@@ -1,0 +1,60 @@
+{
+  "dogFoods": [
+    {
+      "id": 1,
+      "barcode": "074198722899",
+      "name": "Pedigree Adult Complete Nutrition",
+      "brand": "Pedigree",
+      "ingredients": [
+        "Ground Corn",
+        "Corn Meal",
+        "Meat and Bone Meal",
+        "Soybean Meal",
+        "Animal Fat",
+        "Corn Flour"
+      ]
+    },
+    {
+      "id": 2,
+      "barcode": "022014101206",
+      "name": "Purina Pro Plan Adult Complete",
+      "brand": "Purina",
+      "ingredients": [
+        "Chicken",
+        "Wheat Gluten",
+        "Corn Meal",
+        "Soybean Meal",
+        "Meat and Bone Meal",
+        "Animal Fat"
+      ]
+    },
+    {
+      "id": 3,
+      "barcode": "074198532457",
+      "name": "Blue Buffalo Wilderness High Protein",
+      "brand": "Blue Buffalo",
+      "ingredients": [
+        "Beef",
+        "Chicken Meal",
+        "Fish Meal",
+        "Oatmeal",
+        "Barley",
+        "Chicken Fat"
+      ]
+    },
+    {
+      "id": 4,
+      "barcode": "859487002389",
+      "name": "Orijen Original",
+      "brand": "Orijen",
+      "ingredients": [
+        "Fresh Chicken",
+        "Fresh Turkey",
+        "Fresh Fish",
+        "Chicken Meal",
+        "Turkey Meal",
+        "Fish Meal"
+      ]
+    }
+  ]
+}
