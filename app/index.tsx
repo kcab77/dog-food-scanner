@@ -2923,10 +2923,8 @@ export default function App() {
     setIngredients(ingredientList);
 
     await processIngredients(name, raw, ingredientList, "");
-    // Save to database so future barcode scans find it instantly
-    if (lastBarcode) {
-      saveProduct(lastBarcode, name, "", raw, "unknown").catch(() => {});
-    }
+    // Save to database — use scanned barcode if available, otherwise save by name only
+    saveProduct(lastBarcode || "", name, "", raw, "unknown").catch(() => {});
     setLoading(false);
   };
 
