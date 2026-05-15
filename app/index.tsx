@@ -2912,6 +2912,7 @@ export default function App() {
     setIngredients(ingredientList);
 
     await processIngredients(name, raw, ingredientList, "");
+    setLoading(false);
   };
 
   const handleTreatScan = async (rawIngredients: string, name: string, processingMethod?: string) => {
