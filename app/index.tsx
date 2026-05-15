@@ -1679,6 +1679,7 @@ export default function App() {
   );
   const [manualIngredientText, setManualIngredientText] = useState("");
   const [manualProductName, setManualProductName] = useState("");
+  const [manualBarcode, setManualBarcode] = useState("");
   const [treatScore, setTreatScore] = useState<number | null>(null);
   const [treatFlags, setTreatFlags] = useState<
     { name: string; reason: string; severity: string }[]
@@ -2920,11 +2921,12 @@ export default function App() {
     setIsTreatScan(false);
 
     const name = manualProductName.trim() || "Analyzed Product";
+    const barcodeOverride = manualBarcode.trim() || lastBarcode || "";
     setProductName(name);
     setIngredients(ingredientList);
 
     await processIngredients(name, raw, ingredientList, "");
-    const saveResult = await saveProduct(lastBarcode || "", name, "", raw, "unknown");
+    const saveResult = await saveProduct(barcodeOverride, name, "", raw, "unknown");
     if (saveResult === true) {
       Alert.alert("✅ Saved", `${name} has been saved to the database.`);
     } else {
@@ -3980,6 +3982,21 @@ export default function App() {
                 placeholderTextColor="#4B5563"
                 value={manualProductName}
                 onChangeText={setManualProductName}
+              />
+              <TextInput
+                style={{
+                  backgroundColor: "#1a2332",
+                  color: "#fff",
+                  borderRadius: 10,
+                  padding: 12,
+                  fontSize: 13,
+                  marginBottom: 10,
+                }}
+                placeholder="Barcode number (optional — for future scans)"
+                placeholderTextColor="#4B5563"
+                value={manualBarcode}
+                onChangeText={setManualBarcode}
+                keyboardType="numeric"
               />
               <TextInput
                 style={{
