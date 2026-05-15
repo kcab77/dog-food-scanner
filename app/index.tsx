@@ -2528,6 +2528,17 @@ export default function App() {
           <Text style={styles.buttonText}>📷 Scan Ingredient List</Text>
         </TouchableOpacity>
         <TouchableOpacity
+          style={[styles.button, { marginTop: 10, backgroundColor: '#1a2332' }]}
+          onPress={() => {
+            setNotFound(false);
+            setScanned(false);
+            scanningRef.current = false;
+            setScanMode("manual");
+          }}
+        >
+          <Text style={styles.buttonText}>✏️ Enter Ingredients Manually</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
           style={styles.cancelButton}
           onPress={() => {
             setNotFound(false);
@@ -2912,6 +2923,10 @@ export default function App() {
     setIngredients(ingredientList);
 
     await processIngredients(name, raw, ingredientList, "");
+    // Save to database so future barcode scans find it instantly
+    if (lastBarcode) {
+      saveProduct(lastBarcode, name, "", raw, "unknown").catch(() => {});
+    }
     setLoading(false);
   };
 
