@@ -1,17 +1,24 @@
 {
   "expo": {
-    "name": "dog-food-scanner",
-    "slug": "dog-food-scanner",
-    "version": "1.0.0",
+    "name": "PawGrade",
+    "slug": "pawgrade",
+    "version": "1.6.4",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "dogfoodscanner",
+    "scheme": "petscan",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "buildNumber": "14",
+      "bundleIdentifier": "com.kyle.petscan",
+      "supportsTablet": true,
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSCameraUsageDescription": "PawGrade uses your camera to scan pet food barcodes and ingredient labels. Point your camera at a barcode to instantly look up a product, or at an ingredient list to receive an AI-powered safety analysis of every ingredient."
+      }
     },
     "android": {
+      "package": "com.kyle.petscan",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
@@ -19,7 +26,11 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "output": "static",
@@ -33,16 +44,25 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff",
+          "backgroundColor": "#0D0D1A",
           "dark": {
-            "backgroundColor": "#000000"
+            "backgroundColor": "#0D0D1A"
           }
         }
-      ]
+      ],
+      "expo-camera",
+      "expo-font",
+      "expo-image",
+      "expo-web-browser"
     ],
     "experiments": {
-      "typedRoutes": true,
-      "reactCompiler": true
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "8ed0fca5-0731-443a-ae18-1d3ac9d55ced"
+      }
     }
   }
 }
