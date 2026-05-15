@@ -3,6 +3,7 @@ import * as ImageManipulator from "expo-image-manipulator";
 import React, { useRef, useState } from "react";
 import {
     ActivityIndicator,
+    Alert,
     KeyboardAvoidingView,
     Linking,
     Modal,
@@ -2923,8 +2924,12 @@ export default function App() {
     setIngredients(ingredientList);
 
     await processIngredients(name, raw, ingredientList, "");
-    // Save to database — use scanned barcode if available, otherwise save by name only
-    saveProduct(lastBarcode || "", name, "", raw, "unknown").catch(() => {});
+    const saveResult = await saveProduct(lastBarcode || "", name, "", raw, "unknown");
+    if (saveResult === true) {
+      Alert.alert("✅ Saved", `${name} has been saved to the database.`);
+    } else {
+      Alert.alert("❌ Save Failed", `Could not save to database: ${saveResult}`);
+    }
     setLoading(false);
   };
 
