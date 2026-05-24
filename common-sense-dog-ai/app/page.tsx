@@ -1,463 +1,393 @@
-'use client'
+import type { Metadata } from 'next'
+import Link from 'next/link'
 
-import { useState, useRef, useEffect } from 'react'
-import { supabase } from '@/lib/supabase'
-
-const FREE_LIMIT = 20
-const COUNT_KEY = 'csd_question_count'
-const PROFILE_KEY = 'csd_dog_profile'
-
-interface Message {
-  id: string
-  role: 'user' | 'assistant'
-  content: string
+export const metadata: Metadata = {
+  title: 'Life With Hershey — Real Dog Health, Real Stories',
+  description: 'A dog owner\'s honest journey from trusting pet food labels to understanding every ingredient — and building an app to help you do the same.',
 }
-
-interface DogProfile {
-  dog_name: string
-  breed: string
-  age: string
-  diet: string
-  health_issues: string
-}
-
-const WELCOME = `Hi! I'm your Common Sense Dog AI — a holistic, nutrition-first advisor for dog owners who want real, research-backed answers.
-
-I can help you with:
-🥩 Diet & nutrition — raw, gently cooked, freeze-dried, whole food
-🌿 Natural remedies — allergies, skin issues, digestion, joint health
-🐛 Flea & tick prevention — without harsh chemicals
-🦷 Dental health — natural methods that actually work
-💊 Supplements — fish oil, mushrooms, probiotics, goat milk & more
-
-Save your dog's profile above and every answer will be tailored specifically to them. What's on your mind?`
-
-const PROFILE_FIELDS: { key: keyof DogProfile; label: string; placeholder: string }[] = [
-  { key: 'dog_name', label: "Dog's name", placeholder: 'e.g. Hershey' },
-  { key: 'breed', label: 'Breed', placeholder: 'e.g. Chocolate Lab' },
-  { key: 'age', label: 'Age', placeholder: 'e.g. 7 years' },
-  { key: 'diet', label: 'Current diet', placeholder: 'e.g. Kibble, raw, gently cooked...' },
-  { key: 'health_issues', label: 'Health issues or concerns', placeholder: 'e.g. Lipomas, allergies, joint stiffness...' },
-]
 
 export default function Home() {
-  const [messages, setMessages] = useState<Message[]>([
-    { id: 'welcome', role: 'assistant', content: WELCOME },
-  ])
-  const [input, setInput] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [questionCount, setQuestionCount] = useState(0)
-  const [showProfile, setShowProfile] = useState(false)
-  const [showAuth, setShowAuth] = useState(false)
-  const [dogProfile, setDogProfile] = useState<DogProfile | null>(null)
-  const [profileForm, setProfileForm] = useState<DogProfile>({
-    dog_name: '', breed: '', age: '', diet: '', health_issues: '',
-  })
-  const [user, setUser] = useState<any>(null)
-  const [authEmail, setAuthEmail] = useState('')
-  const [authSent, setAuthSent] = useState(false)
-  const [authLoading, setAuthLoading] = useState(false)
-  const [sessionId] = useState(() => `session_${Date.now()}`)
-  const messagesEndRef = useRef<HTMLDivElement>(null)
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
-
-  useEffect(() => {
-    const count = parseInt(localStorage.getItem(COUNT_KEY) || '0', 10)
-    setQuestionCount(count)
-
-    const saved = localStorage.getItem(PROFILE_KEY)
-    if (saved) {
-      try {
-        const p = JSON.parse(saved)
-        setDogProfile(p)
-        setProfileForm(p)
-      } catch {}
-    }
-
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null)
-      if (session?.user) loadProfileFromDB(session.user.id)
-    })
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, session) => {
-      setUser(session?.user ?? null)
-      if (session?.user) loadProfileFromDB(session.user.id)
-    })
-
-    return () => subscription.unsubscribe()
-  }, [])
-
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages, loading])
-
-  const loadProfileFromDB = async (userId: string) => {
-    const { data } = await supabase
-      .from('dog_profiles')
-      .select('*')
-      .eq('user_id', userId)
-      .maybeSingle()
-    if (data) {
-      const p: DogProfile = {
-        dog_name: data.dog_name || '',
-        breed: data.breed || '',
-        age: data.age || '',
-        diet: data.diet || '',
-        health_issues: data.health_issues || '',
-      }
-      setDogProfile(p)
-      setProfileForm(p)
-      localStorage.setItem(PROFILE_KEY, JSON.stringify(p))
-    }
-  }
-
-  const saveProfile = async () => {
-    localStorage.setItem(PROFILE_KEY, JSON.stringify(profileForm))
-    setDogProfile({ ...profileForm })
-    if (user) {
-      await supabase.from('dog_profiles').upsert(
-        { user_id: user.id, ...profileForm, updated_at: new Date().toISOString() },
-        { onConflict: 'user_id' }
-      )
-    }
-    setShowProfile(false)
-  }
-
-  const sendMessage = async () => {
-    const text = input.trim()
-    if (!text || loading) return
-
-    if (!user && questionCount >= FREE_LIMIT) {
-      setShowAuth(true)
-      return
-    }
-
-    const userMsg: Message = { id: `u_${Date.now()}`, role: 'user', content: text }
-    const newMessages = [...messages, userMsg]
-    setMessages(newMessages)
-    setInput('')
-    if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto'
-    }
-    setLoading(true)
-
-    const newCount = questionCount + 1
-    setQuestionCount(newCount)
-    localStorage.setItem(COUNT_KEY, String(newCount))
-
-    try {
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          messages: newMessages
-            .filter(m => m.id !== 'welcome')
-            .map(m => ({ role: m.role, content: m.content })),
-          dogProfile,
-        }),
-      })
-
-      const data = await res.json()
-      const assistantMsg: Message = {
-        id: `a_${Date.now()}`,
-        role: 'assistant',
-        content: data.message || 'Something went wrong — please try again.',
-      }
-      setMessages(prev => [...prev, assistantMsg])
-
-      if (user) {
-        await supabase.from('chat_messages').insert([
-          { user_id: user.id, session_id: sessionId, role: 'user', content: userMsg.content },
-          { user_id: user.id, session_id: sessionId, role: 'assistant', content: assistantMsg.content },
-        ])
-      }
-    } catch {
-      setMessages(prev => [...prev, {
-        id: `err_${Date.now()}`,
-        role: 'assistant',
-        content: 'Something went wrong — please try again.',
-      }])
-    } finally {
-      setLoading(false)
-      if (!user && newCount >= FREE_LIMIT) {
-        setTimeout(() => setShowAuth(true), 800)
-      }
-    }
-  }
-
-  const sendMagicLink = async () => {
-    if (!authEmail.trim()) return
-    setAuthLoading(true)
-    const { error } = await supabase.auth.signInWithOtp({
-      email: authEmail.trim(),
-      options: { emailRedirectTo: window.location.origin },
-    })
-    setAuthLoading(false)
-    if (!error) setAuthSent(true)
-  }
-
-  const questionsLeft = Math.max(0, FREE_LIMIT - questionCount)
-  const isNearLimit = !user && questionsLeft <= 5
-
   return (
-    <div style={{ background: '#0a0a14', minHeight: '100dvh', display: 'flex', flexDirection: 'column', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', color: '#f9fafb' }}>
+    <>
+      <style>{`
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+          --cream: #FDFAF5; --cream-dark: #F5EFE4; --green: #2A5C2E; --green-light: #3D7A42;
+          --green-pale: #EDF4EE; --amber: #C97B2A; --amber-light: #F5E6CC;
+          --text: #1A1A1A; --text-muted: #6B6B6B; --border: #E2D9CA; --white: #FFFFFF;
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--cream); color: var(--text); line-height: 1.6; }
+        nav { background: var(--white); border-bottom: 1px solid var(--border); padding: 0 24px; position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .nav-logo-text { font-size: 17px; font-weight: 700; color: var(--green); letter-spacing: -0.3px; }
+        .nav-logo-sub { font-size: 11px; color: var(--text-muted); }
+        .nav-links { display: flex; align-items: center; gap: 28px; }
+        .nav-links a { text-decoration: none; color: var(--text-muted); font-size: 14px; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--green); }
+        .nav-cta { background: var(--green) !important; color: white !important; padding: 8px 18px; border-radius: 20px; font-size: 13px !important; font-weight: 600 !important; }
+        .hero { background: linear-gradient(135deg, #2A5C2E 0%, #1E4422 50%, #162E18 100%); padding: 80px 24px 100px; text-align: center; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #A8D5AB; font-size: 13px; font-weight: 500; padding: 6px 16px; border-radius: 20px; margin-bottom: 28px; }
+        .hero h1 { font-family: Georgia, serif; font-size: clamp(36px, 6vw, 64px); font-weight: 700; color: #fff; line-height: 1.15; letter-spacing: -1px; margin-bottom: 20px; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .hero h1 span { color: #7DC87F; }
+        .hero p { font-size: 18px; color: rgba(255,255,255,0.75); max-width: 560px; margin: 0 auto 40px; line-height: 1.7; }
+        .hero-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+        .btn-primary { background: #7DC87F; color: #1A2E1B; padding: 14px 28px; border-radius: 30px; font-weight: 700; font-size: 15px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; }
+        .btn-primary:hover { background: #A8D5AB; transform: translateY(-1px); }
+        .btn-secondary { background: rgba(255,255,255,0.1); color: white; padding: 14px 28px; border-radius: 30px; font-weight: 600; font-size: 15px; text-decoration: none; border: 1px solid rgba(255,255,255,0.25); transition: all 0.2s; }
+        .btn-secondary:hover { background: rgba(255,255,255,0.18); }
+        .hero-photo-wrap { margin-top: 56px; display: flex; justify-content: center; }
+        .hero-photo { width: 200px; height: 200px; border-radius: 50%; background: rgba(255,255,255,0.08); border: 3px solid rgba(255,255,255,0.2); display: flex; flex-direction: column; align-items: center; justify-content: center; color: rgba(255,255,255,0.4); font-size: 14px; gap: 8px; }
+        .intro-strip { background: var(--amber-light); border-top: 1px solid #E8D0A8; border-bottom: 1px solid #E8D0A8; padding: 28px 24px; text-align: center; }
+        .intro-strip p { font-size: 17px; color: #7A4F1A; max-width: 700px; margin: 0 auto; font-style: italic; line-height: 1.7; }
+        .section { padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
+        .section-label { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--green); margin-bottom: 12px; }
+        .section-title { font-family: Georgia, serif; font-size: clamp(28px, 4vw, 44px); font-weight: 700; color: var(--text); line-height: 1.2; letter-spacing: -0.5px; margin-bottom: 20px; }
+        .section-title span { color: var(--green); }
+        .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .story-text p { font-size: 16px; color: #444; line-height: 1.8; margin-bottom: 18px; }
+        .story-text p strong { color: var(--text); }
+        .story-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 32px; }
+        .stat-card { background: var(--green-pale); border: 1px solid #C8DFC9; border-radius: 14px; padding: 20px; text-align: center; }
+        .stat-number { font-size: 32px; font-weight: 800; color: var(--green); line-height: 1; margin-bottom: 6px; }
+        .stat-label { font-size: 13px; color: var(--text-muted); line-height: 1.4; }
+        .story-image-placeholder { background: var(--cream-dark); border: 2px dashed var(--border); border-radius: 24px; height: 380px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); font-size: 14px; gap: 10px; }
+        .timeline-section { background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 80px 24px; }
+        .timeline-inner { max-width: 700px; margin: 0 auto; }
+        .timeline-title { font-family: Georgia, serif; font-size: 36px; font-weight: 700; text-align: center; margin-bottom: 52px; color: var(--text); }
+        .timeline { position: relative; }
+        .timeline::before { content: ''; position: absolute; left: 20px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+        .timeline-item { display: flex; gap: 28px; margin-bottom: 40px; position: relative; }
+        .timeline-dot { width: 42px; height: 42px; border-radius: 50%; background: var(--green); border: 3px solid var(--cream); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; position: relative; z-index: 1; }
+        .timeline-content { padding-top: 6px; }
+        .timeline-date { font-size: 12px; font-weight: 700; color: var(--green); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+        .timeline-content h3 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+        .timeline-content p { font-size: 15px; color: var(--text-muted); line-height: 1.6; }
+        .blog-section { padding: 80px 24px; background: var(--cream-dark); }
+        .blog-inner { max-width: 1100px; margin: 0 auto; }
+        .blog-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; }
+        .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
+        .blog-card { background: var(--white); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; text-decoration: none; color: inherit; transition: all 0.2s; display: flex; flex-direction: column; }
+        .blog-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); border-color: #C8DFC9; }
+        .blog-card-image { background: var(--green-pale); height: 160px; display: flex; align-items: center; justify-content: center; font-size: 48px; }
+        .blog-card-body { padding: 22px; flex: 1; display: flex; flex-direction: column; }
+        .blog-tag { display: inline-block; background: var(--green-pale); color: var(--green); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 4px 10px; border-radius: 20px; margin-bottom: 12px; }
+        .blog-card h3 { font-size: 17px; font-weight: 700; line-height: 1.35; margin-bottom: 10px; color: var(--text); }
+        .blog-card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; flex: 1; }
+        .blog-card-footer { padding: 14px 22px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+        .blog-read-more { font-size: 13px; font-weight: 600; color: var(--green); }
+        .blog-date { font-size: 12px; color: var(--text-muted); }
+        .view-all-link { color: var(--green); font-size: 14px; font-weight: 600; text-decoration: none; }
+        .health-section { padding: 80px 24px; background: var(--white); }
+        .health-inner { max-width: 1100px; margin: 0 auto; }
+        .health-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; margin-top: 44px; }
+        .health-card { background: var(--cream); border: 1px solid var(--border); border-radius: 16px; padding: 24px; }
+        .health-card-icon { font-size: 32px; margin-bottom: 14px; }
+        .health-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+        .health-card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+        .app-section { background: linear-gradient(135deg, #1A2E1B 0%, #2A5C2E 100%); padding: 80px 24px; text-align: center; }
+        .app-inner { max-width: 700px; margin: 0 auto; }
+        .app-section .section-label { color: #7DC87F; }
+        .app-section h2 { font-family: Georgia, serif; font-size: clamp(28px, 5vw, 44px); color: white; line-height: 1.2; margin-bottom: 18px; }
+        .app-section p { font-size: 17px; color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 40px; }
+        .app-store-btn { display: inline-flex; align-items: center; gap: 12px; background: white; color: var(--text); padding: 14px 28px; border-radius: 16px; text-decoration: none; font-weight: 700; font-size: 16px; transition: all 0.2s; }
+        .app-store-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,0.3); }
+        .app-features { display: flex; justify-content: center; gap: 32px; margin-top: 48px; flex-wrap: wrap; }
+        .app-feature { color: rgba(255,255,255,0.65); font-size: 14px; display: flex; align-items: center; gap: 7px; }
+        .app-feature::before { content: '✓'; color: #7DC87F; font-weight: 700; }
+        .ai-section { background: var(--green-pale); border-top: 1px solid #C8DFC9; border-bottom: 1px solid #C8DFC9; padding: 60px 24px; text-align: center; }
+        .ai-inner { max-width: 600px; margin: 0 auto; }
+        .ai-section h2 { font-family: Georgia, serif; font-size: 30px; color: var(--text); margin-bottom: 14px; }
+        .ai-section p { font-size: 16px; color: var(--text-muted); line-height: 1.7; margin-bottom: 28px; }
+        footer { background: var(--text); color: rgba(255,255,255,0.5); padding: 40px 24px; text-align: center; }
+        footer p { font-size: 13px; line-height: 1.8; }
+        footer a { color: rgba(255,255,255,0.7); text-decoration: none; }
+        footer a:hover { color: white; }
+        @media (max-width: 768px) { .story-grid { grid-template-columns: 1fr; gap: 40px; } .blog-header { flex-direction: column; align-items: flex-start; gap: 12px; } .nav-links { display: none; } }
+      `}</style>
 
-      {/* Header */}
-      <header style={{ background: '#0f1623', borderBottom: '1px solid #1f2937', padding: '10px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, zIndex: 10 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <span style={{ fontSize: 26 }}>🐾</span>
+      {/* NAV */}
+      <nav>
+        <Link href="/" className="nav-logo">
+          <span style={{fontSize:24}}>🐾</span>
           <div>
-            <div style={{ fontWeight: 700, fontSize: 15, color: '#f9fafb', lineHeight: 1.2 }}>Common Sense Dog AI</div>
-            <div style={{ fontSize: 11, color: '#6b7280' }}>Holistic · Nutrition-First · Whole Food</div>
+            <div className="nav-logo-text">Life With Hershey</div>
+            <div className="nav-logo-sub">Real dog health from a real dog owner</div>
           </div>
+        </Link>
+        <div className="nav-links">
+          <Link href="#story">Our Story</Link>
+          <Link href="#blog">Articles</Link>
+          <Link href="/chat">Ask AI</Link>
+          <Link href="#pawgrade" className="nav-cta">📱 Free App</Link>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          {dogProfile?.dog_name && (
-            <span style={{ fontSize: 12, color: '#22c55e', background: '#052e16', padding: '3px 10px', borderRadius: 20, border: '1px solid #14532d' }}>
-              🐕 {dogProfile.dog_name}
-            </span>
-          )}
-          <button
-            onClick={() => setShowProfile(true)}
-            style={{ background: '#1f2937', border: '1px solid #374151', borderRadius: 8, padding: '6px 12px', color: '#d1d5db', fontSize: 13, cursor: 'pointer', whiteSpace: 'nowrap' }}
-          >
-            {dogProfile?.dog_name ? 'Edit Profile' : '🐾 My Dog'}
-          </button>
-          {user ? (
-            <button onClick={() => supabase.auth.signOut()} style={{ background: 'none', border: 'none', color: '#6b7280', fontSize: 12, cursor: 'pointer' }}>
-              Sign out
-            </button>
-          ) : (
-            <button onClick={() => setShowAuth(true)} style={{ background: 'none', border: 'none', color: '#6b7280', fontSize: 12, cursor: 'pointer' }}>
-              Sign in
-            </button>
-          )}
-        </div>
-      </header>
+      </nav>
 
-      {/* Messages */}
-      <main style={{ flex: 1, overflowY: 'auto', padding: '20px 16px', maxWidth: 760, width: '100%', margin: '0 auto', boxSizing: 'border-box' }}>
-        {messages.map(msg => (
-          <div
-            key={msg.id}
-            style={{
-              marginBottom: 20,
-              display: 'flex',
-              justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start',
-              alignItems: 'flex-start',
-              gap: 10,
-            }}
-          >
-            {msg.role === 'assistant' && (
-              <div style={{ width: 34, height: 34, borderRadius: '50%', background: '#052e16', border: '1px solid #14532d', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 2 }}>
-                <span style={{ fontSize: 16 }}>🐾</span>
-              </div>
-            )}
-            <div
-              style={{
-                maxWidth: '78%',
-                padding: '12px 16px',
-                borderRadius: msg.role === 'user' ? '18px 18px 4px 18px' : '4px 18px 18px 18px',
-                background: msg.role === 'user' ? '#22c55e' : '#111827',
-                color: msg.role === 'user' ? '#000' : '#e5e7eb',
-                fontSize: 15,
-                lineHeight: 1.65,
-                whiteSpace: 'pre-wrap',
-                border: msg.role === 'assistant' ? '1px solid #1f2937' : 'none',
-                fontWeight: msg.role === 'user' ? 500 : 400,
-              }}
-            >
-              {msg.content}
-            </div>
-          </div>
-        ))}
-
-        {loading && (
-          <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, marginBottom: 20 }}>
-            <div style={{ width: 34, height: 34, borderRadius: '50%', background: '#052e16', border: '1px solid #14532d', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              <span style={{ fontSize: 16 }}>🐾</span>
-            </div>
-            <div style={{ background: '#111827', border: '1px solid #1f2937', borderRadius: '4px 18px 18px 18px', padding: '14px 18px', display: 'flex', gap: 6, alignItems: 'center' }}>
-              <div className="dot-1" style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e' }} />
-              <div className="dot-2" style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e' }} />
-              <div className="dot-3" style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e' }} />
-            </div>
-          </div>
-        )}
-        <div ref={messagesEndRef} />
-      </main>
-
-      {/* Input bar */}
-      <div style={{ background: '#0f1623', borderTop: '1px solid #1f2937', padding: '12px 16px 16px' }}>
-        {!user && (
-          <div style={{ textAlign: 'center', fontSize: 12, color: isNearLimit ? '#f59e0b' : '#4b5563', marginBottom: 10 }}>
-            {questionsLeft > 0
-              ? `${questionsLeft} free question${questionsLeft === 1 ? '' : 's'} remaining · Sign in for unlimited`
-              : 'Free limit reached — sign in for unlimited questions'}
-          </div>
-        )}
-        <div style={{ display: 'flex', gap: 8, maxWidth: 760, margin: '0 auto', alignItems: 'flex-end' }}>
-          <textarea
-            ref={textareaRef}
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            onKeyDown={e => {
-              if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault()
-                sendMessage()
-              }
-            }}
-            onInput={e => {
-              const t = e.target as HTMLTextAreaElement
-              t.style.height = 'auto'
-              t.style.height = Math.min(t.scrollHeight, 140) + 'px'
-            }}
-            placeholder={dogProfile?.dog_name ? `Ask about ${dogProfile.dog_name}...` : "Ask about your dog's health, diet, or wellness..."}
-            rows={1}
-            style={{
-              flex: 1,
-              background: '#1f2937',
-              border: '1px solid #374151',
-              borderRadius: 14,
-              padding: '12px 16px',
-              color: '#f9fafb',
-              fontSize: 15,
-              resize: 'none',
-              outline: 'none',
-              fontFamily: 'inherit',
-              lineHeight: 1.5,
-              maxHeight: 140,
-              overflowY: 'auto',
-              transition: 'border-color 0.2s',
-            }}
-            onFocus={e => { e.target.style.borderColor = '#374151' }}
-          />
-          <button
-            onClick={sendMessage}
-            disabled={loading || !input.trim()}
-            style={{
-              background: loading || !input.trim() ? '#1f2937' : '#22c55e',
-              border: 'none',
-              borderRadius: 14,
-              width: 46,
-              height: 46,
-              color: loading || !input.trim() ? '#6b7280' : '#000',
-              fontSize: 20,
-              cursor: loading || !input.trim() ? 'default' : 'pointer',
-              transition: 'background 0.2s',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: 0,
-              fontWeight: 700,
-            }}
-          >
-            ↑
-          </button>
+      {/* HERO */}
+      <section className="hero">
+        <div className="hero-badge">🐕 Chocolate Lab · Rhode Island</div>
+        <h1>How Hershey Taught Me<br/><span>Everything About Dog Health</span></h1>
+        <p>A dog owner&apos;s honest journey from trusting pet food labels to understanding every ingredient — and building an app to help you do the same.</p>
+        <div className="hero-buttons">
+          <Link href="#story" className="btn-primary">🐾 Read Our Story</Link>
+          <Link href="#blog" className="btn-secondary">Browse Articles</Link>
         </div>
-        <div style={{ textAlign: 'center', fontSize: 11, color: '#374151', marginTop: 8 }}>
-          Not a substitute for veterinary care · commonsensedog.com
+        <div className="hero-photo-wrap">
+          <div className="hero-photo">
+            <span style={{fontSize:48}}>🐶</span>
+            <div style={{fontSize:14, color:'rgba(255,255,255,0.4)'}}>Hershey&apos;s photo<br/>goes here</div>
+          </div>
         </div>
+      </section>
+
+      {/* INTRO QUOTE */}
+      <div className="intro-strip">
+        <p>&ldquo;I spent 7 years obsessively studying holistic dog health — not because I wanted to, but because I had to. The day Hershey took Simparica and turned into a zombie, I knew something had to change. <strong>This site is everything I&apos;ve learned since.</strong>&rdquo;</p>
       </div>
 
-      {/* Dog Profile Modal */}
-      {showProfile && (
-        <div
-          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.82)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, padding: 16 }}
-          onClick={e => { if (e.target === e.currentTarget) setShowProfile(false) }}
-        >
-          <div style={{ background: '#111827', borderRadius: 18, padding: 28, width: '100%', maxWidth: 440, border: '1px solid #1f2937' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-              <h2 style={{ margin: 0, fontSize: 18, fontWeight: 700 }}>🐾 Your Dog's Profile</h2>
-              <button onClick={() => setShowProfile(false)} style={{ background: 'none', border: 'none', color: '#6b7280', fontSize: 22, cursor: 'pointer', lineHeight: 1 }}>✕</button>
-            </div>
-            <p style={{ color: '#6b7280', fontSize: 13, marginBottom: 20, marginTop: 4 }}>
-              Every answer will be tailored to your dog once you save their profile.
-            </p>
-            {PROFILE_FIELDS.map(field => (
-              <div key={field.key} style={{ marginBottom: 14 }}>
-                <label style={{ display: 'block', fontSize: 12, color: '#9ca3af', marginBottom: 5, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                  {field.label}
-                </label>
-                <input
-                  type="text"
-                  value={profileForm[field.key]}
-                  onChange={e => setProfileForm(prev => ({ ...prev, [field.key]: e.target.value }))}
-                  placeholder={field.placeholder}
-                  style={{ width: '100%', background: '#1f2937', border: '1px solid #374151', borderRadius: 10, padding: '10px 14px', color: '#f9fafb', fontSize: 14, outline: 'none', boxSizing: 'border-box' }}
-                />
+      {/* OUR STORY */}
+      <section className="section" id="story">
+        <div className="story-grid">
+          <div className="story-text">
+            <div className="section-label">Our Story</div>
+            <h2 className="section-title">From Kibble to <span>Whole Food</span> — Hershey&apos;s Journey</h2>
+            <p>Hershey is my 75-lb chocolate Lab. He loves to swim, he&apos;s always at the softball fields or the beach — and for the first few years of his life, I thought I was doing everything right. Good vet. Regular shots. Name-brand kibble from the pet store.</p>
+            <p>Then one day I gave him his <strong>Simparica</strong> pill. Within hours he was a zombie — glazed over, lethargic, not himself at all. That was the moment I started questioning everything. I dug into the ingredients, the studies, the side effects. What I found scared me. And it sent me down a path I&apos;ve never come back from.</p>
+            <p>I was terrified to take him off conventional food and flea prevention. You hear horror stories. You worry you&apos;re going to make things worse. But I made the switch — off kibble, off chemical preventatives, onto <strong>gently cooked whole food with no added synthetic vitamins or minerals</strong> and a natural flea and tick protocol. The difference was immediate. More energy. Better coat. No new lipomas.</p>
+            <p>That was 7 years ago. I&apos;ve spent every year since obsessively studying holistic dog health — reading studies, testing protocols, talking to holistic vets. Everything I&apos;ve learned is on this site. And the tool I built so you can check any dog food in seconds is <strong>PawGrade</strong>.</p>
+            <div className="story-stats">
+              <div className="stat-card">
+                <div className="stat-number">7</div>
+                <div className="stat-label">Years studying holistic dog health</div>
               </div>
-            ))}
-            <button
-              onClick={saveProfile}
-              style={{ width: '100%', background: '#22c55e', border: 'none', borderRadius: 12, padding: '13px', color: '#000', fontWeight: 700, fontSize: 15, cursor: 'pointer', marginTop: 6 }}
-            >
-              Save Profile
-            </button>
+              <div className="stat-card">
+                <div className="stat-number">70%</div>
+                <div className="stat-label">Of Hershey&apos;s diet is now whole food</div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-number">0</div>
+                <div className="stat-label">New lipomas since switching to whole food</div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-number">🐾</div>
+                <div className="stat-label">More energy than ever at 7 years old</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div className="story-image-placeholder">
+              <span style={{fontSize:48}}>📷</span>
+              <div>Add a photo of you<br/>and Hershey here</div>
+            </div>
           </div>
         </div>
-      )}
+      </section>
 
-      {/* Auth Modal */}
-      {showAuth && (
-        <div
-          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.88)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, padding: 16 }}
-          onClick={e => { if (e.target === e.currentTarget) setShowAuth(false) }}
-        >
-          <div style={{ background: '#111827', borderRadius: 18, padding: 36, width: '100%', maxWidth: 420, border: '1px solid #1f2937', textAlign: 'center' }}>
-            {!authSent ? (
-              <>
-                <div style={{ fontSize: 52, marginBottom: 14 }}>🐾</div>
-                <h2 style={{ margin: '0 0 10px', fontSize: 22, fontWeight: 700 }}>
-                  {questionCount >= FREE_LIMIT ? `You've used your ${FREE_LIMIT} free questions!` : 'Create a free account'}
-                </h2>
-                <p style={{ color: '#9ca3af', marginBottom: 28, fontSize: 15, lineHeight: 1.6 }}>
-                  Sign in to get unlimited questions, save your chat history, and sync your dog's profile across devices.<br />
-                  <strong style={{ color: '#22c55e' }}>Free forever.</strong>
-                </p>
-                <input
-                  type="email"
-                  value={authEmail}
-                  onChange={e => setAuthEmail(e.target.value)}
-                  onKeyDown={e => e.key === 'Enter' && sendMagicLink()}
-                  placeholder="your@email.com"
-                  autoFocus
-                  style={{ width: '100%', background: '#1f2937', border: '1px solid #374151', borderRadius: 12, padding: '13px 16px', color: '#f9fafb', fontSize: 15, outline: 'none', marginBottom: 12, boxSizing: 'border-box' }}
-                />
-                <button
-                  onClick={sendMagicLink}
-                  disabled={authLoading || !authEmail.trim()}
-                  style={{ width: '100%', background: authLoading || !authEmail.trim() ? '#1f2937' : '#22c55e', border: 'none', borderRadius: 12, padding: '13px', color: authLoading || !authEmail.trim() ? '#6b7280' : '#000', fontWeight: 700, fontSize: 15, cursor: authLoading ? 'default' : 'pointer', marginBottom: 10 }}
-                >
-                  {authLoading ? 'Sending...' : 'Continue with Email →'}
-                </button>
-                <p style={{ color: '#4b5563', fontSize: 12 }}>We'll send a magic link — no password needed.</p>
-                {questionCount < FREE_LIMIT && (
-                  <button onClick={() => setShowAuth(false)} style={{ marginTop: 8, background: 'none', border: 'none', color: '#6b7280', fontSize: 13, cursor: 'pointer', textDecoration: 'underline' }}>
-                    Not now ({questionsLeft} question{questionsLeft === 1 ? '' : 's'} left)
-                  </button>
-                )}
-              </>
-            ) : (
-              <>
-                <div style={{ fontSize: 52, marginBottom: 14 }}>📬</div>
-                <h2 style={{ margin: '0 0 10px', fontSize: 22, fontWeight: 700 }}>Check your inbox</h2>
-                <p style={{ color: '#9ca3af', fontSize: 15, lineHeight: 1.6 }}>
-                  We sent a magic link to<br />
-                  <strong style={{ color: '#f9fafb' }}>{authEmail}</strong>.<br /><br />
-                  Click it to sign in and keep chatting.
-                </p>
-                <button
-                  onClick={() => { setShowAuth(false); setAuthSent(false) }}
-                  style={{ marginTop: 24, background: '#1f2937', border: '1px solid #374151', borderRadius: 12, padding: '12px 28px', color: '#f9fafb', fontSize: 14, cursor: 'pointer' }}
-                >
-                  Close
-                </button>
-              </>
-            )}
+      {/* TIMELINE */}
+      <section className="timeline-section">
+        <div className="timeline-inner">
+          <h2 className="timeline-title">The Journey</h2>
+          <div className="timeline">
+            <div className="timeline-item">
+              <div className="timeline-dot">🍗</div>
+              <div className="timeline-content">
+                <div className="timeline-date">The Early Years</div>
+                <h3>Trusting the bag</h3>
+                <p>Name-brand kibble. Regular vet visits. Doing everything &ldquo;right.&rdquo; I had no reason to question any of it — Hershey seemed fine.</p>
+              </div>
+            </div>
+            <div className="timeline-item">
+              <div className="timeline-dot">😶</div>
+              <div className="timeline-content">
+                <div className="timeline-date">The Wake-Up Call</div>
+                <h3>Simparica turned him into a zombie</h3>
+                <p>I gave him his regular Simparica pill and watched him spend the whole day glazed over and lethargic — not himself at all. I started researching. That was the beginning of everything.</p>
+              </div>
+            </div>
+            <div className="timeline-item">
+              <div className="timeline-dot">⚠️</div>
+              <div className="timeline-content">
+                <div className="timeline-date">Then Came the Lipomas</div>
+                <h3>Fatty lumps that shouldn&apos;t be there</h3>
+                <p>His vet said they were &ldquo;common in Labs.&rdquo; I didn&apos;t accept that. I started connecting the dots between his diet, chronic inflammation, and what was growing under his skin.</p>
+              </div>
+            </div>
+            <div className="timeline-item">
+              <div className="timeline-dot">😰</div>
+              <div className="timeline-content">
+                <div className="timeline-date">The Scary Part</div>
+                <h3>Making the switch — terrified</h3>
+                <p>Switching off kibble and off conventional flea prevention felt risky. What if I made things worse? I spent weeks reading everything before I felt confident enough to commit.</p>
+              </div>
+            </div>
+            <div className="timeline-item">
+              <div className="timeline-dot">🥩</div>
+              <div className="timeline-content">
+                <div className="timeline-date">The Transition</div>
+                <h3>Gently cooked whole food — no synthetic vitamins or minerals</h3>
+                <p>Real ingredients. Nothing on the label I couldn&apos;t identify. Within weeks he had more energy than ever. No new lipomas. I knew I&apos;d made the right call.</p>
+              </div>
+            </div>
+            <div className="timeline-item">
+              <div className="timeline-dot">📱</div>
+              <div className="timeline-content">
+                <div className="timeline-date">Today — 7 Years Later</div>
+                <h3>Built PawGrade so you don&apos;t have to do this alone</h3>
+                <p>Seven years of research turned into an app. Scan any dog food barcode and know instantly if it&apos;s worth feeding your dog. The research is done — you just point and scan.</p>
+              </div>
+            </div>
           </div>
         </div>
-      )}
-    </div>
+      </section>
+
+      {/* BLOG */}
+      <section className="blog-section" id="blog">
+        <div className="blog-inner">
+          <div className="blog-header">
+            <div>
+              <div className="section-label">Articles</div>
+              <h2 className="section-title" style={{marginBottom:0}}>What I&apos;ve Learned Along the Way</h2>
+            </div>
+            <Link href="#" className="view-all-link">View all articles →</Link>
+          </div>
+          <div className="blog-grid">
+            <Link href="#" className="blog-card">
+              <div className="blog-card-image">🍄</div>
+              <div className="blog-card-body">
+                <span className="blog-tag">Supplements</span>
+                <h3>Medicinal Mushrooms for Dogs: The Evidence, the Best Types, and What Actually Works</h3>
+                <p>A University of Pennsylvania clinical trial. Published studies on immune modulation and cancer. Here&apos;s what the research actually says.</p>
+              </div>
+              <div className="blog-card-footer">
+                <span className="blog-read-more">Read article →</span>
+                <span className="blog-date">Deep Dive</span>
+              </div>
+            </Link>
+            <Link href="#" className="blog-card">
+              <div className="blog-card-image">🫀</div>
+              <div className="blog-card-body">
+                <span className="blog-tag">Nutrition</span>
+                <h3>Why Omega-3s Matter More Than You Think for Dog Heart Health</h3>
+                <p>Most kibble has an omega-6 to omega-3 ratio of 15:1. Dogs need closer to 5:1. Here&apos;s what chronic imbalance actually does.</p>
+              </div>
+              <div className="blog-card-footer">
+                <span className="blog-read-more">Read article →</span>
+                <span className="blog-date">Nutrition</span>
+              </div>
+            </Link>
+            <Link href="#" className="blog-card">
+              <div className="blog-card-image">🪨</div>
+              <div className="blog-card-body">
+                <span className="blog-tag">Conditions</span>
+                <h3>Lipomas in Dogs: Why They Happen and How Diet Can Help</h3>
+                <p>Vets say they&apos;re harmless. But chronic inflammation and poor diet are what cause them. Here&apos;s the full picture.</p>
+              </div>
+              <div className="blog-card-footer">
+                <span className="blog-read-more">Read article →</span>
+                <span className="blog-date">Hershey&apos;s Journey</span>
+              </div>
+            </Link>
+            <Link href="#" className="blog-card">
+              <div className="blog-card-image">🐟</div>
+              <div className="blog-card-body">
+                <span className="blog-tag">Supplements</span>
+                <h3>Fish Oil for Dogs: Does It Actually Work, and Which Kind?</h3>
+                <p>Not all fish oil is equal. The form, the source, and the dose all matter. What I give Hershey and why.</p>
+              </div>
+              <div className="blog-card-footer">
+                <span className="blog-read-more">Read article →</span>
+                <span className="blog-date">Supplements</span>
+              </div>
+            </Link>
+            <Link href="#" className="blog-card">
+              <div className="blog-card-image">🕐</div>
+              <div className="blog-card-body">
+                <span className="blog-tag">Health</span>
+                <h3>Intermittent Fasting for Dogs: What the Research Actually Says</h3>
+                <p>We&apos;ve been told dogs need to eat twice a day every day. But ancestral dogs didn&apos;t eat like that. A more nuanced take.</p>
+              </div>
+              <div className="blog-card-footer">
+                <span className="blog-read-more">Read article →</span>
+                <span className="blog-date">Lifestyle</span>
+              </div>
+            </Link>
+            <Link href="#" className="blog-card">
+              <div className="blog-card-image">🦠</div>
+              <div className="blog-card-body">
+                <span className="blog-tag">Gut Health</span>
+                <h3>Probiotics and Digestive Enzymes: When They Help and When They Don&apos;t</h3>
+                <p>The pet supplement industry sells a lot of probiotics. Here&apos;s how to know if your dog actually needs them.</p>
+              </div>
+              <div className="blog-card-footer">
+                <span className="blog-read-more">Read article →</span>
+                <span className="blog-date">Gut Health</span>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* HEALTH TOPICS */}
+      <section className="health-section">
+        <div className="health-inner">
+          <div className="section-label">What We Cover</div>
+          <h2 className="section-title">Everything I Wish I Knew Earlier</h2>
+          <div className="health-grid">
+            <div className="health-card"><div className="health-card-icon">🥩</div><h3>Whole Food Diet</h3><p>Gently cooked, freeze-dried, raw — what each means and when each makes sense for your dog.</p></div>
+            <div className="health-card"><div className="health-card-icon">🏷️</div><h3>Reading Labels</h3><p>What &ldquo;by-product,&rdquo; &ldquo;natural flavors,&rdquo; and &ldquo;complete and balanced&rdquo; actually mean in practice.</p></div>
+            <div className="health-card"><div className="health-card-icon">⚗️</div><h3>Flea &amp; Tick Without Chemicals</h3><p>After Simparica left Hershey lethargic and zombie-like, I built a fully natural prevention stack. Here&apos;s exactly what I use and why.</p></div>
+            <div className="health-card"><div className="health-card-icon">🪨</div><h3>Lipoma Management</h3><p>Why Labs get lipomas, the inflammation connection, and the diet changes that stopped Hershey&apos;s from growing.</p></div>
+            <div className="health-card"><div className="health-card-icon">💊</div><h3>Supplements That Work</h3><p>Mushrooms, fish oil, probiotics, digestive enzymes — evidence-based takes on what&apos;s worth giving.</p></div>
+            <div className="health-card"><div className="health-card-icon">🦷</div><h3>Dental Health</h3><p>Natural dental care that actually works — without anesthesia cleanings every year.</p></div>
+            <div className="health-card"><div className="health-card-icon">🫀</div><h3>Liver &amp; Organ Support</h3><p>Monthly heartworm preventatives work through the liver. Supporting detox pathways is something most dog owners never think about.</p></div>
+            <div className="health-card"><div className="health-card-icon">🧪</div><h3>Bloodwork &amp; Monitoring</h3><p>What to actually watch on your dog&apos;s annual panel, and the cheap add-ons most vets don&apos;t mention.</p></div>
+          </div>
+        </div>
+      </section>
+
+      {/* AI CHAT CTA */}
+      <section className="ai-section">
+        <div className="ai-inner">
+          <div className="section-label">Free Tool</div>
+          <h2>Ask the Common Sense Dog AI</h2>
+          <p>Have a question about your dog&apos;s diet, supplements, or health? Ask our AI — trained on holistic veterinary research, nutrition science, and everything I&apos;ve learned over 7 years with Hershey.</p>
+          <Link href="/chat" className="btn-primary" style={{display:'inline-flex'}}>🐾 Ask a Question — Free</Link>
+        </div>
+      </section>
+
+      {/* APP CTA */}
+      <section className="app-section" id="pawgrade">
+        <div className="app-inner">
+          <div className="section-label">The App</div>
+          <h2>Scan Any Dog Food.<br/>Know Exactly What&apos;s In It.</h2>
+          <p>PawGrade came directly out of this journey. Scan a barcode, get an instant AI-powered breakdown of every ingredient — what it is, why it&apos;s in there, and whether it&apos;s good for your dog. Free on the App Store.</p>
+          <a href="https://apps.apple.com/app/id6760376540" className="app-store-btn">
+            <span style={{fontSize:28}}>🍎</span>
+            <div>
+              <div style={{fontSize:11, fontWeight:500, opacity:0.7}}>Download on the</div>
+              <div>App Store — Free</div>
+            </div>
+          </a>
+          <div className="app-features">
+            <div className="app-feature">Scan any barcode</div>
+            <div className="app-feature">AI ingredient analysis</div>
+            <div className="app-feature">Processing method detection</div>
+            <div className="app-feature">Ingredient-by-ingredient breakdown</div>
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer>
+        <p>
+          <strong style={{color:'rgba(255,255,255,0.8)'}}>Life With Hershey</strong> — real dog health from a real dog owner<br/>
+          <br/>
+          <Link href="#story">Our Story</Link> · <Link href="#blog">Articles</Link> · <Link href="/chat">Ask AI</Link> · <Link href="#pawgrade">PawGrade App</Link><br/>
+          <br/>
+          Not veterinary advice. Always consult your vet for medical decisions.<br/>
+          Made with 🐾 in Rhode Island
+        </p>
+      </footer>
+    </>
   )
 }
