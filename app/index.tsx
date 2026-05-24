@@ -24,6 +24,7 @@ import {
     lookupIngredientsWithClaude,
     lookupProduct,
     lookupProductByName,
+    lookupWithGoUPC,
     saveProduct,
     saveProductGA,
     saveToGoogleSheet,
@@ -3424,6 +3425,29 @@ export default function App() {
         }
       }
 
+      // Step 4b: Go-UPC — get ingredients directly if not in Supabase
+      if (!rawIngredients) {
+        try {
+          const goupcResult = await lookupWithGoUPC(data);
+          if (goupcResult?.found) {
+            if (!name && goupcResult.product_name) name = goupcResult.product_name;
+            if (goupcResult.ingredients) {
+              rawIngredients = goupcResult.ingredients;
+              setDataSource("📦 Product Database");
+              await saveProduct(
+                data,
+                goupcResult.product_name || name,
+                goupcResult.brand,
+                rawIngredients,
+                "unknown",
+              );
+            }
+          }
+        } catch (e) {
+          console.log("Go-UPC step failed");
+        }
+      }
+
       // Step 5: UPC Item DB — always run when ingredients missing to get best name + brand for Claude
       let upcBrand = "";
       if (!rawIngredients) {
@@ -3924,7 +3948,7 @@ export default function App() {
                   scanMode === "smart" && styles.modeBtnTextActive,
                 ]}
               >
-                Smart Scan
+                Scan
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -3965,7 +3989,7 @@ export default function App() {
               ? "Point at the ingredient list on a treat bag"
               : scanMode === "manual"
                 ? "Type or paste an ingredient list to analyze"
-                : "Point at any part of the bag — front, ingredients, or label"}
+                : "Point at the barcode to scan — or tap the button to scan an ingredient label"}
           </Text>
           {scanMode === "manual" ? (
             <View style={{ flex: 1, width: "100%", paddingHorizontal: 16, paddingTop: 8 }}>
@@ -4039,6 +4063,7 @@ export default function App() {
                 barcodeScannerSettings={{
                   barcodeTypes: ["ean13", "ean8", "upc_a", "upc_e"],
                 }}
+                onBarcodeScanned={scanMode !== "treats" ? handleBarCodeScanned : undefined}
               />
               <View style={styles.scanOverlay}>
                 <TouchableOpacity
