@@ -1,4 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { blogPosts } from '@/lib/blog-data'
+
+// Strip HTML tags for clean text
+function stripHtml(html: string) {
+  return html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
+}
+
+// Build knowledge block from all blog posts — injected into every chat
+const KNOWLEDGE_BLOCK = blogPosts
+  .map(p => `## ${p.title}\n${stripHtml(p.content)}`)
+  .join('\n\n---\n\n')
 
 const SYSTEM_PROMPT = `You are the Common Sense Dog AI assistant — a holistic, nutrition-first pet health advisor for dog owners who want natural, research-backed guidance without defaulting to pharmaceuticals or generic vet advice.
 
@@ -50,7 +61,13 @@ Never recommend:
 - Synthetic chemical flea/tick treatments as a first option
 - Vague answers like "consult your vet" without giving real guidance first
 
-Always remember: the Common Sense Dog owner is already doing their research. They don't want generic — they want specific, honest, and holistic. Keep answers concise but thorough — 3 to 5 short paragraphs max.`
+Always remember: the Common Sense Dog owner is already doing their research. They don't want generic — they want specific, honest, and holistic. Keep answers concise but thorough — 3 to 5 short paragraphs max.
+
+---
+KNOWLEDGE BASE — LIFE WITH HERSHEY ARTICLES:
+Use this research when answering questions. Reference it naturally.
+
+${KNOWLEDGE_BLOCK}`
 
 export async function POST(req: NextRequest) {
   try {
@@ -58,29 +75,31 @@ export async function POST(req: NextRequest) {
 
     let systemText = SYSTEM_PROMPT
     if (dogProfile?.dog_name) {
-      systemText += `\n\nThe user's dog:\n- Name: ${dogProfile.dog_name}\n- Breed: ${dogProfile.breed || 'not specified'}\n- Age: ${dogProfile.age || 'not specified'}\n- Current diet: ${dogProfile.diet || 'not specified'}\n- Health issues/concerns: ${dogProfile.health_issues || 'none mentioned'}\n\nAddress the dog by name naturally where relevant.`
+      systemText += `\n\n---\nThe user's dog:\n- Name: ${dogProfile.dog_name}\n- Breed: ${dogProfile.breed || 'not specified'}\n- Age: ${dogProfile.age || 'not specified'}\n- Current diet: ${dogProfile.diet || 'not specified'}\n- Health issues/concerns: ${dogProfile.health_issues || 'none mentioned'}\n\nAddress the dog by name naturally where relevant.`
     }
 
-    const contents = messages.map((m: { role: string; content: string }) => ({
-      role: m.role === 'assistant' ? 'model' : 'user',
-      parts: [{ text: m.content }],
+    const claudeMessages = messages.map((m: { role: string; content: string }) => ({
+      role: m.role === 'assistant' ? 'assistant' : 'user',
+      content: m.content,
     }))
 
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.GEMINI_KEY}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          system_instruction: { parts: [{ text: systemText }] },
-          contents,
-          generationConfig: { temperature: 0.7, maxOutputTokens: 1024 },
-        }),
-      }
-    )
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.ANTHROPIC_KEY!,
+        'anthropic-version': '2023-06-01',
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 1024,
+        system: systemText,
+        messages: claudeMessages,
+      }),
+    })
 
     const data = await response.json()
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || ''
+    const text = data?.content?.[0]?.text?.trim() || ''
 
     if (!text) {
       return NextResponse.json({ error: 'No response from AI' }, { status: 500 })
