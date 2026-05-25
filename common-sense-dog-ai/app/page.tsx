@@ -361,13 +361,22 @@ export default function Home() {
           <div className="section-label">The App</div>
           <h2>Scan Any Dog Food.<br/>Know Exactly What&apos;s In It.</h2>
           <p>PawGrade came directly out of this journey. Scan a barcode, get an instant AI-powered breakdown of every ingredient — what it is, why it&apos;s in there, and whether it&apos;s good for your dog. Free on the App Store.</p>
-          <a href="https://apps.apple.com/app/id6760376540" className="app-store-btn">
-            <span style={{fontSize:28}}>🍎</span>
-            <div>
-              <div style={{fontSize:11, fontWeight:500, opacity:0.7}}>Download on the</div>
-              <div>App Store — Free</div>
-            </div>
-          </a>
+          <div style={{display:'flex', gap:14, justifyContent:'center', flexWrap:'wrap'}}>
+            <a href="https://apps.apple.com/app/id6760376540" className="app-store-btn">
+              <span style={{fontSize:28}}>🍎</span>
+              <div>
+                <div style={{fontSize:11, fontWeight:500, opacity:0.7}}>Download on the</div>
+                <div>App Store — Free</div>
+              </div>
+            </a>
+            <Link href="/scan" className="app-store-btn" style={{background:'rgba(255,255,255,0.12)', color:'white', border:'1px solid rgba(255,255,255,0.2)'}}>
+              <span style={{fontSize:28}}>🌐</span>
+              <div>
+                <div style={{fontSize:11, fontWeight:500, opacity:0.7}}>No download needed</div>
+                <div>Try it Online</div>
+              </div>
+            </Link>
+          </div>
           <div className="app-features">
             <div className="app-feature">Scan any barcode</div>
             <div className="app-feature">AI ingredient analysis</div>
