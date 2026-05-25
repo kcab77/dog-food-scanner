@@ -248,10 +248,10 @@ export default function Home() {
               <div className="section-label">Articles</div>
               <h2 className="section-title" style={{marginBottom:0}}>What I&apos;ve Learned Along the Way</h2>
             </div>
-            <Link href="#" className="view-all-link">View all articles →</Link>
+            <Link href="/blog" className="view-all-link">View all articles →</Link>
           </div>
           <div className="blog-grid">
-            <Link href="#" className="blog-card">
+            <Link href="/blog/medicinal-mushrooms-for-dogs" className="blog-card">
               <div className="blog-card-image">🍄</div>
               <div className="blog-card-body">
                 <span className="blog-tag">Supplements</span>
@@ -263,23 +263,23 @@ export default function Home() {
                 <span className="blog-date">Deep Dive</span>
               </div>
             </Link>
-            <Link href="#" className="blog-card">
+            <Link href="/blog/heart-health-dogs" className="blog-card">
               <div className="blog-card-image">🫀</div>
               <div className="blog-card-body">
-                <span className="blog-tag">Nutrition</span>
-                <h3>Why Omega-3s Matter More Than You Think for Dog Heart Health</h3>
-                <p>Most kibble has an omega-6 to omega-3 ratio of 15:1. Dogs need closer to 5:1. Here&apos;s what chronic imbalance actually does.</p>
+                <span className="blog-tag">Heart Health</span>
+                <h3>Heart Health in Dogs: Supplements, Whole Foods, and What the Clinical Trials Actually Show</h3>
+                <p>Heart disease is the second leading cause of death in dogs. Clinical trials show correcting specific deficiencies can reverse cardiac damage.</p>
               </div>
               <div className="blog-card-footer">
                 <span className="blog-read-more">Read article →</span>
-                <span className="blog-date">Nutrition</span>
+                <span className="blog-date">Clinical Research</span>
               </div>
             </Link>
-            <Link href="#" className="blog-card">
+            <Link href="/blog/lipomas-in-dogs" className="blog-card">
               <div className="blog-card-image">🪨</div>
               <div className="blog-card-body">
                 <span className="blog-tag">Conditions</span>
-                <h3>Lipomas in Dogs: Why They Happen and How Diet Can Help</h3>
+                <h3>Lipomas in Dogs: What They Are, Which Breeds Are Most at Risk, and What You Can Do</h3>
                 <p>Vets say they&apos;re harmless. But chronic inflammation and poor diet are what cause them. Here&apos;s the full picture.</p>
               </div>
               <div className="blog-card-footer">
@@ -287,36 +287,36 @@ export default function Home() {
                 <span className="blog-date">Hershey&apos;s Journey</span>
               </div>
             </Link>
-            <Link href="#" className="blog-card">
+            <Link href="/blog/fish-oil-omega3-dogs" className="blog-card">
               <div className="blog-card-image">🐟</div>
               <div className="blog-card-body">
                 <span className="blog-tag">Supplements</span>
-                <h3>Fish Oil for Dogs: Does It Actually Work, and Which Kind?</h3>
-                <p>Not all fish oil is equal. The form, the source, and the dose all matter. What I give Hershey and why.</p>
+                <h3>Fish Oil and Omega-3s for Dogs: The Evidence, the Best Sources, and What Most Owners Get Wrong</h3>
+                <p>Not all fish oil is equal. The form, the source, and the dose all matter. What the clinical trials actually show.</p>
               </div>
               <div className="blog-card-footer">
                 <span className="blog-read-more">Read article →</span>
                 <span className="blog-date">Supplements</span>
               </div>
             </Link>
-            <Link href="#" className="blog-card">
+            <Link href="/blog/intermittent-fasting-dogs" className="blog-card">
               <div className="blog-card-image">🕐</div>
               <div className="blog-card-body">
-                <span className="blog-tag">Health</span>
-                <h3>Intermittent Fasting for Dogs: What the Research Actually Says</h3>
-                <p>We&apos;ve been told dogs need to eat twice a day every day. But ancestral dogs didn&apos;t eat like that. A more nuanced take.</p>
+                <span className="blog-tag">Lifestyle</span>
+                <h3>Intermittent Fasting and Caloric Restriction in Dogs: What the Trials Actually Show</h3>
+                <p>A landmark 20-year clinical trial and a 24,000-dog study. The data is more compelling than most owners realize.</p>
               </div>
               <div className="blog-card-footer">
                 <span className="blog-read-more">Read article →</span>
                 <span className="blog-date">Lifestyle</span>
               </div>
             </Link>
-            <Link href="#" className="blog-card">
+            <Link href="/blog/probiotics-enzymes-dogs" className="blog-card">
               <div className="blog-card-image">🦠</div>
               <div className="blog-card-body">
                 <span className="blog-tag">Gut Health</span>
-                <h3>Probiotics and Digestive Enzymes: When They Help and When They Don&apos;t</h3>
-                <p>The pet supplement industry sells a lot of probiotics. Here&apos;s how to know if your dog actually needs them.</p>
+                <h3>Why Probiotics, Prebiotics, and Digestive Enzymes Could Be the Missing Piece in Your Dog&apos;s Diet</h3>
+                <p>If your dog is eating the same food every single day, their gut is probably not as healthy as you think.</p>
               </div>
               <div className="blog-card-footer">
                 <span className="blog-read-more">Read article →</span>
