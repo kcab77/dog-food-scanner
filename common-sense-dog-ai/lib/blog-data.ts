@@ -467,6 +467,173 @@ export const blogPosts: BlogPost[] = [
 <hr/>
 <p><em>This article is for educational purposes only and does not constitute veterinary advice. Always consult your veterinarian before making significant changes to your dog's feeding schedule.</em></p>
     `
+  },
+  {
+    slug: 'tcvm-organ-meats-dogs',
+    title: 'TCVM and the "Like Supports Like" Principle: Why Organ Meats Are the Most Targeted Food You Can Feed Your Dog',
+    description: 'Traditional Chinese Veterinary Medicine has used organ meats as targeted medicine for 3,000 years. Modern nutritional science is confirming why — heart feeds heart, liver feeds liver, kidney supports kidney.',
+    tag: 'Nutrition',
+    emoji: '🍖',
+    date: '2025',
+    content: `
+<p>Traditional Chinese Veterinary Medicine has used organ meats as targeted, organ-specific medicine for over 3,000 years. The core principle is elegantly simple: heart feeds heart. Liver feeds liver. Kidney supports kidney. What looks like ancient philosophy turns out to have a remarkably sound basis in nutritional biochemistry — because organ meats are among the most nutrient-dense foods on the planet, and they concentrate exactly the compounds the corresponding organ needs to function.</p>
+<p>Modern research isn't just validating this approach — it's revealing precisely why the nutrient profiles in organ meats are so matched to organ function.</p>
+<hr/>
+<h2>What Is TCVM?</h2>
+<p>Traditional Chinese Veterinary Medicine is a comprehensive medical system with a 3,000-year history that includes acupuncture, herbal medicine, Tui Na (medical massage), and food therapy. In the United States it's formally taught through the Chi Institute, which offers board certification in veterinary acupuncture and TCVM food therapy to licensed veterinarians.</p>
+<p>TCVM food therapy assigns each food a <strong>thermal energy</strong> (warming, cooling, or neutral), an organ affinity, and a specific action in the body. Organ meats are considered potent tonics — concentrated sources of the same building blocks found in the corresponding tissue. This isn't metaphor. Organ meats are structurally and biochemically distinct from muscle meat. They contain concentrations of cofactors, enzymes, and bioactive compounds that muscle meat simply doesn't have — and those concentrations directly mirror what the matching organ requires to function.</p>
+<hr/>
+<h2>Heart — Feeds the Heart</h2>
+<h3>The Nutritional Case</h3>
+<p>Beef heart is one of the most taurine-rich foods in existence. Raw beef heart consistently assays at approximately <strong>1,100–1,400 mg of taurine per 100g</strong> — compared to roughly 50 mg in a typical chicken breast. This matters enormously because taurine is essential for normal cardiac contractility, and taurine deficiency is directly implicated in dilated cardiomyopathy (DCM) in dogs.</p>
+<p>The landmark study enrolled 24 Golden Retrievers with DCM; 23 of the 24 were eating grain-free or legume-heavy diets low in taurine-containing whole foods. After diet correction and taurine supplementation, most showed measurable echocardiographic improvement. <a href="https://pubmed.ncbi.nlm.nih.gov/30543707/" target="_blank" rel="noopener">[Study — PLoS One]</a></p>
+<p>Beef heart is also the richest whole-food source of <strong>Coenzyme Q10 (CoQ10)</strong> and <strong>L-carnitine</strong> — the exact two compounds the heart uses to produce cellular energy. CoQ10 is measurably depleted in the myocardium of dogs with congestive heart failure. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7911325/" target="_blank" rel="noopener">[Study]</a> L-carnitine deficiency has been shown to directly cause DCM in Boxers — which resolved when carnitine was supplemented and recurred when it was withdrawn. <a href="https://pubmed.ncbi.nlm.nih.gov/2019534/" target="_blank" rel="noopener">[Study]</a> These three nutrients — taurine, CoQ10, and L-carnitine — are the pillars of integrative veterinary cardiac nutrition. They are all concentrated in the one food that needs them most: the heart.</p>
+<p>In TCVM, heart has a <em>warming thermal nature</em> and an affinity for the Heart and Shen (spirit and mind). Dogs with anxiety, restlessness, or poor sleep are often given heart-based foods in TCVM food therapy alongside other interventions.</p>
+<p><em>Feeding guideline: 5–10% of total diet. Beef, chicken, and duck heart are all excellent. Heart is classified as muscle meat in raw feeding frameworks — not organ — so it doesn't count against the organ cap. Can be fed raw, lightly cooked, or as freeze-dried treats.</em></p>
+<hr/>
+<h2>Liver — Feeds the Liver</h2>
+<h3>The Nutritional Case</h3>
+<p>Liver is the original superfood. Calorie for calorie, it has no rival in the nutrient density rankings. It is the body's primary storage depot for vitamin A, the most bioavailable source of heme iron in any food, and contains active forms of B vitamins — B12, folate, riboflavin, and B6 — that the body uses directly without conversion.</p>
+<p>The practical relevance: <strong>copper and vitamin B12</strong> are essential cofactors for liver cell regeneration and the enzymatic reactions that support detoxification. Dogs on long-term processed kibble often run subclinically low in these cofactors — not deficient by standard blood panel thresholds, but low enough to impair optimal liver function. The ACVIM consensus on hepatotoxicity in dogs specifically names nutritional support — particularly B vitamins and antioxidants — as a key management pillar alongside conventional treatment. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6524396/" target="_blank" rel="noopener">[ACVIM Consensus]</a></p>
+<p>Liver also provides <strong>glutathione precursors</strong> — cysteine, glycine, and glutamine — in highly bioavailable form. Glutathione is the liver's primary antioxidant defense system, and its synthesis requires an adequate supply of all three precursors simultaneously.</p>
+<p>In TCVM, liver has a <em>slightly warming to neutral nature</em> and an affinity for the Liver and Blood. It is used to nourish Blood deficiency — dogs who are anemic, lethargic, have dull coats, or are recovering from illness or surgery.</p>
+<p><strong>Critical caveat on dosing:</strong> Liver is extremely high in vitamin A, which is fat-soluble and accumulates in the body over time. Vitamin A toxicity in dogs causes bone pain, progressive stiffness, and eventually irreversible skeletal deformities. Liver should represent no more than <strong>5% of the total diet</strong> — approximately 1 oz per 20 lbs of body weight, fed 1–2 times per week maximum. Within that guideline, it's an exceptional food. Exceed it consistently over months, and hypervitaminosis A becomes a real concern.</p>
+<p><em>Feeding guideline: No more than 5% of total diet, 1–2x per week. Chicken, beef, duck, and lamb liver are all appropriate. Lamb liver is milder and gentler for sensitive dogs new to organ meats.</em></p>
+<hr/>
+<h2>Kidney — Feeds the Kidneys</h2>
+<h3>The Nutritional Case</h3>
+<p>Kidney is one of the highest whole-food sources of <strong>selenium</strong> — a trace mineral essential for glutathione peroxidase activity, which is one of the kidney's primary antioxidant defenses against oxidative tubular damage. Selenium deficiency accelerates renal dysfunction in multiple animal models, and most processed dog foods provide selenium in poorly bioavailable inorganic forms.</p>
+<p>Kidney also provides extraordinary concentrations of <strong>vitamin B12</strong> — often higher than liver on a gram-for-gram basis — plus riboflavin and zinc, all essential for kidney cell function and DNA repair. It provides kidney-specific structural proteins, phospholipids, and enzymes in their native, bioavailable forms.</p>
+<p>The concept of glandular organ meats providing tissue-specific bioactive compounds has a growing evidence base. Organ meats contain organ-specific growth factors, structural proteins, and enzymatic cofactors in concentrations that directly reflect the metabolic activity of the source tissue. This is the mechanistic underpinning of the TCVM "like supports like" principle — it's not philosophical, it's structural chemistry.</p>
+<p>In TCVM, kidney is the foundational organ of <em>Jing</em> — the constitutional energy a dog is born with and slowly expends throughout life. Kidney tonic foods are given to aging dogs, dogs with bone and joint issues (the Kidney governs bone in TCVM), and dogs with reproductive or hormonal imbalances. Kidney deficiency is considered the root of most aging-related decline.</p>
+<p><em>Feeding guideline: Part of the secreting organ portion of the diet (10% total organs combined). Beef kidney is most commonly used. Lamb kidney is a gentler option for dogs new to organ meats. Can be fed raw or very lightly cooked.</em></p>
+<hr/>
+<h2>Lung — Feeds the Respiratory System and Skin</h2>
+<h3>The Nutritional Case</h3>
+<p>Lung tissue is rich in <strong>elastin</strong> — the elastic structural protein that allows lung tissue to expand and recoil with each breath. Elastin is also the primary structural protein in skin. Dogs fed lung regularly often develop noticeably improved skin elasticity and coat texture — a connection that integrative vets have observed clinically and that the TCVM lung-skin relationship anticipates.</p>
+<p>Lung is also one of the richest food sources of <strong>Diamine Oxidase (DAO)</strong> — the enzyme responsible for breaking down histamine in the gastrointestinal tract. Dogs with chronic itching, hives, ear infections, or recurrent allergic skin reactions may have impaired histamine degradation. Feeding DAO-rich foods directly supports this metabolic pathway from the inside.</p>
+<p>In TCVM, Lung governs the <em>Wei Qi</em> — the defensive energy that circulates at the body's surface, roughly equivalent to mucosal and surface immune function. Dogs with chronic allergies, skin conditions, respiratory issues, or poor coat quality are considered to have Lung Qi deficiency in TCVM, and lung-based foods are a core tonic.</p>
+<p><em>Feeding guideline: 5% of total diet. Freeze-dried lung is the most accessible form — widely available as single-ingredient treats and ideal for use as training rewards for allergy-prone dogs. Beef, bison, and lamb lung are all appropriate.</em></p>
+<hr/>
+<h2>Brain — Feeds the Nervous System</h2>
+<h3>The Nutritional Case</h3>
+<p>Brain tissue is approximately 60% fat by dry weight — and a substantial portion of that fat is <strong>DHA (docosahexaenoic acid)</strong>, the omega-3 fatty acid that is the primary structural component of neuronal cell membranes. The brain is literally built from DHA, and it is the most DHA-dense tissue in the body. Feeding brain provides DHA in its most bioavailable, phospholipid-bound form — the exact molecular form found in nervous system tissue.</p>
+<p>Brain also provides <strong>phosphatidylserine</strong> — a phospholipid that supports neuronal membrane fluidity, memory consolidation, and synaptic signaling. Phosphatidylserine supplementation has been studied in dogs with cognitive dysfunction syndrome (canine dementia) with documented improvements in cognitive test performance and behavioral markers of mental acuity.</p>
+<p>In TCVM, the brain falls under the Kidney organ system — the Kidney is said to govern marrow and the brain. Brain-based foods are indicated for senior dogs showing cognitive decline, dogs with neurological issues, and puppies during peak brain development windows.</p>
+<p><em>Feeding guideline: Small amounts, 1–2x per week. Lamb and beef brain are most common. Best fed raw or very lightly warmed. Note: brain is high in cholesterol and should be used as a targeted supplement food, not a primary protein source.</em></p>
+<hr/>
+<h2>TCVM Thermal Energetics: Matching the Food to the Dog</h2>
+<p>Beyond "like supports like," TCVM assigns each food a thermal nature — not temperature, but metabolic effect. For dogs in practice:</p>
+<ul>
+<li><strong>Warming foods</strong> (venison, lamb, chicken, beef, ginger, oats) — indicated for cold-intolerant dogs, dogs with low energy, slow metabolism, pale gums, or chronic stiff joints in cold weather</li>
+<li><strong>Cooling foods</strong> (duck, rabbit, fish, turkey, pork) — indicated for dogs with chronic inflammation, hot spots, allergies, panting, restlessness, or a tendency to seek cool surfaces</li>
+<li><strong>Neutral foods</strong> (beef, pork, eggs, most vegetables) — appropriate for most dogs regardless of constitution</li>
+</ul>
+<p>A dog with chronic inflammatory conditions — allergies, recurring hot spots, arthritis flares — typically does better on cooling proteins like duck, rabbit, or fish. A dog who is always cold, has low energy, or has difficulty warming up benefits from warming proteins. This framework is applied daily in integrative veterinary practices alongside conventional care and has clinical utility even if the mechanism looks different from Western physiology.</p>
+<hr/>
+<h2>Practical Guidelines: The 10% Rule</h2>
+<p>Most raw feeding frameworks and holistic vets use the following structure for organ meats:</p>
+<ul>
+<li><strong>Total secreting organs: 10% of the diet</strong> (liver, kidney, spleen, pancreas combined)</li>
+<li><strong>Liver specifically: no more than 5%</strong> — vitamin A toxicity risk above this</li>
+<li><strong>Heart: classified as muscle meat, not organ</strong> — can be 5–10% of the muscle meat portion without contributing to the organ cap</li>
+<li><strong>Lung and trachea: counted as "other" — use freely within the 10% organ allocation</strong></li>
+</ul>
+<p>If you are not feeding a complete raw diet, adding organ meats as toppers meaningfully upgrades any meal. Even a tablespoon of raw chicken liver twice a week — over an otherwise kibble-based diet — provides nutrient density that kibble simply cannot replicate. The key is to stay within the limits, rotate the types, and introduce slowly for dogs with sensitive digestion.</p>
+<p>When buying commercial food, look for specific organ names in the ingredient list. <em>"Chicken by-products"</em> or <em>"meat by-products"</em> are rendered, heat-processed mixes — the bioavailable enzymes, structural proteins, and heat-sensitive vitamins that make fresh organ meats valuable are destroyed in the rendering process. They are not equivalent to fresh organ meat.</p>
+<hr/>
+<p><em>Want to know if your dog's food lists real organ meats or processed by-products? Scan any pet food bag instantly with <strong>PawGrade</strong> — free on the App Store — and see exactly what's in every ingredient.</em></p>
+<hr/>
+<p><em>This article is for educational purposes only and does not constitute veterinary advice. Consult a holistic or integrative veterinarian before making major dietary changes, especially for dogs with existing health conditions or organ disease.</em></p>
+    `
+  },
+  {
+    slug: 'turmeric-curcumin-dogs',
+    title: 'Turmeric and Curcumin for Dogs: Anti-Inflammatory, Liver-Protective, and Backed by Real Studies',
+    description: 'Curcumin is one of the most studied natural compounds in veterinary medicine. Clinical trials show documented effects on liver disease, joint inflammation, lipoma formation, and cancer. Here\'s what the evidence actually shows.',
+    tag: 'Supplements',
+    emoji: '🌿',
+    date: '2025',
+    content: `
+<p>Curcumin — the active polyphenol in turmeric — is one of the most studied natural compounds in both human and veterinary medicine. And unlike most nutraceuticals that exist on a foundation of in vitro lab-dish studies with no clinical follow-through, curcumin has veterinary research that includes direct animal feeding trials, a 2025 head-to-head comparison against a pharmaceutical liver drug, and mechanisms documented down to the molecular pathway level.</p>
+<p>The challenge isn't whether it works. It's getting enough of it absorbed to make a difference — which almost no dog owner is doing correctly.</p>
+<hr/>
+<h2>How Curcumin Works: The Mechanisms</h2>
+<p>Curcumin operates through several distinct anti-inflammatory and cytoprotective pathways simultaneously — which is why it shows up in research covering such a wide range of conditions:</p>
+<ul>
+<li><strong>NF-κB inhibition</strong> — NF-κB is the primary "master switch" for chronic inflammation. Curcumin directly suppresses this pathway, blocking the downstream cascade of inflammatory cytokines (IL-1β, IL-6, TNF-α) that drive arthritis, allergies, skin disease, and organ inflammation</li>
+<li><strong>Nrf2 pathway activation</strong> — upregulates the body's own antioxidant enzyme systems including glutathione peroxidase and superoxide dismutase, providing systemic protection against oxidative stress</li>
+<li><strong>AMPK activation</strong> — the same cellular energy sensor activated by exercise and caloric restriction. AMPK activation reduces insulin resistance, promotes healthy fat metabolism, and inhibits abnormal cell proliferation</li>
+<li><strong>Inhibition of adipocyte differentiation</strong> — curcumin directly suppresses the transcription factors (PPARγ and C/EBPα) that drive stem cells to become fat cells — directly relevant to lipoma development and growth <a href="https://pubmed.ncbi.nlm.nih.gov/19297423/" target="_blank" rel="noopener">[Study]</a></li>
+<li><strong>Phase II enzyme induction</strong> — curcumin upregulates the liver's detoxification pathways (CYP enzymes, glucuronidation, sulfation), supporting the clearance of drug metabolites, environmental toxins, and inflammatory byproducts</li>
+</ul>
+<hr/>
+<h2>The Bioavailability Problem — and How to Solve It</h2>
+<p>Standard turmeric powder has extremely poor bioavailability. Plain curcumin is barely absorbed from the gut — the majority passes through without ever entering systemic circulation. This is why most dogs on basic turmeric powder show minimal benefit.</p>
+<p>The solutions:</p>
+<h3>1. Black Pepper (Piperine) — Non-Negotiable</h3>
+<p>A landmark pharmacokinetic study found that combining curcumin with piperine (the active compound in black pepper) at a modest dose increased serum curcumin levels by <strong>2,000%</strong> in both humans and animals. <a href="https://pubmed.ncbi.nlm.nih.gov/9619120/" target="_blank" rel="noopener">[Shoba et al. 1998 — Planta Medica]</a> Piperine works by inhibiting intestinal and hepatic first-pass metabolism — the process that normally degrades curcumin before it reaches circulation. Always use turmeric with black pepper. Without it, you're largely wasting the supplement.</p>
+<h3>2. Fat — Required for Absorption</h3>
+<p>Curcumin is fat-soluble. Mixing it with a healthy fat — coconut oil, olive oil, or a fat-containing meal — significantly increases intestinal absorption by keeping the curcumin in a solubilized, absorbable form long enough to cross the gut wall.</p>
+<h3>3. Phytosome Form — Premium Option</h3>
+<p>The highest-bioavailability commercial form is phytosome-based curcumin, where curcumin is bound to phosphatidylcholine. This form achieves serum levels far higher than standard curcumin extract — and it's what's used in the veterinary clinical trials with documented clinical outcomes. The silybin-phosphatidylcholine complex used in the liver study cited below is built on the same technology platform. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9774582/" target="_blank" rel="noopener">[Study]</a></p>
+<hr/>
+<h2>Liver Disease: Outperforming a Pharmaceutical Drug</h2>
+<p>This is the most striking study in veterinary curcumin research. A 2025 controlled clinical trial in Egypt compared a combination of turmeric and pomegranate peel extract against Silybin-Phosphatidylcholine (a commercial hepatoprotective pharmaceutical) in 30 dogs with corticosteroid-induced hepatopathy. The herbal group normalized liver enzymes (ALT, AST, ALP) <strong>faster than the pharmaceutical group</strong> and restored normal hepatic architecture on ultrasound imaging sooner. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12016885/" target="_blank" rel="noopener">[Study — 2025]</a></p>
+<p>This doesn't mean curcumin always outperforms pharmaceutical hepatoprotectants — this was one trial in a specific model. What it does confirm is that curcumin exerts measurable, clinically significant liver-protective effects in dogs — not just in a lab dish, but in living dogs with documented liver disease.</p>
+<p>Curcumin's liver mechanisms include direct NF-κB suppression in hepatocytes, Nrf2 activation (which upregulates the liver's own antioxidant defenses), and scavenging of the reactive oxygen species that cause hepatocellular damage. For dogs on long-term NSAIDs, phenobarbital, azole antifungals, or other hepatotoxic medications, these mechanisms are directly relevant.</p>
+<hr/>
+<h2>Inflammation and Joint Disease</h2>
+<p>Several studies in dogs with osteoarthritis show curcumin-based supplementation reduces biomarkers of joint inflammation and improves functional mobility. Blinded trials have documented improvements in both owner-reported pain scores and objective gait analysis measures in dogs with chronic joint disease.</p>
+<p>The mechanism — NF-κB inhibition and prostaglandin E2 suppression — targets essentially the same inflammatory pathway as NSAIDs like carprofen and meloxicam, but without the hepatotoxic and gastric side effects associated with long-term NSAID use. This doesn't mean curcumin replaces NSAIDs in acute or severe pain — it means curcumin is a legitimate long-term anti-inflammatory tool for the chronic, low-grade joint inflammation that affects the majority of middle-aged and senior dogs.</p>
+<p>For dogs already on NSAIDs, curcumin can work synergistically — potentially allowing dose reduction over time — but this should always be discussed with your veterinarian.</p>
+<hr/>
+<h2>Lipomas: Blocking Fat Cell Growth at the Source</h2>
+<p>Curcumin directly inhibits <strong>adipogenesis</strong> — the process by which fat stem cells differentiate into mature fat cells — at the transcriptional level. In documented studies, curcumin suppressed lipid accumulation and inhibited PPARγ and C/EBPα, the key regulators of fat cell formation. <a href="https://pubmed.ncbi.nlm.nih.gov/19297423/" target="_blank" rel="noopener">[Study]</a></p>
+<p>It also suppresses <strong>angiogenesis</strong> — the formation of new blood vessels that supply growing fat deposits. A lipoma that cannot recruit a blood supply cannot expand.</p>
+<p>Combined with fish oil (which fixes the omega-6/omega-3 ratio driving inflammation) and medicinal mushrooms like reishi and maitake (which address insulin resistance), curcumin completes the core nutritional strategy for lipoma management in integrative veterinary practice.</p>
+<hr/>
+<h2>Cancer — Complementary Support</h2>
+<p>Curcumin has been studied against multiple canine cancer cell lines. It induces apoptosis (programmed cell death) in osteosarcoma, mast cell tumor, and lymphoma cell lines and inhibits the STAT3 and NF-κB signaling pathways that cancer cells depend on for survival and proliferation. Several veterinary oncologists incorporate curcumin into complementary cancer protocols precisely because it targets these survival pathways with a safety profile that doesn't interfere with most conventional therapies.</p>
+<p>It's important to be clear: curcumin is not a cancer treatment. It does not replace surgery, chemotherapy, or radiation. But the evidence for its role as an adjunctive agent — reducing inflammatory signaling, supporting immune surveillance, and potentially sensitizing tumor cells to conventional therapy — is substantial enough that many veterinary oncologists consider it worth including.</p>
+<hr/>
+<h2>Golden Paste: The Most Practical Delivery Method</h2>
+<p>The integrative vet and raw feeding community has converged on a preparation called <strong>Golden Paste</strong> — a cooked mixture of turmeric, water, black pepper, and oil that maximizes bioavailability and makes supplementation easy to add to any meal. Cooking the turmeric briefly actually improves curcumin's bioavailability compared to raw powder.</p>
+<p><strong>Standard Golden Paste Recipe:</strong></p>
+<ul>
+<li>½ cup turmeric powder</li>
+<li>1 cup filtered water (plus more as needed during cooking)</li>
+<li>1½ tsp freshly ground black pepper</li>
+<li>¼ cup coconut oil or cold-pressed olive oil</li>
+</ul>
+<p>Combine turmeric and water in a saucepan over medium-low heat, stirring constantly until a thick paste forms (5–10 minutes). Add pepper and oil and stir until incorporated. Cool completely before storing. Keeps in the refrigerator up to 2 weeks or frozen in ice cube trays for 3+ months.</p>
+<p><em>Starting dose: ⅛ tsp for small dogs (under 20 lbs); ¼ tsp for medium dogs (20–50 lbs); ½ tsp for large dogs (50–80 lbs); 1 tsp for giant breeds (80+ lbs). Always start at ¼ of the target dose and increase over 2–3 weeks — turmeric is a potent GI motility agent and causes loose stools if increased too quickly.</em></p>
+<hr/>
+<h2>Drug Interactions to Know</h2>
+<p>Curcumin is generally very safe at food-level doses, but a few clinically relevant interactions exist:</p>
+<ul>
+<li><strong>Anticoagulants</strong> — curcumin has mild platelet-inhibiting properties. Use with caution alongside warfarin or other prescribed anticoagulants; discuss with your vet</li>
+<li><strong>Chemotherapy</strong> — curcumin affects CYP enzyme activity and can alter the pharmacokinetics of certain chemotherapy drugs. Always discuss with your oncologist before adding curcumin during active cancer treatment</li>
+<li><strong>NSAIDs</strong> — curcumin and NSAIDs both inhibit prostaglandin synthesis. The combination can increase GI effects in sensitive dogs; monitor stools and reduce NSAID dose as directed by your vet if you're transitioning</li>
+<li><strong>Diabetes medications</strong> — curcumin has modest blood glucose-lowering effects. Monitor blood sugar more closely in diabetic dogs starting supplementation</li>
+<li><strong>Iron absorption</strong> — curcumin chelates iron at high doses; if your dog is anemic or iron-deficient, time supplementation away from iron-containing meals</li>
+</ul>
+<hr/>
+<h2>Signs Your Dog May Benefit</h2>
+<ul>
+<li>Chronic joint stiffness, limping, reluctance to rise after rest</li>
+<li>Lipomas that have appeared or are growing</li>
+<li>Elevated liver enzymes (ALT, AST, ALP) on routine bloodwork</li>
+<li>Chronic skin inflammation, hot spots, or atopic dermatitis</li>
+<li>Dogs on long-term NSAIDs, phenobarbital, or other hepatotoxic medications</li>
+<li>Senior dogs with any chronic inflammatory condition</li>
+<li>Dogs post-cancer treatment looking for anti-inflammatory maintenance support</li>
+</ul>
+<hr/>
+<p><em>Chronic inflammation starts with what your dog eats every single day. Scan any pet food bag instantly with <strong>PawGrade</strong> — free on the App Store — and see whether the ingredients are working against inflammation or driving it.</em></p>
+<hr/>
+<p><em>This article is for educational purposes only and does not constitute veterinary advice. Consult your veterinarian before starting any supplement protocol, especially if your dog has active cancer, diabetes, or is on long-term medication.</em></p>
+    `
   }
 ]
 
