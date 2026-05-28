@@ -3984,7 +3984,7 @@ export default function App() {
   const loadDemo = async () => {
     const demoName = "Purina Pro Plan Adult Chicken & Rice";
     const demoRaw =
-      "Chicken, Rice, Whole Grain Wheat, Corn Gluten Meal, Poultry By-Product Meal, Beef Fat Preserved with Mixed-Tocopherols, Egg Product, Brewers Dried Yeast, Fish Oil, Calcium Carbonate, Potassium Chloride, Salt, Zinc Sulfate, Vitamin E Supplement, Ferrous Sulfate, Niacin, Copper Sulfate, Sodium Selenite, Riboflavin Supplement, Thiamine Mononitrate, Vitamin A Supplement, Pyridoxine Hydrochloride, Manganese Sulfate, Menadione Sodium Bisulfite Complex, Vitamin B-12 Supplement, Vitamin D-3 Supplement";
+      "Chicken, Rice, Whole Grain Wheat, Poultry By-Product Meal, Whole Grain Corn, Soybean Meal, Beef Fat Preserved With Mixed-Tocopherols, Corn Protein Meal, Dried Egg Product, Natural Flavor, Dried Beet Pulp, Glycerin, Mono And Dicalcium Phosphate, Wheat Bran, Calcium Carbonate, Fish Meal, Salt, Soybean Oil, Potassium Chloride, Zinc Proteinate, Ferrous Sulfate, Manganese Proteinate, Copper Proteinate, Calcium Iodate, Sodium Selenite, Vitamin E Supplement, Niacin, Thiamine Mononitrate, Calcium Pantothenate, Vitamin A Supplement, Riboflavin Supplement, Vitamin B-12 Supplement, Pyridoxine Hydrochloride, Folic Acid, Menadione Sodium Bisulfite Complex, Biotin, Vitamin D-3 Supplement, Choline Chloride, Dried Bacillus Coagulans Fermentation Product, L-Ascorbyl-2-Polyphosphate, L-Lysine Monohydrochloride, Garlic Oil";
     const demoList = demoRaw
       .split(",")
       .map((i) => i.trim())
