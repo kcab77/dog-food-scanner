@@ -136,7 +136,7 @@ const HARMFUL_INGREDIENTS: {
   },
   {
     term: "menadione",
-    severity: "toxic",
+    severity: "severe",
     reason:
       "Menadione (synthetic vitamin K3) generates reactive oxygen species during metabolism, depleting cellular glutathione — the body's primary antioxidant defense. Studies in the Journal of Nutrition found menadione causes oxidative damage to red blood cells (Heinz body hemolytic anemia) and liver cell membranes. The National Animal Supplement Council formally recommends against menadione in animal products because of this documented toxicity mechanism. Natural K1 from plants and K2 from animal sources are safe alternatives.",
   },
@@ -512,7 +512,6 @@ const SEVERITY_COLORS: Record<string, string> = {
 };
 
 const TOXIC_ADDITIVES = [
-  "menadione",
   "copper sulfate",
   "sodium selenite",
   "zinc oxide",
@@ -939,7 +938,7 @@ const TREAT_HARMFUL: {
   },
   {
     term: "menadione",
-    severity: "toxic",
+    severity: "severe",
     reason:
       "Synthetic vitamin K3 that depletes glutathione, damaging red blood cells and liver cells. Unnecessary in treats.",
   },
