@@ -518,46 +518,65 @@ const TOXIC_ADDITIVES = [
   "zinc oxide",
   "dl-methionine",
 ];
-const MEAT_MEALS = [
+// Named meals: species identified — acceptable concentrated protein, no penalty
+const NAMED_MEALS = [
   "chicken meal",
   "beef meal",
   "lamb meal",
   "salmon meal",
   "turkey meal",
-  "fish meal",
   "pork meal",
   "duck meal",
   "venison meal",
-  "meat meal",
-  "poultry meal",
   "herring meal",
   "anchovy meal",
   "whitefish meal",
+  "bison meal",
+  "rabbit meal",
 ];
-// Only includes synthetic vitamins/minerals with genuine concern — safe forms (B1, B2, B3, B5, B9, B7, choline, taurine, potassium chloride, ferrous sulfate, manganese) removed so they don't get unfairly penalized
+// Generic meals: no species ID — sourcing unknown, penalized
+const GENERIC_MEALS = [
+  "meat meal",
+  "poultry meal",
+  "fish meal",
+  "animal meal",
+];
+// Combined for display/tag purposes
+const MEAT_MEALS = [...NAMED_MEALS, ...GENERIC_MEALS];
+// All synthetic vitamins/minerals — used for count-based load penalty and "no synthetic vitamins" bonus
+// Safe forms (B1, B2, B3, B5, B9, B7, choline, taurine, potassium chloride, ferrous sulfate, manganese) excluded
 const ADDED_VITAMINS = [
-  // Fat-soluble vitamins (accumulate in body — risk in excess)
-  "vitamin a supplement",
-  "retinyl palmitate",
-  "retinyl acetate",
-  "vitamin d supplement",
-  "vitamin d3 supplement",
-  "cholecalciferol",
-  // Synthetic E (less bioavailable than natural d-alpha)
-  "dl-alpha tocopherol",
-  // B6 — safe at normal levels, toxic in chronic excess
-  "pyridoxine hydrochloride",
-  // Inferior B12 form
-  "cyanocobalamin",
-  // Minerals — poor forms or narrow safety margin
-  "zinc sulfate",
-  "zinc oxide",
-  "copper sulfate",
-  "sodium selenite",
-  "ferric oxide",
-  // Already flagged in HARMFUL_INGREDIENTS but count for vitamin load scoring
-  "menadione",
-  "dl-methionine",
+  "vitamin a supplement", "retinyl palmitate", "retinyl acetate",
+  "vitamin d supplement", "vitamin d3 supplement", "cholecalciferol",
+  "dl-alpha tocopherol", "pyridoxine hydrochloride", "cyanocobalamin",
+  "zinc sulfate", "zinc oxide", "copper sulfate", "sodium selenite", "sodium selenate",
+  "ferric oxide", "magnesium oxide", "menadione", "dl-methionine",
+];
+
+// Per-ingredient tiered penalties for bad/toxic synthetic vitamins and minerals
+// These stack on top of HARMFUL_INGREDIENTS penalties for the worst offenders — intentional
+const VITAMIN_MINERAL_PENALTIES: { term: string; penalty: number; label: string }[] = [
+  // Avoid — worst, liver toxin banned in human supplements
+  { term: "menadione", penalty: 10, label: "Menadione (K3) — liver toxin, banned in human supplements" },
+  // Danger — FDA recall history, extremely narrow safe range
+  { term: "cholecalciferol", penalty: 8, label: "Cholecalciferol (D3) — FDA recall risk, lethal in excess" },
+  { term: "vitamin d3 supplement", penalty: 8, label: "Synthetic Vitamin D3 — FDA recall risk" },
+  { term: "vitamin d supplement", penalty: 6, label: "Synthetic Vitamin D — narrow safe range" },
+  // Severe poor forms — inorganic, oxidative damage, liver accumulation
+  { term: "sodium selenite", penalty: 7, label: "Sodium selenite — inorganic selenium, oxidative kidney damage" },
+  { term: "sodium selenate", penalty: 7, label: "Sodium selenate — inorganic selenium, oxidative kidney damage" },
+  { term: "copper sulfate", penalty: 7, label: "Copper sulfate — bypasses liver regulation, accumulates" },
+  // Moderate poor forms — poorly absorbed or cosmetic only
+  { term: "zinc oxide", penalty: 4, label: "Zinc oxide — poorly absorbed form" },
+  { term: "ferric oxide", penalty: 4, label: "Ferric oxide — cosmetic colorant, zero nutritional value" },
+  { term: "zinc sulfate", penalty: 3, label: "Zinc sulfate — poor bioavailability vs proteinate forms" },
+  { term: "magnesium oxide", penalty: 3, label: "Magnesium oxide — poorly absorbed, causes GI upset" },
+  // Mild — inferior forms, some concern at chronic levels
+  { term: "retinyl palmitate", penalty: 2, label: "Synthetic Vitamin A — fat-soluble, accumulates in liver" },
+  { term: "retinyl acetate", penalty: 2, label: "Synthetic Vitamin A — fat-soluble, accumulates in liver" },
+  { term: "pyridoxine hydrochloride", penalty: 2, label: "Synthetic B6 — toxic in chronic excess" },
+  { term: "dl-alpha tocopherol", penalty: 1, label: "Inferior synthetic Vitamin E (dl-form)" },
+  { term: "cyanocobalamin", penalty: 1, label: "Inferior B12 form — cyanocobalamin vs methylcobalamin" },
 ];
 const LENTIL_LEGUME = [
   "lentils",
@@ -607,6 +626,59 @@ const SUPERFOODS = [
   "broccoli",
   "dandelion",
   "parsley",
+  "sweet potato",
+  "pumpkin",
+  "carrot",
+  "apple",
+  "cranberr",
+  "zucchini",
+  "kale",
+  "beet",
+  "ginger",
+  "bone broth",
+];
+
+// Whole food fruits & vegetables — +2 each, cap +10
+const WHOLE_FOOD_PRODUCE = [
+  "blueberr",
+  "sweet potato",
+  "pumpkin",
+  "carrot",
+  "apple",
+  "spinach",
+  "broccoli",
+  "cranberr",
+  "parsley",
+  "dandelion",
+  "zucchini",
+  "squash",
+  "beet",
+  "kale",
+  "cucumber",
+  "celery",
+  "asparagus",
+];
+
+// Anti-inflammatory & functional whole foods — +3 each, cap +12
+const ANTI_INFLAMMATORY_FOODS = [
+  "turmeric",
+  "fish oil",
+  "salmon oil",
+  "krill oil",
+  "krill",
+  "algal oil",
+  "algae oil",
+  "flaxseed",
+  "flax seed",
+  "chia seed",
+  "chia",
+  "coconut oil",
+  "kelp",
+  "ginger",
+  "bone broth",
+  "green tripe",
+  "astaxanthin",
+  "boswellia",
 ];
 const ORGAN_COVERAGE = [
   {
@@ -1449,20 +1521,23 @@ function computeOmegaRating(
     if (!isNaN(ratio)) {
       if (ratio <= 5)
         return {
-          label: "🐟 Excellent omega ratio (" + actualRatio + ")",
-          bonus: 20,
+          label: `🐟 Excellent omega ratio (${actualRatio}) — anti-inflammatory`,
+          bonus: 10,
         };
-      if (ratio <= 10)
+      if (ratio <= 8)
         return {
-          label: "🐟 Good omega ratio (" + actualRatio + ")",
-          bonus: 15,
-        };
-      if (ratio <= 15)
-        return {
-          label: "⚠️ Moderate omega ratio (" + actualRatio + ")",
+          label: `🐟 Good omega ratio (${actualRatio})`,
           bonus: 5,
         };
-      return { label: "🔴 Poor omega ratio (" + actualRatio + ")", bonus: -8 };
+      if (ratio < 15)
+        return {
+          label: `🔴 Poor omega ratio (${actualRatio}) — pro-inflammatory`,
+          bonus: -10,
+        };
+      return {
+        label: `🔴 Very poor omega ratio (${actualRatio}) — highly pro-inflammatory`,
+        bonus: -15,
+      };
     }
   }
   // Ingredient-based estimation — factor in processing method for accuracy
@@ -1486,24 +1561,17 @@ function computeOmegaRating(
   if (isKibbleOrBaked) {
     if (hasDedicatedOil && highOmega6Count === 0)
       return {
-        label:
-          "⚠️ Moderate omega ratio (est. ~10:1 — kibble fats offset fish oil)",
-        bonus: 5,
-      };
-    if (hasAnyOmega3 && highOmega6Count === 0)
-      return {
-        label: "⚠️ Moderate omega ratio (est. ~12:1 — typical for kibble)",
-        bonus: 3,
+        label: "🔴 Poor omega ratio (est. ~10:1 — kibble fats offset fish oil)",
+        bonus: -10,
       };
     if (!hasAnyOmega3)
       return {
-        label:
-          "🔴 Poor omega ratio (est. 15:1–30:1 — typical kibble without omega-3)",
-        bonus: -8,
+        label: "🔴 Very poor omega ratio (est. 15:1–30:1 — kibble without omega-3)",
+        bonus: -15,
       };
     return {
-      label: "⚠️ Moderate omega ratio (estimated for kibble)",
-      bonus: 3,
+      label: "🔴 Poor omega ratio (est. ~12:1 — typical for kibble)",
+      bonus: -10,
     };
   }
 
@@ -1511,22 +1579,21 @@ function computeOmegaRating(
   if (isRawOrFreezeDried) {
     if (hasDedicatedOil && highOmega6Count === 0)
       return {
-        label:
-          "🐟 Excellent omega ratio (est. ≤5:1 — raw/freeze-dried with fish oil)",
-        bonus: 20,
+        label: "🐟 Excellent omega ratio (est. ≤5:1 — raw/freeze-dried with fish oil) — anti-inflammatory",
+        bonus: 10,
       };
     if (hasDedicatedOil && highOmega6Count <= 1)
       return {
-        label: "🐟 Good omega ratio (est. ~5:1 — raw/freeze-dried)",
-        bonus: 15,
+        label: "🐟 Good omega ratio (est. ~5–8:1 — raw/freeze-dried)",
+        bonus: 5,
       };
     if (hasAnyOmega3 && highOmega6Count === 0)
       return {
-        label: "🐟 Good omega ratio (est. ~5:1 — raw with omega-3 sources)",
-        bonus: 12,
+        label: "🐟 Good omega ratio (est. ~5–8:1 — raw with omega-3 sources)",
+        bonus: 5,
       };
     if (hasAnyOmega3)
-      return { label: "⚠️ Moderate omega ratio (estimated)", bonus: 5 };
+      return { label: "⚠️ Moderate omega ratio (estimated)", bonus: 0 };
     return {
       label: "❓ Omega ratio unknown — scan GA panel for exact numbers",
       bonus: 0,
@@ -1536,17 +1603,17 @@ function computeOmegaRating(
   // Gently cooked / unknown — moderate estimation
   if (hasDedicatedOil && highOmega6Count === 0)
     return {
-      label: "🐟 Good omega ratio (fish oil present, no omega-6 sources)",
-      bonus: 12,
+      label: "🐟 Good omega ratio (est. ~5–8:1 — fish oil, no omega-6 sources)",
+      bonus: 5,
     };
   if (hasDedicatedOil && highOmega6Count <= 1)
-    return { label: "⚠️ Moderate omega ratio (estimated)", bonus: 5 };
+    return { label: "⚠️ Moderate omega ratio (estimated)", bonus: 0 };
   if (hasAnyOmega3 && highOmega6Count === 0)
-    return { label: "⚠️ Moderate omega ratio (estimated)", bonus: 5 };
+    return { label: "⚠️ Moderate omega ratio (estimated)", bonus: 0 };
   if (!hasAnyOmega3 && highOmega6Count >= 1)
     return {
       label: "🔴 Poor omega ratio (high omega-6, no omega-3)",
-      bonus: -8,
+      bonus: -10,
     };
   return {
     label: "❓ Omega ratio unknown — scan GA panel for exact numbers",
@@ -3004,7 +3071,7 @@ export default function App() {
       TOXIC_ADDITIVES.some((t) => ing.toLowerCase().includes(t)),
     );
     const foundMeals = ingredientList.filter((ing) =>
-      MEAT_MEALS.some((m) => ing.toLowerCase().includes(m)),
+      GENERIC_MEALS.some((m) => ing.toLowerCase().includes(m)),
     );
     const foundVitamins = ingredientList.filter((ing) =>
       ADDED_VITAMINS.some((v) => ing.toLowerCase().includes(v)),
@@ -3042,8 +3109,14 @@ export default function App() {
           ing.toLowerCase().includes(o) && !ing.toLowerCase().includes("meal"),
       ),
     );
-    const foundSuperfoods = ingredientList.filter((ing) =>
-      SUPERFOODS.some((s) => ing.toLowerCase().includes(s)),
+    const foundProduce = ingredientList.filter((ing) =>
+      WHOLE_FOOD_PRODUCE.some((p) => ing.toLowerCase().includes(p)),
+    );
+    const foundAntiInflammatory = ingredientList.filter((ing) =>
+      ANTI_INFLAMMATORY_FOODS.some((a) => ing.toLowerCase().includes(a)),
+    );
+    const foundLegumesTop3 = ingredientList.slice(0, 3).filter((ing) =>
+      LENTIL_LEGUME.some((l) => ing.toLowerCase().includes(l)),
     );
     const omegaRatingResult = computeOmegaRating(
       foundOmega3,
@@ -3053,18 +3126,19 @@ export default function App() {
     );
     const noProbiotics = foundProbiotics.length === 0;
     const vitCount = foundVitamins.length;
-    let vitPenalty = 0;
+    let vitLoadPenalty = 0;
     let vitLevel = "";
-    if (vitCount >= 1 && vitCount <= 5) {
-      vitPenalty = 5;
-      vitLevel = "Minor";
-    } else if (vitCount >= 6 && vitCount <= 10) {
-      vitPenalty = 15;
-      vitLevel = "Moderate";
-    } else if (vitCount > 10) {
-      vitPenalty = 30;
+    if (vitCount > 15) {
+      vitLoadPenalty = 12;
       vitLevel = "Severe";
+    } else if (vitCount > 10) {
+      vitLoadPenalty = 8;
+      vitLevel = "High";
+    } else if (vitCount > 7) {
+      vitLoadPenalty = 5;
+      vitLevel = "Moderate";
     }
+    const vitPenalty = vitLoadPenalty;
     const fullText = (name + " " + rawIngredients).toLowerCase();
     const hasAAFCOTrial = AAFCO_TRIAL_KEYWORDS.some((k) =>
       fullText.includes(k),
@@ -3118,12 +3192,19 @@ export default function App() {
       breakdown.push({ label: `${h.name} (${h.severity})`, value: -p });
     }
     total -= processingResult.penalty;
-    if (vitPenalty > 0) {
-      total -= vitPenalty;
+    if (vitLoadPenalty > 0) {
+      total -= vitLoadPenalty;
       breakdown.push({
-        label: `Synthetic vitamins (${vitLevel})`,
-        value: -vitPenalty,
+        label: `High synthetic vitamin/mineral load (${vitCount} added) — over-fortified formula`,
+        value: -vitLoadPenalty,
       });
+    }
+    for (const vmp of VITAMIN_MINERAL_PENALTIES) {
+      const hit = ingredientList.find((ing) => ing.toLowerCase().includes(vmp.term));
+      if (hit) {
+        total -= vmp.penalty;
+        breakdown.push({ label: vmp.label, value: -vmp.penalty });
+      }
     }
     if (foundToxicAdditives.length > 0) {
       const p = foundToxicAdditives.length * 10;
@@ -3134,38 +3215,56 @@ export default function App() {
       });
     }
     if (foundMeals.length > 0) {
-      const p = foundMeals.length * 6;
+      const p = foundMeals.length * 7;
       total -= p;
-      breakdown.push({ label: `Meat meals (${foundMeals.length})`, value: -p });
+      breakdown.push({ label: `Unidentified generic meal (${foundMeals.length}) — sourcing unknown`, value: -p });
     }
-    if (foundLegumesTop5.length > 0) {
-      const p = foundLegumesTop5.length * 12;
+    if (foundLegumesTop3.length > 0) {
+      const p = foundLegumesTop3.length * 15;
       total -= p;
-      breakdown.push({ label: `Legumes in top 5 ingredients`, value: -p });
+      breakdown.push({ label: `Legumes in top 3 ingredients (${foundLegumesTop3.length}) — DCM link`, value: -p });
     }
-    // Carb scoring: estimate % based on ingredient count and position
-    if (foundCarbs.length >= 1) {
+    const legumesTop5NotTop3 = foundLegumesTop5.length - foundLegumesTop3.length;
+    if (legumesTop5NotTop3 > 0) {
+      const p = legumesTop5NotTop3 * 7;
+      total -= p;
+      breakdown.push({ label: `Legumes in top 5 ingredients (${legumesTop5NotTop3}) — DCM link`, value: -p });
+    }
+    // Carb scoring: estimate % from ingredient position and count
+    // Penalties kick in above ~25% carbs — dogs are carnivores, high carbs are problematic
+    if (foundCarbs.length > 0) {
+      const carbIsFirst = HIGH_CARB_INGREDIENTS.some((c) =>
+        ingredientList[0]?.toLowerCase().includes(c),
+      );
       const carbInTop2 = ingredientList
         .slice(0, 2)
-        .some((ing) =>
-          HIGH_CARB_INGREDIENTS.some((c) => ing.toLowerCase().includes(c)),
-        );
+        .some((ing) => HIGH_CARB_INGREDIENTS.some((c) => ing.toLowerCase().includes(c)));
+      const carbInTop5 = ingredientList
+        .slice(0, 5)
+        .some((ing) => HIGH_CARB_INGREDIENTS.some((c) => ing.toLowerCase().includes(c)));
+      const carbCount = foundCarbs.length;
       let carbPenalty = 0;
       let carbLabel = "";
-      if (carbInTop2 && foundCarbs.length >= 2) {
+      if (carbIsFirst && carbCount >= 2) {
+        carbPenalty = 32;
+        carbLabel = "Est. ~45%+ carbs — carb is #1 ingredient with multiple carb sources";
+      } else if (carbIsFirst) {
         carbPenalty = 25;
-        carbLabel =
-          "Est. >45% carbs — very high (carbs dominate primary ingredients)";
+        carbLabel = "Est. ~35–45% carbs — carb is the primary ingredient";
+      } else if (carbInTop2 && carbCount >= 2) {
+        carbPenalty = 22;
+        carbLabel = "Est. ~35–40% carbs — multiple carbs in primary ingredients";
       } else if (carbInTop2) {
-        carbPenalty = 18;
-        carbLabel = "Est. >35% carbs — high (carb is primary ingredient)";
-      } else if (foundCarbs.length >= 3) {
-        carbPenalty = 15;
-        carbLabel = "Est. ~30-35% carbs — above recommended level";
-      } else if (foundCarbs.length >= 2) {
-        carbPenalty = 8;
-        carbLabel = "Est. ~25-30% carbs — moderate carb level";
+        carbPenalty = 12;
+        carbLabel = "Est. ~25–35% carbs — carb is a primary ingredient";
+      } else if (carbCount >= 3) {
+        carbPenalty = 10;
+        carbLabel = "Est. ~25–30% carbs — multiple carb sources";
+      } else if (carbCount >= 2 && carbInTop5) {
+        carbPenalty = 5;
+        carbLabel = "Est. ~20–25% carbs — approaching threshold";
       }
+      // Single carb not in top 5: est. <20% — no penalty
       if (carbPenalty > 0) {
         total -= carbPenalty;
         breakdown.push({ label: carbLabel, value: -carbPenalty });
@@ -3198,17 +3297,27 @@ export default function App() {
       });
     }
     if (foundOrgans.length > 0) {
-      total += 5;
+      const organBonus = Math.min(foundOrgans.length * 5, 25);
+      total += organBonus;
       breakdown.push({
-        label: `Organ meats present (${foundOrgans.length})`,
-        value: 5,
+        label: `Organ meats (${foundOrgans.length}) — nutrient-dense whole food proteins`,
+        value: organBonus,
       });
     }
-    if (foundSuperfoods.length >= 2) {
-      total += 5;
+    if (foundProduce.length > 0) {
+      const produceBonus = Math.min(foundProduce.length * 2, 10);
+      total += produceBonus;
       breakdown.push({
-        label: `Functional superfoods (${foundSuperfoods.length})`,
-        value: 5,
+        label: `Whole food fruits & vegetables (${foundProduce.length})`,
+        value: produceBonus,
+      });
+    }
+    if (foundAntiInflammatory.length > 0) {
+      const antiInflamBonus = Math.min(foundAntiInflammatory.length * 3, 12);
+      total += antiInflamBonus;
+      breakdown.push({
+        label: `Anti-inflammatory ingredients (${foundAntiInflammatory.length}) — turmeric, fish oil, kelp, etc.`,
+        value: antiInflamBonus,
       });
     }
     // Database audit — informational display only, not scored (ingredients already penalized above)
@@ -3555,7 +3664,7 @@ export default function App() {
         TOXIC_ADDITIVES.some((t) => ing.toLowerCase().includes(t)),
       );
       const foundMeals = ingredientList.filter((ing) =>
-        MEAT_MEALS.some((m) => ing.toLowerCase().includes(m)),
+        GENERIC_MEALS.some((m) => ing.toLowerCase().includes(m)),
       );
       const foundVitamins = ingredientList.filter((ing) =>
         ADDED_VITAMINS.some((v) => ing.toLowerCase().includes(v)),
@@ -3591,8 +3700,14 @@ export default function App() {
             !ing.toLowerCase().includes("meal"),
         ),
       );
-      const foundSuperfoods = ingredientList.filter((ing) =>
-        SUPERFOODS.some((s) => ing.toLowerCase().includes(s)),
+      const foundProduce = ingredientList.filter((ing) =>
+        WHOLE_FOOD_PRODUCE.some((p) => ing.toLowerCase().includes(p)),
+      );
+      const foundAntiInflammatory = ingredientList.filter((ing) =>
+        ANTI_INFLAMMATORY_FOODS.some((a) => ing.toLowerCase().includes(a)),
+      );
+      const foundLegumesTop3 = ingredientList.slice(0, 3).filter((ing) =>
+        LENTIL_LEGUME.some((l) => ing.toLowerCase().includes(l)),
       );
       const omegaRatingResult = computeOmegaRating(
         foundOmega3,
@@ -3602,18 +3717,19 @@ export default function App() {
       );
 
       const vitCount = foundVitamins.length;
-      let vitPenalty = 0;
+      let vitLoadPenalty = 0;
       let vitLevel = "";
-      if (vitCount >= 1 && vitCount <= 5) {
-        vitPenalty = 5;
-        vitLevel = "Minor";
-      } else if (vitCount >= 6 && vitCount <= 10) {
-        vitPenalty = 15;
-        vitLevel = "Moderate";
-      } else if (vitCount > 10) {
-        vitPenalty = 30;
+      if (vitCount > 15) {
+        vitLoadPenalty = 12;
         vitLevel = "Severe";
+      } else if (vitCount > 10) {
+        vitLoadPenalty = 8;
+        vitLevel = "High";
+      } else if (vitCount > 7) {
+        vitLoadPenalty = 5;
+        vitLevel = "Moderate";
       }
+      const vitPenalty = vitLoadPenalty;
 
       const fullText = (name + " " + rawIngredients).toLowerCase();
       const hasAAFCOTrial = AAFCO_TRIAL_KEYWORDS.some((k) =>
@@ -3669,12 +3785,19 @@ export default function App() {
         total -= p;
         breakdown.push({ label: `${h.name} (${h.severity})`, value: -p });
       }
-      if (vitPenalty > 0) {
-        total -= vitPenalty;
+      if (vitLoadPenalty > 0) {
+        total -= vitLoadPenalty;
         breakdown.push({
-          label: `Synthetic vitamins (${vitLevel})`,
-          value: -vitPenalty,
+          label: `High synthetic vitamin/mineral load (${vitCount} added) — over-fortified formula`,
+          value: -vitLoadPenalty,
         });
+      }
+      for (const vmp of VITAMIN_MINERAL_PENALTIES) {
+        const hit = ingredientList.find((ing) => ing.toLowerCase().includes(vmp.term));
+        if (hit) {
+          total -= vmp.penalty;
+          breakdown.push({ label: vmp.label, value: -vmp.penalty });
+        }
       }
       if (foundToxicAdditives.length > 0) {
         const p = foundToxicAdditives.length * 10;
@@ -3685,41 +3808,59 @@ export default function App() {
         });
       }
       if (foundMeals.length > 0) {
-        const p = foundMeals.length * 6;
+        const p = foundMeals.length * 7;
         total -= p;
         breakdown.push({
-          label: `Meat meals (${foundMeals.length})`,
+          label: `Unidentified generic meal (${foundMeals.length}) — sourcing unknown`,
           value: -p,
         });
       }
-      if (foundLegumesTop5.length > 0) {
-        const p = foundLegumesTop5.length * 12;
+      if (foundLegumesTop3.length > 0) {
+        const p = foundLegumesTop3.length * 15;
         total -= p;
-        breakdown.push({ label: `Legumes in top 5 ingredients`, value: -p });
+        breakdown.push({ label: `Legumes in top 3 ingredients (${foundLegumesTop3.length}) — DCM link`, value: -p });
       }
-      // Carb scoring: estimate % based on ingredient count and position
-      if (foundCarbs.length >= 1) {
+      const legumesTop5NotTop3 = foundLegumesTop5.length - foundLegumesTop3.length;
+      if (legumesTop5NotTop3 > 0) {
+        const p = legumesTop5NotTop3 * 7;
+        total -= p;
+        breakdown.push({ label: `Legumes in top 5 ingredients (${legumesTop5NotTop3}) — DCM link`, value: -p });
+      }
+      // Carb scoring: estimate % from ingredient position and count
+      // Penalties kick in above ~25% carbs — dogs are carnivores, high carbs are problematic
+      if (foundCarbs.length > 0) {
+        const carbIsFirst = HIGH_CARB_INGREDIENTS.some((c) =>
+          ingredientList[0]?.toLowerCase().includes(c),
+        );
         const carbInTop2 = ingredientList
           .slice(0, 2)
-          .some((ing) =>
-            HIGH_CARB_INGREDIENTS.some((c) => ing.toLowerCase().includes(c)),
-          );
+          .some((ing) => HIGH_CARB_INGREDIENTS.some((c) => ing.toLowerCase().includes(c)));
+        const carbInTop5 = ingredientList
+          .slice(0, 5)
+          .some((ing) => HIGH_CARB_INGREDIENTS.some((c) => ing.toLowerCase().includes(c)));
+        const carbCount = foundCarbs.length;
         let carbPenalty = 0;
         let carbLabel = "";
-        if (carbInTop2 && foundCarbs.length >= 2) {
+        if (carbIsFirst && carbCount >= 2) {
+          carbPenalty = 32;
+          carbLabel = "Est. ~45%+ carbs — carb is #1 ingredient with multiple carb sources";
+        } else if (carbIsFirst) {
           carbPenalty = 25;
-          carbLabel =
-            "Est. >45% carbs — very high (carbs dominate primary ingredients)";
+          carbLabel = "Est. ~35–45% carbs — carb is the primary ingredient";
+        } else if (carbInTop2 && carbCount >= 2) {
+          carbPenalty = 22;
+          carbLabel = "Est. ~35–40% carbs — multiple carbs in primary ingredients";
         } else if (carbInTop2) {
-          carbPenalty = 18;
-          carbLabel = "Est. >35% carbs — high (carb is primary ingredient)";
-        } else if (foundCarbs.length >= 3) {
-          carbPenalty = 15;
-          carbLabel = "Est. ~30-35% carbs — above recommended level";
-        } else if (foundCarbs.length >= 2) {
-          carbPenalty = 8;
-          carbLabel = "Est. ~25-30% carbs — moderate carb level";
+          carbPenalty = 12;
+          carbLabel = "Est. ~25–35% carbs — carb is a primary ingredient";
+        } else if (carbCount >= 3) {
+          carbPenalty = 10;
+          carbLabel = "Est. ~25–30% carbs — multiple carb sources";
+        } else if (carbCount >= 2 && carbInTop5) {
+          carbPenalty = 5;
+          carbLabel = "Est. ~20–25% carbs — approaching threshold";
         }
+        // Single carb not in top 5: est. <20% — no penalty
         if (carbPenalty > 0) {
           total -= carbPenalty;
           breakdown.push({ label: carbLabel, value: -carbPenalty });
@@ -3755,17 +3896,27 @@ export default function App() {
         });
       }
       if (foundOrgans.length > 0) {
-        total += 5;
+        const organBonus = Math.min(foundOrgans.length * 5, 25);
+        total += organBonus;
         breakdown.push({
-          label: `Organ meats present (${foundOrgans.length})`,
-          value: 5,
+          label: `Organ meats (${foundOrgans.length}) — nutrient-dense whole food proteins`,
+          value: organBonus,
         });
       }
-      if (foundSuperfoods.length >= 2) {
-        total += 5;
+      if (foundProduce.length > 0) {
+        const produceBonus = Math.min(foundProduce.length * 2, 10);
+        total += produceBonus;
         breakdown.push({
-          label: `Functional superfoods (${foundSuperfoods.length})`,
-          value: 5,
+          label: `Whole food fruits & vegetables (${foundProduce.length})`,
+          value: produceBonus,
+        });
+      }
+      if (foundAntiInflammatory.length > 0) {
+        const antiInflamBonus = Math.min(foundAntiInflammatory.length * 3, 12);
+        total += antiInflamBonus;
+        breakdown.push({
+          label: `Anti-inflammatory ingredients (${foundAntiInflammatory.length}) — turmeric, fish oil, kelp, etc.`,
+          value: antiInflamBonus,
         });
       }
       total = Math.min(total, processingResult.scoreCap);
