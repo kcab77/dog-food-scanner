@@ -172,7 +172,7 @@ const HARMFUL_INGREDIENTS: {
   },
   {
     term: "corn gluten meal",
-    severity: "moderate",
+    severity: "mild",
     reason:
       "Corn gluten meal is a plant-based protein concentrate with lower biological value for carnivores compared to animal-based proteins. Pet nutrition researchers note it is sometimes used to artificially inflate crude protein percentages on labels",
   },
@@ -298,25 +298,25 @@ const HARMFUL_INGREDIENTS: {
   },
   {
     term: "meat by-product",
-    severity: "severe",
+    severity: "moderate",
     reason:
       "AAFCO defines meat by-products as non-rendered parts other than meat, which may include lungs, spleen, kidneys, brain, and other organs. The lack of species identification makes quality and sourcing difficult to verify",
   },
   {
     term: "meat by-products",
-    severity: "severe",
+    severity: "moderate",
     reason:
       "AAFCO defines meat by-products as non-rendered parts other than meat, which may include lungs, spleen, kidneys, brain, and other organs. The lack of species identification makes quality and sourcing difficult to verify",
   },
   {
     term: "poultry by-product",
-    severity: "severe",
+    severity: "moderate",
     reason:
       "AAFCO defines poultry by-products as non-rendered clean parts such as heads, feet, and viscera. The absence of a named species and variable content makes quality and sourcing difficult for consumers to assess",
   },
   {
     term: "poultry by-products",
-    severity: "severe",
+    severity: "moderate",
     reason:
       "AAFCO defines poultry by-products as non-rendered clean parts such as heads, feet, and viscera. The absence of a named species and variable content makes quality and sourcing difficult for consumers to assess",
   },
@@ -553,30 +553,18 @@ const ADDED_VITAMINS = [
   "ferric oxide", "magnesium oxide", "menadione", "dl-methionine",
 ];
 
-// Per-ingredient tiered penalties for bad/toxic synthetic vitamins and minerals
-// These stack on top of HARMFUL_INGREDIENTS penalties for the worst offenders — intentional
+// Per-ingredient penalties for poor-form vitamins/minerals NOT already in HARMFUL_INGREDIENTS
+// Items already caught by HARMFUL_INGREDIENTS (menadione, cholecalciferol, sodium selenite,
+// copper sulfate, zinc oxide, ferric oxide, retinyl forms, pyridoxine HCl, etc.) are excluded
+// to avoid double-counting
 const VITAMIN_MINERAL_PENALTIES: { term: string; penalty: number; label: string }[] = [
-  // Avoid — worst, liver toxin banned in human supplements
-  { term: "menadione", penalty: 10, label: "Menadione (K3) — liver toxin, banned in human supplements" },
-  // Danger — FDA recall history, extremely narrow safe range
-  { term: "cholecalciferol", penalty: 8, label: "Cholecalciferol (D3) — FDA recall risk, lethal in excess" },
-  { term: "vitamin d3 supplement", penalty: 8, label: "Synthetic Vitamin D3 — FDA recall risk" },
-  { term: "vitamin d supplement", penalty: 6, label: "Synthetic Vitamin D — narrow safe range" },
-  // Severe poor forms — inorganic, oxidative damage, liver accumulation
-  { term: "sodium selenite", penalty: 7, label: "Sodium selenite — inorganic selenium, oxidative kidney damage" },
+  // Not in HARMFUL_INGREDIENTS — inorganic selenium poor form
   { term: "sodium selenate", penalty: 7, label: "Sodium selenate — inorganic selenium, oxidative kidney damage" },
-  { term: "copper sulfate", penalty: 7, label: "Copper sulfate — bypasses liver regulation, accumulates" },
-  // Moderate poor forms — poorly absorbed or cosmetic only
-  { term: "zinc oxide", penalty: 4, label: "Zinc oxide — poorly absorbed form" },
-  { term: "ferric oxide", penalty: 4, label: "Ferric oxide — cosmetic colorant, zero nutritional value" },
+  // Not in HARMFUL_INGREDIENTS — poor mineral forms
   { term: "zinc sulfate", penalty: 3, label: "Zinc sulfate — poor bioavailability vs proteinate forms" },
   { term: "magnesium oxide", penalty: 3, label: "Magnesium oxide — poorly absorbed, causes GI upset" },
-  // Mild — inferior forms, some concern at chronic levels
-  { term: "retinyl palmitate", penalty: 2, label: "Synthetic Vitamin A — fat-soluble, accumulates in liver" },
-  { term: "retinyl acetate", penalty: 2, label: "Synthetic Vitamin A — fat-soluble, accumulates in liver" },
-  { term: "pyridoxine hydrochloride", penalty: 2, label: "Synthetic B6 — toxic in chronic excess" },
-  { term: "dl-alpha tocopherol", penalty: 1, label: "Inferior synthetic Vitamin E (dl-form)" },
-  { term: "cyanocobalamin", penalty: 1, label: "Inferior B12 form — cyanocobalamin vs methylcobalamin" },
+  // Generic vitamin d supplement (not the specific cholecalciferol already caught above)
+  { term: "vitamin d supplement", penalty: 4, label: "Synthetic Vitamin D — narrow safe range" },
 ];
 const LENTIL_LEGUME = [
   "lentils",
