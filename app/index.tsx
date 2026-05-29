@@ -1105,7 +1105,7 @@ const DENTAL_INGREDIENTS = [
 function scoreTreats(ingredientList: string[], processingMethod?: string, productName?: string): {
   score: number;
   flags: { name: string; reason: string; severity: string }[];
-  breakdown: { label: string; value: number }[];
+  breakdown: { label: string; value: number; severity?: string }[];
   ingredientCount: number;
   vitaminFlags: string[];
   dentalIngredients: { ingredient: string; benefit: string }[];
@@ -1114,7 +1114,7 @@ function scoreTreats(ingredientList: string[], processingMethod?: string, produc
   const lower = ingredientList.map((i) => i.toLowerCase());
   const top3 = lower.slice(0, 3);
   const flags: { name: string; reason: string; severity: string }[] = [];
-  const breakdown: { label: string; value: number }[] = [];
+  const breakdown: { label: string; value: number; severity?: string }[] = [];
   let total = 70;
   breakdown.push({ label: "Base score", value: 70 });
 
@@ -1158,9 +1158,9 @@ function scoreTreats(ingredientList: string[], processingMethod?: string, produc
 
   // Score the flags
   for (const f of flags) {
-    const p = SEVERITY_PENALTIES[f.severity] || 8;
+    const p = Math.min(10, SEVERITY_PENALTIES[f.severity] || 8);
     total -= p;
-    breakdown.push({ label: `${f.name} (${f.severity})`, value: -p });
+    breakdown.push({ label: `${f.name} (${f.severity})`, value: -p, severity: f.severity });
   }
 
   // Ingredient count — 10+ ingredients is bad for treats
@@ -3169,7 +3169,7 @@ export default function App() {
     setProcessing(processingResult);
     setVitaminScore({ count: vitCount, penalty: vitPenalty, level: vitLevel });
     let total = 60;
-    const breakdown: { label: string; value: number }[] = [];
+    const breakdown: { label: string; value: number; severity?: string }[] = [];
     breakdown.push({ label: "Base score", value: 60 });
     if (processingResult.penalty > 0)
       breakdown.push({
@@ -3180,10 +3180,10 @@ export default function App() {
       const base = SEVERITY_PENALTIES[h.severity] || 8;
       const pos = h.position ?? 0;
       const mult = pos < 5 ? 1.0 : pos < 10 ? 0.65 : pos < 20 ? 0.40 : 0.20;
-      const p = Math.max(1, Math.round(base * mult));
+      const p = Math.min(10, Math.max(1, Math.round(base * mult)));
       total -= p;
       const posNote = pos >= 10 ? ` — ingredient #${pos + 1} (trace amount)` : pos >= 5 ? ` — ingredient #${pos + 1}` : "";
-      breakdown.push({ label: `${h.name} (${h.severity})${posNote}`, value: -p });
+      breakdown.push({ label: `${h.name} (${h.severity})${posNote}`, value: -p, severity: h.severity });
     }
     total -= processingResult.penalty;
     if (vitLoadPenalty > 0) {
@@ -3769,7 +3769,7 @@ export default function App() {
 
       // Scoring
       let total = 60;
-      const breakdown: { label: string; value: number }[] = [];
+      const breakdown: { label: string; value: number; severity?: string }[] = [];
       breakdown.push({ label: "Base score", value: 60 });
       if (processingResult.penalty > 0)
         breakdown.push({
@@ -3781,10 +3781,10 @@ export default function App() {
         const base = SEVERITY_PENALTIES[h.severity] || 8;
         const pos = h.position ?? 0;
         const mult = pos < 5 ? 1.0 : pos < 10 ? 0.65 : pos < 20 ? 0.40 : 0.20;
-        const p = Math.max(1, Math.round(base * mult));
+        const p = Math.min(10, Math.max(1, Math.round(base * mult)));
         total -= p;
         const posNote = pos >= 10 ? ` — ingredient #${pos + 1} (trace amount)` : pos >= 5 ? ` — ingredient #${pos + 1}` : "";
-        breakdown.push({ label: `${h.name} (${h.severity})${posNote}`, value: -p });
+        breakdown.push({ label: `${h.name} (${h.severity})${posNote}`, value: -p, severity: h.severity });
       }
       if (vitLoadPenalty > 0) {
         total -= vitLoadPenalty;
@@ -4375,7 +4375,13 @@ export default function App() {
                     <Text style={styles.sectionTitle}>Score Breakdown</Text>
                     {scoreBreakdown.map((item, i) => (
                       <View key={i} style={styles.breakdownRow}>
-                        <Text style={styles.breakdownLabel}>{item.label}</Text>
+                        <Text style={[styles.breakdownLabel, {
+                          color: item.severity === 'toxic' ? '#FF4D4D'
+                            : item.severity === 'severe' ? '#FF8C00'
+                            : item.severity === 'moderate' ? '#FBBF24'
+                            : item.severity === 'mild' ? '#D4A017'
+                            : '#D1D5DB',
+                        }]}>{item.label}</Text>
                         <Text
                           style={[
                             styles.breakdownValue,
@@ -4643,7 +4649,13 @@ export default function App() {
                   <Text style={styles.sectionTitle}>Score Breakdown</Text>
                   {scoreBreakdown.map((item, i) => (
                     <View key={i} style={styles.breakdownRow}>
-                      <Text style={styles.breakdownLabel}>{item.label}</Text>
+                      <Text style={[styles.breakdownLabel, {
+                        color: item.severity === 'toxic' ? '#FF4D4D'
+                          : item.severity === 'severe' ? '#FF8C00'
+                          : item.severity === 'moderate' ? '#FBBF24'
+                          : item.severity === 'mild' ? '#D4A017'
+                          : '#D1D5DB',
+                      }]}>{item.label}</Text>
                       <Text
                         style={[
                           styles.breakdownValue,
@@ -5069,53 +5081,6 @@ export default function App() {
                   >
                     Processing Method {processing.emoji} — {processing.rating}
                   </Text>
-                  {/* Enzyme education card — shown for any heat-processed food */}
-                  {(processing.scoreCap <= 35 ||
-                    processing.scoreCap === 55 ||
-                    processing.rating === "Gently Cooked") && (
-                    <View style={styles.enzymeCard}>
-                      <Text style={styles.enzymeCardTitle}>
-                        {processing.scoreCap <= 35
-                          ? "🔥 Enzymes Destroyed by High Heat"
-                          : processing.scoreCap === 55
-                            ? "🔥 Significant Enzyme Loss from Baking"
-                            : "🍳 Heat Reduces Digestive Enzymes"}
-                      </Text>
-                      <Text style={styles.enzymeCardBody}>
-                        {processing.scoreCap <= 35
-                          ? "The high heat used in kibble extrusion (typically 250–300°F) destroys virtually all naturally occurring digestive enzymes and denatures many heat-sensitive nutrients. Manufacturers add back a synthetic vitamin premix after processing — but these are isolated compounds, not the bioavailable, food-matrix-bound nutrients found in whole raw ingredients. Studies on nutrient digestibility show kibble has significantly lower amino acid and micronutrient bioavailability than minimally processed diets."
-                          : processing.scoreCap === 55
-                            ? "Baking uses lower heat than extrusion but still reaches temperatures that destroy most naturally occurring digestive enzymes and degrade heat-sensitive vitamins like B1 (thiamine), B9 (folate), and vitamin C. Nutrient bioavailability is better than kibble but still reduced compared to raw or freeze-dried."
-                            : "Gently cooked food is far superior to kibble — it retains more vitamins, amino acids, and some enzymes depending on cook time and temperature. However, any heat above ~118°F begins breaking down digestive enzymes, so gently cooked diets still benefit from supplemental enzyme support."}
-                      </Text>
-                      <Text style={styles.enzymeCardBody}>
-                        {
-                          "💡 Because raw and freeze-dried foods retain ~95% of their natural enzymes and nutrients, they are more bioavailable — meaning your dog actually absorbs more from each bite. This is why dogs often need 20–25% fewer calories per day on raw or freeze-dried compared to kibble. If switching, reduce portion size accordingly to avoid weight gain."
-                        }
-                      </Text>
-                      <Text style={styles.enzymeCardBody}>
-                        {
-                          "Adding a broad-spectrum digestive enzyme supplement helps compensate for what heat processing destroys — supporting nutrient absorption and reducing digestive burden on your dog's pancreas."
-                        }
-                      </Text>
-                      <TouchableOpacity
-                        style={styles.enzymeBtn}
-                        onPress={() =>
-                          Linking.openURL(
-                            "https://adoredbeast.com/collections/digestive-support",
-                          )
-                        }
-                      >
-                        <Text style={styles.enzymeBtnText}>
-                          🐾 Shop Adored Beast Digestive Enzymes →
-                        </Text>
-                      </TouchableOpacity>
-                      <Text style={styles.enzymeDisclaimer}>
-                        Affiliate link — we may earn a small commission at no
-                        cost to you
-                      </Text>
-                    </View>
-                  )}
                   {processing.scoreCap <= 35 && (
                     <Text style={styles.warningItem}>
                       High heat extrusion has been associated with the
