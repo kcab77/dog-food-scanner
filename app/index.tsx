@@ -511,6 +511,45 @@ const SEVERITY_COLORS: Record<string, string> = {
   toxic: "#7b241c",
 };
 
+const SUPPLEMENT_RECS = [
+  {
+    emoji: "🫀", name: "Liver Treats", color: "#F97316", borderColor: "#F97316", bg: "#1a0a00",
+    body: "Beef or chicken liver is packed with Vitamin A, B12, iron, and CoQ10 — one of the most nutrient-dense treats you can give. However, excess Vitamin A causes toxicity. Keep liver treats to no more than 5% of total daily diet (treats included).",
+    note: "5% rule: a 50lb dog eating 2 cups/day → max 1–2 small liver treats",
+    link: "https://amazon.com", linkText: "🛒 Shop Liver Treats →",
+  },
+  {
+    emoji: "❤️", name: "Heart Treats", color: "#F43F5E", borderColor: "#F43F5E", bg: "#1a0008",
+    body: "Beef or chicken heart is the #1 dietary source of CoQ10 and naturally rich in taurine — critical for cardiac function. Unlike liver, heart is a muscle meat so the organ cap is less strict, but keep all treats under 10% of total diet.",
+    note: "Especially important for breeds with known taurine deficiency concerns",
+    link: "https://amazon.com", linkText: "🛒 Shop Heart Treats →",
+  },
+  {
+    emoji: "🐟", name: "Fish Oil (Omega-3)", color: "#2ECC71", borderColor: "#2ECC71", bg: "#0d1f10",
+    body: "Wild-caught sardine or anchovy oil reduces inflammation and supports coat, joints, and brain function. Look for triglyceride form — not ethyl ester — and store in fridge after opening to prevent rancidity.",
+    note: "Target: ~20mg EPA+DHA per pound of body weight daily",
+    link: "https://amazon.com", linkText: "🛒 Shop Fish Oil →",
+  },
+  {
+    emoji: "🌊", name: "Green Lipped Mussel", color: "#06B6D4", borderColor: "#06B6D4", bg: "#001a1f",
+    body: "New Zealand green lipped mussel contains unique omega-3s (ETA) not found in fish oil, plus natural glucosamine and chondroitin. One of the most potent natural anti-inflammatories for joints — ideal for active, senior, or large-breed dogs.",
+    note: "Works synergistically with fish oil for broader omega-3 coverage",
+    link: "https://amazon.com", linkText: "🛒 Shop Green Lipped Mussel →",
+  },
+  {
+    emoji: "🌿", name: "Detox & Liver Support", color: "#A3E635", borderColor: "#A3E635", bg: "#0a1a00",
+    body: "Dogs eating heavily processed kibble long-term put extra load on their liver and kidneys. Milk thistle (silymarin) is the gold-standard liver protectant — extensively studied in dogs. Pair with turkey tail mushroom for added immune support.",
+    note: "Especially valuable for dogs eating commercial kibble long-term",
+    link: "https://amazon.com", linkText: "🛒 Shop Detox Support →",
+  },
+  {
+    emoji: "🦠", name: "Probiotics", color: "#A78BFA", borderColor: "#A78BFA", bg: "#1a0d2e",
+    body: "Multi-strain probiotics support gut microbiome diversity, immune function, and stool quality. Look for at least 1 billion CFU with Lactobacillus and Bifidobacterium strains. Most beneficial for dogs on kibble, after antibiotics, or with chronic digestive issues.",
+    note: "Pair with fish oil for a synergistic gut + inflammation benefit",
+    link: "https://amazon.com", linkText: "🛒 Shop Probiotics →",
+  },
+];
+
 const TOXIC_ADDITIVES = [
   "copper sulfate",
   "sodium selenite",
@@ -4402,6 +4441,53 @@ export default function App() {
                   </View>
                 )}
 
+                {scoreBreakdown.length > 0 && (
+                  <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>🌿 TCVM Protein Energetics</Text>
+                    <Text style={[styles.sectionBody, { marginBottom: 10 }]}>
+                      Traditional Chinese Veterinary Medicine classifies proteins by their energetic properties. Matching protein to your dog's constitution and season reduces inflammation, hot spots, and digestive upset.
+                    </Text>
+                    <View style={{ marginBottom: 10 }}>
+                      <Text style={{ color: '#60A5FA', fontWeight: '700', fontSize: 13, marginBottom: 4 }}>❄️ Cooling Proteins</Text>
+                      <Text style={{ color: '#93C5FD', fontSize: 13, lineHeight: 19 }}>Duck · Rabbit · Cod · Flounder · Whitefish · Turkey · Clams · Pork</Text>
+                      <Text style={{ color: '#6B7280', fontSize: 11, marginTop: 3 }}>Best for: hot dogs, skin issues, allergies, hot spots, summer heat, panting</Text>
+                    </View>
+                    <View style={{ marginBottom: 10 }}>
+                      <Text style={{ color: '#9CA3AF', fontWeight: '700', fontSize: 13, marginBottom: 4 }}>⚖️ Neutral Proteins</Text>
+                      <Text style={{ color: '#D1D5DB', fontSize: 13, lineHeight: 19 }}>Beef · Salmon · Eggs · Sardines · Herring · Quail · Pork</Text>
+                      <Text style={{ color: '#6B7280', fontSize: 11, marginTop: 3 }}>Good for most dogs year-round</Text>
+                    </View>
+                    <View style={{ marginBottom: 12 }}>
+                      <Text style={{ color: '#FCA5A5', fontWeight: '700', fontSize: 13, marginBottom: 4 }}>🔥 Warming Proteins</Text>
+                      <Text style={{ color: '#FCA5A5', fontSize: 13, lineHeight: 19 }}>Chicken · Lamb · Venison · Goat · Trout · Shrimp · Pheasant · Anchovies</Text>
+                      <Text style={{ color: '#6B7280', fontSize: 11, marginTop: 3 }}>Best for: cold or lethargic dogs, winter months, poor circulation</Text>
+                    </View>
+                    <View style={{ backgroundColor: '#0d1a2e', borderRadius: 10, padding: 12, marginBottom: 10, borderWidth: 1, borderColor: '#1E40AF' }}>
+                      <Text style={{ color: '#60A5FA', fontWeight: '700', fontSize: 13, marginBottom: 4 }}>☀️ Summer Recommendation</Text>
+                      <Text style={{ color: '#93C5FD', fontSize: 13, lineHeight: 19 }}>Switch to cooling or neutral proteins in warm months — duck, rabbit, or white fish are ideal. Avoid chicken and lamb if your dog pants excessively, has seasonal allergies, or hot spots.</Text>
+                    </View>
+                    <TouchableOpacity onPress={() => Linking.openURL('https://drjudymorgan.com')}>
+                      <Text style={{ color: '#2ECC71', fontSize: 13, fontWeight: '600' }}>🌿 Learn more at Dr. Judy Morgan's site →</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+
+                {scoreBreakdown.length > 0 && (
+                  <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>💊 Recommended Supplements</Text>
+                    {SUPPLEMENT_RECS.map((s, i) => (
+                      <View key={i} style={{ marginBottom: 12, backgroundColor: s.bg, borderRadius: 10, padding: 12, borderWidth: 1, borderColor: s.borderColor }}>
+                        <Text style={{ color: s.color, fontWeight: '700', fontSize: 14, marginBottom: 4 }}>{s.emoji} {s.name}</Text>
+                        <Text style={{ color: '#D1D5DB', fontSize: 13, lineHeight: 19, marginBottom: 6 }}>{s.body}</Text>
+                        <Text style={{ color: '#6B7280', fontSize: 11, marginBottom: 10 }}>{s.note}</Text>
+                        <TouchableOpacity style={{ backgroundColor: s.color, borderRadius: 8, paddingVertical: 8, paddingHorizontal: 12, alignSelf: 'flex-start' }} onPress={() => Linking.openURL(s.link)}>
+                          <Text style={{ color: '#000', fontWeight: '700', fontSize: 12 }}>{s.linkText}</Text>
+                        </TouchableOpacity>
+                      </View>
+                    ))}
+                  </View>
+                )}
+
                 {treatFlags.length > 0 && (
                   <View style={styles.section}>
                     <Text style={styles.sectionTitle}>
@@ -4671,6 +4757,53 @@ export default function App() {
                       >
                         {item.value > 0 ? `+${item.value}` : item.value}
                       </Text>
+                    </View>
+                  ))}
+                </View>
+              )}
+
+              {scoreBreakdown.length > 0 && (
+                <View style={styles.section}>
+                  <Text style={styles.sectionTitle}>🌿 TCVM Protein Energetics</Text>
+                  <Text style={[styles.sectionBody, { marginBottom: 10 }]}>
+                    Traditional Chinese Veterinary Medicine classifies proteins by their energetic properties. Matching protein to your dog's constitution and season reduces inflammation, hot spots, and digestive upset.
+                  </Text>
+                  <View style={{ marginBottom: 10 }}>
+                    <Text style={{ color: '#60A5FA', fontWeight: '700', fontSize: 13, marginBottom: 4 }}>❄️ Cooling Proteins</Text>
+                    <Text style={{ color: '#93C5FD', fontSize: 13, lineHeight: 19 }}>Duck · Rabbit · Cod · Flounder · Whitefish · Turkey · Clams · Pork</Text>
+                    <Text style={{ color: '#6B7280', fontSize: 11, marginTop: 3 }}>Best for: hot dogs, skin issues, allergies, hot spots, summer heat, panting</Text>
+                  </View>
+                  <View style={{ marginBottom: 10 }}>
+                    <Text style={{ color: '#9CA3AF', fontWeight: '700', fontSize: 13, marginBottom: 4 }}>⚖️ Neutral Proteins</Text>
+                    <Text style={{ color: '#D1D5DB', fontSize: 13, lineHeight: 19 }}>Beef · Salmon · Eggs · Sardines · Herring · Quail · Pork</Text>
+                    <Text style={{ color: '#6B7280', fontSize: 11, marginTop: 3 }}>Good for most dogs year-round</Text>
+                  </View>
+                  <View style={{ marginBottom: 12 }}>
+                    <Text style={{ color: '#FCA5A5', fontWeight: '700', fontSize: 13, marginBottom: 4 }}>🔥 Warming Proteins</Text>
+                    <Text style={{ color: '#FCA5A5', fontSize: 13, lineHeight: 19 }}>Chicken · Lamb · Venison · Goat · Trout · Shrimp · Pheasant · Anchovies</Text>
+                    <Text style={{ color: '#6B7280', fontSize: 11, marginTop: 3 }}>Best for: cold or lethargic dogs, winter months, poor circulation</Text>
+                  </View>
+                  <View style={{ backgroundColor: '#0d1a2e', borderRadius: 10, padding: 12, marginBottom: 10, borderWidth: 1, borderColor: '#1E40AF' }}>
+                    <Text style={{ color: '#60A5FA', fontWeight: '700', fontSize: 13, marginBottom: 4 }}>☀️ Summer Recommendation</Text>
+                    <Text style={{ color: '#93C5FD', fontSize: 13, lineHeight: 19 }}>Switch to cooling or neutral proteins in warm months — duck, rabbit, or white fish are ideal. Avoid chicken and lamb if your dog pants excessively, has seasonal allergies, or hot spots.</Text>
+                  </View>
+                  <TouchableOpacity onPress={() => Linking.openURL('https://drjudymorgan.com')}>
+                    <Text style={{ color: '#2ECC71', fontSize: 13, fontWeight: '600' }}>🌿 Learn more at Dr. Judy Morgan's site →</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+
+              {scoreBreakdown.length > 0 && (
+                <View style={styles.section}>
+                  <Text style={styles.sectionTitle}>💊 Recommended Supplements</Text>
+                  {SUPPLEMENT_RECS.map((s, i) => (
+                    <View key={i} style={{ marginBottom: 12, backgroundColor: s.bg, borderRadius: 10, padding: 12, borderWidth: 1, borderColor: s.borderColor }}>
+                      <Text style={{ color: s.color, fontWeight: '700', fontSize: 14, marginBottom: 4 }}>{s.emoji} {s.name}</Text>
+                      <Text style={{ color: '#D1D5DB', fontSize: 13, lineHeight: 19, marginBottom: 6 }}>{s.body}</Text>
+                      <Text style={{ color: '#6B7280', fontSize: 11, marginBottom: 10 }}>{s.note}</Text>
+                      <TouchableOpacity style={{ backgroundColor: s.color, borderRadius: 8, paddingVertical: 8, paddingHorizontal: 12, alignSelf: 'flex-start' }} onPress={() => Linking.openURL(s.link)}>
+                        <Text style={{ color: '#000', fontWeight: '700', fontSize: 12 }}>{s.linkText}</Text>
+                      </TouchableOpacity>
                     </View>
                   ))}
                 </View>
