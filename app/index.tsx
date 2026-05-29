@@ -1720,6 +1720,82 @@ function getTreatScoreLabel(score: number): string {
   return "Avoid 🚫";
 }
 
+function HersheyProtocolSection() {
+  return (
+    <View style={{ backgroundColor: "#1A1A2E", borderRadius: 16, padding: 16, marginHorizontal: 16, marginBottom: 12 }}>
+      <Text style={{ fontSize: 13, fontWeight: "700", marginBottom: 6, color: "#9CA3AF", textTransform: "uppercase", letterSpacing: 1 }}>🐾 Hershey's Protocol</Text>
+      <Text style={{ color: "#6B7280", fontSize: 12, marginBottom: 14, lineHeight: 18 }}>
+        My 75lb Lab mix Hershey — here's what I personally use. Do your own research and consult your vet before starting anything new.
+      </Text>
+
+      {/* Dental */}
+      <Text style={{ color: "#2ECC71", fontWeight: "700", fontSize: 13, marginBottom: 8 }}>🦷 Dental Care</Text>
+      {[
+        { title: "Coconut oil + gauze or rag (or toothbrush)", body: "Wrap gauze around your finger, dip in coconut oil, rub along gum line. Antibacterial, safe if swallowed. This is what I use on Hershey." },
+        { title: "Raw carrots", body: "Natural low-calorie dental chew. The firm texture scrubs plaque mechanically — great daily snack." },
+        { title: "Raw bones or chicken feet (occasionally)", body: "Excellent mechanical cleaning especially on back molars. Always raw — never cooked bones. Supervise your dog." },
+        { title: "Himalayan yak chews", body: "These scraped all the tartar off Hershey's back teeth without a vet visit — it was incredible! Made from hardened yak milk. ⚠️ Try at your own risk — research before use and supervise." },
+        { title: "Manuka honey UMF 10+ (for cuts)", body: "Tiny dab on gums for oral health or apply directly to minor surface cuts. ~80% natural sugars — use sparingly, not as a daily supplement." },
+      ].map((item, i) => (
+        <View key={i} style={{ marginBottom: 8, paddingLeft: 10, borderLeftWidth: 2, borderLeftColor: "#2ECC71" }}>
+          <Text style={{ color: "#D1D5DB", fontWeight: "600", fontSize: 12 }}>{item.title}</Text>
+          <Text style={{ color: "#9CA3AF", fontSize: 12, lineHeight: 17, marginTop: 2 }}>{item.body}</Text>
+        </View>
+      ))}
+
+      {/* Omega & Joints */}
+      <Text style={{ color: "#06B6D4", fontWeight: "700", fontSize: 13, marginTop: 12, marginBottom: 8 }}>🐟 Omega-3 & Joint Support</Text>
+      {[
+        { title: "Green Lipped Mussel", body: "Very good for joint health, natural anti-inflammatory, supports heart and brain. One of the best whole-food joint supplements available — works synergistically with fish oil." },
+        { title: "Fish oil (half dose)", body: "Great for joints, inflammation, heart and brain health. Hershey's food (Simple Food Project) already has an excellent omega ratio, so I use half the recommended dose to avoid oversupplementation." },
+      ].map((item, i) => (
+        <View key={i} style={{ marginBottom: 8, paddingLeft: 10, borderLeftWidth: 2, borderLeftColor: "#06B6D4" }}>
+          <Text style={{ color: "#D1D5DB", fontWeight: "600", fontSize: 12 }}>{item.title}</Text>
+          <Text style={{ color: "#9CA3AF", fontSize: 12, lineHeight: 17, marginTop: 2 }}>{item.body}</Text>
+        </View>
+      ))}
+
+      {/* Gut Health */}
+      <Text style={{ color: "#A78BFA", fontWeight: "700", fontSize: 13, marginTop: 12, marginBottom: 8 }}>🦠 Gut Health</Text>
+      {[
+        { title: "Kefir or goat's milk", body: "Excellent natural source of probiotics and prebiotics. Safe to give daily — start with a small amount and work up. Plain, unsweetened only." },
+        { title: "Probiotic supplement", body: "Multi-strain formula with Lactobacillus and Bifidobacterium. Look for at least 1 billion CFU. Most beneficial for dogs on kibble or after antibiotics." },
+      ].map((item, i) => (
+        <View key={i} style={{ marginBottom: 8, paddingLeft: 10, borderLeftWidth: 2, borderLeftColor: "#A78BFA" }}>
+          <Text style={{ color: "#D1D5DB", fontWeight: "600", fontSize: 12 }}>{item.title}</Text>
+          <Text style={{ color: "#9CA3AF", fontSize: 12, lineHeight: 17, marginTop: 2 }}>{item.body}</Text>
+        </View>
+      ))}
+
+      {/* Protein Rotation */}
+      <Text style={{ color: "#60A5FA", fontWeight: "700", fontSize: 13, marginTop: 12, marginBottom: 8 }}>🌿 Protein Rotation (Hershey runs hot)</Text>
+      <View style={{ marginBottom: 6, paddingLeft: 10, borderLeftWidth: 2, borderLeftColor: "#60A5FA" }}>
+        <Text style={{ color: "#93C5FD", fontSize: 12, lineHeight: 18 }}>❄️ <Text style={{ fontWeight: "600" }}>Cooling (best):</Text> Duck, rabbit, white fish, salmon</Text>
+        <Text style={{ color: "#D1D5DB", fontSize: 12, lineHeight: 18 }}>⚖️ <Text style={{ fontWeight: "600" }}>Neutral (fine):</Text> Beef, turkey, eggs</Text>
+        <Text style={{ color: "#FCA5A5", fontSize: 12, lineHeight: 18 }}>🔥 <Text style={{ fontWeight: "600" }}>Warming (limit as staple):</Text> Chicken, lamb</Text>
+        <Text style={{ color: "#6B7280", fontSize: 11, marginTop: 4 }}>Goal: cooling proteins 4-5x/week, neutral 2-3x, warming occasionally</Text>
+      </View>
+
+      {/* Flea & Tick */}
+      <Text style={{ color: "#A3E635", fontWeight: "700", fontSize: 13, marginTop: 12, marginBottom: 8 }}>🦟 Natural Flea & Tick Stack</Text>
+      {[
+        { title: "The Resistance (daily in food)", body: "1 tsp daily — alters body scent at cellular level so bugs don't want to land on him. Full effect in 4-6 weeks. Only layer swimming can't wash off." },
+        { title: "animalEO EVICT (before every outing)", body: "4-10 drops massaged into coat — legs, neck, shoulders, ankles." },
+        { title: "Rose geranium oil", body: "1 drop behind each shoulder blade before outings. Dr. Judy Morgan's #1 tick recommendation — safe undiluted on dogs." },
+        { title: "Metal fine-tooth flea comb (after every outing)", body: "Non-negotiable for dark coats. Check ears, neck, armpits, groin, between toes. Run over white paper towel — flea dirt turns red/brown when wet." },
+      ].map((item, i) => (
+        <View key={i} style={{ marginBottom: 8, paddingLeft: 10, borderLeftWidth: 2, borderLeftColor: "#A3E635" }}>
+          <Text style={{ color: "#D1D5DB", fontWeight: "600", fontSize: 12 }}>{item.title}</Text>
+          <Text style={{ color: "#9CA3AF", fontSize: 12, lineHeight: 17, marginTop: 2 }}>{item.body}</Text>
+        </View>
+      ))}
+      <TouchableOpacity onPress={() => Linking.openURL('https://drjudymorgan.com')}>
+        <Text style={{ color: "#A3E635", fontSize: 12, fontWeight: "600", marginTop: 4 }}>🌿 Get The Resistance + EVICT at drjudymorgan.com →</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
 export default function App() {
   const [permission, requestPermission] = useCameraPermissions();
   const [showDisclaimer, setShowDisclaimer] = useState(true);
@@ -1807,7 +1883,7 @@ export default function App() {
   const [ingredientDetailData, setIngredientDetailData] = useState<any>(null);
   const [ingredientDetailLoading, setIngredientDetailLoading] = useState(false);
   const [scoreBreakdown, setScoreBreakdown] = useState<
-    { label: string; value: number }[]
+    { label: string; value: number; severity?: string }[]
   >([]);
   const [manualProcessingMode, setManualProcessingMode] = useState<
     "barcode" | "label"
@@ -4553,6 +4629,22 @@ export default function App() {
                   </View>
                 )}
 
+                <View style={styles.section}>
+                  <Text style={styles.sectionTitle}>🦷 Dental Care Tips</Text>
+                  {[
+                    { emoji: "🥥", title: "Coconut Oil + Gauze or Rag", body: "Wrap a piece of gauze or an old rag around your finger, dip in coconut oil, and rub along the gum line. Lauric acid in coconut oil is naturally antibacterial. A dog toothbrush works too — coconut oil is safe if swallowed." },
+                    { emoji: "🥕", title: "Raw Carrots", body: "A firm raw carrot is a natural, low-calorie dental chew. The crunchy texture mechanically scrubs plaque and most dogs love them. Great everyday snack." },
+                    { emoji: "🍯", title: "Manuka Honey (UMF 10+) for Cuts", body: "A tiny dab of raw Manuka honey on the gums supports oral microbiome health and can be applied directly to minor surface cuts for its antimicrobial properties. Note: ~80% natural sugars — use sparingly, not as a regular supplement." },
+                    { emoji: "🦴", title: "Raw Bones or Chicken Feet (occasionally)", body: "Raw (never cooked) bones and raw chicken feet provide natural mechanical cleaning, especially on back molars where tartar accumulates. Always supervise and research safe sizing for your breed." },
+                    { emoji: "🏔️", title: "Himalayan Yak Chews", body: "Made from hardened yak milk — these are one of the most effective natural plaque scrapers available. ⚠️ Try at your own risk — research before use and always supervise your dog." },
+                  ].map((tip, i) => (
+                    <View key={i} style={{ backgroundColor: '#0d1a10', borderRadius: 8, padding: 10, marginBottom: 8, borderWidth: 1, borderColor: '#1a4a22' }}>
+                      <Text style={{ color: '#2ECC71', fontWeight: '700', fontSize: 13, marginBottom: 3 }}>{tip.emoji} {tip.title}</Text>
+                      <Text style={{ color: '#9CA3AF', fontSize: 12, lineHeight: 18 }}>{tip.body}</Text>
+                    </View>
+                  ))}
+                </View>
+
                 {treatVitaminFlags.length > 0 && (
                   <View style={styles.section}>
                     <Text style={styles.sectionTitle}>
@@ -4652,6 +4744,8 @@ export default function App() {
                     );
                   })}
                 </View>
+
+                <HersheyProtocolSection />
 
                 <TouchableOpacity
                   style={styles.cancelButton}
@@ -4986,1019 +5080,7 @@ export default function App() {
                 </View>
               )}
 
-              {ingredients.length > 0 && (
-                <View style={styles.section}>
-                  <Text style={styles.sectionTitle}>Full Ingredient List</Text>
-                  <Text style={styles.fullIngredientList}>
-                    {ingredients.join(", ")}
-                  </Text>
-                </View>
-              )}
 
-              {ingredients.length > 0 && (
-                <View style={styles.section}>
-                  <Text style={styles.sectionTitle}>
-                    Ingredient Analysis{" "}
-                    {analysisLoading ? "(analyzing...)" : ""}
-                  </Text>
-                  {ingredients.map((ing, i) => {
-                    let info = getIngredientInfo(ing);
-                    const lower = ing.toLowerCase();
-                    // Only flag carbs if in top 3 — lower positions are less impactful
-                    if (info.tag === "carb" && i >= 3)
-                      info = { bg: "#1a2332", textColor: "#9CA3AF", tag: "" };
-                    // Only flag legumes if in top 7
-                    if (info.tag === "legume" && i >= 7)
-                      info = { bg: "#1a2332", textColor: "#9CA3AF", tag: "" };
-                    const analysis = ingredientAnalysis[lower];
-                    const nutrientInfo = getNutrientInfo(ing);
-                    return (
-                      <View
-                        key={i}
-                        style={[
-                          styles.ingredientRow,
-                          { borderLeftColor: info.textColor },
-                        ]}
-                      >
-                        <View style={styles.ingredientRowHeader}>
-                          <Text
-                            style={[
-                              styles.ingredientRowName,
-                              { color: info.textColor },
-                            ]}
-                          >
-                            {ing}
-                          </Text>
-                          {info.tag !== "" && (
-                            <View
-                              style={[
-                                styles.ingredientBadge,
-                                { backgroundColor: info.bg },
-                              ]}
-                            >
-                              <Text
-                                style={[
-                                  styles.ingredientBadgeText,
-                                  { color: info.textColor },
-                                ]}
-                              >
-                                {info.tag}
-                              </Text>
-                            </View>
-                          )}
-                        </View>
-                        {analysis ? (
-                          <>
-                            {analysis.provides ? (
-                              <Text style={styles.ingredientProvides}>
-                                Provides: {analysis.provides}
-                              </Text>
-                            ) : null}
-                            <Text style={styles.ingredientExplanation}>
-                              {analysis.explanation}
-                            </Text>
-                          </>
-                        ) : analysisLoading ? (
-                          <>
-                            {nutrientInfo && (
-                              <Text style={styles.ingredientProvides}>
-                                🌿 {nutrientInfo}
-                              </Text>
-                            )}
-                            <Text style={styles.ingredientProvides}>
-                              Analyzing...
-                            </Text>
-                          </>
-                        ) : nutrientInfo ? (
-                          <Text style={styles.ingredientProvides}>
-                            🌿 {nutrientInfo}
-                          </Text>
-                        ) : null}
-                      </View>
-                    );
-                  })}
-                </View>
-              )}
-
-              {ingredients.length > 0 &&
-                (() => {
-                  const lowerIngredients = ingredients.map((i) =>
-                    i.toLowerCase(),
-                  );
-                  const missingOrgans = ORGAN_COVERAGE.filter(
-                    (o) =>
-                      !lowerIngredients.some((ing) => ing.includes(o.organ)),
-                  );
-                  const presentOrgans = ORGAN_COVERAGE.filter((o) =>
-                    lowerIngredients.some((ing) => ing.includes(o.organ)),
-                  );
-                  return (
-                    <View style={styles.section}>
-                      <Text style={styles.sectionTitle}>
-                        Organ Meat Coverage
-                      </Text>
-                      {presentOrgans.length > 0 &&
-                        presentOrgans.map((o, i) => (
-                          <View key={i} style={styles.organRow}>
-                            <Text style={styles.organPresent}>
-                              ✓{" "}
-                              {o.organ.charAt(0).toUpperCase() +
-                                o.organ.slice(1)}
-                            </Text>
-                            <Text style={styles.organBenefit}>
-                              {o.benefits}
-                            </Text>
-                          </View>
-                        ))}
-                      {missingOrgans.length > 0 && (
-                        <>
-                          <Text style={styles.organMissingTitle}>
-                            Not present in this food (for reference only —
-                            AAFCO-compliant foods meet baseline nutritional
-                            needs):
-                          </Text>
-                          {missingOrgans.map((o, i) => (
-                            <View key={i} style={styles.organRow}>
-                              <Text style={styles.organMissing}>
-                                ✗{" "}
-                                {o.organ.charAt(0).toUpperCase() +
-                                  o.organ.slice(1)}
-                              </Text>
-                              <Text style={styles.organBenefit}>
-                                {o.benefits}
-                              </Text>
-                            </View>
-                          ))}
-                        </>
-                      )}
-                    </View>
-                  );
-                })()}
-
-              {(omega3Found.length > 0 || omega6Found.length > 0) && (
-                <View style={styles.section}>
-                  <Text style={styles.sectionTitle}>Omega Fatty Acids</Text>
-                  {omega3Found.length > 0 && (
-                    <View style={styles.omegaRow}>
-                      <Text style={styles.omega3Label}>Omega-3 Sources:</Text>
-                      <Text style={styles.omegaSources}>
-                        {omega3Found.join(", ")}
-                      </Text>
-                      <Text style={styles.omegaNote}>
-                        Anti-inflammatory, supports skin, coat, and brain health
-                      </Text>
-                    </View>
-                  )}
-                  {omega6Found.length > 0 && (
-                    <View style={styles.omegaRow}>
-                      <Text style={styles.omega6Label}>
-                        Omega-6 Sources (high ratio = inflammation risk):
-                      </Text>
-                      <Text style={styles.omegaSources}>
-                        {omega6Found.join(", ")}
-                      </Text>
-                    </View>
-                  )}
-                  {omega3Found.length === 0 && (
-                    <Text style={styles.omegaNote}>
-                      ⚠️ No omega-3 sources detected — consider supplementing
-                      with fish oil
-                    </Text>
-                  )}
-                </View>
-              )}
-
-              <TouchableOpacity style={styles.coachBtn} onPress={openCoach}>
-                <Text style={styles.coachBtnIcon}>🐾</Text>
-                <View>
-                  <Text style={styles.coachBtnTitle}>
-                    Ask AI Nutrition Coach
-                  </Text>
-                  <Text style={styles.coachBtnSub}>
-                    Get personalized advice about this product
-                  </Text>
-                </View>
-                <Text style={styles.coachBtnArrow}>›</Text>
-              </TouchableOpacity>
-
-              {onTAPFList && (
-                <View style={styles.safeBox}>
-                  <Text style={styles.safeText}>
-                    ⭐ On Truth About Pet Food Trusted List!
-                  </Text>
-                </View>
-              )}
-
-              {processing && (
-                <View
-                  style={
-                    processing.method === "Unknown"
-                      ? styles.infoBox
-                      : processing.scoreCap <= 35
-                        ? styles.warningBox
-                        : processing.scoreCap <= 55
-                          ? styles.cautionBox
-                          : styles.safeBox
-                  }
-                >
-                  <Text
-                    style={
-                      processing.method === "Unknown"
-                        ? styles.infoTitle
-                        : processing.scoreCap <= 35
-                          ? styles.warningTitle
-                          : processing.scoreCap <= 55
-                            ? styles.cautionTitle
-                            : styles.safeText
-                    }
-                  >
-                    Processing Method {processing.emoji} — {processing.rating}
-                  </Text>
-                  {processing.scoreCap <= 35 && (
-                    <Text style={styles.warningItem}>
-                      High heat extrusion has been associated with the
-                      destruction of natural enzymes and heat-sensitive
-                      nutrients. Synthetic vitamin supplementation is typically
-                      added to compensate.
-                    </Text>
-                  )}
-                  {processing.method === "Unknown" && (
-                    <>
-                      <Text style={[styles.infoBody, { marginBottom: 10 }]}>
-                        Couldn't auto-detect. Set it manually to get an accurate
-                        score:
-                      </Text>
-                      <View style={styles.processingPicker}>
-                        {[
-                          { label: "🌟 Raw / Gently Cooked", key: "raw" },
-                          {
-                            label: "✅ Freeze-Dried / Air-Dried",
-                            key: "freeze-dried",
-                          },
-                          { label: "🟡 Baked", key: "baked" },
-                          { label: "🔴 Kibble", key: "kibble" },
-                        ].map((opt) => (
-                          <TouchableOpacity
-                            key={opt.key}
-                            style={styles.processingOption}
-                            onPress={async () => {
-                              const newProcessing = detectProcessingMethod(
-                                "",
-                                ingredients,
-                                opt.key,
-                              );
-                              setProcessing(newProcessing);
-                              await processIngredients(
-                                productName,
-                                ingredients.join(", "),
-                                ingredients,
-                                opt.key,
-                              );
-                            }}
-                          >
-                            <Text style={styles.processingOptionText}>
-                              {opt.label}
-                            </Text>
-                          </TouchableOpacity>
-                        ))}
-                      </View>
-                    </>
-                  )}
-                </View>
-              )}
-
-              {/* Personalized Recommendations */}
-              {processing &&
-                (() => {
-                  const isHeatProcessed = processing.scoreCap <= 88; // gently cooked, baked, or kibble
-                  const isKibbleOrBaked = processing.scoreCap <= 55;
-                  const poorOmega = omegaRating && omegaRating.bonus <= 0;
-                  const noOmega3 = omega3Found.length === 0;
-                  const recs: {
-                    icon: string;
-                    title: string;
-                    body: string;
-                    btnLabel?: string;
-                    btnUrl?: string;
-                    footnote?: string;
-                  }[] = [];
-
-                  if (noOmega3 || poorOmega) {
-                    recs.push({
-                      icon: "🐟",
-                      title: "Add Fish Oil for Omega-3s",
-                      body: "This food has little to no omega-3 sources. Dogs need a healthy omega-6 to omega-3 ratio of ideally 5:1 or lower. Most kibble runs 15:1–30:1. Adding a quality fish oil daily brings the ratio back in balance, reduces inflammation, and supports skin, coat, joint, and brain health.",
-                      btnLabel: "Shop Native Pet Omega Fish Oil →",
-                      btnUrl: "https://amzn.to/4s8Cy3J",
-                      footnote:
-                        "Affiliate link — we may earn a small commission at no cost to you",
-                    });
-                  }
-
-                  const noProbioticsDetected =
-                    ingredients.filter((ing) =>
-                      PROBIOTIC_SOURCES.some((p) =>
-                        ing.toLowerCase().includes(p),
-                      ),
-                    ).length === 0;
-                  if (noProbioticsDetected) {
-                    recs.push({
-                      icon: "🦠",
-                      title: "No Probiotics Detected",
-                      body: isHeatProcessed
-                        ? "Heat processing destroys beneficial bacteria naturally found in fresh ingredients. This food contains no probiotic strains. Dogs thrive with 1–10 billion CFU of probiotics daily — supporting gut health, immunity, stool quality, and nutrient absorption."
-                        : "No probiotic strains were detected in this food's ingredient list. Even high quality raw and freeze-dried foods benefit from added probiotics to maintain a healthy gut microbiome, especially during diet transitions.",
-                      btnLabel: "Shop Native Pet Probiotic →",
-                      btnUrl: "https://amzn.to/41EEGoV",
-                      footnote:
-                        "Affiliate link — we may earn a small commission at no cost to you",
-                    });
-                  }
-
-                  if (isKibbleOrBaked) {
-                    recs.push({
-                      icon: "🥩",
-                      title: "Try a Better Food",
-                      body: "This food scores poorly. Freeze-dried raw foods retain 95% of natural enzymes and nutrients. Dogs often need 20-25% less food per day compared to kibble. Consider switching to a cleaner whole food option.",
-                      btnLabel: "Shop Simple Food Project (Freeze-Dried) →",
-                      btnUrl: "https://amzn.to/4w6OBBK",
-                      footnote:
-                        "Affiliate link — we may earn a small commission at no cost to you",
-                    });
-                    recs.push({
-                      icon: "🥚",
-                      title: "Add a Raw Egg a Few Times a Week",
-                      body: "A whole raw egg is one of the most bioavailable sources of protein, healthy fat, lecithin, biotin, and choline for dogs. It also contains natural enzymes. For a medium-to-large dog, 3–5 eggs per week is a simple, inexpensive way to add whole food nutrition to a processed diet.",
-                    });
-                  }
-
-                  if (
-                    flagged.some((f) =>
-                      [
-                        "bha",
-                        "bht",
-                        "tbhq",
-                        "ethoxyquin",
-                        "menadione",
-                        "copper sulfate",
-                        "sodium selenite",
-                      ].some((t) => f.name.toLowerCase().includes(t)),
-                    )
-                  ) {
-                    recs.push({
-                      icon: "🌿",
-                      title: "Support Liver & Kidney Detox",
-                      body: "This food contains ingredients that may stress the liver and kidneys over time. A liver and kidney support supplement can help dogs process and eliminate toxins more efficiently.",
-                      btnLabel: "Shop Four Leaf Rover Liver & Kidney Clean →",
-                      btnUrl: "https://amzn.to/3QWJGmX",
-                      footnote:
-                        "Affiliate link — we may earn a small commission at no cost to you",
-                    });
-                  }
-
-                  if (recs.length === 0) return null;
-                  return (
-                    <View style={styles.section}>
-                      <Text style={styles.sectionTitle}>
-                        💡 Personalized Recommendations
-                      </Text>
-                      <Text style={styles.sectionNote}>
-                        Based on what this food is missing:
-                      </Text>
-                      {recs.map((rec, i) => (
-                        <View key={i} style={styles.recCard}>
-                          <Text style={styles.recCardTitle}>
-                            {rec.icon} {rec.title}
-                          </Text>
-                          <Text style={styles.recCardBody}>{rec.body}</Text>
-                          {rec.btnLabel && rec.btnUrl && (
-                            <TouchableOpacity
-                              style={styles.recBtn}
-                              onPress={() => Linking.openURL(rec.btnUrl!)}
-                            >
-                              <Text style={styles.recBtnText}>
-                                {rec.btnLabel}
-                              </Text>
-                            </TouchableOpacity>
-                          )}
-                          {rec.footnote && (
-                            <Text style={styles.enzymeDisclaimer}>
-                              {rec.footnote}
-                            </Text>
-                          )}
-                        </View>
-                      ))}
-                    </View>
-                  );
-                })()}
-
-              {/* Lipoma Management Guide */}
-              {score !== null && (
-                <View style={styles.lipomaGuide}>
-                  <Text style={styles.lipomaTitle}>
-                    🐾 Lipoma-Friendly Feeding Guide
-                  </Text>
-                  <Text style={styles.lipomaSubtitle}>
-                    Lipomas (fatty tumors) in dogs are strongly influenced by
-                    diet. Here's what to look for:
-                  </Text>
-
-                  <View style={styles.lipomaRow}>
-                    <Text style={styles.lipomaLabel}>Carbohydrates</Text>
-                    <Text style={styles.lipomaTarget}>
-                      &lt;20% ideal · &lt;15% excellent
-                    </Text>
-                    <Text style={styles.lipomaBody}>
-                      Excess carbs spike insulin and convert to stored fat — the
-                      primary driver of lipoma growth. Keep carbs as low as
-                      possible. This food:{" "}
-                      {nutritionalProfile?.carb_pct != null
-                        ? `~${nutritionalProfile.carb_pct}% ${nutritionalProfile.carb_pct <= 15 ? "✅" : nutritionalProfile.carb_pct <= 20 ? "🟡" : "⚠️"}`
-                        : "unknown"}
-                    </Text>
-                  </View>
-
-                  <View style={styles.lipomaRow}>
-                    <Text style={styles.lipomaLabel}>Fat</Text>
-                    <Text style={styles.lipomaTarget}>
-                      High fat is OK when carbs are low
-                    </Text>
-                    <Text style={styles.lipomaBody}>
-                      Dietary fat does not directly cause lipomas. When carbs
-                      are low, the body burns fat for fuel instead of storing
-                      it. High protein + high fat + low carb is the ideal lipoma
-                      management diet.
-                    </Text>
-                  </View>
-
-                  <View style={styles.lipomaRow}>
-                    <Text style={styles.lipomaLabel}>Omega-6:3 Ratio</Text>
-                    <Text style={styles.lipomaTarget}>5:1 or lower ideal</Text>
-                    <Text style={styles.lipomaBody}>
-                      Chronic inflammation accelerates lipoma growth. A balanced
-                      omega ratio reduces systemic inflammation. Most kibble
-                      runs 15:1–30:1. Raw and freeze-dried foods are typically
-                      much closer to the ideal ratio.
-                    </Text>
-                  </View>
-
-                  <View style={styles.lipomaRow}>
-                    <Text style={styles.lipomaLabel}>Processing</Text>
-                    <Text style={styles.lipomaTarget}>
-                      Raw or freeze-dried best
-                    </Text>
-                    <Text style={styles.lipomaBody}>
-                      High heat processing creates advanced glycation end
-                      products (AGEs) that promote inflammation and fat storage.
-                      Raw and freeze-dried diets minimize AGE formation and keep
-                      enzymes intact.
-                    </Text>
-                  </View>
-
-                  <View style={styles.lipomaRow}>
-                    <Text style={styles.lipomaLabel}>Ingredients to avoid</Text>
-                    <Text style={styles.lipomaTarget}>
-                      Corn, wheat, rice, soy, sugar, canola oil
-                    </Text>
-                    <Text style={styles.lipomaBody}>
-                      High-glycemic fillers and inflammatory vegetable oils are
-                      the worst offenders for lipoma-prone dogs. Look for named
-                      whole meat proteins as the first 2–3 ingredients.
-                    </Text>
-                  </View>
-
-                  <View style={[styles.lipomaRow, { borderBottomWidth: 0 }]}>
-                    <Text style={styles.lipomaLabel}>This food</Text>
-                    <Text
-                      style={[
-                        styles.lipomaTarget,
-                        {
-                          color:
-                            score >= 70
-                              ? "#2ECC71"
-                              : score >= 50
-                                ? "#e67e22"
-                                : "#c0392b",
-                        },
-                      ]}
-                    >
-                      {score >= 70
-                        ? "✅ Lipoma-friendly"
-                        : score >= 50
-                          ? "🟡 Moderate concern"
-                          : "⚠️ Not recommended for lipoma management"}
-                    </Text>
-                    <Text style={styles.lipomaBody}>
-                      {score >= 70
-                        ? "This food has a low-carb, whole food profile suitable for dogs managing lipomas."
-                        : score >= 50
-                          ? "This food has some concerns for lipoma management. Check the carb % and omega ratio above."
-                          : "This food's high carb content, poor omega ratio, or processed ingredients make it a poor choice for dogs prone to lipomas."}
-                    </Text>
-                  </View>
-                </View>
-              )}
-
-              <View style={styles.section}>
-                <Text style={styles.sectionTitle}>AAFCO Status</Text>
-                <Text style={styles.sectionBody}>{aafcoStatus}</Text>
-                {aafcoStatus.includes("not detected") && (
-                  <TouchableOpacity
-                    onPress={() =>
-                      Linking.openURL(
-                        `https://www.google.com/search?q=${encodeURIComponent((productName || "") + " AAFCO nutritional adequacy statement")}`,
-                      )
-                    }
-                  >
-                    <Text
-                      style={{ color: "#5dade2", fontSize: 12, marginTop: 4 }}
-                    >
-                      🔍 Look up AAFCO status for this brand →
-                    </Text>
-                  </TouchableOpacity>
-                )}
-                <Text style={styles.sectionNote}>
-                  Feeding trials are the gold standard. Nutrient profiles mean
-                  the formula meets guidelines on paper but was not tested on
-                  live animals.
-                </Text>
-              </View>
-
-              {dbAvoidFlags.length > 0 && (
-                <View
-                  style={[styles.warningBox, { backgroundColor: "#1a0a00" }]}
-                >
-                  <Text style={[styles.warningTitle, { color: "#ff4500" }]}>
-                    🚨 AVOID: Dangerous Ingredients ({dbAvoidFlags.length})
-                  </Text>
-                  {dbAvoidFlags.map((item, i) => (
-                    <View key={i} style={styles.ingredientRow}>
-                      <Text style={[styles.warningItem, { color: "#ff6b35" }]}>
-                        • {item.ingredient}
-                      </Text>
-                      <Text
-                        style={[styles.ingredientReason, { color: "#ffaa80" }]}
-                      >
-                        {item.flag}
-                      </Text>
-                    </View>
-                  ))}
-                </View>
-              )}
-
-              {dbCombinationWarnings.length > 0 && (
-                <View
-                  style={[styles.warningBox, { backgroundColor: "#1a0f00" }]}
-                >
-                  <Text style={[styles.warningTitle, { color: "#ffa500" }]}>
-                    ⚠️ Risky Combinations ({dbCombinationWarnings.length})
-                  </Text>
-                  {dbCombinationWarnings.map((item, i) => (
-                    <View key={i} style={styles.ingredientRow}>
-                      <Text
-                        style={[styles.ingredientReason, { color: "#ffd080" }]}
-                      >
-                        {item.warning}
-                      </Text>
-                    </View>
-                  ))}
-                </View>
-              )}
-
-              {dbPoorFormFlags.length > 0 && (
-                <View
-                  style={[styles.warningBox, { backgroundColor: "#0f1a0a" }]}
-                >
-                  <Text style={[styles.warningTitle, { color: "#aad45a" }]}>
-                    💡 Lower-Quality Synthetic Forms ({dbPoorFormFlags.length})
-                  </Text>
-                  <Text
-                    style={[
-                      styles.ingredientReason,
-                      { color: "#c8e89a", marginBottom: 6 },
-                    ]}
-                  >
-                    These are technically safe but cheaper, less bioavailable
-                    forms. Better natural alternatives exist.
-                  </Text>
-                  {dbPoorFormFlags.map((item, i) => (
-                    <View key={i} style={styles.ingredientRow}>
-                      <Text style={[styles.warningItem, { color: "#c8e89a" }]}>
-                        • {item.ingredient}
-                      </Text>
-                      <Text
-                        style={[styles.ingredientReason, { color: "#a0c870" }]}
-                      >
-                        {item.flag}
-                      </Text>
-                    </View>
-                  ))}
-                </View>
-              )}
-
-              {toxicAdditives.length > 0 && (
-                <View
-                  style={[styles.warningBox, { backgroundColor: "#2c0a0a" }]}
-                >
-                  <Text style={[styles.warningTitle, { color: "#ff6b6b" }]}>
-                    ☠️ Toxic Synthetic Additives ({toxicAdditives.length})
-                  </Text>
-                  {toxicAdditives.map((item, i) => {
-                    const match = HARMFUL_INGREDIENTS.find((h) =>
-                      item.toLowerCase().includes(h.term),
-                    );
-                    return (
-                      <View key={i} style={styles.ingredientRow}>
-                        <Text
-                          style={[styles.warningItem, { color: "#ff6b6b" }]}
-                        >
-                          • {item}
-                        </Text>
-                        {match && (
-                          <Text
-                            style={[
-                              styles.ingredientReason,
-                              { color: "#ffaaaa" },
-                            ]}
-                          >
-                            {match.reason}
-                          </Text>
-                        )}
-                      </View>
-                    );
-                  })}
-                </View>
-              )}
-
-              {flagged.length > 0 && (
-                <View style={styles.warningBox}>
-                  <Text style={styles.warningTitle}>
-                    ⚠️ Ingredient Concerns ({flagged.length})
-                  </Text>
-                  <Text
-                    style={{
-                      color: "#aaa",
-                      fontSize: 11,
-                      marginBottom: 8,
-                      fontStyle: "italic",
-                    }}
-                  >
-                    Tap any ingredient to see why it's flagged. Ratings assume
-                    this is primary diet food.
-                  </Text>
-                  {flagged.map((item, i) => {
-                    const expanded = expandedConcerns.has(i);
-                    return (
-                      <TouchableOpacity
-                        key={i}
-                        onPress={() =>
-                          setExpandedConcerns((prev) => {
-                            const n = new Set(prev);
-                            expanded ? n.delete(i) : n.add(i);
-                            return n;
-                          })
-                        }
-                        activeOpacity={0.7}
-                      >
-                        <View
-                          style={[styles.ingredientRow, { marginBottom: 6 }]}
-                        >
-                          <View style={styles.severityRow}>
-                            <Text style={styles.warningItem}>
-                              • {item.name}
-                            </Text>
-                            <View
-                              style={{
-                                flexDirection: "row",
-                                alignItems: "center",
-                                gap: 6,
-                              }}
-                            >
-                              <View
-                                style={[
-                                  styles.severityBadge,
-                                  {
-                                    backgroundColor:
-                                      SEVERITY_COLORS[item.severity] || "#888",
-                                  },
-                                ]}
-                              >
-                                <Text style={styles.severityText}>
-                                  {item.severity === "toxic"
-                                    ? "avoid"
-                                    : item.severity}
-                                </Text>
-                              </View>
-                              <Text style={{ color: "#6B7280", fontSize: 12 }}>
-                                {expanded ? "▲" : "▼"}
-                              </Text>
-                            </View>
-                          </View>
-                          {expanded && (
-                            <Text
-                              style={[
-                                styles.ingredientReason,
-                                { marginTop: 6 },
-                              ]}
-                            >
-                              {item.reason}
-                            </Text>
-                          )}
-                        </View>
-                      </TouchableOpacity>
-                    );
-                  })}
-                </View>
-              )}
-
-              {vitamins.length > 0 && (
-                <View
-                  style={
-                    vitaminScore.level === "Severe"
-                      ? styles.warningBox
-                      : vitaminScore.level === "Moderate"
-                        ? styles.cautionBox
-                        : styles.infoBox
-                  }
-                >
-                  <Text
-                    style={
-                      vitaminScore.level === "Severe"
-                        ? styles.warningTitle
-                        : vitaminScore.level === "Moderate"
-                          ? styles.cautionTitle
-                          : styles.infoTitle
-                    }
-                  >
-                    💊 Synthetic Vitamins & Minerals — {vitaminScore.level} (
-                    {vitamins.length})
-                  </Text>
-                  <Text
-                    style={
-                      vitaminScore.level === "Severe"
-                        ? styles.warningItem
-                        : vitaminScore.level === "Moderate"
-                          ? styles.cautionItem
-                          : styles.infoBody
-                    }
-                  >
-                    {vitamins.length <= 5
-                      ? "Some synthetic supplementation present."
-                      : vitamins.length <= 10
-                        ? "Heavy synthetic supplementation — research suggests this may indicate nutrients were compromised during processing."
-                        : "Extremely heavy supplementation — this formula appears to rely significantly on synthetic nutrients rather than whole food sources."}
-                  </Text>
-                  {vitamins.map((v, i) => (
-                    <Text
-                      key={i}
-                      style={
-                        vitaminScore.level === "Severe"
-                          ? styles.warningItem
-                          : styles.cautionItem
-                      }
-                    >
-                      • {v}
-                    </Text>
-                  ))}
-                </View>
-              )}
-
-              {meals.length > 0 && (
-                <View style={styles.cautionBox}>
-                  <Text style={styles.cautionTitle}>
-                    🍖 Meat Meals – Not Whole Meat ({meals.length})
-                  </Text>
-                  <Text style={styles.cautionNote}>
-                    Rendered meals are highly processed. Whole named meats such
-                    as chicken or beef are generally preferred by veterinary
-                    nutritionists.
-                  </Text>
-                  {meals.map((item, i) => (
-                    <Text key={i} style={styles.cautionItem}>
-                      • {item}
-                    </Text>
-                  ))}
-                </View>
-              )}
-
-              {legumes.length > 0 && (
-                <View style={styles.cautionBox}>
-                  <Text style={styles.cautionTitle}>
-                    🫘 Legumes/Lentils{" "}
-                    {legumes.some((l) =>
-                      ingredients
-                        .slice(0, 5)
-                        .some((i) => i.toLowerCase().includes(l.toLowerCase())),
-                    )
-                      ? "⚠️ In Top 5 – DCM/TCVM Risk"
-                      : "Found"}
-                  </Text>
-                  <Text style={styles.cautionNote}>
-                    The FDA has investigated a possible association between
-                    diets high in legumes and Dilated Cardiomyopathy (DCM) in
-                    dogs. Research is ongoing.
-                  </Text>
-                  {legumes.map((item, i) => (
-                    <Text key={i} style={styles.cautionItem}>
-                      • {item}
-                    </Text>
-                  ))}
-                </View>
-              )}
-
-              {highCarbs.length >= 3 && (
-                <View style={styles.cautionBox}>
-                  <Text style={styles.cautionTitle}>
-                    🌾 High Carbohydrate Content ({highCarbs.length} sources)
-                  </Text>
-                  <Text style={styles.cautionNote}>
-                    Dogs and cats evolved as carnivores. Some veterinary
-                    nutritionists have associated high carbohydrate diets with
-                    obesity, blood sugar dysregulation, and inflammation in
-                    companion animals.
-                  </Text>
-                  {highCarbs.map((item, i) => (
-                    <Text key={i} style={styles.cautionItem}>
-                      • {item}
-                    </Text>
-                  ))}
-                </View>
-              )}
-
-              {sourcingIssues.length > 0 && (
-                <View style={styles.cautionBox}>
-                  <Text style={styles.cautionTitle}>
-                    🌍 Vague Ingredient Sourcing in Top 5
-                  </Text>
-                  <Text style={styles.cautionNote}>
-                    Generic terms such as "meat" or "poultry" do not identify
-                    the actual animal species. Quality, origin, and condition of
-                    these ingredients cannot be independently verified by
-                    consumers.
-                  </Text>
-                  {sourcingIssues.map((i, idx) => (
-                    <Text key={idx} style={styles.cautionItem}>
-                      • {i}
-                    </Text>
-                  ))}
-                </View>
-              )}
-
-              <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Omega Fatty Acid Ratio</Text>
-                {omegaRating && (
-                  <Text
-                    style={[
-                      styles.sectionBody,
-                      { fontWeight: "700", marginBottom: 8 },
-                    ]}
-                  >
-                    {omegaRating.label}
-                  </Text>
-                )}
-                <Text style={[styles.sectionNote, { marginBottom: 6 }]}>
-                  A 5:1 or lower omega-6 to omega-3 ratio is considered ideal
-                  for dogs. Most kibble runs 10:1–30:1.
-                </Text>
-                {processing &&
-                  (processing.rating === "Poor – High Heat Kibble" ||
-                    processing.rating === "OK – Baked") &&
-                  !nutritionalProfile?.omega_ratio && (
-                    <Text
-                      style={{
-                        color: "#F59E0B",
-                        fontSize: 12,
-                        marginBottom: 6,
-                      }}
-                    >
-                      {
-                        "⚠️ Most kibble brands don't disclose the omega ratio because it's typically 15:1–30:1. Scan the Guaranteed Analysis panel if available for exact numbers."
-                      }
-                    </Text>
-                  )}
-                {omega3Found.length > 0 && (
-                  <>
-                    <Text style={[styles.sectionTitle, { marginTop: 4 }]}>
-                      Omega-3 Sources ✅
-                    </Text>
-                    {omega3Found.map((i, idx) => (
-                      <Text key={idx} style={styles.goodItem}>
-                        • {i}
-                      </Text>
-                    ))}
-                  </>
-                )}
-                {omega6Found.length > 0 && (
-                  <>
-                    <Text
-                      style={[
-                        styles.sectionTitle,
-                        { marginTop: 8, color: "#F59E0B" },
-                      ]}
-                    >
-                      High Omega-6 Oils ⚠️
-                    </Text>
-                    {omega6Found.map((i, idx) => (
-                      <Text
-                        key={idx}
-                        style={[styles.cautionItem, { marginBottom: 2 }]}
-                      >
-                        • {i}
-                      </Text>
-                    ))}
-                  </>
-                )}
-                {omega3Found.length === 0 && (
-                  <Text style={styles.sectionBody}>
-                    No omega-3 rich ingredients detected.
-                  </Text>
-                )}
-              </View>
-
-              <View style={styles.section}>
-                <Text style={styles.sectionTitle}>
-                  Fiber Sources {fiberFound.length > 0 ? "✅" : "⚠️"}
-                </Text>
-                {fiberFound.length > 0 ? (
-                  fiberFound.map((i, idx) => (
-                    <Text key={idx} style={styles.goodItem}>
-                      • {i}
-                    </Text>
-                  ))
-                ) : (
-                  <Text style={styles.sectionBody}>
-                    No quality whole food fiber sources detected.
-                  </Text>
-                )}
-
-                <Text style={[styles.sectionTitle, { marginTop: 12 }]}>
-                  Probiotics {probioticsFound.length > 0 ? "✅" : "⚠️"}
-                </Text>
-                {probioticsFound.length > 0 ? (
-                  probioticsFound.map((i, idx) => (
-                    <Text key={idx} style={styles.goodItem}>
-                      • {i}
-                    </Text>
-                  ))
-                ) : (
-                  <Text style={styles.sectionBody}>
-                    No probiotic strains detected in this food. Consider adding
-                    a daily probiotic supplement.
-                  </Text>
-                )}
-              </View>
-
-              {flagged.length === 0 &&
-                meals.length === 0 &&
-                legumes.length === 0 &&
-                highCarbs.length < 3 &&
-                toxicAdditives.length === 0 && (
-                  <View style={styles.safeBox}>
-                    <Text style={styles.safeText}>
-                      ✅ No major ingredient concerns detected based on our
-                      assessment criteria!
-                    </Text>
-                  </View>
-                )}
-              {supabaseAnalysis && (
-                <View style={styles.section}>
-                  <Text style={styles.sectionTitle}>
-                    🧬 Ingredient Intelligence
-                  </Text>
-                  <Text style={styles.sectionBody}>
-                    Purine Load: {supabaseAnalysis.highPurineCount} high-purine
-                    ingredients detected
-                  </Text>
-                  <Text style={styles.sectionBody}>
-                    Synthetic Vitamins/Minerals:{" "}
-                    {supabaseAnalysis.syntheticCount}
-                  </Text>
-                  {supabaseAnalysis.redFlags.length > 0 && (
-                    <View style={{ marginTop: 8 }}>
-                      <Text style={[styles.sectionTitle, { color: "#c0392b" }]}>
-                        🚨 Database Red Flags
-                      </Text>
-                      {supabaseAnalysis.redFlags.map((ing: any, i: number) => (
-                        <View key={i} style={{ marginBottom: 8 }}>
-                          <Text style={{ color: "#c0392b", fontWeight: "600" }}>
-                            • {ing.name}
-                          </Text>
-                          <Text
-                            style={{
-                              fontSize: 11,
-                              color: "#888",
-                              fontStyle: "italic",
-                              marginLeft: 12,
-                            }}
-                          >
-                            {ing.notes}
-                          </Text>
-                        </View>
-                      ))}
-                    </View>
-                  )}
-                </View>
-              )}
               <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Ingredient Pills</Text>
                 <Text style={styles.pillHint}>
@@ -6133,6 +5215,8 @@ export default function App() {
               </View>
             </>
           )}
+
+          <HersheyProtocolSection />
 
           <TouchableOpacity
             style={styles.button}
@@ -6304,86 +5388,6 @@ export default function App() {
         </View>
       </Modal>
 
-      <Modal
-        visible={coachVisible}
-        animationType="slide"
-        presentationStyle="pageSheet"
-        onRequestClose={() => setCoachVisible(false)}
-      >
-        <KeyboardAvoidingView
-          style={styles.coachModal}
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-        >
-          <View style={styles.coachHeader}>
-            <View>
-              <Text style={styles.coachHeaderTitle}>AI Nutrition Coach</Text>
-              <Text style={styles.coachHeaderSub}>{productName}</Text>
-            </View>
-            <TouchableOpacity
-              onPress={() => setCoachVisible(false)}
-              style={styles.coachClose}
-            >
-              <Text style={styles.coachCloseText}>✕</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.coachDisclaimer}>
-            <Text style={styles.coachDisclaimerText}>
-              For informational purposes only. Not veterinary advice.
-            </Text>
-          </View>
-          <ScrollView
-            style={styles.coachMessages}
-            contentContainerStyle={{ padding: 16, paddingBottom: 8 }}
-          >
-            {coachMessages.map((msg, i) => (
-              <View
-                key={i}
-                style={[
-                  styles.coachBubble,
-                  msg.role === "user"
-                    ? styles.coachBubbleUser
-                    : styles.coachBubbleAssistant,
-                ]}
-              >
-                <Text
-                  style={[
-                    styles.coachBubbleText,
-                    msg.role === "user"
-                      ? styles.coachBubbleTextUser
-                      : styles.coachBubbleTextAssistant,
-                  ]}
-                >
-                  {msg.content}
-                </Text>
-              </View>
-            ))}
-            {coachLoading && (
-              <View style={styles.coachBubbleAssistant}>
-                <ActivityIndicator size="small" color="#2ECC71" />
-              </View>
-            )}
-          </ScrollView>
-          <View style={styles.coachInputRow}>
-            <TextInput
-              style={styles.coachInput}
-              value={coachInput}
-              onChangeText={setCoachInput}
-              placeholder="Ask about this food..."
-              placeholderTextColor="#6B7280"
-              onSubmitEditing={sendCoachMessage}
-              returnKeyType="send"
-              editable={!coachLoading}
-            />
-            <TouchableOpacity
-              style={[styles.coachSend, coachLoading && { opacity: 0.5 }]}
-              onPress={sendCoachMessage}
-              disabled={coachLoading}
-            >
-              <Text style={styles.coachSendText}>↑</Text>
-            </TouchableOpacity>
-          </View>
-        </KeyboardAvoidingView>
-      </Modal>
     </View>
   );
 }
