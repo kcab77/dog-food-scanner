@@ -4900,6 +4900,15 @@ export default function App() {
                 </View>
               )}
 
+              {score !== null && score <= 35 && (
+                <View style={{ backgroundColor: "#1a1a2e", borderRadius: 16, padding: 16, marginHorizontal: 16, marginBottom: 12, borderWidth: 1, borderColor: "#2A3A4A" }}>
+                  <Text style={{ color: "#D1D5DB", fontSize: 13, lineHeight: 20, fontStyle: "italic" }}>
+                    💚 I fed my dog kibble for 6 years because I couldn't afford anything better — and he was okay. So please don't feel bad if this is what you can afford right now. They still love you exactly the same.{"\n\n"}The goal isn't perfection, it's just small improvements over time. Even adding a whole food topper, a raw egg, or a little fish a few times a week goes a long way. I'm just trying to help as much as I can. 🐾
+                  </Text>
+                  <Text style={{ color: "#6B7280", fontSize: 11, marginTop: 8 }}>— Kyle, PawGrade founder</Text>
+                </View>
+              )}
+
               {ingredients.length > 0 && (
                 <View style={styles.section}>
                   <Text style={styles.sectionTitle}>Ingredient Pills</Text>
