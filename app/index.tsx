@@ -3030,9 +3030,10 @@ export default function App() {
   ) => {
     const customIngredients = await loadCustomIngredients();
     const top5 = ingredientList.slice(0, 5).map((i) => i.toLowerCase());
-    const foundHarmful: { name: string; reason: string; severity: string }[] =
+    const foundHarmful: { name: string; reason: string; severity: string; position: number }[] =
       [];
-    for (const ing of ingredientList) {
+    for (let _hi = 0; _hi < ingredientList.length; _hi++) {
+      const ing = ingredientList[_hi];
       const match = HARMFUL_INGREDIENTS.find((h) =>
         ing.toLowerCase().includes(h.term),
       );
@@ -3041,6 +3042,7 @@ export default function App() {
           name: ing,
           reason: match.reason,
           severity: match.severity,
+          position: _hi,
         });
         continue;
       }
@@ -3052,6 +3054,7 @@ export default function App() {
           name: ing,
           reason: customMatch.reason,
           severity: customMatch.severity,
+          position: _hi,
         });
     }
     const foundToxicAdditives = ingredientList.filter((ing) =>
@@ -3174,9 +3177,13 @@ export default function App() {
         value: -processingResult.penalty,
       });
     for (const h of foundHarmful) {
-      const p = SEVERITY_PENALTIES[h.severity] || 8;
+      const base = SEVERITY_PENALTIES[h.severity] || 8;
+      const pos = h.position ?? 0;
+      const mult = pos < 5 ? 1.0 : pos < 10 ? 0.65 : pos < 20 ? 0.40 : 0.20;
+      const p = Math.max(1, Math.round(base * mult));
       total -= p;
-      breakdown.push({ label: `${h.name} (${h.severity})`, value: -p });
+      const posNote = pos >= 10 ? ` — ingredient #${pos + 1} (trace amount)` : pos >= 5 ? ` — ingredient #${pos + 1}` : "";
+      breakdown.push({ label: `${h.name} (${h.severity})${posNote}`, value: -p });
     }
     total -= processingResult.penalty;
     if (vitLoadPenalty > 0) {
@@ -3621,9 +3628,10 @@ export default function App() {
       const top5 = ingredientList.slice(0, 5).map((i) => i.toLowerCase());
 
       // Harmful — built-in + custom
-      const foundHarmful: { name: string; reason: string; severity: string }[] =
+      const foundHarmful: { name: string; reason: string; severity: string; position: number }[] =
         [];
-      for (const ing of ingredientList) {
+      for (let _hi = 0; _hi < ingredientList.length; _hi++) {
+        const ing = ingredientList[_hi];
         const match = HARMFUL_INGREDIENTS.find((h) =>
           ing.toLowerCase().includes(h.term),
         );
@@ -3632,6 +3640,7 @@ export default function App() {
             name: ing,
             reason: match.reason,
             severity: match.severity,
+            position: _hi,
           });
           continue;
         }
@@ -3643,6 +3652,7 @@ export default function App() {
             name: ing,
             reason: customMatch.reason,
             severity: customMatch.severity,
+            position: _hi,
           });
         }
       }
@@ -3768,9 +3778,13 @@ export default function App() {
         });
       total -= processingResult.penalty;
       for (const h of foundHarmful) {
-        const p = SEVERITY_PENALTIES[h.severity] || 8;
+        const base = SEVERITY_PENALTIES[h.severity] || 8;
+        const pos = h.position ?? 0;
+        const mult = pos < 5 ? 1.0 : pos < 10 ? 0.65 : pos < 20 ? 0.40 : 0.20;
+        const p = Math.max(1, Math.round(base * mult));
         total -= p;
-        breakdown.push({ label: `${h.name} (${h.severity})`, value: -p });
+        const posNote = pos >= 10 ? ` — ingredient #${pos + 1} (trace amount)` : pos >= 5 ? ` — ingredient #${pos + 1}` : "";
+        breakdown.push({ label: `${h.name} (${h.severity})${posNote}`, value: -p });
       }
       if (vitLoadPenalty > 0) {
         total -= vitLoadPenalty;
