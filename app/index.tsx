@@ -4856,6 +4856,41 @@ export default function App() {
                 </View>
               )}
 
+              {ingredients.length > 0 && (
+                <View style={styles.section}>
+                  <Text style={styles.sectionTitle}>Ingredient Pills</Text>
+                  <Text style={styles.pillHint}>
+                    Tap any ingredient to learn more
+                  </Text>
+                  <View style={styles.pillContainer}>
+                    {ingredients.map((item, i) => {
+                      const harm = flagged.find((f) => f.name === item);
+                      const isGood =
+                        omega3Found.includes(item) || fiberFound.includes(item);
+                      const isMeal = meals.includes(item);
+                      const isLegume = legumes.includes(item);
+                      const bg = harm
+                        ? SEVERITY_COLORS[harm.severity]
+                        : isGood
+                          ? "#1E8449"
+                          : isMeal || isLegume
+                            ? "#D68910"
+                            : "#2A2A3E";
+                      return (
+                        <TouchableOpacity
+                          key={i}
+                          style={[styles.pill, { backgroundColor: bg }]}
+                          onPress={() => handleIngredientTap(item)}
+                          activeOpacity={0.7}
+                        >
+                          <Text style={styles.pillText}>{item}</Text>
+                        </TouchableOpacity>
+                      );
+                    })}
+                  </View>
+                </View>
+              )}
+
               {scoreBreakdown.length > 0 && (
                 <View style={styles.section}>
                   <Text style={styles.sectionTitle}>🌿 TCVM Protein Energetics</Text>
@@ -5080,39 +5115,6 @@ export default function App() {
                 </View>
               )}
 
-
-              <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Ingredient Pills</Text>
-                <Text style={styles.pillHint}>
-                  Tap any ingredient to learn more
-                </Text>
-                <View style={styles.pillContainer}>
-                  {ingredients.map((item, i) => {
-                    const harm = flagged.find((f) => f.name === item);
-                    const isGood =
-                      omega3Found.includes(item) || fiberFound.includes(item);
-                    const isMeal = meals.includes(item);
-                    const isLegume = legumes.includes(item);
-                    const bg = harm
-                      ? SEVERITY_COLORS[harm.severity]
-                      : isGood
-                        ? "#1E8449"
-                        : isMeal || isLegume
-                          ? "#D68910"
-                          : "#2A2A3E";
-                    return (
-                      <TouchableOpacity
-                        key={i}
-                        style={[styles.pill, { backgroundColor: bg }]}
-                        onPress={() => handleIngredientTap(item)}
-                        activeOpacity={0.7}
-                      >
-                        <Text style={styles.pillText}>{item}</Text>
-                      </TouchableOpacity>
-                    );
-                  })}
-                </View>
-              </View>
 
               <View style={styles.section}>
                 <Text style={styles.sectionTitle}>
