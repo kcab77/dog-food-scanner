@@ -17,6 +17,7 @@ import {
 } from "react-native";
 import { auditIngredientList } from "../lib/ingredientDatabase";
 import { analyzeIngredients } from "../lib/ingredientLookup";
+import { logScan } from "../lib/supabase";
 import {
     analyzeIngredientsBatch,
     askNutritionCoach,
@@ -3474,6 +3475,7 @@ export default function App() {
     total = Math.max(5, Math.round(total));
     setScore(total);
     setScoreBreakdown(breakdown);
+    logScan({ productName: name, score: total, processingMethod: processingResult.method, ingredientCount: ingredientList.length, scanMethod: scanMode }).catch(() => {});
     // Fire recall check in background — don't await, never blocks results
     const brandWord = name.split(" ")[0];
     if (brandWord && brandWord.length > 2)
@@ -4079,6 +4081,7 @@ export default function App() {
       total = Math.max(5, Math.round(total));
       setScore(total);
       setScoreBreakdown(breakdown);
+      logScan({ productName: name, score: total, processingMethod: processingResult.method, ingredientCount: ingredientList.length, scanMethod: 'name_search' }).catch(() => {});
       setAnalysisLoading(true);
       analyzeIngredientsBatch(ingredientList)
         .then((analysis: Record<string, any>) => {
