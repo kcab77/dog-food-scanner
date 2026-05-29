@@ -3471,7 +3471,7 @@ export default function App() {
     }
     // Database audit — informational display only, not scored (ingredients already penalized above)
     total = Math.min(total, processingResult.scoreCap);
-    total = Math.max(15, Math.round(total));
+    total = Math.max(5, Math.round(total));
     setScore(total);
     setScoreBreakdown(breakdown);
     // Fire recall check in background — don't await, never blocks results
@@ -4076,7 +4076,7 @@ export default function App() {
         });
       }
       total = Math.min(total, processingResult.scoreCap);
-      total = Math.max(15, Math.round(total));
+      total = Math.max(5, Math.round(total));
       setScore(total);
       setScoreBreakdown(breakdown);
       setAnalysisLoading(true);
