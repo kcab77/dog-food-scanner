@@ -1720,6 +1720,46 @@ function getTreatScoreLabel(score: number): string {
   return "Avoid 🚫";
 }
 
+function LipomaSection() {
+  return (
+    <View style={{ backgroundColor: "#1A1A2E", borderRadius: 16, padding: 16, marginHorizontal: 16, marginBottom: 12 }}>
+      <Text style={{ fontSize: 13, fontWeight: "700", marginBottom: 6, color: "#9CA3AF", textTransform: "uppercase", letterSpacing: 1 }}>🧬 Lipoma Prevention & Management</Text>
+      <Text style={{ color: "#6B7280", fontSize: 12, marginBottom: 14, lineHeight: 18 }}>
+        Lipomas (fatty tumors) are common in dogs but diet and inflammation play a major role in how quickly they develop and grow. These are the most evidence-backed dietary levers.
+      </Text>
+
+      <View style={{ backgroundColor: "#1a0a00", borderRadius: 10, padding: 12, marginBottom: 10, borderWidth: 1, borderColor: "#F97316" }}>
+        <Text style={{ color: "#F97316", fontWeight: "700", fontSize: 13, marginBottom: 6 }}>🍞 Low Carb Diet — Most Important Factor</Text>
+        <Text style={{ color: "#D1D5DB", fontSize: 12, lineHeight: 18, marginBottom: 4 }}>High carbohydrates spike insulin and promote fat cell proliferation and inflammation — the #1 dietary driver of lipoma growth.</Text>
+        <Text style={{ color: "#FBBF24", fontSize: 12, fontWeight: "600" }}>Target: carbs below 20% — ideally below 15%</Text>
+        <Text style={{ color: "#6B7280", fontSize: 11, marginTop: 4 }}>Kibble is typically 35–50% carbs. Raw, gently cooked, and freeze-dried are naturally low carb.</Text>
+      </View>
+
+      <View style={{ backgroundColor: "#001a1f", borderRadius: 10, padding: 12, marginBottom: 10, borderWidth: 1, borderColor: "#06B6D4" }}>
+        <Text style={{ color: "#06B6D4", fontWeight: "700", fontSize: 13, marginBottom: 6 }}>🐟 Omega-6:3 Ratio of 5:1 or Less</Text>
+        <Text style={{ color: "#D1D5DB", fontSize: 12, lineHeight: 18, marginBottom: 4 }}>A high omega-6:omega-3 ratio drives chronic inflammation — the environment where lipomas thrive. Most kibble runs 15:1–30:1. Cooling that ratio is one of the most powerful anti-lipoma moves you can make.</Text>
+        <Text style={{ color: "#06B6D4", fontSize: 12, fontWeight: "600" }}>Target: 5:1 or less omega-6:omega-3</Text>
+        <Text style={{ color: "#6B7280", fontSize: 11, marginTop: 4 }}>Best sources: sardines, salmon, mackerel. Add fish oil or green lipped mussel to reduce ratio further.</Text>
+      </View>
+
+      {[
+        { color: "#A3E635", bg: "#0a1a00", title: "✅ Best Foods for Lipoma-Prone Dogs", body: "Raw, freeze-dried, or gently cooked with no grains, legumes, or inflammatory oils. Look for whole-food omega-3 sources. Rotate cooling proteins: duck, fish, rabbit, salmon." },
+        { color: "#FC8181", bg: "#1a0000", title: "❌ Avoid", body: "Grains (corn, wheat, soy), legumes (peas, lentils, chickpeas), inflammatory oils (sunflower, safflower, soybean, canola), BHA/BHT, artificial colors, added sugars." },
+        { color: "#A78BFA", bg: "#1a0d2e", title: "💊 Supplements That Help", body: "Fish oil (omega-3) · Green lipped mussel (anti-inflammatory, joint support) · Milk thistle (liver support — processes all dietary fat) · Turkey tail mushroom · Turmeric/curcumin" },
+      ].map((item, i) => (
+        <View key={i} style={{ backgroundColor: item.bg, borderRadius: 10, padding: 12, marginBottom: 10, borderWidth: 1, borderColor: item.color }}>
+          <Text style={{ color: item.color, fontWeight: "700", fontSize: 13, marginBottom: 4 }}>{item.title}</Text>
+          <Text style={{ color: "#D1D5DB", fontSize: 12, lineHeight: 18 }}>{item.body}</Text>
+        </View>
+      ))}
+
+      <Text style={{ color: "#6B7280", fontSize: 11, lineHeight: 17, marginTop: 4 }}>
+        ⚠️ Not veterinary advice. Always consult your vet, especially for lipomas that grow rapidly, feel firm, or are in sensitive locations.
+      </Text>
+    </View>
+  );
+}
+
 function HersheyProtocolSection() {
   return (
     <View style={{ backgroundColor: "#1A1A2E", borderRadius: 16, padding: 16, marginHorizontal: 16, marginBottom: 12 }}>
@@ -4745,6 +4785,7 @@ export default function App() {
                   })}
                 </View>
 
+                <LipomaSection />
                 <HersheyProtocolSection />
 
                 <TouchableOpacity
@@ -4891,6 +4932,71 @@ export default function App() {
                 </View>
               )}
 
+              {!nutritionalProfile && scanned && (
+                <View style={styles.section}>
+                  <Text style={styles.sectionTitle}>Guaranteed Analysis</Text>
+                  <Text style={styles.omegaNote}>
+                    📷 Point your camera at the Guaranteed Analysis panel on the bag to see exact protein, fat, fiber, moisture, and carb percentages. These numbers come directly from the manufacturer and are the most accurate source.
+                  </Text>
+                  <View style={{ marginTop: 10, backgroundColor: '#1a0a00', borderRadius: 10, padding: 12, borderWidth: 1, borderColor: '#F97316' }}>
+                    <Text style={{ color: '#F97316', fontWeight: '700', fontSize: 13, marginBottom: 4 }}>⚠️ High Carbs & Lipomas</Text>
+                    <Text style={{ color: '#D1D5DB', fontSize: 12, lineHeight: 18 }}>High carbohydrate diets spike insulin, promote fat cell proliferation, and drive inflammation — all directly linked to lipoma development and growth. Target carbs below 20%, ideally below 15%. Omega-6:3 ratio of 5:1 or less is strongly anti-inflammatory and helps manage existing lipomas.</Text>
+                  </View>
+                </View>
+              )}
+              {nutritionalProfile && (
+                <View style={styles.section}>
+                  <Text style={styles.sectionTitle}>Guaranteed Analysis</Text>
+                  {analysisLoading && !nutritionalProfile ? (
+                    <Text style={styles.omegaNote}>Analyzing ingredients...</Text>
+                  ) : nutritionalProfile ? (
+                    <>
+                      {[
+                        { label: "Protein", value: nutritionalProfile.protein_pct, good: 25, warn: 18, unit: "%" },
+                        { label: "Fat", value: nutritionalProfile.fat_pct, good: 15, warn: 8, unit: "%" },
+                        { label: "Fiber", value: nutritionalProfile.fiber_pct, good: null, warn: null, unit: "%" },
+                        { label: "Moisture", value: nutritionalProfile.moisture_pct, good: null, warn: null, unit: "%" },
+                        { label: "Carbs (est.)", value: nutritionalProfile.carb_pct, good: null, warn: 25, unit: "%", invert: true },
+                      ].filter(r => r.value != null).map((row, i) => (
+                        <View key={i} style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 4, borderBottomWidth: 1, borderBottomColor: '#0D0D1A' }}>
+                          <Text style={{ color: '#9CA3AF', fontSize: 13 }}>{row.label}</Text>
+                          <Text style={{ color: row.invert ? (row.value! > (row.warn ?? 999) ? '#FC8181' : '#2ECC71') : (row.good != null && row.value! >= row.good ? '#2ECC71' : row.warn != null && row.value! < row.warn ? '#FC8181' : '#FBBF24'), fontWeight: '700', fontSize: 13 }}>{row.value}{row.unit}</Text>
+                        </View>
+                      ))}
+                      {nutritionalProfile.omega_ratio && (
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 4 }}>
+                          <Text style={{ color: '#9CA3AF', fontSize: 13 }}>Omega 6:3 ratio</Text>
+                          <Text style={{ color: ["1:", "2:", "3:", "4:", "5:"].some(p => nutritionalProfile.omega_ratio!.startsWith(p)) ? '#2ECC71' : '#FC8181', fontWeight: '700', fontSize: 13 }}>{nutritionalProfile.omega_ratio}{["1:", "2:", "3:", "4:", "5:"].some(p => nutritionalProfile.omega_ratio!.startsWith(p)) ? " ✓" : " ⚠️"}</Text>
+                        </View>
+                      )}
+                      <View style={{ marginTop: 10, backgroundColor: '#1a0a00', borderRadius: 10, padding: 12, borderWidth: 1, borderColor: '#F97316' }}>
+                        <Text style={{ color: '#F97316', fontWeight: '700', fontSize: 13, marginBottom: 4 }}>⚠️ High Carbs & Lipomas</Text>
+                        <Text style={{ color: '#D1D5DB', fontSize: 12, lineHeight: 18 }}>High carbohydrate diets spike insulin, promote fat cell proliferation, and drive inflammation — all directly linked to lipoma development and growth. Target carbs below 20%, ideally below 15%. Omega-6:3 ratio of 5:1 or less is strongly anti-inflammatory and helps manage existing lipomas.</Text>
+                      </View>
+                      <Text style={[styles.omegaNote, { marginTop: 8 }]}>
+                        Carbs estimated as: 100 − protein − fat − fiber − moisture − ~7% ash.
+                      </Text>
+                    </>
+                  ) : null}
+                </View>
+              )}
+
+              {scoreBreakdown.length > 0 && (
+                <View style={styles.section}>
+                  <Text style={styles.sectionTitle}>💊 Recommended Supplements</Text>
+                  {SUPPLEMENT_RECS.map((s, i) => (
+                    <View key={i} style={{ marginBottom: 12, backgroundColor: s.bg, borderRadius: 10, padding: 12, borderWidth: 1, borderColor: s.borderColor }}>
+                      <Text style={{ color: s.color, fontWeight: '700', fontSize: 14, marginBottom: 4 }}>{s.emoji} {s.name}</Text>
+                      <Text style={{ color: '#D1D5DB', fontSize: 13, lineHeight: 19, marginBottom: 6 }}>{s.body}</Text>
+                      <Text style={{ color: '#6B7280', fontSize: 11, marginBottom: 10 }}>{s.note}</Text>
+                      <TouchableOpacity style={{ backgroundColor: s.color, borderRadius: 8, paddingVertical: 8, paddingHorizontal: 12, alignSelf: 'flex-start' }} onPress={() => Linking.openURL(s.link)}>
+                        <Text style={{ color: '#000', fontWeight: '700', fontSize: 12 }}>{s.linkText}</Text>
+                      </TouchableOpacity>
+                    </View>
+                  ))}
+                </View>
+              )}
+
               {scoreBreakdown.length > 0 && (
                 <View style={styles.section}>
                   <Text style={styles.sectionTitle}>🌿 TCVM Protein Energetics</Text>
@@ -4921,200 +5027,6 @@ export default function App() {
                   </TouchableOpacity>
                 </View>
               )}
-
-              {scoreBreakdown.length > 0 && (
-                <View style={styles.section}>
-                  <Text style={styles.sectionTitle}>💊 Recommended Supplements</Text>
-                  {SUPPLEMENT_RECS.map((s, i) => (
-                    <View key={i} style={{ marginBottom: 12, backgroundColor: s.bg, borderRadius: 10, padding: 12, borderWidth: 1, borderColor: s.borderColor }}>
-                      <Text style={{ color: s.color, fontWeight: '700', fontSize: 14, marginBottom: 4 }}>{s.emoji} {s.name}</Text>
-                      <Text style={{ color: '#D1D5DB', fontSize: 13, lineHeight: 19, marginBottom: 6 }}>{s.body}</Text>
-                      <Text style={{ color: '#6B7280', fontSize: 11, marginBottom: 10 }}>{s.note}</Text>
-                      <TouchableOpacity style={{ backgroundColor: s.color, borderRadius: 8, paddingVertical: 8, paddingHorizontal: 12, alignSelf: 'flex-start' }} onPress={() => Linking.openURL(s.link)}>
-                        <Text style={{ color: '#000', fontWeight: '700', fontSize: 12 }}>{s.linkText}</Text>
-                      </TouchableOpacity>
-                    </View>
-                  ))}
-                </View>
-              )}
-
-              {!nutritionalProfile && scanned && (
-                <View style={styles.section}>
-                  <Text style={styles.sectionTitle}>Guaranteed Analysis</Text>
-                  <Text style={styles.omegaNote}>
-                    📷 Point your camera at the Guaranteed Analysis panel on the
-                    bag to see exact protein, fat, fiber, moisture, and carb
-                    percentages. These numbers come directly from the
-                    manufacturer and are the most accurate source.
-                  </Text>
-                </View>
-              )}
-              {nutritionalProfile && (
-                <View style={styles.section}>
-                  <Text style={styles.sectionTitle}>Guaranteed Analysis</Text>
-                  {analysisLoading && !nutritionalProfile ? (
-                    <Text style={styles.omegaNote}>
-                      Analyzing ingredients...
-                    </Text>
-                  ) : nutritionalProfile ? (
-                    <>
-                      {[
-                        {
-                          label: "Protein",
-                          value: nutritionalProfile.protein_pct,
-                          good: 25,
-                          warn: 18,
-                          unit: "%",
-                          higherIsBetter: true,
-                        },
-                        {
-                          label: "Fat",
-                          value: nutritionalProfile.fat_pct,
-                          good: 12,
-                          warn: 8,
-                          unit: "%",
-                          higherIsBetter: true,
-                        },
-                        {
-                          label: "Fiber",
-                          value: nutritionalProfile.fiber_pct,
-                          good: 4,
-                          warn: 2,
-                          unit: "%",
-                          higherIsBetter: false,
-                        },
-                        {
-                          label: "Moisture",
-                          value: nutritionalProfile.moisture_pct,
-                          good: 60,
-                          warn: 20,
-                          unit: "%",
-                          higherIsBetter: false,
-                        },
-                        {
-                          label: "Carbohydrates",
-                          value: nutritionalProfile.carb_pct,
-                          good: 20,
-                          warn: 30,
-                          unit: "%",
-                          higherIsBetter: false,
-                        },
-                      ].map(
-                        ({
-                          label,
-                          value,
-                          good,
-                          warn,
-                          unit,
-                          higherIsBetter,
-                        }) => {
-                          if (value == null) return null;
-                          const pct = Math.min(value, 100);
-                          let barColor = "#2ECC71";
-                          if (label === "Carbohydrates") {
-                            barColor =
-                              value > 30
-                                ? "#c0392b"
-                                : value > 20
-                                  ? "#e67e22"
-                                  : "#2ECC71";
-                          } else if (label === "Moisture") {
-                            barColor =
-                              value > 50
-                                ? "#2ECC71"
-                                : value > 20
-                                  ? "#e67e22"
-                                  : "#c0392b";
-                          } else {
-                            barColor = higherIsBetter
-                              ? value >= good
-                                ? "#2ECC71"
-                                : value >= warn
-                                  ? "#e67e22"
-                                  : "#c0392b"
-                              : "#9CA3AF";
-                          }
-                          const flag = label === "Carbohydrates" && value > 20;
-                          const flagColor = value > 30 ? "#c0392b" : "#e67e22";
-                          return (
-                            <View key={label} style={styles.nutrientRow}>
-                              <Text style={styles.nutrientLabel}>{label}</Text>
-                              <View style={styles.nutrientBarBg}>
-                                <View
-                                  style={[
-                                    styles.nutrientBarFill,
-                                    {
-                                      width: `${pct}%` as any,
-                                      backgroundColor: barColor,
-                                    },
-                                  ]}
-                                />
-                              </View>
-                              <Text
-                                style={[
-                                  styles.nutrientValue,
-                                  { color: flag ? flagColor : "#D1D5DB" },
-                                ]}
-                              >
-                                {value}
-                                {unit}
-                                {flag ? " ⚠️" : ""}
-                              </Text>
-                            </View>
-                          );
-                        },
-                      )}
-                      {nutritionalProfile.omega_ratio &&
-                        nutritionalProfile.omega_ratio !== "unknown" && (
-                          <View style={styles.nutrientRow}>
-                            <Text style={styles.nutrientLabel}>
-                              Omega 6:3 Ratio
-                            </Text>
-                            <Text
-                              style={[
-                                styles.nutrientValue,
-                                {
-                                  color:
-                                    nutritionalProfile.omega_ratio.startsWith(
-                                      "1:",
-                                    ) ||
-                                    nutritionalProfile.omega_ratio.startsWith(
-                                      "2:",
-                                    ) ||
-                                    nutritionalProfile.omega_ratio.startsWith(
-                                      "3:",
-                                    ) ||
-                                    nutritionalProfile.omega_ratio.startsWith(
-                                      "4:",
-                                    ) ||
-                                    nutritionalProfile.omega_ratio.startsWith(
-                                      "5:",
-                                    )
-                                      ? "#2ECC71"
-                                      : "#e67e22",
-                                },
-                              ]}
-                            >
-                              {nutritionalProfile.omega_ratio}
-                              {["1:", "2:", "3:", "4:", "5:"].some((p) =>
-                                nutritionalProfile.omega_ratio!.startsWith(p),
-                              )
-                                ? " ✓"
-                                : " ⚠️"}
-                            </Text>
-                          </View>
-                        )}
-                      <Text style={styles.omegaNote}>
-                        Numbers from the Guaranteed Analysis panel on the bag.
-                        Carbs calculated as: 100 − protein − fat − fiber −
-                        moisture − ~7% ash. Target for lipoma-prone dogs: carbs
-                        &lt;20%, ideally &lt;15%.
-                      </Text>
-                    </>
-                  ) : null}
-                </View>
-              )}
-
 
               <View style={styles.section}>
                 <Text style={styles.sectionTitle}>
@@ -5218,6 +5130,7 @@ export default function App() {
             </>
           )}
 
+          <LipomaSection />
           <HersheyProtocolSection />
 
           <TouchableOpacity
