@@ -1,15 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { blogPosts } from '@/lib/blog-data'
-
-// Strip HTML tags for clean text
-function stripHtml(html: string) {
-  return html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
-}
-
-// Build knowledge block from all blog posts — injected into every chat
-const KNOWLEDGE_BLOCK = blogPosts
-  .map(p => `## ${p.title}\n${stripHtml(p.content)}`)
-  .join('\n\n---\n\n')
+import { searchKnowledgeScored } from '@/lib/pinecone'
+import { isAllowed } from '@/lib/ratelimit'
 
 const SYSTEM_PROMPT = `You are the Common Sense Dog AI assistant — a holistic, nutrition-first pet health advisor for dog owners who want natural, research-backed guidance without defaulting to pharmaceuticals or generic vet advice.
 
@@ -56,24 +47,59 @@ Topics you specialize in:
 
 When a user shares their dog's profile (name, breed, age, diet, health issues), always tailor every answer specifically to that dog. Reference their dog's details naturally throughout the conversation.
 
-Never recommend:
-- Defaulting to kibble
-- Synthetic chemical flea/tick treatments as a first option
-- Vague answers like "consult your vet" without giving real guidance first
+NON-NEGOTIABLE RULES — answer 100% holistically, every time:
+- ALWAYS lead with whole foods or natural medicine FIRST. Real food, herbs, mushrooms (reishi, turkey tail, cordyceps, lion's mane), bone broth, organ meats, omega-3 from whole sources, probiotics from real food, etc. — before anything else.
+- NEVER recommend synthetic, isolated, or chemical ingredients. No synthetic vitamins/minerals (menadione/K3, sodium selenite, copper sulfate, zinc oxide), no artificial preservatives (BHA, BHT, ethoxyquin), no synthetic supplements when a whole-food source exists.
+- NEVER recommend harmful ingredients or anything on the "dangerous ingredients" list, even if asked. If a user mentions one, explain why it's harmful and give the natural alternative instead.
+- NEVER default to kibble, and NEVER suggest synthetic chemical flea/tick or pharmaceutical solutions as a first option — natural and dietary approaches come first; only mention pharmaceuticals as a last resort when genuinely warranted.
+- Prefer chelated/proteinate (whole-food-bound) forms over inorganic forms when a supplement truly is needed.
 
-Always remember: the Common Sense Dog owner is already doing their research. They don't want generic — they want specific, honest, and holistic. Keep answers concise but thorough — 3 to 5 short paragraphs max.
+For health concerns (legal/safety framing):
+- Give real, specific holistic guidance first — don't hide behind a generic "consult your vet."
+- BUT for genuine health concerns, symptoms of illness, medication interactions, or before major diet changes, recommend consulting a HOLISTIC or integrative veterinarian (not a conventional kibble-and-pharma vet).
+- This is educational information to help owners make informed choices — not a diagnosis or a substitute for professional veterinary care. Never claim to treat, cure, or diagnose a medical condition.
 
----
-KNOWLEDGE BASE — LIFE WITH HERSHEY ARTICLES:
-Use this research when answering questions. Reference it naturally.
+Always remember: the Common Sense Dog owner is already doing their research. They don't want generic — they want specific, honest, and holistic. Keep answers concise but thorough — 3 to 5 short paragraphs max.`
 
-${KNOWLEDGE_BLOCK}`
+const ALLOWED_ORIGINS = ['https://commonsensedog.com', 'https://www.commonsensedog.com']
 
 export async function POST(req: NextRequest) {
+  const origin = req.headers.get('origin') || ''
+  if (!ALLOWED_ORIGINS.includes(origin)) {
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+  }
+
+  if (!(await isAllowed(req))) {
+    return NextResponse.json({ error: 'Too many requests. Please slow down.' }, { status: 429 })
+  }
+
   try {
     const { messages, dogProfile } = await req.json()
 
+    // Get the latest user message to search Pinecone
+    const lastUserMessage = [...messages].reverse().find((m: { role: string }) => m.role === 'user')
+    const query = lastUserMessage?.content || ''
+
+    // Pinecone-FIRST retrieval. We pull scored matches and decide how much to
+    // trust the knowledge base vs. the model's general knowledge:
+    //   - STRONG (>= 0.65): the KB clearly answers this. Answer from it, period.
+    //   - WEAK  (0.5–0.65): partial coverage. Use it, but the model may fill gaps.
+    //   - NONE: nothing relevant. Fall back to general holistic knowledge.
+    const STRONG_THRESHOLD = 0.65
+    const scored = query ? await searchKnowledgeScored(query, 8) : []
+    const strongChunks = scored.filter(c => c.score >= STRONG_THRESHOLD).map(c => c.text)
+    const weakChunks = scored.filter(c => c.score < STRONG_THRESHOLD).map(c => c.text)
+
     let systemText = SYSTEM_PROMPT
+
+    if (strongChunks.length > 0) {
+      systemText += `\n\n---\nKNOWLEDGE BASE (PRIMARY SOURCE — USE THIS FIRST):\n\nThe following is curated Common Sense Dog knowledge that directly addresses the user's question. This is your PRIMARY and authoritative source. Build your answer on these chunks first and foremost. Do NOT contradict them. Only add general knowledge to fill small gaps, and only when it aligns with the holistic philosophy above.\n\n${strongChunks.join('\n\n---\n\n')}`
+    } else if (weakChunks.length > 0) {
+      systemText += `\n\n---\nKNOWLEDGE BASE (PARTIAL MATCH):\n\nThe following Common Sense Dog knowledge is partially relevant. Prefer it where it applies, then supplement with your general holistic knowledge to give a complete answer. Stay true to the philosophy above.\n\n${weakChunks.join('\n\n---\n\n')}`
+    } else {
+      systemText += `\n\n---\nNo specific knowledge was found in our database for this question. Answer using your general knowledge, staying true to the holistic philosophy above.`
+    }
+
     if (dogProfile?.dog_name) {
       systemText += `\n\n---\nThe user's dog:\n- Name: ${dogProfile.dog_name}\n- Breed: ${dogProfile.breed || 'not specified'}\n- Age: ${dogProfile.age || 'not specified'}\n- Current diet: ${dogProfile.diet || 'not specified'}\n- Health issues/concerns: ${dogProfile.health_issues || 'none mentioned'}\n\nAddress the dog by name naturally where relevant.`
     }
