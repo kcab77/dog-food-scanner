@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:onskin.com)",
+      "WebFetch(domain:commonsensedog.com)",
+      "Read(//private/tmp/**)",
+      "Bash(python3 publish_articles.py)",
+      "WebSearch"
+    ],
+    "additionalDirectories": [
+      "/tmp",
+      "/private/tmp"
+    ]
+  }
+}

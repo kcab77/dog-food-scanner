@@ -1,4 +1,3 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import * as ImageManipulator from "expo-image-manipulator";
 import React, { useRef, useState } from "react";
@@ -6,7 +5,6 @@ import {
     ActivityIndicator,
     Alert,
     KeyboardAvoidingView,
-    LayoutAnimation,
     Linking,
     Modal,
     Platform,
@@ -15,15 +13,16 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    UIManager,
     View,
 } from "react-native";
 import { auditIngredientList } from "../lib/ingredientDatabase";
 import { analyzeIngredients } from "../lib/ingredientLookup";
 import { logScan, submitFeedback } from "../lib/supabase";
 import {
+    analyzeIngredientsBatch,
     askNutritionCoach,
     lookupIngredientDetail,
+    lookupIngredientsWithClaude,
     lookupProduct,
     lookupProductByName,
     lookupWithGoUPC,
@@ -234,15 +233,15 @@ const HARMFUL_INGREDIENTS: {
   },
   {
     term: "artificial color",
-    severity: "severe",
+    severity: "moderate",
     reason:
-      "Artificial colors in pet food are petroleum-derived synthetic dyes with zero nutritional value. Dogs do not select food by color — these dyes exist purely to appeal to humans. Several have been linked to tumor promotion, hypersensitivity, and carcinogenic activity in animal studies. The CSPI has petitioned to ban multiple common dyes (Red 40, Yellow 5, Yellow 6) from human food — they have no place in dog food.",
+      "Artificial colors serve no nutritional purpose in pet food as dogs and cats do not select food based on color. Some synthetic dyes have been associated with hypersensitivity reactions in animal research",
   },
   {
     term: "artificial colour",
-    severity: "severe",
+    severity: "moderate",
     reason:
-      "Artificial colours in pet food are petroleum-derived synthetic dyes with zero nutritional value. Dogs do not select food by colour — these dyes exist purely to appeal to humans. Several have been linked to tumor promotion, hypersensitivity, and carcinogenic activity in animal studies.",
+      "Artificial colours serve no nutritional purpose in pet food. Some synthetic dyes have been associated with hypersensitivity reactions in animal research",
   },
   {
     term: "artificial flavor",
@@ -258,21 +257,21 @@ const HARMFUL_INGREDIENTS: {
   },
   {
     term: "red 40",
-    severity: "severe",
+    severity: "moderate",
     reason:
-      "Red 40 is a petroleum-derived synthetic dye classified as a possible carcinogen. The Center for Science in the Public Interest has petitioned the FDA to ban it. It has been linked to hypersensitivity, behavioral changes, and tumor promotion in animal studies. There is zero nutritional justification for its use in dog food — it exists purely for human visual appeal.",
+      "Red 40 is a synthetic petroleum-derived dye with no nutritional value in pet food. Some research has associated certain synthetic dyes with hypersensitivity and behavioral changes in sensitive animals",
   },
   {
     term: "yellow 5",
-    severity: "severe",
+    severity: "moderate",
     reason:
-      "Yellow 5 (tartrazine) is a synthetic azo dye linked to hypersensitivity reactions, behavioral changes, and potential carcinogenic activity in animal research. The CSPI has flagged it as a dye of concern. It is banned or restricted in several countries and serves no nutritional purpose in pet food whatsoever.",
+      "Yellow 5 (tartrazine) is a synthetic dye that has been associated with hypersensitivity reactions in some animal research. It provides no nutritional benefit and is considered unnecessary in pet food by most veterinary nutritionists",
   },
   {
     term: "yellow 6",
-    severity: "severe",
+    severity: "moderate",
     reason:
-      "Yellow 6 is a synthetic petroleum-derived dye linked to adrenal gland and kidney tumors in animal studies. The CSPI considers it unsafe. Like all artificial dyes in pet food, it serves zero nutritional purpose — dogs are colorblind to red/orange and cannot distinguish it. Its only function is to make kibble look more appealing to humans.",
+      "Yellow 6 is a synthetic dye that some animal studies have associated with adrenal and kidney changes at high doses. It is considered unnecessary in pet food by most veterinary nutritionists",
   },
   {
     term: "blue 2",
@@ -1059,21 +1058,20 @@ const TREAT_HARMFUL: {
   },
   {
     term: "red 40",
-    severity: "severe",
+    severity: "moderate",
     reason:
-      "Petroleum-derived synthetic dye linked to tumor promotion and hypersensitivity in animal studies. Banned or restricted in several countries. Zero nutritional value — exists only to make treats look appealing to humans.",
+      "Synthetic petroleum-derived dye with no nutritional value. Completely unnecessary in dog treats.",
   },
   {
     term: "yellow 5",
-    severity: "severe",
+    severity: "moderate",
     reason:
-      "Synthetic azo dye linked to hypersensitivity and potential carcinogenic activity in animal research. No nutritional purpose in a dog treat.",
+      "Synthetic dye associated with hypersensitivity reactions. No reason to be in a dog treat.",
   },
   {
     term: "yellow 6",
-    severity: "severe",
-    reason:
-      "Synthetic dye linked to adrenal and kidney tumors in animal studies. Dogs are colorblind to red/orange — this dye exists purely to appeal to humans buying the treat.",
+    severity: "moderate",
+    reason: "Synthetic dye. No nutritional benefit, unnecessary in dog treats.",
   },
   {
     term: "sodium nitrite",
@@ -1845,89 +1843,6 @@ function HersheyProtocolSection() {
   );
 }
 
-// Enable LayoutAnimation on Android (no-op on iOS where it's automatic)
-if (
-  Platform.OS === "android" &&
-  UIManager.setLayoutAnimationEnabledExperimental
-) {
-  UIManager.setLayoutAnimationEnabledExperimental(true);
-}
-
-// Collapsible results section — collapsed by default, animates open/closed.
-function AccordionSection({
-  title,
-  children,
-  defaultOpen = false,
-}: {
-  title: string;
-  children: React.ReactNode;
-  defaultOpen?: boolean;
-}) {
-  const [open, setOpen] = useState(defaultOpen);
-  const toggle = () => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    setOpen((o) => !o);
-  };
-  return (
-    <View style={styles.section}>
-      <TouchableOpacity
-        onPress={toggle}
-        activeOpacity={0.7}
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <Text style={[styles.sectionTitle, { marginBottom: 0 }]}>{title}</Text>
-        <Text style={{ color: "#6B7280", fontSize: 15, fontWeight: "800" }}>
-          {open ? "▾" : "▸"}
-        </Text>
-      </TouchableOpacity>
-      {open && <View style={{ marginTop: 12 }}>{children}</View>}
-    </View>
-  );
-}
-
-// One-line plain-language verdict for the score band (shown above the fold).
-function getVerdict(score: number): string {
-  if (score >= 90) return "Excellent choice — a top-tier food you can feel great about.";
-  if (score >= 75) return "A great food with only minor trade-offs.";
-  if (score >= 60) return "A solid food — a few things worth improving.";
-  if (score >= 45) return "Just okay — consider upgrading or adding whole-food toppers.";
-  if (score >= 30) return "Below average — feed sparingly and look for better options.";
-  return "Poor quality — we'd avoid this one.";
-}
-
-// Single most actionable next step: upgrade the format if it's heavily processed,
-// otherwise recommend the top whole-food topper to add. Returns copy + an affiliate CTA.
-function getNextStep(
-  score: number,
-  processing: { rating?: string } | null,
-): { headline: string; detail: string; rec: (typeof SUPPLEMENT_RECS)[number] } {
-  const rating = (processing?.rating || "").toLowerCase();
-  const poorFormat =
-    rating.includes("kibble") ||
-    rating.includes("poor") ||
-    rating.includes("baked") ||
-    rating.includes("extruded");
-  const fishOil = SUPPLEMENT_RECS[2]; // Fish Oil (Omega-3) — universal anti-inflammatory topper
-  if (poorFormat || score < 45) {
-    return {
-      headline: "Upgrade the format — or top it off",
-      detail:
-        "This is a heat-processed food, so enzymes and heat-sensitive nutrients are degraded. The biggest win is swapping part of each meal for gently cooked, freeze-dried, or raw. On a budget, start by adding a whole-food omega-3 topper to every bowl.",
-      rec: fishOil,
-    };
-  }
-  return {
-    headline: "Add a targeted topper",
-    detail:
-      "The format here is solid. To push it further, add an anti-inflammatory omega-3 topper — it supports coat, joints, and brain and helps balance the omega-6:3 ratio.",
-    rec: fishOil,
-  };
-}
-
 export default function App() {
   const [permission, requestPermission] = useCameraPermissions();
   const [showDisclaimer, setShowDisclaimer] = useState(true);
@@ -1984,6 +1899,7 @@ export default function App() {
   const [manualProductName, setManualProductName] = useState("");
   const [manualBarcode, setManualBarcode] = useState("");
   const [cameraProductName, setCameraProductName] = useState("");
+  const [cameraFoodType, setCameraFoodType] = useState<string>("");
   const [treatScore, setTreatScore] = useState<number | null>(null);
   const [treatFlags, setTreatFlags] = useState<
     { name: string; reason: string; severity: string }[]
@@ -2012,7 +1928,6 @@ export default function App() {
   >([]);
   const [coachInput, setCoachInput] = useState("");
   const [coachLoading, setCoachLoading] = useState(false);
-  const [showCoachPaywall, setShowCoachPaywall] = useState(false);
   const [ingredientDetailVisible, setIngredientDetailVisible] = useState(false);
   const [selectedIngredient, setSelectedIngredient] = useState("");
   const [ingredientDetailData, setIngredientDetailData] = useState<any>(null);
@@ -3022,7 +2937,7 @@ export default function App() {
         await handleTreatScan(
           result.ingredients,
           cameraProductName.trim() || result.product_name || result.brand || "Scanned Treat",
-          result.processing_method,
+          cameraFoodType || result.processing_method,
         );
         scanningRef.current = false;
         return;
@@ -3092,10 +3007,53 @@ export default function App() {
           );
           applyScannedAafco();
         } else {
-          // Product not in cache — prompt user to scan the ingredient list
-          setShowIngredientScanPrompt(true);
-          setError("");
-          scanningRef.current = false;
+          // Fall back to Claude ingredient lookup
+          setSmartScanStep("Looking up ingredients...");
+          const claudeResult = await lookupIngredientsWithClaude(
+            result.product_name || result.brand,
+            result.brand,
+          );
+          if (claudeResult.found) {
+            const rawIngredients = claudeResult.ingredients;
+            const ingredientList: string[] = rawIngredients
+              .split(/,|;/)
+              .map((i: string) => i.trim())
+              .filter((i: string) => i.length > 0);
+            setIngredients(ingredientList);
+            setSmartScanStep("Scoring formula...");
+            await processIngredients(
+              claudeResult.product_name || result.product_name || "",
+              rawIngredients,
+              ingredientList,
+              claudeResult.processing_method || "",
+            );
+            if (claudeResult.aafco_status === "feeding_trials")
+              setAafcoStatus("✅ AAFCO Feeding Trials (gold standard)");
+            else if (claudeResult.aafco_status === "nutrient_profile")
+              setAafcoStatus("🟡 AAFCO Nutrient Profile only");
+            else applyScannedAafco();
+            if (claudeResult.guaranteed_analysis)
+              applyGA(claudeResult.guaranteed_analysis);
+            saveProduct(
+              "smart-" + Date.now(),
+              claudeResult.product_name || result.product_name || "",
+              claudeResult.brand || result.brand || "",
+              rawIngredients,
+              claudeResult.processing_method || "",
+            ).catch(() => {});
+            saveToGoogleSheet(
+              "smart-scan",
+              claudeResult.product_name || "",
+              claudeResult.brand || "",
+              rawIngredients,
+              claudeResult.processing_method || "",
+              null,
+            ).catch(() => {});
+          } else {
+            setShowIngredientScanPrompt(true);
+            setError("");
+            scanningRef.current = false;
+          }
         }
       } else if (effectiveScanType === "guaranteed_analysis") {
         // GA panel only — patch nutritional profile, no full re-analysis
@@ -3127,7 +3085,7 @@ export default function App() {
           scannedName,
           rawIngredients,
           ingredientList,
-          result.processing_method || "",
+          cameraFoodType || result.processing_method || "",
         );
         applyScannedAafco();
         saveToGoogleSheet(
@@ -3226,6 +3184,13 @@ export default function App() {
     setScoreBreakdown(result.breakdown);
     setLoading(false);
     setScanned(true);
+    setAnalysisLoading(true);
+    analyzeIngredientsBatch(ingredientList)
+      .then((analysis: Record<string, any>) => {
+        setIngredientAnalysis(analysis);
+        setAnalysisLoading(false);
+      })
+      .catch(() => setAnalysisLoading(false));
   };
 
   const processIngredients = async (
@@ -3532,6 +3497,15 @@ export default function App() {
     const brandWord = name.split(" ")[0];
     if (brandWord && brandWord.length > 2)
       checkFDARecall(brandWord).catch(() => {});
+    setAnalysisLoading(true);
+    analyzeIngredientsBatch(ingredientList)
+      .then((analysis: Record<string, any>) => {
+        setIngredientAnalysis(analysis);
+        const profile = analysis["__profile__"];
+        if (profile) setNutritionalProfile(profile);
+        setAnalysisLoading(false);
+      })
+      .catch(() => setAnalysisLoading(false));
   };
 
   const openCoach = () => {
@@ -3549,14 +3523,6 @@ export default function App() {
 
   const sendCoachMessage = async () => {
     if (!coachInput.trim() || coachLoading) return;
-
-    const countStr = await AsyncStorage.getItem("coach_message_count");
-    const count = parseInt(countStr || "0", 10);
-    if (count >= 5) {
-      setShowCoachPaywall(true);
-      return;
-    }
-
     const userMsg = { role: "user", content: coachInput.trim() };
     const updated = [...coachMessages, userMsg];
     setCoachMessages(updated);
@@ -3571,7 +3537,6 @@ export default function App() {
     );
     setCoachMessages([...updated, { role: "assistant", content: reply }]);
     setCoachLoading(false);
-    await AsyncStorage.setItem("coach_message_count", String(count + 1));
   };
 
   const handleIngredientTap = async (ingredientName: string) => {
@@ -3780,6 +3745,38 @@ export default function App() {
         }
       }
 
+      // Step 6: Claude — get ingredients by product name or barcode as last resort
+      if (!rawIngredients) {
+        setDataSource("🤖 AI Lookup...");
+        const claudeResult = await lookupIngredientsWithClaude(
+          name || data,
+          upcBrand,
+        );
+        if (claudeResult.found) {
+          rawIngredients = claudeResult.ingredients;
+          sheetProcessingMethod = claudeResult.processing_method;
+          if (!name) name = claudeResult.product_name || "";
+          setDataSource("🤖 AI Powered");
+          await saveProduct(
+            data,
+            name,
+            claudeResult.brand || upcBrand,
+            rawIngredients,
+            sheetProcessingMethod,
+          );
+          if (claudeResult.aafco_status === "feeding_trials")
+            setAafcoStatus("✅ AAFCO Feeding Trials (gold standard)");
+          else if (claudeResult.aafco_status === "nutrient_profile")
+            setAafcoStatus("🟡 AAFCO Nutrient Profile only");
+          if (claudeResult.guaranteed_analysis) {
+            applyGA(claudeResult.guaranteed_analysis);
+            if (data)
+              saveProductGA(data, claudeResult.guaranteed_analysis).catch(
+                () => {},
+              );
+          }
+        }
+      }
 
       // Step 7: Not found anywhere — auto-switch to Smart Scan after brief message
       if (!rawIngredients) {
@@ -4102,6 +4099,16 @@ export default function App() {
       setScore(total);
       setScoreBreakdown(breakdown);
       logScan({ productName: name, score: total, processingMethod: processingResult.method, ingredientCount: ingredientList.length, scanMethod: 'name_search' }).catch(() => {});
+      setAnalysisLoading(true);
+      analyzeIngredientsBatch(ingredientList)
+        .then((analysis: Record<string, any>) => {
+          setIngredientAnalysis(analysis);
+          const profile = analysis["__profile__"];
+          if (profile) setNutritionalProfile(profile);
+          setAnalysisLoading(false);
+        })
+        .catch(() => setAnalysisLoading(false));
+
       // Save scan to Google Sheet in background
       saveToGoogleSheet(
         data,
@@ -4183,6 +4190,13 @@ export default function App() {
       omega_ratio: "14:1",
     });
     await processIngredients(demoName, demoRaw, demoList, "kibble", "14:1", true);
+    setAnalysisLoading(true);
+    analyzeIngredientsBatch(demoList)
+      .then((analysis: Record<string, any>) => {
+        setIngredientAnalysis(analysis);
+        setAnalysisLoading(false);
+      })
+      .catch(() => setAnalysisLoading(false));
   };
 
   const loadGoodDemo = async () => {
@@ -4213,6 +4227,13 @@ export default function App() {
       "4:1",
       true,
     );
+    setAnalysisLoading(true);
+    analyzeIngredientsBatch(demoList)
+      .then((analysis: Record<string, any>) => {
+        setIngredientAnalysis(analysis);
+        setAnalysisLoading(false);
+      })
+      .catch(() => setAnalysisLoading(false));
   };
 
   const loadTreatDemo = async () => {
@@ -4227,6 +4248,13 @@ export default function App() {
     setProductName(demoName);
     setIngredients(demoList);
     await processIngredients(demoName, demoRaw, demoList, "baked", null, true);
+    setAnalysisLoading(true);
+    analyzeIngredientsBatch(demoList)
+      .then((analysis: Record<string, any>) => {
+        setIngredientAnalysis(analysis);
+        setAnalysisLoading(false);
+      })
+      .catch(() => setAnalysisLoading(false));
   };
 
   return (
@@ -4376,6 +4404,32 @@ export default function App() {
                 value={cameraProductName}
                 onChangeText={setCameraProductName}
               />
+              <View style={{ flexDirection: "row", marginHorizontal: 16, marginBottom: 8, gap: 6 }}>
+                {[
+                  { label: "Kibble", value: "kibble" },
+                  { label: "Wet", value: "wet food" },
+                  { label: "Freeze-Dried", value: "freeze dried" },
+                  { label: "Raw", value: "raw" },
+                ].map((opt) => (
+                  <TouchableOpacity
+                    key={opt.value}
+                    onPress={() => setCameraFoodType(cameraFoodType === opt.value ? "" : opt.value)}
+                    style={{
+                      flex: 1,
+                      paddingVertical: 7,
+                      borderRadius: 8,
+                      alignItems: "center",
+                      backgroundColor: cameraFoodType === opt.value ? "#2ECC71" : "#1a2332",
+                      borderWidth: 1,
+                      borderColor: cameraFoodType === opt.value ? "#2ECC71" : "#2d3748",
+                    }}
+                  >
+                    <Text style={{ color: cameraFoodType === opt.value ? "#000" : "#6B7280", fontSize: 11, fontWeight: "600" }}>
+                      {opt.label}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
             <View style={styles.cameraWrapper}>
               <CameraView
                 ref={cameraRef}
@@ -4541,7 +4595,8 @@ export default function App() {
                 </Text>
 
                 {scoreBreakdown.length > 0 && (
-                  <AccordionSection title="Why This Score">
+                  <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>Score Breakdown</Text>
                     {scoreBreakdown.map((item, i) => (
                       <View key={i} style={styles.breakdownRow}>
                         <Text style={[styles.breakdownLabel, {
@@ -4568,11 +4623,12 @@ export default function App() {
                         </Text>
                       </View>
                     ))}
-                  </AccordionSection>
+                  </View>
                 )}
 
                 {scoreBreakdown.length > 0 && (
-                  <AccordionSection title="🌿 Protein Energetics (TCVM)">
+                  <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>🌿 TCVM Protein Energetics</Text>
                     <Text style={[styles.sectionBody, { marginBottom: 10 }]}>
                       Traditional Chinese Veterinary Medicine classifies proteins by their energetic properties. Matching protein to your dog's constitution and season reduces inflammation, hot spots, and digestive upset.
                     </Text>
@@ -4598,11 +4654,12 @@ export default function App() {
                     <TouchableOpacity onPress={() => Linking.openURL('https://drjudymorgan.com')}>
                       <Text style={{ color: '#2ECC71', fontSize: 13, fontWeight: '600' }}>🌿 Learn more at Dr. Judy Morgan's site →</Text>
                     </TouchableOpacity>
-                  </AccordionSection>
+                  </View>
                 )}
 
                 {scoreBreakdown.length > 0 && (
-                  <AccordionSection title="💊 Recommended Supplements">
+                  <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>💊 Recommended Supplements</Text>
                     {SUPPLEMENT_RECS.map((s, i) => (
                       <View key={i} style={{ marginBottom: 12, backgroundColor: s.bg, borderRadius: 10, padding: 12, borderWidth: 1, borderColor: s.borderColor }}>
                         <Text style={{ color: s.color, fontWeight: '700', fontSize: 14, marginBottom: 4 }}>{s.emoji} {s.name}</Text>
@@ -4613,7 +4670,7 @@ export default function App() {
                         </TouchableOpacity>
                       </View>
                     ))}
-                  </AccordionSection>
+                  </View>
                 )}
 
                 {treatFlags.length > 0 && (
@@ -4945,62 +5002,9 @@ export default function App() {
                 </TouchableOpacity>
               )}
 
-              {score !== null && (
-                <View style={{ paddingHorizontal: 16, marginTop: 6, marginBottom: 4 }}>
-                  <Text style={{ color: "#E5E7EB", fontSize: 15, fontWeight: "600", lineHeight: 21 }}>
-                    {getVerdict(score)}
-                  </Text>
-                </View>
-              )}
-
-              {flagged.length > 0 && (
-                <View style={{ paddingHorizontal: 16, marginTop: 10, marginBottom: 4 }}>
-                  <Text style={{ color: "#FC8181", fontSize: 13, fontWeight: "700", marginBottom: 6 }}>
-                    🚩 Red Flags ({flagged.length})
-                  </Text>
-                  <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 6 }}>
-                    {flagged.map((f, i) => (
-                      <View
-                        key={i}
-                        style={{
-                          backgroundColor: SEVERITY_COLORS[f.severity] || "#3d0a0a",
-                          borderRadius: 14,
-                          paddingHorizontal: 10,
-                          paddingVertical: 4,
-                        }}
-                      >
-                        <Text style={{ color: "#fff", fontSize: 12, fontWeight: "600" }}>{f.name}</Text>
-                      </View>
-                    ))}
-                  </View>
-                </View>
-              )}
-
-              {score !== null && (
-                <View style={{ marginHorizontal: 16, marginTop: 12, marginBottom: 4, backgroundColor: "#0d1f10", borderRadius: 14, padding: 14, borderWidth: 1, borderColor: "#2ECC71" }}>
-                  <Text style={{ color: "#2ECC71", fontSize: 13, fontWeight: "800", marginBottom: 6 }}>
-                    ✅ What to do next
-                  </Text>
-                  {(() => {
-                    const next = getNextStep(score, processing);
-                    return (
-                      <>
-                        <Text style={{ color: "#FFFFFF", fontSize: 14, fontWeight: "700", marginBottom: 4 }}>{next.headline}</Text>
-                        <Text style={{ color: "#D1D5DB", fontSize: 13, lineHeight: 19, marginBottom: 10 }}>{next.detail}</Text>
-                        <TouchableOpacity
-                          style={{ backgroundColor: "#2ECC71", borderRadius: 8, paddingVertical: 9, paddingHorizontal: 12, alignSelf: "flex-start" }}
-                          onPress={() => Linking.openURL(next.rec.link)}
-                        >
-                          <Text style={{ color: "#000", fontWeight: "700", fontSize: 12 }}>{next.rec.linkText}</Text>
-                        </TouchableOpacity>
-                      </>
-                    );
-                  })()}
-                </View>
-              )}
-
               {scoreBreakdown.length > 0 && (
-                <AccordionSection title="Why This Score">
+                <View style={styles.section}>
+                  <Text style={styles.sectionTitle}>Score Breakdown</Text>
                   {scoreBreakdown.map((item, i) => (
                     <View key={i} style={styles.breakdownRow}>
                       <Text style={[styles.breakdownLabel, {
@@ -5027,7 +5031,7 @@ export default function App() {
                       </Text>
                     </View>
                   ))}
-                </AccordionSection>
+                </View>
               )}
 
               {score !== null && (
@@ -5040,7 +5044,8 @@ export default function App() {
               )}
 
               {ingredients.length > 0 && (
-                <AccordionSection title="Ingredient Breakdown">
+                <View style={styles.section}>
+                  <Text style={styles.sectionTitle}>Ingredient Pills</Text>
                   <Text style={styles.pillHint}>
                     Tap any ingredient to learn more
                   </Text>
@@ -5070,7 +5075,7 @@ export default function App() {
                       );
                     })}
                   </View>
-                </AccordionSection>
+                </View>
               )}
 
               {!nutritionalProfile && scanned && (
@@ -5123,7 +5128,8 @@ export default function App() {
               )}
 
               {scoreBreakdown.length > 0 && (
-                <AccordionSection title="💊 Recommended Supplements">
+                <View style={styles.section}>
+                  <Text style={styles.sectionTitle}>💊 Recommended Supplements</Text>
                   {SUPPLEMENT_RECS.map((s, i) => (
                     <View key={i} style={{ marginBottom: 12, backgroundColor: s.bg, borderRadius: 10, padding: 12, borderWidth: 1, borderColor: s.borderColor }}>
                       <Text style={{ color: s.color, fontWeight: '700', fontSize: 14, marginBottom: 4 }}>{s.emoji} {s.name}</Text>
@@ -5134,11 +5140,12 @@ export default function App() {
                       </TouchableOpacity>
                     </View>
                   ))}
-                </AccordionSection>
+                </View>
               )}
 
               {scoreBreakdown.length > 0 && (
-                <AccordionSection title="🌿 Protein Energetics (TCVM)">
+                <View style={styles.section}>
+                  <Text style={styles.sectionTitle}>🌿 TCVM Protein Energetics</Text>
                   <Text style={[styles.sectionBody, { marginBottom: 10 }]}>
                     Traditional Chinese Veterinary Medicine classifies proteins by their energetic properties. Matching protein to your dog's constitution and season reduces inflammation, hot spots, and digestive upset.
                   </Text>
@@ -5164,7 +5171,7 @@ export default function App() {
                   <TouchableOpacity onPress={() => Linking.openURL('https://drjudymorgan.com')}>
                     <Text style={{ color: '#2ECC71', fontSize: 13, fontWeight: '600' }}>🌿 Learn more at Dr. Judy Morgan's site →</Text>
                   </TouchableOpacity>
-                </AccordionSection>
+                </View>
               )}
 
               <View style={styles.section}>
@@ -5494,31 +5501,6 @@ export default function App() {
               </TouchableOpacity>
             </>
           )}
-        </View>
-      </Modal>
-
-      <Modal
-        visible={showCoachPaywall}
-        animationType="fade"
-        transparent
-        onRequestClose={() => setShowCoachPaywall(false)}
-      >
-        <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.85)', justifyContent: 'center', alignItems: 'center', padding: 32 }}>
-          <View style={{ backgroundColor: '#0D0D1A', borderRadius: 20, padding: 28, alignItems: 'center', width: '100%' }}>
-            <Text style={{ fontSize: 36, marginBottom: 12 }}>🐾</Text>
-            <Text style={{ color: '#fff', fontSize: 20, fontWeight: '800', textAlign: 'center', marginBottom: 8 }}>
-              You&apos;ve used your 5 free questions
-            </Text>
-            <Text style={{ color: '#9CA3AF', fontSize: 14, textAlign: 'center', lineHeight: 22, marginBottom: 24 }}>
-              The AI Nutrition Coach is coming as a premium feature. Stay tuned for updates!
-            </Text>
-            <TouchableOpacity
-              onPress={() => setShowCoachPaywall(false)}
-              style={{ backgroundColor: '#2ECC71', borderRadius: 12, paddingVertical: 14, paddingHorizontal: 32 }}
-            >
-              <Text style={{ color: '#000', fontWeight: '700', fontSize: 16 }}>Got it</Text>
-            </TouchableOpacity>
-          </View>
         </View>
       </Modal>
 

@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Agent OS — Command Center</title>
+<style>
+  :root {
+    --bg: #07080c;
+    --bg-soft: #0b0d13;
+    --panel: rgba(255,255,255,0.035);
+    --panel-2: rgba(255,255,255,0.07);
+    --panel-solid: #12141b;
+    --border: rgba(255,255,255,0.08);
+    --border-strong: rgba(255,255,255,0.15);
+    --text: #f4f6fb;
+    --muted: #8a93a4;
+    --accent: #8b5cf6;
+    --accent-2: #22d3ee;
+    --warn: #fbbf24;
+    --danger: #f87171;
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--text); display: flex; min-height: 100vh;
+    -webkit-font-smoothing: antialiased; letter-spacing: -0.011em; overflow-x: hidden;
+  }
+  /* Aurora background */
+  .aurora { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+  .aurora::before, .aurora::after { content:""; position:absolute; width:70vw; height:70vw; border-radius:50%; filter: blur(150px); opacity:.14; }
+  .aurora::before { background: radial-gradient(circle, var(--accent), transparent 60%); top:-25vw; left:-10vw; animation: drift 30s ease-in-out infinite alternate; }
+  .aurora::after  { background: radial-gradient(circle, var(--accent-2), transparent 60%); bottom:-30vw; right:-12vw; animation: drift 34s ease-in-out infinite alternate-reverse; }
+  @keyframes drift { 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(7vw,5vh) scale(1.12)} 100%{transform:translate(-5vw,-3vh) scale(.95)} }
+  .grid-overlay { position: fixed; inset:0; z-index:0; pointer-events:none;
+    background-image: linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px), linear-gradient(90deg, rgba(255,255,255,.022) 1px,transparent 1px);
+    background-size: 40px 40px; -webkit-mask-image: radial-gradient(circle at 50% 25%, #000, transparent 75%); mask-image: radial-gradient(circle at 50% 25%, #000, transparent 75%); }
+  /* Sidebar (glass) */
+  .sidebar {
+    width: 252px; background: rgba(9,10,15,0.72); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid var(--border);
+    padding: 18px 12px; display: flex; flex-direction: column; gap: 1px; position: sticky; top: 0; height: 100vh;
+    z-index: 5; overflow-y: auto;
+  }
+  .brand-row { display:flex; align-items:center; gap:10px; padding: 4px 8px 14px; }
+  .brand-logo { width:34px; height:34px; border-radius:10px; display:grid; place-items:center; font-size:17px;
+    background: linear-gradient(140deg, var(--accent), var(--accent-2)); box-shadow: 0 6px 20px rgba(139,92,246,.4); }
+  .brand { font-weight: 800; font-size: 17px; letter-spacing: -0.02em;
+    background: linear-gradient(120deg, var(--accent), var(--accent-2)); -webkit-background-clip:text; background-clip:text; color: transparent; }
+  .brand-sub { font-size:10px; letter-spacing:1.6px; color: var(--muted); margin-top:1px; }
+  .nav-group { margin-top: 11px; }
+  .nav-label { font-size: 10.5px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--muted); font-weight: 700; padding: 4px 10px 5px; opacity:.65; }
+  .nav-btn {
+    width: 100%; text-align: left; background: none; border: none; color: #c2cad6; padding: 7px 10px;
+    border-radius: 10px; cursor: pointer; font-size: 13.5px; display: flex; align-items: center; gap: 11px;
+    position: relative; transition: background .15s, color .15s;
+  }
+  .nav-btn .av, .nav-btn .ico { width: 26px; height: 26px; border-radius: 8px; display:grid; place-items:center; font-size: 14px; flex-shrink:0;
+    background: color-mix(in srgb, var(--c, var(--accent)) 18%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c, var(--accent)) 38%, transparent); }
+  .nav-btn:hover { background: var(--panel-2); color: var(--text); }
+  .nav-btn.active { background: var(--panel-2); color: #fff; font-weight: 600; }
+  .nav-btn.active::before { content:""; position:absolute; left:-12px; top:50%; transform:translateY(-50%); width:3px; height:20px; border-radius:3px; background: var(--c, var(--accent)); box-shadow: 0 0 10px var(--c, var(--accent)); }
+  .sidebar .spacer { flex: 1; min-height: 12px; }
+  .io-row { display: flex; gap: 6px; padding: 0 2px; }
+  .io-row button { flex: 1; font-size: 12px; padding: 8px; }
+  /* Content + topbar */
+  .content { flex: 1; display: flex; flex-direction: column; min-width: 0; position: relative; z-index: 1; }
+  .topbar { display:flex; justify-content:flex-end; gap:10px; padding: 14px 36px 0; }
+  .chip { display:inline-flex; align-items:center; gap:7px; font-size:12px; color: var(--muted); background: var(--panel); border:1px solid var(--border); padding:7px 12px; border-radius:10px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+  .chip kbd { font-family: ui-monospace, monospace; background: var(--panel-2); border:1px solid var(--border); border-radius:5px; padding:0 5px; font-size:11px; color: var(--text); }
+  .chip .bars { display:inline-flex; gap:2px; align-items:flex-end; height:11px; }
+  .chip .bars i { width:3px; border-radius:2px; display:block; }
+  /* Main */
+  .main { padding: 16px 36px 44px; max-width: 1200px; width: 100%; }
+  h1 { margin: 0 0 4px; font-size: 26px; }
+  .sub { color: var(--muted); margin-bottom: 24px; font-size: 14px; }
+  .grid { display: grid; gap: 16px; }
+  .cards-3 { grid-template-columns: repeat(3, 1fr); }
+  .cards-4 { grid-template-columns: repeat(4, 1fr); }
+  .card {
+    background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px;
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+  }
+  .stat { font-size: 30px; font-weight: 800; }
+  .stat-label { color: var(--muted); font-size: 13px; margin-top: 2px; }
+  .section-head { display: flex; align-items: center; justify-content: space-between; margin: 26px 0 12px; }
+  .section-head h2 { font-size: 18px; margin: 0; }
+  button {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; border: none; padding: 9px 15px; border-radius: 10px;
+    font-weight: 600; cursor: pointer; font-size: 13px; box-shadow: 0 4px 16px rgba(139,92,246,.32);
+  }
+  button:hover { filter: brightness(1.08); }
+  button.ghost { background: var(--panel-2); color: var(--text); border: 1px solid var(--border); }
+  button.danger { background: transparent; color: var(--danger); border: 1px solid transparent; padding: 4px 8px; }
+  button.danger:hover { border-color: var(--danger); }
+  .item {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px;
+    margin-bottom: 10px; display: flex; align-items: flex-start; gap: 12px;
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  }
+  .item .body { flex: 1; }
+  .item .title { font-weight: 600; }
+  .item .meta { color: var(--muted); font-size: 12px; margin-top: 4px; }
+  .pill { display: inline-block; font-size: 11px; padding: 2px 9px; border-radius: 20px; font-weight: 600; }
+  .pill.green { background: rgba(76,195,138,.15); color: var(--accent); }
+  .pill.blue { background: rgba(47,129,247,.15); color: var(--accent-2); }
+  .pill.yellow { background: rgba(227,179,65,.15); color: var(--warn); }
+  .pill.gray { background: rgba(139,151,167,.15); color: var(--muted); }
+  .pill.red { background: rgba(248,81,73,.15); color: var(--danger); }
+  input, select, textarea {
+    width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text);
+    padding: 10px 12px; border-radius: 8px; font-size: 14px; font-family: inherit;
+  }
+  textarea { resize: vertical; min-height: 70px; }
+  .row { display: flex; gap: 10px; margin-bottom: 10px; }
+  .row > * { flex: 1; }
+  .chk { width: 18px; height: 18px; margin-top: 2px; cursor: pointer; accent-color: var(--accent); }
+  .done .title { text-decoration: line-through; color: var(--muted); }
+  .empty { color: var(--muted); font-style: italic; padding: 20px 0; }
+  .hidden { display: none; }
+  /* Modal */
+  .modal-bg {
+    position: fixed; inset: 0; background: rgba(0,0,0,.6); display: flex; align-items: center; justify-content: center; z-index: 50;
+  }
+  .modal {
+    background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 22px; width: 480px; max-width: 92vw; max-height: 86vh; overflow-y: auto;
+  }
+  .modal h3 { margin: 0 0 16px; }
+  .modal label { display: block; font-size: 12px; color: var(--muted); margin: 12px 0 5px; }
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; }
+  .agent-prompt { white-space: pre-wrap; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px; font-family: ui-monospace, monospace; font-size: 12px; color: var(--muted); margin-top: 8px; }
+  .copy-btn { font-size: 11px; padding: 5px 10px; }
+  .kanban { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .col-head { font-size: 12px; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); margin-bottom: 10px; font-weight: 700; }
+  .kanban .item { flex-direction: column; cursor: grab; }
+  .progress { height: 6px; background: var(--panel-2); border-radius: 6px; overflow: hidden; margin-top: 10px; }
+  .progress > div { height: 100%; background: var(--accent); }
+  /* Brain (Obsidian) viewer */
+  .brain-wrap { display: grid; grid-template-columns: 230px 1fr; gap: 18px; align-items: start; }
+  .brain-side { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px; position: sticky; top: 20px; max-height: calc(100vh - 60px); overflow:auto; }
+  .brain-group { margin-bottom: 12px; }
+  .brain-group-title { font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); font-weight: 700; padding: 4px 8px; }
+  .brain-link { display: block; width: 100%; text-align: left; background: none; border: none; color: var(--muted); padding: 6px 8px; border-radius: 7px; cursor: pointer; font-size: 13px; }
+  .brain-link:hover { background: var(--panel-2); color: var(--text); }
+  .brain-link.active { background: var(--panel-2); color: var(--accent); font-weight: 600; }
+  .brain-doc { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px 30px; max-height: calc(100vh - 60px); overflow:auto; line-height: 1.6; }
+  .brain-doc h1 { margin: 0 0 14px; }
+  .brain-doc h2 { margin: 22px 0 10px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+  .brain-doc h3 { margin: 18px 0 8px; color: var(--text); }
+  .brain-doc p { margin: 10px 0; }
+  .brain-doc ul, .brain-doc ol { margin: 10px 0; padding-left: 22px; }
+  .brain-doc li { margin: 4px 0; }
+  .brain-doc code { background: var(--bg); border: 1px solid var(--border); border-radius: 5px; padding: 1px 5px; font-family: ui-monospace, monospace; font-size: 12px; }
+  .brain-doc pre.codeblock { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px; overflow:auto; font-family: ui-monospace, monospace; font-size: 12px; color: var(--muted); }
+  .brain-doc blockquote { border-left: 3px solid var(--accent-2); margin: 10px 0; padding: 6px 14px; color: var(--muted); background: var(--panel-2); border-radius: 0 8px 8px 0; }
+  .brain-doc table { border-collapse: collapse; margin: 12px 0; width: 100%; font-size: 13px; }
+  .brain-doc th, .brain-doc td { border: 1px solid var(--border); padding: 7px 10px; text-align: left; }
+  .brain-doc th { background: var(--panel-2); }
+  .brain-doc hr { border: none; border-top: 1px solid var(--border); margin: 18px 0; }
+  .brain-doc a { color: var(--accent-2); text-decoration: none; }
+  .brain-doc a.wl { color: var(--accent); border-bottom: 1px dotted var(--accent); }
+  .brain-doc a.wl:hover, .brain-doc a:hover { text-decoration: underline; }
+  .brain-doc .wl-missing { color: var(--muted); border-bottom: 1px dotted var(--muted); }
+  /* Voice input row */
+  .voice-row { display: flex; gap: 8px; align-items: center; margin-top: 8px; }
+  .voice-row input, .voice-row textarea { flex: 1; }
+  button.mic { flex: 0 0 auto; font-size: 15px; padding: 9px 12px; }
+  button.mic.listening { background: var(--accent); color: #062; animation: micpulse 1s infinite; }
+  @keyframes micpulse { 0%,100% { opacity: 1; } 50% { opacity: .5; } }
+  /* App Store stats */
+  .as-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 8px 0 18px; }
+  .as-stat { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+  .as-stat .n { font-size: 28px; font-weight: 700; line-height: 1; }
+  .as-stat .l { color: var(--muted); font-size: 12px; margin-top: 6px; }
+  .as-chart { display: flex; align-items: flex-end; gap: 4px; height: 170px; padding: 14px; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; }
+  .as-bar { flex: 1; min-width: 3px; background: linear-gradient(180deg, var(--accent), rgba(76,195,138,.2)); border-radius: 4px 4px 0 0; position: relative; }
+  .as-bar:hover { filter: brightness(1.25); }
+  .as-bar .tip { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 3px 7px; font-size: 11px; white-space: nowrap; display: none; margin-bottom: 5px; z-index: 2; }
+  .as-bar:hover .tip { display: block; }
+  .setup-card { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; max-width: 720px; }
+  .setup-card ol { padding-left: 20px; line-height: 1.8; margin: 10px 0; }
+  .setup-card pre { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; overflow: auto; font-family: ui-monospace, monospace; font-size: 12px; color: var(--muted); }
+  .setup-card code { background: var(--bg); border: 1px solid var(--border); border-radius: 5px; padding: 1px 5px; font-family: ui-monospace, monospace; font-size: 12px; }
+  /* Hermes chat */
+  .chat-msgs { display: flex; flex-direction: column; gap: 10px; padding: 6px 2px 14px; min-height: 240px; max-height: calc(100vh - 230px); overflow-y: auto; }
+  .bubble { max-width: 80%; padding: 10px 14px; border-radius: 14px; font-size: 14px; line-height: 1.5; white-space: pre-wrap; word-break: break-word; }
+  .bubble.user { align-self: flex-end; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; border-bottom-right-radius: 4px; }
+  .bubble.bot { align-self: flex-start; background: var(--panel); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
+  .bubble.err { align-self: flex-start; background: rgba(220,80,80,.12); border: 1px solid rgba(220,80,80,.3); color: #f1a9a9; }
+  .bubble .who { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; opacity: .6; margin-bottom: 3px; }
+  .typing-bubble { align-self: flex-start; color: var(--muted); font-size: 13px; padding: 8px 14px; }
+</style>
+</head>
+<body>
+  <div class="aurora"></div>
+  <div class="grid-overlay"></div>
+  <aside class="sidebar">
+    <div class="brand-row">
+      <div class="brand-logo">◎</div>
+      <div>
+        <div class="brand">Agentic OS</div>
+        <div class="brand-sub">LOCAL</div>
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Workspace</div>
+      <button class="nav-btn active" data-view="dashboard" style="--c:#8b5cf6"><span class="av">▦</span> Dashboard</button>
+      <button class="nav-btn" data-view="projects" style="--c:#22d3ee"><span class="av">◈</span> Projects</button>
+      <button class="nav-btn" data-view="tasks" style="--c:#34d399"><span class="av">✓</span> Tasks</button>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Agents</div>
+      <button class="nav-btn" data-view="hermes" style="--c:#22d3ee"><span class="av">🤖</span> Hermes</button>
+      <button class="nav-btn" data-view="agents" style="--c:#f472b6"><span class="av">⚡</span> Prompts</button>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Knowledge</div>
+      <button class="nav-btn" data-view="brain" style="--c:#8b5cf6"><span class="av">🧠</span> Brain</button>
+      <button class="nav-btn" data-view="pinecone" style="--c:#34d399"><span class="av">🧬</span> Pinecone</button>
+      <button class="nav-btn" data-view="content" style="--c:#fbbf24"><span class="av">✎</span> Content</button>
+      <button class="nav-btn" data-view="notes" style="--c:#8a93a4"><span class="av">≡</span> Brain Dumps</button>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Metrics</div>
+      <button class="nav-btn" data-view="appstore" style="--c:#f472b6"><span class="av">📱</span> App Store</button>
+      <button class="nav-btn" data-view="supabase" style="--c:#34d399"><span class="av">🗄️</span> Supabase</button>
+      <button class="nav-btn" data-view="github" style="--c:#22d3ee"><span class="av">🐙</span> GitHub</button>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Self</div>
+      <button class="nav-btn" data-view="goals" style="--c:#fbbf24"><span class="av">🎯</span> Goals</button>
+      <button class="nav-btn" data-view="journal" style="--c:#8b5cf6"><span class="av">📓</span> Journal</button>
+    </div>
+
+    <div class="spacer"></div>
+    <div class="io-row">
+      <button class="ghost" id="exportBtn">Export</button>
+      <button class="ghost" id="importBtn">Import</button>
+    </div>
+    <input type="file" id="importFile" accept="application/json" class="hidden" />
+  </aside>
+
+  <div class="content">
+    <div class="topbar">
+      <span class="chip"><kbd>⌘K</kbd> Command palette</span>
+      <span class="chip"><span class="bars"><i style="height:5px;background:var(--accent)"></i><i style="height:8px;background:var(--accent-2)"></i><i style="height:11px;background:#34d399"></i></span> ALL SYSTEMS</span>
+    </div>
+    <main class="main" id="main"></main>
+  </div>
+
+  <div id="modalRoot"></div>
+
+<script>
+// ─────────────────────────────────────────────────────────────────────────
+// Agent OS — single-file local command center. All data lives in localStorage.
+// ─────────────────────────────────────────────────────────────────────────
+const STORE_KEY = "agent_os_data_v1";
+
+const SEED = {
+  projects: [
+    { id: uid(), name: "PawGrade (iOS app)", status: "active", desc: "Dog food barcode/label scanner, scores 0–100. v1.7.0, pending App Store submission.", color: "green" },
+    { id: uid(), name: "Common Sense Dog (website)", status: "active", desc: "Next.js site + AI chat assistant (Pinecone RAG). commonsensedog.com", color: "blue" },
+    { id: uid(), name: "PetChat / Pet Store Agent (SaaS)", status: "active", desc: "Embeddable pet store chat agent. Pending Railway deployment.", color: "yellow" },
+  ],
+  tasks: [
+    { id: uid(), title: "Submit PawGrade v1.7.0 to App Store", project: "PawGrade (iOS app)", done: false, priority: "high" },
+    { id: uid(), title: "Fill in affiliate links in PawGrade", project: "PawGrade (iOS app)", done: false, priority: "med" },
+    { id: uid(), title: "Fix Supabase RLS on scans table", project: "PawGrade (iOS app)", done: false, priority: "high" },
+    { id: uid(), title: "Upgrade UPC Item DB to paid plan", project: "PawGrade (iOS app)", done: false, priority: "med" },
+    { id: uid(), title: "Build standalone AI assistant section (no-scan chat) — the goldmine; own entry point + paywall", project: "PawGrade (iOS app)", done: false, priority: "high" },
+    { id: uid(), title: "Ship holistic-vet + 'educational, not medical advice' legal disclaimer in AI Coach (coded — verify & deploy)", project: "PawGrade (iOS app)", done: false, priority: "high" },
+    { id: uid(), title: "Make AI assistant Pinecone-first", project: "Common Sense Dog (website)", done: true, priority: "high" },
+    { id: uid(), title: "Deploy Pet Store Agent to Railway", project: "PetChat / Pet Store Agent (SaaS)", done: false, priority: "high" },
+    { id: uid(), title: "Send follow-up email to pet store (chat-hours objection)", project: "PetChat / Pet Store Agent (SaaS)", done: false, priority: "med" },
+  ],
+  content: [
+    { id: uid(), title: "Why omega-6:3 ratio matters in kibble", keyword: "dog food omega ratio", stage: "idea" },
+    { id: uid(), title: "Menadione (Vitamin K3) — is it safe for dogs?", keyword: "menadione dog food", stage: "draft" },
+    { id: uid(), title: "Freeze-dried vs gently cooked dog food", keyword: "freeze dried vs gently cooked", stage: "written" },
+    { id: uid(), title: "Natural flea & tick prevention that actually works", keyword: "natural flea tick prevention dogs", stage: "published" },
+  ],
+  agents: [
+    { id: uid(), name: "Keyword Researcher", desc: "Finds SEO keyword clusters for a topic.", prompt: "You are an SEO keyword researcher for a holistic dog-nutrition brand (Common Sense Dog).\nTopic: {{TOPIC}}\n\nReturn 10 keyword opportunities as a table: keyword | search intent | difficulty (low/med/high) | why it fits our holistic, whole-food-first philosophy. Prioritize low-competition long-tail terms a dog owner would actually search." },
+    { id: uid(), name: "Article Outliner", desc: "Turns a keyword into a structured blog outline.", prompt: "You are a content strategist for Common Sense Dog (holistic, nutrition-first dog health).\nTarget keyword: {{KEYWORD}}\n\nProduce a blog outline: SEO title (<60 chars), meta description (<155 chars), H2/H3 structure, and 1-line note per section on what to cover. Voice: knowledgeable dog owner helping another, evidence-based holistic, never defaults to 'consult your vet'." },
+    { id: uid(), name: "Article Writer", desc: "Writes the full article in brand voice.", prompt: "You are the Common Sense Dog writer. Write a complete blog article from this outline:\n{{OUTLINE}}\n\nVoice: holistic, whole-food-first, channels Dr. Judy Morgan / Dr. Karen Becker / Dr. Marty Goldstein. Direct, specific, actionable. Cite mechanisms (inflammation, omega ratios, processing). 1200–1600 words. End with a practical takeaway." },
+    { id: uid(), name: "Internal Linker", desc: "Suggests internal links to existing posts.", prompt: "Given this new article:\n{{ARTICLE}}\n\nAnd this list of existing posts:\n{{EXISTING_POSTS}}\n\nSuggest 3–5 internal links: anchor text + which post to link to + where in the article. Natural placement only." },
+  ],
+  notes: [
+    { id: uid(), text: "Julian-Goldie-style Agent OS: central command center for all projects + content + agent prompts. This is v1.", ts: Date.now() },
+  ],
+};
+
+function uid() { return Math.random().toString(36).slice(2, 10); }
+function load() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (!raw) { save(SEED); return structuredClone(SEED); }
+    return JSON.parse(raw);
+  } catch { return structuredClone(SEED); }
+}
+function save(d) { localStorage.setItem(STORE_KEY, JSON.stringify(d)); }
+let data = load();
+let view = "dashboard";
+
+const STAGES = ["idea", "draft", "written", "published"];
+const STAGE_LABEL = { idea: "Idea", draft: "Draft", written: "Written", published: "Published" };
+const STAGE_PILL = { idea: "gray", draft: "yellow", written: "blue", published: "green" };
+const PRI_PILL = { high: "red", med: "yellow", low: "gray" };
+
+const main = document.getElementById("main");
+
+// ── Render router ──────────────────────────────────────────────────────────
+function render() {
+  document.querySelectorAll(".nav-btn").forEach(b => b.classList.toggle("active", b.dataset.view === view));
+  ({ dashboard: renderDashboard, projects: renderProjects, tasks: renderTasks,
+     content: renderContent, agents: renderAgents, notes: renderNotes, brain: renderBrain,
+     goals: renderGoals, journal: renderJournal, appstore: renderAppStore, hermes: renderHermes,
+     pinecone: renderPinecone, supabase: renderSupabase, github: renderGitHub }[view])();
+}
+
+async function renderDashboard() {
+  const published = data.content.filter(c => c.stage === "published").length;
+  main.innerHTML = `
+    <h1>Command Center</h1>
+    <div class="sub">Live data from your real app. Today: ${new Date().toLocaleDateString()} · <span id="liveDot" style="color:var(--muted)">connecting…</span></div>
+    <div class="grid cards-4">
+      <div class="card"><div class="stat" id="stScans">—</div><div class="stat-label">Total scans (live)</div></div>
+      <div class="card"><div class="stat" id="stAvg">—</div><div class="stat-label">Avg score (live)</div></div>
+      <div class="card"><div class="stat" id="stFeedback">—</div><div class="stat-label">Feedback (live)</div></div>
+      <div class="card"><div class="stat">${published}</div><div class="stat-label">Published posts</div></div>
+    </div>
+    <div class="section-head"><h2>Recent scans</h2></div>
+    <div id="dashRecent"><div class="empty">Loading…</div></div>
+    <div class="section-head"><h2>High-priority tasks</h2></div>
+    <div id="dashTasks"></div>
+    <div class="section-head"><h2>Projects</h2></div>
+    <div class="grid cards-3" id="dashProjects"></div>
+  `;
+  document.getElementById("dashProjects").innerHTML = data.projects.map(p => `
+    <div class="card"><span class="pill ${p.color||'gray'}">${esc(p.status)}</span>
+    <div class="title" style="margin-top:8px;font-weight:600">${esc(p.name)}</div>
+    <div class="meta" style="color:var(--muted);font-size:12px;margin-top:6px">${esc(p.desc||"")}</div></div>`).join("");
+
+  // High-priority tasks come from TODO.md now (single source of truth)
+  try {
+    const todos = await api("/api/todos");
+    const hp = (todos||[]).filter(t => !t.done && /next update|security|🔥|🚨/i.test(t.section));
+    document.getElementById("dashTasks").innerHTML = hp.length
+      ? hp.map(t => `<div class="item"><div class="body"><div class="title">${esc(t.text)}</div><div class="meta">${esc(t.section)}</div></div></div>`).join("")
+      : `<div class="empty">Nothing urgent in TODO.md.</div>`;
+  } catch { document.getElementById("dashTasks").innerHTML = `<div class="empty">Start the server to sync TODO.md.</div>`; }
+
+  // Live stats from Supabase via local backend
+  try {
+    const s = await api("/api/stats");
+    document.getElementById("stScans").textContent = s.scans ?? "—";
+    document.getElementById("stAvg").textContent = s.avgScore ?? "—";
+    document.getElementById("stFeedback").textContent = s.feedback ?? "—";
+    document.getElementById("liveDot").innerHTML = s.configured ? `<span style="color:var(--accent)">● live</span>` : `<span style="color:var(--warn)">● no Supabase key</span>`;
+    document.getElementById("dashRecent").innerHTML = (s.recent||[]).length
+      ? s.recent.map(r => `<div class="item"><div class="body"><div class="title">${esc(r.product_name||"Unknown")}</div><div class="meta">${esc(r.processing_method||"")}</div></div><span class="pill ${r.score>=60?'green':r.score>=45?'yellow':'red'}">${r.score ?? "?"}</span></div>`).join("")
+      : `<div class="empty">No scans yet.</div>`;
+  } catch {
+    document.getElementById("liveDot").innerHTML = `<span style="color:var(--warn)">● static mode — run ./agent-os/start.sh for live data</span>`;
+    document.getElementById("dashRecent").innerHTML = `<div class="empty">Live data needs the local server running.</div>`;
+  }
+}
+
+function renderProjects() {
+  main.innerHTML = `
+    <div class="section-head"><h1>Projects</h1><button id="addProject">+ Project</button></div>
+    <div id="projList"></div>`;
+  document.getElementById("addProject").onclick = () => projectModal();
+  const el = document.getElementById("projList");
+  el.innerHTML = data.projects.length ? data.projects.map(p => `
+    <div class="item"><div class="body">
+      <div class="title">${esc(p.name)} <span class="pill ${p.color||'gray'}">${esc(p.status)}</span></div>
+      <div class="meta">${esc(p.desc||"")}</div>
+    </div>
+    <button class="ghost" data-edit="${p.id}">Edit</button>
+    <button class="danger" data-del="${p.id}">✕</button></div>`).join("") : `<div class="empty">No projects yet.</div>`;
+  el.querySelectorAll("[data-edit]").forEach(b => b.onclick = () => projectModal(b.dataset.edit));
+  el.querySelectorAll("[data-del]").forEach(b => b.onclick = () => { if(confirm("Delete project?")){ data.projects = data.projects.filter(p=>p.id!==b.dataset.del); persist(); }});
+}
+
+async function renderTasks() {
+  main.innerHTML = `
+    <div class="section-head"><h1>Tasks</h1><button id="addTask">+ Task</button></div>
+    <div class="sub">Synced live with <strong>TODO.md</strong> — this is your single source of truth. Check a box here, it updates the file.</div>
+    <div class="row"><input id="quickTask" placeholder="Add a task to TODO.md…"></div>
+    <div id="taskList"><div class="empty">Loading…</div></div>`;
+  const addNow = async () => {
+    const v = document.getElementById("quickTask").value.trim();
+    if (v) { try { await api("/api/todos", { action:"add", text:v }); renderTasks(); } catch { alert("Start the server (./agent-os/start.sh) to edit TODO.md."); } }
+  };
+  document.getElementById("addTask").onclick = addNow;
+  document.getElementById("quickTask").addEventListener("keydown", e => { if (e.key === "Enter") addNow(); });
+
+  let todos;
+  try { todos = await api("/api/todos"); }
+  catch {
+    document.getElementById("taskList").innerHTML = `<div class="empty">TODO.md sync needs the local server. Run <code>./agent-os/start.sh</code>.</div>`;
+    return;
+  }
+  const el = document.getElementById("taskList");
+  const sorted = [...todos].sort((a,b) => (a.done?1:0)-(b.done?1:0));
+  // group by section
+  const groups = {};
+  sorted.forEach(t => { (groups[t.section] = groups[t.section] || []).push(t); });
+  el.innerHTML = Object.keys(groups).map(sec => `
+    <div class="col-head" style="margin-top:18px">${esc(sec||"Tasks")}</div>
+    ${groups[sec].map(t => `
+      <div class="item ${t.done?'done':''}">
+        <input type="checkbox" class="chk" data-toggle="${esc(t.text)}" ${t.done?'checked':''}>
+        <div class="body"><div class="title">${esc(t.text)}</div></div>
+      </div>`).join("")}
+  `).join("") || `<div class="empty">No tasks in TODO.md.</div>`;
+  el.querySelectorAll("[data-toggle]").forEach(c => c.onchange = async () => {
+    try { await api("/api/todos", { action:"toggle", text:c.dataset.toggle }); renderTasks(); }
+    catch { alert("Couldn't reach the server."); }
+  });
+}
+
+async function renderContent() {
+  main.innerHTML = `
+    <div class="section-head"><h1>Content Pipeline</h1><button id="addContent">+ Content</button></div>
+    <div class="kanban" id="kanban"></div>
+    <div class="section-head"><h2>Drafts → Pinecone</h2></div>
+    <div class="sub">Articles saved from the Agents tab. Pushing runs your existing <code>process_content.mjs</code> pipeline — it generates Q&A pairs and embeds them. <strong>⚠️ This costs Anthropic + Voyage tokens.</strong></div>
+    <div id="draftList"><div class="empty">Loading…</div></div>`;
+  document.getElementById("addContent").onclick = () => contentModal();
+  // Drafts list (from local backend)
+  try {
+    const drafts = await api("/api/drafts");
+    document.getElementById("draftList").innerHTML = drafts.length
+      ? drafts.map(d => `<div class="item"><div class="body"><div class="title" style="font-size:14px">${esc(d.name)}</div><div class="meta">${esc(d.path)}</div></div>
+          <button class="ghost copy-btn" data-push="${esc(d.path)}">Push to Pinecone</button></div>`).join("")
+      : `<div class="empty">No drafts yet. Run an article agent and "Save as draft".</div>`;
+    document.querySelectorAll("[data-push]").forEach(b => b.onclick = async () => {
+      if (!confirm("Push to Pinecone? This runs your pipeline and costs API tokens. Continue?")) return;
+      b.textContent = "Pushing…"; b.disabled = true;
+      try { const r = await api("/api/push-pinecone", { path: b.dataset.push });
+        b.textContent = r.ok ? "✓ Pushed" : "✗ Failed";
+        if (!r.ok) alert((r.error||"Failed")+"\n\n"+(r.log||""));
+      } catch { b.textContent = "✗ Error"; }
+    });
+  } catch { document.getElementById("draftList").innerHTML = `<div class="empty">Drafts need the local server running.</div>`; }
+  const k = document.getElementById("kanban");
+  k.innerHTML = STAGES.map(s => `
+    <div class="kcol" data-stage="${s}"><div class="col-head">${STAGE_LABEL[s]}</div>
+    ${data.content.filter(c=>c.stage===s).map(c => `
+      <div class="item" draggable="true" data-id="${c.id}">
+        <div class="body"><div class="title" style="font-size:14px">${esc(c.title)}</div>
+        <div class="meta">🔑 ${esc(c.keyword||"")}</div>
+        <div style="margin-top:8px;display:flex;gap:6px">
+          ${STAGES.indexOf(s)>0?`<button class="ghost copy-btn" data-back="${c.id}">←</button>`:""}
+          ${STAGES.indexOf(s)<3?`<button class="ghost copy-btn" data-fwd="${c.id}">→</button>`:""}
+          <button class="danger" data-del="${c.id}">✕</button>
+        </div></div>
+      </div>`).join("") || `<div class="empty" style="font-size:12px">—</div>`}
+    </div>`).join("");
+  k.querySelectorAll("[data-fwd]").forEach(b => b.onclick = () => moveContent(b.dataset.fwd, 1));
+  k.querySelectorAll("[data-back]").forEach(b => b.onclick = () => moveContent(b.dataset.back, -1));
+  k.querySelectorAll("[data-del]").forEach(b => b.onclick = () => { data.content = data.content.filter(c=>c.id!==b.dataset.del); persist(); });
+}
+function moveContent(id, dir) {
+  const c = data.content.find(x=>x.id===id); const i = STAGES.indexOf(c.stage)+dir;
+  if (i>=0 && i<STAGES.length) { c.stage = STAGES[i]; persist(); }
+}
+
+function renderAgents() {
+  main.innerHTML = `
+    <div class="section-head"><h1>Agents</h1><button id="addAgent">+ Agent</button></div>
+    <div class="sub">Reusable agent prompts. Copy one, fill the {{VARIABLES}}, paste into Claude. Chain them: Keyword → Outline → Writer → Linker.</div>
+    <div id="agentList"></div>`;
+  document.getElementById("addAgent").onclick = () => agentModal();
+  const el = document.getElementById("agentList");
+  el.innerHTML = data.agents.map(a => `
+    <div class="card" style="margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div><div class="title" style="font-weight:600">⚡ ${esc(a.name)}</div><div class="meta" style="color:var(--muted);font-size:12px">${esc(a.desc||"")}</div></div>
+        <div style="display:flex;gap:6px">
+          <button class="copy-btn" data-run="${a.id}">▶ Run</button>
+          <button class="ghost copy-btn" data-copy="${a.id}">Copy</button>
+          <button class="ghost copy-btn" data-edit="${a.id}">Edit</button>
+          <button class="danger" data-del="${a.id}">✕</button>
+        </div>
+      </div>
+      <div class="agent-prompt">${esc(a.prompt)}</div>
+    </div>`).join("");
+  el.querySelectorAll("[data-run]").forEach(b => b.onclick = () => runAgentModal(b.dataset.run));
+  el.querySelectorAll("[data-copy]").forEach(b => b.onclick = () => { const a = data.agents.find(x=>x.id===b.dataset.copy); navigator.clipboard.writeText(a.prompt); b.textContent="Copied!"; setTimeout(()=>b.textContent="Copy",1200); });
+  el.querySelectorAll("[data-edit]").forEach(b => b.onclick = () => agentModal(b.dataset.edit));
+  el.querySelectorAll("[data-del]").forEach(b => b.onclick = () => { data.agents = data.agents.filter(a=>a.id!==b.dataset.del); persist(); });
+}
+
+// Run an agent: fill {{VARIABLES}}, call Claude via the local backend, show output.
+function runAgentModal(id) {
+  const a = data.agents.find(x=>x.id===id); if(!a) return;
+  const vars = [...new Set((a.prompt.match(/{{\s*([A-Z0-9_]+)\s*}}/g) || []).map(v => v.replace(/[{}\s]/g,"")))];
+  const root = document.getElementById("modalRoot");
+  root.innerHTML = `<div class="modal-bg"><div class="modal" style="width:640px">
+    <h3>▶ Run: ${esc(a.name)}</h3>
+    ${vars.length ? vars.map(v => `<label>${v}</label><textarea data-var="${v}" style="min-height:60px"></textarea>`).join("")
+      : `<div class="sub">No variables — runs as-is.</div>`}
+    <div class="modal-actions"><button class="ghost" id="mClose">Close</button><button id="mRun">Run agent</button></div>
+    <div id="runOut" style="margin-top:14px"></div>
+  </div></div>`;
+  document.getElementById("mClose").onclick = () => root.innerHTML = "";
+  document.getElementById("mRun").onclick = async () => {
+    let prompt = a.prompt;
+    root.querySelectorAll("[data-var]").forEach(t => { prompt = prompt.replaceAll(`{{${t.dataset.var}}}`, t.value).replace(new RegExp(`{{\\s*${t.dataset.var}\\s*}}`,'g'), t.value); });
+    const out = document.getElementById("runOut");
+    out.innerHTML = `<div class="empty">Running Claude… (this costs API tokens)</div>`;
+    try {
+      const r = await api("/api/run-agent", { prompt });
+      if (r.error) { out.innerHTML = `<div class="pill red">Error</div><div class="agent-prompt">${esc(r.error)}</div>`; return; }
+      window._lastRun = { title: a.name + " output", text: r.text };
+      out.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <strong>Output</strong>
+          <div style="display:flex;gap:6px">
+            <button class="copy-btn" id="rCopy">Copy</button>
+            <button class="copy-btn" id="rDraft">Save as draft</button>
+          </div></div>
+        <div class="agent-prompt" style="max-height:340px;overflow:auto">${esc(r.text)}</div>`;
+      document.getElementById("rCopy").onclick = () => navigator.clipboard.writeText(r.text);
+      document.getElementById("rDraft").onclick = async () => {
+        const title = prompt.split('\n')[0].slice(0,60) || a.name;
+        const res = await api("/api/save-draft", { title, content: r.text });
+        out.insertAdjacentHTML("beforeend", `<div class="sub" style="margin-top:8px">Saved → <code>${esc(res.path)}</code>. Push it to Pinecone from the Content tab.</div>`);
+      };
+    } catch { out.innerHTML = `<div class="empty">Couldn't reach the server. Run <code>./agent-os/start.sh</code> first.</div>`; }
+  };
+}
+
+function renderNotes() {
+  main.innerHTML = `
+    <div class="section-head"><h1>Brain Dumps</h1></div>
+    <div class="row"><textarea id="noteInput" placeholder="Dump a thought, idea, or reminder..."></textarea></div>
+    <div class="row" style="justify-content:flex-end"><button id="addNote" style="flex:0 0 auto">Save note</button></div>
+    <div id="noteList" style="margin-top:16px"></div>`;
+  document.getElementById("addNote").onclick = () => {
+    const v = document.getElementById("noteInput").value.trim();
+    if (v) { data.notes.unshift({ id: uid(), text: v, ts: Date.now() }); persist(); }
+  };
+  document.getElementById("noteList").innerHTML = data.notes.length ? data.notes.map(n => `
+    <div class="item"><div class="body"><div class="title" style="font-weight:400;white-space:pre-wrap">${esc(n.text)}</div>
+    <div class="meta">${new Date(n.ts).toLocaleString()}</div></div>
+    <button class="danger" data-del="${n.id}">✕</button></div>`).join("") : `<div class="empty">No notes yet.</div>`;
+  document.querySelectorAll("#noteList [data-del]").forEach(b => b.onclick = () => { data.notes = data.notes.filter(n=>n.id!==b.dataset.del); persist(); });
+}
+
+// ── Voice input (browser SpeechRecognition — no keys, Chrome/Edge) ───────────
+let _recog = null;
+function startVoice(targetId, btn) {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { alert("Voice input needs Chrome or Edge (uses the browser's built-in speech recognition)."); return; }
+  if (_recog) { _recog.stop(); _recog = null; btn.classList.remove("listening"); return; }
+  const el = document.getElementById(targetId);
+  const base = el.value ? el.value.replace(/\s*$/, "") + " " : "";
+  let finalText = "";
+  const r = new SR();
+  r.lang = "en-US"; r.interimResults = true; r.continuous = true;
+  r.onresult = (ev) => {
+    let interim = "";
+    for (let i = ev.resultIndex; i < ev.results.length; i++) {
+      const t = ev.results[i][0].transcript;
+      if (ev.results[i].isFinal) finalText += t + " "; else interim += t;
+    }
+    el.value = base + finalText + interim;
+  };
+  r.onend = () => { _recog = null; btn.classList.remove("listening"); };
+  r.onerror = () => { _recog = null; btn.classList.remove("listening"); };
+  r.start(); _recog = r; btn.classList.add("listening");
+}
+
+// ── Goals (checkbox tasks → vault Agentic OS/Goals.md) ───────────────────────
+async function renderGoals() {
+  main.innerHTML = `<h1>🎯 Goals</h1><div class="empty">Loading…</div>`;
+  let goals;
+  try { goals = await api("/api/goals"); }
+  catch { main.innerHTML = `<h1>🎯 Goals</h1><div class="empty">Start the server (<code>./agent-os/start.sh</code>) to use Goals.</div>`; return; }
+  main.innerHTML = `
+    <h1>🎯 Goals</h1>
+    <div class="sub">Checkbox goals saved to <code>Agentic OS/Goals.md</code> in your Obsidian vault.</div>
+    <div class="voice-row">
+      <input id="goalInput" placeholder="Add a goal…">
+      <button class="ghost mic" id="goalMic" title="Voice input">🎤</button>
+      <button id="goalAdd">Add</button>
+    </div>
+    <div id="goalList" style="margin-top:18px"></div>`;
+  document.getElementById("goalMic").onclick = function () { startVoice("goalInput", this); };
+  const add = async () => {
+    const el = document.getElementById("goalInput"), v = el.value.trim();
+    if (!v) return;
+    await api("/api/goals", { action: "add", text: v }); renderGoals();
+  };
+  document.getElementById("goalAdd").onclick = add;
+  document.getElementById("goalInput").addEventListener("keydown", e => { if (e.key === "Enter") add(); });
+  const list = document.getElementById("goalList");
+  const sorted = [...goals].sort((a, b) => (a.done ? 1 : 0) - (b.done ? 1 : 0));
+  list.innerHTML = sorted.length ? sorted.map(g => `
+    <div class="item ${g.done ? "done" : ""}">
+      <input type="checkbox" class="chk" ${g.done ? "checked" : ""} data-toggle="${esc(g.text)}">
+      <div class="body"><div class="title">${esc(g.text)}</div></div>
+    </div>`).join("") : `<div class="empty">No goals yet. Add one above (or dictate it 🎤).</div>`;
+  list.querySelectorAll("[data-toggle]").forEach(c => c.onchange = async () => {
+    await api("/api/goals", { action: "toggle", text: c.dataset.toggle }); renderGoals();
+  });
+}
+
+// ── Journal (one file per day → vault Agentic OS/<date>.md) ───────────────────
+async function renderJournal() {
+  main.innerHTML = `<h1>📓 Journal</h1><div class="empty">Loading…</div>`;
+  let j;
+  try { j = await api("/api/journal"); }
+  catch { main.innerHTML = `<h1>📓 Journal</h1><div class="empty">Start the server (<code>./agent-os/start.sh</code>) to use the Journal.</div>`; return; }
+  main.innerHTML = `
+    <h1>📓 Journal</h1>
+    <div class="sub">One file per day → <code>Agentic OS/${esc(j.date)}.md</code> in your Obsidian vault (shared with Mission Control).</div>
+    <div class="row"><textarea id="journalInput" placeholder="What happened, an idea, a reflection…"></textarea></div>
+    <div class="voice-row" style="justify-content:flex-end">
+      <button class="ghost mic" id="journalMic" title="Voice input">🎤</button>
+      <button id="journalSave">Save entry</button>
+    </div>
+    <div class="col-head" style="margin-top:24px">Today</div>
+    <div class="brain-doc" id="journalToday"></div>`;
+  document.getElementById("journalMic").onclick = function () { startVoice("journalInput", this); };
+  document.getElementById("journalSave").onclick = async () => {
+    const el = document.getElementById("journalInput"), v = el.value.trim();
+    if (!v) return;
+    const r = await api("/api/journal", { text: v }); el.value = "";
+    document.getElementById("journalToday").innerHTML = mdToHtml(r.content, brainName2Path || {});
+  };
+  document.getElementById("journalToday").innerHTML = j.content
+    ? mdToHtml(j.content, brainName2Path || {})
+    : `<div class="empty">Nothing logged today yet.</div>`;
+}
+
+// ── GitHub (via gh CLI) ─────────────────────────────────────────────────────
+async function renderGitHub() {
+  main.innerHTML = `<h1>🐙 GitHub</h1><div class="empty">Loading…</div>`;
+  let d;
+  try { d = await api("/api/github"); }
+  catch { main.innerHTML = `<h1>🐙 GitHub</h1><div class="empty">Start the server (<code>./agent-os/start.sh</code>) to load GitHub.</div>`; return; }
+  if (!d.authed) {
+    const reason = d.error === "not_logged_in"
+      ? `You're not logged into GitHub yet.`
+      : `GitHub error: ${esc(d.error || "unknown")}`;
+    main.innerHTML = `
+      <h1>🐙 GitHub</h1>
+      <div class="sub">${reason}</div>
+      <div class="setup-card">
+        <p style="margin-top:0"><strong>Log in once</strong> (the <code>gh</code> CLI is already installed):</p>
+        <ol>
+          <li>Open Terminal and run: <pre>gh auth login</pre></li>
+          <li>Choose <strong>GitHub.com</strong> → <strong>HTTPS</strong> → <strong>Login with a web browser</strong>, and follow the prompts.</li>
+          <li>Come back here and reopen the GitHub tab.</li>
+        </ol>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:0">Your login is stored by <code>gh</code> on your machine — Agent OS just reads from it.</p>
+      </div>`;
+    return;
+  }
+  const u = d.user || {};
+  const repos = (d.repos || []).slice().sort((a, b) => (a.pushedAt < b.pushedAt ? 1 : -1));
+  const cards = repos.map(r => {
+    const lang = r.primaryLanguage && r.primaryLanguage.name ? r.primaryLanguage.name : "";
+    const when = r.pushedAt ? new Date(r.pushedAt).toLocaleDateString() : "";
+    return `<div class="item"><div class="body">
+      <div class="title"><a href="${esc(r.url)}" target="_blank" rel="noopener" style="color:var(--text)">${esc(r.name)}</a>
+        ${r.isPrivate ? `<span class="pill gray">private</span>` : ``}
+        ${lang ? `<span class="pill blue">${esc(lang)}</span>` : ``}
+        ${r.stargazerCount ? `<span class="pill gray">★ ${r.stargazerCount}</span>` : ``}
+      </div>
+      <div class="meta">${esc(r.description || "—")}</div>
+      <div class="meta">pushed ${esc(when)}</div>
+    </div></div>`;
+  }).join("");
+  main.innerHTML = `
+    <h1>🐙 GitHub</h1>
+    <div class="sub">Signed in as <strong>${esc(u.login || "")}</strong>${u.name ? ` (${esc(u.name)})` : ""} · ${u.public_repos || 0} public repos · ${u.followers || 0} followers</div>
+    <div class="col-head" style="margin-top:6px">Repositories (recent first)</div>
+    ${cards || `<div class="empty">No repositories.</div>`}`;
+}
+
+// ── Supabase browser (tables + recent rows) ─────────────────────────────────
+async function renderSupabase() {
+  main.innerHTML = `<h1>🗄️ Supabase</h1><div class="empty">Loading…</div>`;
+  let d;
+  try { d = await api("/api/supabase/tables"); }
+  catch { main.innerHTML = `<h1>🗄️ Supabase</h1><div class="empty">Start the server (<code>./agent-os/start.sh</code>) to browse Supabase.</div>`; return; }
+  const proj = (d.project || "").replace("https://", "").replace(".supabase.co", "");
+  const list = (d.tables || []).map(t => `
+    <button class="brain-link" data-table="${esc(t.table)}">
+      ${esc(t.table)} <span style="color:var(--muted);font-size:11px">· ${t.count}</span>
+    </button>`).join("");
+  main.innerHTML = `
+    <h1>🗄️ Supabase</h1>
+    <div class="sub">Project <code>${esc(proj)}</code> · ${ (d.tables||[]).length } tables. Click a table to see recent rows.</div>
+    <div class="brain-wrap">
+      <aside class="brain-side"><div class="brain-group"><div class="brain-group-title">Tables</div>${list || '<div class="empty">none</div>'}</div></aside>
+      <article class="brain-doc" id="sbView"><div class="empty">Pick a table.</div></article>
+    </div>`;
+  document.querySelectorAll("[data-table]").forEach(b => b.onclick = () => loadSupabaseTable(b.dataset.table));
+  const first = (d.tables || [])[0];
+  if (first) loadSupabaseTable(first.table);
+}
+async function loadSupabaseTable(table) {
+  document.querySelectorAll("[data-table]").forEach(b => b.classList.toggle("active", b.dataset.table === table));
+  const view = document.getElementById("sbView"); if (!view) return;
+  view.innerHTML = `<div class="empty">Loading ${esc(table)}…</div>`;
+  let d;
+  try { d = await api("/api/supabase/rows?table=" + encodeURIComponent(table) + "&limit=25"); }
+  catch { view.innerHTML = `<div class="empty">Failed to load.</div>`; return; }
+  if (d.error) { view.innerHTML = `<div class="empty">⚠️ ${esc(d.error)}</div>`; return; }
+  if (!d.rows.length) { view.innerHTML = `<h2 style="margin-top:0">${esc(table)}</h2><div class="empty">No rows.</div>`; return; }
+  const cols = Object.keys(d.rows[0]);
+  const head = cols.map(c => `<th>${esc(c)}</th>`).join("");
+  const body = d.rows.map(r => `<tr>${cols.map(c => {
+    let v = r[c];
+    if (v === null) v = "—"; else if (typeof v === "object") v = JSON.stringify(v);
+    else v = String(v);
+    if (v.length > 80) v = v.slice(0, 80) + "…";
+    return `<td>${esc(v)}</td>`;
+  }).join("")}</tr>`).join("");
+  view.innerHTML = `
+    <h2 style="margin-top:0">${esc(table)} <span style="color:var(--muted);font-size:13px;font-weight:400">· ${d.rows.length} most recent${d.ordered ? "" : " (unordered)"}</span></h2>
+    <div style="overflow:auto"><table>${`<thead><tr>${head}</tr></thead>`}<tbody>${body}</tbody></table></div>`;
+}
+
+// ── Pinecone quick-add (type/speak → add to the knowledge base) ─────────────
+let pineconeAdds = [];
+async function renderPinecone() {
+  let st;
+  try { st = await api("/api/pinecone-add"); }
+  catch { main.innerHTML = `<h1>🧬 Pinecone</h1><div class="empty">Start the server (<code>./agent-os/start.sh</code>) to add to your knowledge base.</div>`; return; }
+  if (!st.configured) {
+    main.innerHTML = `<h1>🧬 Pinecone</h1><div class="empty">Missing <code>PINECONE_API_KEY</code> or <code>VOYAGE_API_KEY</code> in common-sense-dog-ai/.env.local.</div>`; return;
+  }
+  main.innerHTML = `
+    <h1>🧬 Add to Knowledge Base</h1>
+    <div class="sub">Type or 🎤 speak a note → embedded with voyage-3 and stored in Pinecone (<code>${esc(st.index)}</code>), instantly searchable by your AI chat &amp; Coach. One embedding per note — basically free.</div>
+    <div class="row"><textarea id="pcInput" placeholder="Dump a fact, insight, or note for the AI to know…"></textarea></div>
+    <div class="voice-row">
+      <input id="pcTag" placeholder="Tag (optional, e.g. Supplements)" style="max-width:240px">
+      <button class="ghost mic" id="pcMic" title="Voice input">🎤</button>
+      <button id="pcAdd">Add to KB</button>
+    </div>
+    <div id="pcResult" style="margin-top:14px"></div>
+    <div id="pcRecent" style="margin-top:8px"></div>`;
+  document.getElementById("pcMic").onclick = function () { startVoice("pcInput", this); };
+  const add = async () => {
+    const el = document.getElementById("pcInput"), v = el.value.trim();
+    if (!v) return;
+    const tag = document.getElementById("pcTag").value.trim();
+    const btn = document.getElementById("pcAdd"); btn.disabled = true; btn.textContent = "Adding…";
+    document.getElementById("pcResult").innerHTML = `<div class="empty">Embedding + upserting…</div>`;
+    let r;
+    try { r = await api("/api/pinecone-add", { text: v, tag }); }
+    catch { r = { error: "Request failed." }; }
+    btn.disabled = false; btn.textContent = "Add to KB";
+    if (r.ok) {
+      document.getElementById("pcResult").innerHTML = `<div class="item"><div class="body"><div class="title" style="color:var(--accent)">✅ Added to knowledge base</div><div class="meta">id ${esc(r.id)} · ${r.dim}-dim · searchable now</div></div></div>`;
+      pineconeAdds.unshift({ text: v, tag: tag || "Note", ts: Date.now() });
+      el.value = ""; document.getElementById("pcTag").value = "";
+      paintPineconeRecent();
+    } else {
+      document.getElementById("pcResult").innerHTML = `<div class="item"><div class="body"><div class="title" style="color:#f1a9a9">⚠️ ${esc(r.error || "Failed")}</div></div></div>`;
+    }
+  };
+  document.getElementById("pcAdd").onclick = add;
+  paintPineconeRecent();
+}
+function paintPineconeRecent() {
+  const box = document.getElementById("pcRecent"); if (!box) return;
+  if (!pineconeAdds.length) { box.innerHTML = ""; return; }
+  box.innerHTML = `<div class="col-head" style="margin-top:14px">Added this session</div>` + pineconeAdds.map(a => `
+    <div class="item"><div class="body">
+      <div class="title" style="font-weight:400;white-space:pre-wrap">${esc(a.text.length > 160 ? a.text.slice(0,160) + "…" : a.text)}</div>
+      <div class="meta">${esc(a.tag)} · ${new Date(a.ts).toLocaleTimeString()}</div>
+    </div></div>`).join("");
+}
+
+// ── Hermes agent chat (via `hermes -z` oneshot) ─────────────────────────────
+let hermesMsgs = [];
+async function renderHermes() {
+  let st;
+  try { st = await api("/api/hermes"); }
+  catch { main.innerHTML = `<h1>🤖 Hermes</h1><div class="empty">Start the server (<code>./agent-os/start.sh</code>) to chat with Hermes.</div>`; return; }
+  if (!st.installed) {
+    main.innerHTML = `<h1>🤖 Hermes</h1><div class="empty">Hermes isn't installed at <code>~/.local/bin/hermes</code>. Finish <code>hermes setup</code> first.</div>`; return;
+  }
+  main.innerHTML = `
+    <h1>🤖 Hermes</h1>
+    <div class="sub">Chat with your Hermes agent — runs locally via <code>hermes -z</code>. Each reply is generated fresh (oneshot).</div>
+    <div class="chat-msgs" id="hmsgs"></div>
+    <div class="voice-row">
+      <input id="hinput" placeholder="Ask Hermes…" autocomplete="off">
+      <button class="ghost mic" id="hmic" title="Voice input">🎤</button>
+      <button id="hsend">Send</button>
+    </div>`;
+  document.getElementById("hmic").onclick = function () { startVoice("hinput", this); };
+  const send = async () => {
+    const el = document.getElementById("hinput"), v = el.value.trim();
+    if (!v) return;
+    el.value = "";
+    hermesMsgs.push({ who: "user", text: v });
+    paintHermes(true);
+    let r;
+    try { r = await api("/api/hermes", { message: v }); }
+    catch { r = { error: "Request failed (is the server running?)." }; }
+    hermesMsgs.push(r.reply ? { who: "bot", text: r.reply } : { who: "err", text: r.error || "No response." });
+    paintHermes(false);
+  };
+  document.getElementById("hsend").onclick = send;
+  document.getElementById("hinput").addEventListener("keydown", e => { if (e.key === "Enter") send(); });
+  paintHermes(false);
+}
+function paintHermes(thinking) {
+  const box = document.getElementById("hmsgs"); if (!box) return;
+  const msgs = hermesMsgs.map(m => {
+    const cls = m.who === "user" ? "user" : m.who === "err" ? "err" : "bot";
+    const label = m.who === "user" ? "" : `<div class="who">${m.who === "err" ? "error" : "Hermes"}</div>`;
+    return `<div class="bubble ${cls}">${label}${esc(m.text)}</div>`;
+  }).join("");
+  const empty = (!hermesMsgs.length && !thinking) ? `<div class="empty">Say hi to Hermes 👋</div>` : "";
+  const typing = thinking ? `<div class="typing-bubble">Hermes is thinking…</div>` : "";
+  box.innerHTML = msgs + empty + typing;
+  box.scrollTop = box.scrollHeight;
+  const sb = document.getElementById("hsend"); if (sb) sb.disabled = thinking;
+}
+
+// ── App Store Connect (live download stats) ─────────────────────────────────
+async function renderAppStore() {
+  main.innerHTML = `<h1>📱 App Store</h1><div class="empty">Loading…</div>`;
+  let d;
+  try { d = await api("/api/appstore"); }
+  catch { main.innerHTML = `<h1>📱 App Store</h1><div class="empty">Start the server (<code>./agent-os/start.sh</code>) to load App Store stats.</div>`; return; }
+
+  if (!d.configured) {
+    main.innerHTML = `
+      <h1>📱 App Store</h1>
+      <div class="sub">Live downloads from App Store Connect — needs a one-time API key (key stays on your machine, server-side).</div>
+      <div class="setup-card">
+        <p style="margin-top:0"><strong>Set up the App Store Connect API key:</strong></p>
+        <ol>
+          <li>App Store Connect → <strong>Users and Access → Integrations → App Store Connect API</strong> → <strong>+</strong> to generate a key (Access: <em>Finance</em> or <em>Admin</em>).</li>
+          <li>Copy the <strong>Key ID</strong> and <strong>Issuer ID</strong>, and download the <strong>.p8</strong> file (downloadable only once).</li>
+          <li>Get your <strong>Vendor Number</strong> from <strong>Payments and Financial Reports</strong> (8 digits, top-left).</li>
+          <li>Put the .p8 in the <code>agent-os/</code> folder and add to <code>agent-os/.env</code>:</li>
+        </ol>
+        <pre>ASC_KEY_ID=ABCD123456
+ASC_ISSUER_ID=00000000-0000-0000-0000-000000000000
+ASC_VENDOR_NUMBER=12345678
+ASC_PRIVATE_KEY_PATH=./AuthKey_ABCD123456.p8</pre>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:0">Then restart Agent OS. Currently missing: <strong>${(d.missing || []).join(", ") || "—"}</strong>.</p>
+      </div>`;
+    return;
+  }
+  if (d.error && d.total === undefined) {
+    main.innerHTML = `<h1>📱 App Store</h1><div class="empty">App Store Connect error: ${esc(d.error)}</div>`; return;
+  }
+
+  const series = d.series || [];
+  const max = Math.max(1, ...series.map(s => s.units));
+  const best = series.reduce((m, s) => s.units > m.units ? s : m, { units: 0, date: "—" });
+  const avg = series.length ? Math.round(d.total / series.length) : 0;
+  const bars = series.map(s => {
+    const h = Math.max(Math.round((s.units / max) * 100), 2);
+    return `<div class="as-bar" style="height:${h}%"><div class="tip">${esc(s.date)} · ${s.units}</div></div>`;
+  }).join("");
+
+  main.innerHTML = `
+    <h1>📱 App Store</h1>
+    <div class="sub">PawGrade downloads from App Store Connect (Sales &amp; Trends) · vendor ${esc(String(d.vendor || ""))} · last ${d.days} days${d.error ? ` · <span style="color:var(--amber)">note: ${esc(d.error)}</span>` : ""}</div>
+    <div class="as-stats">
+      <div class="as-stat"><div class="n">${d.total}</div><div class="l">downloads · last ${d.days}d</div></div>
+      <div class="as-stat"><div class="n">${avg}</div><div class="l">avg / day</div></div>
+      <div class="as-stat"><div class="n">${best.units}</div><div class="l">best day · ${esc(best.date)}</div></div>
+    </div>
+    <div class="as-chart">${bars || `<div class="empty">No downloads in this window yet.</div>`}</div>
+    <div class="sub" style="margin-top:10px;font-size:12px">Apple data lags ~1–2 days — the most recent day may read 0 until it's finalized.</div>`;
+}
+
+// ── Brain (read-only Obsidian vault viewer) ─────────────────────────────────
+let brainName2Path = {};
+async function renderBrain() {
+  main.innerHTML = `<h1>🧠 Brain</h1><div class="empty">Loading your knowledge base…</div>`;
+  let res;
+  try { res = await api("/api/brain"); }
+  catch { main.innerHTML = `<h1>🧠 Brain</h1><div class="empty">Start the server (<code>./agent-os/start.sh</code>) to load the Brain from your Obsidian vault.</div>`; return; }
+  if (!res.exists || !res.notes.length) {
+    main.innerHTML = `<h1>🧠 Brain</h1><div class="empty">No Brain notes found at <code>${esc(res.dir)}</code>. Build them in your vault first.</div>`; return;
+  }
+  brainName2Path = {};
+  res.notes.forEach(n => { brainName2Path[n.name.toLowerCase()] = n.path; });
+
+  const groups = {};
+  res.notes.forEach(n => { const g = n.folder || "Home"; (groups[g] = groups[g] || []).push(n); });
+  const order = ["Home", "People", "Projects", "Nutrition", "Reference"];
+  const keys = Object.keys(groups).sort((a, b) => {
+    const ia = order.indexOf(a), ib = order.indexOf(b);
+    return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+  });
+  const sidebar = keys.map(g => `
+    <div class="brain-group">
+      <div class="brain-group-title">${esc(g)}</div>
+      ${groups[g].map(n => `<button class="brain-link" data-note="${esc(n.path)}">${esc(n.name)}</button>`).join("")}
+    </div>`).join("");
+
+  main.innerHTML = `
+    <h1>🧠 Brain</h1>
+    <div class="sub">Read-only view of your Obsidian vault (<code>Brain/</code>). One source of truth — edit in Obsidian, reopen this tab to refresh.</div>
+    <div class="brain-wrap">
+      <aside class="brain-side">${sidebar}</aside>
+      <article class="brain-doc" id="brainDoc"><div class="empty">Pick a note.</div></article>
+    </div>`;
+  document.querySelectorAll(".brain-link").forEach(b => b.onclick = () => loadBrainNote(b.dataset.note));
+  loadBrainNote(brainName2Path["brain home"] || res.notes[0].path);
+}
+
+async function loadBrainNote(p) {
+  const doc = document.getElementById("brainDoc"); if (!doc) return;
+  document.querySelectorAll(".brain-link").forEach(b => b.classList.toggle("active", b.dataset.note === p));
+  doc.innerHTML = `<div class="empty">Loading…</div>`;
+  let res;
+  try { res = await api("/api/brain-note?file=" + encodeURIComponent(p)); }
+  catch { doc.innerHTML = `<div class="empty">Couldn't load that note.</div>`; return; }
+  doc.innerHTML = mdToHtml(res.content, brainName2Path);
+  doc.scrollTop = 0;
+  doc.querySelectorAll("a.wl").forEach(a => a.onclick = e => { e.preventDefault(); loadBrainNote(a.dataset.note); });
+}
+
+// Tiny markdown → HTML (headings, bold, code, links, [[wikilinks]], lists, tables, quotes, fences)
+function mdToHtml(md, name2path) {
+  const e = s => s.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m]));
+  const inline = s => {
+    s = e(s);
+    s = s.replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (m, name, alias) => {
+      const label = (alias || name).trim();
+      const p = name2path[name.trim().toLowerCase()];
+      return p ? `<a href="#" class="wl" data-note="${esc(p)}">${esc(label)}</a>`
+               : `<span class="wl-missing">${esc(label)}</span>`;
+    });
+    s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    s = s.replace(/`([^`]+)`/g, '<code>$1</code>');
+    s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+    return s;
+  };
+  const lines = md.replace(/\r/g, '').split('\n');
+  let i = 0, html = '', inList = false, listTag = '';
+  const closeList = () => { if (inList) { html += `</${listTag}>`; inList = false; } };
+  if (lines[0] === '---') { let j = 1; while (j < lines.length && lines[j] !== '---') j++; i = j + 1; }
+  for (; i < lines.length; i++) {
+    let line = lines[i];
+    if (/^```/.test(line)) { closeList(); let code = ''; i++; while (i < lines.length && !/^```/.test(lines[i])) code += lines[i++] + '\n'; html += `<pre class="codeblock">${e(code)}</pre>`; continue; }
+    if (/^\s*$/.test(line)) { closeList(); continue; }
+    if (/^\s*\|.*\|\s*$/.test(line) && i + 1 < lines.length && /^\s*\|[\s:|-]+\|\s*$/.test(lines[i + 1])) {
+      closeList();
+      const head = line.trim().replace(/^\||\|$/g, '').split('|').map(c => `<th>${inline(c.trim())}</th>`).join('');
+      let t = `<table><thead><tr>${head}</tr></thead><tbody>`;
+      i += 2;
+      while (i < lines.length && /^\s*\|.*\|\s*$/.test(lines[i])) {
+        t += `<tr>${lines[i].trim().replace(/^\||\|$/g, '').split('|').map(c => `<td>${inline(c.trim())}</td>`).join('')}</tr>`; i++;
+      }
+      i--; html += t + '</tbody></table>'; continue;
+    }
+    let m;
+    if ((m = line.match(/^(#{1,6})\s+(.*)/))) { closeList(); html += `<h${m[1].length}>${inline(m[2])}</h${m[1].length}>`; continue; }
+    if (/^\s*>\s?/.test(line)) { closeList(); html += `<blockquote>${inline(line.replace(/^\s*>\s?/, ''))}</blockquote>`; continue; }
+    if (/^\s*---+\s*$/.test(line)) { closeList(); html += '<hr>'; continue; }
+    if (/^\s*[-*]\s+/.test(line)) {
+      if (!inList || listTag !== 'ul') { closeList(); html += '<ul>'; inList = true; listTag = 'ul'; }
+      html += `<li>${inline(line.replace(/^\s*[-*]\s+(\[[ x~]\]\s*)?/, ''))}</li>`; continue;
+    }
+    if (/^\s*\d+\.\s+/.test(line)) {
+      if (!inList || listTag !== 'ol') { closeList(); html += '<ol>'; inList = true; listTag = 'ol'; }
+      html += `<li>${inline(line.replace(/^\s*\d+\.\s+/, ''))}</li>`; continue;
+    }
+    closeList();
+    html += `<p>${inline(line)}</p>`;
+  }
+  closeList();
+  return html;
+}
+
+// ── Modals ─────────────────────────────────────────────────────────────────
+function modal(html, onSave) {
+  const root = document.getElementById("modalRoot");
+  root.innerHTML = `<div class="modal-bg"><div class="modal">${html}
+    <div class="modal-actions"><button class="ghost" id="mCancel">Cancel</button><button id="mSave">Save</button></div></div></div>`;
+  document.getElementById("mCancel").onclick = () => root.innerHTML = "";
+  document.getElementById("mSave").onclick = () => { if (onSave() !== false) root.innerHTML = ""; };
+}
+function projectModal(id) {
+  const p = data.projects.find(x=>x.id===id) || {};
+  modal(`<h3>${id?"Edit":"New"} Project</h3>
+    <label>Name</label><input id="pn" value="${esc(p.name||"")}">
+    <label>Description</label><textarea id="pd">${esc(p.desc||"")}</textarea>
+    <label>Status</label><input id="ps" value="${esc(p.status||"active")}">
+    <label>Color</label><select id="pc">${["green","blue","yellow","red","gray"].map(c=>`<option ${p.color===c?"selected":""}>${c}</option>`).join("")}</select>`,
+  () => {
+    const name = document.getElementById("pn").value.trim(); if(!name) return false;
+    const o = { name, desc: document.getElementById("pd").value, status: document.getElementById("ps").value, color: document.getElementById("pc").value };
+    if (id) Object.assign(p, o); else data.projects.push({ id: uid(), ...o });
+    persist();
+  });
+}
+function taskModal(id) {
+  const t = data.tasks.find(x=>x.id===id) || {};
+  modal(`<h3>${id?"Edit":"New"} Task</h3>
+    <label>Title</label><input id="tn" value="${esc(t.title||"")}">
+    <label>Project</label><select id="tp"><option value="">— none —</option>${data.projects.map(p=>`<option ${t.project===p.name?"selected":""}>${esc(p.name)}</option>`).join("")}</select>
+    <label>Priority</label><select id="tpr">${["high","med","low"].map(x=>`<option ${t.priority===x?"selected":""}>${x}</option>`).join("")}</select>`,
+  () => {
+    const title = document.getElementById("tn").value.trim(); if(!title) return false;
+    const o = { title, project: document.getElementById("tp").value, priority: document.getElementById("tpr").value };
+    if (id) Object.assign(t, o); else data.tasks.push({ id: uid(), done:false, ...o });
+    persist();
+  });
+}
+function contentModal(id) {
+  const c = data.content.find(x=>x.id===id) || {};
+  modal(`<h3>New Content</h3>
+    <label>Title</label><input id="cn" value="${esc(c.title||"")}">
+    <label>Target keyword</label><input id="ck" value="${esc(c.keyword||"")}">
+    <label>Stage</label><select id="cs">${STAGES.map(s=>`<option value="${s}" ${c.stage===s?"selected":""}>${STAGE_LABEL[s]}</option>`).join("")}</select>`,
+  () => {
+    const title = document.getElementById("cn").value.trim(); if(!title) return false;
+    const o = { title, keyword: document.getElementById("ck").value, stage: document.getElementById("cs").value };
+    if (id) Object.assign(c, o); else data.content.push({ id: uid(), ...o });
+    persist();
+  });
+}
+function agentModal(id) {
+  const a = data.agents.find(x=>x.id===id) || {};
+  modal(`<h3>${id?"Edit":"New"} Agent</h3>
+    <label>Name</label><input id="an" value="${esc(a.name||"")}">
+    <label>Description</label><input id="ad" value="${esc(a.desc||"")}">
+    <label>Prompt (use {{VARIABLES}})</label><textarea id="ap" style="min-height:160px">${esc(a.prompt||"")}</textarea>`,
+  () => {
+    const name = document.getElementById("an").value.trim(); if(!name) return false;
+    const o = { name, desc: document.getElementById("ad").value, prompt: document.getElementById("ap").value };
+    if (id) Object.assign(a, o); else data.agents.push({ id: uid(), ...o });
+    persist();
+  });
+}
+
+// ── Helpers ────────────────────────────────────────────────────────────────
+function esc(s){ return String(s??"").replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+function persist(){ save(data); render(); }
+// Talk to the local backend. Throws if the server isn't running (static mode).
+async function api(path, payload){
+  const opt = payload ? { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload) } : {};
+  const r = await fetch(path, opt);
+  if (!r.ok) throw new Error("api "+r.status);
+  return r.json();
+}
+
+document.querySelectorAll(".nav-btn").forEach(b => b.onclick = () => { view = b.dataset.view; render(); });
+document.getElementById("exportBtn").onclick = () => {
+  const blob = new Blob([JSON.stringify(data,null,2)], {type:"application/json"});
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+  a.download = `agent-os-backup-${new Date().toISOString().slice(0,10)}.json`; a.click();
+};
+document.getElementById("importBtn").onclick = () => document.getElementById("importFile").click();
+document.getElementById("importFile").onchange = (e) => {
+  const f = e.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = () => { try { data = JSON.parse(r.result); persist(); alert("Imported."); } catch { alert("Invalid file."); } };
+  r.readAsText(f);
+};
+
+render();
+</script>
+</body>
+</html>

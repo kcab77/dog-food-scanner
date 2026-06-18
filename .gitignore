@@ -46,3 +46,8 @@ app-example
 # EAS local credentials
 credentials.json
 credentials/
+.vercel
+
+# Obsidian knowledge vault (human-readable notes; not part of the app build)
+knowledge-vault/
+.env*

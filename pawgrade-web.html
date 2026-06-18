@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PawGrade — Dog Food Analyzer</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0D0D1A; color: #fff; min-height: 100vh; }
+
+  .container { max-width: 680px; margin: 0 auto; padding: 40px 20px; }
+
+  .header { text-align: center; margin-bottom: 40px; }
+  .header h1 { font-size: 32px; font-weight: 800; color: #2ECC71; letter-spacing: -0.5px; }
+  .header p { color: #9CA3AF; margin-top: 8px; font-size: 15px; }
+
+  .search-box { background: #1A1A2E; border-radius: 16px; padding: 24px; margin-bottom: 20px; }
+  .search-box label { display: block; color: #9CA3AF; font-size: 13px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .search-box input, .search-box textarea {
+    width: 100%; background: #0D0D1A; border: 1.5px solid #2A2A45;
+    border-radius: 10px; color: #fff; font-size: 15px; padding: 12px 14px;
+    outline: none; transition: border-color 0.2s; font-family: inherit;
+  }
+  .search-box input:focus, .search-box textarea:focus { border-color: #2ECC71; }
+  .search-box textarea { resize: vertical; min-height: 100px; }
+  .divider { text-align: center; color: #4B5563; font-size: 13px; margin: 14px 0; }
+
+  .analyze-btn {
+    width: 100%; background: #2ECC71; color: #000; border: none;
+    border-radius: 12px; padding: 16px; font-size: 16px; font-weight: 700;
+    cursor: pointer; transition: opacity 0.2s; margin-top: 16px;
+  }
+  .analyze-btn:hover { opacity: 0.9; }
+  .analyze-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .loading { text-align: center; padding: 40px; color: #9CA3AF; }
+  .spinner { width: 36px; height: 36px; border: 3px solid #2A2A45; border-top-color: #2ECC71; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 16px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .error-box { background: #2D1515; border: 1px solid #7B241C; border-radius: 12px; padding: 16px; color: #E74C3C; margin-bottom: 20px; }
+
+  /* Results */
+  .results { animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  .score-card { background: #1A1A2E; border-radius: 16px; padding: 28px; text-align: center; margin-bottom: 16px; }
+  .product-name { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .data-source { color: #6B7280; font-size: 12px; margin-bottom: 20px; }
+  .score-circle { width: 110px; height: 110px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 16px; border: 4px solid; }
+  .score-number { font-size: 38px; font-weight: 800; line-height: 1; }
+  .score-label { font-size: 12px; font-weight: 600; margin-top: 2px; }
+  .processing-badge { display: inline-block; background: #0D0D1A; border-radius: 20px; padding: 6px 14px; font-size: 13px; font-weight: 600; margin-bottom: 16px; }
+
+  .breakdown { text-align: left; margin-top: 16px; }
+  .breakdown-title { font-size: 12px; color: #6B7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; font-weight: 600; }
+  .breakdown-item { display: flex; justify-content: space-between; font-size: 13px; padding: 4px 0; border-bottom: 1px solid #1E1E35; }
+  .breakdown-item:last-child { border-bottom: none; }
+  .breakdown-item span:last-child { color: #9CA3AF; }
+
+  .section { background: #1A1A2E; border-radius: 16px; padding: 20px; margin-bottom: 12px; }
+  .section-title { font-size: 14px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .section-title .count { background: #0D0D1A; border-radius: 20px; padding: 2px 10px; font-size: 12px; color: #9CA3AF; }
+
+  .flag-item { padding: 10px 0; border-bottom: 1px solid #1E1E35; }
+  .flag-item:last-child { border-bottom: none; }
+  .flag-name { font-size: 14px; font-weight: 600; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+  .severity-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; }
+  .flag-reason { font-size: 12px; color: #9CA3AF; line-height: 1.5; }
+
+  .good-item { padding: 6px 0; font-size: 13px; color: #2ECC71; border-bottom: 1px solid #1E1E35; }
+  .good-item:last-child { border-bottom: none; }
+
+  .warn-item { padding: 6px 0; font-size: 13px; color: #F39C12; border-bottom: 1px solid #1E1E35; }
+  .warn-item:last-child { border-bottom: none; }
+
+  .omega-pill { display: inline-block; background: #0D0D1A; border-radius: 20px; padding: 8px 16px; font-size: 13px; font-weight: 600; margin: 4px; }
+
+  .aafco-box { background: #0D0D1A; border-radius: 10px; padding: 12px 14px; font-size: 13px; color: #9CA3AF; }
+
+  .ingredients-list { font-size: 12px; color: #6B7280; line-height: 1.7; }
+
+  .scan-cta { background: linear-gradient(135deg, #1A1A2E, #0D0D1A); border: 1px solid #2ECC71; border-radius: 16px; padding: 24px; text-align: center; margin-top: 20px; }
+  .scan-cta h3 { color: #2ECC71; font-size: 16px; margin-bottom: 8px; }
+  .scan-cta p { color: #9CA3AF; font-size: 13px; margin-bottom: 16px; }
+  .app-btn { display: inline-block; background: #2ECC71; color: #000; font-weight: 700; padding: 12px 24px; border-radius: 10px; text-decoration: none; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🐾 PawGrade</h1>
+    <p>Analyze any dog food instantly — type a brand name or paste the ingredient list</p>
+  </div>
+
+  <div class="search-box">
+    <label>Product Name</label>
+    <input type="text" id="productName" placeholder="e.g. Purina Pro Plan Chicken & Rice" />
+    <div class="divider">— or —</div>
+    <label>Paste Ingredient List</label>
+    <textarea id="ingredientList" placeholder="Chicken, chicken meal, brown rice, oatmeal, poultry fat..."></textarea>
+    <button class="analyze-btn" id="analyzeBtn" onclick="analyze()">Analyze This Food</button>
+  </div>
+
+  <div id="output"></div>
+</div>
+
+<script>
+const ANTHROPIC_KEY = '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';
+const SUPABASE_URL = 'https://dyzupdctgejwyuocqbtw.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5enVwZGN0Z2Vqd3l1b2NxYnR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2ODgxMTksImV4cCI6MjA4ODI2NDExOX0.-wjlNLrlIAgFVtWKTKO9ZknXhT_8bxcWBvfjj1BWB2U';
+
+const HARMFUL = [
+  { term: "xylitol", severity: "toxic", reason: "Causes severe hypoglycemia and liver failure in dogs, even in small amounts (ASPCA)." },
+  { term: "ethoxyquin", severity: "toxic", reason: "Originally a pesticide. Associated with liver enzyme elevation, kidney lesions, and immune dysfunction. Banned in human food in many countries." },
+  { term: "bha", severity: "severe", reason: "IARC classifies as Group 2B possible carcinogen. Long-term feeding studies showed tumors in animals. Listed under California Prop 65." },
+  { term: "bht", severity: "severe", reason: "Causes liver cell changes and disrupts thyroid function. Acts as a tumor promoter in animal studies." },
+  { term: "tbhq", severity: "severe", reason: "Associated with immune system concerns and tumor development at high doses. Banned in several countries." },
+  { term: "sodium nitrite", severity: "severe", reason: "Can form nitrosamines during digestion, some of which are associated with cancer risk in animal studies." },
+  { term: "sodium metabisulfite", severity: "moderate", reason: "Destroys thiamine (Vitamin B1) in pet food and may trigger sensitivity reactions." },
+  { term: "potassium sorbate", severity: "moderate", reason: "Some in vitro studies suggest potential DNA-damaging effects. Unnecessary in quality pet food." },
+  { term: "calcium propionate", severity: "mild", reason: "Possible links to behavioral changes in some research. Unnecessary in quality pet food." },
+  { term: "menadione", severity: "toxic", reason: "Synthetic Vitamin K3 — generates reactive oxygen species, depletes cellular glutathione, causes hemolytic anemia and liver cell damage. NASC recommends against it." },
+  { term: "copper sulfate", severity: "severe", reason: "Accumulates in liver tissue over years. Directly associated with chronic hepatitis in Labrador Retrievers. Breeds like Bedlington Terriers and Dobermans especially susceptible." },
+  { term: "sodium selenite", severity: "severe", reason: "Inorganic selenium with extremely narrow safe range. Generates free radicals, causes progressive kidney tubule damage before symptoms appear." },
+  { term: "zinc oxide", severity: "moderate", reason: "Poorly bioavailable. Some breeds (Huskies, Malamutes) have specific malabsorption issues. Can cause hemolytic anemia and liver/kidney damage." },
+  { term: "dl-methionine", severity: "moderate", reason: "Indicates low biological value protein sources. High quality proteins provide adequate methionine naturally." },
+  { term: "corn syrup", severity: "severe", reason: "Associated with blood sugar dysregulation, obesity, and dental disease. Dogs have no nutritional need for added sugars." },
+  { term: "corn gluten meal", severity: "moderate", reason: "Plant protein with low biological value for carnivores. Used to artificially inflate crude protein percentages." },
+  { term: "wheat gluten", severity: "moderate", reason: "Common allergen in dogs. Associated with the 2007 pet food recall." },
+  { term: "soy protein isolate", severity: "moderate", reason: "Heavily processed. Associated with digestive issues and possible endocrine disruption in sensitive animals." },
+  { term: "cellulose", severity: "mild", reason: "Often derived from wood pulp. Minimal nutritional value compared to whole food fiber sources." },
+  { term: "peanut hulls", severity: "mild", reason: "Agricultural waste byproduct with negligible nutritional value." },
+  { term: "beet pulp", severity: "mild", reason: "Sourced from sugar beets, may contain residual sugars. Many premium brands have moved away from it." },
+  { term: "brewer rice", severity: "mild", reason: "Broken rice fragments from beer brewing — low quality carbohydrate filler." },
+  { term: "ground corn", severity: "mild", reason: "High glycemic, low digestibility for dogs. Used as inexpensive calorie source." },
+  { term: "ground wheat", severity: "mild", reason: "Common allergen with limited nutritional value for carnivores." },
+  { term: "grain fragments", severity: "mild", reason: "Leftover pieces after more nutritious portions are removed for human food." },
+  { term: "artificial color", severity: "moderate", reason: "No nutritional purpose — dogs don't select food by color. Some synthetic dyes linked to hypersensitivity." },
+  { term: "artificial colour", severity: "moderate", reason: "No nutritional purpose. Some synthetic dyes linked to hypersensitivity reactions." },
+  { term: "artificial flavor", severity: "moderate", reason: "Used to mask low quality ingredients. Indicates poor base ingredient palatability." },
+  { term: "artificial flavour", severity: "moderate", reason: "Used to mask low quality ingredients." },
+  { term: "red 40", severity: "moderate", reason: "Synthetic petroleum-derived dye with no nutritional value. Associated with hypersensitivity in some animals." },
+  { term: "yellow 5", severity: "moderate", reason: "Associated with hypersensitivity reactions. No nutritional benefit." },
+  { term: "yellow 6", severity: "moderate", reason: "Some animal studies show adrenal and kidney changes at high doses." },
+  { term: "blue 2", severity: "severe", reason: "Possible association with brain tumor development in animal studies. Banned in several countries." },
+  { term: "caramel color", severity: "moderate", reason: "Ammonia-processed versions may contain 4-MEI, associated with potential carcinogenic activity." },
+  { term: "propylene glycol", severity: "toxic", reason: "Banned by FDA for cat food. Associated with Heinz body anemia. Many veterinary nutritionists recommend avoiding entirely." },
+  { term: "carrageenan", severity: "moderate", reason: "Associated with intestinal inflammation in some research. Avoid for pets with sensitive digestion." },
+  { term: "meat by-product", severity: "severe", reason: "Unidentified parts including lungs, spleen, brain. No species identification — quality impossible to verify." },
+  { term: "meat by-products", severity: "severe", reason: "Unidentified parts including lungs, spleen, brain. No species identification." },
+  { term: "poultry by-product", severity: "severe", reason: "Non-rendered parts: heads, feet, viscera. No named species — quality and sourcing unverifiable." },
+  { term: "poultry by-products", severity: "severe", reason: "Non-rendered parts: heads, feet, viscera. No named species." },
+  { term: "animal digest", severity: "severe", reason: "Chemically hydrolyzed animal tissue. No species ID required — source and quality unverifiable." },
+  { term: "animal fat", severity: "severe", reason: "No species identification. May be sourced from restaurant grease or rendering facilities." },
+  { term: "hydrolyzed protein", severity: "moderate", reason: "Chemically broken-down protein. May indicate lower quality sources." },
+  { term: "blood meal", severity: "moderate", reason: "Rendered slaughterhouse byproduct with variable digestibility." },
+  { term: "bone meal", severity: "mild", reason: "Variable digestibility. May cause phosphorus imbalances." },
+  { term: "feather meal", severity: "moderate", reason: "Made from processed feathers. Very low digestibility — used to inflate crude protein." },
+  { term: "chicken by-product", severity: "severe", reason: "Includes necks, feet, undeveloped eggs, intestines. Quality and content vary significantly." },
+  { term: "sugar", severity: "moderate", reason: "No nutritional requirement for dogs. Associated with obesity, dental disease, blood sugar dysregulation." },
+  { term: "sucrose", severity: "moderate", reason: "Empty calories. Associated with obesity and dental disease." },
+  { term: "fructose", severity: "moderate", reason: "Associated with metabolic concerns in animal research at elevated levels." },
+  { term: "glucose", severity: "moderate", reason: "Empty calories. Associated with blood sugar spikes." },
+  { term: "molasses", severity: "mild", reason: "High sugar content. Unnecessary for blood sugar management." },
+  { term: "sorbitol", severity: "mild", reason: "Can cause osmotic digestive upset and diarrhea." },
+  { term: "garlic", severity: "toxic", reason: "ASPCA: contains thiosulfates that damage red blood cells, causing hemolytic anemia." },
+  { term: "onion", severity: "toxic", reason: "ASPCA: contains N-propyl disulfide which damages red blood cells — hemolytic anemia." },
+  { term: "onion powder", severity: "toxic", reason: "More concentrated than fresh onion. ASPCA classifies all onion-derived ingredients as toxic." },
+  { term: "garlic powder", severity: "toxic", reason: "More concentrated than fresh garlic. ASPCA classifies all garlic-derived ingredients as toxic." },
+  { term: "cholecalciferol", severity: "severe", reason: "Synthetic Vitamin D3 — extremely narrow safe range. Multiple pet food recalls for D3 toxicity causing kidney failure." },
+  { term: "vitamin d3 supplement", severity: "severe", reason: "Synthetic D3 — one of the most dangerous vitamins for dogs in excess. Causes hypercalcemia and kidney failure." },
+  { term: "ferric oxide", severity: "moderate", reason: "Used as cosmetic colorant. Essentially unabsorbable — filler for appearance, not nutrition." },
+  { term: "retinyl palmitate", severity: "mild", reason: "Synthetic fat-soluble Vitamin A that accumulates in body fat and liver. Chronic excess causes hypervitaminosis A." },
+  { term: "retinyl acetate", severity: "mild", reason: "Synthetic fat-soluble Vitamin A that accumulates. Chronic excess causes bone pain and liver stress." },
+  { term: "pyridoxine hydrochloride", severity: "mild", reason: "Synthetic B6 — chronic excess causes peripheral neuropathy in dogs." },
+  { term: "dl-alpha tocopherol", severity: "mild", reason: "Synthetic Vitamin E — significantly lower bioavailability than natural form. May interfere with Vitamin K absorption." },
+  { term: "cyanocobalamin", severity: "mild", reason: "Inferior synthetic B12 with lower bioavailability than methylcobalamin." },
+];
+
+const SEVERITY_PENALTIES = { mild: 2, moderate: 10, severe: 18, toxic: 28 };
+const SEVERITY_COLORS = { mild: '#f39c12', moderate: '#e67e22', severe: '#c0392b', toxic: '#7b241c' };
+
+const TOXIC_ADDITIVES = ["menadione", "copper sulfate", "sodium selenite", "zinc oxide", "dl-methionine"];
+const MEAT_MEALS = ["chicken meal", "beef meal", "lamb meal", "salmon meal", "turkey meal", "fish meal", "pork meal", "duck meal", "venison meal", "meat meal", "poultry meal", "herring meal", "anchovy meal", "whitefish meal"];
+const ADDED_VITAMINS = ["vitamin a supplement", "retinyl palmitate", "retinyl acetate", "vitamin d supplement", "vitamin d3 supplement", "cholecalciferol", "dl-alpha tocopherol", "pyridoxine hydrochloride", "cyanocobalamin", "zinc sulfate", "zinc oxide", "copper sulfate", "sodium selenite", "ferric oxide", "menadione", "dl-methionine"];
+const LENTIL_LEGUME = ["lentils", "peas", "chickpeas", "pea protein", "pea starch", "pea fiber", "legumes", "beans", "fava beans"];
+const HIGH_CARB = ["corn", "wheat", "rice", "oats", "barley", "sorghum", "millet", "potato", "tapioca", "cassava", "white rice", "brown rice", "oatmeal", "flour"];
+const ORGAN_MEATS = ["heart", "liver", "kidney", "gizzard", "lung", "spleen", "tripe"];
+const SUPERFOODS = ["blueberr", "kelp", "krill", "pumpkin seed", "spinach", "turmeric", "coconut oil", "chia seed", "broccoli", "dandelion", "parsley"];
+const OMEGA3_SOURCES = ["salmon", "sardine", "herring", "anchovy", "mackerel", "trout", "fish oil", "salmon oil", "flaxseed", "flax seed", "chia seed", "krill", "krill oil", "algae", "algal oil"];
+const OMEGA3_OILS = ["fish oil", "salmon oil", "krill oil", "algal oil", "algae oil"];
+const OMEGA6_SOURCES = ["sunflower oil", "safflower oil", "corn oil", "soybean oil", "cottonseed oil", "canola oil", "vegetable oil"];
+const PROBIOTIC_SOURCES = ["lactobacillus", "bifidobacterium", "bacillus", "enterococcus", "dried fermentation", "probiotic", "acidophilus"];
+
+function detectProcessingMethod(ingredientList) {
+  const all = ingredientList.join(' ').toLowerCase();
+  if (all.includes('raw') && !all.includes('rawhide')) return { method: 'Raw', rating: 'Raw', scoreCap: 100, penalty: 0, emoji: '🌟' };
+  if (all.includes('freeze-dried') || all.includes('freeze dried')) return { method: 'Freeze-Dried', rating: 'Freeze-Dried', scoreCap: 100, penalty: 0, emoji: '❄️' };
+  if (all.includes('gently cooked') || all.includes('lightly cooked') || all.includes('human-grade')) return { method: 'Gently Cooked', rating: 'Gently Cooked', scoreCap: 88, penalty: 0, emoji: '🍳' };
+  if (all.includes('air-dried') || all.includes('air dried') || all.includes('dehydrated')) return { method: 'Air-Dried', rating: 'Air-Dried', scoreCap: 82, penalty: 0, emoji: '🌬️' };
+  if (all.includes('baked')) return { method: 'Baked', rating: 'OK – Baked', scoreCap: 55, penalty: 20, emoji: '🟡' };
+  // Check if looks like kibble (has a lot of processed ingredients)
+  const kibbleSignals = ['chicken meal', 'turkey meal', 'corn', 'wheat', 'rice', 'oatmeal', 'soybean', 'poultry fat', 'brewers'];
+  if (kibbleSignals.some(k => all.includes(k))) return { method: 'Kibble', rating: 'Poor – High Heat Kibble', scoreCap: 35, penalty: 40, emoji: '🔴' };
+  return { method: 'Unknown', rating: 'Unknown', scoreCap: 75, penalty: 5, emoji: '❓' };
+}
+
+function computeOmegaRating(ingredientList, processingMethod) {
+  const all = ingredientList.join(' ').toLowerCase();
+  const omega3 = OMEGA3_SOURCES.some(s => all.includes(s));
+  const omega3oil = OMEGA3_OILS.some(s => all.includes(s));
+  const omega6 = OMEGA6_SOURCES.filter(s => all.includes(s)).length;
+  const isRaw = ['Raw', 'Freeze-Dried'].includes(processingMethod);
+  const isKibble = ['Kibble', 'Baked'].includes(processingMethod);
+
+  if (isRaw) {
+    if (omega3oil && omega6 === 0) return { label: '✅ Omega ratio ~≤5:1 — excellent', bonus: 20 };
+    if (omega3oil) return { label: '✅ Omega ratio ~5:1 — good', bonus: 15 };
+    if (omega3 && omega6 === 0) return { label: '✅ Omega ratio ~5:1 — good', bonus: 12 };
+    if (omega3) return { label: '🟡 Omega ratio moderate', bonus: 5 };
+    return { label: '❓ Omega ratio unknown', bonus: 0 };
+  }
+  if (isKibble) {
+    if (omega3oil && omega6 === 0) return { label: '🟡 Omega ratio ~10:1', bonus: 5 };
+    if (omega3) return { label: '🟡 Omega ratio ~12:1', bonus: 3 };
+    return { label: '🔴 Omega ratio likely 15:1–30:1 — poor', bonus: -8 };
+  }
+  if (omega3oil && omega6 === 0) return { label: '✅ Omega ratio good', bonus: 12 };
+  if (omega3) return { label: '🟡 Omega ratio moderate', bonus: 5 };
+  return { label: '❓ Omega ratio unknown', bonus: 0 };
+}
+
+function scoreIngredients(ingredientList, productName) {
+  const lower = ingredientList.map(i => i.toLowerCase().trim());
+  const top5 = lower.slice(0, 5);
+  const all = lower.join(' ');
+  const breakdown = [];
+  let total = 60;
+  breakdown.push({ label: 'Base score', value: 60 });
+
+  // Processing method
+  const proc = detectProcessingMethod(lower);
+  if (proc.penalty > 0) {
+    total -= proc.penalty;
+    breakdown.push({ label: `Processing (${proc.rating})`, value: -proc.penalty });
+  }
+
+  // Harmful ingredients
+  const flagged = [];
+  for (const ing of lower) {
+    const match = HARMFUL.find(h => ing.includes(h.term));
+    if (match) {
+      const penalty = SEVERITY_PENALTIES[match.severity] || 0;
+      total -= penalty;
+      breakdown.push({ label: `${ing} (${match.severity})`, value: -penalty });
+      flagged.push({ name: ing, ...match });
+    }
+  }
+
+  // Synthetic vitamins
+  const vitCount = ADDED_VITAMINS.filter(v => all.includes(v)).length;
+  let vitPenalty = 0;
+  let vitLabel = '';
+  if (vitCount >= 11) { vitPenalty = 30; vitLabel = 'Severe synthetic vitamin load'; }
+  else if (vitCount >= 6) { vitPenalty = 15; vitLabel = 'Moderate synthetic vitamin load'; }
+  else if (vitCount >= 1) { vitPenalty = 5; vitLabel = 'Minor synthetic vitamin load'; }
+  if (vitPenalty > 0) {
+    total -= vitPenalty;
+    breakdown.push({ label: vitLabel, value: -vitPenalty });
+  }
+
+  // Toxic additives
+  const toxicFound = TOXIC_ADDITIVES.filter(t => all.includes(t));
+  if (toxicFound.length > 0) {
+    total -= toxicFound.length * 10;
+    breakdown.push({ label: `Toxic additives (${toxicFound.length})`, value: -(toxicFound.length * 10) });
+  }
+
+  // Meat meals
+  const mealsFound = MEAT_MEALS.filter(m => all.includes(m));
+  if (mealsFound.length > 0) {
+    total -= mealsFound.length * 6;
+    breakdown.push({ label: `Rendered meat meals (${mealsFound.length})`, value: -(mealsFound.length * 6) });
+  }
+
+  // Legumes in top 5
+  const legumesTop5 = LENTIL_LEGUME.filter(l => top5.some(t => t.includes(l)));
+  if (legumesTop5.length > 0) {
+    total -= legumesTop5.length * 12;
+    breakdown.push({ label: `Legumes in top 5 (DCM concern)`, value: -(legumesTop5.length * 12) });
+  }
+
+  // High carbs
+  const carbsFound = HIGH_CARB.filter(c => lower.some(i => i.includes(c)));
+  const carbInTop2 = HIGH_CARB.some(c => top5.slice(0, 2).some(t => t.includes(c)));
+  let carbPenalty = 0;
+  let carbLabel = '';
+  if (carbInTop2 && carbsFound.length >= 2) { carbPenalty = 25; carbLabel = 'Est. >45% carbs — very high'; }
+  else if (carbInTop2) { carbPenalty = 18; carbLabel = 'Est. >35% carbs — high'; }
+  else if (carbsFound.length >= 3) { carbPenalty = 15; carbLabel = 'Est. ~30-35% carbs — elevated'; }
+  else if (carbsFound.length >= 2) { carbPenalty = 8; carbLabel = 'Est. ~25-30% carbs — moderate'; }
+  if (carbPenalty > 0) {
+    total -= carbPenalty;
+    breakdown.push({ label: carbLabel, value: -carbPenalty });
+  }
+
+  // Vague proteins in top 5
+  const vagueProtein = ['meat', 'poultry', 'fish', 'animal protein'].some(v => top5.some(t => t === v || t.startsWith(v + ' ')));
+  if (vagueProtein) {
+    total -= 12;
+    breakdown.push({ label: 'Vague protein source in top 5', value: -12 });
+  }
+
+  // Omega
+  const omegaRating = computeOmegaRating(lower, proc.method);
+  if (omegaRating.bonus !== 0) {
+    total += omegaRating.bonus;
+    breakdown.push({ label: 'Omega ratio', value: omegaRating.bonus });
+  }
+
+  // Bonuses
+  const hasOrgans = ORGAN_MEATS.some(o => all.includes(o));
+  if (hasOrgans) { total += 5; breakdown.push({ label: 'Organ meats present', value: 5 }); }
+
+  const superfoodCount = SUPERFOODS.filter(s => all.includes(s)).length;
+  if (superfoodCount >= 2) { total += 5; breakdown.push({ label: 'Superfoods present', value: 5 }); }
+
+  if (vitCount === 0) { total += 8; breakdown.push({ label: 'No synthetic vitamins', value: 8 }); }
+
+  // Apply caps and floor
+  total = Math.min(total, proc.scoreCap);
+  total = Math.max(15, Math.round(total));
+
+  // Other findings
+  const legumesAll = LENTIL_LEGUME.filter(l => lower.some(i => i.includes(l)));
+  const probiotics = PROBIOTIC_SOURCES.filter(p => all.includes(p));
+  const fiberSources = ['pumpkin', 'flaxseed', 'chia', 'psyllium', 'chicory root', 'inulin'].filter(f => all.includes(f));
+  const organsFound = ORGAN_MEATS.filter(o => all.includes(o));
+  const superfoodsFound = SUPERFOODS.filter(s => all.includes(s));
+  const omega3Found = OMEGA3_SOURCES.filter(s => all.includes(s));
+
+  return {
+    score: total,
+    processing: proc,
+    flagged,
+    mealsFound,
+    toxicFound,
+    vitCount,
+    vitPenalty,
+    legumesAll,
+    legumesTop5,
+    carbsFound,
+    omegaRating,
+    organsFound,
+    superfoodsFound,
+    probiotics,
+    fiberSources,
+    omega3Found,
+    breakdown,
+  };
+}
+
+function scoreColor(score) {
+  if (score >= 70) return '#27ae60';
+  if (score >= 50) return '#f39c12';
+  if (score >= 30) return '#e67e22';
+  return '#c0392b';
+}
+
+function scoreLabel(score) {
+  if (score >= 70) return 'Good 👍';
+  if (score >= 50) return 'Fair ⚠️';
+  if (score >= 30) return 'Poor ❌';
+  return 'Very Poor 🚫';
+}
+
+async function lookupProductInSupabase(name) {
+  const res = await fetch(
+    `${SUPABASE_URL}/rest/v1/products?product_name=ilike.*${encodeURIComponent(name)}*&limit=1`,
+    { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
+  );
+  const data = await res.json();
+  return data?.[0] || null;
+}
+
+async function lookupWithClaude(productName) {
+  const res = await fetch('claude-proxy.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-6',
+      max_tokens: 1000,
+      messages: [{
+        role: 'user',
+        content: `A user is searching for this dog food product: "${productName}". Try hard to identify it — even if the name is slightly vague or abbreviated, find the closest matching product you know. Common US dog food brands include Purina Pro Plan, Purina ONE, Purina Dog Chow, Purina Beneful, Hill's Science Diet, Royal Canin, Blue Buffalo, Iams, Eukanuba, Pedigree, Taste of the Wild, Wellness, Merrick, Diamond Naturals, Orijen, Acana, Instinct, Stella & Chewy's, Natural Balance, Nutro, Rachel Ray Nutrish, Victor, Fromm, Canidae, 4Health. A partial or best-guess match is better than returning not found.
+
+Return ONLY valid JSON, no markdown:
+{
+  "product_name": "exact product name",
+  "brand": "brand name",
+  "ingredients": "full comma separated ingredient list as it appears on the bag",
+  "processing_method": "kibble or raw or gently cooked or freeze-dried or baked or unknown",
+  "found": true
+}
+
+Only return {"found": false} if you have absolutely no idea what product this could be.`
+      }]
+    })
+  });
+  const rawText = await res.text();
+  window._debugProxy = 'Status: ' + res.status + ' | ' + rawText.slice(0, 500);
+  let data;
+  try { data = JSON.parse(rawText); } catch(e) { return { found: false }; }
+  let text = data.content?.[0]?.text?.trim() || '{"found":false}';
+  text = text.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim();
+  return JSON.parse(text);
+}
+
+async function analyze() {
+  const productName = document.getElementById('productName').value.trim();
+  const ingredientText = document.getElementById('ingredientList').value.trim();
+  const output = document.getElementById('output');
+  const btn = document.getElementById('analyzeBtn');
+
+  if (!productName && !ingredientText) {
+    output.innerHTML = '<div class="error-box">Please enter a product name or paste an ingredient list.</div>';
+    return;
+  }
+
+  btn.disabled = true;
+  output.innerHTML = `<div class="loading"><div class="spinner"></div><p>Analyzing...</p></div>`;
+
+  try {
+    let ingredients = '';
+    let name = productName;
+    let dataSource = '';
+
+    if (ingredientText) {
+      // User pasted ingredients directly
+      ingredients = ingredientText;
+      name = productName || 'Analyzed Product';
+      dataSource = '📋 Pasted Ingredients';
+    } else {
+      // Look up by product name
+      // Step 1: Supabase
+      const cached = await lookupProductInSupabase(productName);
+      if (cached && cached.ingredients) {
+        ingredients = cached.ingredients;
+        name = cached.product_name || productName;
+        dataSource = '🗄️ PawGrade Database';
+      } else {
+        // Step 2: Claude
+        output.innerHTML = `<div class="loading"><div class="spinner"></div><p>Looking up product with AI...</p></div>`;
+        const result = await lookupWithClaude(productName);
+        if (result.found && result.ingredients) {
+          ingredients = result.ingredients;
+          name = result.product_name || productName;
+          dataSource = '🤖 AI Powered';
+          // Save to Supabase for next time
+          fetch(`${SUPABASE_URL}/rest/v1/products`, {
+            method: 'POST',
+            headers: {
+              'apikey': SUPABASE_KEY,
+              'Authorization': `Bearer ${SUPABASE_KEY}`,
+              'Content-Type': 'application/json',
+              'Prefer': 'resolution=ignore-duplicates',
+            },
+            body: JSON.stringify({
+              barcode: 'web-' + Date.now(),
+              product_name: name,
+              brand: result.brand || '',
+              ingredients,
+              processing_method: result.processing_method || 'unknown',
+            })
+          }).catch(() => {});
+        } else {
+          output.innerHTML = `<div class="error-box">We couldn't find that product.<br><br><small style="word-break:break-all;opacity:0.7">${window._debugProxy || 'no proxy response'}</small></div>`;
+          btn.disabled = false;
+          return;
+        }
+      }
+    }
+
+    // Parse and score
+    const ingredientList = ingredients.split(/,|;/).map(i => i.trim()).filter(i => i.length > 0);
+    const r = scoreIngredients(ingredientList, name);
+    const color = scoreColor(r.score);
+    const label = scoreLabel(r.score);
+
+    let html = `<div class="results">`;
+
+    // Score card
+    html += `<div class="score-card">
+      <div class="product-name">${name}</div>
+      <div class="data-source">${dataSource}</div>
+      <div class="score-circle" style="border-color:${color}; color:${color}">
+        <div class="score-number">${r.score}</div>
+        <div class="score-label" style="color:${color}">${label}</div>
+      </div>
+      <div class="processing-badge">${r.processing.emoji} ${r.processing.rating}</div>
+      <div class="breakdown">
+        <div class="breakdown-title">Score Breakdown</div>
+        ${r.breakdown.map(b => `<div class="breakdown-item"><span>${b.label}</span><span>${b.value > 0 ? '+' : ''}${b.value}</span></div>`).join('')}
+        <div class="breakdown-item" style="font-weight:700"><span>Final Score</span><span style="color:${color}">${r.score}/100</span></div>
+      </div>
+    </div>`;
+
+    // Flagged ingredients
+    if (r.flagged.length > 0) {
+      html += `<div class="section">
+        <div class="section-title">🚨 Flagged Ingredients <span class="count">${r.flagged.length}</span></div>
+        ${r.flagged.map(f => `
+          <div class="flag-item">
+            <div class="flag-name">
+              ${f.name}
+              <span class="severity-badge" style="background:${SEVERITY_COLORS[f.severity]}20; color:${SEVERITY_COLORS[f.severity]}">${f.severity}</span>
+            </div>
+            <div class="flag-reason">${f.reason}</div>
+          </div>
+        `).join('')}
+      </div>`;
+    }
+
+    // Omega rating
+    html += `<div class="section">
+      <div class="section-title">🐟 Omega Fatty Acids</div>
+      <div class="omega-pill">${r.omegaRating.label}</div>
+      ${r.omega3Found.length > 0 ? `<div style="margin-top:10px; font-size:13px; color:#9CA3AF">Sources: ${r.omega3Found.join(', ')}</div>` : ''}
+    </div>`;
+
+    // Positives
+    const positives = [];
+    if (r.organsFound.length > 0) positives.push(`✅ Organ meats: ${r.organsFound.join(', ')}`);
+    if (r.superfoodsFound.length > 0) positives.push(`✅ Superfoods: ${r.superfoodsFound.join(', ')}`);
+    if (r.probiotics.length > 0) positives.push(`✅ Probiotics present`);
+    if (r.fiberSources.length > 0) positives.push(`✅ Quality fiber: ${r.fiberSources.join(', ')}`);
+    if (r.vitCount === 0) positives.push(`✅ No synthetic vitamins detected`);
+    if (positives.length > 0) {
+      html += `<div class="section">
+        <div class="section-title">✅ What's Good</div>
+        ${positives.map(p => `<div class="good-item">${p}</div>`).join('')}
+      </div>`;
+    }
+
+    // Warnings
+    const warnings = [];
+    if (r.mealsFound.length > 0) warnings.push(`⚠️ Rendered meals: ${r.mealsFound.join(', ')}`);
+    if (r.legumesAll.length > 0) warnings.push(`⚠️ Legumes (DCM concern): ${r.legumesAll.join(', ')}${r.legumesTop5.length > 0 ? ' — in top 5 ingredients' : ''}`);
+    if (r.carbsFound.length > 0) warnings.push(`⚠️ High carb ingredients: ${r.carbsFound.join(', ')}`);
+    if (r.vitCount > 0) warnings.push(`⚠️ Synthetic vitamins/minerals: ${r.vitCount} detected`);
+    if (warnings.length > 0) {
+      html += `<div class="section">
+        <div class="section-title">⚠️ Watch Out For</div>
+        ${warnings.map(w => `<div class="warn-item">${w}</div>`).join('')}
+      </div>`;
+    }
+
+    // Full ingredient list
+    html += `<div class="section">
+      <div class="section-title">📋 Full Ingredient List</div>
+      <div class="ingredients-list">${ingredientList.join(', ')}</div>
+    </div>`;
+
+    // CTA
+    html += `<div class="scan-cta">
+      <h3>📱 Scan Barcodes in the App</h3>
+      <p>Use the free PawGrade app to scan any pet food barcode instantly — no typing required.</p>
+      <a class="app-btn" href="https://apps.apple.com/app/id6760376540" target="_blank">Download Free on App Store</a>
+    </div>`;
+
+    html += `</div>`;
+    output.innerHTML = html;
+
+  } catch (e) {
+    output.innerHTML = `<div class="error-box">Something went wrong. Please try again.</div>`;
+    console.error(e);
+  }
+
+  btn.disabled = false;
+}
+
+// Allow Enter key on product name input
+document.getElementById('productName').addEventListener('keydown', e => {
+  if (e.key === 'Enter') analyze();
+});
+</script>
+</body>
+</html>

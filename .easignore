@@ -1,0 +1,45 @@
+# EAS upload ignore list. When this file exists, EAS uses it INSTEAD of
+# .gitignore to decide what to upload for a build.
+#
+# KEY POINT: .env is deliberately NOT ignored here, so the EXPO_PUBLIC_*
+# values (EXPO_PUBLIC_APP_SECRET, EXPO_PUBLIC_GOUPC_KEY) get baked into the
+# TestFlight build. That's what was missing before and caused 403s.
+
+# --- heavy / generated ---
+node_modules/
+.git/
+.expo/
+dist/
+web-build/
+*.log
+.DS_Store
+*.tsbuildinfo
+
+# --- native dirs (managed workflow regenerates these) ---
+/ios
+/android
+
+# --- other projects in this monorepo: NOT part of the PawGrade app build ---
+common-sense-dog-ai/
+pet-health-assistant/
+pet-store-chat-agent/
+investment-agent/
+mission-control/
+agent-os/
+knowledge-vault/
+memory/
+# NOTE: storage/ is the app's own module (app/index.tsx imports ../storage/ingredients) — must be uploaded, do NOT ignore it.
+
+# --- marketing/static files the app doesn't need ---
+*.html
+*.php
+*.csv
+
+# --- other people's credentials: keep OUT of the upload ---
+credentials/
+credentials.json
+.env*.local
+*.pem
+.vercel
+
+# NOTE: plain .env is intentionally allowed through (see top comment).

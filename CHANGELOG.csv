@@ -1,0 +1,56 @@
+Version,Build,Feature,Category,Description
+v1.6,17,Supabase Ingredient Lookup,Backend,Ingredient detail popup now checks Supabase vitamins & minerals table first — instant results with no Claude API cost
+v1.6,17,Supabase Ingredients Override,Backend,ingredients table (78 entries) checked before Claude for detail popups — faster and cheaper
+v1.6,17,Barcode Not Found Auto-Switch,UX,When barcode lookup fails app auto-switches to Smart Scan after 2.5 seconds instead of showing dead-end error screen
+v1.6,17,Claude Barcode Prompt Upgrade,Backend,Claude now tries harder on unknown barcodes — lists all major US brands and returns best-guess match instead of giving up
+v1.6,17,UPC Item DB Always Runs,Backend,UPC Item DB now runs whenever ingredients are missing (not just when name is missing) — Claude always gets best possible name + brand signal
+v1.5,14,Torch / Flashlight,Barcode Scanner,Tap the 💡 button on the camera to toggle flashlight — fixes scanning in dark store aisles
+v1.5,14,Animated Scan Line,Barcode Scanner,Green line sweeps the scan frame while camera is active — confirms scanner is looking and guides barcode alignment
+v1.5,14,Wider Scan Frame,Barcode Scanner,Scan target area widened for easier barcode capture on large bags
+v1.5,14,More Barcode Formats,Barcode Scanner,"Added code128 and itf14 barcode support — covers club/bulk store pet food bags that don't use standard UPC/EAN"
+v1.5,14,Hold Steady Tip,Barcode Scanner,Camera subtitle now shows distance guidance (6–10 inches) to reduce blur-caused scan failures
+v1.5,14,Scanner Lock Fix,Reliability,Scanner no longer permanently locks after a not-found result — immediately re-arms for another scan attempt
+v1.0,1,Barcode Scanner,Core,Point camera at barcode — auto-detects and triggers 6-step lookup chain
+v1.0,1,6-Step Lookup Chain,Core,"Step 1: Google Sheet community database, Step 2: Open Pet Food Facts API, Step 3: Open Food Facts API, Step 4: Supabase cache, Step 5: UPC Item DB, Step 6: Claude AI fallback"
+v1.0,1,Ingredient Analysis,Scoring,Detects 60+ harmful ingredients with severity levels (toxic / severe / moderate / mild)
+v1.0,1,Score 0-100,Scoring,Composite score based on processing method + ingredient penalties + bonuses
+v1.0,1,Supabase Database,Backend,Caches scanned products so repeat scans are instant
+v1.0,1,Google Sheet Sync,Backend,Saves all scans to Google Sheet for community database building
+v1.0,1,Privacy Policy,Legal,Privacy policy page added for App Store submission
+v1.1,10,Smart Scan,Core,"Cal AI-style — point at ANY part of bag (front, ingredients, or GA panel) and Claude Vision reads it"
+v1.1,10,Front-of-Bag Recognition,Core,Identifies brand and product name from front of bag — looks up cached ingredients automatically
+v1.1,10,Guaranteed Analysis Panel,Core,Scans the GA panel to extract exact protein / fat / fiber / moisture / omega percentages
+v1.1,10,GA Visual Bars,UI,Color-coded bar chart showing protein / fat / fiber / moisture / carb percentages
+v1.1,10,Carb Estimation,Scoring,"Calculates estimated carb % from GA numbers (100 - protein - fat - fiber - moisture - 7% ash)"
+v1.1,10,AAFCO Detection,Analysis,"Detects AAFCO feeding trials (gold standard) vs nutrient profile vs not detected — from label scan or Claude knowledge"
+v1.1,10,FDA Recall Check,Safety,Checks FDA Food Enforcement API in background — shows banner if brand has active recall
+v1.1,10,Ingredient Guide,Education,"Full-screen reference guide: vitamins, minerals, proteins, processing methods ranked 1-10 (home cooked to semi-moist)"
+v1.1,10,Processing Method Ranking,Education,"Processing methods scored 1-10: Home Cooked (1-best) → Semi-Moist Pellets (10-worst)"
+v1.1,10,Score Floor Fix,Scoring,Minimum score raised from 0 to 15 — prevents unfairly harsh scores
+v1.1,10,Double Penalty Fix,Scoring,Removed dbAudit scoring penalties that were double-counting ingredients already penalized by HARMFUL_INGREDIENTS
+v1.1,10,Omega Ratio Fix,Scoring,"Processing-method-aware omega estimation — kibble no longer shows Excellent just because fish oil is listed, estimates ~10:1 moderate instead"
+v1.1,10,Omega Ratio State Fix,Scoring,"Fixed React stale closure bug — omega ratio now passed as parameter to processIngredients, not read from stale state"
+v1.1,10,Fish Oil Recommendation,Analysis,Shows recommendation to add fish oil when omega-3 sources are low or absent
+v1.1,10,Kibble Omega Warning,UI,Explains that most kibble brands hide the omega ratio and why it matters
+v1.1,10,Toxic Badge Renamed,UI,Badge text changed from toxic to avoid — less alarming for users discovering the app
+v1.1,10,Ingredient Concerns Context Note,UI,Added note explaining scores assume primary diet — lower if fed as topper or mix-in
+v1.1,10,Vitamin/Mineral Severity Tiers,Scoring,"Vitamins scored by category: fat-soluble (accumulate), poor bioavailability forms, inferior synthetic forms"
+v1.1,10,TAPF Trusted Brands List,Scoring,Truth About Pet Food approved brands get +10 bonus points
+v1.1,10,Nutrition Coach Chat,Feature,AI chat powered by Claude Haiku — ask questions about the scanned product
+v1.1,10,Ingredient Detail Popup,Feature,Tap any ingredient to get a detailed explanation of what it is and its health effects
+v1.1,10,Score Breakdown Section,UI,Shows every individual score addition and deduction with labels
+v1.1,10,Organ Meat Coverage,Analysis,"Shows which organ meats are present vs missing, with their specific nutritional benefits"
+v1.2,11,Ingredient Nutrient Breakdown,Analysis,"31 whole food ingredients mapped to specific nutrients they provide (heart = taurine + CoQ10, liver = Vitamin A + B12, etc.)"
+v1.2,11,Nutrient Info Display,UI,Shows green leaf emoji with specific nutrients under each ingredient while AI analysis loads
+v1.2,11,Vitamins & Minerals Reference,Education,"Full vitamin/mineral reference in Ingredient Guide: good forms vs bad forms, what each does, what to avoid"
+v1.2,11,Processing Methods in Guide,Education,"Processing methods 1-10 added to Ingredient Guide with enzyme survival rates and temp data"
+v1.3,–,Treats Scanner,Core,New Treats tab — completely separate scoring system designed for treat-specific ingredients
+v1.3,–,Treat Scoring Logic,Scoring,"Simplicity = good: single ingredient = 95-100, 2-3 ingredients = great, 4-5 = good, 6-8 = neutral, 9+ = penalty"
+v1.3,–,Treat Harmful Ingredients,Scoring,"Modified harmful list for treats: sugar/corn syrup in top 3 = severe flag, glycerin and salt = OK (not flagged)"
+v1.3,–,Treat Vitamin Warning,Safety,Flags synthetic vitamins in treats as over-supplementation risk on top of regular food
+v1.3,–,Treat Ingredient #1 Bonus,Scoring,+10 bonus if first ingredient is a named whole meat protein
+v1.3,–,Treat vs Food Mode,UI,Camera reused — same Smart Scan vision call routes to treat scorer vs food scorer based on active tab
+v1.3,–,Ingredient Concerns Collapse,UI,"Concerns show as name + severity badge only by default — tap to expand full description. Dramatically shortens scroll time on bad foods"
+v1.3,–,Back Button at Top,UI,Scan Again button added at top of results page — no more scrolling to bottom to go back
+v1.3,–,Grocery Store Finds,Education,"15 whole foods grouped by category (Dental, Gut Health, Joints, Skin & Coat, Immune, Energy, Protein Boost, Detox) with grocery store aisle location for each"
+v1.3,–,API 529 Retry + Fallback,Reliability,"All Claude API calls now retry up to 3 times on overloaded errors — after 2 failed attempts falls back to Claude Haiku model automatically"
