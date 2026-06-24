@@ -1,0 +1,9 @@
+# Vercel builds/installs these itself — don't upload them.
+.next
+node_modules
+
+# Local-only / not needed for the build
+.git
+.env*.local
+*.log
+.DS_Store
