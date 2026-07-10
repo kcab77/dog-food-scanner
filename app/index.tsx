@@ -31,6 +31,8 @@ import {
     saveProductGA,
     saveToGoogleSheet,
     smartScanWithClaude,
+    getBarcodeQuota,
+    incrementBarcodeQuota,
 } from "../lib/productLookup";
 import {
     CustomIngredient,
@@ -3652,25 +3654,18 @@ export default function App() {
       let rawIngredients = "";
       let sheetProcessingMethod = "";
 
-      // Step 1: Google Sheet
+      // Step 1: OUR OWN database first (SmartScan-sourced rows only).
+      // (Replaces the deprecated unknown-origin Google Sheet.)
       try {
-        const sheetUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
-        const sheetResponse = await fetch(sheetUrl);
-        const sheetText = await sheetResponse.text();
-        const sheetJson = JSON.parse(sheetText.substring(47).slice(0, -2));
-        const rows = sheetJson.table.rows;
-        for (const row of rows) {
-          const barcode = row.c[0]?.v?.toString().trim();
-          if (barcode === data.trim()) {
-            name = row.c[1]?.v || "";
-            rawIngredients = row.c[3]?.v || "";
-            sheetProcessingMethod = row.c[4]?.v || "";
-            setDataSource("📋 Community Database");
-            break;
-          }
+        const owned = await lookupProduct(data); // owned sources only by default
+        if (owned) {
+          name = owned.product_name || "";
+          rawIngredients = owned.ingredients || "";
+          sheetProcessingMethod = owned.processing_method || "";
+          setDataSource("🗄️ Our database");
         }
       } catch (e) {
-        console.log("Sheet lookup failed");
+        console.log("Own DB lookup failed");
       }
 
       // Step 2: Open Pet Food Facts
@@ -3767,23 +3762,25 @@ export default function App() {
         }
       }
 
-      // Step 4b: Go-UPC — get ingredients directly if not in Supabase
+      // Step 4b: Go-UPC — LAST-resort barcode lookup, quota-gated (150/mo free plan).
+      // Its data is NEVER persisted (use-only license); results are used for this
+      // scan only. When quota is out we simply skip it and let SmartScan take over.
       if (!rawIngredients) {
         try {
-          const goupcResult = await lookupWithGoUPC(data);
-          if (goupcResult?.found) {
-            if (!name && goupcResult.product_name) name = goupcResult.product_name;
-            if (goupcResult.ingredients) {
-              rawIngredients = goupcResult.ingredients;
-              setDataSource("📦 Product Database");
-              await saveProduct(
-                data,
-                goupcResult.product_name || name,
-                goupcResult.brand,
-                rawIngredients,
-                "unknown",
-              );
+          const quota = await getBarcodeQuota();
+          if (quota.canUse) {
+            const goupcResult = await lookupWithGoUPC(data);
+            if (goupcResult?.found) {
+              await incrementBarcodeQuota(); // count the successful API call
+              if (!name && goupcResult.product_name) name = goupcResult.product_name;
+              if (goupcResult.ingredients) {
+                rawIngredients = goupcResult.ingredients;
+                setDataSource("📦 Product lookup");
+                // Intentionally NOT saved — Go-UPC data is use-only (licensing).
+              }
             }
+          } else {
+            console.log("Go-UPC monthly quota exhausted — skipping; SmartScan will be offered.");
           }
         } catch (e) {
           console.log("Go-UPC step failed");
