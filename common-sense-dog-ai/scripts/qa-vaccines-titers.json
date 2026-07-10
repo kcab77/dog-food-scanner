@@ -1,0 +1,82 @@
+[
+  {
+    "question": "Which vaccines does my dog actually need?",
+    "answer": "🟢 Vaccines split into core (essential for every dog) and non-core (based on risk). Core protects against serious, often deadly diseases: canine distemper, canine adenovirus (hepatitis), and canine parvovirus — plus rabies, which is core wherever rabies exists and is also legally required. These are non-negotiable because the diseases they prevent kill dogs. Non-core vaccines (leptospirosis, Bordetella/'kennel cough,' canine influenza, parainfluenza, Lyme) are decided by your dog's actual exposure risk — lifestyle, region, boarding, and so on. A holistic-but-honest approach isn't 'no vaccines,' it's the RIGHT vaccines: core protection for everyone, non-core only where the risk justifies it. Work out the non-core list with your vet based on how your dog actually lives.",
+    "confidence": "strong",
+    "sources": ["WSAVA Vaccination Guidelines 2024; AAHA Canine Vaccination Guidelines — core vs non-core"],
+    "topic": "vaccines-titers",
+    "source": "Common Sense Dog — Vaccines & Titers pack"
+  },
+  {
+    "question": "Do dogs really need vaccines every year?",
+    "answer": "🟢 For the core viral vaccines — no, and this is important: annual re-vaccination is NOT supported by the evidence. Peer-reviewed research shows modern modified-live core vaccines (distemper, adenovirus, parvo) provide immunity lasting many years, which is exactly why AAHA and AVMA moved the recommended booster interval from yearly to every 3 years. So a dog getting core boosters every single year is very likely being over-vaccinated. (Some non-core vaccines like Bordetella and leptospirosis are shorter-lived and may need more frequent boosting if the dog is at risk, and rabies intervals are set by law.) This is a case where the holistic 'don't over-vaccinate' instinct is fully backed by mainstream guidelines — extend core intervals and/or use titers.",
+    "confidence": "strong",
+    "sources": ["AAHA/AVMA — core interval 1yr→3yr based on duration-of-immunity evidence; WSAVA 2024"],
+    "topic": "vaccines-titers",
+    "source": "Common Sense Dog — Vaccines & Titers pack"
+  },
+  {
+    "question": "What is titer testing and does it actually work?",
+    "answer": "🟡 A titer test is a blood test that measures your dog's existing antibody levels against a disease, showing whether they still have protective immunity — so you can avoid re-vaccinating a dog that's already protected. It's legitimate and mainstream-endorsed: AAHA guidelines state titers are useful for monitoring immunity to distemper, parvovirus, and adenovirus (and rabies). After the puppy series and the booster a year later, annual or periodic titers can help decide whether core boosters are actually needed — and many dogs turn out to have protective titers lasting many years. It's a smart tool for the over-vaccination-conscious owner. Two caveats: titers work well for the core viral diseases but not reliably for non-core ones, and rabies has legal requirements a titer usually can't override.",
+    "confidence": "moderate",
+    "sources": ["AAHA Canine Vaccination Guidelines — titers for CDV/CPV/CAV/rabies; AVMA 'To titer or revaccinate' 2016; point-of-care titer validation PMC12390079"],
+    "topic": "vaccines-titers",
+    "source": "Common Sense Dog — Vaccines & Titers pack"
+  },
+  {
+    "question": "Can I just do titers instead of ever vaccinating my dog?",
+    "answer": "🟡 Not entirely — titers are for deciding about BOOSTERS, not for skipping the foundation. Puppies still need their core vaccine series to build immunity in the first place (a titer on an unvaccinated puppy just confirms they're unprotected). Where titers shine is afterward: instead of automatically re-boosting core vaccines on a schedule, you test and only re-vaccinate if immunity has waned — many dogs won't need it for years. Limits to know: titers are reliable for core viral diseases (distemper, parvo, adenovirus) but not for non-core ones like lepto or Bordetella, and rabies is governed by law, so a titer usually can't legally replace the required rabies vaccine. So: vaccinate the puppy properly, then use titers to avoid unnecessary adult boosters.",
+    "confidence": "moderate",
+    "sources": ["AAHA — titers assess booster need after initial series; rabies legal requirements; non-core titer limits"],
+    "topic": "vaccines-titers",
+    "source": "Common Sense Dog — Vaccines & Titers pack"
+  },
+  {
+    "question": "Is over-vaccination a real concern for dogs?",
+    "answer": "🟡 Yes — over-vaccination (giving boosters more often than needed) is a legitimate concern, and it's why guidelines changed. Repeatedly boosting a dog that already has strong immunity provides no added benefit and carries the small but real risks any vaccine has. The evidence-based response is exactly what AAHA/AVMA now recommend: extend core boosters to every 3 years, use titers to confirm immunity, and give non-core vaccines only by genuine risk. BUT — and this matters for credibility — 'avoid over-vaccination' is NOT the same as 'avoid vaccines.' Core vaccines are safe and prevent diseases that kill dogs; skipping them entirely is how parvo and distemper come back. The honest position is minimal effective vaccination: fully protected, not needlessly boosted.",
+    "confidence": "moderate",
+    "sources": ["AAHA/AVMA 3-year core + titer recommendations; over-vaccination vs under-vaccination balance"],
+    "topic": "vaccines-titers",
+    "source": "Common Sense Dog — Vaccines & Titers pack"
+  },
+  {
+    "question": "Are vaccines safe for dogs, or do they cause health problems?",
+    "answer": "🟢 Core vaccines are safe for the vast majority of dogs and prevent deadly disease — that's the honest, evidence-based bottom line. Adverse reactions do happen but are uncommon and usually mild and short-lived (soreness, brief lethargy, mild fever); serious reactions are rare. The genuine, evidence-supported concern is over-vaccination (unnecessary frequency), not vaccines themselves — which is addressed by 3-year core schedules and titers. Be cautious of claims that routine vaccines cause a laundry list of chronic diseases; those go beyond what the evidence supports and can scare owners into leaving dogs unprotected against parvo and distemper. Sensible practice: vaccinate for core and legal rabies, avoid unnecessary boosters, report any reactions to your vet, and space or tailor vaccines for a dog with a known reaction history (a holistic/integrative vet can help).",
+    "confidence": "strong",
+    "sources": ["WSAVA/AAHA vaccine safety data; adverse-reaction rates; over-vaccination is the evidence-based concern"],
+    "topic": "vaccines-titers",
+    "source": "Common Sense Dog — Vaccines & Titers pack"
+  },
+  {
+    "question": "What about the rabies vaccine specifically?",
+    "answer": "🟢 Rabies is a special case for two reasons: the disease is virtually always fatal and is transmissible to humans, and the vaccine is legally required in most places — so it's not optional the way some vaccines are. Typically a puppy gets the first rabies shot, a booster at one year, then every 3 years with a 3-year-labeled vaccine (intervals are set by local law, not owner preference). Even titer-minded, minimal-vaccine owners generally must keep rabies current to comply with the law and for everyone's safety, including in case of a bite incident. If your dog has a genuine medical reason to avoid it, some jurisdictions allow a veterinarian-signed medical exemption — but that's a legal/medical process, not a personal choice. Keep rabies legal and current.",
+    "confidence": "strong",
+    "sources": ["NASPHV Compendium of Animal Rabies Prevention; AAHA — rabies core + legal requirements"],
+    "topic": "vaccines-titers",
+    "source": "Common Sense Dog — Vaccines & Titers pack"
+  },
+  {
+    "question": "Are puppy vaccines really necessary?",
+    "answer": "🟢 Yes — the puppy series is genuinely essential and not the place to minimize. Puppies are protected early by antibodies from their mother's milk, but that protection fades unpredictably over the first few months, leaving a vulnerable window where they can catch deadly diseases like parvovirus and distemper — which kill puppies. Because you can't know exactly when maternal immunity drops, the series is given as several doses a few weeks apart (typically ~6–16 weeks) to make sure the puppy is covered as soon as it can respond, followed by a booster around a year. Parvo in particular is brutal and common in unvaccinated pups. So: complete the core puppy series on schedule — then, as an adult, you can shift to the minimal-effective approach with 3-year intervals and titers.",
+    "confidence": "strong",
+    "sources": ["WSAVA/AAHA puppy vaccination schedules; maternal antibody interference window"],
+    "topic": "vaccines-titers",
+    "source": "Common Sense Dog — Vaccines & Titers pack"
+  },
+  {
+    "question": "Do the non-core vaccines (lepto, Lyme, Bordetella) matter?",
+    "answer": "🟡 They matter for the RIGHT dogs — it's all about real-world risk. Leptospirosis is worth strong consideration for many dogs because it's potentially fatal, increasingly common, and zoonotic (it can infect people); risk rises with exposure to wildlife, standing water, or rural/wet environments. Bordetella (kennel cough) makes sense for dogs that board, go to daycare, groomers, or dog parks. Lyme depends on tick exposure and region. Canine influenza depends on local outbreaks and social exposure. Unlike core vaccines, these are genuinely optional and should be chosen by your dog's lifestyle and local disease prevalence — a real conversation with your vet, not an automatic yes or no. Some also need more frequent boosting than core vaccines. Match the vaccine to the actual risk.",
+    "confidence": "moderate",
+    "sources": ["WSAVA/AAHA non-core risk-based guidance; leptospirosis zoonosis + severity"],
+    "topic": "vaccines-titers",
+    "source": "Common Sense Dog — Vaccines & Titers pack"
+  },
+  {
+    "question": "What's the holistic but honest approach to vaccinating my dog?",
+    "answer": "🟡 The evidence-based holistic middle ground is 'minimal effective vaccination' — fully protected, but not needlessly boosted. In practice: (1) give puppies their complete core series (non-negotiable — these diseases kill). (2) Keep rabies legal and current. (3) As an adult, extend core boosters to every 3 years and/or use titer testing to confirm immunity before re-vaccinating — many dogs won't need boosters for years. (4) Choose non-core vaccines only by genuine lifestyle risk. (5) Support overall health (nutrition, gut, lean weight) so the immune system responds well, and for a dog with a reaction history, work with a holistic/integrative vet to space or tailor vaccines. This gives you the best of both worlds: real protection against deadly disease, without unnecessary over-vaccination — and it's backed by mainstream guidelines, not against them.",
+    "confidence": "moderate",
+    "sources": ["Synthesis of AAHA/AVMA/WSAVA — core + rabies + 3yr intervals + titers + risk-based non-core"],
+    "topic": "vaccines-titers",
+    "source": "Common Sense Dog — Vaccines & Titers pack"
+  }
+]

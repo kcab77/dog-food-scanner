@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { searchKnowledgeScored } from '@/lib/pinecone'
 import { isAllowed } from '@/lib/ratelimit'
+import { DISCLAIMER } from '@/lib/disclaimer'
 
 const SYSTEM_PROMPT = `You are the Common Sense Dog AI assistant — a holistic, nutrition-first pet health advisor for dog owners who want natural, research-backed guidance without defaulting to pharmaceuticals or generic vet advice.
 
@@ -59,9 +60,16 @@ For health concerns (legal/safety framing):
 - BUT for genuine health concerns, symptoms of illness, medication interactions, or before major diet changes, recommend consulting a HOLISTIC or integrative veterinarian (not a conventional kibble-and-pharma vet).
 - This is educational information to help owners make informed choices — not a diagnosis or a substitute for professional veterinary care. Never claim to treat, cure, or diagnose a medical condition.
 
+ACCURACY (critical): Never fabricate studies, statistics, brand claims, or citations. Only cite specifics that appear in the curated knowledge provided below. If you are not certain of a fact, say so plainly rather than guessing — being honest about uncertainty is better than being confidently wrong.
+
 Always remember: the Common Sense Dog owner is already doing their research. They don't want generic — they want specific, honest, and holistic. Keep answers concise but thorough — 3 to 5 short paragraphs max.`
 
-const ALLOWED_ORIGINS = ['https://commonsensedog.com', 'https://www.commonsensedog.com']
+const ALLOWED_ORIGINS = [
+  'https://commonsensedog.com',
+  'https://www.commonsensedog.com',
+  // localhost is allowed only in dev so the local preview works — never in production.
+  ...(process.env.NODE_ENV !== 'production' ? ['http://localhost:3000', 'http://localhost:3001'] : []),
+]
 
 export async function POST(req: NextRequest) {
   const origin = req.headers.get('origin') || ''
@@ -97,7 +105,7 @@ export async function POST(req: NextRequest) {
     } else if (weakChunks.length > 0) {
       systemText += `\n\n---\nKNOWLEDGE BASE (PARTIAL MATCH):\n\nThe following Common Sense Dog knowledge is partially relevant. Prefer it where it applies, then supplement with your general holistic knowledge to give a complete answer. Stay true to the philosophy above.\n\n${weakChunks.join('\n\n---\n\n')}`
     } else {
-      systemText += `\n\n---\nNo specific knowledge was found in our database for this question. Answer using your general knowledge, staying true to the holistic philosophy above.`
+      systemText += `\n\n---\nACCURACY GUARDRAIL: Our curated knowledge base did not return a match for this question. You may answer from general holistic knowledge, but: (1) NEVER invent studies, statistics, brand claims, or specific numbers — if you don't actually know, say so plainly; (2) keep it conservative and general; (3) for anything health- or dosage-specific, tell the owner to confirm with a holistic/integrative vet. Be honest about uncertainty rather than guessing.`
     }
 
     if (dogProfile?.dog_name) {
@@ -117,7 +125,7 @@ export async function POST(req: NextRequest) {
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
+        model: 'claude-sonnet-4-6',
         max_tokens: 1024,
         system: systemText,
         messages: claudeMessages,
@@ -131,7 +139,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'No response from AI' }, { status: 500 })
     }
 
-    return NextResponse.json({ message: text })
+    return NextResponse.json({ message: text + DISCLAIMER })
   } catch (e) {
     return NextResponse.json({ error: 'Server error' }, { status: 500 })
   }

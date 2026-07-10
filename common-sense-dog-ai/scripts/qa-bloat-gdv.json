@@ -1,0 +1,90 @@
+[
+  {
+    "question": "What is bloat (GDV) in dogs and why is it an emergency?",
+    "answer": "🟢 Bloat, or gastric dilatation-volvulus (GDV), is one of the most acute life-threatening emergencies in dogs. The stomach rapidly fills with gas and fluid (dilatation) and can then twist on itself (volvulus), which traps the contents, cuts off blood supply to the stomach and spleen, blocks blood return to the heart, and sends the dog into shock. It can kill within hours. This is NOT something to manage at home, wait out, or treat holistically — a dog with GDV needs an emergency vet immediately, as survival depends on how fast they get surgery. Every dog owner, especially of at-risk breeds, should know the signs cold.",
+    "confidence": "strong",
+    "sources": ["Cornell Riney Canine Health Center — GDV; VCA; AAHA 'Understanding Canine Bloat'"],
+    "topic": "bloat-gdv",
+    "source": "Common Sense Dog — Bloat / GDV pack"
+  },
+  {
+    "question": "What are the warning signs of bloat in a dog?",
+    "answer": "🟢 Know these — they can save your dog's life. Classic signs: unproductive retching (trying to vomit but nothing or only foam comes up), a swollen, distended, or hard belly, restlessness and pacing, unable to get comfortable, excessive drooling, panting, a hunched or 'praying' posture, and signs of pain or distress. As it worsens: pale gums, rapid heartbeat, weakness, and collapse. The combination of trying to vomit with nothing coming up plus a bloating abdomen in a large dog is a red-alert emergency. Do not wait to 'see if it passes' — get to an emergency vet immediately. Minutes matter.",
+    "confidence": "strong",
+    "sources": ["VCA; PetMD; Cornell — GDV clinical signs"],
+    "topic": "bloat-gdv",
+    "source": "Common Sense Dog — Bloat / GDV pack"
+  },
+  {
+    "question": "Which dogs are most at risk for bloat?",
+    "answer": "🟢 Bloat overwhelmingly affects large and giant, deep-chested breeds — Great Danes (highest risk), German Shepherds, Standard Poodles, Weimaraners, Dobermans, Setters, and similar builds — because their chest shape lets the stomach move and twist more easily. Other risk factors backed by research: increasing age, having a close relative that had GDV (there's a genetic/heritable component), a lean or nervous/anxious temperament, eating one large meal a day, eating too fast, and vigorous exercise right after eating. Small breeds can get it but it's uncommon. If you have an at-risk breed, this is a condition to be proactive about, not reactive.",
+    "confidence": "strong",
+    "sources": ["Glickman et al. GDV risk-factor studies; Purina Institute; PMC7694454 (genetic susceptibility)"],
+    "topic": "bloat-gdv",
+    "source": "Common Sense Dog — Bloat / GDV pack"
+  },
+  {
+    "question": "Do raised food bowls prevent bloat?",
+    "answer": "🟡 No — and this is an important myth-bust, because the advice actually reversed. Older guidance recommended elevated bowls to reduce bloat, but later research found the opposite: feeding from a raised/elevated bowl was associated with an INCREASED risk of GDV, particularly in large and giant breeds. So current advice is to feed at-risk dogs from floor level, not an elevated platform or feeder. If you were using a raised bowl specifically to prevent bloat, you can stop. (Raised bowls may still be used for other reasons like arthritis/mobility, but not as bloat prevention.)",
+    "confidence": "moderate",
+    "sources": ["Glickman et al., 2000 — raised feeders increased GDV risk; Purina Institute GDV nutrition"],
+    "topic": "bloat-gdv",
+    "source": "Common Sense Dog — Bloat / GDV pack"
+  },
+  {
+    "question": "How can I reduce my dog's risk of bloat?",
+    "answer": "🟡 You can't eliminate the risk (much of it is anatomy and genetics), but sensible feeding practices help: feed 2–3 smaller meals a day instead of one large meal to limit stomach volume at any one time; slow down fast eaters with a slow-feeder bowl or food puzzle; feed from floor level (not a raised bowl); avoid vigorous exercise for about an hour before and after meals; and keep stress low around feeding. Don't let a gulping dog tank a huge bowl and then run. These reduce risk modestly — they are NOT a guarantee. For high-risk breeds, the most effective prevention is a surgical one (see gastropexy).",
+    "confidence": "moderate",
+    "sources": ["Purina Institute; AESC; Cornell — GDV prevention/feeding management"],
+    "topic": "bloat-gdv",
+    "source": "Common Sense Dog — Bloat / GDV pack"
+  },
+  {
+    "question": "What is a gastropexy and should my dog have one?",
+    "answer": "🟢 A gastropexy is a surgery that tacks the stomach to the body wall so it can't twist — and it's the single most effective bloat-prevention measure for at-risk dogs. The data is striking: after a GDV episode, without gastropexy it recurs in up to ~80% of dogs, versus under ~5% with the surgery. It can be done as an emergency during GDV treatment, or PROACTIVELY (prophylactic gastropexy) in high-risk breeds — often at the same time as spay/neuter, sometimes laparoscopically. Important nuance: gastropexy prevents the life-threatening twisting, but doesn't fully stop the stomach from bloating with gas, so you still watch for signs. For a Great Dane or other high-risk breed, it's worth discussing with your vet early.",
+    "confidence": "strong",
+    "sources": ["Gastropexy recurrence data (<5% vs ~80%) — VCA, Cornell, WSU Veterinary Teaching Hospital"],
+    "topic": "bloat-gdv",
+    "source": "Common Sense Dog — Bloat / GDV pack"
+  },
+  {
+    "question": "Can diet or holistic approaches prevent bloat?",
+    "answer": "⚪ Honest answer: only partially, and this is one condition where holistic-first isn't the main play. Bloat risk is driven largely by anatomy (deep chest) and genetics, which no diet can change. Feeding management does help modestly — smaller meals, slowing fast eaters, floor-level feeding, and avoiding exercise right after eating — and keeping a dog lean and calm doesn't hurt. But there's no supplement, food, or natural remedy that reliably prevents GDV. So for at-risk breeds, the responsible approach is: apply the feeding practices, learn the emergency signs, and seriously consider a prophylactic gastropexy — rather than relying on diet alone. Knowing the signs and acting fast saves more lives here than any preventive food.",
+    "confidence": "traditional",
+    "sources": ["GDV is largely anatomical/genetic — Cornell, Purina Institute; feeding management is adjunctive"],
+    "topic": "bloat-gdv",
+    "source": "Common Sense Dog — Bloat / GDV pack"
+  },
+  {
+    "question": "Does eating too fast cause bloat in dogs?",
+    "answer": "🟡 Fast eating is a recognized risk factor — gulping food leads to swallowing more air and rapidly filling the stomach, both of which are associated with higher GDV risk, especially in large deep-chested breeds. It's not the sole cause (anatomy and genetics matter more), but it's one of the few risk factors you can actually control. Slow it down with a slow-feeder bowl, a food-dispensing puzzle, or spreading kibble on a lick mat or muffin tin. Combined with smaller, more frequent meals and calm mealtimes, it's a simple, low-cost way to trim risk. Worth doing for any big-breed dog.",
+    "confidence": "moderate",
+    "sources": ["Glickman et al. risk-factor studies; veterinary GDV prevention guidance"],
+    "topic": "bloat-gdv",
+    "source": "Common Sense Dog — Bloat / GDV pack"
+  },
+  {
+    "question": "Is a gassy or bloated-looking belly the same as GDV bloat?",
+    "answer": "🟡 Not necessarily — but you should treat it seriously until you're sure. 'Bloat' casually can mean a gassy, food-full, or distended belly that resolves on its own, whereas GDV is the specific, deadly emergency where the stomach twists. The problem is you can't always tell them apart at home, and GDV moves fast. The danger signs that mean 'emergency now': unproductive retching (trying to vomit with nothing coming up), a rapidly swelling/hard abdomen, restlessness and obvious distress, drooling, and pacing — especially in a large deep-chested dog. When in doubt, especially with an at-risk breed, call or go to the emergency vet immediately. It's far better to be wrong at the ER than right at home too late.",
+    "confidence": "moderate",
+    "sources": ["Differentiating simple bloat vs GDV — VCA, PetMD; when-in-doubt-go emergency guidance"],
+    "topic": "bloat-gdv",
+    "source": "Common Sense Dog — Bloat / GDV pack"
+  },
+  {
+    "question": "Does dry kibble swell in the stomach and cause bloat? Should I moisten my dog's food?",
+    "answer": "🟡 This is one of the most common bloat myths — and the research disproves it. GDV bloat is driven by GAS accumulation and the stomach twisting, NOT by food physically swelling in the stomach. Studies have specifically disproven the idea that dry, extruded kibble causes GDV by expanding. Even more important: moistening kibble to 'pre-expand' it does not reliably help and can backfire — in one study, dogs fed dry food containing citric acid that was moistened before feeding had a ~320% GREATER risk, and soaked kibble is denser and slower to digest. The real diet-related risk factors are having fat or oil among the first four ingredients (~170% higher risk), one large daily meal, and fast/gulping eating (which swallows air). And grain does NOT increase bloat risk — that's a myth too. So don't rely on moistening kibble to prevent bloat; focus on meal size, slowing fast eaters, floor-level bowls, and gastropexy for high-risk breeds.",
+    "confidence": "moderate",
+    "sources": ["Glickman et al. GDV diet risk factors (moistened citric-acid kibble +320%, fat in first 4 ingredients +170%); nutritionrvn.com review; Purina Institute — kibble-swelling myth disproven"],
+    "topic": "bloat-gdv",
+    "source": "Common Sense Dog — Bloat / GDV pack"
+  },
+  {
+    "question": "Is wet, raw, or freeze-dried food safer against bloat? Does rehydrating freeze-dried food help?",
+    "answer": "🟡 There's some support that a non-exclusively-dry diet is lower-risk, but not for the reason people assume. Dr. Glickman's research associated feeding canned food with roughly a 28% DECREASE in bloat risk, and including some canned/fresh/table food in the diet appeared protective (though it's partly confounded, since high-risk breeds tend to be fed kibble). It is NOT because 'wet food doesn't expand' — again, food swelling isn't the mechanism; gas and stomach twisting are. On freeze-dried specifically: rehydrating it before feeding is completely fine — any expansion happens in the bowl with added water, not in the stomach — so it sidesteps the (mythical) swelling worry entirely, and crushing it first is fine too. Note the scary '+320% moistened' finding applied to preservative-containing DRY kibble with citric acid, not rehydrated freeze-dried raw. Bottom line: a varied fresh / gently-cooked / rehydrated-freeze-dried diet is not a bloat concern — put your attention on meal size, slow eating, floor bowls, and gastropexy for truly high-risk breeds.",
+    "confidence": "moderate",
+    "sources": ["Glickman et al. — canned food ~28% lower GDV risk; diet-type associations (confounded by breed); Cornell/Purina Institute"],
+    "topic": "bloat-gdv",
+    "source": "Common Sense Dog — Bloat / GDV pack"
+  }
+]

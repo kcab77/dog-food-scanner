@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
+import { renderMarkdown } from '@/lib/markdown'
 import { supabase } from '@/lib/supabase'
 
 const FREE_LIMIT = 20
@@ -237,6 +238,19 @@ export default function Home() {
 
       {/* Messages */}
       <main style={{ flex: 1, overflowY: 'auto', padding: '20px 16px', maxWidth: 760, width: '100%', margin: '0 auto', boxSizing: 'border-box' }}>
+        <style jsx global>{`
+          .chat-md > :first-child { margin-top: 0; }
+          .chat-md > :last-child { margin-bottom: 0; }
+          .chat-md h1, .chat-md h2 { font-size: 17px; font-weight: 700; margin: 14px 0 6px; color: #4ade80; }
+          .chat-md h3 { font-size: 15px; font-weight: 700; margin: 12px 0 4px; color: #d1fae5; }
+          .chat-md p { margin: 0 0 10px; }
+          .chat-md ul, .chat-md ol { margin: 0 0 10px 18px; }
+          .chat-md li { margin-bottom: 5px; }
+          .chat-md strong { color: #fff; font-weight: 700; }
+          .chat-md a { color: #4ade80; text-decoration: underline; }
+          .chat-md em { color: #9ca3af; font-size: 13px; }
+          .chat-md hr { border: none; border-top: 1px solid #374151; margin: 12px 0; }
+        `}</style>
         {messages.map(msg => (
           <div
             key={msg.id}
@@ -253,22 +267,19 @@ export default function Home() {
                 <span style={{ fontSize: 16 }}>🐾</span>
               </div>
             )}
-            <div
-              style={{
-                maxWidth: '78%',
-                padding: '12px 16px',
-                borderRadius: msg.role === 'user' ? '18px 18px 4px 18px' : '4px 18px 18px 18px',
-                background: msg.role === 'user' ? '#22c55e' : '#111827',
-                color: msg.role === 'user' ? '#000' : '#e5e7eb',
-                fontSize: 15,
-                lineHeight: 1.65,
-                whiteSpace: 'pre-wrap',
-                border: msg.role === 'assistant' ? '1px solid #1f2937' : 'none',
-                fontWeight: msg.role === 'user' ? 500 : 400,
-              }}
-            >
-              {msg.content}
-            </div>
+            {msg.role === 'assistant' ? (
+              <div
+                className="chat-md"
+                style={{ maxWidth: '78%', padding: '12px 16px', borderRadius: '4px 18px 18px 18px', background: '#111827', color: '#e5e7eb', fontSize: 15, lineHeight: 1.65, border: '1px solid #1f2937' }}
+                dangerouslySetInnerHTML={{ __html: renderMarkdown(msg.content) }}
+              />
+            ) : (
+              <div
+                style={{ maxWidth: '78%', padding: '12px 16px', borderRadius: '18px 18px 4px 18px', background: '#22c55e', color: '#000', fontSize: 15, lineHeight: 1.65, whiteSpace: 'pre-wrap', fontWeight: 500 }}
+              >
+                {msg.content}
+              </div>
+            )}
           </div>
         ))}
 

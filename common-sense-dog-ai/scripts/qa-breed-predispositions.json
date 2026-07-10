@@ -1,0 +1,86 @@
+[
+  {
+    "question": "I have a Labrador — what should I feed and watch out for health-wise?",
+    "answer": "🟡 Tier 2 (breed-predisposition consensus): The real breed-linked concerns for Labs (not marketing — these are medical): (1) obesity is #1 — Labs are genetically prone to it (many carry a POMC gene variant that drives hunger), and extra weight worsens everything else, so keep them lean and measure meals; (2) hip and elbow dysplasia → in large-breed PUPPIES feed a controlled-growth large-breed diet and don't over-supplement calcium (fast growth damages joints), plus omega-3 for joint support lifelong; (3) copper-associated hepatopathy → Labs are one of the copper-storage breeds, so favor foods that aren't over-fortified with copper; (4) lipomas and inflammation → an anti-inflammatory, whole-food-leaning diet helps. Skip 'formulated for Labradors' marketing kibble — feed for the individual dog's weight, age, and these specific risks instead. See a vet for: limping/stiffness, sudden weight changes, or elevated liver values. (Merck Veterinary Manual; ACVIM breed data.)",
+    "source": "Veterinary breed-predisposition literature (Merck Vet Manual / ACVIM)",
+    "tier": 2,
+    "topic": "breed/labrador"
+  },
+  {
+    "question": "What health and diet issues should I watch for with my Golden Retriever?",
+    "answer": "🟡 Tier 2: Goldens' big breed-linked risks are (1) a notably high cancer rate (hemangiosarcoma, lymphoma) → an anti-inflammatory, whole-food-leaning diet with omega-3s and antioxidants is a sensible lifelong emphasis (diet doesn't 'prevent' cancer but lowering inflammatory load fits the philosophy); (2) atopic/allergic skin and ear infections → if chronic, a novel or limited-ingredient protein and anti-inflammatory diet often helps, plus gut/skin support; (3) hip dysplasia → controlled growth as a large-breed puppy + joint support; (4) subvalvular aortic stenosis (a heart condition) in some lines. Keep them lean. This is real breed medicine, not breed-marketed food. See a vet for: any new lump (get it checked, don't wait), persistent skin/ear flares, or exercise intolerance. (Merck Veterinary Manual; Morris Animal Foundation Golden Retriever Lifetime Study.)",
+    "source": "Veterinary breed-predisposition literature; Morris Animal Foundation Golden Retriever Lifetime Study",
+    "tier": 2,
+    "topic": "breed/golden-retriever"
+  },
+  {
+    "question": "My dog is a German Shepherd — what diet and health things should I know?",
+    "answer": "🟡 Tier 2: Two breed-specific ones really change how you feed a GSD: (1) EPI (exocrine pancreatic insufficiency) — German Shepherds are THE classic EPI breed; if they have it, they can't make digestive enzymes and will lose weight despite eating ravenously with pale, greasy, voluminous stool → the fix is prescription digestive-enzyme supplementation with every meal plus a moderately low-fiber diet, and it needs a vet diagnosis (the TLI blood test). (2) Bloat/GDV — they're deep-chested, so feed measured meals, discourage gulping, and rest after eating. Also: degenerative myelopathy, hip dysplasia (controlled large-breed puppy growth), and food allergies. See a vet urgently for: a distended abdomen with unproductive retching (GDV = emergency), or chronic weight loss with greasy stool (EPI). (Merck Veterinary Manual; ACVIM.)",
+    "source": "Veterinary breed-predisposition literature (Merck Vet Manual / ACVIM)",
+    "tier": 2,
+    "topic": "breed/german-shepherd"
+  },
+  {
+    "question": "What should I feed my Dachshund and what are their main health risks?",
+    "answer": "🟡 Tier 2: The defining Dachshund issue is IVDD (intervertebral disc disease) — their long-backed build makes them highly prone to disc injuries, and the single most important thing diet-wise is keeping them LEAN: every extra pound loads that spine, so strict weight management is non-negotiable (measured meals, low-cal treats, no free-feeding). Also support joints/discs with omega-3s. Beyond weight: discourage jumping on/off furniture and stairs. They're also prone to obesity generally and dental disease (small mouths). This is breed medicine — the food brand matters far less than the body condition. See a vet immediately for: sudden back pain, wobbliness, dragging back legs, or reluctance to move (possible disc event — time-sensitive). (Merck Veterinary Manual.)",
+    "source": "Veterinary breed-predisposition literature (Merck Vet Manual)",
+    "tier": 2,
+    "topic": "breed/dachshund"
+  },
+  {
+    "question": "I have a Dalmatian — is there a special diet they need?",
+    "answer": "🟡 Tier 2 — yes, this is the one breed where diet genuinely must change: Dalmatians have a genetic defect in purine/uric-acid metabolism that makes them form urate bladder/kidney stones. The diet response is a LOWER-PURINE approach: avoid high-purine foods (organ meats, especially liver; game meats; oily fish; brewer's yeast), favor moderate amounts of lower-purine proteins (eggs, dairy, some poultry in moderation), and — critically — maximize hydration (add water/broth, feed wet food) to keep urine dilute. Some Dalmatians need a prescription urate-management diet and urine-pH monitoring. Also: congenital deafness is common in the breed. See a vet for: straining to urinate, blood in urine, or frequent small urinations (stone signs — can become an emergency if blocked). (Merck Veterinary Manual; ACVIM urolithiasis guidelines.)",
+    "source": "Veterinary breed-predisposition literature (Merck Vet Manual / ACVIM urolithiasis)",
+    "tier": 2,
+    "topic": "breed/dalmatian"
+  },
+  {
+    "question": "What diet and health concerns matter most for a Doberman?",
+    "answer": "🟡 Tier 2: Dobermans' headline risk is DCM (dilated cardiomyopathy) — they're one of the most affected breeds and it can appear before symptoms, so this shapes the diet: ensure adequate taurine and L-carnitine (whole-food diets with quality meat/heart help), and be cautious with grain-free/high-legume ('BEG') diets, which the FDA has been investigating for an association with DCM (association, not proven causation — but caution is reasonable in a high-risk breed). Ask your vet about early screening (echo, NT-proBNP, Holter) and monitor resting respiratory rate at home. Dobermans are also a copper-storage breed (watch dietary copper) and carry von Willebrand bleeding disorder. See a vet for: fainting, cough, exercise intolerance, or a distended belly. (ACVIM; FDA DCM investigation updates.)",
+    "source": "Veterinary breed-predisposition literature (ACVIM); FDA DCM investigation",
+    "tier": 2,
+    "topic": "breed/doberman"
+  },
+  {
+    "question": "My Cavalier King Charles Spaniel — what should I watch for and feed?",
+    "answer": "🟡 Tier 2: Cavaliers are defined by early-onset mitral valve disease (MVD) — the vast majority develop a heart murmur and valve degeneration, often young. Diet/management that supports this: keep them lean (excess weight strains the heart), moderate sodium (avoid salty treats/processed foods) especially as disease progresses, and include heart-supportive nutrients (omega-3 fish oil, and taurine/CoQ10 as adjuncts). The single best home tool is monitoring resting/sleeping respiratory rate — a sustained rate over ~30 breaths/min can be the earliest sign of fluid backup and needs a vet. They're also prone to syringomyelia (a neurological condition). See a vet for: coughing (especially at night), fast/labored breathing, or fainting. (ACVIM cardiology consensus.)",
+    "source": "Veterinary breed-predisposition literature (ACVIM cardiology)",
+    "tier": 2,
+    "topic": "breed/cavalier-king-charles"
+  },
+  {
+    "question": "How should I feed a Great Dane or other giant breed to keep them healthy?",
+    "answer": "🟡 Tier 2: Two giant-breed essentials: (1) BLOAT/GDV is the #1 killer of Great Danes — deep-chested dogs are high-risk, so feed measured meals (not one huge meal), slow down gulping (slow-feeder bowl), and rest them after eating; ask your vet about a preventive gastropexy. (2) Growth control in puppies is critical — giant-breed pups must be on a large/giant-breed puppy food with controlled calcium and calories so they grow SLOWLY; over-nutrition and excess calcium cause developmental bone disease (they're growing for 18–24 months). Adults: keep lean to protect joints, and they're also prone to DCM (taurine/heart awareness) and wobbler syndrome. See a vet emergently for: distended abdomen, unproductive retching, restlessness (GDV — minutes matter). (Merck Veterinary Manual; large-breed growth research.)",
+    "source": "Veterinary breed-predisposition literature (Merck Vet Manual); large-breed growth research",
+    "tier": 2,
+    "topic": "breed/great-dane"
+  },
+  {
+    "question": "What diet is best for a Miniature Schnauzer?",
+    "answer": "🟡 Tier 2 — fat is the key variable: Miniature Schnauzers are strongly prone to hyperlipidemia (high blood fat) and pancreatitis, so a LOWER-FAT diet is often the right call — avoid fatty treats, table scraps, and high-fat foods, and if they've had a pancreatitis episode, a genuinely low-fat diet is important going forward. They're also prone to bladder stones (both struvite and calcium oxalate) → hydration matters (add water/wet food), and to diabetes. Keep them lean overall. See a vet urgently for: vomiting, a hunched/painful belly, and lethargy (pancreatitis signs), or straining to urinate (stones). (Merck Veterinary Manual; ACVIM.)",
+    "source": "Veterinary breed-predisposition literature (Merck Vet Manual / ACVIM)",
+    "tier": 2,
+    "topic": "breed/miniature-schnauzer"
+  },
+  {
+    "question": "My Yorkie is tiny — what feeding and health things should I know?",
+    "answer": "🟡 Tier 2: Toy breeds like Yorkies have a few size-driven concerns: (1) hypoglycemia, especially in PUPPIES — their tiny reserves crash fast, so feed small meals frequently (every few hours for young pups) and know the signs (wobbliness, weakness, glazed look → rub honey/karo on the gums and get to a vet); (2) dental disease — small crowded mouths, so dental-friendly feeding and care matter; (3) portosystemic liver shunt (a congenital condition in some) → poor growth, odd neuro signs after meals, may need a specific diet; (4) tracheal collapse → keep them lean and use a harness not a collar. Keep them at a healthy weight — toy breeds hide obesity. See a vet for: weakness/collapse (hypoglycemia), or stunted growth with post-meal confusion (shunt). (Merck Veterinary Manual.)",
+    "source": "Veterinary breed-predisposition literature (Merck Vet Manual)",
+    "tier": 2,
+    "topic": "breed/yorkshire-terrier"
+  },
+  {
+    "question": "What should I watch for with my Boxer's health and diet?",
+    "answer": "🟡 Tier 2: Boxers have a breed-specific heart disease — arrhythmogenic right ventricular cardiomyopathy (ARVC, 'Boxer cardiomyopathy') and DCM — so heart-supportive feeding matters: adequate taurine and L-carnitine, caution with grain-free/high-legume diets (FDA-investigated DCM association), and ask about screening (Holter monitor, echo). Boxers also have one of the higher cancer rates among breeds (mast cell tumors, lymphoma) → an anti-inflammatory, whole-food-leaning diet fits. They're brachycephalic-ish, so keep them lean for breathing and heat tolerance, and they can have sensitive stomachs. See a vet for: fainting/collapse (can be arrhythmia — important in this breed), any new lump (mast cell tumors need checking), or exercise intolerance. (ACVIM; FDA DCM investigation.)",
+    "source": "Veterinary breed-predisposition literature (ACVIM); FDA DCM investigation",
+    "tier": 2,
+    "topic": "breed/boxer"
+  },
+  {
+    "question": "My English/French Bulldog — what diet and health issues are breed-specific?",
+    "answer": "🟡 Tier 2: For bulldogs (brachycephalic breeds), weight is the master lever: extra pounds worsen their already-compromised airway (BOAS) and heat intolerance, so strict lean weight management is the single most impactful diet decision — measured meals, low-cal treats, and never let them get overweight. They're also prone to skin-fold dermatitis (a whole-food, anti-inflammatory diet + fold care helps) and food sensitivities. Note: English Bulldogs specifically are also prone to urate bladder stones (like Dalmatians) → if yours forms stones, a lower-purine, high-hydration diet applies. Feed slowly (they gulp air) and keep them cool. See a vet for: severe noisy breathing/overheating, or straining to urinate (urate stones in English Bulldogs). (Merck Veterinary Manual; ACVIM.)",
+    "source": "Veterinary breed-predisposition literature (Merck Vet Manual / ACVIM)",
+    "tier": 2,
+    "topic": "breed/bulldog"
+  }
+]

@@ -1,0 +1,51 @@
+[
+  {
+    "question": "I gave my dog a medicated antifungal bath but just lathered and rinsed quickly — did it even work, and why is he itchier afterward?",
+    "answer": "From my Hershey case log (personal observation, tier 3): a quick lather-and-rinse gives you almost no antifungal benefit — ketoconazole/chlorhexidine actives need 5–10 minutes of skin contact time to work, so no contact time = minimal effect. The itch spike right after was from dryness and agitation of already-flared skin, NOT a reaction to the product (the fast rinse actually left less residue, which is how I knew it was dryness, not a product reaction). New protocol I now use: set a 10-minute timer for contact time, use a lick mat to distract during the wait, rinse for twice as long as feels necessary, dry fully including folds and armpits, and wait a minimum of 3–4 days between medicated baths.",
+    "source": "Kyle — Hershey case log, July 2026",
+    "tier": 3,
+    "topic": "skin/bathing"
+  },
+  {
+    "question": "Can I take my dog's cone off for a quick break after a medicated bath during a skin flare?",
+    "answer": "No — from my Hershey case log (tier 3, personal observation): itch peaks in the hours right after a medicated bath on actively flared skin, and the dog can't be trusted without the cone even for a short break in that window. One 60-second cone break led to a self-inflicted lip cut from hard scratching. My rule now: no cone breaks within ~24 hours of a medicated bath during an active flare.",
+    "source": "Kyle — Hershey case log, July 2026",
+    "tier": 3,
+    "topic": "skin/flare management"
+  },
+  {
+    "question": "One of my dog's anal glands feels full and grape-like but the other side is normal — is this an emergency?",
+    "answer": "From my Hershey case log (tier 3, personal observation) — I triage a full anal gland by feel, color, and pain reaction: (1) soft + movable + normal skin color + painless = watch and wait; (2) firm + movable + normal color + mild tenderness (what Hershey had — grape-like, visible, mildly firm, movable, normal color, mild reaction to pressure) = routine vet expression within days, NOT an emergency; (3) hard + hot + red/purple + strong pain reaction = same-day vet, possible abscess. Context that made one side fill up: post-antibiotic soft stools express the glands poorly, and a nearby skin yeast/bacterial flare can irritate the duct opening.",
+    "source": "Kyle — Hershey case log, July 2026",
+    "tier": 3,
+    "topic": "anal glands/gut"
+  },
+  {
+    "question": "My dog keeps getting a full anal gland — is repeatedly expressing it the fix?",
+    "answer": "From my Hershey case log (tier 3, personal observation): firm stools are the natural drain for the anal glands, so gland health is downstream of gut health. The long-term fix is probiotic/gut restoration to firm up the stool — not repeated manual expressing, which only manages the symptom and doesn't address the cause. In Hershey's case the trigger was post-antibiotic soft stools expressing the glands poorly. When NOT to just keep expressing: if it's a recurring pattern, fix the gut rather than making expression a routine.",
+    "source": "Kyle — Hershey case log, July 2026",
+    "tier": 3,
+    "topic": "anal glands/gut"
+  },
+  {
+    "question": "Should I shave my dog's rashy areas during a skin flare even though it'll look bad?",
+    "answer": "My ruling from Hershey's case log (tier 3, personal observation): yes — shaving flared areas down to skin during an active flare trades appearance for airflow and inspection access, and in this case it directly caught an anal gland issue that the fur would have hidden. Timeline for the regret factor: a Lab double coat regrows in roughly 3–4 months (undercoat first, guard hairs later), and actively inflamed areas regrow slower. Worth doing during flares despite the look.",
+    "source": "Kyle — Hershey case log, July 2026",
+    "tier": 3,
+    "topic": "skin/flare management"
+  },
+  {
+    "question": "My dog's cone doesn't stop him from licking his tail raw — what actually works to stop itch-licking?",
+    "answer": "From my Hershey case log (tier 3, personal observation): the cone can't protect the tail, and itch-licking just migrates to whatever's still reachable (tail first, then chin). The toolkit that worked for me: a cold compress for acute itch relief; self-adhesive vet wrap over gauze for unsupervised windows ONLY (remove it when you're home so the skin airs out — don't leave it on); an inflatable donut collar to change the reach geometry; and exercise/enrichment before alone-time to cut down boredom-driven licking.",
+    "source": "Kyle — Hershey case log, July 2026",
+    "tier": 3,
+    "topic": "skin/itch management"
+  },
+  {
+    "question": "My dog has a bald spot where he keeps licking — how do I tell if it's mange or just itch-licking?",
+    "answer": "My diagnostic rule from Hershey's case log (tier 3, personal observation): hair loss at a lick spot with completely NORMAL skin underneath = behavioral/itch licking, not mange. What distinguishes mange is abnormal skin texture — scaly, crusty, thickened, or red. So a bald patch over healthy-looking skin points to licking; changed skin texture points toward mange (or infection) and needs a vet skin scrape to confirm. When to stop guessing and see a vet: any scaly/crusty/thickened/red skin under the bald area.",
+    "source": "Kyle — Hershey case log, July 2026",
+    "tier": 3,
+    "topic": "skin/itch management"
+  }
+]

@@ -1,0 +1,74 @@
+[
+  {
+    "question": "Can my dog's worms or parasites spread to me and my family?",
+    "answer": "🟡 Some can — a few dog parasites are zoonotic (transmissible to humans) — but the risk is manageable with basic hygiene, and it's not a reason to fear having a dog. The main ones to know are roundworms (Toxocara canis) and hookworms (Ancylostoma), which infect people through contaminated soil rather than direct petting. Good news: most cases of Giardia in people do NOT come from dogs (most canine strains aren't readily transmitted to humans). So the honest picture is: real but usually preventable — routine deworming/parasite prevention for your dog plus simple hand-washing and prompt poop pickup handles the vast majority of the risk.",
+    "confidence": "moderate",
+    "sources": ["CDC — Toxocariasis; CAPC guidelines; Today's Veterinary Nurse — Limiting Zoonotic Risks of Internal Parasites 2024"],
+    "topic": "zoonotic-parasites",
+    "source": "Common Sense Dog — Zoonotic Parasites pack"
+  },
+  {
+    "question": "Which dog parasites can actually infect humans?",
+    "answer": "🟡 The main zoonotic ones: Roundworms (Toxocara canis) — the biggest concern; in people the larvae migrate through tissue causing 'visceral larva migrans' or, rarely, 'ocular larva migrans' (eye). Hookworms (Ancylostoma species) — larvae penetrate human skin and cause 'cutaneous larva migrans,' an itchy, winding rash. Certain tapeworms — the flea tapeworm (Dipylidium) can rarely infect people (usually kids) if they swallow an infected flea, and Echinococcus is a more serious but regionally limited tapeworm. Notably, most Giardia and Cryptosporidium in humans is NOT from pets — those canine strains generally don't transfer well to people. So it's really roundworm and hookworm that drive the practical hygiene advice.",
+    "confidence": "moderate",
+    "sources": ["CDC-DPDx; dvm360 parasitic zoonoses; CAPC — zoonotic species lists"],
+    "topic": "zoonotic-parasites",
+    "source": "Common Sense Dog — Zoonotic Parasites pack"
+  },
+  {
+    "question": "How do roundworms spread from dogs to people?",
+    "answer": "🟡 Not from petting your dog — through the environment. Infected dogs pass roundworm eggs in their stool, but those eggs are NOT immediately infective: they need days to weeks in soil to mature ('embryonate') before they can infect anyone. People (most often young children) get infected by inadvertently swallowing those matured eggs from contaminated soil, sandboxes, or unwashed hands — which is why kids who put dirty hands or objects in their mouths (pica/geophagia) are the classic risk. The practical upshot: picking up your dog's poop promptly (before eggs mature) and hand-washing breaks the cycle. The CDC estimates 1–3 million people get larva migrans from roundworms yearly, so it's worth the simple precautions.",
+    "confidence": "moderate",
+    "sources": ["CDC — Toxocariasis transmission; Today's Veterinary Nurse 2024"],
+    "topic": "zoonotic-parasites",
+    "source": "Common Sense Dog — Zoonotic Parasites pack"
+  },
+  {
+    "question": "How do hookworms infect humans?",
+    "answer": "🟡 Differently from roundworms — hookworm larvae in contaminated soil or sand penetrate human skin directly, usually through bare feet or skin lying on the ground. In people this causes 'cutaneous larva migrans': an intensely itchy, red, winding track where the larva moves under the skin. It's most associated with walking barefoot on contaminated beaches or soil in warm climates. Prevention is straightforward: wear shoes in areas where dogs may have defecated, avoid sitting/lying directly on questionable sand or soil, keep your dog dewormed, and pick up stool promptly. It's uncomfortable but treatable, and easily avoided with basic precautions.",
+    "confidence": "moderate",
+    "sources": ["CDC — cutaneous larva migrans (Ancylostoma); CAPC"],
+    "topic": "zoonotic-parasites",
+    "source": "Common Sense Dog — Zoonotic Parasites pack"
+  },
+  {
+    "question": "Can I catch Giardia from my dog?",
+    "answer": "🟡 Mostly no — and this is a common misconception worth correcting. While Giardia sounds scary and is contagious, research shows pets are NOT the source of most human Giardia infections: most canine (and feline) Giardia strains are not readily transmitted to people. Human Giardia usually comes from contaminated water or human-to-human spread, not the family dog. That said, basic hygiene is still sensible (wash hands after cleaning up diarrhea, especially with an infected pet), and a dog with Giardia should be treated for its own sake. But you generally don't need to panic that your dog's Giardia will infect the household.",
+    "confidence": "moderate",
+    "sources": ["CDC / dvm360 — most canine Giardia strains not readily zoonotic; CAPC"],
+    "topic": "zoonotic-parasites",
+    "source": "Common Sense Dog — Zoonotic Parasites pack"
+  },
+  {
+    "question": "Who is most at risk of catching parasites from a dog?",
+    "answer": "🟡 Certain groups warrant extra care: Young children — by far the highest risk, because they put hands and objects in their mouths, play in soil and sandboxes, and may eat dirt (pica), which is the main way roundworm eggs get ingested. Immunocompromised people (chemotherapy, HIV, transplant, certain medications) — more vulnerable to infection and complications. Pregnant women — sensible to be cautious. For healthy adults the risk is low. This is why hygiene advice focuses on kids especially: supervise handwashing after playing outside or with the dog, cover sandboxes when not in use, and keep play areas free of dog feces. It's about smart precautions for the vulnerable, not banishing the dog.",
+    "confidence": "moderate",
+    "sources": ["CDC — Toxocariasis risk groups (children, pica); Today's Veterinary Nurse 2024"],
+    "topic": "zoonotic-parasites",
+    "source": "Common Sense Dog — Zoonotic Parasites pack"
+  },
+  {
+    "question": "How do I protect my family from dog parasites?",
+    "answer": "🟢 A few simple habits handle nearly all the risk: (1) Pick up your dog's stool promptly — before eggs can mature and contaminate soil — and dispose of it properly. (2) Wash hands after handling the dog, cleaning up, gardening, or playing outside, and teach kids to do the same. (3) Keep your dog on regular parasite prevention and deworming per your vet, and have stool checks (a couple times a year). (4) Deworm puppies early and on schedule (they're the highest-shedding). (5) Wear shoes outside, cover sandboxes, and keep children's play areas free of feces. (6) Don't let kids eat dirt. That's it — routine deworming plus basic hygiene makes living with a dog very safe for the whole family.",
+    "confidence": "strong",
+    "sources": ["CDC & CAPC prevention guidance; multimodal control — Today's Veterinary Nurse 2024"],
+    "topic": "zoonotic-parasites",
+    "source": "Common Sense Dog — Zoonotic Parasites pack"
+  },
+  {
+    "question": "Do I need to stop sleeping with or kissing my dog to avoid parasites?",
+    "answer": "🟡 No — for a healthy household with a dewormed dog, you do not need to banish your dog from the bed or stop showing affection. The real-world transmission routes for the main zoonotic parasites are contaminated SOIL (roundworm eggs that matured over days/weeks, hookworm larvae in the ground) — not cuddling a clean, parasite-prevented dog. Extreme advice like 'never let your dog inside, on the bed, or near you' comes from human parasite-cleanse fear-mongering, not mainstream veterinary or public-health guidance. Sensible precautions (deworming, poop pickup, hand-washing, extra care for young kids and immunocompromised people) let you keep the bond. Reasonable hygiene, not paranoia.",
+    "confidence": "moderate",
+    "sources": ["CDC/CAPC transmission via soil, not casual contact; mainstream veterinary guidance"],
+    "topic": "zoonotic-parasites",
+    "source": "Common Sense Dog — Zoonotic Parasites pack"
+  },
+  {
+    "question": "Do puppies carry more risk of spreading parasites?",
+    "answer": "🟡 Yes — puppies are the highest-risk group for shedding zoonotic worms. Many are born with roundworms or acquire them (and hookworms) very early through the mother's placenta or milk, so young puppies commonly shed large numbers of eggs. That's exactly why standard veterinary protocols deworm puppies early and repeatedly (often starting around 2 weeks and every 2 weeks until a few months old), then continue regular prevention. If you have a new puppy and young kids, be especially diligent about prompt stool pickup and hand-washing during those first months. Get the puppy on a vet deworming schedule right away — it protects both the pup and your family.",
+    "confidence": "moderate",
+    "sources": ["CAPC puppy deworming protocols; CDC — vertical/lactogenic transmission in puppies"],
+    "topic": "zoonotic-parasites",
+    "source": "Common Sense Dog — Zoonotic Parasites pack"
+  }
+]

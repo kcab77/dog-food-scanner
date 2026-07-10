@@ -1,0 +1,82 @@
+[
+  {
+    "question": "What are the signs of a urinary problem or UTI in my dog?",
+    "answer": "🟡 Watch for: frequent urination or straining, only passing small amounts, blood in the urine (pink/red tinge), accidents in a house-trained dog, excessive licking of the genital area, straining that produces little or nothing, a strong or foul urine odor, and signs of discomfort. Increased thirst and urination can also signal other issues (kidney, diabetes). A urinary problem is uncomfortable and can escalate — a UTI can ascend to the kidneys, and straining could mean stones or, in male dogs, a dangerous blockage. Get a vet visit and a urinalysis (and often a culture) rather than guessing, especially if there's blood, straining with little output, or any sign your dog can't urinate — inability to pass urine is an emergency.",
+    "confidence": "moderate",
+    "sources": ["Cornell Riney; VCA — canine lower urinary tract signs"],
+    "topic": "urinary-health",
+    "source": "Common Sense Dog — Urinary Health pack"
+  },
+  {
+    "question": "What causes bladder stones in dogs, and can diet dissolve them?",
+    "answer": "🟢 It depends on the stone type — and this distinction is crucial. The two most common are struvite and calcium oxalate. Struvite stones in dogs are usually caused by urinary tract infections, and they are the ONLY common stone that can be completely dissolved with a therapeutic diet (no surgery needed) — though it takes a few weeks up to about three months. Calcium oxalate stones, by contrast, CANNOT be dissolved by any diet and have to be removed (surgery, lithotripsy, or urohydropropulsion); for these, diet is about preventing recurrence. So the first step is always identifying the stone type with your vet (imaging + urinalysis), because it completely changes the plan. Diet is powerful for struvite, preventive-only for oxalate.",
+    "confidence": "strong",
+    "sources": ["VCA — Nutritional Concerns for Dogs with Bladder Stones; Cornell — struvite stones; Today's Veterinary Practice — calcium oxalate urolithiasis"],
+    "topic": "urinary-health",
+    "source": "Common Sense Dog — Urinary Health pack"
+  },
+  {
+    "question": "What diet helps dissolve or prevent struvite stones?",
+    "answer": "🟢 Therapeutic struvite diets work by three levers: reduced magnesium and phosphorus (the minerals that build struvite), lowering urine pH to acidic (below ~6.5, since struvite forms in alkaline urine), and increasing thirst and urination to create dilute urine that discourages crystal formation. Dissolution diets are also typically lower in protein. Because struvite is usually infection-driven, treating and preventing UTIs is a core part of prevention. This is genuinely vet-directed territory — the therapeutic diets are formulated precisely and monitored with follow-up urinalysis — but the underlying principles (acidify, dilute, control minerals, clear infection) are why it works. Hydration is your best at-home ally.",
+    "confidence": "strong",
+    "sources": ["VCA; dvm360 urolithiasis diet comparison; Cornell — struvite dissolution diets"],
+    "topic": "urinary-health",
+    "source": "Common Sense Dog — Urinary Health pack"
+  },
+  {
+    "question": "How do I prevent calcium oxalate stones in my dog?",
+    "answer": "🟢 Since calcium oxalate stones can't be dissolved, prevention is everything after removal. The core strategy is dilute urine — maximize water intake so crystals can't concentrate and form. Diets to prevent oxalate aim to produce less acidic urine than struvite diets and control calcium and oxalate precursors; your vet may recommend a specific therapeutic food. One important, non-obvious caution: do NOT give cranberry supplements to a calcium-oxalate stone-forming dog — cranberry has been shown to increase urinary oxalate, which is exactly the wrong direction. Certain breeds (Miniature Schnauzers, Bichons, Lhasa Apsos) are predisposed. Prevention is hydration + the right diet + regular urine monitoring with your vet.",
+    "confidence": "strong",
+    "sources": ["Today's Veterinary Practice — calcium oxalate urolithiasis; cranberry increases urinary oxalate (VCA bladder-stone nutrition)"],
+    "topic": "urinary-health",
+    "source": "Common Sense Dog — Urinary Health pack"
+  },
+  {
+    "question": "Do cranberry or D-mannose help with dog UTIs?",
+    "answer": "🟡 They have a reasonable, if modest, role in urinary support — mainly by helping keep bacteria (like E. coli) from adhering to the bladder wall, which can aid prevention of recurrent UTIs. They're generally safe as supplements when used responsibly, and D-mannose in particular is popular for this. Two honest caveats: they are supportive/preventive, not a reliable treatment for an established infection (a true UTI usually needs antibiotics based on a culture), and — importantly — cranberry should NOT be given to dogs that form calcium oxalate stones, because it raises urinary oxalate. So: reasonable for UTI-prone dogs without oxalate stones, alongside hydration; not a substitute for treating an active infection.",
+    "confidence": "moderate",
+    "sources": ["Cranberry/D-mannose anti-adhesion urinary support; cranberry→oxalate caution (VCA)"],
+    "topic": "urinary-health",
+    "source": "Common Sense Dog — Urinary Health pack"
+  },
+  {
+    "question": "How important is water and hydration for my dog's urinary health?",
+    "answer": "🟢 It's arguably the single most important at-home factor. Dilute urine is protective urine — plenty of water means the dog urinates more and flushes out bacteria and mineral crystals before they can build into infections or stones, and it keeps mineral concentrations too low to crystallize. Practical ways to boost intake: feed moisture-rich food (canned, fresh, or rehydrated), always have clean water available (multiple bowls, or a fountain, which many dogs prefer), and add water or a splash of low-sodium broth to meals. For any dog prone to UTIs or stones, driving up water intake is a cornerstone of prevention. It fits the holistic fresh-food approach perfectly — real, moisture-rich food naturally supports the urinary tract.",
+    "confidence": "strong",
+    "sources": ["VCA; Cornell — increased water intake / dilute urine for urinary health"],
+    "topic": "urinary-health",
+    "source": "Common Sense Dog — Urinary Health pack"
+  },
+  {
+    "question": "Is wet or fresh food better than kibble for urinary health?",
+    "answer": "🟡 For urinary health, moisture is a real advantage — and this is one area where wet, fresh, raw, or rehydrated food has a clear edge over dry kibble. Dogs on dry-only diets take in less total water and tend to produce more concentrated urine, which favors crystal and stone formation, whereas moisture-rich food increases hydration and dilutes the urine. This lines up nicely with the whole-food philosophy. Caveats: dogs with a diagnosed stone type may still need a specific therapeutic diet (which comes in wet forms too), and the goal is overall water intake — so even kibble-fed dogs can benefit from added water, broth, or a wet topper. Bottom line: more moisture, more dilute urine, healthier urinary tract.",
+    "confidence": "moderate",
+    "sources": ["Moisture/hydration & urine concentration — VCA; Cornell urinary nutrition"],
+    "topic": "urinary-health",
+    "source": "Common Sense Dog — Urinary Health pack"
+  },
+  {
+    "question": "Does my dog need antibiotics for a UTI, or can I treat it naturally?",
+    "answer": "🟡 Be honest and careful here: a true bacterial UTI usually needs antibiotics, ideally chosen by a urine culture, because an untreated infection can worsen and ascend to the kidneys (a serious problem) — and in dogs, straining can also signal stones or a life-threatening blockage that natural remedies won't fix. Natural supports (cranberry/D-mannose, increased hydration, keeping the area clean) are genuinely useful for PREVENTING recurrent UTIs and supporting a UTI-prone dog, but they're not a reliable cure for an active infection. So the sensible path: get a urinalysis to confirm what's going on, treat a real infection properly, and use the natural approaches to reduce how often it comes back. Don't leave a straining or bloody-urine dog untreated hoping it clears on its own.",
+    "confidence": "moderate",
+    "sources": ["Veterinary UTI diagnosis/culture guidance; ascending infection risk — Cornell/VCA"],
+    "topic": "urinary-health",
+    "source": "Common Sense Dog — Urinary Health pack"
+  },
+  {
+    "question": "Can holistic or natural remedies treat bladder stones?",
+    "answer": "⚪ Only partially, and it depends entirely on the stone type — so this needs honesty. Struvite stones can genuinely be dissolved with the right (vet-directed) therapeutic diet plus clearing the underlying infection, and hydration helps a lot — so there's a real dietary/natural angle there. But calcium oxalate stones cannot be dissolved by any diet or supplement and must be physically removed; for those, natural approaches are strictly about preventing recurrence (hydration, diet, and avoiding cranberry). No herb or supplement reliably dissolves an oxalate stone. And a dog that can't urinate is an emergency, period. So: partner with your vet to identify the stone, use diet/hydration where it truly works (struvite, prevention), and don't rely on natural remedies to clear a stone that needs removal.",
+    "confidence": "traditional",
+    "sources": ["Struvite dissolution vs oxalate removal — VCA, Today's Veterinary Practice; hydration/prevention"],
+    "topic": "urinary-health",
+    "source": "Common Sense Dog — Urinary Health pack"
+  },
+  {
+    "question": "How do I keep my dog's urinary system healthy day to day?",
+    "answer": "🟢 A few simple habits go a long way: maximize hydration (moisture-rich food, always-available fresh water, add water/broth to meals) so urine stays dilute; give frequent potty opportunities so your dog isn't holding urine for long stretches (holding lets bacteria and crystals sit); feed a quality, appropriately moist diet; keep your dog lean and active; and watch for early signs (straining, frequency, blood, accidents) so problems get caught fast. For dogs prone to UTIs or stones, work with your vet on the specific diet and consider preventive supports (D-mannose for UTI-prone dogs without oxalate stones). Hydration and prompt attention to symptoms are the two biggest everyday levers.",
+    "confidence": "strong",
+    "sources": ["General urinary-health maintenance — VCA, Cornell; hydration + monitoring"],
+    "topic": "urinary-health",
+    "source": "Common Sense Dog — Urinary Health pack"
+  }
+]

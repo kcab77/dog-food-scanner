@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Does grain-free dog food cause heart disease (DCM)?",
+    "answer": "This is widely misunderstood, so here's the honest, current state of the evidence. In 2018 the FDA flagged a spike in dilated cardiomyopathy (DCM) reports, and over 90% of the diets were grain-free and ~93% contained peas or lentils. So there IS a real signal — but it points more at legumes/formulation ('BEG' boutique, exotic, grain-free, legume-heavy diets) than at the absence of grain itself. Importantly, causation has NOT been proven, the mechanism is still unknown, and taurine deficiency turned out NOT to be the primary cause (these diets had normal taurine). It's an association under active investigation, not a settled 'grain-free = heart disease' fact. Practical takeaway: be cautious of legume-heavy boutique kibbles, and remember a well-formulated whole-food or fresh diet is a different thing from a pea-protein-loaded grain-free kibble.",
+    "topic": "myth-busters",
+    "source": "Common Sense Dog — Myth-Busters pack"
+  },
+  {
+    "question": "Are meat 'by-products' in dog food always bad?",
+    "answer": "Not always — this one is more nuanced than the internet suggests. By definition, by-products are the parts of the animal beyond muscle meat, which can include genuinely nutritious organs like liver, lung, spleen, and kidney — the same nutrient-dense organ meats holistic feeders prize. The real problem is vagueness and quality: an unnamed 'meat by-product' or 'animal by-product' gives you no idea of the species or quality, and cheap renderers can include low-value scraps. So the honest rule isn't 'by-products = evil,' it's 'named, quality organ ingredients are fine; vague unnamed by-products signal a low-transparency food.' Specificity on the label is what matters most.",
+    "topic": "myth-busters",
+    "source": "Common Sense Dog — Myth-Busters pack"
+  },
+  {
+    "question": "If a food says 'complete and balanced' by AAFCO, does that mean it's healthy?",
+    "answer": "Not necessarily — and this is a key distinction. 'Complete and balanced' means the food meets AAFCO's minimum nutrient profile on paper (so a dog won't develop an obvious deficiency), but it says nothing about ingredient quality, digestibility, processing, or whether the nutrients come from whole foods or cheap synthetics. A highly processed kibble full of fillers and synthetic vitamins can be 'complete and balanced' and still be a mediocre diet. Think of it as a floor (won't cause deficiency disease), not a ceiling (optimal nutrition). It's a useful baseline standard, not a quality endorsement.",
+    "topic": "myth-busters",
+    "source": "Common Sense Dog — Myth-Busters pack"
+  },
+  {
+    "question": "Are dogs carnivores or omnivores?",
+    "answer": "The honest answer is 'in between,' and both extremes are wrong. Dogs are not obligate carnivores like cats — during domestication they evolved extra copies of the AMY2B gene that lets them digest starch far better than wolves, so they CAN use some carbohydrates. But they're also not true omnivores like us; they're best described as facultative or 'scavenging' carnivores that thrive on a meat-forward diet and have no actual dietary carbohydrate requirement. So the truth sits in the middle: build the diet around quality animal protein and fat (what they're optimized for), while recognizing they can handle some whole-food carbs. Beware anyone using 'dogs are omnivores' to justify a high-grain, low-meat diet.",
+    "topic": "myth-busters",
+    "source": "Common Sense Dog — Myth-Busters pack"
+  },
+  {
+    "question": "Does fat make dogs fat?",
+    "answer": "No — this is a persistent myth. Dogs are metabolically built to use fat efficiently as a primary, clean-burning energy source (it's their preferred endurance fuel), and dietary fat itself isn't the villain in obesity. Dogs get fat the same way anything does: more calories in than out, often from too much food, too many treats, and too little activity — and excess carbohydrates drive insulin and fat storage. Fat is calorie-dense, so portions matter, but a healthy fat-inclusive diet is appropriate and natural for dogs. Don't fear quality fats; manage total calories.",
+    "topic": "myth-busters",
+    "source": "Common Sense Dog — Myth-Busters pack"
+  },
+  {
+    "question": "Is corn just a cheap filler in dog food?",
+    "answer": "Partly true, partly oversimplified. 'Filler' technically means something with no nutritional value, and corn isn't quite that — when properly processed it's digestible and provides some energy, protein, and linoleic acid. The fair criticisms are different: corn is a cheap, high-carbohydrate ingredient often used to bulk up food and replace more biologically appropriate animal protein, it raises the carb load (which dogs don't need), and it's a common base for ultra-processed kibble. So the honest framing: corn isn't 'toxic filler,' but a corn-heavy food usually signals a cheap, high-carb, plant-bulked formula that isn't ideal for a meat-forward carnivore-leaning animal.",
+    "topic": "myth-busters",
+    "source": "Common Sense Dog — Myth-Busters pack"
+  },
+  {
+    "question": "Is raw feeding dangerous, or is it always the best?",
+    "answer": "Both extremes overstate it — here's the balanced truth. Real benefits reported with raw/fresh feeding include better coat, smaller stools, and high palatability, and it's minimally processed (which fits the holistic ranking). The legitimate risks are also real: bacterial contamination (Salmonella, etc.) affecting the dog and the household, and nutritional imbalance if the diet isn't properly formulated. Rigorous long-term trials comparing raw to other diets are limited, so strong health claims outpace the hard evidence in both directions. Practical honesty: raw can be excellent when it's balanced and handled hygienically, but it's not magic and it's not for every household (immunocompromised people, certain sick dogs). Source well, balance it, handle it safely.",
+    "topic": "myth-busters",
+    "source": "Common Sense Dog — Myth-Busters pack"
+  },
+  {
+    "question": "Do dogs need grains in their diet?",
+    "answer": "No — dogs have no specific dietary requirement for grains, and they have no carbohydrate requirement at all, since they make glucose from protein and fat. That said, 'don't need' isn't the same as 'harmful': some dogs do perfectly well with a modest amount of whole grains, and grains aren't inherently dangerous (true grain allergies are uncommon). The grain-free trend also created its own issues by swapping grains for legumes (see the DCM discussion). So the honest middle ground: grains aren't necessary and shouldn't dominate a meat-forward diet, but they're not the dietary evil they were marketed as — quality and overall formulation matter more than the grain/grain-free label.",
+    "topic": "myth-busters",
+    "source": "Common Sense Dog — Myth-Busters pack"
+  },
+  {
+    "question": "Does a higher price always mean better dog food?",
+    "answer": "No — price correlates with quality only loosely, because you're often paying for marketing, packaging, and 'boutique' branding rather than better ingredients. Some premium-priced foods are genuinely excellent; others are clever marketing over a mediocre formula, and some mid-priced foods are quite good. The real signal is the label, not the price tag: named whole-food proteins high on the list, minimal fillers and synthetics, no concerning preservatives, transparency about sourcing. Read the ingredients and processing method instead of trusting the price — that's exactly what an ingredient scan is for.",
+    "topic": "myth-busters",
+    "source": "Common Sense Dog — Myth-Busters pack"
+  },
+  {
+    "question": "Are bones safe for dogs?",
+    "answer": "It depends entirely on the type — this is a real nuance, not a flat yes or no. COOKED bones are dangerous and should never be given: cooking makes them brittle so they splinter into sharp shards that can crack teeth or puncture the digestive tract. RAW meaty bones are a different story and are fed by many raw-feeders for nutrition and dental benefit, but they still carry risks (choking, tooth fractures on hard weight-bearing bones, intestinal obstruction, bacterial exposure) and should be appropriately sized and supervised. So: never cooked bones; raw bones can be appropriate with the right size, type, and supervision. When unsure, safer chew alternatives exist.",
+    "topic": "myth-busters",
+    "source": "Common Sense Dog — Myth-Busters pack"
+  }
+]

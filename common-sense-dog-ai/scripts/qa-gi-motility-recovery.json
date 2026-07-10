@@ -1,0 +1,146 @@
+[
+  {
+    "question": "Why does my dog poop right after eating, especially after a fatty meal?",
+    "answer": "⚪ Mechanistic/physiological: This is the gastrocolic reflex — food entering the stomach signals the colon to make room, triggering the urge to defecate. High-fat foods (bone marrow especially) stimulate this reflex more strongly. It's a normal motility response, not a digestive problem, as long as the stool stays formed-to-soft rather than watery. (Established GI physiology; see Merck Veterinary Manual — gastrointestinal motility.)",
+    "confidence": "traditional",
+    "sources": ["Merck Veterinary Manual — Gastrointestinal motility / gastrocolic reflex (established physiology)"],
+    "topic": "gi-motility",
+    "source": "Common Sense Dog — GI Motility & Recovery"
+  },
+  {
+    "question": "My dog had several bowel movements in a short window after eating and then running around — is something wrong?",
+    "answer": "⚪ Mechanistic/physiological: Likely a motility spike, not dysfunction. A fatty meal plus intense exercise within a few minutes of eating compounds the gastrocolic reflex — blood shunts to muscles and away from digestion, and transit speeds up, so you can see 2–3 movements in ~15–20 minutes, each progressively less formed. The key differentiator from true GI illness: stool stays formed-to-soft (not watery/explosive) and it self-resolves within hours once the dog rests. If it's watery, bloody, or persists for days, that's different — see a vet.",
+    "confidence": "traditional",
+    "sources": ["Established GI physiology — gastrocolic reflex + exercise-induced blood shunting"],
+    "topic": "gi-motility",
+    "source": "Common Sense Dog — GI Motility & Recovery"
+  },
+  {
+    "question": "How long should my dog rest after a rich or fatty meal before hard exercise?",
+    "answer": "⚪ Practical/mechanistic: A calm 45–60 minute window after any rich or fatty meal before hard running or sprinting is a sensible rule — it lets digestion settle and avoids stacking the gastrocolic reflex with exercise-driven blood shunting (which can cause a run of loose stools). Gentle walking is fine sooner. This is also part of the standard advice for reducing bloat (GDV) risk in deep-chested dogs. Not a rigid medical rule — a practical margin.",
+    "confidence": "traditional",
+    "sources": ["Established practice — post-meal rest to reduce motility spikes and bloat risk"],
+    "topic": "gi-motility",
+    "source": "Common Sense Dog — GI Motility & Recovery"
+  },
+  {
+    "question": "Why is freeze-dried food giving my dog dry, crumbly stool?",
+    "answer": "⚪ Mechanistic: Freeze-dried food that isn't fully rehydrated pulls residual water from the gut and colon during digestion, which can produce dry, crumbly stool (often the first stool of the day if fed once daily). This is a prep/hydration variable, not the colon being 'damaged' — it's a minor, easily corrected input issue. The fix: soak it longer. True colon strain would show as chronic hard stool, straining, or other downstream red flags, not intermittent dryness tied to a known prep step.",
+    "confidence": "traditional",
+    "sources": ["Manufacturer feeding guidance + basic osmosis/hydration physiology"],
+    "topic": "freeze-dried-feeding",
+    "source": "Common Sense Dog — GI Motility & Recovery"
+  },
+  {
+    "question": "How long should I soak freeze-dried dog food before feeding?",
+    "answer": "⚪ Practical: Most freeze-dried brands need 5–15+ minutes of soak time depending on piece size — patties and large nuggets take longer than crumbles, and 1.5–3 minutes is often not enough. A simple trick: start the soak the moment you begin meal prep (before other steps), so it hydrates passively without you standing around waiting in front of the dog. Follow the specific brand's rehydration instructions, as they vary.",
+    "confidence": "traditional",
+    "sources": ["Freeze-dried manufacturer rehydration instructions (brand-specific)"],
+    "topic": "freeze-dried-feeding",
+    "source": "Common Sense Dog — GI Motility & Recovery"
+  },
+  {
+    "question": "My dog passed mucus and a little blood in their stool after chewing a hard bone — is that dangerous?",
+    "answer": "⚪ Mechanistic (with red-flag caveat): A whole, hard, dried-out bone — especially one harder or larger than what your dog usually chews — can mechanically abrade the colon or rectal lining on the way through, showing as mucus plus streaking blood. Mechanical irritation typically resolves within 24–48 hours with no recurrence: one bad day followed by a clean day (no blood) supports self-limiting irritation rather than ongoing disease. What would NOT fit that pattern — and needs a vet: blood that recurs or worsens, persistent mucus, straining, or dark/tarry stool. When in doubt, see a vet.",
+    "confidence": "traditional",
+    "sources": ["Mechanical GI irritation — established clinical reasoning; escalation criteria per Merck Veterinary Manual"],
+    "topic": "gi-bones",
+    "source": "Common Sense Dog — GI Motility & Recovery"
+  },
+  {
+    "question": "Should I give my dog hard bones while they're recovering from an illness or antibiotics?",
+    "answer": "⚪ Practical: It's reasonable to avoid whole, hard bones during any active recovery period (post-antibiotic, skin infection, GI upset) when your dog's GI margin is already reduced — a hard bone adds mechanical stress the gut doesn't need right then. Reintroduce smaller/softer chews only after a clean stretch of normal stools. General recovery principle: change one variable at a time so you can tell what's helping or hurting.",
+    "confidence": "traditional",
+    "sources": ["Clinical caution — reduce mechanical GI load during recovery"],
+    "topic": "gi-bones",
+    "source": "Common Sense Dog — GI Motility & Recovery"
+  },
+  {
+    "question": "My vet prescribed an antibiotic and an anti-inflammatory (NSAID) together — is that safe?",
+    "answer": "🟡 This is a standard, reasonable combination after procedures like an FNA or minor surgery — the antibiotic covers infection risk and the NSAID covers swelling and pain. It is not malpractice, even if a GI flare happens to coincide. The one known trade-off: NSAIDs can irritate the stomach/gut lining, and layered with antibiotic-driven gut-flora disruption this can occasionally produce darker stool (mild digested blood from upper-GI irritation) during the course. If the dark stool starts mid-course and clears after the drugs finish, that points to transient drug-related irritation. (NSAID GI-irritation risk is well documented — Merck Veterinary Manual; FDA canine NSAID safety information.)",
+    "confidence": "moderate",
+    "sources": ["FDA — Canine NSAID safety information", "Merck Veterinary Manual — NSAID adverse effects (GI ulceration/irritation)"],
+    "topic": "meds-gi",
+    "source": "Common Sense Dog — GI Motility & Recovery"
+  },
+  {
+    "question": "Can I do anything to protect my dog's stomach when they're on an NSAID and antibiotic together?",
+    "answer": "🟡 If your dog is prescribed an NSAID and antibiotic together (especially if they've had GI sensitivity before), it's worth asking your vet about running a GI-protectant / stomach-coating agent alongside as prevention. This is a vet's call — dose and choice of agent depend on the dog and the drugs. Don't add anything on your own without asking, since some combinations matter. (NSAID GI-protection strategies — Merck Veterinary Manual.)",
+    "confidence": "moderate",
+    "sources": ["Merck Veterinary Manual — NSAID gastroprotection"],
+    "topic": "meds-gi",
+    "source": "Common Sense Dog — GI Motility & Recovery"
+  },
+  {
+    "question": "Why does my dog's stool color and consistency keep changing after a course of antibiotics?",
+    "answer": "🟡 Stool color is largely driven by bile output and transit time, and both fluctuate while gut flora repopulate after antibiotics. Darker brown = normal bile processing and longer transit; lighter or yellow = faster transit or temporarily reduced bile flow, which is common during flora rebuilding because gut bacteria participate in bile-acid metabolism. Some variability in this window is expected. Two colors that override 'just variability' and need a vet: pale/white/gray (possible bile-duct problem) and black/tarry (possible upper-GI bleed).",
+    "confidence": "moderate",
+    "sources": ["Bile-acid metabolism & gut microbiome — established physiology; stool-color red flags per Merck Veterinary Manual"],
+    "topic": "flora-recovery",
+    "source": "Common Sense Dog — GI Motility & Recovery"
+  },
+  {
+    "question": "How long does it take for a dog's gut bacteria to recover after antibiotics?",
+    "answer": "🟡 Full gut-flora recovery after a course of antibiotics can take anywhere from a few weeks to a couple of months, and some stool color/consistency variability during that window is expected rather than automatically abnormal. A probiotic can support the rebuild. What still isn't 'normal' at any point: persistent diarrhea lasting days, significant blood, or stool that never returns to a normal baseline between episodes — those warrant a vet. (Post-antibiotic dysbiosis and recovery timelines — canine microbiome research, e.g. work from the GI Lab at Texas A&M.)",
+    "confidence": "moderate",
+    "sources": ["Canine gut microbiome / post-antibiotic dysbiosis research (Texas A&M GI Lab and related studies)"],
+    "topic": "flora-recovery",
+    "source": "Common Sense Dog — GI Motility & Recovery"
+  },
+  {
+    "question": "How do I tell a real colon or GI problem from normal stool variation?",
+    "answer": "⚪ Clinical red flags that mean 'see a vet,' not 'just variation': persistent diarrhea lasting days (not resolving within a day); straining without producing stool (tenesmus); mucus consistently coating the stool (not a one-off); significant blood — bright-red streaks/pooling or dark tarry stool (not a single speck tied to a known cause like a hard bone); unexplained weight loss despite normal eating; or stool that never returns to a normal baseline between episodes. Absent these, and with normal appetite, energy, and play, isolated events like a motility spike, mild dryness, or a transient color shift are usually functional variation. This is educational, not a diagnosis — a holistic or conventional vet should assess anything persistent.",
+    "confidence": "traditional",
+    "sources": ["Colonic dysfunction red flags — Merck Veterinary Manual; standard veterinary triage criteria"],
+    "topic": "gi-red-flags",
+    "source": "Common Sense Dog — GI Motility & Recovery"
+  },
+  {
+    "question": "Which stool colors in dogs are emergencies?",
+    "answer": "⚪ Clinical: Two stool colors override all other context and need prompt veterinary attention: pale/white/gray stool (can signal a bile-duct or liver/gallbladder issue, i.e. bile isn't reaching the gut) and black/tarry stool (melena — can indicate digested blood from an upper-GI bleed). Bright-red blood can be minor and mechanical (like a scrape from a hard bone) but is worth watching; recurring or heavy bright-red blood also warrants a vet. When in doubt, call. (Stool-color significance — Merck Veterinary Manual.)",
+    "confidence": "traditional",
+    "sources": ["Merck Veterinary Manual — significance of stool color (melena, acholic stool)"],
+    "topic": "gi-red-flags",
+    "source": "Common Sense Dog — GI Motility & Recovery"
+  },
+  {
+    "question": "What herbs support the liver, kidneys, and gut lining in dogs?",
+    "answer": "⚪ Traditional / 🟡 for milk thistle: Commonly used, gentle supports are — Liver: milk thistle (silymarin), the most evidence-supported single herb for liver support (🟡 moderate — hepatoprotective data, mostly non-canine but mechanistically strong). Kidney: dandelion root, marshmallow root (⚪ traditional). Gut/colon lining: marshmallow root, slippery elm, L-glutamine (⚪ traditional demulcents; L-glutamine has some gut-barrier evidence). Gallbladder/bile flow: dandelion root and bitter greens (⚪ traditional — rarely needed absent a specific issue). These are supportive, not treatments for diagnosed disease — use with a holistic vet's input.",
+    "confidence": "traditional",
+    "sources": ["Silymarin hepatoprotection — reviewed literature (mostly non-canine)", "Traditional herbal/demulcent use (marshmallow root, slippery elm)"],
+    "topic": "herbal-support",
+    "source": "Common Sense Dog — GI Motility & Recovery"
+  },
+  {
+    "question": "When is the right time to start a detox or multi-herb organ-support blend?",
+    "answer": "⚪ Practical/traditional: Introduce a multi-herb detox blend during a stable stretch — ideally 2–3 days of normal stool — not during an active GI event. Several ingredients common in these blends (dandelion root, burdock root, yellow dock) have mild diuretic or laxative properties, so if you start them mid-flare you can't tell whether a change is the blend or the original problem. General rule for reintroducing foods and supplements after any GI event: one variable at a time, with a clean baseline before layering the next. For reference, Four Leaf Rover Liver & Kidney Clean combines marshmallow root, milk thistle, burdock, yellow dock, dandelion, a mushroom blend and broccoli-sprout powder — covering liver, kidney and partial gut-lining support in one formula.",
+    "confidence": "traditional",
+    "sources": ["Herbal pharmacology — mild diuretic/laxative properties of dandelion/burdock/yellow dock; Four Leaf Rover Liver & Kidney Clean label"],
+    "topic": "herbal-support",
+    "source": "Common Sense Dog — GI Motility & Recovery"
+  },
+  {
+    "question": "Is MicrocynAH (hypochlorous acid) spray safe if my dog licks it?",
+    "answer": "⚪/🟡 Hypochlorous acid is a compound the body's own white blood cells produce to fight infection, and it's used in products labeled safe near eyes and mucous membranes — one of the safer topicals if a small amount is licked. Ingesting a little from licking isn't expected to cause a delayed GI cascade hours later; if it caused any upset, it would typically show up quickly. Don't discontinue a prescribed topical over an unrelated GI event. If licking before it absorbs is a concern, allow a brief dry-time or use a light barrier (a shirt) after spraying.",
+    "confidence": "moderate",
+    "sources": ["Hypochlorous acid wound-care safety profile (labeled safe near mucous membranes)"],
+    "topic": "topical-care",
+    "source": "Common Sense Dog — GI Motility & Recovery"
+  },
+  {
+    "question": "How do I tell a mild throat-clearing cough from kennel cough in my dog?",
+    "answer": "⚪ Clinical differentiation: Mild/likely benign looks like a single quick dry hack, maybe once a day, nothing produced, with a normal-sounding bark and no trigger from the collar. Kennel cough looks like a persistent, harsh, honking cough that repeats in cascades through the day, is easily set off by collar pressure, excitement or drinking, and doesn't settle after one hack. Kennel cough has a 5–10 day incubation, so note any recent grooming, boarding, or dog-park exposure. Escalate to a vet if the cough gets more frequent or honking, the dog retches up foam, or won't eat or drink.",
+    "confidence": "traditional",
+    "sources": ["Canine infectious respiratory disease (kennel cough) presentation — Merck Veterinary Manual"],
+    "topic": "cough",
+    "source": "Common Sense Dog — GI Motility & Recovery"
+  },
+  {
+    "question": "Can I give my dog manuka honey for a cough, and when should I not?",
+    "answer": "🟡 antibacterial / ⚪ context: Manuka honey has real antibacterial activity (from methylglyoxal, MGO) and a soothing, coating effect that can help throat irritation — a legitimate home remedy for an isolated cough. The important exception: hold it during active yeast overgrowth treatment. Honey is still sugar, and yeast feeds on sugar, so even small amounts can work against a topical or gut yeast protocol. Reserve manuka for throat/cough support when there's no concurrent yeast or gut issue in progress. This is supportive care, not a substitute for treating an underlying infection.",
+    "confidence": "moderate",
+    "sources": ["Manuka honey antibacterial activity (methylglyoxal) — wound-care literature; sugar–yeast interaction (mechanistic)"],
+    "topic": "manuka-honey",
+    "source": "Common Sense Dog — GI Motility & Recovery"
+  }
+]

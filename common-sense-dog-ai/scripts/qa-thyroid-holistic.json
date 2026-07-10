@@ -1,0 +1,98 @@
+[
+  {
+    "question": "What are the signs of hypothyroidism in dogs?",
+    "answer": "🟢 Strong/clinical: The classic signs are weight gain without eating more, low energy/lethargy, a dull or thinning coat, symmetrical hair loss (often on the flanks or tail — the 'rat tail'), dry or flaky skin, recurrent skin/ear infections, cold intolerance (seeking warm spots), and sometimes a slow heart rate or a 'tragic' facial expression from skin thickening. It's most common in middle-aged, medium-to-large breeds (Golden Retrievers, Dobermans, Labs, setters). These signs overlap with other conditions, so a blood test (T4/free T4 + TSH) is the only way to confirm. (Canine hypothyroidism — Merck Veterinary Manual.)",
+    "confidence": "strong",
+    "sources": ["Merck Veterinary Manual — Hypothyroidism in Dogs"],
+    "topic": "thyroid",
+    "source": "Common Sense Dog — Holistic Thyroid Support"
+  },
+  {
+    "question": "Can dog hypothyroidism be treated naturally without medication?",
+    "answer": "🟢 Strong (honest take): No — true hypothyroidism cannot be cured or safely managed by natural remedies alone. The standard, evidence-based treatment is lifelong thyroid hormone replacement (levothyroxine / L-T4), and it works well: most dogs return to normal on it. Holistic support is genuinely useful but as an ADJUNCT — to support the gland, skin, and overall health alongside medication, not to replace it. Anyone promising a herbal 'cure' for a truly hypothyroid dog is misleading you, and skipping medication in a diagnosed dog risks serious harm. Always work with a vet (ideally an integrative one) on dosing and monitoring. (Levothyroxine is the established treatment — Merck Veterinary Manual; canine L-T4 studies, e.g. PMC12006059.)",
+    "confidence": "strong",
+    "sources": ["Merck Veterinary Manual — Hypothyroidism treatment", "Redox status in hypothyroid dogs treated with levothyroxine (PMC12006059, 2024)"],
+    "topic": "thyroid",
+    "source": "Common Sense Dog — Holistic Thyroid Support"
+  },
+  {
+    "question": "What is the best natural support for a dog's thyroid alongside medication?",
+    "answer": "🟡 Moderate / ⚪ traditional: Think 'support the gland's machinery,' not 'replace the hormone.' The thyroid needs specific nutrients to make and activate hormone: iodine (the raw material — but see the caution below), selenium and zinc (needed to convert storage hormone T4 into the active form T3), and tyrosine (an amino acid building block). A whole-food, minimally-processed diet with quality protein, plus a vet-guided selenium/zinc level, covers most of this. Antioxidant and skin support (omega-3 fish oil, vitamin E) helps the coat and skin problems that come with hypothyroidism. Introduce one thing at a time and keep your vet in the loop, because supplements can shift how much medication your dog needs. (Selenium/zinc in T4→T3 conversion — established physiology; integrative reviews, e.g. IVC Journal.)",
+    "confidence": "moderate",
+    "sources": ["IVC Journal — Integrative therapies for canine hypothyroidism", "Selenium/zinc and deiodinase function — established biochemistry"],
+    "topic": "thyroid",
+    "source": "Common Sense Dog — Holistic Thyroid Support"
+  },
+  {
+    "question": "Is kelp or seaweed good for a dog's thyroid?",
+    "answer": "🟡 Moderate (with a real safety caution): Kelp is a concentrated natural source of iodine, and iodine is essential for making thyroid hormone — so in an iodine-DEFICIENT dog it can help. But it's double-edged: too much iodine can actually worsen hypothyroidism and can interfere unpredictably with levothyroxine in a dog already on medication. Whether your dog needs any depends on the diet — commercial kibble is already fortified with iodine (don't add daily kelp on top; a few times a week at most), while home-cooked or raw diets may genuinely need an iodine source. Never free-feed kelp to a medicated hypothyroid dog without your vet's guidance. Get the dose right with a vet rather than guessing. (Iodine dosing caution & diet-dependence — integrative veterinary guidance; iodine-deficiency goitrous hypothyroidism case, PMC9234484.)",
+    "confidence": "moderate",
+    "sources": ["OC Shelter Pets — Integrative treatments for canine hypothyroidism", "Iodine-deficiency goitrous hypothyroidism case report (PMC9234484)"],
+    "topic": "thyroid",
+    "source": "Common Sense Dog — Holistic Thyroid Support"
+  },
+  {
+    "question": "Do thyroid glandular supplements ('like feeds like') work for dogs?",
+    "answer": "⚪ Traditional / mechanistic (not proven, and one important caveat): In TCVM and glandular therapy the idea is 'like supports like' — feeding thyroid tissue to nourish the thyroid. Some integrative vets use bovine thyroid glandulars as gentle support. Honest caveats: there's no strong canine trial evidence they help, and — importantly — some raw/glandular thyroid products actually contain active thyroid hormone, which means they can act like an unmeasured dose of medication (this is the cause of 'nutritional thyrotoxicosis' seen in dogs fed gullet/neck trim or certain glandulars). So this is not a harmless 'natural' shortcut: use only vet-guided, hormone-free glandular products, and never as a stand-in for properly dosed levothyroxine. (Glandular/TCVM theory — traditional use; nutritional thyrotoxicosis from thyroid-containing meat — documented veterinary phenomenon.)",
+    "confidence": "traditional",
+    "sources": ["TCVM glandular theory (traditional use)", "Nutritional thyrotoxicosis in dogs from thyroid-containing tissue — veterinary case literature"],
+    "topic": "thyroid",
+    "source": "Common Sense Dog — Holistic Thyroid Support"
+  },
+  {
+    "question": "Can ashwagandha help a dog's thyroid?",
+    "answer": "⚪ Emerging / traditional (human data only — be cautious): Ashwagandha is an adaptogenic herb that, in some human studies, modestly raised thyroid hormone levels in mild/subclinical hypothyroidism. There are no canine trials, so this is extrapolation, and the direction matters: it may nudge hormone up (potentially helpful in low thyroid, but risky if combined with levothyroxine or in a hyperthyroid situation). It's not a substitute for medication and shouldn't be added to a medicated dog's routine without a vet, because stacking it on levothyroxine could push levels too high. Labeled honestly: promising mechanism, no dog evidence. (Human subclinical-hypothyroidism ashwagandha studies; no canine data.)",
+    "confidence": "emerging",
+    "sources": ["Human RCTs on ashwagandha in subclinical hypothyroidism (no canine data)"],
+    "topic": "thyroid",
+    "source": "Common Sense Dog — Holistic Thyroid Support"
+  },
+  {
+    "question": "Why does my hypothyroid dog have skin and coat problems, and what helps naturally?",
+    "answer": "🟡 Moderate: Thyroid hormone drives skin turnover and hair growth, so low thyroid causes dull coat, symmetrical hair loss, thickened/darkened skin, and recurrent skin and ear infections. The root fix is correcting the hormone (levothyroxine) — coat usually improves within 1–3 months of proper dosing. Natural support that genuinely helps the skin alongside treatment: omega-3 fish oil (anti-inflammatory, coat quality), vitamin E, adequate zinc, and a whole-food diet. Treat secondary yeast/bacterial skin or ear infections as they come. Topical soothing (oatmeal, coconut oil) helps comfort but doesn't address the cause. (Thyroid dermatologic signs — Merck Veterinary Manual; omega-3 skin benefits — canine dermatology literature.)",
+    "confidence": "moderate",
+    "sources": ["Merck Veterinary Manual — dermatologic signs of hypothyroidism", "Omega-3 fatty acids in canine dermatology (reviewed evidence)"],
+    "topic": "thyroid",
+    "source": "Common Sense Dog — Holistic Thyroid Support"
+  },
+  {
+    "question": "What is autoimmune thyroiditis in dogs and can diet help?",
+    "answer": "🟢 Strong / 🟡 for diet: Most canine hypothyroidism is caused by lymphocytic (autoimmune) thyroiditis — the immune system gradually destroys the thyroid gland. It has a genetic component in predisposed breeds and can be detected early with a thyroglobulin autoantibody (TgAA) test before full hypothyroidism sets in. Diet can't reverse the autoimmune process, but reducing overall inflammatory load — a whole-food, low-processed diet, omega-3s, gut/microbiome support, and avoiding unnecessary immune triggers — is a reasonable adjunct that fits the 'lower inflammation' philosophy. Once the gland is destroyed enough to cause symptoms, hormone replacement is still needed. (Lymphocytic thyroiditis — Merck Veterinary Manual; TgAA testing — established.)",
+    "confidence": "strong",
+    "sources": ["Merck Veterinary Manual — lymphocytic thyroiditis", "Thyroglobulin autoantibody (TgAA) testing — veterinary endocrinology"],
+    "topic": "thyroid",
+    "source": "Common Sense Dog — Holistic Thyroid Support"
+  },
+  {
+    "question": "What foods support thyroid health in dogs?",
+    "answer": "⚪ Practical / traditional: A thyroid-supportive bowl centers on quality animal protein (supplies tyrosine, the amino acid backbone of thyroid hormone) and whole-food sources of the key micronutrients: iodine (fish, and vet-guided kelp for non-kibble diets), selenium (organ meats, fish, eggs, a Brazil nut is too concentrated for dogs — use food sources), and zinc (red meat, organ meat). Fish like sardines add iodine, selenium, and omega-3s in one food. Minimize ultra-processed diets and inflammatory oils. This is supportive nutrition, not a treatment — a diagnosed hypothyroid dog still needs medication. (Nutrient food sources — established nutrition; thyroid nutrient roles — physiology.)",
+    "confidence": "traditional",
+    "sources": ["Thyroid micronutrient physiology (iodine/selenium/zinc/tyrosine)", "Whole-food nutrient sources — canine nutrition references"],
+    "topic": "thyroid",
+    "source": "Common Sense Dog — Holistic Thyroid Support"
+  },
+  {
+    "question": "Can supplements interfere with my dog's thyroid medication?",
+    "answer": "🟡 Moderate (important): Yes — this is why holistic thyroid support must be vet-coordinated. Iodine/kelp can shift how much levothyroxine your dog needs and, in excess, worsen the condition. Calcium supplements, some minerals, and certain foods can reduce levothyroxine absorption if given at the same time (give the medication on a consistent empty-ish schedule, separated from calcium-rich meals). Glandular thyroid products may contain actual hormone and stack on top of the prescribed dose. The practical rule: introduce any new supplement one at a time, keep giving the medication exactly as prescribed, and recheck thyroid levels after changes so the dose stays right. (Levothyroxine absorption/interactions — veterinary pharmacology; monitoring guidance — endocrinology practice.)",
+    "confidence": "moderate",
+    "sources": ["Veterinary pharmacology — levothyroxine absorption and interactions", "Canine thyroid monitoring guidelines"],
+    "topic": "thyroid",
+    "source": "Common Sense Dog — Holistic Thyroid Support"
+  },
+  {
+    "question": "How is hypothyroidism in dogs diagnosed, and can holistic vets test earlier?",
+    "answer": "🟢 Strong/clinical: Diagnosis is by blood test — typically total T4 plus free T4 and TSH, sometimes with a thyroglobulin autoantibody (TgAA) test to catch early autoimmune thyroiditis before symptoms. One low T4 alone isn't enough, because illness, other medications, and 'sick euthyroid' states can falsely lower it — so a full thyroid panel interpreted alongside symptoms is the standard. Integrative vets may test earlier (with TgAA) in at-risk breeds so you can start diet/lifestyle support and monitor. Don't start thyroid medication or heavy iodine on a single borderline result — get a full panel first. (Thyroid panel interpretation & sick euthyroid — Merck Veterinary Manual; TgAA early detection.)",
+    "confidence": "strong",
+    "sources": ["Merck Veterinary Manual — diagnosis of canine hypothyroidism", "Thyroglobulin autoantibody testing"],
+    "topic": "thyroid",
+    "source": "Common Sense Dog — Holistic Thyroid Support"
+  },
+  {
+    "question": "My dog is overweight and tired — is it the thyroid or something else?",
+    "answer": "🟡 Moderate (how to tell): Hypothyroidism is a classic cause of unexplained weight gain plus low energy, especially with coat changes and cold-seeking in a middle-aged medium/large-breed dog — but it's over-diagnosed too. Plain overfeeding/under-exercise, Cushing's disease, heart disease, and arthritis (less activity) all cause similar weight-and-energy pictures. The differentiator is a full thyroid panel plus a look at diet, calories, and other symptoms. If the panel is normal, chasing 'natural thyroid boosters' won't help and iodine could hurt — the fix is calories and movement. If it's genuinely low thyroid, medication plus the supportive steps above resolves it. Get the panel before assuming. (Differential diagnosis of weight gain/lethargy — Merck Veterinary Manual.)",
+    "confidence": "moderate",
+    "sources": ["Merck Veterinary Manual — differentials for weight gain and lethargy"],
+    "topic": "thyroid",
+    "source": "Common Sense Dog — Holistic Thyroid Support"
+  }
+]

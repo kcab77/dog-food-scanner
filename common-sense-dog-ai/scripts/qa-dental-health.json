@@ -1,0 +1,74 @@
+[
+  {
+    "question": "How common and serious is dental disease in dogs?",
+    "answer": "🟢 Far more common and serious than most owners realize — roughly 80% of dogs have some periodontal (gum) disease by age 2. It matters beyond the mouth: as plaque and tartar build up, bacteria get into the bloodstream and can affect the heart, liver, and kidneys, so oral health and whole-body health are genuinely linked. Advanced periodontal disease also causes pain, tooth loss, bone destruction, and infection. That's why dental care isn't cosmetic — it's real preventive medicine. The encouraging part is that consistent home care dramatically slows it down, so a little daily effort pays off across your dog's whole health.",
+    "confidence": "strong",
+    "sources": ["Vetster; Mountain Aire Vet — 80% by age 2, oral-systemic link (heart/liver/kidney)"],
+    "topic": "dental-health",
+    "source": "Common Sense Dog — Dental Health pack"
+  },
+  {
+    "question": "What's the best way to prevent dental disease in my dog?",
+    "answer": "🟢 Daily tooth brushing is the gold standard — it's the single most effective, best-evidenced way to prevent plaque, tartar, and periodontal disease. Use a dog-specific toothpaste (never human toothpaste — xylitol and fluoride are unsafe) and build up gradually so it's a positive routine. If daily isn't realistic, even every-other-day brushing meaningfully helps. Pair brushing with VOHC-approved dental products and regular professional check-ups, and you've covered the bases. Consistency beats intensity here — a quick daily brush does more than an occasional deep effort. Start young if you can, but dogs of any age can learn to accept it.",
+    "confidence": "strong",
+    "sources": ["Effectiveness of Dental Homecare Protocols in Unscaled Dogs — PMC11894899; brushing = gold standard"],
+    "topic": "dental-health",
+    "source": "Common Sense Dog — Dental Health pack"
+  },
+  {
+    "question": "Do dental chews and dental products actually work?",
+    "answer": "🟡 The good ones do — the key is looking for the VOHC seal. The Veterinary Oral Health Council independently reviews dental products (chews, diets, water additives, gels) and awards its Seal of Acceptance only to products proven in testing to reduce plaque and/or tartar. Without that seal, 'dental' on the package is just marketing. In dogs that haven't had a professional cleaning, roughly one dental chew per day, or brushing every other day (or both), can partly remove deposits. So VOHC-approved chews are a legitimate helper — just not a full substitute for brushing. Watch calories (chews add up) and pick appropriately sized, not-too-hard products.",
+    "confidence": "moderate",
+    "sources": ["VOHC.org — Seal of Acceptance criteria; PMC11894899 — one chew/day partly removes deposits"],
+    "topic": "dental-health",
+    "source": "Common Sense Dog — Dental Health pack"
+  },
+  {
+    "question": "Do raw bones clean a dog's teeth?",
+    "answer": "⚪ This is a popular holistic belief, and the honest evidence is thin. The scientific evidence that chewing bones benefits dental health is very limited — chewing may knock off some surface tartar mechanically, but it's not well-proven, and bones carry real risks: fractured teeth (a common, painful, expensive problem, especially with hard weight-bearing bones), choking, intestinal obstruction, and bacterial exposure. And to be clear, COOKED bones should never be given — they splinter dangerously. If you choose raw meaty bones, use appropriately sized, softer ones, supervise closely, and know it doesn't replace brushing. For proven dental benefit with less risk, brushing and VOHC-approved products are the better bet.",
+    "confidence": "traditional",
+    "sources": ["Vetster — 'evidence of bones benefiting dental health is very limited'; tooth-fracture risk"],
+    "topic": "dental-health",
+    "source": "Common Sense Dog — Dental Health pack"
+  },
+  {
+    "question": "Does dry kibble clean my dog's teeth?",
+    "answer": "🟡 Mostly no — this is a common myth used to justify kibble. Regular dry kibble does little for teeth because it shatters on contact without meaningful scrubbing, and dogs often swallow pieces nearly whole. The starchy coating can even feed plaque bacteria. (There ARE special large-kibble 'dental diets' engineered so the tooth sinks into the kibble before it breaks, and some carry the VOHC seal — but that's a specific designed product, not ordinary kibble.) So don't count on your dog's regular food to keep teeth clean. Brushing and VOHC-approved dental products are what actually work — feeding kibble 'for the teeth' isn't a real reason.",
+    "confidence": "moderate",
+    "sources": ["Dental-diet mechanism / kibble-cleans-teeth myth — veterinary dental references; VOHC dental diets are the exception"],
+    "topic": "dental-health",
+    "source": "Common Sense Dog — Dental Health pack"
+  },
+  {
+    "question": "Are anesthesia-free dental cleanings a good idea?",
+    "answer": "🟢 Honestly, no — anesthesia-free 'cleanings' are largely cosmetic and can be misleading. They scrape visible tartar off the crown to make teeth look whiter, but they cannot clean below the gumline — which is exactly where periodontal disease does its damage — and they don't allow a proper tooth-by-tooth exam, dental X-rays, or polishing. So a dog can look better while disease progresses underneath. A real cleaning requires anesthesia so the vet can examine, scale below the gumline, and X-ray. Many people fear anesthesia, but for a healthy dog with proper pre-op screening, the health risks of advanced dental disease far outweigh the anesthesia risk. Don't let a cosmetic cleaning give false reassurance.",
+    "confidence": "strong",
+    "sources": ["LaGrange Vet; veterinary dental consensus — anesthesia-free can't clean subgingival; anesthesia needed"],
+    "topic": "dental-health",
+    "source": "Common Sense Dog — Dental Health pack"
+  },
+  {
+    "question": "Why does my dog have bad breath?",
+    "answer": "🟡 The most common cause by far is dental disease — plaque, tartar, and gum infection produce that characteristic foul odor, so persistent bad breath is usually your dog's mouth telling you it needs attention (check for red gums, brown tartar, or loose teeth). But breath is also a window into the body: a sweet or fruity smell can signal diabetes, a urine-like odor can point to kidney issues, and gut imbalances can contribute too. So don't just mask it with a breath product — treat bad breath as a diagnostic clue. Start with a dental assessment; if the mouth looks healthy but breath is off, mention it to your vet to rule out metabolic causes.",
+    "confidence": "moderate",
+    "sources": ["Bad breath as dental-disease indicator + systemic clues — PetMD, veterinary dental references"],
+    "topic": "dental-health",
+    "source": "Common Sense Dog — Dental Health pack"
+  },
+  {
+    "question": "Does diet affect my dog's dental health?",
+    "answer": "⚪ Somewhat, but less than brushing — and the holistic claims here outrun the evidence. The idea that raw or whole-food diets keep teeth cleaner (less starchy residue, more chewing) is plausible and some raw-feeders report less tartar, but rigorous evidence is limited, and raw meaty bones carry the fracture/choking risks noted elsewhere. Conversely, ordinary kibble doesn't meaningfully clean teeth. So a fresh, low-processed diet may be a modest positive for oral health, but it is NOT a substitute for the proven measures. The honest hierarchy: brushing first, VOHC-approved products second, diet and appropriate chews as helpful extras, and professional cleanings when needed.",
+    "confidence": "traditional",
+    "sources": ["Limited evidence for raw/diet dental benefit; brushing/VOHC are proven — Vetster, VOHC"],
+    "topic": "dental-health",
+    "source": "Common Sense Dog — Dental Health pack"
+  },
+  {
+    "question": "When does my dog need a professional dental cleaning?",
+    "answer": "🟡 Signs it's time: visible tartar (yellow-brown buildup), red or bleeding gums, bad breath, pawing at the mouth, dropping food or chewing on one side, or loose/discolored teeth. Many vets recommend periodic professional cleanings (frequency varies by the individual dog and breed — small breeds often need them more) even with good home care, because tartar below the gumline can only be removed under anesthesia. A professional cleaning includes a full oral exam, dental X-rays (to catch disease hidden under the gums), scaling above and below the gumline, and polishing. Think of home care as slowing disease between cleanings, and professional cleanings as the reset. If in doubt, have your vet assess the mouth at the annual exam.",
+    "confidence": "moderate",
+    "sources": ["Professional cleaning indications + anesthesia rationale — veterinary dental guidelines"],
+    "topic": "dental-health",
+    "source": "Common Sense Dog — Dental Health pack"
+  }
+]

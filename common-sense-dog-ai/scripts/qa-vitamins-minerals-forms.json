@@ -1,0 +1,80 @@
+[
+  {
+    "question": "What's the difference between good and bad forms of vitamins and minerals in dog food?",
+    "answer": "The simple pattern: inorganic forms are bad and organic/chelated forms are good. Inorganic minerals — sulfates, oxides, and selenite — absorb poorly and tend to accumulate in the body and damage organs over time. Organic or chelated forms — labeled as proteinate, chelate, or bound to an amino acid like methionine — are absorbed efficiently and self-regulating, so they're far safer. When you read a label, the form of the mineral matters as much as the mineral itself.",
+    "topic": "vitamins-minerals-forms",
+    "source": "Common Sense Dog — Vitamins & Minerals Forms pack"
+  },
+  {
+    "question": "What is menadione (vitamin K3) and why is it bad for dogs?",
+    "answer": "Menadione is synthetic vitamin K3, and it's one of the most concerning additives in dog food. It depletes glutathione (a key antioxidant), can damage liver cells and red blood cells, and is linked to hemolytic anemia. It's banned from human supplements in many places, yet still shows up in pet food, often hidden under names like 'menadione sodium bisulfite complex.' Dogs do far better getting vitamin K naturally — K1 from plants and K2 from animal foods.",
+    "topic": "vitamins-minerals-forms",
+    "source": "Common Sense Dog — Vitamins & Minerals Forms pack"
+  },
+  {
+    "question": "Why is sodium selenite a problem in dog food?",
+    "answer": "Sodium selenite is the cheap inorganic form of selenium, and it generates free radicals and can cause progressive damage to the kidney tubules as it accumulates. Selenium itself is an essential mineral, but the form matters enormously — selenomethionine is the safer, well-absorbed organic form. If you see 'sodium selenite' on a label, that's a red flag for a low-quality synthetic vitamin pack.",
+    "topic": "vitamins-minerals-forms",
+    "source": "Common Sense Dog — Vitamins & Minerals Forms pack"
+  },
+  {
+    "question": "Is copper sulfate in dog food harmful?",
+    "answer": "It can be, because copper sulfate is absorbed in a way that lets copper silently accumulate in the liver, and over time that's linked to chronic copper-associated hepatitis — a real concern in breeds like Labradors and Dobermans. The dog often shows no symptoms until liver damage is advanced. The safer form is copper proteinate (chelated copper), which the body regulates better. Rising copper levels in modern dog food are an increasingly discussed issue, so the form on the label is worth checking.",
+    "topic": "vitamins-minerals-forms",
+    "source": "Common Sense Dog — Vitamins & Minerals Forms pack"
+  },
+  {
+    "question": "Why is zinc oxide a poor form of zinc for dogs?",
+    "answer": "Zinc oxide is poorly absorbed, so dogs may not get the zinc they actually need from it, and it's been associated with hemolytic anemia, with breeds like Huskies and Malamutes being especially sensitive to zinc issues. The better, well-absorbed form is zinc proteinate (chelated zinc). Zinc sulfate is also a weaker, more poorly tolerated form. As with other minerals, the chelated/proteinate version is the one you want to see.",
+    "topic": "vitamins-minerals-forms",
+    "source": "Common Sense Dog — Vitamins & Minerals Forms pack"
+  },
+  {
+    "question": "Is synthetic vitamin D3 (cholecalciferol) dangerous in dog food?",
+    "answer": "It can be, because vitamin D has the narrowest safe range of any nutrient — too little or too much both cause serious harm — and synthetic cholecalciferol has been behind multiple dog food recalls and cases of vitamin D toxicity leading to kidney failure. Small formulation errors can become dangerous fast. Whole-food sources of vitamin D, like fish and egg yolk, are far safer and self-limiting. Synthetic D3 isn't automatically toxic, but it's a high-stakes additive that demands precise manufacturing.",
+    "topic": "vitamins-minerals-forms",
+    "source": "Common Sense Dog — Vitamins & Minerals Forms pack"
+  },
+  {
+    "question": "What does ferric oxide do in dog food?",
+    "answer": "Ferric oxide is essentially an unabsorbable iron-based colorant — it adds a reddish color to make food look meatier or fresher, but provides virtually no usable nutrition. It's there for appearance, not for your dog. It's a small thing, but it's a marker of a product designed to look good to humans rather than nourish the dog, and ideally it just shouldn't be there.",
+    "topic": "vitamins-minerals-forms",
+    "source": "Common Sense Dog — Vitamins & Minerals Forms pack"
+  },
+  {
+    "question": "Which vitamin forms should I be cautious about even if they're not the worst?",
+    "answer": "A few 'caution' forms to know: retinyl palmitate or acetate (synthetic vitamin A, can build up in the liver), pyridoxine HCl (synthetic B6, chronic excess can cause nerve issues), and cyanocobalamin (synthetic B12 that carries a trace of cyanide — methylcobalamin is the better form). Also watch vitamin E: natural is 'd-alpha tocopherol,' while synthetic is 'dl-alpha tocopherol' — that little 'l' tells you it's synthetic. None are emergencies, but whole-food and better-form sources are preferable.",
+    "topic": "vitamins-minerals-forms",
+    "source": "Common Sense Dog — Vitamins & Minerals Forms pack"
+  },
+  {
+    "question": "How can I tell natural vitamin E from synthetic on a label?",
+    "answer": "Look at the prefix on 'tocopherol.' Natural vitamin E is 'd-alpha tocopherol,' while the synthetic version is 'dl-alpha tocopherol' — the extra 'l' is the giveaway. The natural d-form is more bioavailable and better used by the body. It's a quick, easy label check that tells you something about the overall quality of a food's vitamin pack.",
+    "topic": "vitamins-minerals-forms",
+    "source": "Common Sense Dog — Vitamins & Minerals Forms pack"
+  },
+  {
+    "question": "Why is BHA in dog food considered dangerous?",
+    "answer": "BHA (butylated hydroxyanisole) is a synthetic preservative with serious research concerns: the U.S. National Toxicology Program found it produced squamous-cell tumors in animal studies, it's classified by IARC as a possible human carcinogen (group 2B), and it's listed under California's Proposition 65. It's used to keep fats from going rancid, but natural preservatives like mixed tocopherols (vitamin E) and rosemary extract do the job without the risk. BHA is one of the strongest red flags on an ingredient label.",
+    "topic": "vitamins-minerals-forms",
+    "source": "Common Sense Dog — Vitamins & Minerals Forms pack"
+  },
+  {
+    "question": "Is BHT in dog food safe?",
+    "answer": "BHT (butylated hydroxytoluene) raises the same kind of concerns as its chemical cousin BHA. Research links it to liver enlargement (hypertrophy), interference with thyroid peroxidase (thyroid function), and it's been described as a tumor promoter. Like BHA, it's a synthetic fat preservative that's avoidable — mixed tocopherols and rosemary extract preserve food naturally. Seeing BHT on a label is a reason to choose a different product.",
+    "topic": "vitamins-minerals-forms",
+    "source": "Common Sense Dog — Vitamins & Minerals Forms pack"
+  },
+  {
+    "question": "What is ethoxyquin and why is it in some dog foods?",
+    "answer": "Ethoxyquin was originally developed as a pesticide and rubber stabilizer, and it's used as a preservative in some pet foods (often in fish meal, where it may not even appear on the final label). It's been linked to liver and kidney lesions and immune dysfunction, and it's banned from human food in many places. Because it can ride in on fish-based ingredients without being listed, choosing brands that explicitly state they're ethoxyquin-free is the safest move.",
+    "topic": "vitamins-minerals-forms",
+    "source": "Common Sense Dog — Vitamins & Minerals Forms pack"
+  },
+  {
+    "question": "Are there other preservatives besides BHA and BHT I should avoid?",
+    "answer": "Yes — two more to watch are TBHQ and sodium nitrite. TBHQ is a synthetic preservative with immune-system concerns and tumor formation at higher doses. Sodium nitrite, used in some meaty/jerky-style products, can form nitrosamines, which carry cancer risk. The pattern across all of these is the same: synthetic chemical preservatives carry real research-backed risks, while natural options like mixed tocopherols and rosemary extract do the job safely.",
+    "topic": "vitamins-minerals-forms",
+    "source": "Common Sense Dog — Vitamins & Minerals Forms pack"
+  }
+]

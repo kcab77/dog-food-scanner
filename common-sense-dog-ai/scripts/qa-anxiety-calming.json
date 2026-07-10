@@ -1,0 +1,82 @@
+[
+  {
+    "question": "How can I calm my anxious dog naturally?",
+    "answer": "🟡 Build from the foundation up: the most effective base is plenty of physical exercise, mental enrichment (sniff walks, puzzle feeders, training), and a predictable routine — these address the root and have strong support. On top of that, the best-evidenced calming aids are L-theanine, dog-appeasing pheromones (Adaptil), alpha-casozepine (Zylkene), and gut-brain probiotics. Think of supplements as helpful adjuncts, not cures — they take the edge off mild-to-moderate anxiety while you do the behavioral work. For severe anxiety (panic, self-harm, can't be left alone), natural aids usually aren't enough and it's time for a vet or veterinary behaviorist. Match the tool to the severity.",
+    "confidence": "moderate",
+    "sources": ["Overview of evidence-based canine calming aids — PetMD; Royal Veterinary Center behavior library"],
+    "topic": "anxiety-calming",
+    "source": "Common Sense Dog — Anxiety & Calming pack"
+  },
+  {
+    "question": "Does L-theanine work for dog anxiety?",
+    "answer": "🟡 L-theanine has some of the strongest published evidence among natural calming ingredients for dogs. It's an amino acid (from green tea) that promotes relaxation without sedation, and several studies show it reduces anxious behaviors, with onset typically around 30–60 minutes — useful for predictable stressors like storms, vet visits, or car rides. It's well tolerated and non-drowsy, which is part of its appeal. Dose to your dog's weight using a quality product and give it time to assess. It won't fix severe, entrenched anxiety on its own, but for situational or mild-moderate anxiety it's a solid, evidence-backed first choice.",
+    "confidence": "moderate",
+    "sources": ["L-theanine anxiolytic studies in dogs (Suntheanine); veterinary calming-aid reviews"],
+    "topic": "anxiety-calming",
+    "source": "Common Sense Dog — Anxiety & Calming pack"
+  },
+  {
+    "question": "Do calming pheromones like Adaptil work for dogs?",
+    "answer": "🟡 Yes — dog-appeasing pheromone (DAP, sold as Adaptil) has reasonable evidence. It's a synthetic copy of the pheromone a mother dog releases while nursing, which signals safety, and multiple studies show it can reduce anxiety in situations like being home alone, thunderstorms, vet visits, and helping puppies settle. It comes as a plug-in diffuser, collar, or spray. It's drug-free and safe to combine with other approaches, so it's an easy, low-risk layer. Effects are usually modest and work best alongside training and a good routine — it's a helper, not a standalone fix.",
+    "confidence": "moderate",
+    "sources": ["Multiple DAP/Adaptil clinical studies; PetMD calming aids review"],
+    "topic": "anxiety-calming",
+    "source": "Common Sense Dog — Anxiety & Calming pack"
+  },
+  {
+    "question": "Can probiotics help my dog's anxiety (the gut-brain connection)?",
+    "answer": "🟡 There's real and growing evidence here. The gut and brain communicate (the gut-brain axis), and specific 'psychobiotic' strains have shown behavioral benefits — notably Bifidobacterium longum (BL999, in Purina Calming Care), which in a clinical trial improved anxious behaviors in a large share of dogs. The catch is time: these work gradually, typically needing 6–12 weeks of daily use to see changes, so it's a long-game, foundational support rather than a quick fix. It fits the holistic 'fix the gut' philosophy nicely and pairs well with faster-acting aids (L-theanine, pheromones) for acute moments. Consistency is everything.",
+    "confidence": "moderate",
+    "sources": ["Purina Calming Care B. longum BL999 clinical trial; gut-brain axis / psychobiotic research"],
+    "topic": "anxiety-calming",
+    "source": "Common Sense Dog — Anxiety & Calming pack"
+  },
+  {
+    "question": "What is alpha-casozepine (Zylkene) and does it help anxiety?",
+    "answer": "🟡 Alpha-casozepine (sold as Zylkene) is a natural calming compound derived from a milk protein — the same soothing component that relaxes nursing infants. It has decent evidence for general anxiety and noise-related fear in dogs, works without sedation or dependence, and is well tolerated, which makes it a popular gentle option. It's typically given daily, and can be used for ongoing anxiety or started ahead of a known stressful period. Like the other natural aids, it's best for mild-to-moderate anxiety and works even better combined with behavior work. A reasonable, well-supported natural choice.",
+    "confidence": "moderate",
+    "sources": ["Alpha-casozepine (Zylkene) trials for canine anxiety and noise phobia"],
+    "topic": "anxiety-calming",
+    "source": "Common Sense Dog — Anxiety & Calming pack"
+  },
+  {
+    "question": "Does CBD help with dog anxiety?",
+    "answer": "🟠 The evidence for CBD specifically for anxiety is still emerging — more promising than proven. CBD interacts with the endocannabinoid system, which helps regulate mood and stress, and there's stronger data for CBD in canine pain/arthritis than for anxiety, where studies are earlier and mixed. Real-world reports are encouraging but the research is catching up. If you try it: use a quality, third-party-tested product, dose conservatively, know that CBD can elevate liver enzymes (so vet monitoring is smart, especially long-term or with other meds), and check local legality. Treat it as an experimental adjunct with vet oversight, not a first-line certainty.",
+    "confidence": "emerging",
+    "sources": ["CBD canine studies (stronger for OA pain than anxiety); liver-enzyme safety data"],
+    "topic": "anxiety-calming",
+    "source": "Common Sense Dog — Anxiety & Calming pack"
+  },
+  {
+    "question": "Does exercise and enrichment really help an anxious dog?",
+    "answer": "🟢 Yes — this is foundational and it's the most reliably effective 'natural' anxiety tool. Physical exercise burns off nervous energy and releases feel-good neurochemicals, while mental enrichment (sniff walks, puzzle/lick mats, nose work, training games) tires the brain and builds confidence — a bored, under-stimulated dog is far more prone to anxiety and destructive behavior. A tired, mentally-satisfied dog is a calmer dog. Add a predictable daily routine (dogs feel safe knowing what's coming) and you've addressed the root more powerfully than any supplement. Every calming plan should start here before layering on aids.",
+    "confidence": "strong",
+    "sources": ["Behavioral consensus; enrichment/exercise for canine anxiety — veterinary behavior literature"],
+    "topic": "anxiety-calming",
+    "source": "Common Sense Dog — Anxiety & Calming pack"
+  },
+  {
+    "question": "What's the honest take on Prozac and prescription anxiety meds for dogs?",
+    "answer": "🟡 They have a real, legitimate place — and it's important not to demonize them. For serious anxiety (panic, separation distress, self-injury), medications like fluoxetine (Prozac) are FDA-recognized, evidence-based, and can genuinely relieve suffering, usually alongside behavior modification. The fair holistic critique is that they're too often reached for as step one instead of addressing root causes — exercise, enrichment, training, routine, gut/diet. So the balanced approach: build the natural foundation first, and reserve meds for cases that truly need them — but never let a dog suffer in the name of being 'all natural.' Work with a vet or veterinary behaviorist, who can also combine natural aids with medication safely. Natural-first, not natural-only.",
+    "confidence": "moderate",
+    "sources": ["Fluoxetine (Reconcile) FDA approval for canine separation anxiety; veterinary behavior guidelines"],
+    "topic": "anxiety-calming",
+    "source": "Common Sense Dog — Anxiety & Calming pack"
+  },
+  {
+    "question": "Do calming treats and melatonin actually work for dogs?",
+    "answer": "⚪ Results are modest and depend heavily on the ingredients. The best calming treats contain evidence-based components (L-theanine, alpha-casozepine, probiotics), so read labels rather than trusting 'calming' on the front — many contain too little active ingredient to matter. Melatonin is commonly used for sleep, noise phobia, and mild anxiety, and it's generally safe with some supportive use, though rigorous canine data is limited (grade it emerging). Overall, these are gentle helpers for mild or situational anxiety, not solutions for serious cases. Set modest expectations, choose products by their proven ingredients and doses, and combine them with the behavioral foundation.",
+    "confidence": "traditional",
+    "sources": ["Calming-treat ingredient reviews; melatonin use in dogs (limited formal trials)"],
+    "topic": "anxiety-calming",
+    "source": "Common Sense Dog — Anxiety & Calming pack"
+  },
+  {
+    "question": "When does my dog's anxiety need professional help?",
+    "answer": "🟢 Get professional help when anxiety is severe or affecting quality of life: panic attacks, self-injury (licking/chewing to the point of damage), destructive behavior or house-soiling when left alone, inability to be left at all, aggression rooted in fear, or anxiety that isn't improving with the foundational work. Start with your vet (to rule out pain or medical causes — pain and conditions like thyroid issues can mimic or worsen anxiety), and ask for a referral to a veterinary behaviorist for serious cases. They can build a proper behavior-modification plan and combine natural aids with medication when needed. Natural approaches are wonderful for mild-to-moderate anxiety, but true panic disorders deserve real professional support — it's kinder, not weaker.",
+    "confidence": "strong",
+    "sources": ["Veterinary behavior referral guidance; rule out medical/pain contributors"],
+    "topic": "anxiety-calming",
+    "source": "Common Sense Dog — Anxiety & Calming pack"
+  }
+]

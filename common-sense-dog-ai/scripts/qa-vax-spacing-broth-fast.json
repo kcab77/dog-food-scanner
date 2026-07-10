@@ -1,0 +1,16 @@
+[
+  {
+    "question": "My vet wants to give my dog several vaccines at once — should I space them out instead, and what about rabies?",
+    "answer": "🟡 Tier 2 — Dr. Jean Dodds DVM (Hemopet canine vaccination protocol): Many holistic vets, led by Dr. Jean Dodds, recommend NOT giving multiple vaccines on the same day, to lower the risk of adverse reactions — especially in small, young, or reaction-prone dogs. Her specific protocol: give the rabies vaccine 3–4 weeks apart from other vaccines and never on the same day; and don't combine a vaccine within about 2 weeks of other treatments (Bordetella, leptospirosis, flea/tick, or heartworm prevention) — do one thing at a time. She also recommends a titer test first to check whether your dog is already immune and can skip a re-vaccination. Balanced note: conventional AAHA guidance considers giving core vaccines together acceptable and convenient, so spacing is a 'reduce the load' holistic preference, not a universally accepted rule. WHEN NOT to skip or delay: puppies still need their full core series on schedule, and rabies is legally required regardless of titers — so work out the timing with your vet rather than skipping. (Dr. Jean Dodds DVM, Hemopet protocol.)",
+    "source": "Dr. Jean Dodds DVM — Hemopet canine vaccination protocol",
+    "tier": 2,
+    "topic": "vaccines/titers"
+  },
+  {
+    "question": "Can I give my dog bone broth during a fast without breaking it — does it hurt autophagy?",
+    "answer": "⚪ Mechanistic (honest correction of a popular myth): Bone broth is the BEST gentle option to get a fasting dog through the window — it's very low-calorie, hydrating, warming, and satisfying, which is why it's the go-to. But the common claim that it 'technically doesn't break a fast' isn't quite true: bone broth contains protein and amino acids (collagen, gelatin, glycine, glutamine) that signal the mTOR pathway, and when mTOR goes up, autophagy goes down — so it does partially dent a strict autophagy-focused fast. Practical decision rule: if your goal is DEEP autophagy, water only is stricter; if your goal is appetite control, hydration, or easing a dog into or out of a fast, a small amount of broth is a reasonable trade and the impact is minor (Dr. Jason Fung makes the same point for people — a cup's worth is roughly negligible for metabolic/weight goals). Honest caveat: canine fasting-for-autophagy is extrapolated from human and rodent science — the mechanism is real but direct dog evidence is limited. WHEN NOT to fast at all: never fast puppies, toy/small breeds prone to hypoglycemia, or diabetic, pregnant, underweight, or unwell dogs — keep any fasting sensible and vet-guided. (Autophagy/mTOR biology — cell & human studies; Dr. Jason Fung on bone-broth fasting.)",
+    "source": "Autophagy/mTOR biology (human/cell studies); Dr. Jason Fung (bone-broth fasting)",
+    "tier": 2,
+    "topic": "fasting"
+  }
+]

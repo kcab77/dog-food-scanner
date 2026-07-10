@@ -1,0 +1,82 @@
+[
+  {
+    "question": "Can diet or natural approaches prevent or cure cancer in my dog?",
+    "answer": "⚪ Here's the honest framing up front: nutrition and holistic care can help REDUCE risk and SUPPORT a dog through cancer, but no diet, supplement, or natural remedy is a proven cure, and none should replace veterinary oncology. What genuinely has support: keeping your dog lean (obesity is a real risk factor), an anti-inflammatory whole-food diet, omega-3s, and reducing carcinogen exposure. What's promising but unproven: ketogenic diets, medicinal mushrooms, and turmeric. The most powerful, honest position is 'natural-first for prevention and support, integrated with real medical treatment when cancer strikes' — an integrative or oncology vet gives you the best of both. Anyone promising a natural cure is not being straight with you.",
+    "confidence": "traditional",
+    "sources": ["Frontiers Vet Sci 2024 — nutrition & oncology review (PMC/10.3389/fvets.2024.1490290)"],
+    "topic": "cancer-support",
+    "source": "Common Sense Dog — Cancer Prevention & Support pack"
+  },
+  {
+    "question": "Does keeping my dog lean reduce cancer risk?",
+    "answer": "🟡 Yes — this is one of the better-supported, and freest, preventive levers. Obesity is a well-established cancer risk factor because excess fat tissue drives chronic low-grade inflammation, insulin resistance, and altered hormonal signaling that create a pro-tumor environment. That's the same 'inflammation is the root' principle applied to cancer. Keeping your dog at a lean body condition (you should easily feel the ribs) reduces that inflammatory burden and benefits nearly every aspect of health and longevity. It won't guarantee anything, but of all the things you can control, maintaining a lean weight is near the top for cancer-risk reduction.",
+    "confidence": "moderate",
+    "sources": ["Obesity as cancer risk factor — chronic inflammation/insulin resistance mechanism; veterinary oncology literature"],
+    "topic": "cancer-support",
+    "source": "Common Sense Dog — Cancer Prevention & Support pack"
+  },
+  {
+    "question": "Do omega-3 fatty acids help with cancer in dogs?",
+    "answer": "🟡 There's reasonable support for omega-3s (EPA/DHA) in the cancer context, in two ways. First, dietary EPA and DHA have shown protective action against several cancer types through mechanisms like promoting cancer-cell apoptosis (death), suppressing proliferation, and affecting tumor blood-vessel formation. Second, and very practically, omega-3s have an anti-cachexia effect — they help fight the muscle wasting and weight loss that cancer and chemo often cause, which is a major factor in how dogs do. So a quality marine omega-3 is a sensible, well-tolerated part of both a preventive anti-inflammatory diet and supportive care during treatment. Dose to weight and use alongside veterinary care.",
+    "confidence": "moderate",
+    "sources": ["EPA/DHA anti-tumor & anti-cachexia mechanisms — Frontiers Vet Sci 2024 nutrition-oncology review"],
+    "topic": "cancer-support",
+    "source": "Common Sense Dog — Cancer Prevention & Support pack"
+  },
+  {
+    "question": "Does a ketogenic or low-carb diet fight cancer in dogs? (the 'starve the cancer' idea)",
+    "answer": "🟠 This is popular in holistic circles, so let me be honest about where the science actually is: there is NO evidence that a ketogenic diet prevents cancer in the first place. The theory — that many tumors rely on glucose, so restricting carbs might slow them — is biologically plausible and is being studied, and it may help slow progression WHEN used alongside standard cancer therapy, but it is not proven and is still emerging/experimental in dogs. Importantly, a keto diet is not automatically safe for every dog (it's high-fat, a concern for pancreatitis-prone dogs) and must be properly balanced. So: a lower-carb whole-food diet is reasonable and fits the anti-inflammatory approach, but don't treat keto as a proven cancer treatment or use it to replace real oncology.",
+    "confidence": "emerging",
+    "sources": ["Ketogenic diet + canine cancer — theorized adjuvant, no prevention evidence (VNG; KetoPet; Frontiers 2024 review)"],
+    "topic": "cancer-support",
+    "source": "Common Sense Dog — Cancer Prevention & Support pack"
+  },
+  {
+    "question": "Does turkey tail mushroom help dogs with cancer?",
+    "answer": "🟠 This one has a real, encouraging (if small) study behind it. Researchers at the University of Pennsylvania School of Veterinary Medicine gave polysaccharopeptide (PSP), the active compound in turkey tail mushroom, to dogs with hemangiosarcoma (an aggressive cancer). Dogs on high-dose PSP (100 mg/kg daily) had a median survival of ~199 days — longer than the ~117 days at 50 mg/kg and longer than typical historical comparisons. It's a small study (about 15 dogs) so it's promising rather than proven, but it's genuine evidence for an immune-modulating medicinal mushroom, which fits the holistic toolkit well. Use a quality PSP/PSK-standardized product, and ideally as a complement to veterinary care, not a replacement.",
+    "confidence": "emerging",
+    "sources": ["Brown & Reetz, University of Pennsylvania — PSP in canine hemangiosarcoma (PMC3440946); median survival 199 days at 100 mg/kg"],
+    "topic": "cancer-support",
+    "source": "Common Sense Dog — Cancer Prevention & Support pack"
+  },
+  {
+    "question": "Does turmeric or curcumin fight cancer in dogs?",
+    "answer": "🟠 Promising in the lab, but not yet proven in living dogs — so keep expectations honest. In vitro (cell) studies are encouraging: curcumin reduced cancer-cell viability and increased apoptosis in canine cancer cell lines, and a Cornell study found turmeric combined with rosemary extract had a synergistic cell-killing effect. But there is currently very little clinical evidence proving turmeric/curcumin actually treats cancer in real dogs, and plain turmeric is poorly absorbed (bioavailable formulations, e.g., with black pepper/fat, are needed). It's also a blood thinner, which matters around surgery or with certain meds. So it's a reasonable anti-inflammatory adjunct within a holistic diet, not a proven cancer treatment — use it with veterinary awareness.",
+    "confidence": "emerging",
+    "sources": ["Curcumin in vitro canine cancer effects; Cornell 2017 turmeric+rosemary synergy (BMC Vet Res); limited in vivo evidence"],
+    "topic": "cancer-support",
+    "source": "Common Sense Dog — Cancer Prevention & Support pack"
+  },
+  {
+    "question": "What does an anti-cancer or anti-inflammatory diet for dogs look like?",
+    "answer": "⚪ The holistic anti-cancer diet centers on lowering inflammation and the metabolic 'fuel' for tumors — reasonable and health-promoting, though think prevention/support rather than proven treatment. Priorities: keep the dog lean, feed a fresh whole-food, lower-carbohydrate diet (reducing the high-glycemic load of ultra-processed kibble), emphasize quality protein and marine omega-3s (fish, sardines), and add antioxidant-rich vegetables and berries. Cut the pro-inflammatory stuff: high omega-6 oils, synthetic additives, and known carcinogens (BHA/BHT, etc.). This is the same 'inflammation is the root' philosophy applied to cancer — it builds a healthier terrain, and it supports a dog in treatment, but it's supportive care, not a cure. Balance any therapeutic diet with your vet, especially during active treatment.",
+    "confidence": "traditional",
+    "sources": ["Anti-inflammatory/whole-food rationale; omega-3 + antioxidant support — Frontiers 2024 review; holistic consensus (labeled as supportive)"],
+    "topic": "cancer-support",
+    "source": "Common Sense Dog — Cancer Prevention & Support pack"
+  },
+  {
+    "question": "Do antioxidants and reducing toxins help prevent cancer in dogs?",
+    "answer": "⚪ It's biologically reasonable and worth doing, though direct canine proof is limited. Epidemiological and clinical research (mostly in humans) suggests antioxidant- and anti-inflammatory-rich diets are associated with lower cancer risk, and the mechanistic logic — reducing oxidative DNA damage and chronic inflammation — is sound. On the toxin side, minimizing exposure to known and suspected carcinogens is sensible: lawn/garden chemicals, secondhand smoke, some flea/tick chemicals, synthetic food preservatives, and heavily processed foods. A note of honesty: high-dose antioxidant SUPPLEMENTS during active chemo/radiation can sometimes interfere with treatment, so clear those with your oncologist. Whole-food antioxidants (berries, colorful veg) and a low-toxin lifestyle are the safe, sensible version.",
+    "confidence": "traditional",
+    "sources": ["Antioxidant/anti-inflammatory cancer-risk epidemiology (PMC6264403); carcinogen-reduction rationale"],
+    "topic": "cancer-support",
+    "source": "Common Sense Dog — Cancer Prevention & Support pack"
+  },
+  {
+    "question": "How do I support a dog going through cancer treatment?",
+    "answer": "🟡 The biggest nutritional goal during treatment is protecting appetite and muscle, because weight loss and cachexia (muscle wasting) genuinely worsen outcomes. Practical support: feed a highly palatable, quality diet and don't obsess over 'perfect' if the challenge is getting them to eat; use warming, tasty toppers (a little bone broth, sardines) to tempt appetite; provide adequate quality protein and marine omega-3s (which specifically help fight cachexia); and support the gut with probiotics if antibiotics or chemo upset digestion. Keep them hydrated. Coordinate everything with the oncology team — some supplements interact with chemo/radiation, and appetite or nausea may need medication. Supportive nutrition can meaningfully improve how a dog feels and tolerates treatment.",
+    "confidence": "moderate",
+    "sources": ["Cancer cachexia management + omega-3 — Frontiers 2024 nutrition-oncology review; supportive-care consensus"],
+    "topic": "cancer-support",
+    "source": "Common Sense Dog — Cancer Prevention & Support pack"
+  },
+  {
+    "question": "Can I treat my dog's cancer naturally instead of chemo or surgery?",
+    "answer": "⚪ This is the most important honest answer in this whole topic: no — natural approaches should not replace conventional cancer treatment, and choosing 'natural instead of' can cost your dog time and quality of life. Surgery, chemotherapy, and radiation are the evidence-based treatments that actually shrink or remove tumors and extend survival for many cancers, and some canine cancers are very treatable or even curable when caught early. Holistic care — anti-inflammatory diet, omega-3s, medicinal mushrooms, keeping the dog lean and comfortable — is genuinely valuable as COMPLEMENTARY support that can improve wellbeing and possibly outcomes alongside treatment. The best model is integrative: an oncologist for the medicine, plus holistic support for the whole dog. Being natural-minded and pro-treatment are not in conflict — together they give your dog the best shot.",
+    "confidence": "traditional",
+    "sources": ["Veterinary oncology standard-of-care; integrative oncology consensus — treatment + supportive care"],
+    "topic": "cancer-support",
+    "source": "Common Sense Dog — Cancer Prevention & Support pack"
+  }
+]

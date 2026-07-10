@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { isValidAppRequest } from '@/lib/auth'
 import { searchKnowledgeScored } from '@/lib/pinecone'
 import { isAllowed } from '@/lib/ratelimit'
+import { DISCLAIMER } from '@/lib/disclaimer'
 
 const COACH_PHILOSOPHY = `You are the PawGrade nutrition coach — a holistic, nutrition-first dog health guide. You help dog owners understand what's in their pet's food and what to do about it. Explain simply and conversationally. Keep responses to 2-4 sentences unless the user asks for more detail.
 
@@ -54,7 +55,7 @@ Full ingredient list: ${ingredientList}`
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
+        model: 'claude-sonnet-4-6',
         max_tokens: 512,
         system: systemText,
         messages: claudeMessages,
@@ -63,7 +64,8 @@ Full ingredient list: ${ingredientList}`
 
     const data = await response.json()
     const text = data?.content?.[0]?.text?.trim() || ''
-    return NextResponse.json({ message: text || "Sorry, I couldn't connect right now." })
+    const message = text ? text + DISCLAIMER : "Sorry, I couldn't connect right now."
+    return NextResponse.json({ message })
   } catch (e) {
     return NextResponse.json({ message: "Sorry, I couldn't connect right now." }, { status: 500 })
   }

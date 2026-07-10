@@ -1,0 +1,10 @@
+[
+  {
+    "question": "What herbs are good for a dog's thyroid?",
+    "answer": "⚪ Traditional / emerging — and thyroid is more of a NUTRIENT story than an herb story, so keep expectations honest: \n\nFor an UNDERactive thyroid (hypothyroidism — the common one in dogs): \n• Ashwagandha — an adaptogen that modestly raised thyroid hormone in some human trials (no canine data); may gently nudge levels up. \n• Guggul — traditionally used to support T4→T3 conversion (mostly human/rodent data). \n• Adaptogens like rhodiola and holy basil (tulsi) — support the stress/adrenal axis that interacts with the thyroid, rather than acting on the gland directly. \nAll of these are supportive-only and NOT a replacement for levothyroxine in a truly hypothyroid dog. \n\n⚠️ CRITICAL SAFETY DISTINCTION — some 'thyroid herbs' do the OPPOSITE: bugleweed, lemon balm, and motherwort are ANTI-thyroid herbs used to calm an OVERactive thyroid (hyperthyroidism). Giving them to a hypothyroid (underactive) dog is backwards and can make things worse. Match the herb to the direction of the problem. \n\nBecause herbs here can push hormone up or down and can interact with medication, this is very much a work-with-your-holistic-vet situation, not a DIY one. (Ashwagandha/guggul — human/traditional use; bugleweed/lemon balm antithyroid action — herbal pharmacology.)",
+    "confidence": "traditional",
+    "sources": ["Ashwagandha human subclinical-hypothyroid RCTs (no canine data)", "Guggul traditional/rodent thyroid data", "Bugleweed/lemon balm/motherwort antithyroid activity — herbal pharmacology literature"],
+    "topic": "thyroid",
+    "source": "Common Sense Dog — Holistic Thyroid Support"
+  }
+]

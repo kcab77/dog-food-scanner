@@ -24,7 +24,7 @@ import { spawn } from 'child_process'
 import { fileURLToPath } from 'url'
 
 const PORT = process.env.BRAIN_PORT || 4318
-const VAULT = process.env.OBSIDIAN_BRAIN_VAULT || join(homedir(), 'Documents', 'ObsidianVault')
+const VAULT = process.env.OBSIDIAN_BRAIN_VAULT || join(homedir(), 'Documents', 'Obsidian Vault')
 const BRAIN = join(VAULT, 'Brain')
 const INBOX = join(BRAIN, 'Inbox')
 const TASKS_FILE = join(BRAIN, 'Tasks.md')

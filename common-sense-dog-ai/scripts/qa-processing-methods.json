@@ -1,0 +1,74 @@
+[
+  {
+    "question": "What's the healthiest way for dog food to be processed?",
+    "answer": "How food is processed determines how much of its nutrition actually survives, and the holistic ranking from best to worst is: homemade/home-cooked, then raw, freeze-dried, gently cooked, air-dried, wet/canned, and last of all dry kibble. The general rule is the less heat and processing, the more enzymes, nutrients, and bioavailability are preserved. Raw and freeze-dried retain roughly 95% of nutrients, while extruded kibble — cooked at 250–300°F under pressure — has virtually no live enzymes and needs synthetic vitamins sprayed back on afterward. You don't have to feed 100% raw to benefit; even adding gently cooked or freeze-dried toppers moves the needle.",
+    "topic": "processing-methods",
+    "source": "Common Sense Dog — Processing Methods pack"
+  },
+  {
+    "question": "Why is kibble considered the worst-processed dog food?",
+    "answer": "Kibble is made by extrusion — cooking ingredients at 250–300°F under high pressure to form shelf-stable pellets — which destroys nearly all natural enzymes and degrades many nutrients. Because so much is lost, manufacturers spray synthetic vitamins and minerals back on after cooking, often in cheap inorganic forms the body absorbs poorly. It's also inherently high-carb, because starch is needed to bind the pellets together, making it an ultra-processed, high-glycemic food. It's convenient and calorie-dense, but it's the lowest tier nutritionally.",
+    "topic": "processing-methods",
+    "source": "Common Sense Dog — Processing Methods pack"
+  },
+  {
+    "question": "Is freeze-dried dog food as good as raw?",
+    "answer": "Nearly — freeze-drying is essentially raw food with the water removed at very low temperature, so it retains about 95% of the nutrients and enzymes while becoming shelf-stable and easy to store. It sits just below raw on the holistic ranking and well above kibble. For owners who want raw-level nutrition without the handling and freezer space, freeze-dried is an excellent option. Just rehydrate it and check that the ingredient quality is high.",
+    "topic": "processing-methods",
+    "source": "Common Sense Dog — Processing Methods pack"
+  },
+  {
+    "question": "How does gently cooked dog food compare to kibble?",
+    "answer": "Gently cooked food is far better than kibble. It's prepared at low temperatures, so while some heat-sensitive enzymes are lost, the whole-food ingredients stay intact and recognizable, and it skips the extreme heat, pressure, and synthetic-vitamin spray of extrusion. It's a great middle-ground for owners who aren't comfortable with raw but want a real, minimally processed diet. On the holistic ranking it sits above air-dried and wet food, below freeze-dried and raw.",
+    "topic": "processing-methods",
+    "source": "Common Sense Dog — Processing Methods pack"
+  },
+  {
+    "question": "Where does air-dried dog food rank?",
+    "answer": "Air-dried food is slowly dried with low heat (around 104–118°F), which keeps most enzymes right at the survival threshold — better than kibble or canned, but a notch below freeze-dried. It's shelf-stable and convenient like kibble but far less processed. The big variable is ingredient quality, so read the label: a clean air-dried food with named whole-food ingredients is a solid choice.",
+    "topic": "processing-methods",
+    "source": "Common Sense Dog — Processing Methods pack"
+  },
+  {
+    "question": "Is wet or canned dog food better than kibble?",
+    "answer": "In some ways yes — canned food often uses more whole ingredients and provides excellent hydration, which is great for kidney and urinary health. The downside is it's cooked hot (around 240–250°F), which destroys most of the natural enzymes. So it beats kibble on hydration and often on ingredient quality, but the high cooking heat keeps it in the lower-middle of the processing ranking. A whole-food canned food is a reasonable upgrade from dry kibble.",
+    "topic": "processing-methods",
+    "source": "Common Sense Dog — Processing Methods pack"
+  },
+  {
+    "question": "What are enzymes in dog food and why do they matter?",
+    "answer": "Natural enzymes in raw, whole foods help with digestion and nutrient absorption, and they're fragile — heat destroys them. That's the core reason processing method matters so much: raw and freeze-dried keep about 95% of enzymes, dehydrated/air-dried foods keep most (they sit right at the 104–118°F threshold), gently cooked keeps some, while canned (240–250°F) and especially extruded kibble (250–300°F) destroy nearly all of them. Feeding less-processed food, or adding raw/freeze-dried toppers, helps restore that enzyme activity.",
+    "topic": "processing-methods",
+    "source": "Common Sense Dog — Processing Methods pack"
+  },
+  {
+    "question": "Is homemade dog food the best option?",
+    "answer": "Home-cooked or homemade can be the very best because you control everything — the freshest ingredients, no preservatives, and no industrial processing. The catch is that it requires real nutritional knowledge to balance properly, or a dog can end up deficient over time. If you go homemade, work from balanced recipes (ideally guided by a holistic or integrative vet or a canine nutritionist) and rotate ingredients. Done right, it's the gold standard; done carelessly, it can create gaps.",
+    "topic": "processing-methods",
+    "source": "Common Sense Dog — Processing Methods pack"
+  },
+  {
+    "question": "Do dogs need carbohydrates, and how much is too much?",
+    "answer": "Dogs have no dietary carbohydrate requirement, but a modest amount of whole-food carbs isn't harmful for most. The problem is kibble, which often runs 30–50%+ carbs because starch is needed to bind the pellets. High carbs (over ~30%) drive insulin and fat storage, which can feed problems like lipoma growth. Best whole-food carbs in small amounts are cooked sweet potato, pumpkin, and white rice — think topper, not foundation.",
+    "topic": "processing-methods",
+    "source": "Common Sense Dog — Processing Methods pack"
+  },
+  {
+    "question": "Do Labradors need more carbs because they're active?",
+    "answer": "Not as much as people assume. Labs do carry a POMC gene mutation that makes them more carb- and glucose-driven and very food-motivated, so they tend to do better with a small amount of carbs (~10–20%) than with zero. But dogs, Labs included, are efficient at burning fat for sustained energy, so high activity doesn't justify a high-carb kibble. A little whole-food carb like cooked sweet potato or pumpkin is a fine tuning choice — not a reason to feed a starchy diet.",
+    "topic": "processing-methods",
+    "source": "Common Sense Dog — Processing Methods pack"
+  },
+  {
+    "question": "I can't afford to feed all raw — what's the best budget approach?",
+    "answer": "You don't have to go all-in to get real benefits. Feeding a base of a better-processed food and adding raw or freeze-dried toppers, a little gently cooked food, or whole-food extras (sardines, an egg, pumpkin) meaningfully upgrades a bowl. Even partially replacing kibble lowers the processed load and adds back enzymes and real nutrition. Consistency with small upgrades beats an expensive diet you can't sustain.",
+    "topic": "processing-methods",
+    "source": "Common Sense Dog — Processing Methods pack"
+  },
+  {
+    "question": "Why do kibble labels list so many added vitamins and minerals?",
+    "answer": "Because the extrusion process destroys so much of the food's natural nutrition that manufacturers have to add synthetic vitamins and minerals back in afterward to meet nutritional standards. The concern isn't just that they're synthetic — it's that they're often the cheap inorganic forms (oxides, sulfates, selenite) that absorb poorly and can accumulate. A long list of added synthetics is a sign the base food was heavily processed in the first place. Whole-food and less-processed diets get more of those nutrients from the actual ingredients.",
+    "topic": "processing-methods",
+    "source": "Common Sense Dog — Processing Methods pack"
+  }
+]

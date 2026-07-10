@@ -515,16 +515,10 @@ const SEVERITY_COLORS: Record<string, string> = {
 
 const SUPPLEMENT_RECS = [
   {
-    emoji: "🫀", name: "Liver Treats", color: "#F97316", borderColor: "#F97316", bg: "#1a0a00",
-    body: "Beef or chicken liver is packed with Vitamin A, B12, iron, and CoQ10 — one of the most nutrient-dense treats you can give. However, excess Vitamin A causes toxicity. Keep liver treats to no more than 5% of total daily diet (treats included).",
-    note: "5% rule: a 50lb dog eating 2 cups/day → max 1–2 small liver treats",
-    link: "https://amzn.to/4wWcj44", linkText: "🛒 Shop Liver Treats →",
-  },
-  {
-    emoji: "❤️", name: "Heart Treats", color: "#F43F5E", borderColor: "#F43F5E", bg: "#1a0008",
-    body: "Beef or chicken heart is the #1 dietary source of CoQ10 and naturally rich in taurine — critical for cardiac function. Unlike liver, heart is a muscle meat so the organ cap is less strict, but keep all treats under 10% of total diet.",
-    note: "Especially important for breeds with known taurine deficiency concerns",
-    link: "https://amzn.to/4vkvZgs", linkText: "🛒 Shop Heart Treats →",
+    emoji: "🦠", name: "Probiotics", color: "#A78BFA", borderColor: "#A78BFA", bg: "#1a0d2e",
+    body: "Multi-strain probiotics support gut microbiome diversity, immune function, and stool quality. Look for at least 1 billion CFU with Lactobacillus and Bifidobacterium strains. Most beneficial for dogs on kibble, after antibiotics, or with chronic digestive issues.",
+    note: "Pair with fish oil for a synergistic gut + inflammation benefit",
+    link: "https://amzn.to/4dPRAWP", linkText: "🛒 Shop Probiotics →",
   },
   {
     emoji: "🐟", name: "Fish Oil (Omega-3)", color: "#2ECC71", borderColor: "#2ECC71", bg: "#0d1f10",
@@ -539,16 +533,22 @@ const SUPPLEMENT_RECS = [
     link: "https://amzn.to/4vpJKdX", linkText: "🛒 Shop Green Lipped Mussel →",
   },
   {
+    emoji: "❤️", name: "Heart Treats", color: "#F43F5E", borderColor: "#F43F5E", bg: "#1a0008",
+    body: "Beef or chicken heart is the #1 dietary source of CoQ10 and naturally rich in taurine — critical for cardiac function. Unlike liver, heart is a muscle meat so the organ cap is less strict, but keep all treats under 10% of total diet.",
+    note: "Especially important for breeds with known taurine deficiency concerns",
+    link: "https://amzn.to/4vkvZgs", linkText: "🛒 Shop Heart Treats →",
+  },
+  {
+    emoji: "🫀", name: "Liver Treats", color: "#F97316", borderColor: "#F97316", bg: "#1a0a00",
+    body: "Beef or chicken liver is packed with Vitamin A, B12, iron, and CoQ10 — one of the most nutrient-dense treats you can give. However, excess Vitamin A causes toxicity. Keep liver treats to no more than 5% of total daily diet (treats included).",
+    note: "5% rule: a 50lb dog eating 2 cups/day → max 1–2 small liver treats",
+    link: "https://amzn.to/4wWcj44", linkText: "🛒 Shop Liver Treats →",
+  },
+  {
     emoji: "🌿", name: "Detox & Liver Support", color: "#A3E635", borderColor: "#A3E635", bg: "#0a1a00",
     body: "Dogs are exposed to pesticides, lawn chemicals, and environmental toxins year-round — especially in summer. The liver has to filter all of it. Milk thistle (silymarin) is one of the most well-studied natural liver protectants in dogs, helping the liver detox and regenerate. Pair with turkey tail mushroom for added immune support.",
     note: "Especially valuable after flea treatments, vaccines, or heavy outdoor exposure",
     link: "https://amzn.to/4dZ2ZDT", linkText: "🛒 Shop Detox Support →",
-  },
-  {
-    emoji: "🦠", name: "Probiotics", color: "#A78BFA", borderColor: "#A78BFA", bg: "#1a0d2e",
-    body: "Multi-strain probiotics support gut microbiome diversity, immune function, and stool quality. Look for at least 1 billion CFU with Lactobacillus and Bifidobacterium strains. Most beneficial for dogs on kibble, after antibiotics, or with chronic digestive issues.",
-    note: "Pair with fish oil for a synergistic gut + inflammation benefit",
-    link: "https://amzn.to/4dPRAWP", linkText: "🛒 Shop Probiotics →",
   },
   {
     emoji: "🍃", name: "Four Leaf Rover", color: "#22C55E", borderColor: "#22C55E", bg: "#041a0a",
@@ -1858,32 +1858,47 @@ function AccordionSection({
   title,
   children,
   defaultOpen = false,
+  bare = false,
 }: {
   title: string;
   children: React.ReactNode;
   defaultOpen?: boolean;
+  bare?: boolean;
 }) {
   const [open, setOpen] = useState(defaultOpen);
   const toggle = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setOpen((o) => !o);
   };
+  const header = (
+    <TouchableOpacity
+      onPress={toggle}
+      activeOpacity={0.7}
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        ...(bare ? { marginHorizontal: 16, marginTop: 4, paddingVertical: 6 } : {}),
+      }}
+    >
+      <Text style={[styles.sectionTitle, { marginBottom: 0 }]}>{title}</Text>
+      <Text style={{ color: "#6B7280", fontSize: 15, fontWeight: "800" }}>
+        {open ? "▾" : "▸"}
+      </Text>
+    </TouchableOpacity>
+  );
+  // bare = the children bring their own card styling (e.g. LipomaSection); don't double-wrap.
+  if (bare) {
+    return (
+      <View style={{ marginBottom: open ? 0 : 8 }}>
+        {header}
+        {open && children}
+      </View>
+    );
+  }
   return (
     <View style={styles.section}>
-      <TouchableOpacity
-        onPress={toggle}
-        activeOpacity={0.7}
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <Text style={[styles.sectionTitle, { marginBottom: 0 }]}>{title}</Text>
-        <Text style={{ color: "#6B7280", fontSize: 15, fontWeight: "800" }}>
-          {open ? "▾" : "▸"}
-        </Text>
-      </TouchableOpacity>
+      {header}
       {open && <View style={{ marginTop: 12 }}>{children}</View>}
     </View>
   );
@@ -1940,6 +1955,8 @@ export default function App() {
   const [flagged, setFlagged] = useState<
     { name: string; reason: string; severity: string }[]
   >([]);
+  // Which red-flag chips are expanded to show their one-sentence "why" inline.
+  const [expandedRedFlags, setExpandedRedFlags] = useState<Record<string, boolean>>({});
   const [meals, setMeals] = useState<string[]>([]);
   const [vitamins, setVitamins] = useState<string[]>([]);
   const [toxicAdditives, setToxicAdditives] = useState<string[]>([]);
@@ -3157,6 +3174,19 @@ export default function App() {
       .filter((i) => i.length > 0);
     if (ingredientList.length === 0) return;
 
+    // Guard: people sometimes type the product NAME into the ingredient box
+    // (e.g. "Purina puppy food"), which would get scored as a single bogus
+    // ingredient. A real ingredient list has multiple comma-separated items.
+    const nameNorm = manualProductName.trim().toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+    const rawNorm = raw.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+    if (ingredientList.length < 2 || (nameNorm && rawNorm === nameNorm)) {
+      Alert.alert(
+        "That looks like a product name",
+        'Please paste the actual ingredient list from the label — the comma-separated items, e.g. "Chicken, brown rice, salmon oil, peas, ...". Or use Smart Scan to photograph the label and we\'ll read it for you.',
+      );
+      return;
+    }
+
     setScanned(true);
     setLoading(true);
     setNotFound(false);
@@ -3781,6 +3811,26 @@ export default function App() {
       }
 
 
+      // Guard: some sources (Open Food Facts is user-contributed, or a bad cached
+      // row) return junk in the ingredients field — e.g. the product name itself
+      // ("Purina Puppy Food"). A real ingredient list has many comma-separated
+      // items and isn't just the product name. If it fails the sanity check, drop
+      // it so we fall through to Smart Scan (OCR the actual label) below.
+      const looksLikeIngredientList = (text: string, prod: string) => {
+        const t = (text || "").trim();
+        if (t.length < 15) return false;
+        const parts = t.split(/,|;/).map((s) => s.trim()).filter(Boolean);
+        if (parts.length < 3) return false; // real lists have many items
+        const norm = (s: string) =>
+          (s || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+        if (prod && norm(t) === norm(prod)) return false; // it's just the name
+        return true;
+      };
+      if (rawIngredients && !looksLikeIngredientList(rawIngredients, name)) {
+        console.log("Discarding non-ingredient text from barcode source:", rawIngredients);
+        rawIngredients = "";
+      }
+
       // Step 7: Not found anywhere — auto-switch to Smart Scan after brief message
       if (!rawIngredients) {
         setLoading(false);
@@ -4272,22 +4322,8 @@ export default function App() {
                 Type In
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.modeBtn,
-                scanMode === "treats" && styles.modeBtnActive,
-              ]}
-              onPress={() => { setScanMode("treats"); setScanned(false); setProductName(""); setScore(null); setNutritionalProfile(null); setTreatDentalIngredients([]); setTreatProcessingMethod(''); scanningRef.current = false; }}
-            >
-              <Text
-                style={[
-                  styles.modeBtnText,
-                  scanMode === "treats" && styles.modeBtnTextActive,
-                ]}
-              >
-                🦴 Treats
-              </Text>
-            </TouchableOpacity>
+            {/* Treats mode disabled — tab hidden until the custom treats database is built.
+                Treats scoring/results code is left intact but unreachable from the UI. */}
           </View>
           <Text style={styles.subtitle}>
             {scanMode === "treats"
@@ -4946,61 +4982,17 @@ export default function App() {
               )}
 
               {score !== null && (
-                <View style={{ paddingHorizontal: 16, marginTop: 6, marginBottom: 4 }}>
-                  <Text style={{ color: "#E5E7EB", fontSize: 15, fontWeight: "600", lineHeight: 21 }}>
-                    {getVerdict(score)}
+                <View style={{ backgroundColor: "#1a1a2e", borderRadius: 16, padding: 16, marginHorizontal: 16, marginTop: 6, marginBottom: 12, borderWidth: 1, borderColor: "#2A3A4A" }}>
+                  <Text style={{ color: "#D1D5DB", fontSize: 13, lineHeight: 20, fontStyle: "italic" }}>
+                    💚 I fed my dog kibble for 6 years because I couldn't afford anything better — and he was okay. So please don't feel bad if this is what you can afford right now. They still love you exactly the same.{"\n\n"}The goal isn't perfection, it's just small improvements over time. Even adding a whole food topper, a raw egg, or a little fish a few times a week goes a long way. I'm just trying to help as much as I can. 🐾
                   </Text>
-                </View>
-              )}
-
-              {flagged.length > 0 && (
-                <View style={{ paddingHorizontal: 16, marginTop: 10, marginBottom: 4 }}>
-                  <Text style={{ color: "#FC8181", fontSize: 13, fontWeight: "700", marginBottom: 6 }}>
-                    🚩 Red Flags ({flagged.length})
-                  </Text>
-                  <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 6 }}>
-                    {flagged.map((f, i) => (
-                      <View
-                        key={i}
-                        style={{
-                          backgroundColor: SEVERITY_COLORS[f.severity] || "#3d0a0a",
-                          borderRadius: 14,
-                          paddingHorizontal: 10,
-                          paddingVertical: 4,
-                        }}
-                      >
-                        <Text style={{ color: "#fff", fontSize: 12, fontWeight: "600" }}>{f.name}</Text>
-                      </View>
-                    ))}
-                  </View>
-                </View>
-              )}
-
-              {score !== null && (
-                <View style={{ marginHorizontal: 16, marginTop: 12, marginBottom: 4, backgroundColor: "#0d1f10", borderRadius: 14, padding: 14, borderWidth: 1, borderColor: "#2ECC71" }}>
-                  <Text style={{ color: "#2ECC71", fontSize: 13, fontWeight: "800", marginBottom: 6 }}>
-                    ✅ What to do next
-                  </Text>
-                  {(() => {
-                    const next = getNextStep(score, processing);
-                    return (
-                      <>
-                        <Text style={{ color: "#FFFFFF", fontSize: 14, fontWeight: "700", marginBottom: 4 }}>{next.headline}</Text>
-                        <Text style={{ color: "#D1D5DB", fontSize: 13, lineHeight: 19, marginBottom: 10 }}>{next.detail}</Text>
-                        <TouchableOpacity
-                          style={{ backgroundColor: "#2ECC71", borderRadius: 8, paddingVertical: 9, paddingHorizontal: 12, alignSelf: "flex-start" }}
-                          onPress={() => Linking.openURL(next.rec.link)}
-                        >
-                          <Text style={{ color: "#000", fontWeight: "700", fontSize: 12 }}>{next.rec.linkText}</Text>
-                        </TouchableOpacity>
-                      </>
-                    );
-                  })()}
+                  <Text style={{ color: "#6B7280", fontSize: 11, marginTop: 8 }}>— Kyle, PawGrade founder</Text>
                 </View>
               )}
 
               {scoreBreakdown.length > 0 && (
-                <AccordionSection title="Why This Score">
+                <View style={styles.section}>
+                  <Text style={styles.sectionTitle}>Why This Score</Text>
                   {scoreBreakdown.map((item, i) => (
                     <View key={i} style={styles.breakdownRow}>
                       <Text style={[styles.breakdownLabel, {
@@ -5027,50 +5019,7 @@ export default function App() {
                       </Text>
                     </View>
                   ))}
-                </AccordionSection>
-              )}
-
-              {score !== null && (
-                <View style={{ backgroundColor: "#1a1a2e", borderRadius: 16, padding: 16, marginHorizontal: 16, marginBottom: 12, borderWidth: 1, borderColor: "#2A3A4A" }}>
-                  <Text style={{ color: "#D1D5DB", fontSize: 13, lineHeight: 20, fontStyle: "italic" }}>
-                    💚 I fed my dog kibble for 6 years because I couldn't afford anything better — and he was okay. So please don't feel bad if this is what you can afford right now. They still love you exactly the same.{"\n\n"}The goal isn't perfection, it's just small improvements over time. Even adding a whole food topper, a raw egg, or a little fish a few times a week goes a long way. I'm just trying to help as much as I can. 🐾
-                  </Text>
-                  <Text style={{ color: "#6B7280", fontSize: 11, marginTop: 8 }}>— Kyle, PawGrade founder</Text>
                 </View>
-              )}
-
-              {ingredients.length > 0 && (
-                <AccordionSection title="Ingredient Breakdown">
-                  <Text style={styles.pillHint}>
-                    Tap any ingredient to learn more
-                  </Text>
-                  <View style={styles.pillContainer}>
-                    {ingredients.map((item, i) => {
-                      const harm = flagged.find((f) => f.name === item);
-                      const isGood =
-                        omega3Found.includes(item) || fiberFound.includes(item);
-                      const isMeal = meals.includes(item);
-                      const isLegume = legumes.includes(item);
-                      const bg = harm
-                        ? SEVERITY_COLORS[harm.severity]
-                        : isGood
-                          ? "#1E8449"
-                          : isMeal || isLegume
-                            ? "#D68910"
-                            : "#2A2A3E";
-                      return (
-                        <TouchableOpacity
-                          key={i}
-                          style={[styles.pill, { backgroundColor: bg }]}
-                          onPress={() => handleIngredientTap(item)}
-                          activeOpacity={0.7}
-                        >
-                          <Text style={styles.pillText}>{item}</Text>
-                        </TouchableOpacity>
-                      );
-                    })}
-                  </View>
-                </AccordionSection>
               )}
 
               {!nutritionalProfile && scanned && (
@@ -5122,6 +5071,87 @@ export default function App() {
                 </View>
               )}
 
+              {flagged.length > 0 && (
+                <View style={styles.section}>
+                  <Text style={[styles.sectionTitle, { color: "#FC8181" }]}>🚩 Red Flags ({flagged.length})</Text>
+                  <Text style={[styles.omegaNote, { marginBottom: 8 }]}>Tap a name to see why it's a concern.</Text>
+                  {flagged.map((f, i) => {
+                    const open = !!expandedRedFlags[f.name];
+                    return (
+                      <View key={i} style={{ marginBottom: 8 }}>
+                        <TouchableOpacity
+                          activeOpacity={0.7}
+                          onPress={() => {
+                            LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+                            setExpandedRedFlags((prev) => ({ ...prev, [f.name]: !prev[f.name] }));
+                          }}
+                          style={{ flexDirection: "row", alignItems: "center", alignSelf: "flex-start", backgroundColor: SEVERITY_COLORS[f.severity] || "#3d0a0a", borderRadius: 14, paddingHorizontal: 12, paddingVertical: 6 }}
+                        >
+                          <Text style={{ color: "#fff", fontSize: 13, fontWeight: "700" }}>{f.name}</Text>
+                          <Text style={{ color: "#fff", fontSize: 11, fontWeight: "800", marginLeft: 6 }}>{open ? "▾" : "▸"}</Text>
+                        </TouchableOpacity>
+                        {open && (
+                          <Text style={{ color: "#D1D5DB", fontSize: 12, lineHeight: 18, marginTop: 6, marginLeft: 2 }}>{f.reason}</Text>
+                        )}
+                      </View>
+                    );
+                  })}
+                </View>
+              )}
+
+              {ingredients.length > 0 && (
+                <AccordionSection title="Ingredient Breakdown">
+                  <Text style={styles.pillHint}>
+                    Tap any ingredient to learn more
+                  </Text>
+                  <View style={styles.pillContainer}>
+                    {ingredients.map((item, i) => {
+                      const harm = flagged.find((f) => f.name === item);
+                      const isGood =
+                        omega3Found.includes(item) || fiberFound.includes(item);
+                      const isMeal = meals.includes(item);
+                      const isLegume = legumes.includes(item);
+                      const bg = harm
+                        ? SEVERITY_COLORS[harm.severity]
+                        : isGood
+                          ? "#1E8449"
+                          : isMeal || isLegume
+                            ? "#D68910"
+                            : "#2A2A3E";
+                      return (
+                        <TouchableOpacity
+                          key={i}
+                          style={[styles.pill, { backgroundColor: bg }]}
+                          onPress={() => handleIngredientTap(item)}
+                          activeOpacity={0.7}
+                        >
+                          <Text style={styles.pillText}>{item}</Text>
+                        </TouchableOpacity>
+                      );
+                    })}
+                  </View>
+                </AccordionSection>
+              )}
+
+              {score !== null && (
+                <View style={styles.section}>
+                  <Text style={styles.sectionTitle}>Simple additions to upgrade the bowl</Text>
+                  {[
+                    "🥚 An egg in the morning",
+                    "🐟 Sardines or fish oil",
+                    "🥛 Plain yogurt, kefir, or goat's milk for probiotics",
+                  ].map((item, i) => (
+                    <Text key={i} style={{ color: "#D1D5DB", fontSize: 14, lineHeight: 24 }}>{item}</Text>
+                  ))}
+                </View>
+              )}
+
+              {score !== null && (
+                <AccordionSection title="🐾 Hershey's Protocol" bare>
+                  <HersheyProtocolSection />
+                </AccordionSection>
+              )}
+
               {scoreBreakdown.length > 0 && (
                 <AccordionSection title="💊 Recommended Supplements">
                   {SUPPLEMENT_RECS.map((s, i) => (
@@ -5134,6 +5164,90 @@ export default function App() {
                       </TouchableOpacity>
                     </View>
                   ))}
+                </AccordionSection>
+              )}
+
+              {score !== null && (
+                <AccordionSection title="🛒 Grocery Store Finds">
+                  <Text style={[styles.omegaNote, { marginBottom: 12 }]}>
+                    Whole foods you can grab at any grocery store — no specialty
+                    pet stores needed.
+                  </Text>
+                  {(() => {
+                    const categories = [
+                      ...new Set(GROCERY_FINDS.map((g) => g.category)),
+                    ];
+                    return categories.map((cat) => (
+                      <View key={cat} style={{ marginBottom: 12 }}>
+                        <Text
+                          style={{
+                            color: "#9CA3AF",
+                            fontSize: 11,
+                            fontWeight: "700",
+                            textTransform: "uppercase",
+                            letterSpacing: 1,
+                            marginBottom: 6,
+                          }}
+                        >
+                          {cat}
+                        </Text>
+                        {GROCERY_FINDS.filter((g) => g.category === cat).map(
+                          (g, i) => (
+                            <View
+                              key={i}
+                              style={{
+                                backgroundColor: "#1a2332",
+                                borderRadius: 10,
+                                padding: 12,
+                                marginBottom: 6,
+                              }}
+                            >
+                              <View
+                                style={{
+                                  flexDirection: "row",
+                                  alignItems: "center",
+                                  marginBottom: 4,
+                                }}
+                              >
+                                <Text style={{ fontSize: 18, marginRight: 8 }}>
+                                  {g.emoji}
+                                </Text>
+                                <Text
+                                  style={{
+                                    color: "#FFFFFF",
+                                    fontWeight: "700",
+                                    fontSize: 14,
+                                    flex: 1,
+                                  }}
+                                >
+                                  {g.item}
+                                </Text>
+                              </View>
+                              <Text
+                                style={{
+                                  color: "#D1D5DB",
+                                  fontSize: 12,
+                                  lineHeight: 17,
+                                  marginBottom: 4,
+                                }}
+                              >
+                                {g.benefit}
+                              </Text>
+                              <Text style={{ color: "#6B9EAF", fontSize: 11 }}>
+                                📍 {g.where}
+                              </Text>
+                            </View>
+                          ),
+                        )}
+                      </View>
+                    ));
+                  })()}
+                </AccordionSection>
+              )}
+
+              {score !== null && (
+                <AccordionSection title="🧬 Lipoma Prevention" bare>
+                  <LipomaSection />
                 </AccordionSection>
               )}
 
@@ -5167,85 +5281,6 @@ export default function App() {
                 </AccordionSection>
               )}
 
-              <View style={styles.section}>
-                <Text style={styles.sectionTitle}>
-                  🛒 Grocery Store Finds for Dogs
-                </Text>
-                <Text style={[styles.omegaNote, { marginBottom: 12 }]}>
-                  Whole foods you can grab at any grocery store — no specialty
-                  pet stores needed.
-                </Text>
-                {(() => {
-                  const categories = [
-                    ...new Set(GROCERY_FINDS.map((g) => g.category)),
-                  ];
-                  return categories.map((cat) => (
-                    <View key={cat} style={{ marginBottom: 12 }}>
-                      <Text
-                        style={{
-                          color: "#9CA3AF",
-                          fontSize: 11,
-                          fontWeight: "700",
-                          textTransform: "uppercase",
-                          letterSpacing: 1,
-                          marginBottom: 6,
-                        }}
-                      >
-                        {cat}
-                      </Text>
-                      {GROCERY_FINDS.filter((g) => g.category === cat).map(
-                        (g, i) => (
-                          <View
-                            key={i}
-                            style={{
-                              backgroundColor: "#1a2332",
-                              borderRadius: 10,
-                              padding: 12,
-                              marginBottom: 6,
-                            }}
-                          >
-                            <View
-                              style={{
-                                flexDirection: "row",
-                                alignItems: "center",
-                                marginBottom: 4,
-                              }}
-                            >
-                              <Text style={{ fontSize: 18, marginRight: 8 }}>
-                                {g.emoji}
-                              </Text>
-                              <Text
-                                style={{
-                                  color: "#FFFFFF",
-                                  fontWeight: "700",
-                                  fontSize: 14,
-                                  flex: 1,
-                                }}
-                              >
-                                {g.item}
-                              </Text>
-                            </View>
-                            <Text
-                              style={{
-                                color: "#D1D5DB",
-                                fontSize: 12,
-                                lineHeight: 17,
-                                marginBottom: 4,
-                              }}
-                            >
-                              {g.benefit}
-                            </Text>
-                            <Text style={{ color: "#6B9EAF", fontSize: 11 }}>
-                              📍 {g.where}
-                            </Text>
-                          </View>
-                        ),
-                      )}
-                    </View>
-                  ));
-                })()}
-              </View>
-
               <View style={styles.bottomDisclaimer}>
                 <Text style={styles.bottomDisclaimerText}>
                   ⚖️ For informational and educational purposes only. This is
@@ -5268,9 +5303,6 @@ export default function App() {
               </View>
             </>
           )}
-
-          <LipomaSection />
-          <HersheyProtocolSection />
 
           <TouchableOpacity
             style={styles.button}

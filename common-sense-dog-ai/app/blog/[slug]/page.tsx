@@ -11,7 +11,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const post = getPostBySlug(params.slug)
   if (!post) return {}
   return {
-    title: `${post.title} — Life With Hershey`,
+    title: `${post.title} — Common Sense Dog`,
     description: post.description,
   }
 }
@@ -22,8 +22,20 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
 
   const otherPosts = blogPosts.filter(p => p.slug !== post.slug).slice(0, 3)
 
+  const articleLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.description,
+    datePublished: /^\d{4}$/.test(post.date) ? `${post.date}-01-01` : post.date,
+    author: { '@type': 'Organization', name: 'Common Sense Dog' },
+    publisher: { '@type': 'Organization', name: 'Common Sense Dog' },
+    mainEntityOfPage: `https://commonsensedog.com/blog/${post.slug}`,
+  }
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }} />
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
         :root { --green: #2A5C2E; --green-pale: #EDF4EE; --cream: #FDFAF5; --cream-dark: #F5EFE4; --text: #1A1A1A; --text-muted: #6B6B6B; --border: #E2D9CA; --white: #FFFFFF; }
@@ -76,12 +88,13 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
         <Link href="/" className="nav-logo">
           <span style={{fontSize:22}}>🐾</span>
           <div>
-            <div className="nav-logo-text">Life With Hershey</div>
+            <div className="nav-logo-text">Common Sense Dog</div>
             <div className="nav-logo-sub">Real dog health from a real dog owner</div>
           </div>
         </Link>
         <div className="nav-links">
           <Link href="/#story">Our Story</Link>
+          <Link href="/library">📖 A–Z</Link>
           <Link href="/blog" style={{color:'#2A5C2E', fontWeight:700}}>Articles</Link>
           <Link href="/chat">Ask AI</Link>
           <Link href="/scan">Scanner</Link>
@@ -129,7 +142,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
 
       <footer>
         <p>
-          <strong style={{color:'rgba(255,255,255,0.8)'}}>Life With Hershey</strong><br/>
+          <strong style={{color:'rgba(255,255,255,0.8)'}}>Common Sense Dog</strong><br/>
           <Link href="/">Home</Link> · <Link href="/blog">Articles</Link> · <Link href="/chat">Ask AI</Link> · <Link href="/scan">Scanner</Link><br/><br/>
           Not veterinary advice. Always consult your vet for medical decisions.
         </p>

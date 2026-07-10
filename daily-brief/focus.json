@@ -1,0 +1,19 @@
+{
+  "ventures": [
+    {
+      "name": "PawGrade",
+      "status": "v1.7.0 built (EAS 46), NOT submitted",
+      "nextAction": "Fill in the 6 affiliate links in SUPPLEMENT_RECS (app/index.tsx) before burning a build credit, then eas build + submit"
+    },
+    {
+      "name": "Common Sense Dog",
+      "status": "Live site; redeploy gated on security",
+      "nextAction": "Finish security work (spend cap, key rotation, Upstash rate limiting, Go-UPC proxy) before redeploying the assistant"
+    },
+    {
+      "name": "PetChat",
+      "status": "Built locally, not deployed",
+      "nextAction": "Deploy to Railway (git init -> private repo -> set ANTHROPIC_API_KEY + ADMIN_TOKEN -> generate domain). Then resume owner-channel outreach (IG DM > owner email > LinkedIn)"
+    }
+  ]
+}

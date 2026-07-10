@@ -1,0 +1,58 @@
+[
+  {
+    "question": "Is hawthorn berry good for a dog's heart?",
+    "answer": "⚪ Traditional / 🟠 emerging: Hawthorn (Crataegus) is the most-used herbal heart tonic and is often called the top botanical for cardiac support. It's thought to gently dilate blood vessels (making it easier for the heart to pump), provide antioxidant protection to heart-muscle cells, and help the remaining healthy cells beat more efficiently — given as a tea or a glycerin tincture. Honest limits: the evidence is largely traditional plus human/lab data, not canine trials, and it does NOT fix a structural problem like a leaky valve — it supports function and symptoms. Important safety point: because it acts ON the cardiovascular system, it can add to or interact with prescription heart medications (blood pressure, ACE inhibitors), so it must be used with your (ideally cardiology-aware, holistic) vet, not stacked on meds on your own. (Hawthorn cardiotonic activity — human/traditional herbal literature; no canine RCTs.)",
+    "confidence": "emerging",
+    "sources": ["Hawthorn (Crataegus) cardiotonic — human trials & traditional herbal use; no canine RCTs"],
+    "topic": "heart-holistic",
+    "source": "Common Sense Dog — Holistic Heart Support"
+  },
+  {
+    "question": "How do I monitor my dog's heart at home — what is a resting respiratory rate?",
+    "answer": "🟢 Strong / clinical — this is the single best home tool for a heart dog: count your dog's breaths while they are asleep (one breath = chest up + down), for 30 seconds x2 or a full minute. A normal sleeping (resting) respiratory rate is under about 30 breaths per minute. A sustained jump above ~30–35, or a clear rise from your dog's own baseline, is an early sign of fluid building up in the lungs (congestive heart failure) and means call your vet — often it just needs a medication adjustment, caught before a crisis. Track it a few times a week in a notes app so you know their normal. This is vet-cardiologist-standard monitoring, not folklore. (Resting/sleeping respiratory rate monitoring — veterinary cardiology standard of care.)",
+    "confidence": "strong",
+    "sources": ["Sleeping respiratory rate monitoring in canine heart failure — veterinary cardiology guidelines (ACVIM)"],
+    "topic": "heart-holistic",
+    "source": "Common Sense Dog — Holistic Heart Support"
+  },
+  {
+    "question": "What is the NT-proBNP test and should my dog get it?",
+    "answer": "🟢/🟡 Moderate-strong: NT-proBNP is a blood test that measures a hormone the heart releases when its muscle is stretched or stressed — so it can flag heart disease before outward symptoms appear, and it helps tell whether a cough or breathing change is coming from the heart versus the lungs. It's especially worth asking about for breeds prone to heart disease (Cavaliers, Dobermans, etc.) or if a murmur is found. It doesn't replace a full workup (a cardiac ultrasound/echo is the gold standard for diagnosis), but it's a useful, low-stress screening and triage tool. (NT-proBNP in canine cardiology — established biomarker; ACVIM guidance.)",
+    "confidence": "moderate",
+    "sources": ["NT-proBNP as a canine cardiac biomarker — veterinary cardiology literature / ACVIM"],
+    "topic": "heart-holistic",
+    "source": "Common Sense Dog — Holistic Heart Support"
+  },
+  {
+    "question": "Can dandelion help a dog with fluid buildup from heart failure?",
+    "answer": "⚪ Traditional (with a serious safety caveat): Dandelion leaf is a traditional natural diuretic and also happens to be potassium-rich (unlike drug diuretics that deplete potassium), so it's used in holistic circles to help the body shed some excess fluid. BUT — and this matters — in real congestive heart failure, natural diuretics are NOT strong or reliable enough to replace prescription diuretics like furosemide. Fluid in the lungs is an emergency-level problem; relying on dandelion instead of prescribed medication can be fatal. Think of it as possible gentle adjunct support in mild/early cases WITH your vet's blessing, never a substitute for the real medication in an actively failing heart. (Dandelion diuretic effect — traditional/human herbal data; not validated for canine CHF.)",
+    "confidence": "traditional",
+    "sources": ["Dandelion (Taraxacum) diuretic activity — traditional/human herbal use; no canine CHF trials"],
+    "topic": "heart-holistic",
+    "source": "Common Sense Dog — Holistic Heart Support"
+  },
+  {
+    "question": "Is CBD safe or helpful for a dog's heart?",
+    "answer": "🟠 Emerging / low confidence — be cautious here: CBD is sometimes suggested for heart dogs on the theory that it may relax blood vessels (vasodilation) and reduce the pressure the heart pumps against. Honestly, the canine cardiac evidence for this is very thin — it's early theory, not established benefit. The bigger practical issue is interactions: CBD is processed by the same liver enzymes (cytochrome P450) as many heart medications, so it can change drug levels in the body. For a dog on cardiac meds, that's a real reason to involve your vet before adding CBD rather than assuming it's harmless. Promising area, but not something to self-prescribe for a heart patient. (CBD–drug interaction via CYP450 — pharmacology; canine cardiac benefit — not established.)",
+    "confidence": "emerging",
+    "sources": ["CBD CYP450 drug-interaction pharmacology; canine cardiovascular benefit — no established evidence"],
+    "topic": "heart-holistic",
+    "source": "Common Sense Dog — Holistic Heart Support"
+  },
+  {
+    "question": "Does dental disease affect a dog's heart?",
+    "answer": "🟡 Moderate (association, not proven cause): There is a real statistical link — a large study of ~60,000 dogs (Glickman, Purdue) found dogs with worse periodontal disease had more heart disease, and the link was strongest for endocarditis (infection of the heart valves); researchers have even matched the same bacterial strains in the mouth and on infected heart valves. That said, association isn't proof of cause — bad teeth are best understood as a risk factor and a source of chronic inflammation and bacteria, especially relevant for dogs already prone to valve disease. The takeaway is practical: keeping your dog's mouth healthy (brushing, dental care) is a sensible, low-risk way to reduce one avoidable stressor on the heart. Don't oversell it as 'dental disease causes heart disease,' but don't ignore it either. (Glickman Purdue ~60k-dog study; oral–endocardial bacterial clonality — PMID 19222358.)",
+    "confidence": "moderate",
+    "sources": ["Glickman et al., Purdue — periodontal disease & cardiac disease in ~60,000 dogs", "Endocarditis risk vs periodontal severity (PMID 19222358)"],
+    "topic": "heart-holistic",
+    "source": "Common Sense Dog — Holistic Heart Support"
+  },
+  {
+    "question": "What nutrients support a dog's heart, and does kibble vs. fresh food matter?",
+    "answer": "🟡 Moderate / ⚪ mechanistic: Beyond the well-known cardiac nutrients (taurine, L-carnitine, CoQ10, omega-3s), the heart muscle also depends on selenium, vitamin E, and magnesium for normal function and rhythm. Diet quality matters here: heat-processed kibble can lose or degrade heat-sensitive nutrients (some B-vitamins, certain antioxidants, and taurine availability can be affected by processing and ingredients), which is part of why whole-food and fresh diets are favored for cardiac support — the nutrients arrive in more bioavailable, less 'baked-out' form. This is a bigger consideration for dogs on lower-quality ultra-processed diets than for those on balanced fresh/whole-food diets. Omega-3 fish or krill oil is one of the better-supported additions — it helps blunt the inflammatory signals (like TNF-alpha) that drive the muscle-wasting (cachexia) seen in heart patients. Balance any home diet with a vet or nutritionist so you don't accidentally create a deficiency. (Cardiac micronutrient roles — physiology; omega-3 & cardiac cachexia — canine studies, e.g. Freeman; processing nutrient loss — food science.)",
+    "confidence": "moderate",
+    "sources": ["Omega-3 and cardiac cachexia in dogs — Freeman et al.", "Selenium/vitamin E/magnesium in cardiac muscle — physiology", "Heat processing and nutrient loss — food science"],
+    "topic": "heart-holistic",
+    "source": "Common Sense Dog — Holistic Heart Support"
+  }
+]

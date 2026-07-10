@@ -1,0 +1,90 @@
+[
+  {
+    "question": "Can antibiotics cause a yeast infection in my dog?",
+    "answer": "🟢 Yes — this is well-established. Antibiotics kill bacteria, including the beneficial bacteria that normally keep skin and gut yeast (Malassezia) in check. With that bacterial competition removed, yeast can opportunistically overgrow into the vacated niche — the veterinary literature notes that antibacterial treatment often results in proliferation of Malassezia yeasts. The key concept: antibiotics do NOT touch yeast (different organism, different drug class), so treating a bacterial problem can inadvertently set up a yeast problem. This is exactly why probiotic support during and after any antibiotic course is preventive infrastructure, not an optional add-on.",
+    "confidence": "strong",
+    "sources": ["Malassezia species and canine skin disease — PMC9754143", "Bond et al., Canine Malassezia dermatitis — PMC5603939"],
+    "topic": "post-antibiotic-yeast",
+    "source": "Common Sense Dog — Post-Antibiotic Yeast Overgrowth pack"
+  },
+  {
+    "question": "Why did my dog's itching get WORSE while on antibiotics?",
+    "answer": "🟢 It's a classic diagnostic tell that the problem isn't (only) bacterial. Antibiotics resolve the bacterial piece but don't touch yeast — and by wiping out competing bacteria, they can actually let yeast expand during the course. So if scabs or infected spots clear but a generalized itch appears or worsens during antibiotics, that pattern points to yeast (or another non-bacterial cause) rather than the original bacterial issue. A common real-world trigger chain: a probiotic gap + exposure to bacteria-heavy water (like a stagnant river) + an antibiotic course, which together clear the way for yeast. The fix is to rebuild flora and address the yeast directly — not more antibiotics.",
+    "confidence": "moderate",
+    "sources": ["Malassezia proliferation after antibacterial treatment — Rover/veterinary review; PMC9754143"],
+    "topic": "post-antibiotic-yeast",
+    "source": "Common Sense Dog — Post-Antibiotic Yeast Overgrowth pack"
+  },
+  {
+    "question": "How do I tell if it's a yeast overgrowth versus a food allergy?",
+    "answer": "🟡 A few patterns help distinguish them, though only a vet skin cytology confirms yeast. Yeast/gut-imbalance tends to cause a whole-body or scattered itch (belly, neck, various spots) with a musty smell, often greasy skin — versus food allergy, which frequently concentrates on paws, ears, and rear. Timing is a big clue: itch that flares right after a trigger event (a probiotic gap, dirty-water exposure, or an antibiotic course) points to an acute yeast/flora disruption rather than a long-standing dietary staple, which would be an unlikely new culprit. Both are ultimately tied to gut and immune health. If it's recurrent or won't clear, get a cytology and work up the underlying cause with a vet.",
+    "confidence": "moderate",
+    "sources": ["Malassezia dermatitis presentation — VCA; PMC5603939"],
+    "topic": "post-antibiotic-yeast",
+    "source": "Common Sense Dog — Post-Antibiotic Yeast Overgrowth pack"
+  },
+  {
+    "question": "What's the proven way to treat a dog's yeast overgrowth?",
+    "answer": "🟢 The best-evidenced treatment is topical antifungal washing: a shampoo with 2% miconazole + 2% chlorhexidine, about twice weekly with ~10 minutes of contact time, has good clinical support. For more severe or widespread cases, vets add an oral antifungal (ketoconazole or itraconazole) — a different drug class than antibiotics, targeting the fungal cell wall. A skin scrape/cytology confirms yeast first. So even within a holistic plan, medicated antifungal bathing is the practical workhorse that physically reduces the yeast while you fix the underlying cause (rebuild flora, address the trigger). Antibiotics will NOT help yeast — make sure the diagnosis is right.",
+    "confidence": "strong",
+    "sources": ["Negre et al., evidence-based Malassezia treatment review; Royal Canin Academy — miconazole/chlorhexidine 2% strong evidence"],
+    "topic": "post-antibiotic-yeast",
+    "source": "Common Sense Dog — Post-Antibiotic Yeast Overgrowth pack"
+  },
+  {
+    "question": "Do probiotics help with or after antibiotics?",
+    "answer": "🟡 Yes — supporting the gut with probiotics during and after an antibiotic course helps rebuild the beneficial bacteria antibiotics wipe out, which is the same bacterial competition that normally keeps yeast in check. Because antibiotics actively fight the probiotic while the course is running, the biggest visible benefit tends to come once the antibiotics stop and the probiotic can work unobstructed. Give it daily with zero gaps — consistency is the primary lever. Think of it as preventive infrastructure around any antibiotic use, not just a fix after problems appear. Gut flora rebuild generally takes 1–3 weeks minimum.",
+    "confidence": "moderate",
+    "sources": ["Probiotics + gut-skin axis (see itchy-skin & probiotics packs); general veterinary consensus on post-antibiotic probiotic support"],
+    "topic": "post-antibiotic-yeast",
+    "source": "Common Sense Dog — Post-Antibiotic Yeast Overgrowth pack"
+  },
+  {
+    "question": "Does cutting carbs and sugar cure a dog's yeast infection?",
+    "answer": "⚪ This is a popular holistic claim, but the honest evidence is weak/mixed. The theory — yeast feeds on sugar, so a low-carb/grain-free diet starves it — sounds logical and some sources support it, but the veterinary literature is inconsistent and some points to dietary fat (not sugar) as more relevant in Malassezia problems. So a fresh, lower-carb whole-food diet is healthy and reasonable to try, and may help some dogs, but don't rely on it as a cure. The better-supported levers are treating the underlying trigger (often allergy) and using proven topical antifungals. Diet is a supporting player here, not the main treatment.",
+    "confidence": "traditional",
+    "sources": ["Malassezia diet/carbohydrate role — mixed evidence (see verified Yeast & Ears pack; Frontiers Malassezia overview PMC7059102)"],
+    "topic": "post-antibiotic-yeast",
+    "source": "Common Sense Dog — Post-Antibiotic Yeast Overgrowth pack"
+  },
+  {
+    "question": "Do natural antifungals like Pau d'Arco, caprylic acid, oregano, or coconut oil work for dog yeast?",
+    "answer": "⚪ These are traditional/emerging options with limited canine trial data — reasonable as adjuncts, not proven primary treatments. Herbal antifungal blends (Pau d'Arco, caprylic/capric acid, oregano, olive leaf, goldenseal, thyme) are used to target yeast and its biofilm (the protective coating that shields yeast from the immune system and topicals), but rigorous dog studies are thin, and some of these herbs are potent, so dose carefully and ideally with a holistic vet. Virgin coconut oil (lauric acid) has mild antifungal and moisturizing action, but use it only on dry, flaky, NON-red patches — not on open, red, or wet areas. Treat all of these as supportive complements to the proven approach (medicated antifungal bathing + fixing the root cause).",
+    "confidence": "traditional",
+    "sources": ["Caprylic acid / botanical antifungals — in vitro & traditional use; limited canine RCT data"],
+    "topic": "post-antibiotic-yeast",
+    "source": "Common Sense Dog — Post-Antibiotic Yeast Overgrowth pack"
+  },
+  {
+    "question": "Is a diluted apple cider vinegar rinse good for a dog's yeast?",
+    "answer": "⚪ It's a reasonable traditional topical support, with modest expectations. A 1:1 apple cider vinegar and water rinse creates a mildly acidic, yeast-hostile surface environment; for generalized cases it's used full-body a few times a week with several minutes of contact time. Two rules: never use it on open wounds, raw skin, or near the eyes (it stings), and think of it as a between-bath helper, not a cure. It has far less evidence than medicated miconazole/chlorhexidine shampoo, so use it alongside — not instead of — the proven approach and addressing the underlying trigger.",
+    "confidence": "traditional",
+    "sources": ["Traditional topical use; no strong canine RCT — labeled honestly"],
+    "topic": "post-antibiotic-yeast",
+    "source": "Common Sense Dog — Post-Antibiotic Yeast Overgrowth pack"
+  },
+  {
+    "question": "Is colloidal silver safe and effective for my dog's skin or yeast?",
+    "answer": "⚠️ Be cautious here — the honest evidence is much weaker than marketing suggests. Scientific research supporting colloidal silver in dogs is virtually nonexistent, and there's no proven efficacy or standardized dosing; the one encouraging note is a small preliminary study on a silver-NANOPARTICLE shampoo for Malassezia that still needs larger trials. On safety, real concerns exist: silver can accumulate and cause argyria (permanent bluish-gray skin discoloration), build up in organs (kidney, liver, brain, spleen) with potential neurological effects, and — taken orally — it can reduce the effectiveness of medications like levothyroxine and tetracyclines. Veterinarians generally advise safer, proven options (medicated antifungal shampoos, prescribed antifungals). If you ever use a topical silver product, use it sparingly and short-term on a small area, avoid oral use, and talk to your vet — don't treat it as a risk-free cure-all.",
+    "confidence": "traditional",
+    "sources": ["Colloidal silver for dogs — Great Pet Care; Dogster (vet-reviewed); ElleVet: no proven efficacy, argyria/organ/drug-interaction risks; one preliminary silver-nanoparticle Malassezia shampoo study"],
+    "topic": "post-antibiotic-yeast",
+    "source": "Common Sense Dog — Post-Antibiotic Yeast Overgrowth pack"
+  },
+  {
+    "question": "Do omega-3s (fish oil, green lipped mussel) treat yeast?",
+    "answer": "🟡 Important distinction: omega-3s reduce itch and inflammation but have NO antifungal action — don't confuse symptom relief with resolving the yeast itself. Sardines and fish oil (EPA/DHA) and green-lipped mussel (GAGs plus the unique omega-3 ETA) are well-supported anti-inflammatories that can make a yeasty, irritated dog more comfortable and support skin health, which is genuinely useful. But they won't clear the yeast — that still requires the antifungal approach plus fixing the underlying cause. Use omega-3s as symptomatic and whole-body support layered on top of actual antifungal treatment, not as a substitute for it.",
+    "confidence": "strong",
+    "sources": ["Omega-3 anti-inflammatory evidence (see joints-research pack, Roush 2010); mechanism: no antifungal activity"],
+    "topic": "post-antibiotic-yeast",
+    "source": "Common Sense Dog — Post-Antibiotic Yeast Overgrowth pack"
+  },
+  {
+    "question": "How long until a yeast overgrowth improves, and when should I see the vet?",
+    "answer": "🟡 With the right approach, expect gut flora to rebuild over 1–3 weeks minimum, and real visible improvement often within about 5–7 days once a probiotic is working unobstructed (i.e., after antibiotics stop). Track objective signs: less licking/scratching, calmer skin, fading redness and smell. See the vet — ideally for a skin scrape/cytology — if there's no improvement by day 7–10, or any worsening: spreading redness, heat, discharge, or a change in appetite or energy. Those can mean the yeast needs prescription antifungal shampoo (miconazole/chlorhexidine) or an oral antifungal, or that something else is going on. Holistic-first is great for mild cases, but an established or worsening infection needs a proper diagnosis.",
+    "confidence": "moderate",
+    "sources": ["Clinical course of Malassezia treatment — VCA; general veterinary guidance"],
+    "topic": "post-antibiotic-yeast",
+    "source": "Common Sense Dog — Post-Antibiotic Yeast Overgrowth pack"
+  }
+]

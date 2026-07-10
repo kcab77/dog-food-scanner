@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { blogPosts } from '@/lib/blog-data'
 
 export const metadata: Metadata = {
-  title: 'Articles — Life With Hershey',
+  title: 'Articles — Common Sense Dog',
   description: 'Research-backed articles on dog nutrition, supplements, and holistic health.',
 }
 
@@ -44,7 +44,7 @@ export default function BlogPage() {
         <Link href="/" className="nav-logo">
           <span style={{fontSize:22}}>🐾</span>
           <div>
-            <div className="nav-logo-text">Life With Hershey</div>
+            <div className="nav-logo-text">Common Sense Dog</div>
             <div className="nav-logo-sub">Real dog health from a real dog owner</div>
           </div>
         </Link>
@@ -81,7 +81,7 @@ export default function BlogPage() {
 
       <footer>
         <p>
-          <strong style={{color:'rgba(255,255,255,0.8)'}}>Life With Hershey</strong><br/>
+          <strong style={{color:'rgba(255,255,255,0.8)'}}>Common Sense Dog</strong><br/>
           <Link href="/">Home</Link> · <Link href="/blog">Articles</Link> · <Link href="/chat">Ask AI</Link> · <Link href="/scan">Scanner</Link> · <Link href="/#pawgrade">PawGrade App</Link><br/><br/>
           Not veterinary advice. Always consult your vet for medical decisions.
         </p>

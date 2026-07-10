@@ -1,0 +1,23 @@
+[
+  {
+    "question": "How do I know if my dog actually has leaky gut versus just a temporary gut upset?",
+    "answer": "🟡 permeability is real / ⚪ 'syndrome' is a looser term — the honest picture: increased intestinal permeability ('leaky gut') is a genuine, measurable phenomenon (the tight junctions between gut-lining cells loosen, and it can be measured with a lactulose-mannitol test; it's closely linked to IBD/chronic enteropathy). But 'leaky gut SYNDROME' as a standalone diagnosis is used loosely, so the KEY DISTINGUISHING FACTOR is the PATTERN, not a single symptom: true leaky gut is a CHRONIC, recurring picture over months to years — chronic loose stool that never fully resolves, persistent gas/bloating, recurring skin flares (gut-skin axis), REPEATED yeast/bacterial overgrowth (not one episode), food sensitivities that multiply over time, poor coat and weight loss despite eating well, and lethargy. Typical drivers are long-term: chronic NSAID/steroid use, IBD, ongoing food sensitivities, a long-term poor-quality diet, chronic stress, or repeated/prolonged antibiotic courses. DECISION RULE: a single episode with a clear, identifiable, one-time trigger that resolves is NOT leaky gut — that's a temporary upset. Leaky gut is diagnosed on the chronic recurring pattern. See a vet (ideally for a workup including IBD) if the pattern is chronic. (Intestinal permeability & IBD — PMC6467570; lactulose-mannitol testing.)",
+    "source": "Intestinal permeability / IBD literature (PMC6467570; lactulose-mannitol test)",
+    "tier": 2,
+    "topic": "leaky-gut"
+  },
+  {
+    "question": "My dog had one course of antibiotics and a gap in probiotics, then a yeast flare — does that mean he has leaky gut?",
+    "answer": "Tier 3 (Hershey case log) — No, and the distinction matters: a ~2–3 week probiotic gap plus one antibiotic course is a TEMPORARY microbial-balance disruption, not leaky gut. The mechanism was: good bacteria got depleted, the antibiotics further wiped out flora, and yeast opportunistically overgrew in the empty space — that's reversible by restoring flora (probiotics, gut support), and it's mechanistically DIFFERENT from structural damage to the gut lining. DECISION RULE for telling them apart: a dog with a healthy history, a single identifiable one-time trigger, and NO chronic/recurring pattern does not fit the leaky-gut picture — even if a couple of surface symptoms (a skin flare, needing added enzymes for a cooked diet) happen to overlap. Leaky gut is the months-to-years recurring pattern; this was one triggered, reversible event. (Hershey case, Kyle's log — personal observation, tier 3.)",
+    "source": "Kyle — Hershey case log, July 2026",
+    "tier": 3,
+    "topic": "leaky-gut"
+  },
+  {
+    "question": "My dog needs digestive enzymes added to his cooked food — does that mean he has an absorption problem or leaky gut?",
+    "answer": "Tier 3 (Hershey case log) — No. Needing supplemented digestive enzymes for a gently-cooked diet is a DIET-FORMAT requirement, not evidence of a gut or absorption problem: cooking destroys the natural enzymes present in raw food, so you're simply replacing what the cooking removed. That's completely distinct from true malabsorption or leaky gut, where the gut itself can't absorb nutrients properly (as in EPI or chronic enteropathy). DECISION RULE: adding enzymes because of how the food is PREPARED = normal and expected; needing them because the dog is losing weight, passing greasy/voluminous stool, or failing to thrive despite eating well = a real absorption problem that needs a vet workup. Don't read a diet-format need as a disease. (Hershey case, Kyle's log — personal observation, tier 3; cooking/enzyme rationale — food science.)",
+    "source": "Kyle — Hershey case log, July 2026",
+    "tier": 3,
+    "topic": "leaky-gut"
+  }
+]

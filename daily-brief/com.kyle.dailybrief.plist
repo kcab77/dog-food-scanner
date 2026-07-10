@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.kyle.dailybrief</string>
+
+    <!-- IMPORTANT: confirm your node path with `which node` and update the first
+         string below if it differs (this default is /usr/local/bin/node). -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/local/bin/node</string>
+        <string>/Users/Kyle/Documents/Projects/dog-food-scanner/daily-brief/brief.mjs</string>
+    </array>
+
+    <!-- Run every day at 7:00 AM local time. -->
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>7</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+
+    <key>StandardOutPath</key>
+    <string>/Users/Kyle/Documents/Projects/dog-food-scanner/daily-brief/brief.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/Kyle/Documents/Projects/dog-food-scanner/daily-brief/brief.log</string>
+
+    <key>RunAtLoad</key>
+    <false/>
+</dict>
+</plist>

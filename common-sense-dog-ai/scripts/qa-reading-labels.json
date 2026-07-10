@@ -1,0 +1,62 @@
+[
+  {
+    "question": "What do the percentages in a dog food's Guaranteed Analysis actually mean?",
+    "answer": "Those 'As Fed' percentages are the raw numbers straight off the scale, water included — and that makes them misleading for comparing different foods. A food with 70% moisture will look artificially low on protein and everything else compared to a 10%-moisture kibble, even if it's actually more nutrient-dense once you remove the water. To truly compare foods, you need to convert to a dry matter basis. As Fed numbers alone aren't reliable across foods of different moisture levels.",
+    "topic": "reading-labels",
+    "source": "Common Sense Dog — Reading Labels pack"
+  },
+  {
+    "question": "What is dry matter basis and how do I calculate it?",
+    "answer": "Dry matter (DM) basis strips out the water so you're comparing the actual solid food. The formula is: DM% = As Fed% ÷ (1 − Moisture%). For example, 10% protein as-fed in a food with 75% moisture is 10 ÷ (1 − 0.75) = 40% protein on a dry matter basis. This is the standard way to compare nutrient density between foods of different moisture content — like asking 'which food has more protein per ounce of actual food.' Always convert to DM before comparing a wet or fresh food to a kibble.",
+    "topic": "reading-labels",
+    "source": "Common Sense Dog — Reading Labels pack"
+  },
+  {
+    "question": "What does '% of calories' (% kcal) tell me about dog food?",
+    "answer": "Percent of calories tells you how the diet's energy is distributed across protein, fat, and carbs — it's the best number for judging metabolic impact, like whether a diet is truly low-carb or high-fat. It matters because fat carries 9 kcal/gram versus about 4 for protein and carbs, so two foods can show identical dry-matter percentages but very different calorie splits if their fat content differs. Use %kcal when you care about energy and fuel source (carb load, fat-vs-carb balance), and use dry matter when you care about nutrient density.",
+    "topic": "reading-labels",
+    "source": "Common Sense Dog — Reading Labels pack"
+  },
+  {
+    "question": "Should I use dry matter or % of calories to compare dog foods?",
+    "answer": "Use both, for different jobs. Dry matter is for comparing nutrient density between products — protein, fat, fiber per ounce of real food once water is removed. Percent of calories is for judging the metabolic and energy picture — how much of the diet's fuel comes from carbs versus fat. As Fed alone is the one to avoid for comparisons, because moisture differences distort it. Rule of thumb: DM for density, %kcal for energy impact.",
+    "topic": "reading-labels",
+    "source": "Common Sense Dog — Reading Labels pack"
+  },
+  {
+    "question": "Do dogs actually need carbohydrates in their diet?",
+    "answer": "No — AAFCO sets no minimum carbohydrate requirement for dogs, because they can produce all the glucose they need from protein and fat through a process called gluconeogenesis. A food where only 3–10% of calories come from carbs is not deficient; it simply reflects a fat- and protein-driven whole-food diet, which is the holistic-preferred model. By contrast, most kibble runs 30–50%+ carbs largely because starch is needed to bind the pellets together, not because dogs require it.",
+    "topic": "reading-labels",
+    "source": "Common Sense Dog — Reading Labels pack"
+  },
+  {
+    "question": "My dog's fresh food looks low in carbs — is that a problem?",
+    "answer": "Usually not. A low carb percentage on a whole-food, gently cooked, or raw diet is normal and reflects energy coming from fat and protein instead of starch — which is exactly what a dog's metabolism is built for. Dogs don't have a carb requirement, so 'low carb' isn't 'deficient.' If your dog is very active, you can add a small complex-carb topper (cooked sweet potato, pumpkin, or oats at roughly 5% of daily calories) to support glycogen, but that's fine-tuning, not fixing a deficiency.",
+    "topic": "reading-labels",
+    "source": "Common Sense Dog — Reading Labels pack"
+  },
+  {
+    "question": "Do active dogs like Labs need a high-carb diet for energy?",
+    "answer": "It's a common assumption, but no. Dogs — Labs included — are very efficient at converting dietary fat into sustained energy, and fat is actually the preferred endurance fuel in canine sports nutrition because it's calorie-dense and avoids the insulin spike-and-crash cycle that carbs can cause. A modest complex-carb topper (~5% of calories) can help replenish glycogen for high-intensity bursts, but that's a tuning choice. High activity is not a reason to feed a starchy, high-carb kibble.",
+    "topic": "reading-labels",
+    "source": "Common Sense Dog — Reading Labels pack"
+  },
+  {
+    "question": "My dog gets tired or crashes during exercise on hot days — is it the food?",
+    "answer": "Often it's heat, not fuel. If your dog is fine during steady or low-intensity activity but crashes quickly during sprints or intense bursts specifically on high-humidity days (around 70%+ humidity), that's a heat-dissipation problem — panting is a dog's main cooling tool, and it loses effectiveness when humidity is too high for moisture to evaporate. Dogs that run hot or have dark coats are more affected. The tell: if the same crash also happens on cool, low-humidity days, then it's worth revisiting diet and energy supply.",
+    "topic": "reading-labels",
+    "source": "Common Sense Dog — Reading Labels pack"
+  },
+  {
+    "question": "What health issue can mimic low energy from diet in dogs?",
+    "answer": "Hypothyroidism — and Labradors are predisposed to it. Low thyroid can look a lot like diet-related fatigue, low energy, weight gain, and exercise intolerance, so it's easy to misread as a feeding problem. The way to check it directly is a thyroid (T4) panel at annual bloodwork rather than guessing from the bowl. Rule that out before assuming a sluggish dog just needs a different food.",
+    "topic": "reading-labels",
+    "source": "Common Sense Dog — Reading Labels pack"
+  },
+  {
+    "question": "Why does kibble have so many more carbs than fresh or raw food?",
+    "answer": "Largely because of how it's made: extruded kibble needs starch to bind the ingredients into shelf-stable pellets, so carbs often end up at 30–50%+ of calories — far more than a dog needs. Fresh, gently cooked, and raw foods don't require that binding starch, so their carb content is naturally much lower and their energy comes from protein and fat. So a high carb number on kibble is partly a manufacturing necessity, not a nutritional one — another reason less-processed diets better match canine metabolism.",
+    "topic": "reading-labels",
+    "source": "Common Sense Dog — Reading Labels pack"
+  }
+]

@@ -14,17 +14,13 @@ and burned Anthropic tokens.
 
 - [x] **Anthropic spend cap** — Kyle uses prepaid credits, so loss is bounded to whatever's loaded. ✅ (Still: an attacker can burn the WHOLE balance + take the assistant offline for real users — rate limiting is what prevents that.)
 - [x] **Rotate `ANTHROPIC_KEY`** — done.
-- [~] **Upstash Redis rate limiting** — CODE DONE (lib/ratelimit.ts + wired into all 4 AI routes, 20 req/60s per IP, fails open until configured). Packages installed. **You just need to:**
-      1. Create free account at upstash.com → new Redis database
-      2. Copy its `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN`
-      3. Add both as env vars in Vercel (Project → Settings → Environment Variables)
-      4. Redeploy. That's it — limiter activates automatically once the env vars exist.
-- [ ] **Proxy the Go-UPC key server-side** — move `EXPO_PUBLIC_GOUPC_KEY` out of the app; have the app call your `/api/barcode` and keep the paid key on the server only.
+- [x] **Upstash Redis rate limiting** — DONE 2026-06-24. `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN` added in Vercel; limiter (20 req/60s per IP) goes live on redeploy. Wired into all 5 AI routes (scan, chat, coach, ingredient, barcode).
+- [x] **Proxy the Go-UPC key server-side** — DONE 2026-06-24. App now calls `/api/barcode` (with `x-app-secret`); the paid key lives only as server-side `GOUPC_KEY`, and `EXPO_PUBLIC_GOUPC_KEY` was removed from the app + `.env` so it's no longer baked into the bundle. Backend route is also rate-limited. (Takes effect in the next app build.)
 
 ## 🔥 Next update (do these soon)
 
 - [ ] **Deploy commonsensedog.com (Vercel)** — pushes the holistic + Pinecone-first Coach live to ALL existing PawGrade installs (server-side, no App Store resubmission needed). ⚠️ Do the SECURITY items above FIRST.
-- [ ] **Ship holistic-vet legal disclaimer** — already coded in `/api/coach` + `/api/chat` ("consult a holistic/integrative vet" + "educational, not medical advice"). Just verify & deploy.
+- [x] **Ship holistic-vet legal disclaimer** — DONE 2026-06-24. Verified the holistic-vet + "educational, not medical advice" framing in both system prompts, AND added a deterministic server-side append (`lib/disclaimer.ts`) so a fixed disclaimer lands on EVERY `/api/coach` + `/api/chat` reply. Renders in both the website chat and the app's coach screen (no app rebuild needed). Ships with the redeploy.
 - [ ] **Build standalone AI assistant section** (no-scan chat) — THE GOLDMINE. Own entry point + paywall. Reuses existing holistic+Pinecone backend. ⚠️ Make sure rate limiting is live before this ships — a free-to-chat screen is the #1 abuse target.
 
 ## 📱 PawGrade app
@@ -51,4 +47,4 @@ and burned Anthropic tokens.
 
 ---
 
-*Last updated: 2026-06-11*
+*Last updated: 2026-06-24*

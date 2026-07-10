@@ -1,0 +1,62 @@
+[
+  {
+    "question": "What does the actual research say about natural joint remedies for dogs?",
+    "answer": "Graded honestly by the strength of the evidence: STRONG — weight management and omega-3 fatty acids (both backed by multiple randomized trials with objective force-plate gait analysis). MODERATE–STRONG — green-lipped mussel. MODERATE — undenatured type II collagen (UC-II). EMERGING–MODERATE — curcumin/collagen/green-tea blends and CBD. MIXED/WEAK–MODERATE — glucosamine/chondroitin (popular but inconsistent in objective trials). One key thing to understand: in dog osteoarthritis studies the placebo/caregiver effect is large (owners report improvement in ~40–50% of placebo dogs), which is why blinded, force-plate-measured trials matter so much. The best plan layers the strongest levers first.",
+    "topic": "joints-research",
+    "source": "Common Sense Dog — Joint Health Research (evidence-cited) pack"
+  },
+  {
+    "question": "Is weight loss really the best thing for a dog's arthritis?",
+    "answer": "Yes — it's the single highest-impact, best-evidenced natural intervention, and it's free. In a prospective trial (Marshall et al., 2010), obese arthritic dogs on a restricted-calorie diet had significantly decreased lameness after just ~6% body-weight loss, with objective gait-analysis confirmation by ~9% loss. An earlier study (Impellizeri et al., 2000) found dogs losing 11–18% of body weight had significantly reduced hind-limb lameness, and combining calorie restriction with physiotherapy improved results further (Mlacnik et al., 2006). Excess weight adds mechanical load AND produces inflammatory signals from fat tissue, so it hurts joints two ways. Target a lean body condition (BCS 4–5/9) — it's the foundation everything else builds on. Evidence grade: Strong.",
+    "topic": "joints-research",
+    "source": "Common Sense Dog — Joint Health Research (evidence-cited) pack"
+  },
+  {
+    "question": "How strong is the evidence that fish oil / omega-3 helps dog joints?",
+    "answer": "It's the best-supported supplement for canine osteoarthritis. In a force-plate RCT (Roush et al., 2010), objective weight-bearing improved in 82% of the fish-oil group versus only 38% of controls. A separate multicenter RCT of 127 dogs over 6 months found owner-reported improvements in rising, playing, and walking, and additional placebo-controlled trials (Mehler 2016; Hielm-Björkman 2012) back it up. EPA/DHA reduce inflammatory eicosanoids and appear to down-regulate cartilage-degrading enzymes. Two practical notes: dose matters — therapeutic EPA/DHA amounts are much higher than what's in typical 'joint chews' — and use a marine oil (fish/krill), not flax, since dogs convert plant ALA poorly. Evidence grade: Strong.",
+    "topic": "joints-research",
+    "source": "Common Sense Dog — Joint Health Research (evidence-cited) pack"
+  },
+  {
+    "question": "Does green-lipped mussel work for dog arthritis, per the studies?",
+    "answer": "The evidence is solid. A double-blind RCT (Bui & Bierer, 2003/2004) found that adding 0.3% green-lipped mussel (GLM) powder to the diet significantly improved arthritis scores, joint swelling, and joint pain versus control, and a diet-enriched GLM trial (Hielm-Björkman et al., 2009) improved pain behavior and function in clinical OA dogs. A 2024 accelerometry pilot in working dogs showed promise on objective gait sensors, and a GLM oil (PCSO-524) performed strongly in a head-to-head hip-OA trial. GLM is a whole-food marine source of omega-3s plus glycosaminoglycans — very on-brand for a holistic approach. Quality/processing matters (cold-processed, stabilized extract). Evidence grade: Moderate–Strong.",
+    "topic": "joints-research",
+    "source": "Common Sense Dog — Joint Health Research (evidence-cited) pack"
+  },
+  {
+    "question": "What is UC-II (undenatured type II collagen) and does it work for dogs?",
+    "answer": "UC-II is a form of collagen that works through oral tolerance / immune modulation — a different mechanism than hydrolyzed collagen used as a 'building block.' The notable data: an RCT (Stabile et al., 2019) found UC-II reduced load and mobility-impairment scores by about 33% — comparable to robenacoxib, a prescription NSAID. It's also appeared in multi-ingredient placebo-controlled trials alongside Boswellia, hyaluronic acid, and green tea. The NSAID-comparable result on a natural, low-dose supplement is genuinely worth watching. Evidence grade: Moderate.",
+    "topic": "joints-research",
+    "source": "Common Sense Dog — Joint Health Research (evidence-cited) pack"
+  },
+  {
+    "question": "Do turmeric/curcumin and collagen/green-tea blends help dog joints?",
+    "answer": "There's real but early evidence, usually testing them in combination. An RCT of 42 dogs over 3 months (Comblain et al., 2017) found a diet with curcuminoid extract + hydrolyzed collagen + green tea extract significantly reduced pain on manipulation versus control, and a 2024 study combined Curcumin C3 Complex with glucosamine/chondroitin with benefit. Two honest caveats: plain dietary turmeric is poorly absorbed by dogs (trials use bioavailability-enhanced extracts, e.g., with black pepper/fat), and curcumin can affect blood clotting — flag it with your vet before surgery or if combined with other meds. Evidence grade: Emerging–Moderate.",
+    "topic": "joints-research",
+    "source": "Common Sense Dog — Joint Health Research (evidence-cited) pack"
+  },
+  {
+    "question": "Does glucosamine and chondroitin actually work for dogs, according to trials?",
+    "answer": "The evidence is genuinely mixed — it's more popular than proven. An earlier RCT (McCarthy et al., 2007) found glucosamine + chondroitin produced significant improvement in pain, weight-bearing, and severity by day 70 (though slower to kick in than carprofen). But a 2023 head-to-head force-plate RCT in 75 hip-OA dogs (Kampa et al., Frontiers in Veterinary Science) found the marine compounds PCSO-524 and EAB-277 improved objective weight-bearing similar to carprofen, while glucosamine/chondroitin did NOT outperform placebo on force-plate measures. So on objective data, omega-3s and green-lipped mussel look stronger. It's very safe, so a 60–90 day trial is reasonable — just judge by whether YOUR dog actually responds, and don't rely on it as the only intervention. Evidence grade: Mixed / Weak–Moderate.",
+    "topic": "joints-research",
+    "source": "Common Sense Dog — Joint Health Research (evidence-cited) pack"
+  },
+  {
+    "question": "Is there real evidence for CBD helping arthritic dogs?",
+    "answer": "Yes, a fast-growing and fairly promising base. A double-blind placebo-controlled RCT (Gamble et al., 2018) found CBD significantly decreased pain and increased activity in a dose-dependent way, and a Cornell RCT (2 mg/kg twice daily, 2020) found decreased pain and increased comfort/activity. A 2024 CBD + krill oil double-blind RCT improved chronic stifle OA. Honest caveats: product quality and dosing vary wildly, CBD can elevate liver enzymes (so vet monitoring is smart, especially long-term or with other meds), and legality/testing vary by region. Evidence grade: Emerging–Moderate.",
+    "topic": "joints-research",
+    "source": "Common Sense Dog — Joint Health Research (evidence-cited) pack"
+  },
+  {
+    "question": "Why does the placebo effect matter so much in dog arthritis studies?",
+    "answer": "Because it's unusually large — owners report improvement in roughly 40–50% of dogs given a placebo. This 'caregiver placebo effect' happens because we want to see our dogs feel better, so we unconsciously read improvement into their behavior. It's exactly why you can't trust testimonials or even open-label results for joint supplements, and why the gold standard is blinded, placebo-controlled trials using OBJECTIVE measures like force-plate gait analysis (which measures actual weight-bearing, not opinion). When you see a supplement backed by force-plate RCTs (like omega-3), that's real; when it's only backed by 'my dog seems better,' stay skeptical. This is the honest lens for judging any joint claim.",
+    "topic": "joints-research",
+    "source": "Common Sense Dog — Joint Health Research (evidence-cited) pack"
+  },
+  {
+    "question": "What's the best evidence-based plan for a dog with arthritis?",
+    "answer": "Layer it by strength of evidence: (1) FOUNDATION — keep the dog lean (BCS 4–5/9; strongest evidence of anything) plus consistent low-impact exercise like leash walks and swimming. (2) CORE SUPPLEMENT — a quality marine omega-3 (fish oil or green-lipped mussel) at a real therapeutic EPA/DHA dose. (3) ADD-ONS WORTH TRIALING — UC-II collagen and/or a curcumin-collagen-green-tea blend; CBD as an adjunct with vet oversight. (4) OPTIONAL/LOW-RISK — glucosamine/chondroitin (safe but inconsistent; judge by your dog's response). (5) ADJUNCTS — physical rehab/physiotherapy, and discuss with your vet whether pain or disease-modifying meds belong alongside the natural approach for moderate-to-severe cases. Give each supplement a fair 6–12 week trial and track objective signs (rising, stair use, walk distance, stiffness after rest). Natural-first, but never let a dog suffer.",
+    "topic": "joints-research",
+    "source": "Common Sense Dog — Joint Health Research (evidence-cited) pack"
+  }
+]

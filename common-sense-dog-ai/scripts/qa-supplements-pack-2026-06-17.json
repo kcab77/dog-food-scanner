@@ -1,0 +1,260 @@
+[
+  {
+    "question": "Does green-lipped mussel actually work for joint pain in dogs?",
+    "answer": "The evidence is real but mixed. A randomized, double-blinded trial (Hielm-Björkman et al., 2009) in 45 dogs with osteoarthritis fed green-lipped mussel or placebo for 8 weeks found the mussel group improved more than placebo on pain and mobility. However, a 2022 double-blinded placebo-controlled crossover trial (Corbee et al.) in 32 dogs over 16 weeks found improvement over baseline but no significant difference versus placebo. So several trials show benefit, but not all beat placebo. Confidence: MEDIUM.",
+    "topic": "green-lipped-mussel-joints",
+    "source": "Hielm-Björkman et al. 2009 (n=45 RCT); Corbee et al. 2022 (n=32 crossover RCT)"
+  },
+  {
+    "question": "What is green-lipped mussel and why is it used for dogs' joints?",
+    "answer": "Green-lipped mussel (Perna canaliculus) is a shellfish native to the coastal waters of New Zealand. It's a marine source of omega-3 fatty acids, glycosaminoglycans, and other anti-inflammatory compounds. It's used for canine joints because some extracts inhibit inflammatory mediators like PGE2, which is involved in joint pain and cartilage breakdown, similar in target to NSAIDs but much milder.",
+    "topic": "green-lipped-mussel-joints",
+    "source": "Whitehouse et al. 1997; Halpern 2000; review literature"
+  },
+  {
+    "question": "How does green-lipped mussel reduce inflammation in dogs?",
+    "answer": "Its anti-inflammatory action is primarily attributed to a unique profile of omega-3 fatty acids that modulate the cyclooxygenase and lipoxygenase inflammatory pathways. By shifting the balance toward less inflammatory eicosanoid production, it may reduce the inflammatory environment that accelerates cartilage breakdown and causes joint discomfort.",
+    "topic": "green-lipped-mussel-joints",
+    "source": "PCSO-524 mechanism literature (cyclooxygenase/lipoxygenase modulation)"
+  },
+  {
+    "question": "What is PCSO-524 in green-lipped mussel products for dogs?",
+    "answer": "PCSO-524 is a patented, stabilized lipid extract of the New Zealand green-lipped mussel, combined with olive oil and vitamin E. It's the concentrated marine-lipid form used in most of the canine joint studies, including products marketed as Antinol. Several studies have shown apparent benefit of PCSO-524 for canine osteoarthritis pain, and it's the version with the most research behind it versus plain mussel powder.",
+    "topic": "green-lipped-mussel-joints",
+    "source": "Frontiers Vet Sci 2024 (EAB-277/PCSO-524); PCSO-524 canine OA literature"
+  },
+  {
+    "question": "Is green-lipped mussel as effective as anti-inflammatory drugs for dog arthritis?",
+    "answer": "No. In the 2009 randomized trial, green-lipped mussel improved pain and mobility more than placebo but less than carprofen, an NSAID. It should be thought of as a mild supportive supplement, not a replacement for prescription pain relief in dogs with significant arthritis. Confidence: MEDIUM.",
+    "topic": "green-lipped-mussel-joints",
+    "source": "Hielm-Björkman et al. 2009 (n=45 RCT)"
+  },
+  {
+    "question": "How long does green-lipped mussel take to help a dog's joints?",
+    "answer": "The controlled canine trials ran 8 to 16 weeks, with benefits measured at the end of those periods. This suggests it's a slow-acting supportive supplement that needs consistent daily use over several weeks rather than something that works immediately, and the effects, where present, are modest. Confidence: MEDIUM.",
+    "topic": "green-lipped-mussel-joints",
+    "source": "Hielm-Björkman et al. 2009; Corbee et al. 2022"
+  },
+  {
+    "question": "Is green-lipped mussel safe for dogs?",
+    "answer": "It is generally well-tolerated in the trials conducted, with no major adverse effects reported. As a shellfish-derived product, caution is reasonable in dogs with known shellfish sensitivities, and as with any joint supplement it's best discussed with a vet if the dog is on other medications.",
+    "topic": "green-lipped-mussel-joints",
+    "source": "Canine osteoarthritis trial tolerability data"
+  },
+  {
+    "question": "Is green-lipped mussel combined with krill oil better for dogs?",
+    "answer": "Some products (such as EAB-277/Antinol Rapid) combine green-lipped mussel lipids with krill oil, on the theory that krill provides phospholipid-bound EPA and DHA that may absorb better than fish oil. A blinded, placebo-controlled canine study using objective outcome measures concluded this combination showed effectiveness for osteoarthritis pain in dogs. Whether it outperforms green-lipped mussel alone isn't firmly established. Confidence: MEDIUM.",
+    "topic": "green-lipped-mussel-joints",
+    "source": "Frontiers Vet Sci 2024 (EAB-277 blinded placebo-controlled study)"
+  },
+  {
+    "question": "Does the form of green-lipped mussel matter (powder vs oil extract)?",
+    "answer": "It appears to. Most of the positive canine research used concentrated stabilized lipid extracts (like PCSO-524), not plain dried mussel powder. Human trials show inconsistency partly tied to formulation: one trial found benefit with a PCSO-524 extract while another using a different enriched extract found none. For dogs, choosing a researched extract form is more likely to reflect the studied effect than a generic powder. Confidence: MEDIUM.",
+    "topic": "green-lipped-mussel-joints",
+    "source": "Zawadzki 2013; Stebbings 2017 (human formulation comparison); canine PCSO-524 trials"
+  },
+  {
+    "question": "Does turmeric or curcumin reduce inflammation in dogs?",
+    "answer": "There is some real canine evidence. A randomized, double-blind, placebo-controlled trial (Comblain et al., 2017) fed 42 dogs with osteoarthritis a curcuminoid blend for 3 months and found a significant reduction in pain on manipulation in the supplemented group but not the control, though objective gait (force-plate) measures didn't differ. Mechanism is strong but live-dog proof is limited. Confidence: LOW-to-MEDIUM.",
+    "topic": "curcumin-turmeric-inflammation",
+    "source": "Comblain et al. 2017 (n=42, 3-month RCT, BMC Vet Res)"
+  },
+  {
+    "question": "What is the difference between turmeric and curcumin?",
+    "answer": "Turmeric is the whole spice, the ground rhizome of the Curcuma longa plant. Curcumin (more precisely, a group of curcuminoids) is the active anti-inflammatory compound within turmeric, but it makes up only a small percentage of the spice by weight. This distinction matters because the research showing anti-inflammatory effects uses concentrated curcumin extracts, not whole turmeric powder.",
+    "topic": "curcumin-turmeric-inflammation",
+    "source": "Turmeric in veterinary medicine review (de Jonckheere)"
+  },
+  {
+    "question": "Why is curcumin's bioavailability a problem in dogs?",
+    "answer": "Plain curcumin is poorly absorbed in the gut and rapidly cleared from the body, so very little reaches the bloodstream in active form. This is the central limitation of turmeric supplements. Results depend heavily on using an absorption-enhanced formulation, such as curcumin bound to phosphatidylcholine or paired with piperine (black pepper extract).",
+    "topic": "curcumin-turmeric-inflammation",
+    "source": "Curcumin bioavailability literature; Comblain et al. 2017 (phosphatidylcholine-bound form)"
+  },
+  {
+    "question": "Can I just sprinkle turmeric powder on my dog's food for inflammation?",
+    "answer": "It's unlikely to do much on its own because raw turmeric powder is poorly absorbed and contains only a small percentage of active curcuminoids. The canine studies that showed benefit used concentrated, bioavailability-enhanced curcumin extracts, not kitchen turmeric. Plain turmeric is safe in small amounts but not a reliable anti-inflammatory at culinary doses.",
+    "topic": "curcumin-turmeric-inflammation",
+    "source": "Curcumin bioavailability literature; canine OA trials"
+  },
+  {
+    "question": "Does the 'golden paste' method of giving turmeric to dogs help absorption?",
+    "answer": "The popular golden paste approach combines turmeric with black pepper (piperine) and a fat source, which is rooted in real bioavailability science, since piperine and lipids can improve curcumin absorption. However, no controlled canine trial has validated golden paste specifically, and the dose of actual curcuminoids it delivers is hard to standardize. The principle is sound; the proof in dogs is anecdotal. Confidence: LOW.",
+    "topic": "curcumin-turmeric-inflammation",
+    "source": "Bioavailability literature (piperine, lipids); no controlled canine golden-paste trial"
+  },
+  {
+    "question": "How does curcumin reduce inflammation at the cellular level?",
+    "answer": "In cell and lab studies, curcumin downregulates key inflammatory signaling, with documented decreases in TNF-α, NF-kB, IL-8, and the enzyme PTGS2 (COX-2). One in vivo study referenced in canine literature showed these inflammatory markers decreased in curcumin-treated subjects. This strong mechanistic basis is why interest persists despite the absorption challenge. Confidence in mechanism: HIGH; in clinical effect: LOW-to-MEDIUM.",
+    "topic": "curcumin-turmeric-inflammation",
+    "source": "Sgorlon et al. 2016 (in vivo markers); cell-study literature"
+  },
+  {
+    "question": "Is curcumin safe for dogs?",
+    "answer": "Curcumin has an excellent safety profile and is well-tolerated in dogs. The main considerations are possible interactions with blood-thinning medications and mild digestive upset at higher doses. Reviewers consistently note its safety is good enough to justify trying it as a supportive supplement in most cases, even while calling for larger efficacy trials.",
+    "topic": "curcumin-turmeric-inflammation",
+    "source": "Turmeric in veterinary medicine review (de Jonckheere); Wynn 2007"
+  },
+  {
+    "question": "What dose of curcumin is used for dogs?",
+    "answer": "Published recommendations are broad and not firmly standardized, ranging from roughly 50 to 250 mg of curcumin three times daily for dogs (Wynn, 2007). The wide range reflects a lack of standardization in extraction processes and product quality, so the actual curcuminoid content of a given product matters as much as the stated dose. A vet's guidance is sensible given the variability. Confidence: LOW-to-MEDIUM.",
+    "topic": "curcumin-turmeric-inflammation",
+    "source": "Wynn 2007 (cited in turmeric veterinary review)"
+  },
+  {
+    "question": "Does curcumin work as well as anti-inflammatory drugs for dogs?",
+    "answer": "The canine evidence isn't strong enough to claim that. The one solid 3-month trial showed subjective pain improvement but flat objective gait measures, and most other support comes from cell studies or other species. It's best viewed as a low-risk supportive option alongside, not in place of, vet-directed treatment for significant inflammation. Confidence: LOW-to-MEDIUM.",
+    "topic": "curcumin-turmeric-inflammation",
+    "source": "Comblain et al. 2017; review literature"
+  },
+  {
+    "question": "Does a fecal transplant help dogs with chronic diarrhea or IBD?",
+    "answer": "Evidence is promising but the best-controlled study is cautionary. A 2025 prospective study of 20 dogs with chronic enteropathy found that one month after FMT the clinical index dropped significantly (median 5 to 1) and 17 of 20 stayed improved at 3 months. But a double-blinded, placebo-controlled trial (Toresson et al., 2022) of 13 IBD dogs found both the FMT and placebo groups improved equally, with no significant difference. Confidence: MEDIUM.",
+    "topic": "fmt-gi-health",
+    "source": "Scientific Reports 2025 (n=20, prospective); Toresson et al. 2022 PLOS ONE (n=13, blinded RCT)"
+  },
+  {
+    "question": "What is a fecal microbiota transplant (FMT) in dogs?",
+    "answer": "FMT is the transfer of processed stool from a healthy donor dog into a recipient dog, usually by enema or oral capsule, to introduce a healthier population of gut bacteria. The goal is to correct dysbiosis (an unbalanced gut microbiome) associated with chronic digestive disease. It's used as an adjunct to diet and medication, not usually as a standalone treatment.",
+    "topic": "fmt-gi-health",
+    "source": "Canine FMT clinical literature"
+  },
+  {
+    "question": "How is a fecal transplant given to a dog?",
+    "answer": "In the published studies, FMT has been delivered by rectal enema or as oral freeze-dried capsules. Some protocols use a single treatment; others use repeated doses (for example, daily capsules for a month). One study compared a single enema versus repeated treatments. There's no firmly established 'best' protocol yet, which is part of why results vary across studies.",
+    "topic": "fmt-gi-health",
+    "source": "Pérez-Accino et al. 2025 (single enema); freeze-dried capsule protocol literature"
+  },
+  {
+    "question": "Why did a fecal transplant study show no difference from placebo in dogs?",
+    "answer": "In the 2022 double-blinded trial of 13 IBD dogs, all dogs were also receiving corticosteroids and a hypoallergenic diet, and both the FMT and placebo groups improved significantly with no difference between them. This suggests much of the improvement came from the concurrent diet and steroid therapy rather than the transplant, a key reason FMT's standalone benefit in chronic cases is still unproven.",
+    "topic": "fmt-gi-health",
+    "source": "Toresson et al. 2022 PLOS ONE (n=13, blinded RCT)"
+  },
+  {
+    "question": "Is fecal transplant proven to work better in some dog conditions than others?",
+    "answer": "Yes. FMT has the strongest evidence in acute and infectious GI disease: in puppies with parvovirus, FMT significantly reduced recovery time and hospitalization, and it was superior to metronidazole at correcting dysbiosis after acute diarrhea. The evidence is weaker and more mixed for chronic enteropathy and IBD, where placebo-controlled results haven't clearly favored FMT. Confidence: MEDIUM overall, higher for acute disease.",
+    "topic": "fmt-gi-health",
+    "source": "Canine parvovirus FMT study; acute diarrhea metronidazole comparison"
+  },
+  {
+    "question": "What is dysbiosis and how does it relate to fecal transplants in dogs?",
+    "answer": "Dysbiosis is an imbalance or reduced diversity in the gut's bacterial community, often measured in dogs with a 'dysbiosis index.' It's associated with chronic GI disease. FMT aims to correct it by introducing a healthy donor's microbes. In the 2025 prospective study, FMT improved both the clinical index and the dysbiosis index at one month, along with favorable changes in bile acids and short-chain fatty acids like propionate. Confidence: MEDIUM.",
+    "topic": "fmt-gi-health",
+    "source": "Scientific Reports 2025 (dysbiosis index, bile acids, propionate)"
+  },
+  {
+    "question": "Is fecal transplant safe for dogs?",
+    "answer": "In the published canine studies, no adverse effects were reported in the follow-up periods, and it's generally considered low-risk when donor dogs are properly screened for pathogens and parasites. The main safety dependency is rigorous donor screening, since you're transferring live microbes. It should be done under veterinary supervision.",
+    "topic": "fmt-gi-health",
+    "source": "Toresson et al. 2022 (no adverse effects at 30 days); canine FMT safety literature"
+  },
+  {
+    "question": "How long do the effects of a fecal transplant last in dogs?",
+    "answer": "It varies and long-term durability is still unclear. In the 2025 prospective study, 17 of 20 dogs were still improved at 3 months and 10 remained clinically stable up to a year. But an earlier study only reported outcomes to 15 days. The honest position is that some dogs sustain benefit for months while the long-term picture remains under-studied. Confidence: MEDIUM.",
+    "topic": "fmt-gi-health",
+    "source": "Scientific Reports 2025 (1-year follow-up); earlier prospective study (15-day endpoint)"
+  },
+  {
+    "question": "Is bovine colostrum worth giving a dog for immune support?",
+    "answer": "It has some of the more specific canine data among immune supplements. A randomized controlled trial (Satyaraj et al., 2013) gave 24 dogs a diet with 0.1% spray-dried bovine colostrum over a 40-week test phase after a distemper vaccine. The colostrum group showed a significantly higher and longer-lasting vaccine antibody response, higher fecal IgA, and greater gut microbiota diversity. Note it was industry-funded. Confidence: MEDIUM.",
+    "topic": "bovine-colostrum-immune-gut",
+    "source": "Satyaraj et al. 2013 Br J Nutr (n=24, 40-week RCT, Purina-funded)"
+  },
+  {
+    "question": "What is bovine colostrum and what's in it?",
+    "answer": "Bovine colostrum is the first milk produced by cows after giving birth, before regular milk comes in. It's rich in immunoglobulins (antibodies, especially IgG), growth factors like IGF-1 and TGF-beta, antimicrobial proteins, and proline-rich polypeptides. These components are why it's studied for immune and gut-barrier support rather than as a basic nutritional source.",
+    "topic": "bovine-colostrum-immune-gut",
+    "source": "Bovine colostrum composition reviews"
+  },
+  {
+    "question": "How does bovine colostrum support a dog's immune system?",
+    "answer": "Through several components. Its immunoglobulins (antibodies) can survive gastric transit, particularly in powder or capsule form, and contribute to immune defense. Proline-rich polypeptides are thought to modulate the immune system bidirectionally, calming an overactive response or boosting an underactive one. In the controlled canine trial, colostrum-fed dogs mounted a stronger and more durable vaccine antibody response. Confidence: MEDIUM.",
+    "topic": "bovine-colostrum-immune-gut",
+    "source": "Satyaraj et al. 2013; proline-rich polypeptide literature"
+  },
+  {
+    "question": "Does bovine colostrum help a dog's gut health?",
+    "answer": "There's supportive evidence. The 40-week canine RCT found colostrum increased fecal IgA (a gut immune marker) and improved gut microbiota diversity and stability. Separately, a trial in recently weaned puppies found bovine colostrum improved fecal quality during the stress of diet and environment changes. Its growth factors are thought to support gut-lining repair and tight-junction integrity. Confidence: MEDIUM.",
+    "topic": "bovine-colostrum-immune-gut",
+    "source": "Satyaraj et al. 2013; weaned-puppy fecal quality trial"
+  },
+  {
+    "question": "Can bovine colostrum act as a prebiotic for dogs?",
+    "answer": "Yes, in part. The oligosaccharides in colostrum can function as prebiotics, selectively feeding beneficial gut bacteria. This complements rather than replaces dedicated probiotics: colostrum can help feed the beneficial bacteria that probiotics introduce. This is consistent with the trial finding of increased gut microbiota diversity in colostrum-fed dogs. Confidence: MEDIUM.",
+    "topic": "bovine-colostrum-immune-gut",
+    "source": "Satyaraj et al. 2013 (microbiota diversity); colostrum oligosaccharide literature"
+  },
+  {
+    "question": "Can older dogs benefit from bovine colostrum?",
+    "answer": "It's theoretically relevant for senior dogs because two hallmarks of aging, age-related immune decline (immunosenescence) and gut-barrier deterioration, are both targets colostrum may support. However, the strongest controlled canine trial was in younger adult dogs (mean age 2.5 years), so direct evidence specifically in seniors is limited. Confidence: LOW-to-MEDIUM for the senior-specific claim.",
+    "topic": "bovine-colostrum-immune-gut",
+    "source": "Satyaraj et al. 2013 (mean age 2.5 yr); immunosenescence reviews"
+  },
+  {
+    "question": "How is bovine colostrum given to dogs and how soon does it work?",
+    "answer": "It's typically given as a powder or capsule mixed with food; powder and capsule forms are thought to help the immunoglobulins survive stomach acid better than liquid. Based on the available evidence, gut-related improvements such as stool quality may appear within a couple of weeks, while immune changes are slower and harder to observe, potentially taking several weeks of consistent use. Confidence: LOW-to-MEDIUM on timing.",
+    "topic": "bovine-colostrum-immune-gut",
+    "source": "Colostrum administration literature; weaned-puppy fecal quality trial"
+  },
+  {
+    "question": "Is bovine colostrum safe for dogs, and what are the limits of the evidence?",
+    "answer": "It is well-tolerated in the published studies with no significant adverse effects. The main limitations of the evidence base, not safety concerns, are that the key immune study was funded by a pet food manufacturer (Nestlé Purina), sample sizes are modest, and much of the supporting mechanistic data comes from other species like pigs and humans. Dogs with a dairy intolerance are a reasonable exception to watch.",
+    "topic": "bovine-colostrum-immune-gut",
+    "source": "Satyaraj et al. 2013 (Purina-funded); cross-species colostrum literature"
+  },
+  {
+    "question": "Does L-theanine help calm anxious dogs?",
+    "answer": "It's among the better-studied calming supplements, with consistent positive owner reports but weak study designs. An open-label study (Pike et al., 2015) of storm-sensitive dogs given L-theanine found owners reported reduced severity and less drooling, pacing, panting, and hiding. An Italian study of 20 noise-phobic dogs combined it with behavioral therapy for 63 days and saw significant symptom reduction. Most studies lack blinding/placebo controls. Confidence: LOW-to-MEDIUM.",
+    "topic": "l-theanine-anxiety",
+    "source": "Pike et al. 2015 J Vet Behav (open-label); Michelazzi et al. (n=20, 63-day)"
+  },
+  {
+    "question": "What is L-theanine and how does it work in dogs?",
+    "answer": "L-theanine is an amino acid found naturally in green tea. It's thought to promote relaxation by influencing brain neurotransmitters and supporting alpha brain-wave activity associated with a calm-but-alert state. Notably it's non-sedating, so it aims to reduce anxiety without making the dog drowsy or impairing awareness.",
+    "topic": "l-theanine-anxiety",
+    "source": "L-theanine mechanism literature; Yokogoshi et al. 1998"
+  },
+  {
+    "question": "What kind of anxiety is L-theanine best for in dogs?",
+    "answer": "The canine research focuses on situational and noise-related anxiety, specifically thunderstorm sensitivity and noise phobias. It appears best suited to predictable, situational daytime stress rather than as a treatment for severe or generalized anxiety disorders. It's most effective used as part of a plan that includes behavioral training, not alone. Confidence: LOW-to-MEDIUM.",
+    "topic": "l-theanine-anxiety",
+    "source": "Pike et al. 2015 (storm); Michelazzi et al. (noise phobia)"
+  },
+  {
+    "question": "Does L-theanine make dogs sleepy or sedated?",
+    "answer": "No, that's one of its main appeals. L-theanine is non-sedating: it's intended to promote a calmer state without reducing alertness or causing drowsiness. This distinguishes it from some sedative-type calming aids and is part of why it's often suggested for situations where you still want the dog responsive, like training through a stressful trigger.",
+    "topic": "l-theanine-anxiety",
+    "source": "Canine L-theanine product and mechanism literature"
+  },
+  {
+    "question": "Why is the evidence for L-theanine in dogs considered weak?",
+    "answer": "Because the studies have design problems even though results are positive: most are open-label (no blinding), rely on owner ratings susceptible to the caregiver placebo effect, use small samples of roughly 10 to 20 dogs, and at least one was funded by the supplement's manufacturer. The Italian study also found no change in blood cortisol, a physiological stress marker, despite behavioral improvement. Confidence: LOW-to-MEDIUM.",
+    "topic": "l-theanine-anxiety",
+    "source": "skeptvet evidence review; Michelazzi et al. (no cortisol change)"
+  },
+  {
+    "question": "What did the L-theanine cortisol finding mean for anxious dogs?",
+    "answer": "In the 63-day noise-phobia study, dogs showed a significant reduction in observable phobic behaviors, but their blood cortisol (a stress hormone) did not significantly change. This is a mixed signal: the behavior improved, but a key objective physiological stress marker did not, which is one reason the benefit is considered behaviorally suggestive rather than firmly proven. Confidence: LOW-to-MEDIUM.",
+    "topic": "l-theanine-anxiety",
+    "source": "Michelazzi et al. (no significant cortisol change despite behavioral improvement)"
+  },
+  {
+    "question": "Can L-theanine be combined with other calming approaches for dogs?",
+    "answer": "Yes, and that's how it performed best in research. In studies it was paired with behavioral therapy, and it's often used alongside environmental management. Some sources note melatonin can complement it for nighttime or noise-related anxiety while L-theanine targets daytime situational stress. The consistent theme is that L-theanine is a support to a broader plan, not a standalone fix. Confidence: LOW-to-MEDIUM.",
+    "topic": "l-theanine-anxiety",
+    "source": "Michelazzi et al. (with behavioral therapy); calming-aid comparison literature"
+  },
+  {
+    "question": "Is L-theanine safe for dogs?",
+    "answer": "Yes, L-theanine has a wide safety margin and is generally very well-tolerated, with side effects being rare and mild, such as slight digestive upset. Because it's non-sedating and low-risk, it's often recommended as a reasonable first-try option for mild to moderate situational anxiety, ideally combined with behavioral approaches.",
+    "topic": "l-theanine-anxiety",
+    "source": "Canine L-theanine safety literature"
+  },
+  {
+    "question": "How is L-theanine given to dogs for things like thunderstorms?",
+    "answer": "In the studies it was given over a sustained period, for example daily for several weeks or before and across multiple storm events, rather than as a single instant-acting dose. This suggests it may work best with consistent use leading into an anxiety-provoking season rather than as a last-minute single dose. Product forms include chews and tablets; matching the dose to the dog's size matters since some treats underdose larger dogs. Confidence: LOW-to-MEDIUM.",
+    "topic": "l-theanine-anxiety",
+    "source": "Pike et al. 2015 (4 weeks or 5 storm events); product dosing guidance"
+  }
+]
