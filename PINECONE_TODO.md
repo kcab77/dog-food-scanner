@@ -48,6 +48,7 @@ knowledge as possible so the assistant becomes THE go-to instead of normal blog 
 - [x] **Holistic Thyroid Support** (organ series #1) — confidence-tagged, web-verified; honest "no natural cure / levothyroxine is standard", iodine-excess + hormone-containing-glandular safety warnings (12 + diet-context + herbs = 14 pairs) — ingested 2026-07-06. SEO article: `drafts/thyroid-support-for-dogs.md`; answer page `/answers/natural-thyroid-support-for-dogs`
 - [x] **Holistic Heart Support** (complementary to existing heart pack) — from Kyle's NotebookLM video summary; gaps only: hawthorn, resting-respiratory-rate monitoring, NT-proBNP, dandelion diuretic, CBD caution, dental-heart association (verified: assoc not cause), cardiac nutrients + diet-context (7 pairs) — ingested 2026-07-06. Flagged in FACTCHECK_QUEUE.
 - [x] Milk-thistle SEO answer page + 301 redirect from dead WP URL — `/answers/milk-thistle-for-dogs`
+- [x] **Evidence-Based Holistic Topics** — Kyle-supplied research roundup (omega-3 OA, probiotics, curcumin, CBD, MCT/CDS, antioxidant brain-aging, GLM, raw diet metabolic, B. longum anxiety) + acupuncture + Coriolus/PSP hemangiosarcoma cancer-caution case; web-verified the two cancer/epilepsy-critical citations directly (15 pairs) — ingested 2026-07-12. Obsidian summary: `commonsensedog knowledge/Evidence-Based Holistic Topics (2026-07-12).md`
 
 ## 🔍 In review (drafted, awaiting Kyle's approval before ingest)
 *(none right now — all caught up; all Brain/Nutrition/ vault notes are now packed)*

@@ -1,0 +1,92 @@
+[
+  {
+    "question": "Does fish oil actually help with my dog's arthritis, or is that just marketing?",
+    "answer": "🟢 Strong evidence: omega-3s (EPA/DHA) are one of the best-supported natural joint interventions in dogs. A 127-dog multicenter RCT found a diet with 31x more omega-3 and a shifted omega-6:3 ratio improved owner-reported rising and playing by 6 weeks and walking by 12–24 weeks vs. control food (Roush et al., 2010, JAVMA, PMID 20043800). A separate 38-dog RCT found fish-oil-enriched diets significantly improved peak vertical force — an objective, blinded gait/weight-bearing measurement — at 90 days (5.6% vs. 0.4% in controls). The effect is dose- and ratio-dependent, so 'a little fish oil' isn't the same as a therapeutic dose.",
+    "topic": "omega-3-osteoarthritis",
+    "source": "Common Sense Dog — Evidence-Based Holistic Topics 2026-07"
+  },
+  {
+    "question": "How much fish oil does a dog actually need for it to work for joints?",
+    "answer": "🟢 Strong evidence for omega-3 as a joint intervention, though exact dosing varies by study. The trials showing real benefit (Roush et al., 2010, JAVMA; and a 38-dog force-plate RCT published in JAVMA 236(1)) used diets with substantially elevated omega-3 and a meaningfully shifted omega-6:3 ratio — not a token daily drizzle. A commonly cited practical target from veterinary nutrition sources is roughly 20mg combined EPA+DHA per pound of body weight per day; talk to your vet before dosing a dog with a bleeding disorder or on other medications.",
+    "topic": "omega-3-osteoarthritis",
+    "source": "Common Sense Dog — Evidence-Based Holistic Topics 2026-07"
+  },
+  {
+    "question": "Are probiotics worth giving my dog if they don't have any stomach issues?",
+    "answer": "🟡 Moderate evidence, but it's strongest for dogs that already have GI disease or atopic dermatitis (skin allergies) — weaker for a healthy dog with no symptoms. An RCT found a probiotic/nutraceutical combo improved pruritic (itchy) dermatitis faster than placebo over 10 weeks, with favorable shifts in gut microbiota (PMC10854619). Specific strains — Lactobacillus sakei and L. rhamnosus GG — reduced atopic dermatitis symptoms in trials (PMC12012994). In healthy dogs, a synbiotic RCT found the response was individualized and depended on the dog's existing gut flora rather than a uniform benefit (PMC8111948).",
+    "topic": "probiotics-gut-skin",
+    "source": "Common Sense Dog — Evidence-Based Holistic Topics 2026-07"
+  },
+  {
+    "question": "My dog has itchy skin — will probiotics help?",
+    "answer": "🟡 Moderate evidence — this is actually one of the better-supported uses for probiotics. A 10-week RCT found a probiotic/nutraceutical combination improved pruritic dermatitis faster than placebo, alongside favorable gut microbiota shifts (PMC10854619). Specific strains (Lactobacillus sakei, L. rhamnosus GG) reduced atopic dermatitis symptoms in canine trials (PMC12012994). It's a reasonable adjunct alongside your vet's allergy management plan — not a replacement for it if symptoms are severe.",
+    "topic": "probiotics-gut-skin",
+    "source": "Common Sense Dog — Evidence-Based Holistic Topics 2026-07"
+  },
+  {
+    "question": "Is turmeric or curcumin actually backed by research for dog joint pain?",
+    "answer": "🟠 Emerging evidence — the direction is positive but there are still few large canine RCTs, and curcumin's main practical limitation is poor bioavailability. One RCT found a diet combining curcuminoids, hydrolyzed collagen, and green tea extract significantly reduced pain-on-manipulation in osteoarthritic dogs after 3 months vs. control (PMC5738810). Mechanistic/in-vitro work shows curcumin reduces inflammatory markers (PGE2, MMP-3) and cartilage breakdown. Practical takeaway: look for a combination formula or an enhanced-bioavailability curcumin product — raw turmeric powder alone is poorly absorbed and unlikely to reach therapeutic levels.",
+    "topic": "turmeric-curcumin",
+    "source": "Common Sense Dog — Evidence-Based Holistic Topics 2026-07"
+  },
+  {
+    "question": "Is CBD actually proven to help dogs with seizures?",
+    "answer": "🟡 Moderate evidence for epilepsy specifically. A blinded RCT (26 dogs) found CBD added to standard anti-epileptic drugs produced a significant 33% reduction in seizure frequency vs. placebo, though the proportion of dogs classified as 'responders' (≥50% reduction) was similar between groups (JAVMA 254(11), PMID 31067185). A later 39-dog double-blind crossover trial at a higher dose (9mg/kg/day) found a more clearly significant reduction (JVIM, Rozental et al., 2023). Plasma CBD level correlated with seizure reduction, and liver enzymes should be monitored. This is an adjunct to — never a replacement for — your vet's anti-epileptic drug protocol.",
+    "topic": "cbd-oa-epilepsy",
+    "source": "Common Sense Dog — Evidence-Based Holistic Topics 2026-07"
+  },
+  {
+    "question": "Does CBD help dogs with arthritis pain?",
+    "answer": "🟡 Moderate evidence, still early overall. An RCT found CBD-treated osteoarthritic dogs showed improved comfort and activity scores vs. placebo and the product was well tolerated (Frontiers in Veterinary Science, 2023). A systematic review of the canine CBD literature (for both OA and epilepsy) found the evidence is real but still limited to a handful of trials with moderate-to-high risk of bias — promising, not settled. Use hemp-derived, THC-free products only, and treat it as an adjunct alongside vet-directed pain management, not a standalone treatment.",
+    "topic": "cbd-oa-epilepsy",
+    "source": "Common Sense Dog — Evidence-Based Holistic Topics 2026-07"
+  },
+  {
+    "question": "My senior dog seems confused and disoriented at night — is there a diet that actually helps with dog dementia?",
+    "answer": "🟢 Strong evidence for MCT oil in canine cognitive dysfunction syndrome (CDS), one of the better-supported interventions for early dog dementia. A double-blind, placebo-controlled RCT across 24 clinics (87 senior dogs) found a 6.5% MCT diet significantly improved all 6 CDS categories — disorientation, social interaction, sleep-wake cycle, house-training, anxiety, and activity — by day 90, while the control diet only improved 4 of 6 (PMC6299068). Memory improvements on cognitive testing showed up within just 2 weeks. Talk to your vet about a CDS workup first, since disorientation can also signal other medical issues in seniors.",
+    "topic": "mct-cognitive-dysfunction",
+    "source": "Common Sense Dog — Evidence-Based Holistic Topics 2026-07"
+  },
+  {
+    "question": "Can diet really slow down brain aging in older dogs, or is that overhyped?",
+    "answer": "🟢 Strong evidence — this is foundational research in the field, not a fringe claim. Longitudinal trials (the Milgram studies) found a diet enriched with vitamins E and C, fruits/vegetables, and mitochondrial cofactors (lipoic acid, L-carnitine) produced learning improvements within 2 weeks in aged dogs, sustained over 2 years, with treated seniors approaching young-dog performance on cognitive tests (PMC2734239). Importantly, the effect was age-specific — no benefit was seen in young dogs, consistent with an oxidative-stress mechanism. Combining the diet with behavioral/environmental enrichment (puzzle toys, new experiences) produced a larger effect than diet alone — so pair the two rather than relying on diet in isolation.",
+    "topic": "antioxidant-brain-aging",
+    "source": "Common Sense Dog — Evidence-Based Holistic Topics 2026-07"
+  },
+  {
+    "question": "Is green-lipped mussel worth adding for my dog's joints, or should I just do glucosamine/chondroitin?",
+    "answer": "🟡 Low-to-moderate evidence for green-lipped mussel (GLM) alone, but the direction is consistent, and it's stronger in combination formulas. An 8-week RCT (45 dogs) found GLM extract alleviated pain and swelling, and combined with krill oil it increased plasma omega-3 levels and improved peak vertical force — an objective gait measurement (Frontiers in Veterinary Science, 2024). Systematic reviews rank GLM as low-to-moderate evidence when used alone, but stronger when combined with glucosamine/chondroitin or omega-3s. Practical takeaway: reasonable as part of a combination joint product rather than a standalone fix — and it doesn't replace weight management or omega-3, which have stronger individual evidence.",
+    "topic": "green-lipped-mussel",
+    "source": "Common Sense Dog — Evidence-Based Holistic Topics 2026-07"
+  },
+  {
+    "question": "I read that a mushroom supplement can help dogs with hemangiosarcoma — is that actually true?",
+    "answer": "🟠🔴 Mixed evidence — important to get this one right. A small Penn Vet pilot (15 dogs) found Coriolus versicolor polysaccharopeptide (PSP, brand name I'm-Yunity) alone produced a median survival of 199 days at 100mg/kg/day — comparable to doxorubicin chemotherapy and better than surgery alone (19–86 days) (Penn Today; Brown et al., 2012, PubMed 22988473). But a larger, controlled follow-up RCT found adding PSP to doxorubicin after splenectomy did NOT improve survival over doxorubicin alone — and female dogs on PSP-alone actually had significantly reduced survival compared to dogs on doxorubicin/placebo (Gedney et al., 2022, Veterinary and Comparative Oncology, PMID 35442554). This is a textbook case where an encouraging small pilot didn't hold up in a larger controlled trial. Early positive data is not the same as proven benefit — this should never replace standard oncologic treatment (surgery ± chemotherapy) for hemangiosarcoma, and any supplement decision for a cancer diagnosis should go through your vet oncologist.",
+    "topic": "coriolus-hemangiosarcoma",
+    "source": "Common Sense Dog — Evidence-Based Holistic Topics 2026-07"
+  },
+  {
+    "question": "Does acupuncture actually work for chronic pain in dogs, or is it just placebo for the owner?",
+    "answer": "🟠 Weak-to-mixed evidence — acupuncture should be positioned as a safe adjunct, not a proven primary treatment. An RCT using objective ground-reaction-force and activity-count measures (32 dogs, weekly sessions x4 weeks) is one of the few studies using non-subjective outcomes (PMC7517673). A critical appraisal of 4 RCTs found weak overall strength of evidence, with 3 of the 4 trials showing acupuncture was no better than placebo for pain reduction (PMC9227989). That said, major veterinary pain-management guidelines (AAHA/AAFP/WSAVA) still endorse it as a safe adjunct within a broader multimodal pain plan — the honest framing is 'reasonable complementary option,' not 'proven pain treatment.'",
+    "topic": "acupuncture-chronic-pain",
+    "source": "Common Sense Dog — Evidence-Based Holistic Topics 2026-07"
+  },
+  {
+    "question": "Is raw food actually healthier than kibble, or is that just a holistic-community belief?",
+    "answer": "🟠 Emerging evidence with real safety trade-offs — the metabolic signal is promising but studies are short-duration so far. A 2025 University of Helsinki intervention study found raw-fed dogs had lower blood glucose/lipids, higher ketones, and a lower insulin-resistance proxy (TyG index) vs. kibble-fed dogs over 4.5 months (Frontiers in Veterinary Science, 2024/2025). Other studies report better dental, ear, and skin health and higher fecal anti-inflammatory markers on raw diets, with kibble-fed dogs gaining more weight. But raw diets carry documented higher Salmonella/Campylobacter/resistant-bacteria loads — clinical illness in healthy dogs is rare, but the risk is real for immunocompromised people or pets in the household. Any raw recommendation should come with food-safety handling guidance, not just the upside.",
+    "topic": "raw-diet-metabolic",
+    "source": "Common Sense Dog — Evidence-Based Holistic Topics 2026-07"
+  },
+  {
+    "question": "Is there a probiotic that actually helps with dog anxiety, not just gut health?",
+    "answer": "🟠 Early/signal-only evidence — promising, but the flagship study has not yet been fully peer-reviewed, so this should be framed as an emerging lead, not an established treatment. A crossover trial in 24 anxious Labradors found Bifidobacterium longum (strain NCC3001) supplementation was associated with improved anxiety behaviors in 90% of dogs, lower salivary cortisol in 83%, and lower heart-rate response in 75%. The proposed mechanism is the gut-brain axis via vagal signaling, shown in preclinical models (mechanism data: MDPI, 15(14):3122). For a dog with significant anxiety, this is worth mentioning as an emerging gut-brain option, but it should be paired with behavioral intervention and a vet consult — not used as a standalone fix.",
+    "topic": "psychobiotic-anxiety",
+    "source": "Common Sense Dog — Evidence-Based Holistic Topics 2026-07"
+  },
+  {
+    "question": "Out of all the holistic dog supplements people talk about, which ones actually have the strongest science behind them?",
+    "answer": "Ranked by evidence strength: 🟢 STRONG — omega-3 (EPA/DHA) for osteoarthritis, MCT-oil diets for cognitive dysfunction in seniors, and antioxidant-enriched diets for brain aging — all backed by multiple RCTs with objective outcome measures. 🟡 MODERATE — probiotics for GI disease/atopic dermatitis, and CBD for OA pain and as an epilepsy adjunct. 🟠 EMERGING — turmeric/curcumin for inflammation, green-lipped mussel for joints (stronger in combination formulas), and raw/fresh diets for metabolic markers (short-duration studies only). 🟠 WEAK-MIXED — acupuncture for chronic pain (adjunct only). ⚪ EARLY/SIGNAL-ONLY — B. longum probiotic for anxiety. And one important caution case: Coriolus versicolor (PSP) mushroom extract looked promising in a small hemangiosarcoma pilot but did not hold up in a larger controlled trial — a good reminder that an exciting pilot study is not the same as proven benefit, especially for cancer.",
+    "topic": "evidence-strength-overview",
+    "source": "Common Sense Dog — Evidence-Based Holistic Topics 2026-07"
+  }
+]
