@@ -1718,8 +1718,8 @@ function getScoreColor(score: number): string {
 function getScoreLabel(score: number): string {
   if (score >= 70) return "Good 👍";
   if (score >= 50) return "Fair ⚠️";
-  if (score >= 30) return "Poor ❌";
-  return "Very Poor 🚫";
+  if (score >= 30) return "Below Average";
+  return "Low Quality";
 }
 
 function getTreatScoreLabel(score: number): string {
@@ -4984,6 +4984,17 @@ export default function App() {
                     💚 I fed my dog kibble for 6 years because I couldn't afford anything better — and he was okay. So please don't feel bad if this is what you can afford right now. They still love you exactly the same.{"\n\n"}The goal isn't perfection, it's just small improvements over time. Even adding a whole food topper, a raw egg, or a little fish a few times a week goes a long way. I'm just trying to help as much as I can. 🐾
                   </Text>
                   <Text style={{ color: "#6B7280", fontSize: 11, marginTop: 8 }}>— Kyle, PawGrade founder</Text>
+                </View>
+              )}
+
+              {score !== null && (
+                <View style={{ backgroundColor: "#0d1f2e", borderRadius: 16, padding: 16, marginHorizontal: 16, marginBottom: 12, borderWidth: 1, borderColor: "#2A5A7A" }}>
+                  <Text style={{ color: "#7DD3FC", fontSize: 12, fontWeight: "700", marginBottom: 6, textTransform: "uppercase", letterSpacing: 0.5 }}>
+                    💡 {getNextStep(score, processing).headline}
+                  </Text>
+                  <Text style={{ color: "#D1D5DB", fontSize: 13, lineHeight: 19 }}>
+                    {getNextStep(score, processing).detail}
+                  </Text>
                 </View>
               )}
 
