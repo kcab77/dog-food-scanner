@@ -1861,11 +1861,13 @@ function AccordionSection({
   children,
   defaultOpen = false,
   bare = false,
+  titleColor,
 }: {
   title: string;
   children: React.ReactNode;
   defaultOpen?: boolean;
   bare?: boolean;
+  titleColor?: string;
 }) {
   const [open, setOpen] = useState(defaultOpen);
   const toggle = () => {
@@ -1883,7 +1885,7 @@ function AccordionSection({
         ...(bare ? { marginHorizontal: 16, marginTop: 4, paddingVertical: 6 } : {}),
       }}
     >
-      <Text style={[styles.sectionTitle, { marginBottom: 0 }]}>{title}</Text>
+      <Text style={[styles.sectionTitle, { marginBottom: 0 }, titleColor ? { color: titleColor } : null]}>{title}</Text>
       <Text style={{ color: "#6B7280", fontSize: 15, fontWeight: "800" }}>
         {open ? "▾" : "▸"}
       </Text>
@@ -5079,36 +5081,8 @@ export default function App() {
                 </View>
               )}
 
-              {flagged.length > 0 && (
-                <View style={styles.section}>
-                  <Text style={[styles.sectionTitle, { color: "#FC8181" }]}>🚩 Red Flags ({flagged.length})</Text>
-                  <Text style={[styles.omegaNote, { marginBottom: 8 }]}>Tap a name to see why it's a concern.</Text>
-                  {flagged.map((f, i) => {
-                    const open = !!expandedRedFlags[f.name];
-                    return (
-                      <View key={i} style={{ marginBottom: 8 }}>
-                        <TouchableOpacity
-                          activeOpacity={0.7}
-                          onPress={() => {
-                            LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-                            setExpandedRedFlags((prev) => ({ ...prev, [f.name]: !prev[f.name] }));
-                          }}
-                          style={{ flexDirection: "row", alignItems: "center", alignSelf: "flex-start", backgroundColor: SEVERITY_COLORS[f.severity] || "#3d0a0a", borderRadius: 14, paddingHorizontal: 12, paddingVertical: 6 }}
-                        >
-                          <Text style={{ color: "#fff", fontSize: 13, fontWeight: "700" }}>{f.name}</Text>
-                          <Text style={{ color: "#fff", fontSize: 11, fontWeight: "800", marginLeft: 6 }}>{open ? "▾" : "▸"}</Text>
-                        </TouchableOpacity>
-                        {open && (
-                          <Text style={{ color: "#D1D5DB", fontSize: 12, lineHeight: 18, marginTop: 6, marginLeft: 2 }}>{f.reason}</Text>
-                        )}
-                      </View>
-                    );
-                  })}
-                </View>
-              )}
-
               {ingredients.length > 0 && (
-                <AccordionSection title="Ingredient Breakdown">
+                <AccordionSection title="Ingredient Breakdown" defaultOpen>
                   <Text style={styles.pillHint}>
                     Tap any ingredient to learn more
                   </Text>
@@ -5138,6 +5112,33 @@ export default function App() {
                       );
                     })}
                   </View>
+                </AccordionSection>
+              )}
+
+              {flagged.length > 0 && (
+                <AccordionSection title={`🚩 Ingredients to Watch (${flagged.length})`} titleColor="#FC8181">
+                  <Text style={[styles.omegaNote, { marginBottom: 8 }]}>Tap a name to see why it's a concern.</Text>
+                  {flagged.map((f, i) => {
+                    const open = !!expandedRedFlags[f.name];
+                    return (
+                      <View key={i} style={{ marginBottom: 8 }}>
+                        <TouchableOpacity
+                          activeOpacity={0.7}
+                          onPress={() => {
+                            LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+                            setExpandedRedFlags((prev) => ({ ...prev, [f.name]: !prev[f.name] }));
+                          }}
+                          style={{ flexDirection: "row", alignItems: "center", alignSelf: "flex-start", backgroundColor: SEVERITY_COLORS[f.severity] || "#3d0a0a", borderRadius: 14, paddingHorizontal: 12, paddingVertical: 6 }}
+                        >
+                          <Text style={{ color: "#fff", fontSize: 13, fontWeight: "700" }}>{f.name}</Text>
+                          <Text style={{ color: "#fff", fontSize: 11, fontWeight: "800", marginLeft: 6 }}>{open ? "▾" : "▸"}</Text>
+                        </TouchableOpacity>
+                        {open && (
+                          <Text style={{ color: "#D1D5DB", fontSize: 12, lineHeight: 18, marginTop: 6, marginLeft: 2 }}>{f.reason}</Text>
+                        )}
+                      </View>
+                    );
+                  })}
                 </AccordionSection>
               )}
 

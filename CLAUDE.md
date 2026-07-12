@@ -124,18 +124,25 @@ Scoring algorithm (unchanged across recent UI work — **do not change scoring w
 
 ## Results Screen & Scan Behavior (v1.8.1 — UI layer)
 
-Post-scan results render in `app/index.tsx` in this section order:
+Post-scan results render in `app/index.tsx` in this section order (reordered 2026-07-12 for an
+"inform, don't judge" flow — factual/actionable content leads, the red-flag callout is opt-in):
 1. Compassionate empathy note (always visible, top)
-2. Why This Score (always visible)
-3. Guaranteed Analysis (always visible)
-4. Red Flags — tap a name to expand its one-sentence reason **inline** (uses `expandedRedFlags` state)
-5. Ingredient Breakdown *(collapsible)*
-6. "Simple additions to upgrade the bowl" (egg / sardines or fish oil / yogurt-kefir-goat's milk)
-7. Hershey's Protocol *(collapsible)*
-8. Recommended Supplements *(collapsible)* — 7 affiliate cards, order: Probiotics → Fish Oil → Green Lipped Mussel → Heart → Liver → Detox → Four Leaf Rover
-9. Grocery Store Finds *(collapsible)*
-10. Lipoma Prevention *(collapsible)*
-11. TCVM / Protein Energetics *(collapsible)*
+2. "Here's how to improve" actionable card (`getNextStep()`, always visible when scored)
+3. Why This Score (always visible)
+4. Guaranteed Analysis (always visible)
+5. Ingredient Breakdown *(collapsible, **open by default**)* — pill-colored, informational first
+6. "🚩 Ingredients to Watch" — formerly "Red Flags"; now *collapsible, closed by default* so it's
+   opt-in rather than an unavoidable red banner. Tap a name to expand its one-sentence reason
+   **inline** (uses `expandedRedFlags` state). Red title text via `AccordionSection`'s `titleColor` prop.
+7. "Simple additions to upgrade the bowl" (egg / sardines or fish oil / yogurt-kefir-goat's milk)
+8. Hershey's Protocol *(collapsible)*
+9. Recommended Supplements *(collapsible)* — 7 affiliate cards, order: Probiotics → Fish Oil → Green Lipped Mussel → Heart → Liver → Detox → Four Leaf Rover
+10. Grocery Store Finds *(collapsible)*
+11. Lipoma Prevention *(collapsible)*
+12. TCVM / Protein Energetics *(collapsible)*
+
+Score labels (`getScoreLabel`) were also softened 2026-07-12: no more "Poor ❌"/"Very Poor 🚫" —
+now "Below Average"/"Low Quality" (colors/thresholds/scoring math unchanged, presentation only).
 
 - Collapsible sections use the reusable **`<AccordionSection>`** component (RN `LayoutAnimation`, ▸/▾ chevron, collapsed by default; `bare` mode wraps cards that bring their own styling like Lipoma/Hershey).
 - **Food type is auto-detected** by Claude Vision (`result.processing_method`) — the manual pre-scan food-type picker was removed.
