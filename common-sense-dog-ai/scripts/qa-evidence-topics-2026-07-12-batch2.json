@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Is yucca actually good for my dog's joint inflammation, or is it just in supplements as filler?",
+    "answer": "🟠 Early/signal-only evidence — no canine clinical trials exist yet, so this shouldn't be presented as proven the way omega-3 or MCT oil are. Yucca's steroidal saponins and phenolics (including resveratrol) have plausible anti-inflammatory/anti-arthritic mechanisms in review literature — NF-κB inhibition and suppression of intestinal protozoa implicated in joint inflammation (Journal of Inflammation, 2006; PubMed 16571135) — but this is mechanistic/in-vitro reasoning, not a dog trial. The best-documented actual effect in dogs is unrelated to joints: reduced fecal ammonia and stool/urine odor when added to food. It's a common ingredient in joint blends, but its inclusion there rides on plausibility, not dog trial evidence.",
+    "topic": "yucca-schidigera",
+    "source": "Common Sense Dog — Evidence-Based Holistic Topics 2026-07"
+  },
+  {
+    "question": "Do glucosamine and chondroitin actually work for dog arthritis, or is that debunked?",
+    "answer": "🟡 Moderate evidence — real but modest effect, and it's slower-acting than NSAIDs. A 35-dog RCT compared glucosamine HCl + chondroitin sulfate against carprofen (a positive control, not placebo) and found statistically significant improvements in pain, weight-bearing, and OA severity by day 70 — but the response developed more slowly than with carprofen (PubMed 16647870). A separate placebo-controlled trial testing the combination alongside marine fatty acids and carprofen for hip OA found benefit from the combined approach (PMC9929184). Mechanistically, chondroitin inhibits cartilage-degrading enzymes, but whether oral dosing delivers enough active compound to joint tissue to matter is still genuinely debated in reviews (PMC5356289). Reasonable first-line supplement, safe to combine with other approaches, but set expectations for a slower, more modest effect than prescription pain management — not a replacement for vet-directed care in moderate-to-severe OA.",
+    "topic": "glucosamine-chondroitin",
+    "source": "Common Sense Dog — Evidence-Based Holistic Topics 2026-07"
+  },
+  {
+    "question": "My senior dog has liver issues — is SAMe actually worth giving?",
+    "answer": "🟡 Moderate-strong evidence for the liver-support use specifically, which is well-established and standard in veterinary liver-disease protocols. SAMe replenishes hepatic glutathione and reduces oxidative stress in damaged liver cells (VCA). Important limit: SAMe supports the liver's ability to cope with damage, it doesn't treat the underlying cause — infection, toxin exposure, copper accumulation, or cancer — so it's a supportive adjunct once your vet has identified and is addressing the actual cause, not a stand-alone fix.",
+    "topic": "same-liver-cognitive",
+    "source": "Common Sense Dog — Evidence-Based Holistic Topics 2026-07"
+  },
+  {
+    "question": "Does SAMe help with dog cognitive decline the same way MCT oil does?",
+    "answer": "🟠 Emerging evidence — promising but thinner than the MCT oil or antioxidant-diet evidence for cognitive support. A 36-dog double-blinded, placebo-controlled trial gave SAM tosylate (18mg/kg) for 2 months to dogs over 8 showing cognitive-dysfunction signs, using a standardized 14-item behavior/locomotion questionnaire; SAMe significantly improved activity (57% vs. 9% of dogs) and awareness (60% vs. 21%) vs. placebo, and more than halved the aggregate mental-impairment score in 41% of treated dogs vs. 16% on placebo (dvm360 summary of the 2008 trial, PubMed). It's a reasonable option, especially if liver support is also a goal, but the MCT-diet and antioxidant-diet evidence covered elsewhere is deeper (larger multicenter trials, more replicated).",
+    "topic": "same-liver-cognitive",
+    "source": "Common Sense Dog — Evidence-Based Holistic Topics 2026-07"
+  },
+  {
+    "question": "Is boswellia (frankincense) actually proven for dog joint pain?",
+    "answer": "🟡 Moderate evidence, almost always tested as part of a combination product rather than boswellia alone — so don't oversell an isolated boswellia extract as independently proven. A randomized, placebo-controlled crossover trial found a supplement combining undenatured type II collagen (UC-II) and Boswellia serrata improved mobility impairment in dogs with mild-to-moderate OA after just 4 weeks (PMC11524509). A Swiss multicenter trial (29 dogs with chronic joint/spinal disease) found boswellia resin extract at 400mg/10kg body weight daily was effective in 71% of eligible dogs after only 2 weeks with no reported side effects. Good evidence for combination joint-support products; boswellia's standalone contribution isn't cleanly isolated in most trials.",
+    "topic": "boswellia-serrata",
+    "source": "Common Sense Dog — Evidence-Based Holistic Topics 2026-07"
+  },
+  {
+    "question": "Is melatonin safe and effective for my dog's fear of thunderstorms/fireworks?",
+    "answer": "🟡 Moderate evidence specifically for noise phobia and situational stress — one of the better-supported 'natural' options for predictable stressors like fireworks, storms, vet visits, or car trips. An RCT with an active control found melatonin effective for noise-phobia and sleep-disrupted anxiety in dogs. The mechanism is sedation, not direct fear-reduction, which matters for expectations — it calms rather than 'cures' the fear response. Safety profile is favorable at typical doses (roughly 1.5–6mg by weight, every 8–24h), but it must be xylitol-free — many human melatonin gummies contain xylitol, which is acutely toxic to dogs. Broader claimed uses (separation anxiety, compulsive behaviors, cognitive disorders, pre-op anxiety) are mostly supported by case reports and anecdote, not RCTs — don't extend the same confidence there.",
+    "topic": "melatonin-situational-anxiety",
+    "source": "Common Sense Dog — Evidence-Based Holistic Topics 2026-07"
+  },
+  {
+    "question": "What is alpha-casozepine and does it actually calm dogs down?",
+    "answer": "🟠 Weak-mixed evidence. Alpha-casozepine is a milk-derived peptide structurally similar to GABA, with affinity for GABA-A receptors (a benzodiazepine-like mechanism in theory). Some newer studies show an anxiolytic-like effect — reduced stress-related behavior, increased olfactory exploration — with sustained daily dosing, but there's no evidence it works as an acute, shortly-before-the-stressor dose, and recent trials find only a mild effect, often only when combined with other ingredients (CBD, L-tryptophan) rather than given alone. Reasonable as a mild, low-risk daily adjunct for anxious dogs, but temper expectations — it's not a dependable stand-alone fix, and won't help if given right before a known stressor (for that situational use, melatonin has better support).",
+    "topic": "alpha-casozepine-anxiety",
+    "source": "Common Sense Dog — Evidence-Based Holistic Topics 2026-07"
+  },
+  {
+    "question": "Does cranberry actually prevent UTIs in dogs?",
+    "answer": "🟠 Weak-mixed evidence, and this is a case where the popular belief runs ahead of the data — don't rely on cranberry to treat an active UTI or reliably prevent recurrence. A randomized controlled trial in 94 dogs prone to bacteriuria (acute thoracolumbar disk herniation) found cranberry extract did NOT reduce bacteriuria incidence — 11 dogs on cranberry developed it vs. 6 on placebo (JVIM, PMC5259620). A systematic review of 3 studies (106 dogs, 16 cats) found no statistically significant impact from cranberry in any study, with low-to-very-low certainty evidence overall (JVPT, Weese 2026). The field's own guidelines reflect this: the 2019 ISCAID urinary guidelines state there's no evidence cranberry is effective for treating cystitis, and insufficient evidence to recommend it for prevention. A separate smaller study did find cranberry blocked E. coli adhesion to kidney cells in vitro and reduced UTI development in dogs with a UTI history — a more favorable but much smaller result. Net: plausible mechanism, but the more rigorous trials don't support it. A vet visit for recurrent UTIs is the right move, not a supplement swap.",
+    "topic": "cranberry-uti",
+    "source": "Common Sense Dog — Evidence-Based Holistic Topics 2026-07"
+  },
+  {
+    "question": "Is quercetin really 'nature's Benadryl' for dogs with allergies?",
+    "answer": "🟠 Emerging evidence, and mostly studied as part of a broader antioxidant/polyphenol diet rather than as an isolated quercetin supplement — so the 'nature's Benadryl' framing oversells the canine-specific evidence. A 40-dog RCT found a diet fortified with antioxidants, polyphenols, and omega-3s (quercetin among the polyphenols) produced lower atopic dermatitis severity scores (CADESI-4) at day 60 vs. baseline (PMC8603501). The proposed mechanism — mast-cell mediator and histamine-synthesis inhibition — is well-supported in vitro, but there's no dog-specific proof that quercetin alone reduces clinical allergic response. Reasonable as part of a broader anti-inflammatory, antioxidant-rich diet for atopic dogs; don't present isolated quercetin supplementation as proven allergy relief on its own.",
+    "topic": "quercetin-allergies",
+    "source": "Common Sense Dog — Evidence-Based Holistic Topics 2026-07"
+  },
+  {
+    "question": "Is lion's mane mushroom actually helpful for my senior dog's brain health?",
+    "answer": "🟠 Early/signal-only evidence — strong mechanistic rationale, but no controlled canine trials exist yet, so treat this as a signal worth watching rather than proof. Lion's Mane (Hericium erinaceus) contains hericenones and erinacines, compounds shown to stimulate nerve growth factor (NGF) synthesis — plausibly relevant to neuronal maintenance in aging brains — but there are no dog-specific studies testing it in isolation. Human trials are mixed: small short-duration RCTs show tentative improvements in processing speed/subjective stress in young adults, while other trials find no effect on composite cognitive or mood measures. A 2025 industry-sponsored study (MycoDog, 30 aging dogs with cognitive decline) found 59% showed measurable improvement and 23% remained stable on a proprietary mushroom blend, tracked via owner surveys and wearable activity/sleep monitors — notable since cognitive decline is typically progressive, but the design was single-arm and open-label with no placebo control, so expectation effects and natural fluctuation can't be ruled out. Reasonable low-risk add-on alongside the better-established interventions (MCT oil, antioxidant diet), not a substitute for them.",
+    "topic": "lions-mane-cognitive",
+    "source": "Common Sense Dog — Evidence-Based Holistic Topics 2026-07"
+  }
+]
