@@ -1,0 +1,62 @@
+[
+  {
+    "question": "What does 'AAFCO complete and balanced' actually mean for my dog's food?",
+    "answer": "It means the food meets AAFCO's minimum nutrient levels (and stays under a few maximums) for a given life stage — either 'Adult Maintenance' or 'Growth & Reproduction' (puppies/pregnant/nursing). Important nuance: these are floor requirements designed to prevent classical deficiency disease in a healthy population, not an optimization target. 'Meets AAFCO' tells you the food won't make a healthy dog nutritionally deficient — it says nothing about whether the mineral forms are well-absorbed, whether the food is anti-inflammatory, or whether it's actually optimal. (Source: AAFCO Dog and Cat Food Nutrient Profiles, official committee document, 2016.)",
+    "topic": "aafco-nutrient-profiles",
+    "source": "Common Sense Dog — AAFCO Nutrient Profiles (official source) 2026-07"
+  },
+  {
+    "question": "Does AAFCO require dog food to have omega-3s (fish oil)?",
+    "answer": "For adult maintenance food: no, not really. AAFCO sets NO minimum requirement for EPA/DHA or ALA (omega-3s) in adult maintenance dog food — those fields are marked 'ND' (not determined) in the official profile. The only omega-3-related rule is indirect: the omega-6:omega-3 ratio can't exceed 30:1, which is an extremely loose ceiling (quality foods typically target 5:1 or better). A kibble can be 100% AAFCO-compliant with zero added fish oil. Puppy/growth food does have a small minimum (0.05% DM for EPA+DHA, 0.08% DM for ALA), but that's a bare deficiency-prevention floor, nowhere near the amount used in trials showing anti-inflammatory joint benefit (which used roughly 31x more omega-3 than a baseline diet). 'AAFCO approved' tells you almost nothing about a food's omega balance — check the actual ratio or ingredient list.",
+    "topic": "aafco-nutrient-profiles",
+    "source": "Common Sense Dog — AAFCO Nutrient Profiles (official source) 2026-07"
+  },
+  {
+    "question": "What's the AAFCO minimum protein and fat for dog food?",
+    "answer": "Adult maintenance: 18.0% crude protein, 5.5% crude fat (both dry matter basis). Growth & reproduction (puppies/pregnant/nursing): 22.5% crude protein, 8.5% crude fat — higher across the board because growing/reproducing dogs have higher nutrient demands. There's no AAFCO maximum for protein or fat — those are minimum-only nutrients. (Source: official AAFCO Dog Food Nutrient Profiles, 2016.)",
+    "topic": "aafco-nutrient-profiles",
+    "source": "Common Sense Dog — AAFCO Nutrient Profiles (official source) 2026-07"
+  },
+  {
+    "question": "How much calcium should be in my puppy's food, and why do large breed puppies need a different amount?",
+    "answer": "AAFCO's growth & reproduction minimum for calcium is 1.2% (dry matter), with a general maximum of 2.5% — but for large-breed puppy formulas specifically (dogs expected to weigh 70lb+ as adults), the maximum is capped much lower, at 1.8% DM. This matters because excess calcium during the rapid-growth window in large breeds is linked to skeletal developmental problems (like osteochondrosis and other growth abnormalities) — it's not just 'more calcium is better for growing bones,' too much is a genuine risk for large breeds specifically. Adult maintenance minimum is much lower at 0.5% DM. Always use a large-breed-specific puppy formula for dogs expected to be large as adults.",
+    "topic": "aafco-nutrient-profiles",
+    "source": "Common Sense Dog — AAFCO Nutrient Profiles (official source) 2026-07"
+  },
+  {
+    "question": "Is there a maximum safe amount of selenium in dog food, and why does it matter?",
+    "answer": "Yes — AAFCO sets selenium at 0.35mg/kg minimum and 2mg/kg maximum, which is the narrowest safety margin (about 5.7x) of any nutrient in the entire AAFCO profile. Most nutrients have much wider safe ranges. This is exactly why the FORM of selenium used matters so much: a cheap, poorly-regulated inorganic source like sodium selenite gives formulators much less margin for error than a well-controlled organic/chelated form. Unlike omega-3 or vitamin E, this is not a nutrient where 'more is better' — don't free-supplement selenium on top of a complete diet without a specific, vet-directed reason, since the gap between adequate and toxic (selenosis) is genuinely tight.",
+    "topic": "aafco-nutrient-profiles",
+    "source": "Common Sense Dog — AAFCO Nutrient Profiles (official source) 2026-07"
+  },
+  {
+    "question": "Does it matter what FORM minerals like copper and iron are in, or is meeting the AAFCO number enough?",
+    "answer": "It matters — and this isn't just a holistic opinion, it's in AAFCO's own official document. AAFCO's footnotes explicitly state that copper from oxide sources, and iron from carbonate or oxide sources, have such poor digestibility that they 'should not be considered in determining the minimum nutrient concentration' — meaning AAFCO itself acknowledges a food can list a mineral amount on paper that technically hits the number, using a form the dog barely absorbs. This is why chelated or proteinate mineral forms (bound to an amino acid for better absorption) are preferred over cheap inorganic oxide/sulfate forms — the AAFCO minimum assumes reasonably bioavailable forms, and a 'compliant on paper' food using poor forms may deliver less usable mineral than the label implies.",
+    "topic": "aafco-nutrient-profiles",
+    "source": "Common Sense Dog — AAFCO Nutrient Profiles (official source) 2026-07"
+  },
+  {
+    "question": "My vet recommended a much higher dose of vitamin E than what's in my dog's food — is that safe?",
+    "answer": "Likely yes, and this is a real, well-documented gap between AAFCO's baseline and therapeutic use. AAFCO's minimum is 50 IU/kg of food (with a footnote requiring more if the diet is high in polyunsaturated fat, i.e., heavy fish oil fortification needs extra vitamin E to keep pace). Veterinary dermatology sources commonly use much higher therapeutic doses for inflammatory skin conditions — roughly 400-800 IU/day for medium-large dogs (20-40kg) and 200-400 IU/day for small dogs (under 20kg), given as a daily supplement rather than baked into the food. Important distinction: those are per-day doses for a diagnosed condition, not directly comparable to AAFCO's per-kg-of-food number — always follow your vet's specific dosing rather than trying to convert between the two yourself, since excess vitamin E can interfere with vitamin K-dependent blood clotting.",
+    "topic": "aafco-nutrient-profiles",
+    "source": "Common Sense Dog — AAFCO Nutrient Profiles (official source) 2026-07"
+  },
+  {
+    "question": "My Siberian Husky has skin problems — could it be zinc deficiency even though the food meets AAFCO minimums?",
+    "answer": "Yes, genuinely possible — this is a known breed-specific condition called zinc-responsive dermatosis, most common in Siberian Huskies, Alaskan Malamutes, and other northern breeds. It's usually not a diet-formulation failure (the food can meet AAFCO's 80mg/kg adult minimum just fine) — it's a genetic defect in zinc absorption in these breeds, meaning they need more than a normal dog to reach the same tissue level. Treatment is a therapeutic zinc supplement dosed per the dog's body weight (commonly 1-3mg elemental zinc/kg body weight/day initially, with maintenance doses reported anywhere from 0.5mg/kg twice weekly up to 8mg/kg/day in refractory cases), usually needed lifelong, and must be vet-supervised since excess zinc supplementation risks copper deficiency and hemolytic anemia. This needs an actual vet diagnosis — don't self-supplement zinc for skin issues without confirming the cause first.",
+    "topic": "aafco-nutrient-profiles",
+    "source": "Common Sense Dog — AAFCO Nutrient Profiles (official source) 2026-07"
+  },
+  {
+    "question": "Why does processed kibble sometimes need MORE vitamins added than the 'natural' minimum?",
+    "answer": "Processing loss is a real, AAFCO-acknowledged factor for at least one nutrient: thiamine (vitamin B1). AAFCO's own footnote states that processing can destroy up to 90% of the thiamine in a diet, so formulators are expected to over-fortify specifically to guarantee the AAFCO minimum (2.25mg/kg growth, same for adult) survives cooking/extrusion and is still present in the final product a dog actually eats. This is a good concrete example of why heavily processed formats (kibble, especially extruded) need heavier synthetic fortification just to match what a less-processed food delivers more naturally — it's baked into AAFCO's own formulation guidance, not just a holistic talking point.",
+    "topic": "aafco-nutrient-profiles",
+    "source": "Common Sense Dog — AAFCO Nutrient Profiles (official source) 2026-07"
+  },
+  {
+    "question": "What's the ideal calcium to phosphorus ratio for dog food?",
+    "answer": "AAFCO requires a minimum Ca:P ratio of 1:1 for both adult maintenance and growth/reproduction, with a maximum of 2:1. Within that range, roughly 1.1:1 to 1.5:1 is commonly considered the practical sweet spot by veterinary nutritionists, though AAFCO itself only regulates the 1:1–2:1 band. Calcium minimum is 0.5% DM (adult) / 1.2% DM (growth) and phosphorus minimum is 0.4% DM (adult) / 1.0% DM (growth) — both minerals need to move together, since an imbalanced ratio (even if both individually 'pass') can affect bone development, especially in growing large-breed puppies.",
+    "topic": "aafco-nutrient-profiles",
+    "source": "Common Sense Dog — AAFCO Nutrient Profiles (official source) 2026-07"
+  }
+]
