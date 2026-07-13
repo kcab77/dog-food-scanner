@@ -78,6 +78,38 @@ export const answerPages: AnswerPage[] = [
       },
     ],
   },
+  {
+    slug: 'homemade-dog-toothpaste',
+    emoji: '🦷',
+    tag: 'Dental Care',
+    title: 'Homemade Dog Toothpaste: Safe DIY Recipe',
+    metaDescription:
+      "A vet-safety-checked homemade dog toothpaste recipe — plus the human-toothpaste ingredients (xylitol, fluoride, essential oils) that are genuinely dangerous for dogs.",
+    lead:
+      "You can make a safe, effective dog toothpaste at home with just two ingredients — but the bigger issue is what NOT to put in it. Never use human toothpaste on a dog: fluoride and xylitol (a common human-toothpaste sweetener) are both toxic to dogs, and xylitol can be fatal in small amounts. Here's a simple, safe recipe and exactly which \"natural\" additions to avoid.",
+    faqs: [
+      {
+        q: 'What is a safe homemade dog toothpaste recipe?',
+        a: 'The simplest safe base is coconut oil plus baking soda: mix roughly 2 tablespoons of coconut oil with 1 teaspoon of baking soda into a paste. Coconut oil has natural antibacterial properties (lauric acid) and dogs generally tolerate the taste; baking soda mildly helps lift plaque. Keep the ratio baking-soda-light — it should taste mostly like coconut oil, not a science-fair volcano. Store in a small sealed container and use a soft dog toothbrush or a finger brush.',
+      },
+      {
+        q: 'Can I just use my own toothpaste on my dog?',
+        a: 'No — never use human toothpaste on a dog. Two ingredients make it genuinely dangerous: fluoride, which is toxic to dogs in the amounts found in a tube of human toothpaste, and xylitol, a sugar substitute in many "natural" and sugar-free human toothpastes that causes a rapid, dangerous drop in blood sugar and can lead to liver failure in dogs — even a small lick of a xylitol-containing toothpaste is a genuine emergency. Check ingredient labels carefully; xylitol shows up in unexpected products.',
+      },
+      {
+        q: 'Are essential oils safe to add to dog toothpaste?',
+        a: 'Most are not, so it\'s safest to leave them out entirely. Tea tree (melaleuca), wintergreen, clove, and cinnamon essential oils are all established canine toxins even in small concentrated amounts, and dogs are swallowing this paste, not spitting it out like a person would. If you want flavor, a small pinch of finely chopped curly parsley (not spring/wild parsley, which is different and can be toxic) is a safe, breath-freshening addition — skip the essential oil aisle altogether.',
+      },
+      {
+        q: 'Is baking soda safe for dogs in toothpaste?',
+        a: 'In the small amount used in a toothpaste recipe (roughly a teaspoon mixed into oil, most of which stays on the brush and gums rather than being swallowed), baking soda is considered safe for occasional dental use. It becomes a real concern only in large ingested quantities, where sodium bicarbonate can cause GI upset or, in extreme cases, electrolyte imbalance — which is a reason to keep any homemade toothpaste stored well out of reach, not left out where a dog could get into the whole batch.',
+      },
+      {
+        q: 'Does homemade toothpaste actually replace brushing or dental chews?',
+        a: 'No product — homemade, commercial, or a dental chew — replaces mechanical brushing as the gold standard for canine dental health. Toothpaste (homemade or store-bought) is a flavor/compliance aid that makes brushing tolerable for the dog; the actual plaque removal comes from the brushing action itself, ideally daily. Use a safe homemade paste to make the habit stick, not as a substitute for the brush.',
+      },
+    ],
+  },
 ]
 
 export const getAnswer = (slug: string) => answerPages.find((a) => a.slug === slug)
