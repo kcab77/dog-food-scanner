@@ -3764,10 +3764,12 @@ export default function App() {
         }
       }
 
-      // Step 4b: Go-UPC — LAST-resort barcode lookup, quota-gated (150/mo free plan).
-      // Its data is NEVER persisted (use-only license); results are used for this
-      // scan only. When quota is out we simply skip it and let SmartScan take over.
-      if (!rawIngredients) {
+      // Step 4b: Go-UPC — DISABLED 2026-07-13, Kyle canceled the paid subscription,
+      // so every call would just fail (dead network round-trip) before falling
+      // through anyway. Left in place (commented) rather than deleted in case the
+      // subscription is ever reactivated — flip GOUPC_ENABLED back to re-enable.
+      const GOUPC_ENABLED = false;
+      if (GOUPC_ENABLED && !rawIngredients) {
         try {
           const quota = await getBarcodeQuota();
           if (quota.canUse) {
@@ -4329,7 +4331,7 @@ export default function App() {
               ? "Point at the ingredient list on a treat bag"
               : scanMode === "manual"
                 ? "Type or paste an ingredient list to analyze"
-                : "Point at the barcode to scan — or tap the button to scan an ingredient label"}
+                : "Tap the button to scan the ingredient label — barcode recognition also works for previously-scanned products"}
           </Text>
           {scanMode === "manual" ? (
             <View style={{ flex: 1, width: "100%", paddingHorizontal: 16, paddingTop: 8 }}>
