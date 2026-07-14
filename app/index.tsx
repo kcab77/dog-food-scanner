@@ -1879,17 +1879,35 @@ function AccordionSection({
     <TouchableOpacity
       onPress={toggle}
       activeOpacity={0.7}
+      // hitSlop widens the tap target well past the text without changing layout —
+      // these headers are the primary navigation of the results screen.
+      hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
       style={{
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-        ...(bare ? { marginHorizontal: 16, marginTop: 4, paddingVertical: 6 } : {}),
+        ...(bare ? { marginHorizontal: 16, marginTop: 4, paddingVertical: 8 } : {}),
       }}
     >
-      <Text style={[styles.sectionTitle, { marginBottom: 0 }, titleColor ? { color: titleColor } : null]}>{title}</Text>
-      <Text style={{ color: t.textDim, fontSize: 15, fontWeight: "800" }}>
-        {open ? "▾" : "▸"}
-      </Text>
+      <Text style={[styles.sectionTitle, { marginBottom: 0, flex: 1 }, titleColor ? { color: titleColor } : null]}>{title}</Text>
+      {/* A chevron in a soft chip reads as an affordance; a bare glyph reads as decoration. */}
+      <View
+        style={{
+          width: 22,
+          height: 22,
+          borderRadius: 7,
+          backgroundColor: t.surface,
+          borderWidth: 1,
+          borderColor: t.border,
+          alignItems: "center",
+          justifyContent: "center",
+          marginLeft: 10,
+        }}
+      >
+        <Text style={{ color: t.textMuted, fontSize: 11, fontWeight: "800" }}>
+          {open ? "▾" : "▸"}
+        </Text>
+      </View>
     </TouchableOpacity>
   );
   // bare = the children bring their own card styling (e.g. LipomaSection); don't double-wrap.
@@ -1904,7 +1922,7 @@ function AccordionSection({
   return (
     <View style={styles.section}>
       {header}
-      {open && <View style={{ marginTop: 12 }}>{children}</View>}
+      {open && <View style={{ marginTop: 16 }}>{children}</View>}
     </View>
   );
 }
@@ -4983,21 +5001,23 @@ export default function App() {
                 </TouchableOpacity>
               )}
 
+              {/* Kyle's note. Set as a pull-quote with a rule down the left, not italics —
+                  long italic paragraphs are genuinely hard to read on a phone. */}
               {score !== null && (
-                <View style={{ backgroundColor: t.surfaceAlt, borderRadius: 16, padding: 16, marginHorizontal: 16, marginTop: 6, marginBottom: 12, borderWidth: 1, borderColor: t.border }}>
-                  <Text style={{ color: t.text, fontSize: 13, lineHeight: 20, fontStyle: "italic" }}>
+                <View style={{ backgroundColor: t.surfaceAlt, borderRadius: 18, padding: 18, marginHorizontal: 16, marginTop: 6, marginBottom: 14, borderWidth: 1, borderColor: t.border, borderLeftWidth: 3, borderLeftColor: t.good }}>
+                  <Text style={{ color: t.text, fontSize: 14, lineHeight: 22 }}>
                     💚 I fed my dog kibble for 6 years because I couldn't afford anything better — and he was okay. So please don't feel bad if this is what you can afford right now. They still love you exactly the same.{"\n\n"}The goal isn't perfection, it's just small improvements over time. Even adding a whole food topper, a raw egg, or a little fish a few times a week goes a long way. I'm just trying to help as much as I can. 🐾
                   </Text>
-                  <Text style={{ color: t.textDim, fontSize: 11, marginTop: 8 }}>— Kyle, PawGrade founder</Text>
+                  <Text style={{ color: t.textDim, fontSize: 12, marginTop: 12, fontWeight: "600" }}>— Kyle, PawGrade founder</Text>
                 </View>
               )}
 
               {score !== null && (
-                <View style={{ backgroundColor: t.dcmTint, borderRadius: 16, padding: 16, marginHorizontal: 16, marginBottom: 12, borderWidth: 1, borderColor: t.dcmDeep }}>
-                  <Text style={{ color: t.infoSoft, fontSize: 12, fontWeight: "700", marginBottom: 6, textTransform: "uppercase", letterSpacing: 0.5 }}>
+                <View style={{ backgroundColor: t.dcmTint, borderRadius: 18, padding: 18, marginHorizontal: 16, marginBottom: 14, borderWidth: 1, borderColor: t.dcmDeep }}>
+                  <Text style={{ color: t.infoSoft, fontSize: 11, fontWeight: "800", marginBottom: 8, textTransform: "uppercase", letterSpacing: 1.1 }}>
                     💡 {getNextStep(score, processing).headline}
                   </Text>
-                  <Text style={{ color: t.text, fontSize: 13, lineHeight: 19 }}>
+                  <Text style={{ color: t.text, fontSize: 14, lineHeight: 22 }}>
                     {getNextStep(score, processing).detail}
                   </Text>
                 </View>
@@ -5120,24 +5140,42 @@ export default function App() {
 
               {flagged.length > 0 && (
                 <AccordionSection title={`🚩 Ingredients to Watch (${flagged.length})`} titleColor={t.critical}>
-                  <Text style={[styles.omegaNote, { marginBottom: 8 }]}>Tap a name to see why it's a concern.</Text>
+                  <Text style={[styles.omegaNote, { marginBottom: 12 }]}>Tap a name to see why it's a concern.</Text>
+                  {/* Full-width rows with a severity stripe, rather than saturated blobs.
+                      A stripe encodes seriousness at a glance and stays informative;
+                      a solid red pill just reads as alarm. */}
                   {flagged.map((f, i) => {
                     const open = !!expandedRedFlags[f.name];
+                    const sev = SEVERITY_COLORS[f.severity] || t.critical;
                     return (
-                      <View key={i} style={{ marginBottom: 8 }}>
+                      <View
+                        key={i}
+                        style={{
+                          marginBottom: 8,
+                          backgroundColor: t.surface,
+                          borderRadius: 12,
+                          borderWidth: 1,
+                          borderColor: open ? sev : t.border,
+                          overflow: "hidden",
+                        }}
+                      >
                         <TouchableOpacity
                           activeOpacity={0.7}
                           onPress={() => {
                             LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
                             setExpandedRedFlags((prev) => ({ ...prev, [f.name]: !prev[f.name] }));
                           }}
-                          style={{ flexDirection: "row", alignItems: "center", alignSelf: "flex-start", backgroundColor: SEVERITY_COLORS[f.severity] || t.criticalTint, borderRadius: 14, paddingHorizontal: 12, paddingVertical: 6 }}
+                          style={{ flexDirection: "row", alignItems: "center", paddingHorizontal: 12, paddingVertical: 11 }}
                         >
-                          <Text style={{ color: t.textStrong, fontSize: 13, fontWeight: "700" }}>{f.name}</Text>
-                          <Text style={{ color: t.textStrong, fontSize: 11, fontWeight: "800", marginLeft: 6 }}>{open ? "▾" : "▸"}</Text>
+                          <View style={{ width: 3, height: 20, borderRadius: 2, backgroundColor: sev, marginRight: 10 }} />
+                          <Text style={{ color: t.textStrong, fontSize: 14, fontWeight: "600", flex: 1 }}>{f.name}</Text>
+                          <Text style={{ color: sev, fontSize: 9, fontWeight: "800", textTransform: "uppercase", letterSpacing: 0.6, marginRight: 8 }}>
+                            {f.severity}
+                          </Text>
+                          <Text style={{ color: t.textDim, fontSize: 11, fontWeight: "800" }}>{open ? "▾" : "▸"}</Text>
                         </TouchableOpacity>
                         {open && (
-                          <Text style={{ color: t.text, fontSize: 12, lineHeight: 18, marginTop: 6, marginLeft: 2 }}>{f.reason}</Text>
+                          <Text style={{ color: t.text, fontSize: 13, lineHeight: 20, paddingHorizontal: 12, paddingBottom: 12, paddingLeft: 25 }}>{f.reason}</Text>
                         )}
                       </View>
                     );
@@ -5148,13 +5186,27 @@ export default function App() {
               {score !== null && (
                 <View style={styles.section}>
                   <Text style={styles.sectionTitle}>Simple additions to upgrade the bowl</Text>
+                  {/* Each addition gets its own row so they read as three distinct,
+                      doable actions rather than one run-on block of text. */}
                   {[
                     "🥚 An egg in the morning",
                     "🐟 Sardines or fish oil",
                     "🥛 Plain yogurt, kefir, or goat's milk for probiotics",
-                  ].map((item, i) => (
-                    <Text key={i} style={{ color: t.text, fontSize: 14, lineHeight: 24 }}>{item}</Text>
+                  ].map((item, i, arr) => (
+                    <View
+                      key={i}
+                      style={{
+                        paddingVertical: 11,
+                        borderBottomWidth: i === arr.length - 1 ? 0 : 1,
+                        borderBottomColor: t.border,
+                      }}
+                    >
+                      <Text style={{ color: t.text, fontSize: 14, lineHeight: 21 }}>{item}</Text>
+                    </View>
                   ))}
+                  <Text style={[styles.sectionNote, { marginTop: 12 }]}>
+                    All optional — small upgrades, not corrections.
+                  </Text>
                 </View>
               )}
 
@@ -5166,13 +5218,16 @@ export default function App() {
 
               {scoreBreakdown.length > 0 && (
                 <AccordionSection title="💊 Recommended Supplements">
+                  {/* Accent moved to a left rule + heading rather than a saturated
+                      card fill — seven full-colour tinted cards in a row was visually
+                      loud and made the copy harder to read. */}
                   {SUPPLEMENT_RECS.map((s, i) => (
-                    <View key={i} style={{ marginBottom: 12, backgroundColor: s.bg, borderRadius: 10, padding: 12, borderWidth: 1, borderColor: s.borderColor }}>
-                      <Text style={{ color: s.color, fontWeight: '700', fontSize: 14, marginBottom: 4 }}>{s.emoji} {s.name}</Text>
-                      <Text style={{ color: t.text, fontSize: 13, lineHeight: 19, marginBottom: 6 }}>{s.body}</Text>
-                      <Text style={{ color: t.textDim, fontSize: 11, marginBottom: 10 }}>{s.note}</Text>
-                      <TouchableOpacity style={{ backgroundColor: s.color, borderRadius: 8, paddingVertical: 8, paddingHorizontal: 12, alignSelf: 'flex-start' }} onPress={() => Linking.openURL(s.link)}>
-                        <Text style={{ color: t.onAccent, fontWeight: '700', fontSize: 12 }}>{s.linkText}</Text>
+                    <View key={i} style={{ marginBottom: 12, backgroundColor: s.bg, borderRadius: 14, padding: 14, borderWidth: 1, borderColor: s.borderColor, borderLeftWidth: 3, borderLeftColor: s.color }}>
+                      <Text style={{ color: s.color, fontWeight: '700', fontSize: 15, marginBottom: 6, letterSpacing: -0.2 }}>{s.emoji} {s.name}</Text>
+                      <Text style={{ color: t.text, fontSize: 13, lineHeight: 20, marginBottom: 8 }}>{s.body}</Text>
+                      <Text style={{ color: t.textDim, fontSize: 12, lineHeight: 17, marginBottom: 12 }}>{s.note}</Text>
+                      <TouchableOpacity style={{ backgroundColor: s.color, borderRadius: 10, paddingVertical: 10, paddingHorizontal: 14, alignSelf: 'flex-start' }} onPress={() => Linking.openURL(s.link)}>
+                        <Text style={{ color: t.onAccent, fontWeight: '800', fontSize: 12.5 }}>{s.linkText}</Text>
                       </TouchableOpacity>
                     </View>
                   ))}
@@ -5698,74 +5753,85 @@ const styles = StyleSheet.create({
   },
 
   // Results
-  results: { paddingBottom: 40, backgroundColor: t.bg },
+  results: { paddingBottom: 48, backgroundColor: t.bg },
 
-  // Score banner — full width hero
+  // Score banner — full width hero.
+  // Restraint over shout: the number is the message, so it gets tighter tracking
+  // and the supporting copy steps back rather than competing with it.
   scoreBanner: {
-    paddingTop: 60,
-    paddingBottom: 32,
+    paddingTop: 56,
+    paddingBottom: 28,
     alignItems: "center",
     marginBottom: 0,
   },
   scoreBannerNumber: {
-    fontSize: 80,
-    fontWeight: "900",
-    color: t.textStrong,
-    lineHeight: 88,
-  },
-  scoreBannerLabel: {
-    fontSize: 18,
-    color: "rgba(255,255,255,0.7)",
-    fontWeight: "600",
-    marginTop: -8,
-  },
-  scoreBannerRating: {
-    fontSize: 22,
+    fontSize: 68,
     fontWeight: "800",
     color: t.textStrong,
-    marginTop: 8,
+    lineHeight: 72,
+    letterSpacing: -2,
+  },
+  scoreBannerLabel: {
+    fontSize: 15,
+    color: "rgba(255,255,255,0.72)",
+    fontWeight: "600",
+    marginTop: -2,
+  },
+  scoreBannerRating: {
+    fontSize: 17,
+    fontWeight: "700",
+    color: t.textStrong,
+    marginTop: 12,
+    letterSpacing: 0.2,
   },
   scoreBannerNote: {
-    fontSize: 12,
-    color: "rgba(255,255,255,0.6)",
+    fontSize: 11,
+    color: "rgba(255,255,255,0.62)",
     marginTop: 6,
+    letterSpacing: 0.3,
   },
 
   productName: {
-    fontSize: 20,
+    fontSize: 21,
     fontWeight: "700",
     color: t.textStrong,
-    lineHeight: 26,
+    lineHeight: 27,
+    letterSpacing: -0.3,
     paddingHorizontal: 16,
-    marginTop: 20,
-    marginBottom: 2,
+    marginTop: 22,
+    marginBottom: 3,
   },
+  // Provenance, not a verdict — so it reads as metadata, not as "this is good".
   dataSource: {
-    fontSize: 12,
-    color: t.good,
+    fontSize: 11,
+    color: t.textDim,
     fontWeight: "600",
     paddingHorizontal: 16,
-    marginBottom: 16,
+    marginBottom: 18,
+    letterSpacing: 0.2,
   },
 
-  // Cards
+  // Cards — a hairline border and more air gives each section a real edge,
+  // so the screen reads as discrete cards instead of one long wall of text.
   section: {
     backgroundColor: t.surfaceAlt,
-    borderRadius: 16,
-    padding: 16,
+    borderRadius: 18,
+    padding: 18,
     marginHorizontal: 16,
-    marginBottom: 12,
+    marginBottom: 14,
+    borderWidth: 1,
+    borderColor: t.border,
   },
   sectionTitle: {
-    fontSize: 13,
-    fontWeight: "700",
-    marginBottom: 10,
-    color: t.textMuted,
+    fontSize: 11,
+    fontWeight: "800",
+    marginBottom: 14,
+    color: t.textDim,
     textTransform: "uppercase",
-    letterSpacing: 1,
+    letterSpacing: 1.2,
   },
-  sectionBody: { fontSize: 14, color: t.text, lineHeight: 20 },
-  sectionNote: { fontSize: 12, color: t.textDim, marginTop: 6, lineHeight: 18 },
+  sectionBody: { fontSize: 14, color: t.text, lineHeight: 22 },
+  sectionNote: { fontSize: 12, color: t.textDim, marginTop: 8, lineHeight: 19 },
 
   warningBox: {
     backgroundColor: t.criticalTint,
@@ -5873,14 +5939,16 @@ const styles = StyleSheet.create({
   },
 
   // Ingredient pills
-  pillContainer: { flexDirection: "row", flexWrap: "wrap", gap: 6 },
-  pill: { paddingHorizontal: 10, paddingVertical: 5, borderRadius: 20 },
-  pillText: { color: t.textStrong, fontSize: 12, fontWeight: "500" },
+  pillContainer: { flexDirection: "row", flexWrap: "wrap", gap: 7 },
+  // Bigger tap target and more internal padding — these are the most-touched
+  // element on the screen and were previously cramped.
+  pill: { paddingHorizontal: 12, paddingVertical: 7, borderRadius: 10 },
+  pillText: { color: t.textStrong, fontSize: 13, fontWeight: "600", letterSpacing: -0.1 },
   pillHint: {
-    fontSize: 11,
-    color: t.textFaint,
-    marginBottom: 8,
-    fontStyle: "italic",
+    fontSize: 12,
+    color: t.textDim,
+    marginBottom: 12,
+    lineHeight: 17,
   },
 
   // Ingredient detail modal
@@ -6089,7 +6157,7 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   omegaSources: { fontSize: 12, color: t.text, marginBottom: 3 },
-  omegaNote: { fontSize: 11, color: t.textMuted, fontStyle: "italic" },
+  omegaNote: { fontSize: 12, color: t.textDim, lineHeight: 18 },
   fullIngredientList: { fontSize: 13, color: t.text, lineHeight: 20 },
   demoRow: {
     flexDirection: "row",
@@ -6175,12 +6243,14 @@ const styles = StyleSheet.create({
   backBtnTop: {
     alignSelf: "flex-start",
     marginLeft: 16,
-    marginTop: 8,
+    marginTop: 12,
     marginBottom: 4,
-    paddingVertical: 6,
-    paddingHorizontal: 12,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
     backgroundColor: t.surfaceAlt,
-    borderRadius: 20,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: t.border,
   },
   backBtnTopText: { color: t.textMuted, fontSize: 13, fontWeight: "600" },
 
@@ -6351,16 +6421,26 @@ const styles = StyleSheet.create({
     marginTop: -2,
   },
   scoreInfo: { flex: 1 },
+  // "Why This Score" ledger. More row height + a visible hairline makes it
+  // scannable line-by-line; the +/- value is right-aligned and tabular so the
+  // numbers form a clean column instead of drifting.
   breakdownRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: 5,
+    paddingVertical: 9,
     borderBottomWidth: 1,
-    borderBottomColor: t.bg,
+    borderBottomColor: t.border,
   },
-  breakdownLabel: { flex: 1, fontSize: 13, color: t.text },
-  breakdownValue: { fontSize: 13, fontWeight: "700", marginLeft: 8 },
+  breakdownLabel: { flex: 1, fontSize: 13, color: t.text, lineHeight: 19, paddingRight: 10 },
+  breakdownValue: {
+    fontSize: 14,
+    fontWeight: "800",
+    marginLeft: 8,
+    minWidth: 38,
+    textAlign: "right",
+    fontVariant: ["tabular-nums"],
+  },
   lipomaGuide: {
     backgroundColor: t.surfaceSunken,
     borderRadius: 14,
