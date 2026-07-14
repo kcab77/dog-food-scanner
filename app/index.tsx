@@ -21,6 +21,7 @@ import {
 import { auditIngredientList } from "../lib/ingredientDatabase";
 import { analyzeIngredients } from "../lib/ingredientLookup";
 import { logScan, submitFeedback } from "../lib/supabase";
+import { t } from "../lib/theme";
 import {
     askNutritionCoach,
     lookupIngredientDetail,
@@ -509,51 +510,51 @@ const SEVERITY_PENALTIES: Record<string, number> = {
 };
 
 const SEVERITY_COLORS: Record<string, string> = {
-  mild: "#f39c12",
-  moderate: "#e67e22",
-  severe: "#c0392b",
-  toxic: "#7b241c",
+  mild: t.high,
+  moderate: t.high,
+  severe: t.criticalDeep,
+  toxic: t.criticalDeep,
 };
 
 const SUPPLEMENT_RECS = [
   {
-    emoji: "🦠", name: "Probiotics", color: "#A78BFA", borderColor: "#A78BFA", bg: "#1a0d2e",
+    emoji: "🦠", name: "Probiotics", color: t.accents.probiotic.fg, borderColor: t.accents.probiotic.fg, bg: t.accents.probiotic.bg,
     body: "Multi-strain probiotics support gut microbiome diversity, immune function, and stool quality. Look for at least 1 billion CFU with Lactobacillus and Bifidobacterium strains. Most beneficial for dogs on kibble, after antibiotics, or with chronic digestive issues.",
     note: "Pair with fish oil for a synergistic gut + inflammation benefit",
     link: "https://amzn.to/4dPRAWP", linkText: "🛒 Shop Probiotics →",
   },
   {
-    emoji: "🐟", name: "Fish Oil (Omega-3)", color: "#2ECC71", borderColor: "#2ECC71", bg: "#0d1f10",
+    emoji: "🐟", name: "Fish Oil (Omega-3)", color: t.good, borderColor: t.good, bg: t.goodTint,
     body: "Wild-caught sardine or anchovy oil reduces inflammation and supports coat, joints, and brain function. Look for triglyceride form — not ethyl ester — and store in fridge after opening to prevent rancidity.",
     note: "Target: ~20mg EPA+DHA per pound of body weight daily",
     link: "https://amzn.to/4efzKxO", linkText: "🛒 Shop Fish Oil →",
   },
   {
-    emoji: "🌊", name: "Green Lipped Mussel", color: "#06B6D4", borderColor: "#06B6D4", bg: "#001a1f",
+    emoji: "🌊", name: "Green Lipped Mussel", color: t.accents.mussel.fg, borderColor: t.accents.mussel.fg, bg: t.accents.mussel.bg,
     body: "New Zealand green lipped mussel contains unique omega-3s (ETA) not found in fish oil, plus natural glucosamine and chondroitin. One of the most potent natural anti-inflammatories for joints — ideal for active, senior, or large-breed dogs.",
     note: "Works synergistically with fish oil for broader omega-3 coverage",
     link: "https://amzn.to/4vpJKdX", linkText: "🛒 Shop Green Lipped Mussel →",
   },
   {
-    emoji: "❤️", name: "Heart Treats", color: "#F43F5E", borderColor: "#F43F5E", bg: "#1a0008",
+    emoji: "❤️", name: "Heart Treats", color: t.accents.heart.fg, borderColor: t.accents.heart.fg, bg: t.accents.heart.bg,
     body: "Beef or chicken heart is the #1 dietary source of CoQ10 and naturally rich in taurine — critical for cardiac function. Unlike liver, heart is a muscle meat so the organ cap is less strict, but keep all treats under 10% of total diet.",
     note: "Especially important for breeds with known taurine deficiency concerns",
     link: "https://amzn.to/4vkvZgs", linkText: "🛒 Shop Heart Treats →",
   },
   {
-    emoji: "🫀", name: "Liver Treats", color: "#F97316", borderColor: "#F97316", bg: "#1a0a00",
+    emoji: "🫀", name: "Liver Treats", color: t.accents.liver.fg, borderColor: t.accents.liver.fg, bg: t.accents.liver.bg,
     body: "Beef or chicken liver is packed with Vitamin A, B12, iron, and CoQ10 — one of the most nutrient-dense treats you can give. However, excess Vitamin A causes toxicity. Keep liver treats to no more than 5% of total daily diet (treats included).",
     note: "5% rule: a 50lb dog eating 2 cups/day → max 1–2 small liver treats",
     link: "https://amzn.to/4wWcj44", linkText: "🛒 Shop Liver Treats →",
   },
   {
-    emoji: "🌿", name: "Detox & Liver Support", color: "#A3E635", borderColor: "#A3E635", bg: "#0a1a00",
+    emoji: "🌿", name: "Detox & Liver Support", color: t.accents.detox.fg, borderColor: t.accents.detox.fg, bg: t.accents.detox.bg,
     body: "Dogs are exposed to pesticides, lawn chemicals, and environmental toxins year-round — especially in summer. The liver has to filter all of it. Milk thistle (silymarin) is one of the most well-studied natural liver protectants in dogs, helping the liver detox and regenerate. Pair with turkey tail mushroom for added immune support.",
     note: "Especially valuable after flea treatments, vaccines, or heavy outdoor exposure",
     link: "https://amzn.to/4dZ2ZDT", linkText: "🛒 Shop Detox Support →",
   },
   {
-    emoji: "🍃", name: "Four Leaf Rover", color: "#22C55E", borderColor: "#22C55E", bg: "#041a0a",
+    emoji: "🍃", name: "Four Leaf Rover", color: t.accents.rover.fg, borderColor: t.accents.rover.fg, bg: t.accents.rover.bg,
     body: "Four Leaf Rover makes research-backed supplements formulated specifically for dogs — including liver support, toxin binders, probiotics, and more. One of the most trusted brands in holistic dog health.",
     note: "Browse their full line — each product targets a specific need",
     link: "https://amzn.to/43FJ5sK", linkText: "🛒 Shop Four Leaf Rover →",
@@ -1305,28 +1306,28 @@ function getTreatIngredientInfo(
   );
   if (harmful) {
     if (harmful.severity === "toxic")
-      return { bg: "#3d0a0a", textColor: "#ff6b6b", tag: "avoid" };
+      return { bg: t.criticalTint, textColor: t.critical, tag: "avoid" };
     if (harmful.severity === "severe")
-      return { bg: "#3d1010", textColor: "#fc8181", tag: "severe" };
+      return { bg: t.criticalTint, textColor: t.critical, tag: "severe" };
     if (harmful.severity === "moderate")
-      return { bg: "#3d2010", textColor: "#f6a35a", tag: "concern" };
-    return { bg: "#3d2e10", textColor: "#f6c35a", tag: "mild" };
+      return { bg: t.highTint, textColor: t.high, tag: "concern" };
+    return { bg: t.moderateTint, textColor: t.moderate, tag: "mild" };
   }
   if (ADDED_VITAMINS.some((v) => lower.includes(v)))
-    return { bg: "#2d2a10", textColor: "#e6c840", tag: "supplement" };
+    return { bg: t.moderateTint, textColor: t.moderate, tag: "supplement" };
   if (TREAT_OK_INGREDIENTS.some((t) => lower === t || lower.includes(t)))
-    return { bg: "#1a2332", textColor: "#6B9EAF", tag: "ok in treats" };
+    return { bg: t.surface, textColor: t.textMuted, tag: "ok in treats" };
   // Single/whole ingredients
   if (
     SPECIFIC_PROTEIN_TERMS.some((p) => lower.includes(p)) &&
     !lower.includes("meal") &&
     !lower.includes("by-product")
   ) {
-    return { bg: "#0d2d1a", textColor: "#2ecc71", tag: "whole food" };
+    return { bg: t.goodTint, textColor: t.good, tag: "whole food" };
   }
   if (ORGAN_MEATS.some((o) => lower.includes(o) && !lower.includes("meal")))
-    return { bg: "#0d2d1a", textColor: "#52be80", tag: "organ" };
-  return { bg: "#1a2332", textColor: "#9CA3AF", tag: "" };
+    return { bg: t.goodTint, textColor: t.good, tag: "organ" };
+  return { bg: t.surface, textColor: t.textMuted, tag: "" };
 }
 
 const GROCERY_FINDS: {
@@ -1671,48 +1672,48 @@ function getIngredientInfo(ing: string): {
   const harmful = HARMFUL_INGREDIENTS.find((h: any) => lower.includes(h.term));
   if (harmful) {
     if (harmful.severity === "toxic")
-      return { bg: "#3d0a0a", textColor: "#ff6b6b", tag: "avoid" };
+      return { bg: t.criticalTint, textColor: t.critical, tag: "avoid" };
     if (harmful.severity === "severe")
-      return { bg: "#3d1010", textColor: "#fc8181", tag: "severe" };
+      return { bg: t.criticalTint, textColor: t.critical, tag: "severe" };
     if (harmful.severity === "moderate")
-      return { bg: "#3d2010", textColor: "#f6a35a", tag: "concern" };
+      return { bg: t.highTint, textColor: t.high, tag: "concern" };
     if (harmful.severity === "mild")
-      return { bg: "#3d2e10", textColor: "#f6c35a", tag: "mild" };
+      return { bg: t.moderateTint, textColor: t.moderate, tag: "mild" };
   }
   if (TOXIC_ADDITIVES.some((t: string) => lower.includes(t)))
-    return { bg: "#3d0a0a", textColor: "#ff6b6b", tag: "avoid" };
+    return { bg: t.criticalTint, textColor: t.critical, tag: "avoid" };
   if (ADDED_VITAMINS.some((v: string) => lower.includes(v)))
-    return { bg: "#2d2a10", textColor: "#e6c840", tag: "synthetic" };
+    return { bg: t.moderateTint, textColor: t.moderate, tag: "synthetic" };
   if (MEAT_MEALS.some((m: string) => lower.includes(m)))
-    return { bg: "#2d2010", textColor: "#d4a050", tag: "meal" };
+    return { bg: t.moderateTint, textColor: t.moderateDeep, tag: "meal" };
   if (LENTIL_LEGUME.some((l: string) => lower.includes(l)))
-    return { bg: "#2d1e10", textColor: "#e67e22", tag: "legume" };
+    return { bg: t.highTint, textColor: t.high, tag: "legume" };
   if (HIGH_CARB_INGREDIENTS.some((c: string) => lower.includes(c)))
-    return { bg: "#2d2a10", textColor: "#c8b840", tag: "carb" };
+    return { bg: t.moderateTint, textColor: t.moderate, tag: "carb" };
   if (
     ORGAN_MEATS.some(
       (o: string) => lower.includes(o) && !lower.includes("meal"),
     )
   )
-    return { bg: "#0d2d1a", textColor: "#52be80", tag: "organ" };
+    return { bg: t.goodTint, textColor: t.good, tag: "organ" };
   if (OMEGA3_SOURCES.some((o: string) => lower.includes(o)))
-    return { bg: "#0d1f2d", textColor: "#5dade2", tag: "omega-3" };
+    return { bg: t.dcmTint, textColor: t.infoSoft, tag: "omega-3" };
   if (SUPERFOODS.some((s: string) => lower.includes(s)))
-    return { bg: "#0d2d1a", textColor: "#2ecc71", tag: "superfood" };
+    return { bg: t.goodTint, textColor: t.good, tag: "superfood" };
   if (
     SPECIFIC_PROTEIN_TERMS.some((s: string) => lower.includes(s)) &&
     !MEAT_MEALS.some((m: string) => lower.includes(m))
   ) {
-    return { bg: "#0d2d1a", textColor: "#2ecc71", tag: "protein" };
+    return { bg: t.goodTint, textColor: t.good, tag: "protein" };
   }
-  return { bg: "#1a2332", textColor: "#9CA3AF", tag: "" };
+  return { bg: t.surface, textColor: t.textMuted, tag: "" };
 }
 
 function getScoreColor(score: number): string {
-  if (score >= 70) return "#27ae60";
-  if (score >= 50) return "#f39c12";
-  if (score >= 30) return "#e67e22";
-  return "#c0392b";
+  if (score >= 70) return t.good;
+  if (score >= 50) return t.high;
+  if (score >= 30) return t.high;
+  return t.criticalDeep;
 }
 
 function getScoreLabel(score: number): string {
@@ -1733,38 +1734,38 @@ function getTreatScoreLabel(score: number): string {
 
 function LipomaSection() {
   return (
-    <View style={{ backgroundColor: "#1A1A2E", borderRadius: 16, padding: 16, marginHorizontal: 16, marginBottom: 12 }}>
-      <Text style={{ fontSize: 13, fontWeight: "700", marginBottom: 6, color: "#9CA3AF", textTransform: "uppercase", letterSpacing: 1 }}>🧬 Lipoma Prevention & Management</Text>
-      <Text style={{ color: "#6B7280", fontSize: 12, marginBottom: 14, lineHeight: 18 }}>
+    <View style={{ backgroundColor: t.surfaceAlt, borderRadius: 16, padding: 16, marginHorizontal: 16, marginBottom: 12 }}>
+      <Text style={{ fontSize: 13, fontWeight: "700", marginBottom: 6, color: t.textMuted, textTransform: "uppercase", letterSpacing: 1 }}>🧬 Lipoma Prevention & Management</Text>
+      <Text style={{ color: t.textDim, fontSize: 12, marginBottom: 14, lineHeight: 18 }}>
         Lipomas (fatty tumors) are common in dogs but diet and inflammation play a major role in how quickly they develop and grow. These are the most evidence-backed dietary levers.
       </Text>
 
-      <View style={{ backgroundColor: "#1a0a00", borderRadius: 10, padding: 12, marginBottom: 10, borderWidth: 1, borderColor: "#F97316" }}>
-        <Text style={{ color: "#F97316", fontWeight: "700", fontSize: 13, marginBottom: 6 }}>🍞 Low Carb Diet — Most Important Factor</Text>
-        <Text style={{ color: "#D1D5DB", fontSize: 12, lineHeight: 18, marginBottom: 4 }}>High carbohydrates spike insulin and promote fat cell proliferation and inflammation — the #1 dietary driver of lipoma growth.</Text>
-        <Text style={{ color: "#FBBF24", fontSize: 12, fontWeight: "600" }}>Target: carbs below 20% — ideally below 15%</Text>
-        <Text style={{ color: "#6B7280", fontSize: 11, marginTop: 4 }}>Kibble is typically 35–50% carbs. Raw, gently cooked, and freeze-dried are naturally low carb.</Text>
+      <View style={{ backgroundColor: t.accents.liver.bg, borderRadius: 10, padding: 12, marginBottom: 10, borderWidth: 1, borderColor: t.accents.liver.fg }}>
+        <Text style={{ color: t.accents.liver.fg, fontWeight: "700", fontSize: 13, marginBottom: 6 }}>🍞 Low Carb Diet — Most Important Factor</Text>
+        <Text style={{ color: t.text, fontSize: 12, lineHeight: 18, marginBottom: 4 }}>High carbohydrates spike insulin and promote fat cell proliferation and inflammation — the #1 dietary driver of lipoma growth.</Text>
+        <Text style={{ color: t.moderate, fontSize: 12, fontWeight: "600" }}>Target: carbs below 20% — ideally below 15%</Text>
+        <Text style={{ color: t.textDim, fontSize: 11, marginTop: 4 }}>Kibble is typically 35–50% carbs. Raw, gently cooked, and freeze-dried are naturally low carb.</Text>
       </View>
 
-      <View style={{ backgroundColor: "#001a1f", borderRadius: 10, padding: 12, marginBottom: 10, borderWidth: 1, borderColor: "#06B6D4" }}>
-        <Text style={{ color: "#06B6D4", fontWeight: "700", fontSize: 13, marginBottom: 6 }}>🐟 Omega-6:3 Ratio of 5:1 or Less</Text>
-        <Text style={{ color: "#D1D5DB", fontSize: 12, lineHeight: 18, marginBottom: 4 }}>A high omega-6:omega-3 ratio drives chronic inflammation — the environment where lipomas thrive. Most kibble runs 15:1–30:1. Cooling that ratio is one of the most powerful anti-lipoma moves you can make.</Text>
-        <Text style={{ color: "#06B6D4", fontSize: 12, fontWeight: "600" }}>Target: 5:1 or less omega-6:omega-3</Text>
-        <Text style={{ color: "#6B7280", fontSize: 11, marginTop: 4 }}>Best sources: sardines, salmon, mackerel. Add fish oil or green lipped mussel to reduce ratio further.</Text>
+      <View style={{ backgroundColor: t.accents.mussel.bg, borderRadius: 10, padding: 12, marginBottom: 10, borderWidth: 1, borderColor: t.accents.mussel.fg }}>
+        <Text style={{ color: t.accents.mussel.fg, fontWeight: "700", fontSize: 13, marginBottom: 6 }}>🐟 Omega-6:3 Ratio of 5:1 or Less</Text>
+        <Text style={{ color: t.text, fontSize: 12, lineHeight: 18, marginBottom: 4 }}>A high omega-6:omega-3 ratio drives chronic inflammation — the environment where lipomas thrive. Most kibble runs 15:1–30:1. Cooling that ratio is one of the most powerful anti-lipoma moves you can make.</Text>
+        <Text style={{ color: t.accents.mussel.fg, fontSize: 12, fontWeight: "600" }}>Target: 5:1 or less omega-6:omega-3</Text>
+        <Text style={{ color: t.textDim, fontSize: 11, marginTop: 4 }}>Best sources: sardines, salmon, mackerel. Add fish oil or green lipped mussel to reduce ratio further.</Text>
       </View>
 
       {[
-        { color: "#A3E635", bg: "#0a1a00", title: "✅ Best Foods for Lipoma-Prone Dogs", body: "Raw, freeze-dried, or gently cooked with no grains, legumes, or inflammatory oils. Look for whole-food omega-3 sources. Rotate cooling proteins: duck, fish, rabbit, salmon." },
-        { color: "#FC8181", bg: "#1a0000", title: "❌ Avoid", body: "Grains (corn, wheat, soy), legumes (peas, lentils, chickpeas), inflammatory oils (sunflower, safflower, soybean, canola), BHA/BHT, artificial colors, added sugars." },
-        { color: "#A78BFA", bg: "#1a0d2e", title: "💊 Supplements That Help", body: "Fish oil (omega-3) · Green lipped mussel (anti-inflammatory, joint support) · Milk thistle (liver support — processes all dietary fat) · Turkey tail mushroom · Turmeric/curcumin" },
+        { color: t.accents.detox.fg, bg: t.accents.detox.bg, title: "✅ Best Foods for Lipoma-Prone Dogs", body: "Raw, freeze-dried, or gently cooked with no grains, legumes, or inflammatory oils. Look for whole-food omega-3 sources. Rotate cooling proteins: duck, fish, rabbit, salmon." },
+        { color: t.critical, bg: t.criticalTint, title: "❌ Avoid", body: "Grains (corn, wheat, soy), legumes (peas, lentils, chickpeas), inflammatory oils (sunflower, safflower, soybean, canola), BHA/BHT, artificial colors, added sugars." },
+        { color: t.accents.probiotic.fg, bg: t.accents.probiotic.bg, title: "💊 Supplements That Help", body: "Fish oil (omega-3) · Green lipped mussel (anti-inflammatory, joint support) · Milk thistle (liver support — processes all dietary fat) · Turkey tail mushroom · Turmeric/curcumin" },
       ].map((item, i) => (
         <View key={i} style={{ backgroundColor: item.bg, borderRadius: 10, padding: 12, marginBottom: 10, borderWidth: 1, borderColor: item.color }}>
           <Text style={{ color: item.color, fontWeight: "700", fontSize: 13, marginBottom: 4 }}>{item.title}</Text>
-          <Text style={{ color: "#D1D5DB", fontSize: 12, lineHeight: 18 }}>{item.body}</Text>
+          <Text style={{ color: t.text, fontSize: 12, lineHeight: 18 }}>{item.body}</Text>
         </View>
       ))}
 
-      <Text style={{ color: "#6B7280", fontSize: 11, lineHeight: 17, marginTop: 4 }}>
+      <Text style={{ color: t.textDim, fontSize: 11, lineHeight: 17, marginTop: 4 }}>
         ⚠️ Not veterinary advice. Always consult your vet, especially for lipomas that grow rapidly, feel firm, or are in sensitive locations.
       </Text>
     </View>
@@ -1773,14 +1774,14 @@ function LipomaSection() {
 
 function HersheyProtocolSection() {
   return (
-    <View style={{ backgroundColor: "#1A1A2E", borderRadius: 16, padding: 16, marginHorizontal: 16, marginBottom: 12 }}>
-      <Text style={{ fontSize: 13, fontWeight: "700", marginBottom: 6, color: "#9CA3AF", textTransform: "uppercase", letterSpacing: 1 }}>🐾 Hershey's Protocol</Text>
-      <Text style={{ color: "#6B7280", fontSize: 12, marginBottom: 14, lineHeight: 18 }}>
+    <View style={{ backgroundColor: t.surfaceAlt, borderRadius: 16, padding: 16, marginHorizontal: 16, marginBottom: 12 }}>
+      <Text style={{ fontSize: 13, fontWeight: "700", marginBottom: 6, color: t.textMuted, textTransform: "uppercase", letterSpacing: 1 }}>🐾 Hershey's Protocol</Text>
+      <Text style={{ color: t.textDim, fontSize: 12, marginBottom: 14, lineHeight: 18 }}>
         My 75lb Lab mix Hershey — here's what I personally use. Do your own research and consult your vet before starting anything new.
       </Text>
 
       {/* Dental */}
-      <Text style={{ color: "#2ECC71", fontWeight: "700", fontSize: 13, marginBottom: 8 }}>🦷 Dental Care</Text>
+      <Text style={{ color: t.good, fontWeight: "700", fontSize: 13, marginBottom: 8 }}>🦷 Dental Care</Text>
       {[
         { title: "Coconut oil + gauze or rag (or toothbrush)", body: "Wrap gauze around your finger, dip in coconut oil, rub along gum line. Antibacterial, safe if swallowed. This is what I use on Hershey." },
         { title: "Raw carrots", body: "Natural low-calorie dental chew. The firm texture scrubs plaque mechanically — great daily snack." },
@@ -1788,60 +1789,60 @@ function HersheyProtocolSection() {
         { title: "Himalayan yak chews", body: "These scraped all the tartar off Hershey's back teeth without a vet visit — it was incredible! Made from hardened yak milk. ⚠️ Try at your own risk — research before use and supervise." },
         { title: "Manuka honey UMF 10+ (for cuts)", body: "Tiny dab on gums for oral health or apply directly to minor surface cuts. ~80% natural sugars — use sparingly, not as a daily supplement." },
       ].map((item, i) => (
-        <View key={i} style={{ marginBottom: 8, paddingLeft: 10, borderLeftWidth: 2, borderLeftColor: "#2ECC71" }}>
-          <Text style={{ color: "#D1D5DB", fontWeight: "600", fontSize: 12 }}>{item.title}</Text>
-          <Text style={{ color: "#9CA3AF", fontSize: 12, lineHeight: 17, marginTop: 2 }}>{item.body}</Text>
+        <View key={i} style={{ marginBottom: 8, paddingLeft: 10, borderLeftWidth: 2, borderLeftColor: t.good }}>
+          <Text style={{ color: t.text, fontWeight: "600", fontSize: 12 }}>{item.title}</Text>
+          <Text style={{ color: t.textMuted, fontSize: 12, lineHeight: 17, marginTop: 2 }}>{item.body}</Text>
         </View>
       ))}
 
       {/* Omega & Joints */}
-      <Text style={{ color: "#06B6D4", fontWeight: "700", fontSize: 13, marginTop: 12, marginBottom: 8 }}>🐟 Omega-3 & Joint Support</Text>
+      <Text style={{ color: t.accents.mussel.fg, fontWeight: "700", fontSize: 13, marginTop: 12, marginBottom: 8 }}>🐟 Omega-3 & Joint Support</Text>
       {[
         { title: "Green Lipped Mussel", body: "Very good for joint health, natural anti-inflammatory, supports heart and brain. One of the best whole-food joint supplements available — works synergistically with fish oil." },
         { title: "Fish oil (half dose)", body: "Great for joints, inflammation, heart and brain health. Hershey's food (Simple Food Project) already has an excellent omega ratio, so I use half the recommended dose to avoid oversupplementation." },
       ].map((item, i) => (
-        <View key={i} style={{ marginBottom: 8, paddingLeft: 10, borderLeftWidth: 2, borderLeftColor: "#06B6D4" }}>
-          <Text style={{ color: "#D1D5DB", fontWeight: "600", fontSize: 12 }}>{item.title}</Text>
-          <Text style={{ color: "#9CA3AF", fontSize: 12, lineHeight: 17, marginTop: 2 }}>{item.body}</Text>
+        <View key={i} style={{ marginBottom: 8, paddingLeft: 10, borderLeftWidth: 2, borderLeftColor: t.accents.mussel.fg }}>
+          <Text style={{ color: t.text, fontWeight: "600", fontSize: 12 }}>{item.title}</Text>
+          <Text style={{ color: t.textMuted, fontSize: 12, lineHeight: 17, marginTop: 2 }}>{item.body}</Text>
         </View>
       ))}
 
       {/* Gut Health */}
-      <Text style={{ color: "#A78BFA", fontWeight: "700", fontSize: 13, marginTop: 12, marginBottom: 8 }}>🦠 Gut Health</Text>
+      <Text style={{ color: t.accents.probiotic.fg, fontWeight: "700", fontSize: 13, marginTop: 12, marginBottom: 8 }}>🦠 Gut Health</Text>
       {[
         { title: "Kefir or goat's milk", body: "Excellent natural source of probiotics and prebiotics. Safe to give daily — start with a small amount and work up. Plain, unsweetened only." },
         { title: "Probiotic supplement", body: "Multi-strain formula with Lactobacillus and Bifidobacterium. Look for at least 1 billion CFU. Most beneficial for dogs on kibble or after antibiotics." },
       ].map((item, i) => (
-        <View key={i} style={{ marginBottom: 8, paddingLeft: 10, borderLeftWidth: 2, borderLeftColor: "#A78BFA" }}>
-          <Text style={{ color: "#D1D5DB", fontWeight: "600", fontSize: 12 }}>{item.title}</Text>
-          <Text style={{ color: "#9CA3AF", fontSize: 12, lineHeight: 17, marginTop: 2 }}>{item.body}</Text>
+        <View key={i} style={{ marginBottom: 8, paddingLeft: 10, borderLeftWidth: 2, borderLeftColor: t.accents.probiotic.fg }}>
+          <Text style={{ color: t.text, fontWeight: "600", fontSize: 12 }}>{item.title}</Text>
+          <Text style={{ color: t.textMuted, fontSize: 12, lineHeight: 17, marginTop: 2 }}>{item.body}</Text>
         </View>
       ))}
 
       {/* Protein Rotation */}
-      <Text style={{ color: "#60A5FA", fontWeight: "700", fontSize: 13, marginTop: 12, marginBottom: 8 }}>🌿 Protein Rotation (Hershey runs hot)</Text>
-      <View style={{ marginBottom: 6, paddingLeft: 10, borderLeftWidth: 2, borderLeftColor: "#60A5FA" }}>
-        <Text style={{ color: "#93C5FD", fontSize: 12, lineHeight: 18 }}>❄️ <Text style={{ fontWeight: "600" }}>Cooling (best):</Text> Duck, rabbit, white fish, salmon</Text>
-        <Text style={{ color: "#D1D5DB", fontSize: 12, lineHeight: 18 }}>⚖️ <Text style={{ fontWeight: "600" }}>Neutral (fine):</Text> Beef, turkey, eggs</Text>
-        <Text style={{ color: "#FCA5A5", fontSize: 12, lineHeight: 18 }}>🔥 <Text style={{ fontWeight: "600" }}>Warming (limit as staple):</Text> Chicken, lamb</Text>
-        <Text style={{ color: "#6B7280", fontSize: 11, marginTop: 4 }}>Goal: cooling proteins 4-5x/week, neutral 2-3x, warming occasionally</Text>
+      <Text style={{ color: t.info, fontWeight: "700", fontSize: 13, marginTop: 12, marginBottom: 8 }}>🌿 Protein Rotation (Hershey runs hot)</Text>
+      <View style={{ marginBottom: 6, paddingLeft: 10, borderLeftWidth: 2, borderLeftColor: t.info }}>
+        <Text style={{ color: t.infoSoft, fontSize: 12, lineHeight: 18 }}>❄️ <Text style={{ fontWeight: "600" }}>Cooling (best):</Text> Duck, rabbit, white fish, salmon</Text>
+        <Text style={{ color: t.text, fontSize: 12, lineHeight: 18 }}>⚖️ <Text style={{ fontWeight: "600" }}>Neutral (fine):</Text> Beef, turkey, eggs</Text>
+        <Text style={{ color: t.critical, fontSize: 12, lineHeight: 18 }}>🔥 <Text style={{ fontWeight: "600" }}>Warming (limit as staple):</Text> Chicken, lamb</Text>
+        <Text style={{ color: t.textDim, fontSize: 11, marginTop: 4 }}>Goal: cooling proteins 4-5x/week, neutral 2-3x, warming occasionally</Text>
       </View>
 
       {/* Flea & Tick */}
-      <Text style={{ color: "#A3E635", fontWeight: "700", fontSize: 13, marginTop: 12, marginBottom: 8 }}>🦟 Natural Flea & Tick Stack</Text>
+      <Text style={{ color: t.accents.detox.fg, fontWeight: "700", fontSize: 13, marginTop: 12, marginBottom: 8 }}>🦟 Natural Flea & Tick Stack</Text>
       {[
         { title: "The Resistance (daily in food)", body: "1 tsp daily — alters body scent at cellular level so bugs don't want to land on him. Full effect in 4-6 weeks. Only layer swimming can't wash off." },
         { title: "animalEO EVICT (before every outing)", body: "4-10 drops massaged into coat — legs, neck, shoulders, ankles." },
         { title: "Rose geranium oil", body: "1 drop behind each shoulder blade before outings. Dr. Judy Morgan's #1 tick recommendation — safe undiluted on dogs." },
         { title: "Metal fine-tooth flea comb (after every outing)", body: "Non-negotiable for dark coats. Check ears, neck, armpits, groin, between toes. Run over white paper towel — flea dirt turns red/brown when wet." },
       ].map((item, i) => (
-        <View key={i} style={{ marginBottom: 8, paddingLeft: 10, borderLeftWidth: 2, borderLeftColor: "#A3E635" }}>
-          <Text style={{ color: "#D1D5DB", fontWeight: "600", fontSize: 12 }}>{item.title}</Text>
-          <Text style={{ color: "#9CA3AF", fontSize: 12, lineHeight: 17, marginTop: 2 }}>{item.body}</Text>
+        <View key={i} style={{ marginBottom: 8, paddingLeft: 10, borderLeftWidth: 2, borderLeftColor: t.accents.detox.fg }}>
+          <Text style={{ color: t.text, fontWeight: "600", fontSize: 12 }}>{item.title}</Text>
+          <Text style={{ color: t.textMuted, fontSize: 12, lineHeight: 17, marginTop: 2 }}>{item.body}</Text>
         </View>
       ))}
       <TouchableOpacity onPress={() => Linking.openURL('https://drjudymorgan.com')}>
-        <Text style={{ color: "#A3E635", fontSize: 12, fontWeight: "600", marginTop: 4 }}>🌿 Get The Resistance + EVICT at drjudymorgan.com →</Text>
+        <Text style={{ color: t.accents.detox.fg, fontSize: 12, fontWeight: "600", marginTop: 4 }}>🌿 Get The Resistance + EVICT at drjudymorgan.com →</Text>
       </TouchableOpacity>
     </View>
   );
@@ -1886,7 +1887,7 @@ function AccordionSection({
       }}
     >
       <Text style={[styles.sectionTitle, { marginBottom: 0 }, titleColor ? { color: titleColor } : null]}>{title}</Text>
-      <Text style={{ color: "#6B7280", fontSize: 15, fontWeight: "800" }}>
+      <Text style={{ color: t.textDim, fontSize: 15, fontWeight: "800" }}>
         {open ? "▾" : "▸"}
       </Text>
     </TouchableOpacity>
@@ -2143,7 +2144,7 @@ export default function App() {
 
   if (showGuide) {
     return (
-      <View style={{ flex: 1, backgroundColor: "#0D0D1A" }}>
+      <View style={{ flex: 1, backgroundColor: t.bg }}>
         <View
           style={{
             flexDirection: "row",
@@ -2151,16 +2152,16 @@ export default function App() {
             padding: 16,
             paddingTop: 56,
             borderBottomWidth: 1,
-            borderBottomColor: "#1a2332",
+            borderBottomColor: t.surface,
           }}
         >
           <TouchableOpacity
             onPress={() => setShowGuide(false)}
             style={{ marginRight: 12 }}
           >
-            <Text style={{ color: "#2ECC71", fontSize: 16 }}>← Back</Text>
+            <Text style={{ color: t.good, fontSize: 16 }}>← Back</Text>
           </TouchableOpacity>
-          <Text style={{ color: "#fff", fontSize: 18, fontWeight: "700" }}>
+          <Text style={{ color: t.textStrong, fontSize: 18, fontWeight: "700" }}>
             📚 Ingredient Guide
           </Text>
         </View>
@@ -2171,7 +2172,7 @@ export default function App() {
           {/* VITAMINS */}
           <Text
             style={{
-              color: "#2ECC71",
+              color: t.good,
               fontSize: 16,
               fontWeight: "800",
               marginBottom: 12,
@@ -2269,7 +2270,7 @@ export default function App() {
             <View
               key={i}
               style={{
-                backgroundColor: "#1a2332",
+                backgroundColor: t.surface,
                 borderRadius: 10,
                 padding: 12,
                 marginBottom: 8,
@@ -2284,16 +2285,16 @@ export default function App() {
                 }}
               >
                 <Text
-                  style={{ color: "#fff", fontWeight: "700", fontSize: 13 }}
+                  style={{ color: t.textStrong, fontWeight: "700", fontSize: 13 }}
                 >
                   {v.name}
                 </Text>
                 <Text style={{ fontSize: 16 }}>{v.rating}</Text>
               </View>
-              <Text style={{ color: "#5dade2", fontSize: 11, marginBottom: 4 }}>
+              <Text style={{ color: t.infoSoft, fontSize: 11, marginBottom: 4 }}>
                 Form: {v.form}
               </Text>
-              <Text style={{ color: "#9CA3AF", fontSize: 12, lineHeight: 17 }}>
+              <Text style={{ color: t.textMuted, fontSize: 12, lineHeight: 17 }}>
                 {v.risk}
               </Text>
             </View>
@@ -2302,7 +2303,7 @@ export default function App() {
           {/* MINERALS */}
           <Text
             style={{
-              color: "#2ECC71",
+              color: t.good,
               fontSize: 16,
               fontWeight: "800",
               marginTop: 16,
@@ -2389,7 +2390,7 @@ export default function App() {
             <View
               key={i}
               style={{
-                backgroundColor: "#1a2332",
+                backgroundColor: t.surface,
                 borderRadius: 10,
                 padding: 12,
                 marginBottom: 8,
@@ -2404,16 +2405,16 @@ export default function App() {
                 }}
               >
                 <Text
-                  style={{ color: "#fff", fontWeight: "700", fontSize: 13 }}
+                  style={{ color: t.textStrong, fontWeight: "700", fontSize: 13 }}
                 >
                   {m.name}
                 </Text>
                 <Text style={{ fontSize: 16 }}>{m.rating}</Text>
               </View>
-              <Text style={{ color: "#5dade2", fontSize: 11, marginBottom: 4 }}>
+              <Text style={{ color: t.infoSoft, fontSize: 11, marginBottom: 4 }}>
                 Form: {m.form}
               </Text>
-              <Text style={{ color: "#9CA3AF", fontSize: 12, lineHeight: 17 }}>
+              <Text style={{ color: t.textMuted, fontSize: 12, lineHeight: 17 }}>
                 {m.risk}
               </Text>
             </View>
@@ -2422,7 +2423,7 @@ export default function App() {
           {/* PROTEINS */}
           <Text
             style={{
-              color: "#2ECC71",
+              color: t.good,
               fontSize: 16,
               fontWeight: "800",
               marginTop: 16,
@@ -2515,7 +2516,7 @@ export default function App() {
             <View
               key={i}
               style={{
-                backgroundColor: "#1a2332",
+                backgroundColor: t.surface,
                 borderRadius: 10,
                 padding: 12,
                 marginBottom: 8,
@@ -2530,18 +2531,18 @@ export default function App() {
                 }}
               >
                 <Text
-                  style={{ color: "#fff", fontWeight: "700", fontSize: 13 }}
+                  style={{ color: t.textStrong, fontWeight: "700", fontSize: 13 }}
                 >
                   {p.name}
                 </Text>
-                <Text style={{ color: "#9CA3AF", fontSize: 11 }}>
+                <Text style={{ color: t.textMuted, fontSize: 11 }}>
                   {p.allergen}
                 </Text>
               </View>
-              <Text style={{ color: "#5dade2", fontSize: 11, marginBottom: 4 }}>
+              <Text style={{ color: t.infoSoft, fontSize: 11, marginBottom: 4 }}>
                 Digestibility: {p.digestibility}
               </Text>
-              <Text style={{ color: "#9CA3AF", fontSize: 12, lineHeight: 17 }}>
+              <Text style={{ color: t.textMuted, fontSize: 12, lineHeight: 17 }}>
                 {p.note}
               </Text>
             </View>
@@ -2550,7 +2551,7 @@ export default function App() {
           {/* PROCESSING METHODS */}
           <Text
             style={{
-              color: "#2ECC71",
+              color: t.good,
               fontSize: 16,
               fontWeight: "800",
               marginTop: 16,
@@ -2565,7 +2566,7 @@ export default function App() {
               rank: "1",
               name: "Home Cooked",
               emoji: "🏠",
-              color: "#27ae60",
+              color: t.good,
               pros: "Full control over every ingredient. No preservatives, no synthetic additives, human-grade whole foods.",
               cons: "Requires careful formulation to meet AAFCO guidelines — vitamin and mineral balance is critical. Work with a veterinary nutritionist or use a service like BalanceIT or JustFoodForDogs recipes to ensure complete nutrition.",
               warning:
@@ -2575,7 +2576,7 @@ export default function App() {
               rank: "2",
               name: "Raw (Pathogen-Controlled)",
               emoji: "🌟",
-              color: "#27ae60",
+              color: t.good,
               pros: "Highest enzyme retention (~95%). Most bioavailable nutrients. Closest to ancestral diet. Ideal omega ratio when properly formulated.",
               cons: "Pathogen risk (Salmonella, E. coli, Listeria) if not handled carefully. Must be from a reputable source with pathogen testing (HPP-treated preferred). Not recommended for immunocompromised dogs or households.",
               warning:
@@ -2585,7 +2586,7 @@ export default function App() {
               rank: "3",
               name: "Freeze-Dried",
               emoji: "❄️",
-              color: "#27ae60",
+              color: t.good,
               pros: "Near-raw nutrition — enzymes and nutrients preserved without heat. Lightweight, shelf stable. Convenient alternative to raw.",
               cons: "Expensive per serving. Rehydration required for some products. Quality varies by brand.",
               warning: null,
@@ -2594,7 +2595,7 @@ export default function App() {
               rank: "4",
               name: "Gently Cooked",
               emoji: "🍳",
-              color: "#2ecc71",
+              color: t.good,
               pros: "Human-grade ingredients. Low heat preserves more nutrients than kibble. Whole food proteins. Much better bioavailability than dry food.",
               cons: "Some enzyme loss from heat above 118°F. Shorter shelf life, requires refrigeration. More expensive than kibble.",
               warning: null,
@@ -2603,7 +2604,7 @@ export default function App() {
               rank: "5",
               name: "Dehydrated",
               emoji: "🌿",
-              color: "#2ecc71",
+              color: t.good,
               pros: "Low heat (104–118°F) preserves most enzymes and nutrients. Human-grade ingredients (Honest Kitchen). Just add water. Better than canned or kibble.",
               cons: "Higher carb content in some formulas (Honest Kitchen Whole Grain ~40%). Rehydration required.",
               warning: null,
@@ -2612,7 +2613,7 @@ export default function App() {
               rank: "6",
               name: "Air-Dried",
               emoji: "🌬️",
-              color: "#f39c12",
+              color: t.high,
               pros: "Slow drying at low temperature preserves more nutrients than baking or extrusion. Convenient, shelf stable. Better than kibble.",
               cons: "Not as nutrient-dense as freeze-dried or raw. Some enzyme loss. Expensive.",
               warning: null,
@@ -2621,7 +2622,7 @@ export default function App() {
               rank: "7",
               name: "Canned / Wet Food",
               emoji: "🥫",
-              color: "#f39c12",
+              color: t.high,
               pros: "High moisture content (good for hydration). Whole food ingredients. No artificial preservatives needed (sealed can). Better than dry food for ingredient quality.",
               cons: "Retort processed at 240–250°F — hotter than kibble in some cases. Destroys most enzymes and heat-sensitive vitamins. Heavy synthetic supplementation added back after processing.",
               warning:
@@ -2631,7 +2632,7 @@ export default function App() {
               rank: "8",
               name: "Baked",
               emoji: "🟡",
-              color: "#e67e22",
+              color: t.high,
               pros: "Lower heat than extrusion. Slightly better nutrient retention than kibble. Some whole food ingredients.",
               cons: "Still reaches temperatures that destroy most enzymes and degrade heat-sensitive vitamins (B1, B9, C). Requires heavy synthetic supplementation. Limited brands use this method.",
               warning: null,
@@ -2640,7 +2641,7 @@ export default function App() {
               rank: "9",
               name: "Dry / Kibble (Extruded)",
               emoji: "🔴",
-              color: "#c0392b",
+              color: t.criticalDeep,
               pros: "Convenient, affordable, shelf stable, widely available.",
               cons: "Extruded at 250–300°F — destroys virtually all enzymes and denatures heat-sensitive nutrients. Synthetic vitamin premix added back post-processing. Lowest bioavailability of any pet food format. Most formulas contain preservatives, fillers, and poor-quality ingredients.",
               warning:
@@ -2650,7 +2651,7 @@ export default function App() {
               rank: "10",
               name: "Semi-Moist / Pellets",
               emoji: "🚫",
-              color: "#7b241c",
+              color: t.criticalDeep,
               pros: "Palatable, convenient.",
               cons: "Worst category. High in sugar, propylene glycol, artificial colors, and humectants to maintain soft texture. High carb content. Heavily processed. Virtually no nutritional value beyond basic calories.",
               warning:
@@ -2660,7 +2661,7 @@ export default function App() {
             <View
               key={i}
               style={{
-                backgroundColor: "#1a2332",
+                backgroundColor: t.surface,
                 borderRadius: 10,
                 padding: 12,
                 marginBottom: 8,
@@ -2687,14 +2688,14 @@ export default function App() {
                 </Text>
                 <Text style={{ fontSize: 16, marginRight: 6 }}>{p.emoji}</Text>
                 <Text
-                  style={{ color: "#fff", fontWeight: "700", fontSize: 14 }}
+                  style={{ color: t.textStrong, fontWeight: "700", fontSize: 14 }}
                 >
                   {p.name}
                 </Text>
               </View>
               <Text
                 style={{
-                  color: "#2ecc71",
+                  color: t.good,
                   fontSize: 11,
                   fontWeight: "600",
                   marginBottom: 2,
@@ -2704,7 +2705,7 @@ export default function App() {
               </Text>
               <Text
                 style={{
-                  color: "#9CA3AF",
+                  color: t.textMuted,
                   fontSize: 12,
                   lineHeight: 17,
                   marginBottom: 6,
@@ -2714,7 +2715,7 @@ export default function App() {
               </Text>
               <Text
                 style={{
-                  color: "#e67e22",
+                  color: t.high,
                   fontSize: 11,
                   fontWeight: "600",
                   marginBottom: 2,
@@ -2724,7 +2725,7 @@ export default function App() {
               </Text>
               <Text
                 style={{
-                  color: "#9CA3AF",
+                  color: t.textMuted,
                   fontSize: 12,
                   lineHeight: 17,
                   marginBottom: p.warning ? 6 : 0,
@@ -2735,7 +2736,7 @@ export default function App() {
               {p.warning && (
                 <Text
                   style={{
-                    color: "#FC8181",
+                    color: t.critical,
                     fontSize: 11,
                     lineHeight: 16,
                     marginTop: 4,
@@ -2750,7 +2751,7 @@ export default function App() {
           {/* KEY RULES */}
           <Text
             style={{
-              color: "#2ECC71",
+              color: t.good,
               fontSize: 16,
               fontWeight: "800",
               marginTop: 16,
@@ -2799,17 +2800,17 @@ export default function App() {
             <View
               key={i}
               style={{
-                backgroundColor: "#1a1a2e",
+                backgroundColor: t.surfaceAlt,
                 borderRadius: 10,
                 padding: 12,
                 marginBottom: 8,
                 borderLeftWidth: 3,
-                borderLeftColor: r.icon === "🚨" ? "#c0392b" : "#f39c12",
+                borderLeftColor: r.icon === "🚨" ? t.criticalDeep : t.high,
               }}
             >
               <Text
                 style={{
-                  color: "#fff",
+                  color: t.textStrong,
                   fontWeight: "700",
                   fontSize: 13,
                   marginBottom: 4,
@@ -2817,7 +2818,7 @@ export default function App() {
               >
                 {r.icon} {r.title}
               </Text>
-              <Text style={{ color: "#9CA3AF", fontSize: 12, lineHeight: 17 }}>
+              <Text style={{ color: t.textMuted, fontSize: 12, lineHeight: 17 }}>
                 {r.body}
               </Text>
             </View>
@@ -2825,7 +2826,7 @@ export default function App() {
 
           <Text
             style={{
-              color: "#6B7280",
+              color: t.textDim,
               fontSize: 11,
               textAlign: "center",
               marginTop: 16,
@@ -2860,7 +2861,7 @@ export default function App() {
           <Text style={styles.buttonText}>📷 Scan Ingredient List</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.button, { marginTop: 10, backgroundColor: '#1a2332' }]}
+          style={[styles.button, { marginTop: 10, backgroundColor: t.surface }]}
           onPress={() => {
             setNotFound(false);
             setScanned(false);
@@ -4287,7 +4288,7 @@ export default function App() {
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%', marginBottom: 4 }}>
             <Text style={[styles.title, { marginBottom: 0 }]}>🐾 PawGrade</Text>
             <TouchableOpacity onPress={() => { setShowFeedbackModal(true); setFeedbackSubmitted(false); }} style={{ padding: 8 }}>
-              <Text style={{ color: '#6B7280', fontSize: 13 }}>💬 Feedback</Text>
+              <Text style={{ color: t.textDim, fontSize: 13 }}>💬 Feedback</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.modeToggle}>
@@ -4337,37 +4338,37 @@ export default function App() {
             <View style={{ flex: 1, width: "100%", paddingHorizontal: 16, paddingTop: 8 }}>
               <TextInput
                 style={{
-                  backgroundColor: "#1a2332",
-                  color: "#fff",
+                  backgroundColor: t.surface,
+                  color: t.textStrong,
                   borderRadius: 10,
                   padding: 12,
                   fontSize: 13,
                   marginBottom: 10,
                 }}
                 placeholder="Product name (optional)"
-                placeholderTextColor="#4B5563"
+                placeholderTextColor={t.textFaint}
                 value={manualProductName}
                 onChangeText={setManualProductName}
               />
               <TextInput
                 style={{
-                  backgroundColor: "#1a2332",
-                  color: "#fff",
+                  backgroundColor: t.surface,
+                  color: t.textStrong,
                   borderRadius: 10,
                   padding: 12,
                   fontSize: 13,
                   marginBottom: 10,
                 }}
                 placeholder="Barcode number (optional — for future scans)"
-                placeholderTextColor="#4B5563"
+                placeholderTextColor={t.textFaint}
                 value={manualBarcode}
                 onChangeText={setManualBarcode}
                 keyboardType="numeric"
               />
               <TextInput
                 style={{
-                  backgroundColor: "#1a2332",
-                  color: "#fff",
+                  backgroundColor: t.surface,
+                  color: t.textStrong,
                   borderRadius: 10,
                   padding: 12,
                   fontSize: 13,
@@ -4376,14 +4377,14 @@ export default function App() {
                   marginBottom: 14,
                 }}
                 placeholder={"Paste ingredient list here...\n\nExample: Chicken, Brown Rice, Chicken Meal, Peas, Chicken Fat, Fish Oil..."}
-                placeholderTextColor="#4B5563"
+                placeholderTextColor={t.textFaint}
                 value={manualIngredientText}
                 onChangeText={setManualIngredientText}
                 multiline
               />
               <TouchableOpacity
                 style={{
-                  backgroundColor: manualIngredientText.trim() ? "#2ECC71" : "#1a2332",
+                  backgroundColor: manualIngredientText.trim() ? t.good : t.surface,
                   borderRadius: 12,
                   paddingVertical: 14,
                   alignItems: "center",
@@ -4391,7 +4392,7 @@ export default function App() {
                 onPress={handleManualAnalyze}
                 disabled={!manualIngredientText.trim()}
               >
-                <Text style={{ color: "#000", fontWeight: "700", fontSize: 16 }}>
+                <Text style={{ color: t.onAccent, fontWeight: "700", fontSize: 16 }}>
                   Analyze Ingredients
                 </Text>
               </TouchableOpacity>
@@ -4400,8 +4401,8 @@ export default function App() {
             <View style={{ width: "100%", flex: 1 }}>
               <TextInput
                 style={{
-                  backgroundColor: "#1a2332",
-                  color: "#fff",
+                  backgroundColor: t.surface,
+                  color: t.textStrong,
                   borderRadius: 10,
                   padding: 12,
                   fontSize: 13,
@@ -4409,7 +4410,7 @@ export default function App() {
                   marginBottom: 8,
                 }}
                 placeholder="Brand / product name (optional)"
-                placeholderTextColor="#4B5563"
+                placeholderTextColor={t.textFaint}
                 value={cameraProductName}
                 onChangeText={setCameraProductName}
               />
@@ -4438,7 +4439,7 @@ export default function App() {
             <>
               <Text
                 style={{
-                  color: "#6B7280",
+                  color: t.textDim,
                   fontSize: 12,
                   marginBottom: 6,
                   marginTop: 8,
@@ -4451,7 +4452,7 @@ export default function App() {
                   style={[styles.demoBtn, styles.demoBtnBad]}
                   onPress={loadDemo}
                 >
-                  <Text style={[styles.demoBtnText, { color: "#E74C3C" }]}>
+                  <Text style={[styles.demoBtnText, { color: t.critical }]}>
                     Purina Pro Plan
                   </Text>
                 </TouchableOpacity>
@@ -4467,7 +4468,7 @@ export default function App() {
                   style={[styles.demoBtn, styles.demoBtnBad, { flex: 1 }]}
                   onPress={loadTreatDemo}
                 >
-                  <Text style={[styles.demoBtnText, { color: "#E74C3C" }]}>
+                  <Text style={[styles.demoBtnText, { color: t.critical }]}>
                     🦴 Milk-Bone Treats
                   </Text>
                 </TouchableOpacity>
@@ -4492,7 +4493,7 @@ export default function App() {
               style={styles.disclaimerLink}
               onPress={() => setShowGuide(true)}
             >
-              <Text style={[styles.disclaimerLinkText, { color: "#2ECC71" }]}>
+              <Text style={[styles.disclaimerLinkText, { color: t.good }]}>
                 📚 Ingredient Guide
               </Text>
             </TouchableOpacity>
@@ -4505,7 +4506,7 @@ export default function App() {
         >
           {loading && (
             <View style={styles.loadingBox}>
-              <ActivityIndicator size="large" color="#2ECC71" />
+              <ActivityIndicator size="large" color={t.good} />
               <Text style={styles.loadingText}>
                 {smartScanStep || dataSource || "Checking databases..."}
               </Text>
@@ -4582,11 +4583,11 @@ export default function App() {
                     {scoreBreakdown.map((item, i) => (
                       <View key={i} style={styles.breakdownRow}>
                         <Text style={[styles.breakdownLabel, {
-                          color: item.severity === 'toxic' ? '#FF4D4D'
-                            : item.severity === 'severe' ? '#FF8C00'
-                            : item.severity === 'moderate' ? '#FBBF24'
-                            : item.severity === 'mild' ? '#D4A017'
-                            : '#D1D5DB',
+                          color: item.severity === 'toxic' ? t.critical
+                            : item.severity === 'severe' ? t.high
+                            : item.severity === 'moderate' ? t.moderate
+                            : item.severity === 'mild' ? t.moderateDeep
+                            : t.text,
                         }]}>{item.label}</Text>
                         <Text
                           style={[
@@ -4594,10 +4595,10 @@ export default function App() {
                             {
                               color:
                                 item.value > 0
-                                  ? "#2ECC71"
+                                  ? t.good
                                   : item.value < 0
-                                    ? "#FC8181"
-                                    : "#9CA3AF",
+                                    ? t.critical
+                                    : t.textMuted,
                             },
                           ]}
                         >
@@ -4614,26 +4615,26 @@ export default function App() {
                       Traditional Chinese Veterinary Medicine classifies proteins by their energetic properties. Matching protein to your dog's constitution and season reduces inflammation, hot spots, and digestive upset.
                     </Text>
                     <View style={{ marginBottom: 10 }}>
-                      <Text style={{ color: '#60A5FA', fontWeight: '700', fontSize: 13, marginBottom: 4 }}>❄️ Cooling Proteins</Text>
-                      <Text style={{ color: '#93C5FD', fontSize: 13, lineHeight: 19 }}>Duck · Rabbit · Cod · Flounder · Whitefish · Turkey · Clams · Pork</Text>
-                      <Text style={{ color: '#6B7280', fontSize: 11, marginTop: 3 }}>Best for: hot dogs, skin issues, allergies, hot spots, summer heat, panting</Text>
+                      <Text style={{ color: t.info, fontWeight: '700', fontSize: 13, marginBottom: 4 }}>❄️ Cooling Proteins</Text>
+                      <Text style={{ color: t.infoSoft, fontSize: 13, lineHeight: 19 }}>Duck · Rabbit · Cod · Flounder · Whitefish · Turkey · Clams · Pork</Text>
+                      <Text style={{ color: t.textDim, fontSize: 11, marginTop: 3 }}>Best for: hot dogs, skin issues, allergies, hot spots, summer heat, panting</Text>
                     </View>
                     <View style={{ marginBottom: 10 }}>
-                      <Text style={{ color: '#9CA3AF', fontWeight: '700', fontSize: 13, marginBottom: 4 }}>⚖️ Neutral Proteins</Text>
-                      <Text style={{ color: '#D1D5DB', fontSize: 13, lineHeight: 19 }}>Beef · Salmon · Eggs · Sardines · Herring · Quail · Pork</Text>
-                      <Text style={{ color: '#6B7280', fontSize: 11, marginTop: 3 }}>Good for most dogs year-round</Text>
+                      <Text style={{ color: t.textMuted, fontWeight: '700', fontSize: 13, marginBottom: 4 }}>⚖️ Neutral Proteins</Text>
+                      <Text style={{ color: t.text, fontSize: 13, lineHeight: 19 }}>Beef · Salmon · Eggs · Sardines · Herring · Quail · Pork</Text>
+                      <Text style={{ color: t.textDim, fontSize: 11, marginTop: 3 }}>Good for most dogs year-round</Text>
                     </View>
                     <View style={{ marginBottom: 12 }}>
-                      <Text style={{ color: '#FCA5A5', fontWeight: '700', fontSize: 13, marginBottom: 4 }}>🔥 Warming Proteins</Text>
-                      <Text style={{ color: '#FCA5A5', fontSize: 13, lineHeight: 19 }}>Chicken · Lamb · Venison · Goat · Trout · Shrimp · Pheasant · Anchovies</Text>
-                      <Text style={{ color: '#6B7280', fontSize: 11, marginTop: 3 }}>Best for: cold or lethargic dogs, winter months, poor circulation</Text>
+                      <Text style={{ color: t.critical, fontWeight: '700', fontSize: 13, marginBottom: 4 }}>🔥 Warming Proteins</Text>
+                      <Text style={{ color: t.critical, fontSize: 13, lineHeight: 19 }}>Chicken · Lamb · Venison · Goat · Trout · Shrimp · Pheasant · Anchovies</Text>
+                      <Text style={{ color: t.textDim, fontSize: 11, marginTop: 3 }}>Best for: cold or lethargic dogs, winter months, poor circulation</Text>
                     </View>
-                    <View style={{ backgroundColor: '#0d1a2e', borderRadius: 10, padding: 12, marginBottom: 10, borderWidth: 1, borderColor: '#1E40AF' }}>
-                      <Text style={{ color: '#60A5FA', fontWeight: '700', fontSize: 13, marginBottom: 4 }}>☀️ Summer Recommendation</Text>
-                      <Text style={{ color: '#93C5FD', fontSize: 13, lineHeight: 19 }}>Switch to cooling or neutral proteins in warm months — duck, rabbit, or white fish are ideal. Avoid chicken and lamb if your dog pants excessively, has seasonal allergies, or hot spots.</Text>
+                    <View style={{ backgroundColor: t.dcmTint, borderRadius: 10, padding: 12, marginBottom: 10, borderWidth: 1, borderColor: t.dcmDeep }}>
+                      <Text style={{ color: t.info, fontWeight: '700', fontSize: 13, marginBottom: 4 }}>☀️ Summer Recommendation</Text>
+                      <Text style={{ color: t.infoSoft, fontSize: 13, lineHeight: 19 }}>Switch to cooling or neutral proteins in warm months — duck, rabbit, or white fish are ideal. Avoid chicken and lamb if your dog pants excessively, has seasonal allergies, or hot spots.</Text>
                     </View>
                     <TouchableOpacity onPress={() => Linking.openURL('https://drjudymorgan.com')}>
-                      <Text style={{ color: '#2ECC71', fontSize: 13, fontWeight: '600' }}>🌿 Learn more at Dr. Judy Morgan's site →</Text>
+                      <Text style={{ color: t.good, fontSize: 13, fontWeight: '600' }}>🌿 Learn more at Dr. Judy Morgan's site →</Text>
                     </TouchableOpacity>
                   </AccordionSection>
                 )}
@@ -4643,10 +4644,10 @@ export default function App() {
                     {SUPPLEMENT_RECS.map((s, i) => (
                       <View key={i} style={{ marginBottom: 12, backgroundColor: s.bg, borderRadius: 10, padding: 12, borderWidth: 1, borderColor: s.borderColor }}>
                         <Text style={{ color: s.color, fontWeight: '700', fontSize: 14, marginBottom: 4 }}>{s.emoji} {s.name}</Text>
-                        <Text style={{ color: '#D1D5DB', fontSize: 13, lineHeight: 19, marginBottom: 6 }}>{s.body}</Text>
-                        <Text style={{ color: '#6B7280', fontSize: 11, marginBottom: 10 }}>{s.note}</Text>
+                        <Text style={{ color: t.text, fontSize: 13, lineHeight: 19, marginBottom: 6 }}>{s.body}</Text>
+                        <Text style={{ color: t.textDim, fontSize: 11, marginBottom: 10 }}>{s.note}</Text>
                         <TouchableOpacity style={{ backgroundColor: s.color, borderRadius: 8, paddingVertical: 8, paddingHorizontal: 12, alignSelf: 'flex-start' }} onPress={() => Linking.openURL(s.link)}>
-                          <Text style={{ color: '#000', fontWeight: '700', fontSize: 12 }}>{s.linkText}</Text>
+                          <Text style={{ color: t.onAccent, fontWeight: '700', fontSize: 12 }}>{s.linkText}</Text>
                         </TouchableOpacity>
                       </View>
                     ))}
@@ -4665,14 +4666,14 @@ export default function App() {
                           styles.flagItem,
                           {
                             borderLeftColor:
-                              SEVERITY_COLORS[f.severity] || "#e67e22",
+                              SEVERITY_COLORS[f.severity] || t.high,
                           },
                         ]}
                       >
                         <Text
                           style={[
                             styles.flagName,
-                            { color: SEVERITY_COLORS[f.severity] || "#e67e22" },
+                            { color: SEVERITY_COLORS[f.severity] || t.high },
                           ]}
                         >
                           {f.name}
@@ -4686,9 +4687,9 @@ export default function App() {
                 {treatProcessingMethod && treatProcessingMethod !== 'Unknown' && (
                   <View style={styles.section}>
                     <Text style={styles.sectionTitle}>🔥 Processing Method</Text>
-                    <View style={{ backgroundColor: '#1a2332', borderRadius: 10, padding: 12 }}>
-                      <Text style={{ color: '#FFFFFF', fontWeight: '700', fontSize: 14 }}>{treatProcessingMethod}</Text>
-                      <Text style={{ color: '#9CA3AF', fontSize: 12, marginTop: 4 }}>
+                    <View style={{ backgroundColor: t.surface, borderRadius: 10, padding: 12 }}>
+                      <Text style={{ color: t.textStrong, fontWeight: '700', fontSize: 14 }}>{treatProcessingMethod}</Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 4 }}>
                         {treatProcessingMethod === 'Freeze-Dried' || treatProcessingMethod === 'Raw'
                           ? 'Nutrients and enzymes are fully intact — the gold standard for treats.'
                           : treatProcessingMethod === 'Baked'
@@ -4710,9 +4711,9 @@ export default function App() {
                       This treat contains ingredients shown to support dental health.
                     </Text>
                     {treatDentalIngredients.map((d, i) => (
-                      <View key={i} style={{ backgroundColor: '#0d2d1a', borderRadius: 8, padding: 10, marginBottom: 6 }}>
-                        <Text style={{ color: '#2ecc71', fontWeight: '700', fontSize: 13 }}>{d.ingredient}</Text>
-                        <Text style={{ color: '#9CA3AF', fontSize: 12, marginTop: 2 }}>{d.benefit}</Text>
+                      <View key={i} style={{ backgroundColor: t.goodTint, borderRadius: 8, padding: 10, marginBottom: 6 }}>
+                        <Text style={{ color: t.good, fontWeight: '700', fontSize: 13 }}>{d.ingredient}</Text>
+                        <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 2 }}>{d.benefit}</Text>
                       </View>
                     ))}
                   </View>
@@ -4727,9 +4728,9 @@ export default function App() {
                     { emoji: "🦴", title: "Raw Bones or Chicken Feet (occasionally)", body: "Raw (never cooked) bones and raw chicken feet provide natural mechanical cleaning, especially on back molars where tartar accumulates. Always supervise and research safe sizing for your breed." },
                     { emoji: "🏔️", title: "Himalayan Yak Chews", body: "Made from hardened yak milk — these are one of the most effective natural plaque scrapers available. ⚠️ Try at your own risk — research before use and always supervise your dog." },
                   ].map((tip, i) => (
-                    <View key={i} style={{ backgroundColor: '#0d1a10', borderRadius: 8, padding: 10, marginBottom: 8, borderWidth: 1, borderColor: '#1a4a22' }}>
-                      <Text style={{ color: '#2ECC71', fontWeight: '700', fontSize: 13, marginBottom: 3 }}>{tip.emoji} {tip.title}</Text>
-                      <Text style={{ color: '#9CA3AF', fontSize: 12, lineHeight: 18 }}>{tip.body}</Text>
+                    <View key={i} style={{ backgroundColor: t.goodTint, borderRadius: 8, padding: 10, marginBottom: 8, borderWidth: 1, borderColor: t.goodDeep }}>
+                      <Text style={{ color: t.good, fontWeight: '700', fontSize: 13, marginBottom: 3 }}>{tip.emoji} {tip.title}</Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, lineHeight: 18 }}>{tip.body}</Text>
                     </View>
                   ))}
                 </View>
@@ -4822,7 +4823,7 @@ export default function App() {
                             <Text
                               style={[
                                 styles.ingredientProvides,
-                                { color: "#555" },
+                                { color: t.textFaint },
                               ]}
                             >
                               Analyzing...
@@ -4885,15 +4886,15 @@ export default function App() {
                   style={{
                     fontSize: 18,
                     fontWeight: "700",
-                    color: "#FFFFFF",
+                    color: t.textStrong,
                     paddingHorizontal: 16,
                     marginTop: 20,
                     marginBottom: 2,
                     borderBottomWidth: 1,
-                    borderBottomColor: "#2d3748",
+                    borderBottomColor: t.border,
                   }}
                   placeholder="Add product name..."
-                  placeholderTextColor="#4B5563"
+                  placeholderTextColor={t.textFaint}
                   value={productName === "Scanned Product" || productName === "Analyzed Product" ? "" : productName}
                   onChangeText={setProductName}
                 />
@@ -4903,14 +4904,14 @@ export default function App() {
               {processing && !processing.rating.includes("Unknown") && (
                 <View style={{ flexDirection: "row", alignItems: "center", paddingHorizontal: 16, marginTop: 4, marginBottom: 4 }}>
                   <View style={{
-                    backgroundColor: processing.rating.includes("Poor") || processing.rating.includes("Kibble") ? "#3d0a0a" : processing.rating.includes("OK") ? "#2d2a10" : "#0a1a00",
+                    backgroundColor: processing.rating.includes("Poor") || processing.rating.includes("Kibble") ? t.criticalTint : processing.rating.includes("OK") ? t.moderateTint : t.accents.detox.bg,
                     borderRadius: 20,
                     paddingHorizontal: 10,
                     paddingVertical: 4,
                     borderWidth: 1,
-                    borderColor: processing.rating.includes("Poor") || processing.rating.includes("Kibble") ? "#c0392b" : processing.rating.includes("OK") ? "#f39c12" : "#2ECC71",
+                    borderColor: processing.rating.includes("Poor") || processing.rating.includes("Kibble") ? t.criticalDeep : processing.rating.includes("OK") ? t.high : t.good,
                   }}>
-                    <Text style={{ color: processing.rating.includes("Poor") || processing.rating.includes("Kibble") ? "#fc8181" : processing.rating.includes("OK") ? "#f6c35a" : "#2ECC71", fontSize: 12, fontWeight: "700" }}>
+                    <Text style={{ color: processing.rating.includes("Poor") || processing.rating.includes("Kibble") ? t.critical : processing.rating.includes("OK") ? t.moderate : t.good, fontSize: 12, fontWeight: "700" }}>
                       {processing.emoji} {processing.rating}
                     </Text>
                   </View>
@@ -4918,7 +4919,7 @@ export default function App() {
               )}
               {(!processing || processing.rating.includes("Unknown")) && rawIngredientsText && !isTreatScan && (
                 <View style={{ paddingHorizontal: 16, marginTop: 8, marginBottom: 4 }}>
-                  <Text style={{ color: "#6B7280", fontSize: 12, marginBottom: 6 }}>What type of food is this?</Text>
+                  <Text style={{ color: t.textDim, fontSize: 12, marginBottom: 6 }}>What type of food is this?</Text>
                   <View style={{ flexDirection: "row", gap: 6 }}>
                     {[
                       { label: "Kibble", value: "kibble" },
@@ -4938,12 +4939,12 @@ export default function App() {
                           paddingVertical: 7,
                           borderRadius: 8,
                           alignItems: "center",
-                          backgroundColor: "#1a2332",
+                          backgroundColor: t.surface,
                           borderWidth: 1,
-                          borderColor: "#2d3748",
+                          borderColor: t.border,
                         }}
                       >
-                        <Text style={{ color: "#9CA3AF", fontSize: 10, fontWeight: "600" }}>{opt.label}</Text>
+                        <Text style={{ color: t.textMuted, fontSize: 10, fontWeight: "600" }}>{opt.label}</Text>
                       </TouchableOpacity>
                     ))}
                   </View>
@@ -4956,7 +4957,7 @@ export default function App() {
               {recallAlert?.found && (
                 <TouchableOpacity
                   style={{
-                    backgroundColor: "#7b0000",
+                    backgroundColor: t.toxic,
                     borderRadius: 10,
                     padding: 12,
                     marginTop: 8,
@@ -4965,17 +4966,17 @@ export default function App() {
                   onPress={() => Linking.openURL(recallAlert.url)}
                 >
                   <Text
-                    style={{ color: "#fff", fontWeight: "800", fontSize: 14 }}
+                    style={{ color: t.textStrong, fontWeight: "800", fontSize: 14 }}
                   >
                     ⚠️ Possible FDA Recall on File
                   </Text>
                   <Text
-                    style={{ color: "#ffaaaa", fontSize: 12, marginTop: 4 }}
+                    style={{ color: t.critical, fontSize: 12, marginTop: 4 }}
                   >
                     {recallAlert.description}
                   </Text>
                   <Text
-                    style={{ color: "#ff8080", fontSize: 11, marginTop: 4 }}
+                    style={{ color: t.critical, fontSize: 11, marginTop: 4 }}
                   >
                     Recall date: {recallAlert.date} — Tap to verify on FDA.gov →
                   </Text>
@@ -4983,20 +4984,20 @@ export default function App() {
               )}
 
               {score !== null && (
-                <View style={{ backgroundColor: "#1a1a2e", borderRadius: 16, padding: 16, marginHorizontal: 16, marginTop: 6, marginBottom: 12, borderWidth: 1, borderColor: "#2A3A4A" }}>
-                  <Text style={{ color: "#D1D5DB", fontSize: 13, lineHeight: 20, fontStyle: "italic" }}>
+                <View style={{ backgroundColor: t.surfaceAlt, borderRadius: 16, padding: 16, marginHorizontal: 16, marginTop: 6, marginBottom: 12, borderWidth: 1, borderColor: t.border }}>
+                  <Text style={{ color: t.text, fontSize: 13, lineHeight: 20, fontStyle: "italic" }}>
                     💚 I fed my dog kibble for 6 years because I couldn't afford anything better — and he was okay. So please don't feel bad if this is what you can afford right now. They still love you exactly the same.{"\n\n"}The goal isn't perfection, it's just small improvements over time. Even adding a whole food topper, a raw egg, or a little fish a few times a week goes a long way. I'm just trying to help as much as I can. 🐾
                   </Text>
-                  <Text style={{ color: "#6B7280", fontSize: 11, marginTop: 8 }}>— Kyle, PawGrade founder</Text>
+                  <Text style={{ color: t.textDim, fontSize: 11, marginTop: 8 }}>— Kyle, PawGrade founder</Text>
                 </View>
               )}
 
               {score !== null && (
-                <View style={{ backgroundColor: "#0d1f2e", borderRadius: 16, padding: 16, marginHorizontal: 16, marginBottom: 12, borderWidth: 1, borderColor: "#2A5A7A" }}>
-                  <Text style={{ color: "#7DD3FC", fontSize: 12, fontWeight: "700", marginBottom: 6, textTransform: "uppercase", letterSpacing: 0.5 }}>
+                <View style={{ backgroundColor: t.dcmTint, borderRadius: 16, padding: 16, marginHorizontal: 16, marginBottom: 12, borderWidth: 1, borderColor: t.dcmDeep }}>
+                  <Text style={{ color: t.infoSoft, fontSize: 12, fontWeight: "700", marginBottom: 6, textTransform: "uppercase", letterSpacing: 0.5 }}>
                     💡 {getNextStep(score, processing).headline}
                   </Text>
-                  <Text style={{ color: "#D1D5DB", fontSize: 13, lineHeight: 19 }}>
+                  <Text style={{ color: t.text, fontSize: 13, lineHeight: 19 }}>
                     {getNextStep(score, processing).detail}
                   </Text>
                 </View>
@@ -5008,11 +5009,11 @@ export default function App() {
                   {scoreBreakdown.map((item, i) => (
                     <View key={i} style={styles.breakdownRow}>
                       <Text style={[styles.breakdownLabel, {
-                        color: item.severity === 'toxic' ? '#FF4D4D'
-                          : item.severity === 'severe' ? '#FF8C00'
-                          : item.severity === 'moderate' ? '#FBBF24'
-                          : item.severity === 'mild' ? '#D4A017'
-                          : '#D1D5DB',
+                        color: item.severity === 'toxic' ? t.critical
+                          : item.severity === 'severe' ? t.high
+                          : item.severity === 'moderate' ? t.moderate
+                          : item.severity === 'mild' ? t.moderateDeep
+                          : t.text,
                       }]}>{item.label}</Text>
                       <Text
                         style={[
@@ -5020,10 +5021,10 @@ export default function App() {
                           {
                             color:
                               item.value > 0
-                                ? "#2ECC71"
+                                ? t.good
                                 : item.value < 0
-                                  ? "#FC8181"
-                                  : "#9CA3AF",
+                                  ? t.critical
+                                  : t.textMuted,
                           },
                         ]}
                       >
@@ -5040,9 +5041,9 @@ export default function App() {
                   <Text style={styles.omegaNote}>
                     📷 Point your camera at the Guaranteed Analysis panel on the bag to see exact protein, fat, fiber, moisture, and carb percentages. These numbers come directly from the manufacturer and are the most accurate source.
                   </Text>
-                  <View style={{ marginTop: 10, backgroundColor: '#1a0a00', borderRadius: 10, padding: 12, borderWidth: 1, borderColor: '#F97316' }}>
-                    <Text style={{ color: '#F97316', fontWeight: '700', fontSize: 13, marginBottom: 4 }}>⚠️ High Carbs & Lipomas</Text>
-                    <Text style={{ color: '#D1D5DB', fontSize: 12, lineHeight: 18 }}>High carbohydrate diets spike insulin, promote fat cell proliferation, and drive inflammation — all directly linked to lipoma development and growth. Target carbs below 20%, ideally below 15%. Omega-6:3 ratio of 5:1 or less is strongly anti-inflammatory and helps manage existing lipomas.</Text>
+                  <View style={{ marginTop: 10, backgroundColor: t.accents.liver.bg, borderRadius: 10, padding: 12, borderWidth: 1, borderColor: t.accents.liver.fg }}>
+                    <Text style={{ color: t.accents.liver.fg, fontWeight: '700', fontSize: 13, marginBottom: 4 }}>⚠️ High Carbs & Lipomas</Text>
+                    <Text style={{ color: t.text, fontSize: 12, lineHeight: 18 }}>High carbohydrate diets spike insulin, promote fat cell proliferation, and drive inflammation — all directly linked to lipoma development and growth. Target carbs below 20%, ideally below 15%. Omega-6:3 ratio of 5:1 or less is strongly anti-inflammatory and helps manage existing lipomas.</Text>
                   </View>
                 </View>
               )}
@@ -5060,20 +5061,20 @@ export default function App() {
                         { label: "Moisture", value: nutritionalProfile.moisture_pct, good: null, warn: null, unit: "%" },
                         { label: "Carbs (est.)", value: nutritionalProfile.carb_pct, good: null, warn: 25, unit: "%", invert: true },
                       ].filter(r => r.value != null).map((row, i) => (
-                        <View key={i} style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 4, borderBottomWidth: 1, borderBottomColor: '#0D0D1A' }}>
-                          <Text style={{ color: '#9CA3AF', fontSize: 13 }}>{row.label}</Text>
-                          <Text style={{ color: row.invert ? (row.value! > (row.warn ?? 999) ? '#FC8181' : '#2ECC71') : (row.good != null && row.value! >= row.good ? '#2ECC71' : row.warn != null && row.value! < row.warn ? '#FC8181' : '#FBBF24'), fontWeight: '700', fontSize: 13 }}>{row.value}{row.unit}</Text>
+                        <View key={i} style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 4, borderBottomWidth: 1, borderBottomColor: t.bg }}>
+                          <Text style={{ color: t.textMuted, fontSize: 13 }}>{row.label}</Text>
+                          <Text style={{ color: row.invert ? (row.value! > (row.warn ?? 999) ? t.critical : t.good) : (row.good != null && row.value! >= row.good ? t.good : row.warn != null && row.value! < row.warn ? t.critical : t.moderate), fontWeight: '700', fontSize: 13 }}>{row.value}{row.unit}</Text>
                         </View>
                       ))}
                       {nutritionalProfile.omega_ratio && (
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 4 }}>
-                          <Text style={{ color: '#9CA3AF', fontSize: 13 }}>Omega 6:3 ratio</Text>
-                          <Text style={{ color: ["1:", "2:", "3:", "4:", "5:"].some(p => nutritionalProfile.omega_ratio!.startsWith(p)) ? '#2ECC71' : '#FC8181', fontWeight: '700', fontSize: 13 }}>{nutritionalProfile.omega_ratio}{["1:", "2:", "3:", "4:", "5:"].some(p => nutritionalProfile.omega_ratio!.startsWith(p)) ? " ✓" : " ⚠️"}</Text>
+                          <Text style={{ color: t.textMuted, fontSize: 13 }}>Omega 6:3 ratio</Text>
+                          <Text style={{ color: ["1:", "2:", "3:", "4:", "5:"].some(p => nutritionalProfile.omega_ratio!.startsWith(p)) ? t.good : t.critical, fontWeight: '700', fontSize: 13 }}>{nutritionalProfile.omega_ratio}{["1:", "2:", "3:", "4:", "5:"].some(p => nutritionalProfile.omega_ratio!.startsWith(p)) ? " ✓" : " ⚠️"}</Text>
                         </View>
                       )}
-                      <View style={{ marginTop: 10, backgroundColor: '#1a0a00', borderRadius: 10, padding: 12, borderWidth: 1, borderColor: '#F97316' }}>
-                        <Text style={{ color: '#F97316', fontWeight: '700', fontSize: 13, marginBottom: 4 }}>⚠️ High Carbs & Lipomas</Text>
-                        <Text style={{ color: '#D1D5DB', fontSize: 12, lineHeight: 18 }}>High carbohydrate diets spike insulin, promote fat cell proliferation, and drive inflammation — all directly linked to lipoma development and growth. Target carbs below 20%, ideally below 15%. Omega-6:3 ratio of 5:1 or less is strongly anti-inflammatory and helps manage existing lipomas.</Text>
+                      <View style={{ marginTop: 10, backgroundColor: t.accents.liver.bg, borderRadius: 10, padding: 12, borderWidth: 1, borderColor: t.accents.liver.fg }}>
+                        <Text style={{ color: t.accents.liver.fg, fontWeight: '700', fontSize: 13, marginBottom: 4 }}>⚠️ High Carbs & Lipomas</Text>
+                        <Text style={{ color: t.text, fontSize: 12, lineHeight: 18 }}>High carbohydrate diets spike insulin, promote fat cell proliferation, and drive inflammation — all directly linked to lipoma development and growth. Target carbs below 20%, ideally below 15%. Omega-6:3 ratio of 5:1 or less is strongly anti-inflammatory and helps manage existing lipomas.</Text>
                       </View>
                       <Text style={[styles.omegaNote, { marginTop: 8 }]}>
                         Carbs estimated as: 100 − protein − fat − fiber − moisture − ~7% ash.
@@ -5098,10 +5099,10 @@ export default function App() {
                       const bg = harm
                         ? SEVERITY_COLORS[harm.severity]
                         : isGood
-                          ? "#1E8449"
+                          ? t.goodDeep
                           : isMeal || isLegume
-                            ? "#D68910"
-                            : "#2A2A3E";
+                            ? t.high
+                            : t.border;
                       return (
                         <TouchableOpacity
                           key={i}
@@ -5118,7 +5119,7 @@ export default function App() {
               )}
 
               {flagged.length > 0 && (
-                <AccordionSection title={`🚩 Ingredients to Watch (${flagged.length})`} titleColor="#FC8181">
+                <AccordionSection title={`🚩 Ingredients to Watch (${flagged.length})`} titleColor={t.critical}>
                   <Text style={[styles.omegaNote, { marginBottom: 8 }]}>Tap a name to see why it's a concern.</Text>
                   {flagged.map((f, i) => {
                     const open = !!expandedRedFlags[f.name];
@@ -5130,13 +5131,13 @@ export default function App() {
                             LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
                             setExpandedRedFlags((prev) => ({ ...prev, [f.name]: !prev[f.name] }));
                           }}
-                          style={{ flexDirection: "row", alignItems: "center", alignSelf: "flex-start", backgroundColor: SEVERITY_COLORS[f.severity] || "#3d0a0a", borderRadius: 14, paddingHorizontal: 12, paddingVertical: 6 }}
+                          style={{ flexDirection: "row", alignItems: "center", alignSelf: "flex-start", backgroundColor: SEVERITY_COLORS[f.severity] || t.criticalTint, borderRadius: 14, paddingHorizontal: 12, paddingVertical: 6 }}
                         >
-                          <Text style={{ color: "#fff", fontSize: 13, fontWeight: "700" }}>{f.name}</Text>
-                          <Text style={{ color: "#fff", fontSize: 11, fontWeight: "800", marginLeft: 6 }}>{open ? "▾" : "▸"}</Text>
+                          <Text style={{ color: t.textStrong, fontSize: 13, fontWeight: "700" }}>{f.name}</Text>
+                          <Text style={{ color: t.textStrong, fontSize: 11, fontWeight: "800", marginLeft: 6 }}>{open ? "▾" : "▸"}</Text>
                         </TouchableOpacity>
                         {open && (
-                          <Text style={{ color: "#D1D5DB", fontSize: 12, lineHeight: 18, marginTop: 6, marginLeft: 2 }}>{f.reason}</Text>
+                          <Text style={{ color: t.text, fontSize: 12, lineHeight: 18, marginTop: 6, marginLeft: 2 }}>{f.reason}</Text>
                         )}
                       </View>
                     );
@@ -5152,7 +5153,7 @@ export default function App() {
                     "🐟 Sardines or fish oil",
                     "🥛 Plain yogurt, kefir, or goat's milk for probiotics",
                   ].map((item, i) => (
-                    <Text key={i} style={{ color: "#D1D5DB", fontSize: 14, lineHeight: 24 }}>{item}</Text>
+                    <Text key={i} style={{ color: t.text, fontSize: 14, lineHeight: 24 }}>{item}</Text>
                   ))}
                 </View>
               )}
@@ -5168,10 +5169,10 @@ export default function App() {
                   {SUPPLEMENT_RECS.map((s, i) => (
                     <View key={i} style={{ marginBottom: 12, backgroundColor: s.bg, borderRadius: 10, padding: 12, borderWidth: 1, borderColor: s.borderColor }}>
                       <Text style={{ color: s.color, fontWeight: '700', fontSize: 14, marginBottom: 4 }}>{s.emoji} {s.name}</Text>
-                      <Text style={{ color: '#D1D5DB', fontSize: 13, lineHeight: 19, marginBottom: 6 }}>{s.body}</Text>
-                      <Text style={{ color: '#6B7280', fontSize: 11, marginBottom: 10 }}>{s.note}</Text>
+                      <Text style={{ color: t.text, fontSize: 13, lineHeight: 19, marginBottom: 6 }}>{s.body}</Text>
+                      <Text style={{ color: t.textDim, fontSize: 11, marginBottom: 10 }}>{s.note}</Text>
                       <TouchableOpacity style={{ backgroundColor: s.color, borderRadius: 8, paddingVertical: 8, paddingHorizontal: 12, alignSelf: 'flex-start' }} onPress={() => Linking.openURL(s.link)}>
-                        <Text style={{ color: '#000', fontWeight: '700', fontSize: 12 }}>{s.linkText}</Text>
+                        <Text style={{ color: t.onAccent, fontWeight: '700', fontSize: 12 }}>{s.linkText}</Text>
                       </TouchableOpacity>
                     </View>
                   ))}
@@ -5192,7 +5193,7 @@ export default function App() {
                       <View key={cat} style={{ marginBottom: 12 }}>
                         <Text
                           style={{
-                            color: "#9CA3AF",
+                            color: t.textMuted,
                             fontSize: 11,
                             fontWeight: "700",
                             textTransform: "uppercase",
@@ -5207,7 +5208,7 @@ export default function App() {
                             <View
                               key={i}
                               style={{
-                                backgroundColor: "#1a2332",
+                                backgroundColor: t.surface,
                                 borderRadius: 10,
                                 padding: 12,
                                 marginBottom: 6,
@@ -5225,7 +5226,7 @@ export default function App() {
                                 </Text>
                                 <Text
                                   style={{
-                                    color: "#FFFFFF",
+                                    color: t.textStrong,
                                     fontWeight: "700",
                                     fontSize: 14,
                                     flex: 1,
@@ -5236,7 +5237,7 @@ export default function App() {
                               </View>
                               <Text
                                 style={{
-                                  color: "#D1D5DB",
+                                  color: t.text,
                                   fontSize: 12,
                                   lineHeight: 17,
                                   marginBottom: 4,
@@ -5244,7 +5245,7 @@ export default function App() {
                               >
                                 {g.benefit}
                               </Text>
-                              <Text style={{ color: "#6B9EAF", fontSize: 11 }}>
+                              <Text style={{ color: t.textMuted, fontSize: 11 }}>
                                 📍 {g.where}
                               </Text>
                             </View>
@@ -5268,26 +5269,26 @@ export default function App() {
                     Traditional Chinese Veterinary Medicine classifies proteins by their energetic properties. Matching protein to your dog's constitution and season reduces inflammation, hot spots, and digestive upset.
                   </Text>
                   <View style={{ marginBottom: 10 }}>
-                    <Text style={{ color: '#60A5FA', fontWeight: '700', fontSize: 13, marginBottom: 4 }}>❄️ Cooling Proteins</Text>
-                    <Text style={{ color: '#93C5FD', fontSize: 13, lineHeight: 19 }}>Duck · Rabbit · Cod · Flounder · Whitefish · Turkey · Clams · Pork</Text>
-                    <Text style={{ color: '#6B7280', fontSize: 11, marginTop: 3 }}>Best for: hot dogs, skin issues, allergies, hot spots, summer heat, panting</Text>
+                    <Text style={{ color: t.info, fontWeight: '700', fontSize: 13, marginBottom: 4 }}>❄️ Cooling Proteins</Text>
+                    <Text style={{ color: t.infoSoft, fontSize: 13, lineHeight: 19 }}>Duck · Rabbit · Cod · Flounder · Whitefish · Turkey · Clams · Pork</Text>
+                    <Text style={{ color: t.textDim, fontSize: 11, marginTop: 3 }}>Best for: hot dogs, skin issues, allergies, hot spots, summer heat, panting</Text>
                   </View>
                   <View style={{ marginBottom: 10 }}>
-                    <Text style={{ color: '#9CA3AF', fontWeight: '700', fontSize: 13, marginBottom: 4 }}>⚖️ Neutral Proteins</Text>
-                    <Text style={{ color: '#D1D5DB', fontSize: 13, lineHeight: 19 }}>Beef · Salmon · Eggs · Sardines · Herring · Quail · Pork</Text>
-                    <Text style={{ color: '#6B7280', fontSize: 11, marginTop: 3 }}>Good for most dogs year-round</Text>
+                    <Text style={{ color: t.textMuted, fontWeight: '700', fontSize: 13, marginBottom: 4 }}>⚖️ Neutral Proteins</Text>
+                    <Text style={{ color: t.text, fontSize: 13, lineHeight: 19 }}>Beef · Salmon · Eggs · Sardines · Herring · Quail · Pork</Text>
+                    <Text style={{ color: t.textDim, fontSize: 11, marginTop: 3 }}>Good for most dogs year-round</Text>
                   </View>
                   <View style={{ marginBottom: 12 }}>
-                    <Text style={{ color: '#FCA5A5', fontWeight: '700', fontSize: 13, marginBottom: 4 }}>🔥 Warming Proteins</Text>
-                    <Text style={{ color: '#FCA5A5', fontSize: 13, lineHeight: 19 }}>Chicken · Lamb · Venison · Goat · Trout · Shrimp · Pheasant · Anchovies</Text>
-                    <Text style={{ color: '#6B7280', fontSize: 11, marginTop: 3 }}>Best for: cold or lethargic dogs, winter months, poor circulation</Text>
+                    <Text style={{ color: t.critical, fontWeight: '700', fontSize: 13, marginBottom: 4 }}>🔥 Warming Proteins</Text>
+                    <Text style={{ color: t.critical, fontSize: 13, lineHeight: 19 }}>Chicken · Lamb · Venison · Goat · Trout · Shrimp · Pheasant · Anchovies</Text>
+                    <Text style={{ color: t.textDim, fontSize: 11, marginTop: 3 }}>Best for: cold or lethargic dogs, winter months, poor circulation</Text>
                   </View>
-                  <View style={{ backgroundColor: '#0d1a2e', borderRadius: 10, padding: 12, marginBottom: 10, borderWidth: 1, borderColor: '#1E40AF' }}>
-                    <Text style={{ color: '#60A5FA', fontWeight: '700', fontSize: 13, marginBottom: 4 }}>☀️ Summer Recommendation</Text>
-                    <Text style={{ color: '#93C5FD', fontSize: 13, lineHeight: 19 }}>Switch to cooling or neutral proteins in warm months — duck, rabbit, or white fish are ideal. Avoid chicken and lamb if your dog pants excessively, has seasonal allergies, or hot spots.</Text>
+                  <View style={{ backgroundColor: t.dcmTint, borderRadius: 10, padding: 12, marginBottom: 10, borderWidth: 1, borderColor: t.dcmDeep }}>
+                    <Text style={{ color: t.info, fontWeight: '700', fontSize: 13, marginBottom: 4 }}>☀️ Summer Recommendation</Text>
+                    <Text style={{ color: t.infoSoft, fontSize: 13, lineHeight: 19 }}>Switch to cooling or neutral proteins in warm months — duck, rabbit, or white fish are ideal. Avoid chicken and lamb if your dog pants excessively, has seasonal allergies, or hot spots.</Text>
                   </View>
                   <TouchableOpacity onPress={() => Linking.openURL('https://drjudymorgan.com')}>
-                    <Text style={{ color: '#2ECC71', fontSize: 13, fontWeight: '600' }}>🌿 Learn more at Dr. Judy Morgan's site →</Text>
+                    <Text style={{ color: t.good, fontSize: 13, fontWeight: '600' }}>🌿 Learn more at Dr. Judy Morgan's site →</Text>
                   </TouchableOpacity>
                 </AccordionSection>
               )}
@@ -5361,14 +5362,14 @@ export default function App() {
                 : null;
             const impactColor =
               impact === "toxic" || impact === "severe"
-                ? "#c0392b"
+                ? t.criticalDeep
                 : impact === "moderate"
-                  ? "#e67e22"
+                  ? t.high
                   : impact === "mild"
-                    ? "#f39c12"
+                    ? t.high
                     : impact === "beneficial"
-                      ? "#27ae60"
-                      : "#6B7280";
+                      ? t.good
+                      : t.textDim;
             const impactLabel =
               impact === "toxic"
                 ? "☠️ Toxic"
@@ -5416,7 +5417,7 @@ export default function App() {
 
                 {ingredientDetailLoading && (
                   <View style={styles.detailLoadingRow}>
-                    <ActivityIndicator size="small" color="#2ECC71" />
+                    <ActivityIndicator size="small" color={t.good} />
                     <Text style={styles.detailLoadingText}>
                       Looking up ingredient details...
                     </Text>
@@ -5451,13 +5452,13 @@ export default function App() {
                       <View
                         style={[
                           styles.detailSection,
-                          { borderLeftWidth: 3, borderLeftColor: "#c0392b" },
+                          { borderLeftWidth: 3, borderLeftColor: t.criticalDeep },
                         ]}
                       >
                         <Text
                           style={[
                             styles.detailSectionTitle,
-                            { color: "#FC8181" },
+                            { color: t.critical },
                           ]}
                         >
                           Linked Health Conditions
@@ -5465,7 +5466,7 @@ export default function App() {
                         <Text
                           style={[
                             styles.detailSectionBody,
-                            { color: "#FC8181" },
+                            { color: t.critical },
                           ]}
                         >
                           {ingredientDetailData.disease_links}
@@ -5491,36 +5492,36 @@ export default function App() {
         presentationStyle="pageSheet"
         onRequestClose={() => { setShowFeedbackModal(false); setFeedbackText(''); setFeedbackSubmitted(false); }}
       >
-        <View style={{ flex: 1, backgroundColor: '#0D0D1A', padding: 24, paddingTop: 48 }}>
+        <View style={{ flex: 1, backgroundColor: t.bg, padding: 24, paddingTop: 48 }}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
-            <Text style={{ color: '#fff', fontSize: 20, fontWeight: '800' }}>Send Feedback</Text>
+            <Text style={{ color: t.textStrong, fontSize: 20, fontWeight: '800' }}>Send Feedback</Text>
             <TouchableOpacity onPress={() => { setShowFeedbackModal(false); setFeedbackText(''); setFeedbackSubmitted(false); }} style={{ padding: 8 }}>
-              <Text style={{ color: '#6B7280', fontSize: 18 }}>✕</Text>
+              <Text style={{ color: t.textDim, fontSize: 18 }}>✕</Text>
             </TouchableOpacity>
           </View>
           {feedbackSubmitted ? (
             <View style={{ alignItems: 'center', marginTop: 60 }}>
-              <Text style={{ color: '#2ECC71', fontSize: 22, fontWeight: '800', marginBottom: 12 }}>Thanks! 🐾</Text>
-              <Text style={{ color: '#9CA3AF', textAlign: 'center', fontSize: 15, lineHeight: 22 }}>
+              <Text style={{ color: t.good, fontSize: 22, fontWeight: '800', marginBottom: 12 }}>Thanks! 🐾</Text>
+              <Text style={{ color: t.textMuted, textAlign: 'center', fontSize: 15, lineHeight: 22 }}>
                 Your feedback helps make PawGrade better for every dog parent.
               </Text>
             </View>
           ) : (
             <>
-              <Text style={{ color: '#9CA3AF', marginBottom: 16, fontSize: 14, lineHeight: 21 }}>
+              <Text style={{ color: t.textMuted, marginBottom: 16, fontSize: 14, lineHeight: 21 }}>
                 What&apos;s not working? What would you like to see? We read every message.
               </Text>
               <TextInput
-                style={{ backgroundColor: '#1a2332', color: '#fff', borderRadius: 12, padding: 14, fontSize: 14, minHeight: 150, textAlignVertical: 'top', marginBottom: 16 }}
+                style={{ backgroundColor: t.surface, color: t.textStrong, borderRadius: 12, padding: 14, fontSize: 14, minHeight: 150, textAlignVertical: 'top', marginBottom: 16 }}
                 placeholder="Type your feedback here..."
-                placeholderTextColor="#4B5563"
+                placeholderTextColor={t.textFaint}
                 value={feedbackText}
                 onChangeText={setFeedbackText}
                 multiline
                 autoFocus
               />
               <TouchableOpacity
-                style={{ backgroundColor: feedbackText.trim() ? '#2ECC71' : '#1a2332', borderRadius: 12, paddingVertical: 14, alignItems: 'center' }}
+                style={{ backgroundColor: feedbackText.trim() ? t.good : t.surface, borderRadius: 12, paddingVertical: 14, alignItems: 'center' }}
                 disabled={!feedbackText.trim() || feedbackSubmitting}
                 onPress={async () => {
                   setFeedbackSubmitting(true);
@@ -5531,8 +5532,8 @@ export default function App() {
                 }}
               >
                 {feedbackSubmitting
-                  ? <ActivityIndicator color="#000" />
-                  : <Text style={{ color: '#000', fontWeight: '700', fontSize: 16 }}>Submit</Text>
+                  ? <ActivityIndicator color={t.onAccent} />
+                  : <Text style={{ color: t.onAccent, fontWeight: '700', fontSize: 16 }}>Submit</Text>
                 }
               </TouchableOpacity>
             </>
@@ -5547,19 +5548,19 @@ export default function App() {
         onRequestClose={() => setShowCoachPaywall(false)}
       >
         <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.85)', justifyContent: 'center', alignItems: 'center', padding: 32 }}>
-          <View style={{ backgroundColor: '#0D0D1A', borderRadius: 20, padding: 28, alignItems: 'center', width: '100%' }}>
+          <View style={{ backgroundColor: t.bg, borderRadius: 20, padding: 28, alignItems: 'center', width: '100%' }}>
             <Text style={{ fontSize: 36, marginBottom: 12 }}>🐾</Text>
-            <Text style={{ color: '#fff', fontSize: 20, fontWeight: '800', textAlign: 'center', marginBottom: 8 }}>
+            <Text style={{ color: t.textStrong, fontSize: 20, fontWeight: '800', textAlign: 'center', marginBottom: 8 }}>
               You&apos;ve used your 5 free questions
             </Text>
-            <Text style={{ color: '#9CA3AF', fontSize: 14, textAlign: 'center', lineHeight: 22, marginBottom: 24 }}>
+            <Text style={{ color: t.textMuted, fontSize: 14, textAlign: 'center', lineHeight: 22, marginBottom: 24 }}>
               The AI Nutrition Coach is coming as a premium feature. Stay tuned for updates!
             </Text>
             <TouchableOpacity
               onPress={() => setShowCoachPaywall(false)}
-              style={{ backgroundColor: '#2ECC71', borderRadius: 12, paddingVertical: 14, paddingHorizontal: 32 }}
+              style={{ backgroundColor: t.good, borderRadius: 12, paddingVertical: 14, paddingHorizontal: 32 }}
             >
-              <Text style={{ color: '#000', fontWeight: '700', fontSize: 16 }}>Got it</Text>
+              <Text style={{ color: t.onAccent, fontWeight: '700', fontSize: 16 }}>Got it</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -5570,30 +5571,30 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#0D0D1A" },
+  container: { flex: 1, backgroundColor: t.bg },
   center: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
-    backgroundColor: "#0D0D1A",
+    backgroundColor: t.bg,
   },
 
   // Scan screen
   scanScreen: {
     flex: 1,
-    backgroundColor: "#0D0D1A",
+    backgroundColor: t.bg,
     paddingTop: 60,
     alignItems: "center",
   },
   title: {
     fontSize: 28,
     fontWeight: "800",
-    color: "#FFFFFF",
+    color: t.textStrong,
     letterSpacing: -0.5,
     marginBottom: 4,
   },
-  subtitle: { fontSize: 14, color: "#6B7280", marginBottom: 20 },
+  subtitle: { fontSize: 14, color: t.textDim, marginBottom: 20 },
   cameraWrapper: { width: "100%", flex: 1, position: "relative" },
   camera: { flex: 1 },
   scanOverlay: {
@@ -5611,7 +5612,7 @@ const styles = StyleSheet.create({
     left: 4,
     right: 4,
     height: 2,
-    backgroundColor: "#2ECC71",
+    backgroundColor: t.good,
     opacity: 0.85,
     borderRadius: 1,
   },
@@ -5629,7 +5630,7 @@ const styles = StyleSheet.create({
   torchIcon: { fontSize: 18 },
   modeToggle: {
     flexDirection: "row",
-    backgroundColor: "#1A1A2E",
+    backgroundColor: t.surfaceAlt,
     borderRadius: 12,
     padding: 4,
     marginBottom: 10,
@@ -5641,16 +5642,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
   },
-  modeBtnActive: { backgroundColor: "#2ECC71" },
-  modeBtnText: { color: "#6B7280", fontWeight: "600", fontSize: 14 },
-  modeBtnTextActive: { color: "#fff" },
+  modeBtnActive: { backgroundColor: t.good },
+  modeBtnText: { color: t.textDim, fontWeight: "600", fontSize: 14 },
+  modeBtnTextActive: { color: t.textStrong },
   captureBtn: {
     width: 72,
     height: 72,
     borderRadius: 36,
     backgroundColor: "rgba(255,255,255,0.2)",
     borderWidth: 3,
-    borderColor: "#fff",
+    borderColor: t.textStrong,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -5658,13 +5659,13 @@ const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: "#fff",
+    backgroundColor: t.textStrong,
   },
   corner: {
     position: "absolute",
     width: 28,
     height: 28,
-    borderColor: "#2ECC71",
+    borderColor: t.good,
     borderWidth: 3,
   },
   cornerTL: {
@@ -5697,7 +5698,7 @@ const styles = StyleSheet.create({
   },
 
   // Results
-  results: { paddingBottom: 40, backgroundColor: "#0D0D1A" },
+  results: { paddingBottom: 40, backgroundColor: t.bg },
 
   // Score banner — full width hero
   scoreBanner: {
@@ -5709,7 +5710,7 @@ const styles = StyleSheet.create({
   scoreBannerNumber: {
     fontSize: 80,
     fontWeight: "900",
-    color: "#fff",
+    color: t.textStrong,
     lineHeight: 88,
   },
   scoreBannerLabel: {
@@ -5721,7 +5722,7 @@ const styles = StyleSheet.create({
   scoreBannerRating: {
     fontSize: 22,
     fontWeight: "800",
-    color: "#fff",
+    color: t.textStrong,
     marginTop: 8,
   },
   scoreBannerNote: {
@@ -5733,7 +5734,7 @@ const styles = StyleSheet.create({
   productName: {
     fontSize: 20,
     fontWeight: "700",
-    color: "#FFFFFF",
+    color: t.textStrong,
     lineHeight: 26,
     paddingHorizontal: 16,
     marginTop: 20,
@@ -5741,7 +5742,7 @@ const styles = StyleSheet.create({
   },
   dataSource: {
     fontSize: 12,
-    color: "#2ECC71",
+    color: t.good,
     fontWeight: "600",
     paddingHorizontal: 16,
     marginBottom: 16,
@@ -5749,7 +5750,7 @@ const styles = StyleSheet.create({
 
   // Cards
   section: {
-    backgroundColor: "#1A1A2E",
+    backgroundColor: t.surfaceAlt,
     borderRadius: 16,
     padding: 16,
     marginHorizontal: 16,
@@ -5759,86 +5760,86 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: "700",
     marginBottom: 10,
-    color: "#9CA3AF",
+    color: t.textMuted,
     textTransform: "uppercase",
     letterSpacing: 1,
   },
-  sectionBody: { fontSize: 14, color: "#D1D5DB", lineHeight: 20 },
-  sectionNote: { fontSize: 12, color: "#6B7280", marginTop: 6, lineHeight: 18 },
+  sectionBody: { fontSize: 14, color: t.text, lineHeight: 20 },
+  sectionNote: { fontSize: 12, color: t.textDim, marginTop: 6, lineHeight: 18 },
 
   warningBox: {
-    backgroundColor: "#1F0A0A",
+    backgroundColor: t.criticalTint,
     borderRadius: 16,
     padding: 16,
     marginHorizontal: 16,
     marginBottom: 12,
     borderLeftWidth: 3,
-    borderLeftColor: "#E74C3C",
+    borderLeftColor: t.critical,
   },
   warningTitle: {
     fontWeight: "700",
-    color: "#FC8181",
+    color: t.critical,
     marginBottom: 8,
     fontSize: 14,
   },
   warningItem: {
-    color: "#FC8181",
+    color: t.critical,
     marginBottom: 4,
     fontWeight: "600",
     fontSize: 13,
   },
 
   cautionBox: {
-    backgroundColor: "#1A150A",
+    backgroundColor: t.moderateTint,
     borderRadius: 16,
     padding: 16,
     marginHorizontal: 16,
     marginBottom: 12,
     borderLeftWidth: 3,
-    borderLeftColor: "#F59E0B",
+    borderLeftColor: t.moderate,
   },
   cautionTitle: {
     fontWeight: "700",
-    color: "#FCD34D",
+    color: t.moderate,
     marginBottom: 8,
     fontSize: 14,
   },
-  cautionItem: { color: "#FCD34D", marginBottom: 4, fontSize: 13 },
+  cautionItem: { color: t.moderate, marginBottom: 4, fontSize: 13 },
   cautionNote: {
-    color: "#F59E0B",
+    color: t.moderate,
     fontSize: 12,
     lineHeight: 18,
     marginBottom: 8,
   },
 
   infoBox: {
-    backgroundColor: "#0A1220",
+    backgroundColor: t.bg,
     borderRadius: 16,
     padding: 16,
     marginHorizontal: 16,
     marginBottom: 12,
     borderLeftWidth: 3,
-    borderLeftColor: "#3B82F6",
+    borderLeftColor: t.info,
   },
   infoTitle: {
     fontWeight: "700",
-    color: "#93C5FD",
+    color: t.infoSoft,
     marginBottom: 8,
     fontSize: 14,
   },
-  infoBody: { color: "#93C5FD", fontSize: 13, lineHeight: 20 },
+  infoBody: { color: t.infoSoft, fontSize: 13, lineHeight: 20 },
 
   safeBox: {
-    backgroundColor: "#0A1A0F",
+    backgroundColor: t.goodTint,
     borderRadius: 16,
     padding: 16,
     marginHorizontal: 16,
     marginBottom: 12,
     borderLeftWidth: 3,
-    borderLeftColor: "#2ECC71",
+    borderLeftColor: t.good,
   },
-  safeText: { color: "#6EE7B7", fontWeight: "600", fontSize: 14 },
-  goodItem: { color: "#6EE7B7", marginBottom: 4, fontSize: 13 },
+  safeText: { color: t.good, fontWeight: "600", fontSize: 14 },
+  goodItem: { color: t.good, marginBottom: 4, fontSize: 13 },
 
   severityRow: {
     flexDirection: "row",
@@ -5852,19 +5853,19 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   severityText: {
-    color: "#fff",
+    color: t.textStrong,
     fontSize: 10,
     fontWeight: "700",
     textTransform: "uppercase",
   },
-  ingredient: { fontSize: 13, color: "#D1D5DB", lineHeight: 20 },
-  flaggedIngredient: { color: "#FC8181", fontWeight: "600" },
-  mealIngredient: { color: "#FCD34D", fontWeight: "600" },
-  cautionIngredient: { color: "#F59E0B", fontWeight: "600" },
-  goodIngredient: { color: "#6EE7B7", fontWeight: "600" },
+  ingredient: { fontSize: 13, color: t.text, lineHeight: 20 },
+  flaggedIngredient: { color: t.critical, fontWeight: "600" },
+  mealIngredient: { color: t.moderate, fontWeight: "600" },
+  cautionIngredient: { color: t.moderate, fontWeight: "600" },
+  goodIngredient: { color: t.good, fontWeight: "600" },
   ingredientReason: {
     fontSize: 11,
-    color: "#6B7280",
+    color: t.textDim,
     fontStyle: "italic",
     marginLeft: 14,
     marginTop: 2,
@@ -5874,16 +5875,16 @@ const styles = StyleSheet.create({
   // Ingredient pills
   pillContainer: { flexDirection: "row", flexWrap: "wrap", gap: 6 },
   pill: { paddingHorizontal: 10, paddingVertical: 5, borderRadius: 20 },
-  pillText: { color: "#fff", fontSize: 12, fontWeight: "500" },
+  pillText: { color: t.textStrong, fontSize: 12, fontWeight: "500" },
   pillHint: {
     fontSize: 11,
-    color: "#4B5563",
+    color: t.textFaint,
     marginBottom: 8,
     fontStyle: "italic",
   },
 
   // Ingredient detail modal
-  detailModal: { flex: 1, backgroundColor: "#0D0D1A" },
+  detailModal: { flex: 1, backgroundColor: t.bg },
   detailHeader: {
     flexDirection: "row",
     alignItems: "flex-start",
@@ -5891,11 +5892,11 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingTop: 28,
     borderBottomWidth: 1,
-    borderBottomColor: "#1A1A2E",
+    borderBottomColor: t.surfaceAlt,
   },
   detailIngredientName: {
     flex: 1,
-    color: "#FFFFFF",
+    color: t.textStrong,
     fontWeight: "800",
     fontSize: 20,
     lineHeight: 26,
@@ -5912,7 +5913,7 @@ const styles = StyleSheet.create({
   },
   detailImpactText: { fontWeight: "700", fontSize: 14 },
   detailSection: {
-    backgroundColor: "#1A1A2E",
+    backgroundColor: t.surfaceAlt,
     borderRadius: 14,
     padding: 16,
     marginBottom: 12,
@@ -5920,12 +5921,12 @@ const styles = StyleSheet.create({
   detailSectionTitle: {
     fontSize: 11,
     fontWeight: "700",
-    color: "#6B7280",
+    color: t.textDim,
     textTransform: "uppercase",
     letterSpacing: 1,
     marginBottom: 8,
   },
-  detailSectionBody: { fontSize: 14, color: "#D1D5DB", lineHeight: 22 },
+  detailSectionBody: { fontSize: 14, color: t.text, lineHeight: 22 },
   detailLoadingRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -5933,18 +5934,18 @@ const styles = StyleSheet.create({
     padding: 16,
     marginBottom: 12,
   },
-  detailLoadingText: { color: "#6B7280", fontSize: 13 },
+  detailLoadingText: { color: t.textDim, fontSize: 13 },
   detailDisclaimer: {
     fontSize: 11,
-    color: "#374151",
+    color: t.borderBright,
     textAlign: "center",
     marginTop: 8,
     lineHeight: 17,
   },
 
-  loadingBox: { alignItems: "center", padding: 80, backgroundColor: "#0D0D1A" },
+  loadingBox: { alignItems: "center", padding: 80, backgroundColor: t.bg },
   loadingText: {
-    color: "#6B7280",
+    color: t.textDim,
     marginTop: 14,
     fontSize: 14,
     fontWeight: "500",
@@ -5952,7 +5953,7 @@ const styles = StyleSheet.create({
 
   disclaimerScreen: {
     flex: 1,
-    backgroundColor: "#0D0D1A",
+    backgroundColor: t.bg,
     padding: 24,
     paddingTop: 70,
     alignItems: "center",
@@ -5962,9 +5963,9 @@ const styles = StyleSheet.create({
     width: 72,
     height: 72,
     borderRadius: 36,
-    backgroundColor: "#0D2818",
+    backgroundColor: t.goodTint,
     borderWidth: 2,
-    borderColor: "#2ECC71",
+    borderColor: t.good,
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 12,
@@ -5973,17 +5974,17 @@ const styles = StyleSheet.create({
   disclaimerAppName: {
     fontSize: 28,
     fontWeight: "900",
-    color: "#FFFFFF",
+    color: t.textStrong,
     letterSpacing: -0.5,
   },
   disclaimerTagline: {
     fontSize: 13,
-    color: "#6B7280",
+    color: t.textDim,
     marginBottom: 28,
     marginTop: 4,
   },
   disclaimerCard: {
-    backgroundColor: "#1A1A2E",
+    backgroundColor: t.surfaceAlt,
     borderRadius: 20,
     padding: 20,
     width: "100%",
@@ -5992,7 +5993,7 @@ const styles = StyleSheet.create({
   disclaimerCardTitle: {
     fontSize: 13,
     fontWeight: "700",
-    color: "#9CA3AF",
+    color: t.textMuted,
     textTransform: "uppercase",
     letterSpacing: 1,
     marginBottom: 16,
@@ -6006,12 +6007,12 @@ const styles = StyleSheet.create({
   disclaimerRowText: {
     flex: 1,
     fontSize: 14,
-    color: "#D1D5DB",
+    color: t.text,
     lineHeight: 20,
   },
   disclaimerFooter: {
     fontSize: 11,
-    color: "#4B5563",
+    color: t.textFaint,
     textAlign: "center",
     marginTop: 16,
     lineHeight: 17,
@@ -6046,8 +6047,8 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     textTransform: "uppercase",
   },
-  ingredientProvides: { fontSize: 11, color: "#6B9EAF", marginBottom: 2 },
-  ingredientExplanation: { fontSize: 12, color: "#9CA3AF", lineHeight: 17 },
+  ingredientProvides: { fontSize: 11, color: t.textMuted, marginBottom: 2 },
+  ingredientExplanation: { fontSize: 12, color: t.textMuted, lineHeight: 17 },
   organRow: {
     flexDirection: "row",
     alignItems: "flex-start",
@@ -6056,20 +6057,20 @@ const styles = StyleSheet.create({
   },
   organPresent: {
     fontSize: 13,
-    color: "#2ECC71",
+    color: t.good,
     fontWeight: "600",
     width: 80,
   },
   organMissing: {
     fontSize: 13,
-    color: "#FC8181",
+    color: t.critical,
     fontWeight: "600",
     width: 80,
   },
-  organBenefit: { flex: 1, fontSize: 12, color: "#9CA3AF", lineHeight: 17 },
+  organBenefit: { flex: 1, fontSize: 12, color: t.textMuted, lineHeight: 17 },
   organMissingTitle: {
     fontSize: 12,
-    color: "#9CA3AF",
+    color: t.textMuted,
     marginTop: 8,
     marginBottom: 6,
     fontStyle: "italic",
@@ -6077,19 +6078,19 @@ const styles = StyleSheet.create({
   omegaRow: { marginBottom: 10 },
   omega3Label: {
     fontSize: 13,
-    color: "#5dade2",
+    color: t.infoSoft,
     fontWeight: "600",
     marginBottom: 2,
   },
   omega6Label: {
     fontSize: 13,
-    color: "#e67e22",
+    color: t.high,
     fontWeight: "600",
     marginBottom: 2,
   },
-  omegaSources: { fontSize: 12, color: "#D1D5DB", marginBottom: 3 },
-  omegaNote: { fontSize: 11, color: "#9CA3AF", fontStyle: "italic" },
-  fullIngredientList: { fontSize: 13, color: "#D1D5DB", lineHeight: 20 },
+  omegaSources: { fontSize: 12, color: t.text, marginBottom: 3 },
+  omegaNote: { fontSize: 11, color: t.textMuted, fontStyle: "italic" },
+  fullIngredientList: { fontSize: 13, color: t.text, lineHeight: 20 },
   demoRow: {
     flexDirection: "row",
     justifyContent: "center",
@@ -6102,21 +6103,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderRadius: 20,
     borderWidth: 1.5,
-    borderColor: "#2ECC71",
+    borderColor: t.good,
   },
-  demoBtnGood: { borderColor: "#2ECC71" },
-  demoBtnBad: { borderColor: "#E74C3C" },
-  demoBtnText: { color: "#2ECC71", fontSize: 13, fontWeight: "600" },
+  demoBtnGood: { borderColor: t.good },
+  demoBtnBad: { borderColor: t.critical },
+  demoBtnText: { color: t.good, fontSize: 13, fontWeight: "600" },
   disclaimerLink: { alignItems: "center", padding: 12 },
   disclaimerLinkText: {
-    color: "#6B7280",
+    color: t.textDim,
     fontSize: 12,
     textDecorationLine: "underline",
   },
 
   notFoundScreen: {
     flex: 1,
-    backgroundColor: "#0D0D1A",
+    backgroundColor: t.bg,
     padding: 24,
     paddingTop: 80,
     alignItems: "center",
@@ -6125,18 +6126,18 @@ const styles = StyleSheet.create({
   notFoundTitle: {
     fontSize: 24,
     fontWeight: "800",
-    color: "#FFFFFF",
+    color: t.textStrong,
     marginBottom: 12,
   },
   notFoundText: {
     fontSize: 15,
-    color: "#9CA3AF",
+    color: t.textMuted,
     textAlign: "center",
     marginBottom: 12,
     lineHeight: 22,
   },
   instructionBox: {
-    backgroundColor: "#1A1A2E",
+    backgroundColor: t.surfaceAlt,
     borderRadius: 16,
     padding: 16,
     width: "100%",
@@ -6144,20 +6145,20 @@ const styles = StyleSheet.create({
   },
   instructionTitle: {
     fontWeight: "700",
-    color: "#FFFFFF",
+    color: t.textStrong,
     marginBottom: 8,
     fontSize: 15,
   },
   instructionText: {
-    color: "#9CA3AF",
+    color: t.textMuted,
     fontSize: 13,
     marginBottom: 4,
     lineHeight: 20,
   },
-  bold: { fontWeight: "700", color: "#FFFFFF" },
+  bold: { fontWeight: "700", color: t.textStrong },
 
   bottomDisclaimer: {
-    backgroundColor: "#1A1A2E",
+    backgroundColor: t.surfaceAlt,
     borderRadius: 16,
     padding: 16,
     marginHorizontal: 16,
@@ -6166,7 +6167,7 @@ const styles = StyleSheet.create({
   },
   bottomDisclaimerText: {
     fontSize: 11,
-    color: "#6B7280",
+    color: t.textDim,
     lineHeight: 18,
     marginBottom: 8,
   },
@@ -6178,10 +6179,10 @@ const styles = StyleSheet.create({
     marginBottom: 4,
     paddingVertical: 6,
     paddingHorizontal: 12,
-    backgroundColor: "#1A1A2E",
+    backgroundColor: t.surfaceAlt,
     borderRadius: 20,
   },
-  backBtnTopText: { color: "#9CA3AF", fontSize: 13, fontWeight: "600" },
+  backBtnTopText: { color: t.textMuted, fontSize: 13, fontWeight: "600" },
 
   // Treat scan styles
   flagItem: {
@@ -6191,7 +6192,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   flagName: { fontSize: 13, fontWeight: "700", marginBottom: 3 },
-  flagReason: { fontSize: 12, color: "#9CA3AF", lineHeight: 17 },
+  flagReason: { fontSize: 12, color: t.textMuted, lineHeight: 17 },
   ingredientItem: { borderRadius: 8, padding: 10, marginBottom: 6 },
   ingredientName: { fontSize: 13, fontWeight: "600", flex: 1 },
   ingredientTag: {
@@ -6202,7 +6203,7 @@ const styles = StyleSheet.create({
   },
 
   error: {
-    color: "#FC8181",
+    color: t.critical,
     textAlign: "center",
     marginBottom: 16,
     fontWeight: "600",
@@ -6212,16 +6213,16 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 16,
     fontSize: 16,
-    color: "#9CA3AF",
+    color: t.textMuted,
   },
   link: {
-    color: "#2ECC71",
+    color: t.good,
     textDecorationLine: "underline",
     fontSize: 12,
     fontWeight: "600",
   },
   button: {
-    backgroundColor: "#2ECC71",
+    backgroundColor: t.good,
     padding: 16,
     borderRadius: 14,
     marginHorizontal: 16,
@@ -6229,14 +6230,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonText: {
-    color: "#fff",
+    color: t.textStrong,
     fontWeight: "800",
     fontSize: 16,
     letterSpacing: 0.5,
   },
   cancelButton: { padding: 14, alignItems: "center", marginTop: 8 },
-  cancelText: { color: "#6B7280", fontSize: 15 },
-  scoreLabel: { fontSize: 14, color: "#6B7280", marginBottom: 4 },
+  cancelText: { color: t.textDim, fontSize: 15 },
+  scoreLabel: { fontSize: 14, color: t.textDim, marginBottom: 4 },
   scoreNumber: { fontSize: 32, fontWeight: "800" },
   scoreRating: { fontSize: 18, fontWeight: "700" },
   scoreNote: { fontSize: 11, lineHeight: 16 },
@@ -6250,27 +6251,27 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginRight: 16,
   },
-  scoreOutOf: { fontSize: 12, color: "#6B7280", fontWeight: "600" },
+  scoreOutOf: { fontSize: 12, color: t.textDim, fontWeight: "600" },
 
   // Coach button (in results)
   coachBtn: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#0D2818",
+    backgroundColor: t.goodTint,
     borderRadius: 16,
     padding: 16,
     marginHorizontal: 16,
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: "#2ECC71",
+    borderColor: t.good,
   },
   coachBtnIcon: { fontSize: 28, marginRight: 12 },
-  coachBtnTitle: { color: "#2ECC71", fontWeight: "700", fontSize: 15 },
-  coachBtnSub: { color: "#4B9960", fontSize: 12, marginTop: 2 },
-  coachBtnArrow: { color: "#2ECC71", fontSize: 24, marginLeft: "auto" as any },
+  coachBtnTitle: { color: t.good, fontWeight: "700", fontSize: 15 },
+  coachBtnSub: { color: t.goodDeep, fontSize: 12, marginTop: 2 },
+  coachBtnArrow: { color: t.good, fontSize: 24, marginLeft: "auto" as any },
 
   // Coach modal
-  coachModal: { flex: 1, backgroundColor: "#0D0D1A" },
+  coachModal: { flex: 1, backgroundColor: t.bg },
   coachHeader: {
     flexDirection: "row",
     alignItems: "center",
@@ -6278,25 +6279,25 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingTop: 24,
     borderBottomWidth: 1,
-    borderBottomColor: "#1A1A2E",
+    borderBottomColor: t.surfaceAlt,
   },
-  coachHeaderTitle: { color: "#FFFFFF", fontWeight: "800", fontSize: 18 },
-  coachHeaderSub: { color: "#6B7280", fontSize: 12, marginTop: 2 },
+  coachHeaderTitle: { color: t.textStrong, fontWeight: "800", fontSize: 18 },
+  coachHeaderSub: { color: t.textDim, fontSize: 12, marginTop: 2 },
   coachClose: {
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: "#1A1A2E",
+    backgroundColor: t.surfaceAlt,
     justifyContent: "center",
     alignItems: "center",
   },
-  coachCloseText: { color: "#9CA3AF", fontSize: 14, fontWeight: "700" },
+  coachCloseText: { color: t.textMuted, fontSize: 14, fontWeight: "700" },
   coachDisclaimer: {
-    backgroundColor: "#1A1505",
+    backgroundColor: t.moderateTint,
     paddingHorizontal: 16,
     paddingVertical: 8,
   },
-  coachDisclaimerText: { color: "#92731A", fontSize: 11, textAlign: "center" },
+  coachDisclaimerText: { color: t.moderateDeep, fontSize: 11, textAlign: "center" },
   coachMessages: { flex: 1 },
   coachBubble: {
     maxWidth: "85%",
@@ -6305,46 +6306,46 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   coachBubbleUser: {
-    backgroundColor: "#2ECC71",
+    backgroundColor: t.good,
     alignSelf: "flex-end",
     borderBottomRightRadius: 4,
   },
   coachBubbleAssistant: {
-    backgroundColor: "#1A1A2E",
+    backgroundColor: t.surfaceAlt,
     alignSelf: "flex-start",
     borderBottomLeftRadius: 4,
   },
   coachBubbleText: { fontSize: 14, lineHeight: 20 },
-  coachBubbleTextUser: { color: "#fff", fontWeight: "500" },
-  coachBubbleTextAssistant: { color: "#D1D5DB" },
+  coachBubbleTextUser: { color: t.textStrong, fontWeight: "500" },
+  coachBubbleTextAssistant: { color: t.text },
   coachInputRow: {
     flexDirection: "row",
     alignItems: "center",
     padding: 12,
     paddingBottom: 28,
     borderTopWidth: 1,
-    borderTopColor: "#1A1A2E",
+    borderTopColor: t.surfaceAlt,
     gap: 8,
   },
   coachInput: {
     flex: 1,
-    backgroundColor: "#1A1A2E",
+    backgroundColor: t.surfaceAlt,
     borderRadius: 24,
     paddingHorizontal: 16,
     paddingVertical: 12,
-    color: "#FFFFFF",
+    color: t.textStrong,
     fontSize: 15,
   },
   coachSend: {
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: "#2ECC71",
+    backgroundColor: t.good,
     justifyContent: "center",
     alignItems: "center",
   },
   coachSendText: {
-    color: "#fff",
+    color: t.textStrong,
     fontSize: 20,
     fontWeight: "700",
     marginTop: -2,
@@ -6356,109 +6357,109 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 5,
     borderBottomWidth: 1,
-    borderBottomColor: "#0D0D1A",
+    borderBottomColor: t.bg,
   },
-  breakdownLabel: { flex: 1, fontSize: 13, color: "#D1D5DB" },
+  breakdownLabel: { flex: 1, fontSize: 13, color: t.text },
   breakdownValue: { fontSize: 13, fontWeight: "700", marginLeft: 8 },
   lipomaGuide: {
-    backgroundColor: "#0a1628",
+    backgroundColor: t.surfaceSunken,
     borderRadius: 14,
     padding: 16,
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: "#3B82F6",
+    borderColor: t.info,
   },
   lipomaTitle: {
     fontSize: 16,
     fontWeight: "700",
-    color: "#93C5FD",
+    color: t.infoSoft,
     marginBottom: 4,
   },
   lipomaSubtitle: {
     fontSize: 12,
-    color: "#9CA3AF",
+    color: t.textMuted,
     marginBottom: 14,
     lineHeight: 17,
   },
   lipomaRow: {
     borderBottomWidth: 1,
-    borderBottomColor: "#1F2937",
+    borderBottomColor: t.border,
     paddingBottom: 12,
     marginBottom: 12,
   },
   lipomaLabel: {
     fontSize: 13,
     fontWeight: "700",
-    color: "#D1D5DB",
+    color: t.text,
     marginBottom: 2,
   },
   lipomaTarget: {
     fontSize: 12,
-    color: "#93C5FD",
+    color: t.infoSoft,
     fontWeight: "600",
     marginBottom: 4,
   },
-  lipomaBody: { fontSize: 12, color: "#9CA3AF", lineHeight: 17 },
+  lipomaBody: { fontSize: 12, color: t.textMuted, lineHeight: 17 },
   recCard: {
-    backgroundColor: "#0d1a2a",
+    backgroundColor: t.surfaceSunken,
     borderRadius: 12,
     padding: 14,
     borderWidth: 1,
-    borderColor: "#3B82F6",
+    borderColor: t.info,
     marginBottom: 12,
   },
   recCardTitle: {
     fontSize: 14,
     fontWeight: "700",
-    color: "#93C5FD",
+    color: t.infoSoft,
     marginBottom: 8,
   },
   recCardBody: {
     fontSize: 13,
-    color: "#D1D5DB",
+    color: t.text,
     lineHeight: 19,
     marginBottom: 10,
   },
   recBtn: {
-    backgroundColor: "#3B82F6",
+    backgroundColor: t.info,
     borderRadius: 10,
     paddingVertical: 10,
     paddingHorizontal: 14,
     alignItems: "center",
   },
-  recBtnText: { color: "#fff", fontSize: 13, fontWeight: "700" },
+  recBtnText: { color: t.textStrong, fontSize: 13, fontWeight: "700" },
   enzymeCard: {
     marginTop: 12,
-    backgroundColor: "#0d1f10",
+    backgroundColor: t.goodTint,
     borderRadius: 12,
     padding: 14,
     borderWidth: 1,
-    borderColor: "#2ECC71",
+    borderColor: t.good,
   },
   enzymeCardTitle: {
     fontSize: 14,
     fontWeight: "700",
-    color: "#2ECC71",
+    color: t.good,
     marginBottom: 8,
   },
   enzymeCardBody: {
     fontSize: 13,
-    color: "#D1D5DB",
+    color: t.text,
     lineHeight: 19,
     marginBottom: 8,
   },
   enzymeBtn: {
-    backgroundColor: "#2ECC71",
+    backgroundColor: t.good,
     borderRadius: 10,
     paddingVertical: 10,
     paddingHorizontal: 14,
     alignItems: "center",
     marginTop: 4,
   },
-  enzymeBtnText: { color: "#000", fontSize: 13, fontWeight: "700" },
+  enzymeBtnText: { color: t.onAccent, fontSize: 13, fontWeight: "700" },
   enzymeDisclaimer: {
     fontSize: 10,
-    color: "#6B7280",
+    color: t.textDim,
     textAlign: "center",
     marginTop: 6,
   },
@@ -6469,25 +6470,25 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   processingOption: {
-    backgroundColor: "#1A2A3A",
+    backgroundColor: t.surfaceSunken,
     borderRadius: 10,
     paddingHorizontal: 12,
     paddingVertical: 8,
     borderWidth: 1,
-    borderColor: "#3B82F6",
+    borderColor: t.info,
   },
-  processingOptionText: { color: "#93C5FD", fontSize: 13, fontWeight: "600" },
+  processingOptionText: { color: t.infoSoft, fontSize: 13, fontWeight: "600" },
   nutrientRow: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 8,
     gap: 8,
   },
-  nutrientLabel: { width: 110, fontSize: 12, color: "#9CA3AF" },
+  nutrientLabel: { width: 110, fontSize: 12, color: t.textMuted },
   nutrientBarBg: {
     flex: 1,
     height: 8,
-    backgroundColor: "#1F2937",
+    backgroundColor: t.border,
     borderRadius: 4,
     overflow: "hidden",
   },
