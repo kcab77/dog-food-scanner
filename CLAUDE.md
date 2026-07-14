@@ -122,6 +122,30 @@ Scoring algorithm (unchanged across recent UI work — **do not change scoring w
 
 ---
 
+## 🎨 Design System — `lib/theme.ts` (READ THIS BEFORE ANY UI/VISUAL WORK)
+
+**`lib/theme.ts` is the single source of truth for the app's entire appearance.**
+
+To restyle / revamp / re-theme the app: **edit `lib/theme.ts` and nothing else.**
+Every colour in `app/index.tsx` resolves through the `t` object. Change a token's
+value there and it propagates across the whole app automatically.
+
+- Tokens are **semantic**, not literal: `t.critical`, `t.good`, `t.surface`, `t.textMuted`.
+  (A token named for its *meaning* stays true when you change red → magenta.
+  One named `chili` becomes a lie.)
+- `t.dcm` (indigo) is reserved **exclusively** for the DCM / heart-risk category so it
+  never reads as "just another severity tier". Don't reuse it for anything else.
+- Also exports: `radius`, `space`, `type` scales, plus `scoreColor()`, `scoreLabel()`,
+  and `severityColor` — so grading *presentation* is themed in one place too.
+
+**Hard rule: never reintroduce a raw hex literal into a component.** Add a token to
+`lib/theme.ts` instead. As of 2026-07-14 there are **zero** hex literals in `app/index.tsx`
+(all 495 were migrated); keep it that way or the app becomes un-revampable again.
+
+Scoring *math* is NOT in the theme — only presentation. Don't change scoring (see above).
+
+---
+
 ## Results Screen & Scan Behavior (v1.8.1 — UI layer)
 
 Post-scan results render in `app/index.tsx` in this section order (reordered 2026-07-12 for an
