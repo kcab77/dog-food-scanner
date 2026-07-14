@@ -122,6 +122,45 @@ Scoring algorithm (unchanged across recent UI work — **do not change scoring w
 
 ---
 
+## 🚫 UI REVAMP RULES — DO NOT DELETE CONTENT (read before any UI work)
+
+A past revamp **rewrote the results screen from scratch and silently deleted half the
+app.** Never do this. When restyling:
+
+1. **Edit `app/index.tsx` IN PLACE.** Never rewrite it from scratch or regenerate a
+   section from memory. Read the real code first, then make targeted edits.
+2. **Delete nothing.** Restyling changes *how* info is shown, never *whether* it's
+   shown. If you think something should be cut → **ask Kyle, don't cut it.**
+3. **Colours only via `lib/theme.ts` tokens.** Zero raw hex in components (currently 0 — keep it 0).
+4. **Never touch the scoring math**, API calls, Supabase, or keys.
+5. Before saying "done": run `npx tsc --noEmit` (app/ + lib/ must be zero errors), then
+   walk the checklist below and report ✅ per item. You cannot run the app — say so.
+
+**All 16 sections must still render:** compassionate note · "how to improve" card · Why
+This Score · Guaranteed Analysis · Processing Method · Ingredient Breakdown pills ·
+Ingredients to Watch · Simple additions · Hershey's Protocol · Recommended Supplements
+(**all 7** cards: Probiotics→Fish Oil→Green Lipped Mussel→Heart→Liver→Detox→Four Leaf
+Rover) · Grocery Store Finds · Lipoma Prevention · TCVM/Protein Energetics · Dental
+Benefits + Tips · FDA recall banner · data-source/AAFCO/TAPF status.
+
+**All 29 data constants must still be used:** `HARMFUL_INGREDIENTS` `SEVERITY_PENALTIES`
+`SEVERITY_COLORS` `SUPPLEMENT_RECS` `TOXIC_ADDITIVES` `NAMED_MEALS` `GENERIC_MEALS`
+`MEAT_MEALS` `ADDED_VITAMINS` `VITAMIN_MINERAL_PENALTIES` `LENTIL_LEGUME`
+`HIGH_CARB_INGREDIENTS` `ORGAN_MEATS` `SUPERFOODS` `WHOLE_FOOD_PRODUCE`
+`ANTI_INFLAMMATORY_FOODS` `ORGAN_COVERAGE` `HIGH_FIBER` `PROBIOTIC_SOURCES`
+`AAFCO_TRIAL_KEYWORDS` `GENERIC_PROTEIN_TERMS` `SPECIFIC_PROTEIN_TERMS`
+`INGREDIENT_NUTRIENTS` `GROCERY_FINDS` `PROCESSING_METHODS` `DENTAL_INGREDIENTS`
+`TAPF_APPROVED_BRANDS` `TREAT_HARMFUL` `TREAT_OK_INGREDIENTS`.
+
+**Behaviour that must survive:** ingredient pill → detail modal · red flag → expands
+inline · sections stay collapsible · feedback modal + AI coach still open · dormant
+Treats code stays in the file (don't delete it).
+
+Tone: professional ≠ cold. PawGrade's voice is "I fed my dog kibble for six years, I'm
+not judging you." Don't sand that off.
+
+---
+
 ## 🎨 Design System — `lib/theme.ts` (READ THIS BEFORE ANY UI/VISUAL WORK)
 
 **`lib/theme.ts` is the single source of truth for the app's entire appearance.**
