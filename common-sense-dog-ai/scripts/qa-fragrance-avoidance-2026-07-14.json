@@ -1,0 +1,38 @@
+[
+  {
+    "question": "Should I avoid fragranced shampoo, toys, and other products for my dog?",
+    "answer": "⚪ Traditional/precautionary guidance rather than a clinical-trial-backed claim, but the reasoning holds up: the safest default is fragrance-free wherever you can find it — shampoo, toys, bedding, cleaning products. If a fragrance-free option genuinely isn't available, the next-best rule of thumb is to pick a product where 'fragrance' or 'parfum' sits LOW on the ingredient list (further down usually means a smaller amount) rather than near the top. Two real reasons this matters: (1) 'fragrance' is a legal labeling loophole — regulators let manufacturers list it as one word while it can legally contain dozens of undisclosed chemicals, sometimes including phthalates used to make the scent last longer, and (2) dogs' sense of smell is dramatically more sensitive than ours (commonly cited as tens of thousands of times more scent receptors), so a fragrance level a person finds pleasant or mild can be genuinely overwhelming or irritating at nose-level for a dog.",
+    "topic": "fragrance-avoidance",
+    "source": "Common Sense Dog — Fragrance Avoidance (Toys, Shampoo, Products) 2026-07"
+  },
+  {
+    "question": "Can fragranced dog shampoo actually cause skin problems?",
+    "answer": "⚪ Traditional/mechanistic reasoning, best documented as case-level veterinary dermatology rather than large controlled trials: synthetic fragrance is a recognized cause of allergic contact dermatitis in dogs — showing up as itching, redness, or a dog rubbing/scratching at their face and body right after a bath. Fragrance mixtures often rely on phthalates as fixatives to make the scent last, and phthalates are established endocrine disruptors with documented liver/kidney/reproductive effects on long-term exposure in toxicology literature (largely human/environmental health data, extrapolated cautiously to dogs). Practical takeaway: if your dog scratches, licks excessively, or gets red skin/ears after a bath, fragrance is one of the first ingredients worth ruling out — try a fragrance-free shampoo next and see if the reaction stops.",
+    "topic": "fragrance-avoidance",
+    "source": "Common Sense Dog — Fragrance Avoidance (Toys, Shampoo, Products) 2026-07"
+  },
+  {
+    "question": "Are scented dog toys bad for dogs?",
+    "answer": "⚪ Precautionary, not trial-backed — but the same two concerns apply as with shampoo: scented toys use the same undisclosed 'fragrance' loophole (so you genuinely don't know what's creating the smell), and a dog's nose is close to the toy for extended chewing/play sessions, meaning prolonged concentrated exposure to whatever that fragrance actually contains. There's an added mechanical concern with scented plastic/rubber toys specifically: fragrance oils are sometimes used to mask off-gassing from cheap plastics, so a strong 'new toy smell' can be a signal of lower-quality material rather than something to find reassuring. Fragrance-free, simple-material toys (natural rubber, rope, etc.) are the safer default, especially for heavy chewers who spend a lot of time with a toy in direct mouth contact.",
+    "topic": "fragrance-avoidance",
+    "source": "Common Sense Dog — Fragrance Avoidance (Toys, Shampoo, Products) 2026-07"
+  },
+  {
+    "question": "Why is 'fragrance' allowed to be just one word on a pet product label?",
+    "answer": "This is a real regulatory gap, not a dog-specific issue — it's the same loophole that exists in human cosmetics and cleaning products. Regulators generally allow manufacturers to list 'fragrance' or 'parfum' as a single ingredient without disclosing the individual chemicals that make it up, treating the specific blend as a protected trade secret. That single word can legally represent a mixture of dozens of compounds, including synthetic musks and phthalate fixatives, none of which show up individually on the label. This is exactly why 'fragrance-free' (not just 'unscented,' which can still contain a masking fragrance) is the more reliable label claim to look for if you want to avoid the ingredient entirely.",
+    "topic": "fragrance-avoidance",
+    "source": "Common Sense Dog — Fragrance Avoidance (Toys, Shampoo, Products) 2026-07"
+  },
+  {
+    "question": "What's the difference between 'unscented' and 'fragrance-free' on a dog product label?",
+    "answer": "They are not the same, and this trips people up. 'Fragrance-free' means no fragrance ingredients were added at all. 'Unscented' often means a masking fragrance WAS added specifically to cancel out the smell of the base ingredients — so an 'unscented' shampoo can still legally contain fragrance chemicals under that same undisclosed 'fragrance' label term. If the goal is to minimize fragrance exposure for a sensitive dog, look specifically for 'fragrance-free' on the label, not 'unscented.'",
+    "topic": "fragrance-avoidance",
+    "source": "Common Sense Dog — Fragrance Avoidance (Toys, Shampoo, Products) 2026-07"
+  },
+  {
+    "question": "How do I know if my dog is reacting to fragrance in a product?",
+    "answer": "Watch for a pattern right after exposure: sneezing, coughing, watery eyes, or pawing at the face and ears shortly after a bath or after playing with a scented toy; skin redness, hives, or intense scratching in the hours that follow; or a dog actively avoiding or trying to get away from a product (turning their head away from a shampoo bottle, dropping a scented toy quickly). If you notice this pattern, the practical test is simple: switch to a fragrance-free version of the same type of product and see if the reaction stops — that's a more useful real-world signal than trying to identify which specific fragrance chemical is responsible, since the label won't tell you anyway.",
+    "topic": "fragrance-avoidance",
+    "source": "Common Sense Dog — Fragrance Avoidance (Toys, Shampoo, Products) 2026-07"
+  }
+]
