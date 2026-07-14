@@ -1,0 +1,26 @@
+[
+  {
+    "question": "My dog has red/inflamed gums — does manuka honey applied topically actually help?",
+    "answer": "From my Hershey case log (personal observation, tier 3): I noticed visible improvement in gum redness after applying manuka honey topically to the gums for just 1-2 nights. This lines up with manuka honey's known antibacterial activity (from methylglyoxal, MGO) and its soothing, coating effect, which is well-documented for wound care generally — but this specific gum-redness result is my own single-dog observation, not a controlled study. If you try this: use real manuka honey (UMF/MGO rated, not a generic 'honey blend'), apply a small amount directly to the affected gum area, and treat it as supportive care while still getting persistent gum redness checked by a vet — gum inflammation can also signal dental disease, an infection, or something needing actual treatment, not just a topical remedy.",
+    "confidence": "traditional",
+    "sources": ["Kyle — Hershey case log, July 2026 (personal observation, tier 3)", "Manuka honey antibacterial activity (methylglyoxal) — general wound-care literature"],
+    "topic": "manuka-honey",
+    "source": "Common Sense Dog — Hershey Case Log, July 2026"
+  },
+  {
+    "question": "Do purple vegetables like purple sweet potato or purple cabbage actually help prevent or fight cancer in dogs?",
+    "answer": "🟠 Emerging/mechanistic — a real compound with a real anti-cancer mechanism, but the evidence gap matters a lot here, so don't oversell it. Purple and dark blue produce (purple sweet potato, purple cabbage, blueberries, blackberries, bilberries) get their color from anthocyanins, and there's genuine peer-reviewed research showing anthocyanins can inhibit cancer cell growth and induce apoptosis (programmed cell death) in cancer cells — demonstrated for colorectal, melanoma, and leukemia cell lines among others (PMC2582525; PMC5492086 — bilberry extract induced significant mitochondrial damage and activated the caspase apoptosis cascade in cell studies). The critical caveat: essentially all of this evidence is in vitro (cancer cells in a lab dish) or in non-canine animal models — there is no controlled trial showing that a dog eating purple vegetables prevents or treats cancer in a living body. Feeding these as part of a whole-food, antioxidant-rich diet is a reasonable, low-risk practice with a plausible protective mechanism behind it — but it is not a substitute for veterinary oncology care, and 'kills cancer cells in a dish' should never be represented to an owner as 'cures cancer in a dog.'",
+    "confidence": "emerging",
+    "sources": ["Anthocyanins and their role in cancer prevention, PMC2582525", "Antiproliferative and proapoptotic activities of anthocyanin extracts from blueberry on melanoma cells, PMC5492086", "Potential mechanisms of cancer chemoprevention by anthocyanins, PubMed 12630561"],
+    "topic": "anthocyanins-cancer",
+    "source": "Common Sense Dog — Evidence-Based Holistic Topics 2026-07"
+  },
+  {
+    "question": "What purple vegetables are safe to add to my dog's bowl for the anthocyanin benefit?",
+    "answer": "🟠 Emerging benefit, but safety-wise these are genuinely fine additions in reasonable amounts: purple sweet potato (cooked, plain), red/purple cabbage (small amounts, raw or lightly cooked), and blueberries/blackberries/bilberries are all safe, commonly used whole-food toppers for dogs. Avoid purple/red onion and any allium family vegetable (garlic, onion, chives, leeks) — those are purple/reddish in some varieties but are toxic to dogs regardless of anthocyanin content, and grapes (also a source of related polyphenols) are toxic to dogs and should never substitute for these. Stick to the vetted whole-food list rather than assuming 'purple = safe and beneficial' as a blanket rule.",
+    "confidence": "traditional",
+    "sources": ["General veterinary toxicology — allium and grape toxicity in dogs"],
+    "topic": "anthocyanins-cancer",
+    "source": "Common Sense Dog — Evidence-Based Holistic Topics 2026-07"
+  }
+]
