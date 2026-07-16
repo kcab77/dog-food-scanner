@@ -4874,18 +4874,44 @@ export default function App() {
           {!loading && !isTreatScan && productName !== "" && (
             <>
               {score !== null && (
-                <View
-                  style={[
-                    styles.scoreBanner,
-                    { backgroundColor: getScoreColor(score) },
-                  ]}
-                >
-                  <Text style={styles.scoreBannerNumber}>{score}</Text>
-                  <Text style={styles.scoreBannerLabel}>/100</Text>
-                  <Text style={styles.scoreBannerRating}>
-                    {getScoreLabel(score)}
-                  </Text>
-                  <Text style={styles.scoreBannerNote}>
+                <View style={styles.scoreHero}>
+                  {/* Circular score ring on the dark ground — a measured instrument,
+                      not a flat colour slab. The ring colour carries the verdict. */}
+                  <View
+                    style={[
+                      styles.scoreRing,
+                      { borderColor: getScoreColor(score) },
+                    ]}
+                  >
+                    <Text
+                      style={[
+                        styles.scoreRingNumber,
+                        { color: getScoreColor(score) },
+                      ]}
+                    >
+                      {score}
+                    </Text>
+                    <Text style={styles.scoreRingOutOf}>/ 100</Text>
+                  </View>
+                  <View
+                    style={[
+                      styles.scoreRatingPill,
+                      {
+                        backgroundColor: getScoreColor(score) + "22",
+                        borderColor: getScoreColor(score) + "55",
+                      },
+                    ]}
+                  >
+                    <Text
+                      style={[
+                        styles.scoreRatingText,
+                        { color: getScoreColor(score) },
+                      ]}
+                    >
+                      {getScoreLabel(score)}
+                    </Text>
+                  </View>
+                  <Text style={styles.scoreHeroNote}>
                     Processing · Ingredients · Nutrition Research
                   </Text>
                 </View>
@@ -5755,7 +5781,56 @@ const styles = StyleSheet.create({
   // Results
   results: { paddingBottom: 48, backgroundColor: t.bg },
 
-  // Score banner — full width hero.
+  // Score hero — circular ring on the dark ground (food results).
+  // Reads as a measured instrument rather than a flat colour block.
+  scoreHero: {
+    alignItems: "center",
+    paddingTop: 48,
+    paddingBottom: 24,
+  },
+  scoreRing: {
+    width: 168,
+    height: 168,
+    borderRadius: 84,
+    borderWidth: 9,
+    backgroundColor: t.surfaceAlt,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  scoreRingNumber: {
+    fontSize: 62,
+    fontWeight: "800",
+    lineHeight: 66,
+    letterSpacing: -2,
+    fontVariant: ["tabular-nums"],
+  },
+  scoreRingOutOf: {
+    fontSize: 13,
+    color: t.textDim,
+    fontWeight: "600",
+    marginTop: 2,
+    letterSpacing: 0.5,
+  },
+  scoreRatingPill: {
+    marginTop: 18,
+    paddingHorizontal: 16,
+    paddingVertical: 7,
+    borderRadius: 999,
+    borderWidth: 1,
+  },
+  scoreRatingText: {
+    fontSize: 15,
+    fontWeight: "800",
+    letterSpacing: 0.2,
+  },
+  scoreHeroNote: {
+    fontSize: 11,
+    color: t.textDim,
+    marginTop: 12,
+    letterSpacing: 0.3,
+  },
+
+  // Score banner — full width hero (still used by the treats results screen).
   // Restraint over shout: the number is the message, so it gets tighter tracking
   // and the supporting copy steps back rather than competing with it.
   scoreBanner: {
