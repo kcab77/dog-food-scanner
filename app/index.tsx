@@ -1966,6 +1966,51 @@ function getNextStep(
   };
 }
 
+// DCM heart-risk pattern — PRESENTATION ONLY, reads the same ingredient list the
+// scorer already parsed. Does NOT feed into or alter the score (the existing
+// legume/DCM penalty in the scoring function is untouched) — this is a
+// separate, clearly-labelled informational panel per Kyle's spec: flag
+// grain-free + legume/potato-in-top-5 as a distinct evidence-linked category,
+// never folded into general ingredient "concerns".
+const DCM_GRAIN_TERMS = ["rice", "oat", "oats", "barley", "wheat", "corn", "sorghum", "millet"];
+const DCM_EXOTIC_PROTEIN = ["kangaroo", "bison", "venison", "duck", "alligator", "boar", "rabbit", "ostrich", "elk"];
+
+function getDCMPattern(ingredientList: string[]): {
+  triggered: boolean;
+  tier: "Highest" | "Elevated" | null;
+  grainFree: boolean;
+  legumeOrPotatoTop5: boolean;
+  fractionated: boolean;
+  fractionCount: number;
+  exotic: boolean;
+} {
+  const lower = ingredientList.map((i) => i.toLowerCase());
+  const top5 = lower.slice(0, 5);
+  const top10 = lower.slice(0, 10);
+  const isSweetPotato = (s: string) => s.includes("sweet potato");
+  const isPotato = (s: string) => !isSweetPotato(s) && s.includes("potato");
+  // LENTIL_LEGUME is the existing scoring constant (peas/pea fractions/lentils/
+  // chickpeas/beans) — reused read-only, never mutated, never re-scored here.
+  const isLegume = (s: string) => LENTIL_LEGUME.some((term) => s.includes(term));
+
+  const grainFree = !top10.some((i) => DCM_GRAIN_TERMS.some((g) => i.includes(g)));
+  const legumeOrPotatoTop5 = top5.some((i) => isLegume(i) || isPotato(i));
+  const fractionCount = top10.filter((i) => isLegume(i)).length;
+  const fractionated = fractionCount >= 3;
+  const triggered = grainFree && (legumeOrPotatoTop5 || fractionated);
+  const exotic = lower.slice(0, 3).some((i) => DCM_EXOTIC_PROTEIN.some((p) => i.includes(p)));
+
+  return {
+    triggered,
+    tier: triggered ? (exotic ? "Highest" : "Elevated") : null,
+    grainFree,
+    legumeOrPotatoTop5,
+    fractionated,
+    fractionCount,
+    exotic,
+  };
+}
+
 export default function App() {
   const [permission, requestPermission] = useCameraPermissions();
   const [showDisclaimer, setShowDisclaimer] = useState(true);
@@ -4303,21 +4348,31 @@ export default function App() {
     <View style={styles.container}>
       {!scanned ? (
         <View style={styles.scanScreen}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%', paddingHorizontal: 20, marginBottom: 10 }}>
-            <Text style={[styles.title, { marginBottom: 0 }]}>🐾 PawGrade</Text>
-            <TouchableOpacity
-              onPress={() => { setShowFeedbackModal(true); setFeedbackSubmitted(false); }}
-              style={{
-                paddingVertical: 6,
-                paddingHorizontal: 12,
-                borderRadius: 999,
-                backgroundColor: t.surface,
-                borderWidth: 1,
-                borderColor: t.border,
-              }}
-            >
-              <Text style={{ color: t.textMuted, fontSize: 12, fontWeight: '600' }}>💬 Feedback</Text>
-            </TouchableOpacity>
+          <View style={{ width: '100%', paddingHorizontal: 20, marginBottom: 6 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.scanEyebrow}>🐾 PawGrade</Text>
+                <Text style={[styles.title, { marginBottom: 0 }]}>
+                  {scanMode === "manual" ? "Type in ingredients" : "Scan a food"}
+                </Text>
+              </View>
+              <TouchableOpacity
+                onPress={() => { setShowFeedbackModal(true); setFeedbackSubmitted(false); }}
+                style={{
+                  width: 34,
+                  height: 34,
+                  borderRadius: 17,
+                  backgroundColor: t.surface,
+                  borderWidth: 1,
+                  borderColor: t.border,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginTop: 4,
+                }}
+              >
+                <Text style={{ fontSize: 15 }}>💬</Text>
+              </TouchableOpacity>
+            </View>
           </View>
           <View style={styles.modeToggle}>
             <TouchableOpacity
@@ -4355,13 +4410,18 @@ export default function App() {
             {/* Treats mode disabled — tab hidden until the custom treats database is built.
                 Treats scoring/results code is left intact but unreachable from the UI. */}
           </View>
-          <Text style={styles.subtitle}>
-            {scanMode === "treats"
-              ? "Point at the ingredient list on a treat bag"
-              : scanMode === "manual"
-                ? "Type or paste an ingredient list to analyze"
-                : "Tap the button to scan the ingredient label — barcode recognition also works for previously-scanned products"}
-          </Text>
+          <View style={styles.heroCard}>
+            <Text style={styles.heroCardIcon}>
+              {scanMode === "manual" ? "⌨️" : scanMode === "treats" ? "🦴" : "📷"}
+            </Text>
+            <Text style={styles.heroCardText}>
+              {scanMode === "treats"
+                ? "Point at the ingredient list on a treat bag"
+                : scanMode === "manual"
+                  ? "Type or paste an ingredient list to analyze"
+                  : "Tap the button to scan the ingredient label — barcode recognition also works for previously-scanned products"}
+            </Text>
+          </View>
           {scanMode === "manual" ? (
             <View style={{ flex: 1, width: "100%", paddingHorizontal: 16, paddingTop: 8 }}>
               <TextInput
@@ -5197,43 +5257,56 @@ export default function App() {
               )}
 
               {flagged.length > 0 && (
-                <AccordionSection title={`🚩 Ingredients to Watch (${flagged.length})`} titleColor={t.critical}>
-                  <Text style={[styles.omegaNote, { marginBottom: 12 }]}>Tap a name to see why it's a concern.</Text>
-                  {/* Full-width rows with a severity stripe, rather than saturated blobs.
-                      A stripe encodes seriousness at a glance and stays informative;
-                      a solid red pill just reads as alarm. */}
-                  {flagged.map((f, i) => {
+                <AccordionSection title={`Biggest Concerns (${flagged.length})`} titleColor={t.critical}>
+                  <Text style={[styles.omegaNote, { marginBottom: 12 }]}>Tap a concern to see why it matters.</Text>
+                  {/* Apple grouped-card row: a coloured icon badge carries the
+                      severity at a glance (matching the approved prototype),
+                      the tag pill on the right names the tier in words too —
+                      colour is never the only signal. */}
+                  {flagged.map((f, i, arr) => {
                     const open = !!expandedRedFlags[f.name];
                     const sev = SEVERITY_COLORS[f.severity] || t.critical;
                     return (
-                      <View
-                        key={i}
-                        style={{
-                          marginBottom: 8,
-                          backgroundColor: t.surface,
-                          borderRadius: 12,
-                          borderWidth: 1,
-                          borderColor: open ? sev : t.border,
-                          overflow: "hidden",
-                        }}
-                      >
+                      <View key={i}>
                         <TouchableOpacity
                           activeOpacity={0.7}
                           onPress={() => {
                             LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
                             setExpandedRedFlags((prev) => ({ ...prev, [f.name]: !prev[f.name] }));
                           }}
-                          style={{ flexDirection: "row", alignItems: "center", paddingHorizontal: 12, paddingVertical: 11 }}
+                          style={{
+                            flexDirection: "row",
+                            alignItems: "center",
+                            paddingVertical: 12,
+                            borderBottomWidth: i === arr.length - 1 && !open ? 0 : 1,
+                            borderBottomColor: t.border,
+                          }}
                         >
-                          <View style={{ width: 3, height: 20, borderRadius: 2, backgroundColor: sev, marginRight: 10 }} />
-                          <Text style={{ color: t.textStrong, fontSize: 14, fontWeight: "600", flex: 1 }}>{f.name}</Text>
-                          <Text style={{ color: sev, fontSize: 9, fontWeight: "800", textTransform: "uppercase", letterSpacing: 0.6, marginRight: 8 }}>
-                            {f.severity}
-                          </Text>
-                          <Text style={{ color: t.textDim, fontSize: 11, fontWeight: "800" }}>{open ? "▾" : "▸"}</Text>
+                          <View style={{ width: 30, height: 30, borderRadius: 9, backgroundColor: sev, alignItems: "center", justifyContent: "center", marginRight: 12 }}>
+                            <Text style={{ color: t.onAccent, fontSize: 15, fontWeight: "800" }}>!</Text>
+                          </View>
+                          <Text style={{ color: t.textStrong, fontSize: 15, fontWeight: "500", flex: 1, letterSpacing: -0.1 }}>{f.name}</Text>
+                          <View style={{ backgroundColor: sev + "1F", paddingHorizontal: 9, paddingVertical: 4, borderRadius: 7, marginRight: 8 }}>
+                            <Text style={{ color: sev, fontSize: 10, fontWeight: "800", textTransform: "uppercase", letterSpacing: 0.4 }}>
+                              {f.severity}
+                            </Text>
+                          </View>
+                          <Text style={{ color: t.textFaint, fontSize: 16, fontWeight: "600" }}>{open ? "⌄" : "›"}</Text>
                         </TouchableOpacity>
                         {open && (
-                          <Text style={{ color: t.text, fontSize: 13, lineHeight: 20, paddingHorizontal: 12, paddingBottom: 12, paddingLeft: 25 }}>{f.reason}</Text>
+                          <Text
+                            style={{
+                              color: t.textMuted,
+                              fontSize: 13,
+                              lineHeight: 20,
+                              paddingBottom: 14,
+                              paddingLeft: 42,
+                              borderBottomWidth: i === arr.length - 1 ? 0 : 1,
+                              borderBottomColor: t.border,
+                            }}
+                          >
+                            {f.reason}
+                          </Text>
                         )}
                       </View>
                     );
@@ -5241,25 +5314,129 @@ export default function App() {
                 </AccordionSection>
               )}
 
+              {/* DCM heart-risk pattern — its own indigo, its own card, never folded
+                  into general "concerns". Presentation-only classification (see
+                  getDCMPattern above); does not touch the score. */}
+              {ingredients.length > 0 && (() => {
+                const dcmResult = getDCMPattern(ingredients);
+                return (
+                  <View
+                    style={{
+                      backgroundColor: dcmResult.triggered ? t.dcmTint : t.surface,
+                      borderRadius: 18,
+                      marginHorizontal: 16,
+                      marginBottom: 14,
+                      padding: 18,
+                      borderWidth: 1,
+                      borderColor: dcmResult.triggered ? t.dcmDeep + "40" : t.border,
+                    }}
+                  >
+                    <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 12 }}>
+                      <Text style={{ fontSize: 16, marginRight: 8, color: dcmResult.triggered ? t.dcm : t.good }}>♥</Text>
+                      <Text style={{ fontSize: 11, fontWeight: "800", letterSpacing: 1.1, textTransform: "uppercase", color: dcmResult.triggered ? t.dcm : t.textDim }}>
+                        Heart-Health · DCM Pattern
+                      </Text>
+                    </View>
+
+                    <View
+                      style={{
+                        alignSelf: "flex-start",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        paddingHorizontal: 13,
+                        paddingVertical: 7,
+                        borderRadius: 9,
+                        marginBottom: 12,
+                        backgroundColor: dcmResult.triggered ? t.dcm : t.goodTint,
+                      }}
+                    >
+                      <Text style={{ color: dcmResult.triggered ? t.onAccent : t.good, fontSize: 12, fontWeight: "800" }}>
+                        {dcmResult.triggered ? `⬤ Pattern detected · ${dcmResult.tier} tier` : "✓ Pattern not detected"}
+                      </Text>
+                    </View>
+
+                    {dcmResult.triggered ? (
+                      <>
+                        <Text style={{ fontSize: 13, lineHeight: 20, color: t.text, marginBottom: 12 }}>
+                          This food is <Text style={{ fontWeight: "700" }}>grain-free</Text> and lists{" "}
+                          <Text style={{ fontWeight: "700" }}>peas, legumes, or potatoes prominently</Text> — the pattern the
+                          FDA has been investigating in relation to canine{" "}
+                          <Text style={{ fontWeight: "700" }}>DCM (dilated cardiomyopathy)</Text>, a disease where the heart
+                          muscle thins and struggles to pump, in dogs without a genetic predisposition to it.
+                        </Text>
+                        <View style={{ backgroundColor: t.surfaceSunken, borderRadius: 12, padding: 12, marginBottom: 12, gap: 7 }}>
+                          {dcmResult.grainFree && (
+                            <Text style={{ fontSize: 12, color: t.textMuted, lineHeight: 17 }}>
+                              <Text style={{ color: t.dcm, fontWeight: "800" }}>✓ </Text>No grain anywhere in the top 10 ingredients.
+                            </Text>
+                          )}
+                          {dcmResult.legumeOrPotatoTop5 && (
+                            <Text style={{ fontSize: 12, color: t.textMuted, lineHeight: 17 }}>
+                              <Text style={{ color: t.dcm, fontWeight: "800" }}>✓ </Text>A legume or potato appears in the top 5 ingredients.
+                            </Text>
+                          )}
+                          {dcmResult.fractionated && (
+                            <Text style={{ fontSize: 12, color: t.textMuted, lineHeight: 17 }}>
+                              <Text style={{ color: t.dcm, fontWeight: "800" }}>Σ </Text>Legumes split into {dcmResult.fractionCount} separate entries in the top 10 — summed, they behave like one much larger ingredient.
+                            </Text>
+                          )}
+                          {dcmResult.exotic && (
+                            <Text style={{ fontSize: 12, color: t.textMuted, lineHeight: 17 }}>
+                              <Text style={{ color: t.dcm, fontWeight: "800" }}>! </Text>Built on an exotic protein — matches the FDA's most-investigated profile.
+                            </Text>
+                          )}
+                        </View>
+                        <Text style={{ fontSize: 11.5, color: t.textDim, lineHeight: 17, marginBottom: 12 }}>
+                          This is a correlational pattern still under investigation — not a confirmed cause. Plenty of dogs eat these foods without ever developing DCM. It's a reason to talk to your vet, not a reason to panic.
+                        </Text>
+                      </>
+                    ) : (
+                      <Text style={{ fontSize: 13, lineHeight: 20, color: t.text, marginBottom: 4 }}>
+                        {dcmResult.grainFree
+                          ? "This food is grain-free, but its top ingredients don't match the legume- or potato-heavy pattern under FDA investigation."
+                          : "This food contains grain, so it falls outside the grain-free pattern the FDA has been investigating — even if peas appear further down the list, that isn't the flagged profile."}
+                      </Text>
+                    )}
+
+                    <TouchableOpacity
+                      onPress={() =>
+                        Linking.openURL(
+                          "https://www.fda.gov/animal-veterinary/outbreaks-and-advisories/fda-investigation-potential-link-between-certain-diets-and-canine-dilated-cardiomyopathy"
+                        )
+                      }
+                    >
+                      <Text style={{ color: t.dcm, fontSize: 12, fontWeight: "700", marginTop: dcmResult.triggered ? 0 : 8 }}>
+                        Read the FDA investigation →
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                );
+              })()}
+
               {score !== null && (
                 <View style={styles.section}>
-                  <Text style={styles.sectionTitle}>Simple additions to upgrade the bowl</Text>
-                  {/* Each addition gets its own row so they read as three distinct,
-                      doable actions rather than one run-on block of text. */}
+                  <Text style={styles.sectionTitle}>Make it better</Text>
+                  {/* Icon-row cards, matching the approved prototype — each addition
+                      reads as a distinct, doable action rather than a run-on list. */}
                   {[
-                    "🥚 An egg in the morning",
-                    "🐟 Sardines or fish oil",
-                    "🥛 Plain yogurt, kefir, or goat's milk for probiotics",
+                    { icon: "🥚", label: "An egg in the morning" },
+                    { icon: "🐟", label: "Sardines or fish oil" },
+                    { icon: "🥛", label: "Plain yogurt, kefir, or goat's milk for probiotics" },
                   ].map((item, i, arr) => (
                     <View
                       key={i}
                       style={{
+                        flexDirection: "row",
+                        alignItems: "center",
                         paddingVertical: 11,
                         borderBottomWidth: i === arr.length - 1 ? 0 : 1,
                         borderBottomColor: t.border,
                       }}
                     >
-                      <Text style={{ color: t.text, fontSize: 14, lineHeight: 21 }}>{item}</Text>
+                      <View style={{ width: 30, height: 30, borderRadius: 9, backgroundColor: t.goodTint, alignItems: "center", justifyContent: "center", marginRight: 12 }}>
+                        <Text style={{ fontSize: 15 }}>{item.icon}</Text>
+                      </View>
+                      <Text style={{ color: t.textStrong, fontSize: 15, fontWeight: "500", flex: 1, letterSpacing: -0.1 }}>{item.label}</Text>
                     </View>
                   ))}
                   <Text style={[styles.sectionNote, { marginTop: 12 }]}>
@@ -5700,11 +5877,19 @@ const styles = StyleSheet.create({
     paddingTop: 60,
     alignItems: "center",
   },
+  // Apple large-title nav: a quiet eyebrow, then a big bold headline —
+  // matches the "Scan a food" title treatment in the approved prototype.
+  scanEyebrow: {
+    fontSize: 15,
+    color: t.textMuted,
+    fontWeight: "500",
+    marginBottom: 2,
+  },
   title: {
-    fontSize: 26,
+    fontSize: 32,
     fontWeight: "800",
     color: t.textStrong,
-    letterSpacing: -0.5,
+    letterSpacing: -0.8,
     marginBottom: 4,
   },
   subtitle: {
@@ -5714,6 +5899,27 @@ const styles = StyleSheet.create({
     lineHeight: 19,
     paddingHorizontal: 32,
     marginBottom: 14,
+  },
+  // Instructional hero card — the blue accent card from the prototype,
+  // adapted to sit above the live camera (this app shows the scanner
+  // immediately rather than a separate "open scanner" home state).
+  heroCard: {
+    alignSelf: "stretch",
+    marginHorizontal: 16,
+    marginBottom: 14,
+    backgroundColor: t.info,
+    borderRadius: 18,
+    padding: 16,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  heroCardIcon: { fontSize: 26, marginRight: 12 },
+  heroCardText: {
+    flex: 1,
+    color: t.onAccent,
+    fontSize: 13,
+    lineHeight: 18,
+    fontWeight: "500",
   },
   cameraWrapper: {
     alignSelf: "stretch",
@@ -5759,27 +5965,35 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   torchIcon: { fontSize: 18 },
+  // Apple segmented control: a light-grey track with a white active pill —
+  // not a colour-filled toggle. Colour lives in the content below, not the
+  // navigation chrome, matching the approved prototype's iOS system look.
   modeToggle: {
     flexDirection: "row",
     alignSelf: "stretch",
-    backgroundColor: t.surface,
-    borderRadius: 999,
-    borderWidth: 1,
-    borderColor: t.border,
-    padding: 4,
+    backgroundColor: t.surfaceSunken,
+    borderRadius: 11,
+    padding: 3,
     marginHorizontal: 20,
-    marginBottom: 12,
+    marginBottom: 14,
   },
   modeBtn: {
     flex: 1,
-    paddingVertical: 9,
+    paddingVertical: 8,
     paddingHorizontal: 16,
-    borderRadius: 999,
+    borderRadius: 9,
     alignItems: "center",
   },
-  modeBtnActive: { backgroundColor: t.good },
+  modeBtnActive: {
+    backgroundColor: t.surface,
+    shadowColor: t.textStrong,
+    shadowOpacity: 0.12,
+    shadowRadius: 3,
+    shadowOffset: { width: 0, height: 1 },
+    elevation: 2,
+  },
   modeBtnText: { color: t.textMuted, fontWeight: "600", fontSize: 14 },
-  modeBtnTextActive: { color: t.onAccent, fontWeight: "800" },
+  modeBtnTextActive: { color: t.textStrong, fontWeight: "700" },
   captureBtn: {
     width: 72,
     height: 72,
