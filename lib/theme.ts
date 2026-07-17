@@ -19,62 +19,67 @@
  */
 
 // ── PALETTE ──────────────────────────────────────────────────────────────────
-// Derived from whole foods against a dark instrument ground: kale, turmeric,
-// carrot, chili, blueberry. Swap these for a different mood in one pass.
+// Apple-inspired light theme: soft iOS system grey ground, white grouped
+// cards, and the real Apple system colours (systemGreen/Red/Orange/Indigo).
+// Those system colours are deliberately dual-purpose in Apple's own design —
+// saturated enough to read as white-on-fill (buttons, pills, badges) AND dark
+// enough to read as text-on-white (labels, links) — which is exactly why they
+// were chosen here instead of the old neon dark-mode brights.
 const palette = {
-  // grounds — deep indigo-biased ink (a *chosen* neutral, not flat grey)
-  ink: '#0C0E1A',
-  slate: '#151830',
-  slateRaised: '#1C2043',
-  slateSunken: '#12142B',
-  hairline: '#282E4E',
-  hairlineBright: '#333A5E',
+  // grounds — iOS systemGroupedBackground family
+  ink: '#F2F2F7',
+  slate: '#FFFFFF',
+  slateRaised: '#FFFFFF',
+  slateSunken: '#EFEFF4',
+  hairline: 'rgba(60,60,67,0.13)',
+  hairlineBright: 'rgba(60,60,67,0.22)',
 
-  // type
+  // type — iOS label / secondaryLabel / tertiaryLabel family
   white: '#FFFFFF',
-  paper: '#F0F2FA',
-  ash: '#D6DAEA',
-  smoke: '#9198BC',
-  slateGrey: '#666E93',
-  faint: '#4B5270',
+  paper: '#1C1C1E',
+  ash: '#3A3A3C',
+  smoke: '#6C6C70',
+  slateGrey: '#8E8E93',
+  faint: '#B4B4BB',
   black: '#000000',
 
-  // produce-derived semantics
-  kale: '#35D89A',
-  kaleDeep: '#1E8449',
-  kaleTint: '#0D2818',
+  // produce-derived semantics, now on real Apple system-colour values.
+  // Tints are light pastel washes (the iOS "tag" pattern: pale bg + rich text).
+  kale: '#248A3D',
+  kaleDeep: '#1B6B2F',
+  kaleTint: '#E6F8EA',
 
-  turmeric: '#F5C542',
-  turmericDeep: '#92731A',
-  turmericTint: '#2D2A10',
+  turmeric: '#B7791F',
+  turmericDeep: '#8A5B14',
+  turmericTint: '#FFF6DD',
 
-  carrot: '#FF9A3D',
-  carrotDeep: '#B4531A',
-  carrotTint: '#2D1E10',
+  carrot: '#C2410C',
+  carrotDeep: '#9A3412',
+  carrotTint: '#FFEDDD',
 
-  chili: '#FF5E7E',
-  chiliDeep: '#C0392B',
-  chiliTint: '#3D1010',
+  chili: '#D70015',
+  chiliDeep: '#A4000F',
+  chiliTint: '#FFE5E8',
   chiliDeepest: '#7B0000',
 
-  berry: '#8091FF',
-  berryDeep: '#3B4BC4',
-  berryTint: '#161A3D',
+  berry: '#5856D6',
+  berryDeep: '#3B3A9E',
+  berryTint: '#EEEDFB',
 
-  // supporting accents (supplement cards, misc)
-  ocean: '#06B6D4',
-  oceanTint: '#001A1F',
-  violet: '#A78BFA',
-  violetTint: '#1A0D2E',
-  lime: '#A3E635',
-  limeTint: '#0A1A00',
-  rose: '#F43F5E',
-  roseTint: '#1A0008',
-  ember: '#F97316',
-  emberTint: '#1A0A00',
-  emerald: '#22C55E',
-  emeraldTint: '#041A0A',
-  sky: '#7DD3FC',
+  // supporting accents (supplement cards, misc) — same Apple system family
+  ocean: '#0086A8',
+  oceanTint: '#E1F6FA',
+  violet: '#8E3FBF', // darkened from Apple's systemPurple for safe white-text contrast on solid CTA fills
+  violetTint: '#F6ECFC',
+  lime: '#4D8400',
+  limeTint: '#EFF8DE',
+  rose: '#D70052',
+  roseTint: '#FCE7EE',
+  ember: '#C2410C',
+  emberTint: '#FFEDDD',
+  emerald: '#248A3D',
+  emeraldTint: '#E6F8EA',
+  sky: '#007AFF',
 } as const;
 
 // ── SEMANTIC TOKENS ──────────────────────────────────────────────────────────
@@ -93,7 +98,8 @@ export const t = {
   textMuted: palette.smoke,
   textDim: palette.slateGrey,
   textFaint: palette.faint,
-  onAccent: palette.ink, // text sitting ON a bright accent fill
+  onAccent: palette.white, // text/icons sitting ON a saturated accent fill (buttons, pills, banners) — always light regardless of theme
+  overlayControl: palette.white, // camera-preview controls (capture ring) — drawn over live video, not app chrome, so this stays constant across themes
 
   // severity — the ladder the whole scanner is built on
   good: palette.kale,

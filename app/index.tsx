@@ -4303,10 +4303,20 @@ export default function App() {
     <View style={styles.container}>
       {!scanned ? (
         <View style={styles.scanScreen}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%', marginBottom: 4 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%', paddingHorizontal: 20, marginBottom: 10 }}>
             <Text style={[styles.title, { marginBottom: 0 }]}>🐾 PawGrade</Text>
-            <TouchableOpacity onPress={() => { setShowFeedbackModal(true); setFeedbackSubmitted(false); }} style={{ padding: 8 }}>
-              <Text style={{ color: t.textDim, fontSize: 13 }}>💬 Feedback</Text>
+            <TouchableOpacity
+              onPress={() => { setShowFeedbackModal(true); setFeedbackSubmitted(false); }}
+              style={{
+                paddingVertical: 6,
+                paddingHorizontal: 12,
+                borderRadius: 999,
+                backgroundColor: t.surface,
+                borderWidth: 1,
+                borderColor: t.border,
+              }}
+            >
+              <Text style={{ color: t.textMuted, fontSize: 12, fontWeight: '600' }}>💬 Feedback</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.modeToggle}>
@@ -4358,9 +4368,11 @@ export default function App() {
                 style={{
                   backgroundColor: t.surface,
                   color: t.textStrong,
-                  borderRadius: 10,
-                  padding: 12,
-                  fontSize: 13,
+                  borderRadius: 12,
+                  borderWidth: 1,
+                  borderColor: t.border,
+                  padding: 14,
+                  fontSize: 14,
                   marginBottom: 10,
                 }}
                 placeholder="Product name (optional)"
@@ -4372,9 +4384,11 @@ export default function App() {
                 style={{
                   backgroundColor: t.surface,
                   color: t.textStrong,
-                  borderRadius: 10,
-                  padding: 12,
-                  fontSize: 13,
+                  borderRadius: 12,
+                  borderWidth: 1,
+                  borderColor: t.border,
+                  padding: 14,
+                  fontSize: 14,
                   marginBottom: 10,
                 }}
                 placeholder="Barcode number (optional — for future scans)"
@@ -4387,9 +4401,12 @@ export default function App() {
                 style={{
                   backgroundColor: t.surface,
                   color: t.textStrong,
-                  borderRadius: 10,
-                  padding: 12,
-                  fontSize: 13,
+                  borderRadius: 12,
+                  borderWidth: 1,
+                  borderColor: t.border,
+                  padding: 14,
+                  fontSize: 14,
+                  lineHeight: 20,
                   minHeight: 180,
                   textAlignVertical: "top",
                   marginBottom: 14,
@@ -4403,14 +4420,23 @@ export default function App() {
               <TouchableOpacity
                 style={{
                   backgroundColor: manualIngredientText.trim() ? t.good : t.surface,
-                  borderRadius: 12,
-                  paddingVertical: 14,
+                  borderRadius: 999,
+                  paddingVertical: 15,
                   alignItems: "center",
+                  borderWidth: 1,
+                  borderColor: manualIngredientText.trim() ? t.goodDeep : t.border,
                 }}
                 onPress={handleManualAnalyze}
                 disabled={!manualIngredientText.trim()}
               >
-                <Text style={{ color: t.onAccent, fontWeight: "700", fontSize: 16 }}>
+                <Text
+                  style={{
+                    color: manualIngredientText.trim() ? t.onAccent : t.textFaint,
+                    fontWeight: "800",
+                    fontSize: 15,
+                    letterSpacing: 0.2,
+                  }}
+                >
                   Analyze Ingredients
                 </Text>
               </TouchableOpacity>
@@ -4421,11 +4447,13 @@ export default function App() {
                 style={{
                   backgroundColor: t.surface,
                   color: t.textStrong,
-                  borderRadius: 10,
-                  padding: 12,
-                  fontSize: 13,
+                  borderRadius: 12,
+                  borderWidth: 1,
+                  borderColor: t.border,
+                  padding: 14,
+                  fontSize: 14,
                   marginHorizontal: 16,
-                  marginBottom: 8,
+                  marginBottom: 10,
                 }}
                 placeholder="Brand / product name (optional)"
                 placeholderTextColor={t.textFaint}
@@ -4457,10 +4485,13 @@ export default function App() {
             <>
               <Text
                 style={{
-                  color: t.textDim,
-                  fontSize: 12,
+                  color: t.textFaint,
+                  fontSize: 11,
+                  fontWeight: "700",
+                  letterSpacing: 1.2,
+                  textTransform: "uppercase",
                   marginBottom: 6,
-                  marginTop: 8,
+                  marginTop: 12,
                 }}
               >
                 Try a sample scan:
@@ -4498,7 +4529,8 @@ export default function App() {
               flexDirection: "row",
               justifyContent: "center",
               gap: 16,
-              marginTop: 4,
+              marginTop: 8,
+              marginBottom: 6,
             }}
           >
             <TouchableOpacity
@@ -5010,7 +5042,7 @@ export default function App() {
                   onPress={() => Linking.openURL(recallAlert.url)}
                 >
                   <Text
-                    style={{ color: t.textStrong, fontWeight: "800", fontSize: 14 }}
+                    style={{ color: t.onAccent, fontWeight: "800", fontSize: 14 }}
                   >
                     ⚠️ Possible FDA Recall on File
                   </Text>
@@ -5148,7 +5180,7 @@ export default function App() {
                           ? t.goodDeep
                           : isMeal || isLegume
                             ? t.high
-                            : t.border;
+                            : t.textMuted; // neutral pill fill — dark enough for onAccent (white) text to read (5.5:1)
                       return (
                         <TouchableOpacity
                           key={i}
@@ -5669,14 +5701,31 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   title: {
-    fontSize: 28,
+    fontSize: 26,
     fontWeight: "800",
     color: t.textStrong,
     letterSpacing: -0.5,
     marginBottom: 4,
   },
-  subtitle: { fontSize: 14, color: t.textDim, marginBottom: 20 },
-  cameraWrapper: { width: "100%", flex: 1, position: "relative" },
+  subtitle: {
+    fontSize: 13,
+    color: t.textMuted,
+    textAlign: "center",
+    lineHeight: 19,
+    paddingHorizontal: 32,
+    marginBottom: 14,
+  },
+  cameraWrapper: {
+    alignSelf: "stretch",
+    flex: 1,
+    position: "relative",
+    marginHorizontal: 16,
+    borderRadius: 22,
+    overflow: "hidden",
+    borderWidth: 1,
+    borderColor: t.border,
+    backgroundColor: t.surfaceSunken,
+  },
   camera: { flex: 1 },
   scanOverlay: {
     position: "absolute",
@@ -5684,8 +5733,9 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    justifyContent: "center",
+    justifyContent: "flex-end",
     alignItems: "center",
+    paddingBottom: 22,
   },
   scanFrame: { width: 280, height: 160, position: "relative" },
   scanLine: {
@@ -5711,28 +5761,32 @@ const styles = StyleSheet.create({
   torchIcon: { fontSize: 18 },
   modeToggle: {
     flexDirection: "row",
-    backgroundColor: t.surfaceAlt,
-    borderRadius: 12,
+    alignSelf: "stretch",
+    backgroundColor: t.surface,
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: t.border,
     padding: 4,
-    marginBottom: 10,
+    marginHorizontal: 20,
+    marginBottom: 12,
   },
   modeBtn: {
     flex: 1,
-    paddingVertical: 8,
+    paddingVertical: 9,
     paddingHorizontal: 16,
-    borderRadius: 10,
+    borderRadius: 999,
     alignItems: "center",
   },
   modeBtnActive: { backgroundColor: t.good },
-  modeBtnText: { color: t.textDim, fontWeight: "600", fontSize: 14 },
-  modeBtnTextActive: { color: t.textStrong },
+  modeBtnText: { color: t.textMuted, fontWeight: "600", fontSize: 14 },
+  modeBtnTextActive: { color: t.onAccent, fontWeight: "800" },
   captureBtn: {
     width: 72,
     height: 72,
     borderRadius: 36,
     backgroundColor: "rgba(255,255,255,0.2)",
     borderWidth: 3,
-    borderColor: t.textStrong,
+    borderColor: t.overlayControl,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -5740,7 +5794,7 @@ const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: t.textStrong,
+    backgroundColor: t.overlayControl,
   },
   corner: {
     position: "absolute",
@@ -5842,7 +5896,7 @@ const styles = StyleSheet.create({
   scoreBannerNumber: {
     fontSize: 68,
     fontWeight: "800",
-    color: t.textStrong,
+    color: t.onAccent,
     lineHeight: 72,
     letterSpacing: -2,
   },
@@ -5855,7 +5909,7 @@ const styles = StyleSheet.create({
   scoreBannerRating: {
     fontSize: 17,
     fontWeight: "700",
-    color: t.textStrong,
+    color: t.onAccent,
     marginTop: 12,
     letterSpacing: 0.2,
   },
@@ -6018,7 +6072,7 @@ const styles = StyleSheet.create({
   // Bigger tap target and more internal padding — these are the most-touched
   // element on the screen and were previously cramped.
   pill: { paddingHorizontal: 12, paddingVertical: 7, borderRadius: 10 },
-  pillText: { color: t.textStrong, fontSize: 13, fontWeight: "600", letterSpacing: -0.1 },
+  pillText: { color: t.onAccent, fontSize: 13, fontWeight: "600", letterSpacing: -0.1 },
   pillHint: {
     fontSize: 12,
     color: t.textDim,
@@ -6243,19 +6297,20 @@ const styles = StyleSheet.create({
   demoBtn: {
     alignItems: "center",
     paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderRadius: 20,
-    borderWidth: 1.5,
+    paddingHorizontal: 18,
+    borderRadius: 999,
+    borderWidth: 1,
     borderColor: t.good,
+    backgroundColor: t.surface,
   },
-  demoBtnGood: { borderColor: t.good },
-  demoBtnBad: { borderColor: t.critical },
-  demoBtnText: { color: t.good, fontSize: 13, fontWeight: "600" },
+  demoBtnGood: { borderColor: t.goodDeep, backgroundColor: t.goodTint },
+  demoBtnBad: { borderColor: t.criticalDeep, backgroundColor: t.criticalTint },
+  demoBtnText: { color: t.good, fontSize: 13, fontWeight: "700" },
   disclaimerLink: { alignItems: "center", padding: 12 },
   disclaimerLinkText: {
     color: t.textDim,
     fontSize: 12,
-    textDecorationLine: "underline",
+    fontWeight: "600",
   },
 
   notFoundScreen: {
@@ -6375,7 +6430,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonText: {
-    color: t.textStrong,
+    color: t.onAccent,
     fontWeight: "800",
     fontSize: 16,
     letterSpacing: 0.5,
@@ -6461,7 +6516,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 4,
   },
   coachBubbleText: { fontSize: 14, lineHeight: 20 },
-  coachBubbleTextUser: { color: t.textStrong, fontWeight: "500" },
+  coachBubbleTextUser: { color: t.onAccent, fontWeight: "500" },
   coachBubbleTextAssistant: { color: t.text },
   coachInputRow: {
     flexDirection: "row",
@@ -6490,7 +6545,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   coachSendText: {
-    color: t.textStrong,
+    color: t.onAccent,
     fontSize: 20,
     fontWeight: "700",
     marginTop: -2,
@@ -6582,7 +6637,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     alignItems: "center",
   },
-  recBtnText: { color: t.textStrong, fontSize: 13, fontWeight: "700" },
+  recBtnText: { color: t.onAccent, fontSize: 13, fontWeight: "700" },
   enzymeCard: {
     marginTop: 12,
     backgroundColor: t.goodTint,
