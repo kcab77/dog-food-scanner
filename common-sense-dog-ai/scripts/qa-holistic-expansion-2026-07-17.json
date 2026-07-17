@@ -1,0 +1,110 @@
+[
+  {
+    "question": "Does bovine colostrum actually help a dog's gut and immune system?",
+    "answer": "🟡 Moderate evidence — one of the better-supported natural gut/immune supplements, but the claims that hold up are narrower than the marketing. A 40-week placebo-controlled RCT in 24 husky-cross dogs found colostrum supplementation significantly raised fecal IgA and increased microbiota diversity/stability vs. control (Animals, MDPI, 2025), and an earlier controlled study found it influenced post-vaccination antibody response (PubMed 23773360, 2013). Where hype outruns evidence: improved IgA and microbiome diversity are real findings, but 'heals leaky gut' and 'cures allergies' are extrapolations beyond what these two trials actually showed — reasonable to recommend for gut/immune support, not as a disease treatment.",
+    "topic": "bovine-colostrum",
+    "source": "Common Sense Dog — Holistic Topics Expansion 2026-07"
+  },
+  {
+    "question": "Does L-theanine (Anxitane) actually work for dog anxiety, or is it just marketed as calming?",
+    "answer": "🟠 Weak-mixed evidence, despite being widely sold as a 'clinically proven' calmer — that language isn't warranted by the actual dog data. The strongest canine studies are an open-label (uncontrolled) storm-sensitivity study showing reduced anxiety behaviors, an unblinded 10-dog noise-phobia study, and one placebo-controlled lab study showing more human-approach behavior — no adequately powered, blinded, placebo-controlled field RCT exists. Safety is genuinely well-supported (excellent tolerability, no notable side effects), so it's low-risk to try for situational anxiety — just don't expect confirmed efficacy, only a plausible one. Competes directly with alpha-casozepine, also weak-mixed evidence in this knowledge base.",
+    "topic": "l-theanine-anxiety",
+    "source": "Common Sense Dog — Holistic Topics Expansion 2026-07"
+  },
+  {
+    "question": "Is UC-II collagen actually better than glucosamine and chondroitin for dog joints?",
+    "answer": "🟡 Moderate evidence, and unusually — the trendy claim is actually trial-supported here. A head-to-head RCT found UC-II (40mg/day) outperformed glucosamine+chondroitin on pain and lameness over 90 days, cutting pain scores ~40% vs. ~15% (Toxicology Mechanisms and Methods, 2007). A later RCT found meaningful mobility improvement vs. the NSAID robenacoxib (PMC 6789547, 2019), and a 2024 placebo-controlled crossover study of UC-II + Boswellia showed improved mild/moderate mobility impairment (PLOS One, 2024). The mechanism is oral tolerance (immune signaling), not supplying cartilage substrate — so it does NOT 'regrow cartilage' despite that claim circulating; the benefit is pain/mobility. One of the stronger evidence-based joint additions — arguably belongs ahead of glucosamine/chondroitin in a joint-support tier.",
+    "topic": "uc-ii-collagen",
+    "source": "Common Sense Dog — Holistic Topics Expansion 2026-07"
+  },
+  {
+    "question": "Does milk thistle actually help a dog's liver, and does the form matter?",
+    "answer": "🟠 Emerging evidence in dogs (mechanism is well-established): no large canine RCTs in clinically ill dogs exist, but the most-cited dog study (12 dogs, oral silymarin 16mg/kg twice daily for 7 days) showed declining liver enzymes (ALT, SAP, γ-GT) vs. no change in controls. The hepatoprotective mechanism (membrane stabilization, glutathione support, antioxidant, anti-fibrotic) is well-characterized and translational. Critical practical point: plain silymarin has poor oral bioavailability (~20-50%) — phosphatidylcholine-complexed silybin (the form in products like Denamarin, paired with SAMe) absorbs far better, and raw powder is NOT equivalent. It supports a damaged liver's resilience; it does not treat the underlying cause (toxin, infection, copper storage, cancer). Solid adjunct once a vet addresses the actual liver problem.",
+    "topic": "milk-thistle-liver",
+    "source": "Common Sense Dog — Holistic Topics Expansion 2026-07"
+  },
+  {
+    "question": "Does slippery elm actually help with dog vomiting or diarrhea?",
+    "answer": "🟠 Emerging/weak-mixed — large real-world numbers, but no controlled trial. A large uncontrolled field trial (a potency-enhanced elm mucilage prescribed by 197 vets to ~3,952 dogs) reported 82% of vomiting dogs and 93% of diarrheic dogs responding within 2 days/4 doses — but with no placebo control, and most acute GI upset self-resolves in 1-2 days regardless, so that response rate likely overstates the attributable benefit. The soothing/coating mechanism on irritated GI mucosa is plausible. Practical caveat: the mucilage can reduce absorption of other oral medications — separate dosing by about 2 hours. Reasonable low-risk option for mild, self-limiting GI upset; don't let it delay vet care for persistent vomiting or diarrhea.",
+    "topic": "slippery-elm-gi",
+    "source": "Common Sense Dog — Holistic Topics Expansion 2026-07"
+  },
+  {
+    "question": "Should I give my healthy dog digestive enzymes every day for better digestion?",
+    "answer": "Split evidence, and the split matters a lot for whether this is worth doing. 🟢 Strong and standard-of-care for dogs with exocrine pancreatic insufficiency (EPI) — pancreatic enzyme replacement is evidence-based treatment there (Merck Veterinary Manual). But for a healthy dog with a normal pancreas, a controlled digestibility study found NO difference in protein, fat, or carbohydrate digestibility between enzyme-supplemented and unsupplemented food (Journal of Nutritional Science, Cambridge) — essentially null. This is a case where a real medical therapy for a specific disease gets marketed as a general wellness add-on with no supporting data for that broader use. Essential for EPI, unnecessary for dogs with normal digestion.",
+    "topic": "digestive-enzymes",
+    "source": "Common Sense Dog — Holistic Topics Expansion 2026-07"
+  },
+  {
+    "question": "Is colloidal silver safe to give my dog for infections?",
+    "answer": "🟠🔴 Early/signal-only evidence with a real, documented safety risk — this is a case where popular holistic use runs directly against both the evidence and the regulatory position. There are essentially no controlled canine efficacy studies and no standardized dosing. Documented risks include argyria — a permanent, irreversible blue-gray discoloration of skin and tissue from silver accumulation — plus dose-dependent toxicity (weight loss, altered liver enzymes, neurological effects). The FDA's 1999 position that there's no evidence colloidal silver products are safe or effective for treating any condition still stands. High hype, weak evidence, and a real irreversible harm on the downside — this isn't recommended; if a topical use is being considered anyway, the systemic-absorption and argyria risk needs to be flagged, and evidence-based options should be favored.",
+    "topic": "colloidal-silver",
+    "source": "Common Sense Dog — Holistic Topics Expansion 2026-07"
+  },
+  {
+    "question": "Does food-grade diatomaceous earth actually deworm dogs?",
+    "answer": "🟠 Early/signal-only, and the internal-deworming claim specifically is essentially unsupported. No published clinical trials show diatomaceous earth (DE) eliminates intestinal worms in dogs, and livestock studies are inconsistent (one sheep study showed ~61% fecal egg reduction; a goat study found egg counts actually increased over six weeks). Mechanistically it doesn't hold up well either — the moist, mucus-lined gut likely neutralizes DE's abrasive/drying action, and gut worms lack the hard exoskeleton DE damages in insects. The FDA does not recognize DE as safe or effective for treating parasites. This is one of the weakest widely-repeated natural-health claims out there: plausible-sounding mechanism, no canine evidence, and physiology working against it. Fecal testing plus a proven anthelmintic is the responsible route for actual deworming; inhaled DE dust is also a genuine respiratory irritant to be aware of.",
+    "topic": "diatomaceous-earth",
+    "source": "Common Sense Dog — Holistic Topics Expansion 2026-07"
+  },
+  {
+    "question": "Is bone broth actually good for a dog's joints, or is that overhyped?",
+    "answer": "🟠 Weak-mixed as a whole product — bone broth itself is barely studied in dogs standalone, though its components have some real support. Gelatin/hydrolyzed collagen peptides are absorbed and concentrate in cartilage (one joint study found improvement at 2.5% dietary gelatin hydrolysate), and glycine has documented anti-inflammatory effects (though that research is non-canine). The clearest, best-supported real-world use is practical: palatability and hydration for inappetent, ill, or post-surgical dogs — not cartilage repair. Homemade broth has variable, uncertain collagen dose, so it doesn't validate the specific 'joint-healing' framing some sources promote. Genuinely useful for sick or dehydrated dogs and as a low-risk food topper; don't treat it as a proven joint therapy or 'detox.'",
+    "topic": "bone-broth",
+    "source": "Common Sense Dog — Holistic Topics Expansion 2026-07"
+  },
+  {
+    "question": "Does apple cider vinegar actually help with my dog's itchy skin or ear infections?",
+    "answer": "🟠 Weak-mixed to early-signal-only — no compelling peer-reviewed canine evidence for routine oral or topical use, despite how common this recommendation is in holistic circles. The antimicrobial/yeast claims trace back to in-vitro or controlled-environment lab work, not actual dog trials. Real cautions matter more here than the thin efficacy evidence: never flush it inside the ear (it can cause pain and vestibular signs on an already-ulcerated ear), topical use on broken or allergic skin can sting and worsen irritation, and oral ACV can interfere with diabetic medications and cause GI upset if undiluted. Low-stakes as a heavily diluted coat rinse if a dog tolerates it well; not evidence-based for internal health, and keep it out of the ears entirely.",
+    "topic": "apple-cider-vinegar",
+    "source": "Common Sense Dog — Holistic Topics Expansion 2026-07"
+  },
+  {
+    "question": "Is coconut oil as good for my dog's brain as the MCT oil research I've read about?",
+    "answer": "🟠 Weak-mixed for coconut oil specifically — and this is an important distinction to make, since it's often blurred. Canine coconut-oil research is limited; skin/coat moisturizing benefit is plausible but modest, and the 'antibacterial' lauric-acid claims rest on petri-dish work, not dogs. Critically, coconut oil is only about 50% MCTs, so the strong MCT cognitive-diet evidence (the well-supported research on cognitive dysfunction) does NOT transfer directly to spoon-fed coconut oil — it's being sold on research it doesn't fully deliver. There's also a real pancreatitis/calorie caution with a high fat load. Fine in small amounts as a coat aid or as the carrier oil in a turmeric 'golden paste'; if the actual goal is the cognitive MCT benefit, use a real MCT product at studied levels instead, and mind the fat/calorie load either way.",
+    "topic": "coconut-oil-vs-mct",
+    "source": "Common Sense Dog — Holistic Topics Expansion 2026-07"
+  },
+  {
+    "question": "Does feeding my dog once a day instead of twice actually improve their health long-term?",
+    "answer": "🟠 Emerging evidence — large-scale but observational, so it shows association, not proof of cause. The Dog Aging Project analyzed feeding frequency across tens of thousands of dogs and found once-daily feeding was associated with lower cognitive-dysfunction scores (n≈10,474) and lower odds of GI, dental, orthopedic, kidney/urinary, and liver/pancreas disorders (n≈24,238), even after controlling for age, sex, and breed (GeroScience, 2022). It builds on rodent time-restricted-feeding longevity data, but the 'autophagy' and longevity mechanisms are extrapolated from rodents, not proven in dogs directly. Not appropriate for puppies, diabetics, toy breeds prone to hypoglycemia, or dogs where fasting is otherwise contraindicated. A genuinely promising, low-cost intervention for healthy adult dogs with real (if not yet causal) large-cohort backing.",
+    "topic": "time-restricted-feeding",
+    "source": "Common Sense Dog — Holistic Topics Expansion 2026-07"
+  },
+  {
+    "question": "Can a ketogenic diet actually help fight my dog's cancer?",
+    "answer": "🟠 Early/signal-only — and this is a case where the confidence of the promotion in integrative-cancer circles greatly exceeds the actual data, so it needs care. No clinical trials show a survival benefit in canine cancer patients; the evidence is essentially one published case report plus mechanistic data. A study in healthy dogs found short-term ketogenic feeding shifted the gut/serum metabolome toward an 'anti-tumorigenic' signature (PMC 9506423) — suggestive, not outcome data — and a 2024 systematic review concluded there's insufficient evidence to recommend keto for clinical cancer patients (J Anim Physiol Anim Nutr, 2024). 'Starves cancer' marketing rests on mechanism and one case report, not proof. Keto diets are also genuinely hard to formulate completely and can be risky in a cachexic cancer patient without professional oversight. Biologically interesting and actively researched, but should never replace oncologic care, and needs a veterinary nutritionist to formulate safely — the same 'promising mechanism ≠ proven treatment' caution that applies to the turkey-tail mushroom hemangiosarcoma case elsewhere in this knowledge base.",
+    "topic": "ketogenic-diet-cancer",
+    "source": "Common Sense Dog — Holistic Topics Expansion 2026-07"
+  },
+  {
+    "question": "Are fermented vegetables actually good for my dog's gut microbiome?",
+    "answer": "🟠 Emerging evidence, directionally positive but still early and small-scale. A 2026 Waltham Petcare Science Institute study found dogs' gut bacteria are well-equipped to ferment plant fiber (averaging ~71 fiber-degrading enzymes per species), with about half of gut bacteria by volume producing the beneficial short-chain fatty acid butyrate from fermentation. A beagle study using kimchi-derived probiotics reported improved HDL, lower triglycerides, and higher fecal lactic-acid bacteria. Fermentation also improves nutrient bioavailability generally. 'Transforms gut health' or 'detox' framing outruns these small early studies. Portions should stay modest since fiber/FODMAP tolerance varies dog to dog, and any onion- or garlic-containing ferments must be avoided entirely (toxic to dogs regardless of fermentation). Plausible, low-cost microbiome support with early positive signals — reasonable in small amounts, without overclaiming disease treatment.",
+    "topic": "fermented-vegetables",
+    "source": "Common Sense Dog — Holistic Topics Expansion 2026-07"
+  },
+  {
+    "question": "If I cook homemade food for my dog myself, is it automatically healthier and balanced?",
+    "answer": "🟢 Strong evidence — but on the risk, not the benefit, and this is honestly one of the most important safety messages for anyone feeding fresh. The landmark UC Davis analysis (Larsen/Stockman, JAVMA, 2013) evaluated 200 home-prepared maintenance recipes from 34 sources including vet textbooks and pet care books: 95% were deficient in at least one essential nutrient below AAFCO minimums, and the majority had multiple deficiencies — common gaps were choline, vitamin D, zinc, and vitamin E, capable of causing real harm (immune dysfunction, fatty liver, musculoskeletal abnormalities). Only a handful of recipes, all written by board-certified veterinary nutritionists, actually met complete nutrient profiles. Web-verified: this figure holds up against the primary UC Davis coverage. 'Homemade is automatically healthier' ignores that the overwhelming majority of recipes, even from seemingly credible sources, are measurably deficient. This isn't an argument against home cooking — it's a completeness/quality-control problem. Use a board-certified veterinary nutritionist-formulated recipe or a vetted balancing service, not an unverified recipe found online or in a book.",
+    "topic": "homemade-diet-balancing",
+    "source": "Common Sense Dog — Holistic Topics Expansion 2026-07"
+  },
+  {
+    "question": "What is TCVM food energetics (warming vs cooling foods) and is it actually backed by research?",
+    "answer": "🟠 Early/signal-only as a system — no controlled outcome trials validate it, though it's a real and long-used traditional framework. TCVM (Traditional Chinese Veterinary Medicine) food therapy classifies foods as warming (chicken, lamb), cooling (fish, rabbit), or neutral to balance yin-yang, and practitioners report benefit in inflammatory, skin, and GI conditions — but there are no controlled trials validating either the energetic classification system itself or its clinical outcomes in dogs; support is traditional and clinical-experience-based. Some individual foods invoked do have separate real nutritional evidence (fish and omega-3s, for instance) — but that validates the nutrient, not the energetic framework around it. Where the system happens to align with conventional nutrition (e.g., recommending a cooling novel protein for an inflamed, allergic dog), the actual benefit may come from the conventional mechanism, not the energetic label. A traditional organizing framework some owners value, and it can coexist with evidence-based feeding — but it isn't a substitute for meeting established nutritional requirements, and its specific clinical claims remain unproven.",
+    "topic": "tcvm-food-energetics",
+    "source": "Common Sense Dog — Holistic Topics Expansion 2026-07"
+  },
+  {
+    "question": "Does homeopathy actually work for dogs, or is it just placebo?",
+    "answer": "🟠 Weak-mixed, trending toward null — the honest read is that there's no reliable evidence of benefit beyond placebo. A 2014-2015 meta-analysis of veterinary homeopathy found a small statistically significant effect over placebo, but the authors themselves flagged the evidence as limited and at high risk of bias. Higher-quality appraisals (AMSTAR 2 methodology) found only a couple of reliable placebo-controlled RCTs, and the single most reliable positive one was diarrhea prevention in pigs, not dogs. The broad conclusion across reviews is that there's no reliable evidence homeopathy is distinguishable from placebo in dogs, cats, or horses. Individual positive trials do exist, but they sit within a body of mostly-null, high-bias research overall. This is a topic where popular holistic-tradition use and controlled evidence genuinely diverge — worth stating plainly, especially if homeopathy is being considered in place of a treatment that actually has real evidence behind it for a serious condition.",
+    "topic": "homeopathy",
+    "source": "Common Sense Dog — Holistic Topics Expansion 2026-07"
+  },
+  {
+    "question": "Do well-known holistic vets like Dr. Karen Becker or Dr. Judy Morgan always recommend things that are actually backed by evidence?",
+    "answer": "Mostly, but not always — and it's worth knowing which is which, since these voices get cited by name often. Dr. Karen Becker's endorsements of colloidal silver (as part of an MRSA protocol) and food-grade diatomaceous earth (for internal parasite removal) both run against the controlled evidence and documented risks — colloidal silver carries a real, irreversible argyria risk and has no FDA backing for safety/efficacy, and DE has no canine trial evidence for internal deworming. Conversely, Becker's time-restricted/once-daily feeding guidance lines up well with a large (if observational) Dog Aging Project study, and both Becker's and Dr. Judy Morgan's fermented-food advocacy is directionally consistent with emerging microbiome research. Dr. Andrew Jones's use of milk thistle for liver support actually matches mainstream veterinary practice (pairing bioavailable silybin with SAMe, as in products like Denamarin). The takeaway: 'a trusted holistic vet says so' isn't a substitute for checking the actual evidence tier on a specific claim — some of their guidance is well-supported, some isn't, and it varies claim by claim rather than by practitioner.",
+    "topic": "holistic-vet-evidence-crossref",
+    "source": "Common Sense Dog — Holistic Topics Expansion 2026-07"
+  }
+]
