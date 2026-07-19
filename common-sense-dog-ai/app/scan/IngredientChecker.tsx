@@ -63,11 +63,11 @@ export default function IngredientChecker() {
         <textarea
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder="Paste the ingredient list here — e.g. Chicken, Brown Rice, Chicken Meal, Corn, BHA, Menadione Sodium Bisulfite…"
-          aria-label="Ingredient list"
+          placeholder="Paste a full ingredient list, or just ask about one or two — e.g. &quot;is menadione bad?&quot; or &quot;BHA, pea protein&quot;"
+          aria-label="Ingredient list or a specific ingredient"
         />
-        <button disabled={loading}>{loading ? 'Checking…' : '🔍 Check these ingredients'}</button>
-        <p className="hint">Free · holistic · no app needed</p>
+        <button disabled={loading}>{loading ? 'Checking…' : '🔍 Check ingredient(s)'}</button>
+        <p className="hint">Full list or just one — free · holistic · no app needed</p>
       </form>
 
       {error && <div className="error">{error}</div>}
