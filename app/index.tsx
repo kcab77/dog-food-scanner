@@ -2091,6 +2091,11 @@ export default function App() {
     url: string;
   } | null>(null);
   const [showGuide, setShowGuide] = useState(false);
+  // Quick ingredient lookup — ask about one or a few ingredients without a
+  // full scan. Reuses handleIngredientTap + the existing ingredient detail
+  // modal below; no new API surface.
+  const [showIngredientLookup, setShowIngredientLookup] = useState(false);
+  const [ingredientLookupText, setIngredientLookupText] = useState("");
   const [coachVisible, setCoachVisible] = useState(false);
   const [coachMessages, setCoachMessages] = useState<
     { role: string; content: string }[]
@@ -4584,12 +4589,94 @@ export default function App() {
               </View>
             </>
           )}
+          {/* Quick ingredient lookup — ask about one or a few ingredients
+              without needing a full scan. Tapping a chip reuses the exact
+              same handleIngredientTap() + detail modal a scanned ingredient
+              pill uses, so this is pure UI, no new lookup logic. */}
+          <TouchableOpacity
+            onPress={() => setShowIngredientLookup((v) => !v)}
+            style={{
+              alignSelf: "stretch",
+              marginHorizontal: 16,
+              marginTop: 4,
+              backgroundColor: t.surface,
+              borderRadius: 14,
+              borderWidth: 1,
+              borderColor: t.border,
+              paddingVertical: 12,
+              paddingHorizontal: 14,
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ fontSize: 15, marginRight: 9 }}>🔍</Text>
+            <Text style={{ color: t.textStrong, fontSize: 13.5, fontWeight: "600", flex: 1 }}>
+              Ask about an ingredient
+            </Text>
+            <Text style={{ color: t.textFaint, fontSize: 12 }}>{showIngredientLookup ? "▾" : "▸"}</Text>
+          </TouchableOpacity>
+          {showIngredientLookup && (
+            <View
+              style={{
+                alignSelf: "stretch",
+                marginHorizontal: 16,
+                marginTop: 8,
+                backgroundColor: t.surfaceSunken,
+                borderRadius: 14,
+                padding: 12,
+              }}
+            >
+              <TextInput
+                style={{
+                  backgroundColor: t.surface,
+                  color: t.textStrong,
+                  borderRadius: 10,
+                  borderWidth: 1,
+                  borderColor: t.border,
+                  padding: 11,
+                  fontSize: 13,
+                }}
+                placeholder="Type one or a few — e.g. menadione, BHA, pea protein"
+                placeholderTextColor={t.textFaint}
+                value={ingredientLookupText}
+                onChangeText={setIngredientLookupText}
+                returnKeyType="done"
+              />
+              <Text style={{ color: t.textDim, fontSize: 11, marginTop: 6, marginBottom: 8 }}>
+                Separate a few with commas — tap one to see what it means.
+              </Text>
+              {ingredientLookupText.trim().length > 0 && (
+                <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 7 }}>
+                  {ingredientLookupText
+                    .split(",")
+                    .map((s) => s.trim())
+                    .filter((s) => s.length > 0)
+                    .map((name, i) => (
+                      <TouchableOpacity
+                        key={i}
+                        onPress={() => handleIngredientTap(name)}
+                        style={{
+                          backgroundColor: t.infoSoft + "22",
+                          borderWidth: 1,
+                          borderColor: t.info + "55",
+                          borderRadius: 999,
+                          paddingHorizontal: 12,
+                          paddingVertical: 7,
+                        }}
+                      >
+                        <Text style={{ color: t.info, fontSize: 12.5, fontWeight: "600" }}>{name}</Text>
+                      </TouchableOpacity>
+                    ))}
+                </View>
+              )}
+            </View>
+          )}
           <View
             style={{
               flexDirection: "row",
               justifyContent: "center",
               gap: 16,
-              marginTop: 8,
+              marginTop: 12,
               marginBottom: 6,
             }}
           >
