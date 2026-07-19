@@ -110,15 +110,20 @@ Embeds (voyage-3) and upserts directly — no Claude generation. IDs are `qa-<to
 
 ---
 
-## PawGrade Scoring System (current app: v1.8.1)
+## PawGrade Scoring System (current app: v1.9.0)
 
-Scoring algorithm (unchanged across recent UI work — **do not change scoring without asking Kyle**):
+Scoring algorithm (**do not change scoring without asking Kyle** — full detail + rationale in
+`APP_SPEC.md` § 3, keep that file in sync too):
 - Base score: 60
-- Kibble cap: 35 (kibble penalty: -40), baked cap: 55, gently cooked cap: 85, raw cap: 100
+- **Processing method is bonus-based, not cap-based (changed 2026-07-19).** Kibble is the
+  neutral baseline — no penalty, no cap. Gentler formats earn a bonus instead: Raw/Freeze-dried
+  +25, Gently Cooked +22, Air-Dried +18, Baked +8, Kibble/Unknown +0. `scoreCap` is now a
+  uniform 100 everywhere (just the general ceiling).
 - Harmful ingredient penalties: capped at -10 per ingredient, scaled by position (ingredients 20+ get 20% penalty)
 - Menadione severity: "severe" (-18 before cap)
 - Score floor: 5
-- Labels: 90–100 Excellent, 75–89 Great, 60–74 Good, 45–59 Fair, 30–44 Use Sparingly, <30 Avoid
+- Labels (softened 2026-07-12): 90–100 Excellent, 75–89 Great, 60–74 Good, 45–59 Fair,
+  30–44 Below Average, <30 Low Quality
 
 ---
 
@@ -199,7 +204,7 @@ Scoring *math* is NOT in the theme — only presentation. Don't change scoring (
 
 ---
 
-## Results Screen & Scan Behavior (v1.8.1 — UI layer)
+## Results Screen & Scan Behavior (v1.9.0 — UI layer)
 
 Post-scan results render in `app/index.tsx` in this section order (reordered 2026-07-12 for an
 "inform, don't judge" flow — factual/actionable content leads, the red-flag callout is opt-in):
