@@ -181,6 +181,20 @@ value there and it propagates across the whole app automatically.
 `lib/theme.ts` instead. As of 2026-07-14 there are **zero** hex literals in `app/index.tsx`
 (all 495 were migrated); keep it that way or the app becomes un-revampable again.
 
+**Light/Dark mode (added 2026-07-19):** `lib/theme.ts` now defines a full `lightPalette` and
+`darkPalette` (both real Apple system-colour pairs, not a naive invert), mapped through the
+same `buildTokens()` shape so they can't drift out of sync. The active mode is chosen **once,
+at app launch**, from `Appearance.getColorScheme()` — it automatically matches the device's
+OS Light/Dark setting.
+
+⚠️ **Known limitation, by design, not a bug:** because `t` is one static object imported
+throughout the app rather than a React context, it does **not** live-update if the user
+flips Light/Dark mode while the app is already open — a relaunch picks up the change. Making
+it reactive mid-session is a genuinely separate, larger project: every colour access would
+need to move to a theme hook, and the large `StyleSheet.create()` block (evaluated once at
+module load, ~490 `t.xxx` references) would need to move inside the component behind
+`useMemo`. Don't attempt this as a quick add-on to an unrelated task — scope it properly.
+
 Scoring *math* is NOT in the theme — only presentation. Don't change scoring (see above).
 
 ---

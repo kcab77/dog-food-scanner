@@ -1,3 +1,5 @@
+import { Appearance } from 'react-native';
+
 /**
  * PawGrade Design System — THE SINGLE SOURCE OF TRUTH FOR THE APP'S LOOK.
  *
@@ -9,23 +11,42 @@
  *  Do NOT reintroduce raw hex codes into components; add a token here instead.
  * ─────────────────────────────────────────────────────────────────────────────
  *
+ * LIGHT / DARK MODE (added 2026-07-19)
+ *   `t` resolves to `lightTokens` or `darkTokens` based on the device's OS
+ *   appearance setting (`Appearance.getColorScheme()`), read ONCE when the app
+ *   launches. Both palettes use real Apple system-colour values (Apple
+ *   publishes distinct light/dark variants for every system colour — this
+ *   uses the actual pairs, not a naive invert).
+ *
+ *   Known limitation: because `t` is a single static object imported
+ *   throughout the app (not a React context), it picks up the OS scheme at
+ *   launch but does NOT live-update if the user flips Light/Dark mid-session
+ *   while the app stays open — a relaunch picks up the change. Making it
+ *   live-update requires converting every component's colour access to a
+ *   theme hook/context and moving the (large) StyleSheet.create() block to
+ *   recompute per-render — a genuinely separate, larger project, not a
+ *   drop-in change. Flagged here rather than silently half-done.
+ *
  * STRUCTURE
- *   palette — the raw named colours. The "paint".
- *   t       — semantic tokens (what a colour MEANS, not what it looks like).
- *             Components only ever use `t`, never `palette` directly.
+ *   lightPalette / darkPalette — the raw named colours per mode. The "paint".
+ *   buildTokens(palette)       — maps a palette to the semantic token shape.
+ *   t                          — semantic tokens for the ACTIVE mode (what a
+ *                                 colour MEANS, not what it looks like).
+ *                                 Components only ever use `t`, never a
+ *                                 palette directly.
  *
  * Why the split: `t.critical` stays meaningful when you change it from red to
  * magenta. `palette.chili` would be a lie the moment you do.
  */
 
-// ── PALETTE ──────────────────────────────────────────────────────────────────
+// ── LIGHT PALETTE ────────────────────────────────────────────────────────────
 // Apple-inspired light theme: soft iOS system grey ground, white grouped
-// cards, and the real Apple system colours (systemGreen/Red/Orange/Indigo).
-// Those system colours are deliberately dual-purpose in Apple's own design —
-// saturated enough to read as white-on-fill (buttons, pills, badges) AND dark
-// enough to read as text-on-white (labels, links) — which is exactly why they
-// were chosen here instead of the old neon dark-mode brights.
-const palette = {
+// cards, and the real Apple LIGHT-mode system colours. Those system colours
+// are deliberately dual-purpose in Apple's own design — saturated enough to
+// read as white-on-fill (buttons, pills, badges) AND dark enough to read as
+// text-on-white (labels, links) — which is why they were chosen over the
+// brighter dark-mode-only brights this app used to run.
+const lightPalette = {
   // grounds — iOS systemGroupedBackground family
   ink: '#F2F2F7',
   slate: '#FFFFFF',
@@ -43,7 +64,7 @@ const palette = {
   faint: '#B4B4BB',
   black: '#000000',
 
-  // produce-derived semantics, now on real Apple system-colour values.
+  // produce-derived semantics, on real Apple LIGHT system-colour values.
   // Tints are light pastel washes (the iOS "tag" pattern: pale bg + rich text).
   kale: '#248A3D',
   kaleDeep: '#1B6B2F',
@@ -66,7 +87,6 @@ const palette = {
   berryDeep: '#3B3A9E',
   berryTint: '#EEEDFB',
 
-  // supporting accents (supplement cards, misc) — same Apple system family
   ocean: '#0086A8',
   oceanTint: '#E1F6FA',
   violet: '#8E3FBF', // darkened from Apple's systemPurple for safe white-text contrast on solid CTA fills
@@ -82,64 +102,136 @@ const palette = {
   sky: '#007AFF',
 } as const;
 
-// ── SEMANTIC TOKENS ──────────────────────────────────────────────────────────
-export const t = {
-  // surfaces
-  bg: palette.ink,
-  surface: palette.slate,
-  surfaceAlt: palette.slateRaised,
-  surfaceSunken: palette.slateSunken,
-  border: palette.hairline,
-  borderBright: palette.hairlineBright,
+// ── DARK PALETTE ─────────────────────────────────────────────────────────────
+// Same Apple system-colour family, DARK-mode variants (Apple's own published
+// dark pairs — brighter/more saturated than the light-mode versions, which is
+// how Apple keeps them legible against near-black rather than a naive invert).
+const darkPalette = {
+  // grounds — iOS systemGroupedBackground family, dark
+  ink: '#000000',
+  slate: '#1C1C1E',
+  slateRaised: '#242426',
+  slateSunken: '#0E0E0F',
+  hairline: 'rgba(84,84,88,0.55)',
+  hairlineBright: 'rgba(99,99,104,0.68)',
 
-  // type
-  textStrong: palette.paper,
-  text: palette.ash,
-  textMuted: palette.smoke,
-  textDim: palette.slateGrey,
-  textFaint: palette.faint,
-  onAccent: palette.white, // text/icons sitting ON a saturated accent fill (buttons, pills, banners) — always light regardless of theme
-  overlayControl: palette.white, // camera-preview controls (capture ring) — drawn over live video, not app chrome, so this stays constant across themes
+  // type — iOS dark label / secondaryLabel / tertiaryLabel family
+  white: '#FFFFFF',
+  paper: '#FFFFFF',
+  ash: '#D1D1D6',
+  smoke: '#9A9AA0',
+  slateGrey: '#7C7C82',
+  faint: '#57575C',
+  black: '#000000',
 
-  // severity — the ladder the whole scanner is built on
-  good: palette.kale,
-  goodDeep: palette.kaleDeep,
-  goodTint: palette.kaleTint,
+  // produce-derived semantics, on real Apple DARK system-colour values
+  kale: '#30D158',
+  kaleDeep: '#25A244',
+  kaleTint: '#0F2818',
 
-  moderate: palette.turmeric,
-  moderateDeep: palette.turmericDeep,
-  moderateTint: palette.turmericTint,
+  turmeric: '#FFD60A',
+  turmericDeep: '#C7A600',
+  turmericTint: '#2E2705',
 
-  high: palette.carrot,
-  highDeep: palette.carrotDeep,
-  highTint: palette.carrotTint,
+  carrot: '#FF9F0A',
+  carrotDeep: '#CC7A00',
+  carrotTint: '#2E1D05',
 
-  critical: palette.chili,
-  criticalDeep: palette.chiliDeep,
-  criticalTint: palette.chiliTint,
-  toxic: palette.chiliDeepest,
+  chili: '#FF453A',
+  chiliDeep: '#D6291F',
+  chiliTint: '#360D0A',
+  chiliDeepest: '#7B0000',
 
-  // DCM / heart-risk — deliberately its OWN colour, never reused for severity,
-  // so it reads as a distinct evidence-linked category rather than "more bad".
-  dcm: palette.berry,
-  dcmDeep: palette.berryDeep,
-  dcmTint: palette.berryTint,
+  berry: '#5E5CE6',
+  berryDeep: '#8B89F5',
+  berryTint: '#1C1B3D',
 
-  // informational / links
-  info: palette.berry,
-  infoSoft: palette.sky,
-
-  // accent set for the supplement + grocery cards
-  accents: {
-    probiotic: { fg: palette.violet, bg: palette.violetTint },
-    fishOil: { fg: palette.kale, bg: palette.kaleTint },
-    mussel: { fg: palette.ocean, bg: palette.oceanTint },
-    heart: { fg: palette.rose, bg: palette.roseTint },
-    liver: { fg: palette.ember, bg: palette.emberTint },
-    detox: { fg: palette.lime, bg: palette.limeTint },
-    rover: { fg: palette.emerald, bg: palette.emeraldTint },
-  },
+  ocean: '#40C8E0',
+  oceanTint: '#052A31',
+  violet: '#BF5AF2',
+  violetTint: '#2C1338',
+  lime: '#8FD400',
+  limeTint: '#1C2900',
+  rose: '#FF375F',
+  roseTint: '#33081A',
+  ember: '#FF9F0A',
+  emberTint: '#2E1D05',
+  emerald: '#30D158',
+  emeraldTint: '#0F2818',
+  sky: '#0A84FF',
 } as const;
+
+// ── TOKEN BUILDER ────────────────────────────────────────────────────────────
+// Maps either palette to the same semantic shape, so light/dark stay
+// structurally identical and can never drift out of sync with each other.
+function buildTokens(palette: Record<keyof typeof lightPalette, string>) {
+  return {
+    // surfaces
+    bg: palette.ink,
+    surface: palette.slate,
+    surfaceAlt: palette.slateRaised,
+    surfaceSunken: palette.slateSunken,
+    border: palette.hairline,
+    borderBright: palette.hairlineBright,
+
+    // type
+    textStrong: palette.paper,
+    text: palette.ash,
+    textMuted: palette.smoke,
+    textDim: palette.slateGrey,
+    textFaint: palette.faint,
+    onAccent: palette.white, // text/icons sitting ON a saturated accent fill — always light in both modes
+    overlayControl: palette.white, // camera-preview controls — drawn over live video, not app chrome, constant across modes
+
+    // severity — the ladder the whole scanner is built on
+    good: palette.kale,
+    goodDeep: palette.kaleDeep,
+    goodTint: palette.kaleTint,
+
+    moderate: palette.turmeric,
+    moderateDeep: palette.turmericDeep,
+    moderateTint: palette.turmericTint,
+
+    high: palette.carrot,
+    highDeep: palette.carrotDeep,
+    highTint: palette.carrotTint,
+
+    critical: palette.chili,
+    criticalDeep: palette.chiliDeep,
+    criticalTint: palette.chiliTint,
+    toxic: palette.chiliDeepest,
+
+    // DCM / heart-risk — deliberately its OWN colour, never reused for
+    // severity, so it reads as a distinct evidence-linked category.
+    dcm: palette.berry,
+    dcmDeep: palette.berryDeep,
+    dcmTint: palette.berryTint,
+
+    // informational / links
+    info: palette.berry,
+    infoSoft: palette.sky,
+
+    // accent set for the supplement + grocery cards
+    accents: {
+      probiotic: { fg: palette.violet, bg: palette.violetTint },
+      fishOil: { fg: palette.kale, bg: palette.kaleTint },
+      mussel: { fg: palette.ocean, bg: palette.oceanTint },
+      heart: { fg: palette.rose, bg: palette.roseTint },
+      liver: { fg: palette.ember, bg: palette.emberTint },
+      detox: { fg: palette.lime, bg: palette.limeTint },
+      rover: { fg: palette.emerald, bg: palette.emeraldTint },
+    },
+  };
+}
+
+const lightTokens = buildTokens(lightPalette);
+const darkTokens = buildTokens(darkPalette);
+
+// ── ACTIVE MODE ──────────────────────────────────────────────────────────────
+// Chosen once at launch from the device's OS Light/Dark setting. See the
+// "LIGHT / DARK MODE" note at the top of this file for the live-update caveat.
+const scheme = Appearance.getColorScheme();
+export const t = scheme === 'dark' ? darkTokens : lightTokens;
 
 // ── SCALE ────────────────────────────────────────────────────────────────────
 export const radius = { sm: 8, md: 12, lg: 16, xl: 22, pill: 999 } as const;
