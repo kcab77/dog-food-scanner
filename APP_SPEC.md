@@ -52,16 +52,25 @@ path and a demo path; keep them in sync.)
 
 **Base:** `total = 60`
 
-**Processing method** sets a hard score cap AND a penalty (whichever binds):
-| Method | Cap | Penalty |
-|---|---|---|
-| Raw / raw frozen | 100 | 0 |
-| Freeze-dried | 100 | 0 |
-| Gently cooked | 88 | small |
-| Air-dried / dehydrated | 82 | small |
-| Baked / oven-baked | 55 | moderate |
-| **Kibble / extruded / dry** | **35** | **-40** |
-| Unknown | 75 | — |
+**Processing method — bonus-based, updated 2026-07-19.** Kibble is the neutral
+baseline (no penalty, no cap) — most owners already know kibble isn't the top
+format, so the score shouldn't editorialize by punishing the format itself.
+Gentler formats earn a bonus on top instead. `scoreCap` is now a uniform 100
+everywhere (just the general ceiling, no longer format-specific).
+| Method | Bonus |
+|---|---|
+| Raw / raw frozen | +25 |
+| Freeze-dried | +25 |
+| Gently cooked | +22 |
+| Air-dried / dehydrated | +18 |
+| Baked / oven-baked | +8 |
+| **Kibble / extruded / dry** | **0 (neutral baseline)** |
+| Unknown | 0 |
+
+Ingredient-level flags (menadione, fillers, vague protein, etc.) still apply
+normally on top of this — a genuinely bad kibble can still score low, just not
+because it's kibble. The results-screen processing badge reflects this: kibble
+gets an informational/neutral colour, not a red "alarm" colour.
 
 **Harmful ingredients** (`HARMFUL_INGREDIENTS`, ~70 entries): penalty =
 `SEVERITY_PENALTIES[severity] × positional multiplier`, capped at −10 each.

@@ -1472,6 +1472,13 @@ const PROCESSING_METHODS = {
   raw: ["raw frozen", "raw food", "raw"],
 };
 
+// Kibble is the neutral baseline (no penalty, no cap) — most owners already
+// know kibble isn't the top format, so the score shouldn't editorialize by
+// punishing the format itself. Gentler processing methods earn a bonus on
+// top instead. Ingredient-level flags (menadione, fillers, etc.) still apply
+// normally on top of this — a genuinely bad kibble can still score low, just
+// not because it's kibble. scoreCap is now a uniform 100 everywhere (the
+// general ceiling), not a format-specific cap.
 function detectProcessingMethod(
   name: string,
   ingredients: string[],
@@ -1491,6 +1498,7 @@ function detectProcessingMethod(
         rating: "Raw",
         scoreCap: 100,
         penalty: 0,
+        bonus: 25,
         emoji: "🌟",
       };
   for (const k of PROCESSING_METHODS.great)
@@ -1500,6 +1508,7 @@ function detectProcessingMethod(
         rating: "Freeze-Dried",
         scoreCap: 100,
         penalty: 0,
+        bonus: 25,
         emoji: "❄️",
       };
   for (const k of PROCESSING_METHODS.gently)
@@ -1507,8 +1516,9 @@ function detectProcessingMethod(
       return {
         method: k,
         rating: "Gently Cooked",
-        scoreCap: 88,
+        scoreCap: 100,
         penalty: 0,
+        bonus: 22,
         emoji: "🍳",
       };
   for (const k of PROCESSING_METHODS.airDried)
@@ -1516,33 +1526,37 @@ function detectProcessingMethod(
       return {
         method: k,
         rating: "Air-Dried",
-        scoreCap: 82,
+        scoreCap: 100,
         penalty: 0,
+        bonus: 18,
         emoji: "🌬️",
       };
   for (const k of PROCESSING_METHODS.ok)
     if (combined.includes(k))
       return {
         method: k,
-        rating: "OK – Baked",
-        scoreCap: 55,
-        penalty: 20,
+        rating: "Baked",
+        scoreCap: 100,
+        penalty: 0,
+        bonus: 8,
         emoji: "🟡",
       };
   for (const k of PROCESSING_METHODS.bad)
     if (combined.includes(k))
       return {
         method: k,
-        rating: "Poor – High Heat Kibble",
-        scoreCap: 35,
-        penalty: 40,
-        emoji: "🔴",
+        rating: "Kibble",
+        scoreCap: 100,
+        penalty: 0,
+        bonus: 0,
+        emoji: "🔵",
       };
   return {
     method: "Unknown",
     rating: "Unknown – set manually below",
-    scoreCap: 75,
-    penalty: 5,
+    scoreCap: 100,
+    penalty: 0,
+    bonus: 0,
     emoji: "❓",
   };
 }
@@ -2046,6 +2060,7 @@ export default function App() {
     rating: string;
     scoreCap: number;
     penalty: number;
+    bonus: number;
     emoji: string;
   } | null>(null);
   const [score, setScore] = useState<number | null>(null);
@@ -3487,6 +3502,11 @@ export default function App() {
         label: `Processing (${processingResult.rating})`,
         value: -processingResult.penalty,
       });
+    if (processingResult.bonus > 0)
+      breakdown.push({
+        label: `Format bonus (${processingResult.rating})`,
+        value: processingResult.bonus,
+      });
     for (const h of foundHarmful) {
       const base = SEVERITY_PENALTIES[h.severity] || 8;
       const pos = h.position ?? 0;
@@ -3497,6 +3517,7 @@ export default function App() {
       breakdown.push({ label: `${h.name} (${h.severity})${posNote}`, value: -p, severity: h.severity });
     }
     total -= processingResult.penalty;
+    total += processingResult.bonus;
     if (vitLoadPenalty > 0) {
       total -= vitLoadPenalty;
       breakdown.push({
@@ -4073,7 +4094,13 @@ export default function App() {
           label: `Processing (${processingResult.rating})`,
           value: -processingResult.penalty,
         });
+      if (processingResult.bonus > 0)
+        breakdown.push({
+          label: `Format bonus (${processingResult.rating})`,
+          value: processingResult.bonus,
+        });
       total -= processingResult.penalty;
+      total += processingResult.bonus;
       for (const h of foundHarmful) {
         const base = SEVERITY_PENALTIES[h.severity] || 8;
         const pos = h.position ?? 0;
@@ -5124,18 +5151,23 @@ export default function App() {
               ) : (
                 <Text style={styles.productName}>{productName}</Text>
               )}
+              {/* Kibble is the neutral baseline now (no penalty/cap), so its badge
+                  is informational, not an alarm colour — that would silently
+                  undercut the point of removing the format penalty. Every
+                  format that earns a real bonus gets a green badge scaled to
+                  how much it earned; kibble/unknown stay neutral. */}
               {processing && !processing.rating.includes("Unknown") && (
                 <View style={{ flexDirection: "row", alignItems: "center", paddingHorizontal: 16, marginTop: 4, marginBottom: 4 }}>
                   <View style={{
-                    backgroundColor: processing.rating.includes("Poor") || processing.rating.includes("Kibble") ? t.criticalTint : processing.rating.includes("OK") ? t.moderateTint : t.accents.detox.bg,
+                    backgroundColor: processing.bonus === 0 ? t.surfaceSunken : processing.bonus >= 18 ? t.goodTint : t.moderateTint,
                     borderRadius: 20,
                     paddingHorizontal: 10,
                     paddingVertical: 4,
                     borderWidth: 1,
-                    borderColor: processing.rating.includes("Poor") || processing.rating.includes("Kibble") ? t.criticalDeep : processing.rating.includes("OK") ? t.high : t.good,
+                    borderColor: processing.bonus === 0 ? t.border : processing.bonus >= 18 ? t.good : t.moderate,
                   }}>
-                    <Text style={{ color: processing.rating.includes("Poor") || processing.rating.includes("Kibble") ? t.critical : processing.rating.includes("OK") ? t.moderate : t.good, fontSize: 12, fontWeight: "700" }}>
-                      {processing.emoji} {processing.rating}
+                    <Text style={{ color: processing.bonus === 0 ? t.textMuted : processing.bonus >= 18 ? t.good : t.moderate, fontSize: 12, fontWeight: "700" }}>
+                      {processing.emoji} {processing.rating}{processing.bonus > 0 ? ` · +${processing.bonus}` : ""}
                     </Text>
                   </View>
                 </View>
