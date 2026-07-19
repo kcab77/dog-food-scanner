@@ -110,6 +110,38 @@ export const answerPages: AnswerPage[] = [
       },
     ],
   },
+  {
+    slug: 'can-dogs-eat-apples',
+    emoji: '🍎',
+    tag: 'Safe & Toxic Foods',
+    title: 'Can Dogs Eat Apples?',
+    metaDescription:
+      "Yes, dogs can eat apples — with one real precaution. What to remove first, how much is safe, and the one part of the apple that's genuinely a hazard.",
+    lead:
+      "Yes — apples are a safe, healthy snack for most dogs, and a genuinely good one: real fiber, vitamin C, and antioxidants for very few calories. The one rule that matters: always remove the core and seeds first. Apple seeds contain trace amounts of a cyanide-producing compound — harmless in the amount a dog would get from stealing one seed, but not something to feed on purpose.",
+    faqs: [
+      {
+        q: 'Are apple seeds actually dangerous to dogs?',
+        a: "Apple seeds contain amygdalin, which breaks down into a small amount of cyanide compound when chewed and digested. In practice, the amount in the few seeds from a slice or two is not enough to cause harm — this isn't an emergency-room scenario for a dog that snags a seed or two. It's still good practice to core an apple before giving it to your dog, both because seeds aren't meant to be eaten in quantity and because a whole core can be a choking or obstruction risk, especially in small dogs.",
+      },
+      {
+        q: 'How much apple can I give my dog?',
+        a: "Treat it like any other treat: roughly 10% or less of daily calories. A few slices is plenty for most dogs — this is a snack and enrichment item, not a meal component. Introduce it gradually the first time, like any new food, since a sudden amount of extra fiber can cause loose stool in a dog whose gut isn't used to it.",
+      },
+      {
+        q: "What's actually good about apples for dogs?",
+        a: "Real fiber (good for digestion and stool quality), vitamin C and vitamin A, and antioxidants called polyphenols — all for very few calories, which makes apple slices a genuinely better treat option than most commercial dog treats calorie-for-calorie. The skin is fine to leave on (that's where a lot of the fiber and antioxidants are) as long as it's washed.",
+      },
+      {
+        q: 'Can dogs eat applesauce or apple juice?',
+        a: "Plain, unsweetened applesauce with no added sugar, cinnamon, or other additives is fine in small amounts, though it lacks the fiber benefit of the whole fruit since it's been processed. Apple juice is mostly sugar and water with the fiber removed — not toxic, but not something worth giving regularly; plain apple slices are the better choice by a wide margin.",
+      },
+      {
+        q: 'Are there dogs that should avoid apples?',
+        a: "Diabetic dogs or dogs on a strict low-sugar/low-carb plan should get apples sparingly if at all, given the natural sugar content, and it's worth asking your vet what fits their specific management plan. Otherwise, apples are one of the safer, more universally tolerated fruits for dogs — just always minus the core and seeds.",
+      },
+    ],
+  },
 ]
 
 export const getAnswer = (slug: string) => answerPages.find((a) => a.slug === slug)

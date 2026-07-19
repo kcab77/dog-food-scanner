@@ -7,6 +7,12 @@ const nextConfig = {
     return [
       { source: '/milk-thistle', destination: '/answers/milk-thistle-for-dogs', permanent: true },
       { source: '/milk-thistle/', destination: '/answers/milk-thistle-for-dogs', permanent: true },
+      { source: '/apples', destination: '/answers/can-dogs-eat-apples', permanent: true },
+      { source: '/apples/', destination: '/answers/can-dogs-eat-apples', permanent: true },
+      // Old WP category archive has no single equivalent page — send to the blog
+      // index (the closest real "browse everything" hub) rather than 404.
+      { source: '/category/disease-sickness-medicine', destination: '/blog', permanent: true },
+      { source: '/category/disease-sickness-medicine/', destination: '/blog', permanent: true },
     ]
   },
 }
