@@ -1,0 +1,32 @@
+[
+  {
+    "question": "What is the 'salt line' or 'salt divider' trick for reading a dog food ingredient label?",
+    "answer": "🟢 Strong, regulation-backed heuristic (this is a labeling-law fact, not a supplement claim, so it's rated on the strength of the rule it relies on). AAFCO's Model Regulations require every pet food ingredient to be listed in descending order of predominance by weight, on an as-formulated (pre-cooking) basis — the heaviest ingredient going into the mixer is listed first, the lightest last, and nothing can be grouped or omitted no matter how small the amount (AAFCO, 'Reading Labels'; AAFCO Model Regulations). Salt (sodium chloride) is added to virtually every commercial dog food, and formulators reliably keep it to roughly 1% or less of total formula weight — dogs need only a small amount, and there's no cost incentive to use more than needed. Because everything is ordered strictly by weight, anything listed AFTER salt is necessarily present at that same trace level or less (under roughly 1% of the product). The rule: find salt on the list, and treat everything below it as 'trace amount,' not 'significant inclusion.' It's a genuinely reliable 5-second label-literacy tool, not an urban myth.",
+    "topic": "salt-divider-rule",
+    "source": "Common Sense Dog — Salt Divider Rule 2026-07"
+  },
+  {
+    "question": "The bag of dog food has blueberries and kale on the front — does that actually mean much nutritionally?",
+    "answer": "Check where it sits relative to salt on the actual ingredient panel, not the front-of-bag photography. Pet food marketing routinely puts eye-catching whole-food ingredients (blueberries, kale, pumpkin, turmeric, 'superfoods') on the front of the bag with imagery that implies real nutritional weight — but if that ingredient sits several places after salt on the actual panel, its contribution to the recipe is trace-level, present mostly for label appeal rather than nutrition. This works because AAFCO requires ingredients listed in strict descending order by weight, and salt is reliably kept to roughly 1% or less of formula weight — so anything below it is at or under that same trace level. Flip the bag over before trusting the front.",
+    "topic": "salt-divider-rule",
+    "source": "Common Sense Dog — Salt Divider Rule 2026-07"
+  },
+  {
+    "question": "Does a trace amount on an ingredient label mean it's useless or just marketing?",
+    "answer": "Not necessarily — this is the important caveat to the salt-divider rule, and it's easy to oversimplify. The rule tells you QUANTITY, not whether that quantity matters, and those are two different questions. Some things work at genuinely tiny doses: added vitamins/minerals, probiotics (measured in CFUs, not weight), and preservatives are all legitimately effective in the sub-1% range. So a superfood listed after salt is very likely there mostly for the label rather than meaningful nutrition — but a preservative or a probiotic strain in that same position could still be doing real work. Position tells you how much is there; it doesn't by itself tell you whether that amount is enough to matter for that specific ingredient.",
+    "topic": "salt-divider-rule",
+    "source": "Common Sense Dog — Salt Divider Rule 2026-07"
+  },
+  {
+    "question": "Can manufacturers hide where salt actually sits on the ingredient list?",
+    "answer": "Yes, in a couple of legal but label-obscuring ways. First, renaming: salt can appear as 'sea salt,' 'sodium chloride,' or get folded into a 'vitamins and minerals' premix blend, making it harder to spot and pushing the true salt line further down the list than it first appears. Second, and separately, manufacturers use 'ingredient splitting' — dividing one lesser ingredient into multiple technically distinct forms (e.g., splitting potato into dried potatoes, potato starch, potato protein, and potato flour, or rice into brown rice, white rice, and rice flour) so each split portion weighs less individually and lists lower, letting a more desirable ingredient like a named meat claim the #1 spot — even though the split ingredient's COMBINED weight might actually be greater. This is fully legal (each split form has its own AAFCO ingredient definition) but has the same label-distorting effect. When checking a label, look for multiple variants of the same base ingredient (several rice or potato forms clustered in the first 5-6 ingredients) — that pattern means the 'first ingredient' claim on the front of the bag is less meaningful than it looks.",
+    "topic": "salt-divider-rule",
+    "source": "Common Sense Dog — Salt Divider Rule 2026-07"
+  },
+  {
+    "question": "How do I actually use the salt-divider rule when I'm standing in the pet store reading a bag?",
+    "answer": "Four steps: (1) Find salt on the ingredient panel — or one of its aliases ('sea salt,' 'sodium chloride,' or folded into a vitamins/minerals premix). (2) Everything listed below it: mentally relabel as trace/marketing-level, not a meaningful nutritional contributor — this is roughly the under-1%-of-formula zone. (3) Everything ABOVE salt, especially the first 5-6 ingredients, check for split forms of the same base ingredient (multiple rice, potato, or corn variants clustered together) — that pattern means the named 'first ingredient' on the front of the bag is less meaningful than it looks, since the split filler's combined weight could exceed it. (4) Remember this rule is about quantity and position, not quality — a trace ingredient can still be a legitimate functional additive (a preservative, a probiotic), and a top-of-list named meat can still sit in a mediocre formula if the rest of the recipe is filled with split fillers. Use it as a quick literacy tool, not the whole verdict on a food.",
+    "topic": "salt-divider-rule",
+    "source": "Common Sense Dog — Salt Divider Rule 2026-07"
+  }
+]
