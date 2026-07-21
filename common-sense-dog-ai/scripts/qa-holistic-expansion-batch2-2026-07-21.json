@@ -1,0 +1,80 @@
+[
+  {
+    "question": "Is raw goat milk or kefir actually good for my dog's gut?",
+    "answer": "🟠 Emerging for kefir specifically, early/signal-only for raw goat milk itself. The best canine evidence is on kefir as a functional dairy: a study found kefir supplementation successfully modified canine gut microbiota with no evident side effects (Kim et al., J Dairy Science, 2019). Broader claims for raw goat milk specifically (easier digestion via smaller fat globules and A2 beta-casein, probiotic content) are mostly extrapolated from human digestibility work and anecdote, not canine trials. Important safety flag: raw (unpasteurized) milk carries documented Salmonella/E. coli/Listeria risk — the CDC and veterinary nutritionists advise against raw dairy, especially in homes with immunocompromised people. Fermenting into kefir doesn't eliminate that raw-source risk. Kefir has a plausible, lightly-evidenced microbiome benefit; raw goat milk is popular and probably fine for most healthy dogs in small amounts, but the raw-dairy pathogen risk is real and often under-emphasized in holistic marketing.",
+    "topic": "raw-goat-milk-kefir",
+    "source": "Common Sense Dog — Holistic Topics Expansion Batch 2 2026-07"
+  },
+  {
+    "question": "Is green tripe actually a superfood for dogs?",
+    "answer": "🟠 Early/signal-only. The nutrient profile is genuinely favorable (roughly 11% protein, ~1:1 calcium:phosphorus, balanced omega-3:6, plus Lactobacillus acidophilus and digestive enzymes from the rumen) — but there's very little dog-specific research on tripe as an actual intervention. The one notable signal: feeding raw tripe during puppyhood was associated with lower later risk of skin allergies in observational data — association, not proven cause. A nutritious, well-balanced whole food that's reasonable to include, but the 'superfood cure-all' framing outruns the near-absent intervention data; must be green (unbleached) tripe, and standard raw-handling caveats apply.",
+    "topic": "green-tripe",
+    "source": "Common Sense Dog — Holistic Topics Expansion Batch 2 2026-07"
+  },
+  {
+    "question": "Is garlic actually safe and effective to give my dog for fleas?",
+    "answer": "⚠️ Weak-mixed leaning UNSAFE on safety, and unsupported on efficacy — this is a genuine controversy worth taking seriously, including where it means disagreeing with popular advice. On safety: garlic's organosulfur compounds (thiosulfates) cause oxidative damage to canine red blood cells, forming Heinz bodies that can lead to hemolytic anemia. A 2025 in-vitro study (web-verified) found ALL forms of garlic damaged canine red blood cells, with dried/granulated garlic causing MORE damage than fresh (~15% of cells injured with granulated garlic vs. ~5% with fresh vs. ~2% in untreated controls) — meaning the powdered forms used in most supplements are the more concerning ones, not less. Heinz bodies can form at doses below those causing visible anemia, so 'my dog seems fine' doesn't confirm no damage is occurring. On efficacy: a 2020 veterinary evidence review found no in-vivo studies showing garlic prevents, kills, or repels fleas at any life stage in dogs (web-verified) — and mechanistically, the 'garlic makes blood smell bad to fleas via sweat' theory doesn't hold up since dogs don't sweat through their skin the way the theory requires. So the popular claim fails on both halves at once: it isn't shown to work, and it carries a real, dose-dependent, cumulative blood-cell risk that's worse with the powdered forms most commonly used. Certain breeds (Japanese breeds like Akita/Shiba) are extra-sensitive. There are effective, safer flea options — recommending garlic means accepting an unproven benefit against a measurable hematologic risk.",
+    "topic": "garlic-fleas-safety",
+    "source": "Common Sense Dog — Holistic Topics Expansion Batch 2 2026-07"
+  },
+  {
+    "question": "What is PEA (palmitoylethanolamide) and does it actually help with my dog's joint pain?",
+    "answer": "🟡 Moderate evidence, and strengthening — one of the more promising newer natural pain options. PEA is a fatty-acid amide the body makes naturally, which modulates pain and inflammation (via PPAR-α activation and mast-cell down-regulation). A 2026 double-blind, placebo-controlled RCT of a standardized PEA formulation (Levagen+) in dogs and cats found it alleviated joint pain and reduced its impact over 6 weeks. Earlier supporting work: a PEA-quercetin combination reduced inflammation and lameness in osteoarthritis models (BMC Vet Research, 2017), and a PEA-Equisetum combination showed benefit in a 2024 chronic-pain trial. It's mechanistically attractive as an NSAID-sparing option given long-term NSAID side-effect concerns. Trials are still relatively few, and several test PEA in combination products rather than alone, so 'replaces NSAIDs' overstates it — it's a promising adjunct, not a proven equivalent for moderate-to-severe pain. Worth considering as an NSAID-sparing addition, ideally using a standardized form like Levagen+.",
+    "topic": "pea-palmitoylethanolamide",
+    "source": "Common Sense Dog — Holistic Topics Expansion Batch 2 2026-07"
+  },
+  {
+    "question": "Does eggshell membrane (NEM) actually help dog joints?",
+    "answer": "🟡 Moderate evidence. A randomized, double-blind, placebo-controlled trial in osteoarthritic dogs (52 enrolled, using validated owner questionnaires) found improved joint function and reduced discomfort vs. placebo over roughly 90 days; a separate 10-week placebo-controlled canine trial reported decreased functional limitation and less antalgic (pain-avoidant) posture. Human NEM trials corroborate reduced pain and stiffness. Natural eggshell membrane supplies collagen, hyaluronic acid, and glycosaminoglycans. Sample sizes are modest and outcomes are owner-reported rather than objective force-plate measurements, so the benefit shown is symptom relief, not proven cartilage regeneration. A reasonably well-evidenced, well-tolerated joint option that sits comfortably alongside UC-II and green-lipped mussel in a joint-support tier.",
+    "topic": "eggshell-membrane-nem",
+    "source": "Common Sense Dog — Holistic Topics Expansion Batch 2 2026-07"
+  },
+  {
+    "question": "Is deer or elk velvet antler actually good for dog joints?",
+    "answer": "🟠 Weak-mixed — one supportive dog study sitting inside a mostly-null broader literature, worth knowing the full context. A double-blind, placebo-controlled 60-day field study of quality elk velvet antler (QEVA) in dogs found significant improvement in gait, activity, and vitality with no adverse effects — a real positive result. But a systematic review of 7 velvet-antler RCTs across various conditions found 5 showed no effect and the 2 positive ones weren't considered convincing. So the canine osteoarthritis signal is genuine but sits within a wider evidence base that's mostly negative. The single positive dog trial gets cited in marketing without that systematic-review context. Worth knowing about, but rated below better-supported joint options like UC-II, omega-3, or eggshell membrane.",
+    "topic": "velvet-antler",
+    "source": "Common Sense Dog — Holistic Topics Expansion Batch 2 2026-07"
+  },
+  {
+    "question": "Does spirulina actually boost a dog's immune system?",
+    "answer": "🟡 Moderate evidence specifically for immune markers — one of the better-evidenced 'green superfood' claims for dogs. A controlled 42-week study in 30 dogs found spirulina supplementation significantly increased antibody response to rabies vaccination and raised fecal IgA from weeks 9 through 42, plus showed favorable gut-function effects. Anti-allergic and anti-inflammatory effects are shown in mice but not yet confirmed in dogs. The immune-marker claim (vaccine response, IgA) is legitimately supported by real dog data — better footing than most algae/superfood claims. Allergy and cancer claims rest on rodent or in-vitro data, not dog outcomes, and source quality matters since poorly-sourced spirulina/blue-green algae carries contamination risk. Reasonable for immune support specifically; don't extend to unproven allergy or cancer claims.",
+    "topic": "spirulina-immune",
+    "source": "Common Sense Dog — Holistic Topics Expansion Batch 2 2026-07"
+  },
+  {
+    "question": "Do beta-glucan supplements actually boost my dog's immune system?",
+    "answer": "🟠 Emerging/weak-mixed, and 'boosts immunity' is actually an oversimplification worth correcting. Several canine studies show beta-1,3/1,6-glucans measurably shift immune markers (altered IgA/IgM, modified vaccination responses, 'trained immunity' adjuvant effects for rabies vaccine) — but the changes are complex and not uniformly a one-directional 'boost': one beagle study actually saw DECREASED serum IgA, and effects disappeared within a week of stopping supplementation. A 2024 review notes early signals for atopic dermatitis, osteoarthritis, and IBD support, but calls for more clinical-outcome trials before those are considered proven. Beta-glucans (often the active fraction marketed in medicinal-mushroom products) produce real, measurable immunomodulation — up AND down — without yet having clear disease-outcome proof in dogs. More accurate framing: 'modulates immune function,' not 'boosts immunity.'",
+    "topic": "beta-glucans",
+    "source": "Common Sense Dog — Holistic Topics Expansion Batch 2 2026-07"
+  },
+  {
+    "question": "Does kelp (Ascophyllum nodosum) actually help with my dog's dental plaque and tartar?",
+    "answer": "🟡 Moderate evidence — one of the better-evidenced natural dental options that actually holds up under scrutiny. Multiple placebo-controlled canine studies of Ascophyllum nodosum (the ingredient in ProDen PlaqueOff) show real results: a double-blind RCT of edible treats reduced plaque by roughly 40% and calculus by roughly 20% over 90 days; soft-chew studies show plaque reduction in the 20-29% range and calculus reduction 27-40%; a 60-dog placebo-controlled study documented measurable saliva-metabolome changes, showing the mechanism works systemically through saliva rather than mechanical abrasion. It works to SLOW re-accumulation of plaque and tartar, not remove what's already established — it doesn't replace professional dental cleaning. Iodine content means caution is needed in dogs with thyroid disease. A good, genuinely evidence-based adjunct to brushing and professional cleanings, not a substitute for either.",
+    "topic": "kelp-dental",
+    "source": "Common Sense Dog — Holistic Topics Expansion Batch 2 2026-07"
+  },
+  {
+    "question": "Does ashwagandha actually help with dog stress and anxiety?",
+    "answer": "🟡 Moderate evidence — one of the better-evidenced natural calming options currently available. A randomized controlled trial in 24 dogs (15mg/kg/day standardized root extract, 4 weeks) found significantly reduced urinary cortisol:creatinine ratio (an objective stress marker) and lower fear-related behavior scores vs. placebo. A separate 2024 randomized, double-blind, placebo-controlled study in geriatric dogs found benefits on aging-related parameters. The proposed mechanism is HPA-axis modulation and enhanced GABA activity. Two modest RCTs is a real but still-early evidence base — 'adaptogen cures anxiety' overstates it, and quality/standardization of the extract (e.g., KSM-66) matters for getting comparable results to the trials. Use caution in pregnancy and with thyroid or immune-modulating conditions. Reasonable for stress support using a standardized extract, ideally alongside behavioral work for dogs with significant anxiety.",
+    "topic": "ashwagandha-stress",
+    "source": "Common Sense Dog — Holistic Topics Expansion Batch 2 2026-07"
+  },
+  {
+    "question": "Is manuka honey actually good for wound care on dogs?",
+    "answer": "🟡 Moderate evidence for topical wounds specifically — genuinely one of the better-supported 'natural' wound options, with an important safety caveat on which form to use. A 2024 study found medical-grade manuka honey had superior antibacterial activity against common canine and feline wound pathogens compared to non-medical honey, and manuka-infused dressings improved healing and reduced infection in dogs (though one controlled trial found no better cosmetic scarring outcome than standard care, so it's not uniformly superior on every measure). GI/ulcer use rests on antimicrobial activity shown in lab settings (against H. pylori, S. aureus), not canine outcome trials — that use is more speculative. Critical safety point: only medical-grade, gamma-irradiated honey should be used on wounds — raw honey can carry Clostridium botulinum spores. Sugar content also matters for diabetic or overweight dogs. Legitimately useful topically (medical-grade only); internal/GI use is much less evidence-based than the wound-care use.",
+    "topic": "manuka-honey-wounds",
+    "source": "Common Sense Dog — Holistic Topics Expansion Batch 2 2026-07"
+  },
+  {
+    "question": "Can a fecal transplant actually help my dog's stomach problems?",
+    "answer": "🟠 Emerging overall, approaching moderate for acute infectious GI specifically — genuinely promising, but the strength of evidence differs a lot by what it's being used for. The strongest signal: a 2025 prospective, double-blind, placebo-controlled RCT in 27 parvovirus puppies found fecal microbiota transplant (FMT, given as enema plus oral capsules) significantly shortened recovery time and hospitalization vs. placebo — real, controlled, positive data for acute infectious diarrhea. For chronic enteropathy (long-term GI issues) the picture is more mixed — smaller studies show short-term clinical benefit but inconsistent and uncertain durability of the microbiota changes, and larger controlled data is still limited. Formal veterinary clinical guidelines for FMT now exist. 'Resets the microbiome' or 'cures chronic GI issues' overstates the chronic-condition evidence specifically; donor screening and standardization are real quality and safety variables. This is a veterinary procedure requiring a vet, not a home remedy. Strongest for acute infectious GI (parvo) with real 2025 RCT support; for chronic enteropathy it's a reasonable vet-directed adjunct with still-developing evidence.",
+    "topic": "fecal-microbiota-transplant",
+    "source": "Common Sense Dog — Holistic Topics Expansion Batch 2 2026-07"
+  },
+  {
+    "question": "Do holistic vets ever recommend things that are actually dangerous, not just unproven?",
+    "answer": "Yes, and the clearest current example is garlic for fleas. Dr. Andrew Jones publicly recommends garlic as a flea repellent and has described toxicity concerns as based on an 'outdated, flawed' study — but that framing runs against current evidence on both sides of the claim: a 2025 in-vitro study found all forms of garlic (fresh and dried/granulated, with dried causing MORE red-blood-cell damage than fresh) cause dose-dependent oxidative damage to canine red blood cells, with sub-clinical Heinz body formation occurring below the dose that causes visible anemia — and separately, controlled review work found no evidence garlic actually works as a flea preventive in dogs at all. So this isn't a 'weak evidence, probably harmless' case like most items in this knowledge base — it's an unproven benefit set against a real, measurable safety risk, from a trusted, frequently-cited source. Worth stating plainly to anyone citing that specific recommendation. On the other side, plenty of holistic-vet guidance holds up well against the evidence — Dr. Judy Morgan's PEA and goat milk/kefir advocacy and Dr. Karen Becker's ashwagandha recommendation all line up reasonably with real trial data. The pattern isn't 'holistic vets are wrong' or 'holistic vets are right' — it's claim-by-claim, and garlic-for-fleas is the one that needs the most caution right now.",
+    "topic": "holistic-vet-evidence-crossref-batch2",
+    "source": "Common Sense Dog — Holistic Topics Expansion Batch 2 2026-07"
+  }
+]
