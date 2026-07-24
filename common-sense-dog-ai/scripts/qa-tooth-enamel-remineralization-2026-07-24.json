@@ -1,0 +1,56 @@
+[
+  {
+    "question": "Can a dog's tooth enamel be restored once it's damaged?",
+    "answer": "🟢 Strong (established dental biology, applies across species): Enamel has no living cells or blood supply once a tooth erupts, so it does not naturally regrow — this is true for dogs just as it is for humans. There's an important distinction, though: early demineralization (a chalky white-spot stage, before a true cavity or worn patch forms) can genuinely be halted and partially remineralized by redepositing calcium and phosphate. Once enamel is actually lost — a cavity, a chip, or worn-through enamel — it cannot regrow naturally and needs a vet, not a home remedy. The goal of any dental-support routine is prevention and catching demineralization early, not reversing existing damage.",
+    "topic": "tooth-enamel-remineralization",
+    "source": "Common Sense Dog — Tooth Enamel Remineralization pack (human research + dog cross-reference), compiled July 2026"
+  },
+  {
+    "question": "Is human toothpaste safe to use on a dog's teeth?",
+    "answer": "🟢 Strong — no, don't use human toothpaste on a dog. Two ingredients make it genuinely dangerous: fluoride, which is toxic to dogs in the amounts found in a normal tube (see next question), and xylitol, a sweetener in many 'natural'/sugar-free formulas that causes a rapid, dangerous blood-sugar crash in dogs. Beyond those two, the foaming agents (SLS) in human toothpaste also cause GI irritation and vomiting in dogs, who swallow toothpaste rather than spitting it out like a person would. Use a dog-specific toothpaste — ideally one built around hydroxyapatite rather than fluoride (see below).",
+    "topic": "tooth-enamel-remineralization",
+    "source": "Common Sense Dog — Tooth Enamel Remineralization pack, compiled July 2026"
+  },
+  {
+    "question": "Is fluoride toxic to dogs?",
+    "answer": "🟢 Strong, well-documented, treat as absolute — yes. Per the Merck Veterinary Manual, sodium fluoride at roughly 5–10 mg per kg of body weight can be fatal to a dog, and toxic effects can start under 1 mg/kg — smaller dogs are at greater risk. A single 100-gram tube of fluoride human toothpaste can contain 75–500 mg of sodium fluoride, which is enough to be a real hazard if a dog gets into a full tube. Chronic low-level exposure also causes dental fluorosis — weakened, discolored teeth — the opposite of what you're trying to achieve. Never use fluoride toothpaste, mouth rinses, or fluoridated dental products on a dog.",
+    "topic": "tooth-enamel-remineralization",
+    "source": "Merck Veterinary Manual — Fluoride Poisoning (web-verified 2026-07-24); Common Sense Dog pack, compiled July 2026"
+  },
+  {
+    "question": "Are xylitol dental products (gum, dental chews, tooth wipes) dangerous for dogs?",
+    "answer": "🟢 Strong, treat as an emergency ingredient — yes. Xylitol is used in some human 'tooth-friendly' products because it starves decay-causing bacteria and stimulates mineral-rich saliva, but in dogs it triggers a massive insulin release, causing life-threatening hypoglycemia within 10–60 minutes and potential liver failure at higher doses. Even one piece of xylitol gum can kill a small dog. Always check the ingredient list on any dental wipe, gel, or chew before giving it to a dog — 'natural' or 'sugar-free' labeling is a red flag to check closely, not a reassurance.",
+    "topic": "tooth-enamel-remineralization",
+    "source": "Common Sense Dog — Tooth Enamel Remineralization pack, compiled July 2026"
+  },
+  {
+    "question": "Is hydroxyapatite toothpaste safe and effective for dogs?",
+    "answer": "🟡 Moderate-to-emerging for dogs specifically (strong in humans, plausible but not yet canine-RCT-proven): Hydroxyapatite is literally the mineral dog and human enamel is made of, so it works by depositing that same mineral back onto the tooth surface and filling micro-defects. In human trials it's a strong, non-toxic alternative to fluoride — one 24-month RCT in 500+ children found it gave a statistically significant reduction in enamel lesions versus standard fluoride toothpaste. It's non-toxic and biocompatible, and some pet dental products already use it, which makes it the most promising fluoride alternative for dogs — but there isn't yet dog-specific clinical trial evidence the way there is for humans. Look for it as an ingredient in dog-specific dental products rather than assuming any hydroxyapatite product is dog-safe by default.",
+    "topic": "tooth-enamel-remineralization",
+    "source": "PMC — Hydroxyapatite-Fluoride Toothpastes RCT; Common Sense Dog pack, compiled July 2026"
+  },
+  {
+    "question": "Does kelp help with a dog's dental health?",
+    "answer": "🟡 Moderate — yes, for plaque/tartar, but it's not an enamel-remineralizing agent specifically. Kelp (Ascophyllum nodosum, sold as ProDen PlaqueOff) has real canine RCT support for reducing plaque and tartar buildup as part of overall dental health. Think of it as a different mechanism than remineralization — it's about slowing new buildup, not rebuilding mineral lost from the enamel surface. It pairs well with brushing and a hydroxyapatite dental product rather than replacing either.",
+    "topic": "tooth-enamel-remineralization",
+    "source": "Common Sense Dog — Tooth Enamel Remineralization pack, compiled July 2026"
+  },
+  {
+    "question": "What diet and nutrients support healthy tooth enamel in dogs?",
+    "answer": "🟢 Strong (minerals, vitamin D as foundational) / 🟡 Moderate (K2, magnesium): The same building blocks that support human enamel apply to dogs eating a balanced diet — calcium and phosphorus are the literal minerals enamel is rebuilt from, vitamin D is needed to actually absorb them, and magnesium supports vitamin D activation and calcium metabolism. Vitamin K2 helps direct calcium and phosphate to teeth and bone rather than soft tissue. Important caution specific to dogs: don't megadose any of this — excess calcium and vitamin D are genuinely harmful in dogs (skeletal problems in growing puppies, vitamin D toxicity), so this is about feeding a complete, balanced diet, not adding extra mineral supplements on top of it. Cutting sugary treats also helps, the same way it does in humans — oral bacteria convert sugar into the acid that erodes enamel.",
+    "topic": "tooth-enamel-remineralization",
+    "source": "Common Sense Dog — Tooth Enamel Remineralization pack, compiled July 2026"
+  },
+  {
+    "question": "Are raw bones good for a dog's teeth and enamel?",
+    "answer": "🟠 Emerging/mixed — raw meaty bones provide mechanical plaque control (the chewing action scrapes plaque off the tooth surface) for appropriate chewers, but this is a physical-abrasion mechanism, not a mineral-remineralization one — it doesn't rebuild enamel the way hydroxyapatite or dietary minerals do. It also carries real risk of tooth fracture in aggressive chewers, so it's a supervised, dog-appropriate-size decision, not a universal recommendation. Never give cooked bones — they splinter and are a physical hazard, unrelated to the raw-bone dental discussion.",
+    "topic": "tooth-enamel-remineralization",
+    "source": "Common Sense Dog — Tooth Enamel Remineralization pack, compiled July 2026"
+  },
+  {
+    "question": "Is there a new treatment that can regrow a dog's tooth enamel?",
+    "answer": "🟠 Emerging, lab-stage only — not yet available for humans or dogs. A November 2025 Nature Communications study demonstrated a biomimetic protein-matrix gel that regrew organized, enamel-like crystal layers with near-natural hardness under lab conditions — a genuinely exciting mechanism for the future of dentistry. But this is early-stage human research, not a consumer product, and there is no canine research or application of it at all. If you see any product marketed today as 'regrowing' your dog's enamel, that claim is not supported by current science — the real, available options are prevention (dental care routine) and halting early demineralization, not regeneration of enamel that's already lost.",
+    "topic": "tooth-enamel-remineralization",
+    "source": "Nature Communications, Nov 2025 (biomimetic enamel regeneration study); Common Sense Dog pack, compiled July 2026"
+  }
+]

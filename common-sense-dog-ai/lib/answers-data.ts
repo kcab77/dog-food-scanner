@@ -142,7 +142,468 @@ export const answerPages: AnswerPage[] = [
       },
     ],
   },
+
+  // ── Batch 1: Toxic & Safe Foods (from qa-toxic-and-safe-foods.json) ──
+  {
+    slug: 'what-human-foods-are-toxic-to-dogs',
+    emoji: '☠️',
+    tag: 'Safe & Toxic Foods',
+    title: 'What Human Foods Are Toxic to Dogs?',
+    metaDescription:
+      'The full list of common human foods that are genuinely dangerous for dogs — xylitol, chocolate, grapes, onions, alcohol, caffeine, and more — plus what to do if your dog eats one.',
+    lead:
+      "The most dangerous, well-documented ones are xylitol, chocolate, grapes and raisins, onions and other allium vegetables, macadamia nuts, alcohol, caffeine, and raw yeast bread dough. Each works by a different mechanism, and some are dangerous in tiny amounts (xylitol, grapes) while others depend on dose and size (chocolate, onions). If your dog eats any of these, call your vet, the ASPCA Animal Poison Control Center, or the Pet Poison Helpline — don't wait for symptoms.",
+    faqs: [
+      {
+        q: 'Why are alcohol and raw bread dough dangerous for dogs?',
+        a: 'Both come down to ethanol. Alcohol causes dangerous drops in blood sugar, body temperature, and blood pressure, and can lead to seizures or respiratory failure — dogs are far more sensitive than people. Raw yeast bread dough is a double threat: the warm stomach makes it keep rising (causing painful bloat and possible stomach twisting), and the fermenting yeast produces alcohol absorbed into the bloodstream. Both are emergencies — call your vet or poison control.',
+      },
+      {
+        q: 'Can dogs have caffeine or coffee?',
+        a: "No. Caffeine is a stimulant in the same chemical family as chocolate's theobromine, and dogs are very sensitive to it — it can cause restlessness, a racing heart, high blood pressure, tremors, and seizures. A few licks of brewed coffee likely won't harm a large dog, but coffee grounds, beans, or pills are concentrated and dangerous. Keep all caffeine sources out of reach.",
+      },
+      {
+        q: 'Are cooked bones or corn cobs dangerous for dogs?',
+        a: "Yes, but as physical hazards rather than poisons. Cooked bones become brittle and splinter into sharp fragments that can damage or puncture the mouth, throat, and digestive tract. Corn cobs are a classic cause of intestinal blockage because dogs swallow chunks that don't break down and lodge in the gut, often requiring surgery.",
+      },
+      {
+        q: 'What should I do if my dog ate something toxic?',
+        a: "Act fast and don't wait for symptoms — many toxins (grapes, onions, xylitol) cause delayed damage. Note what was eaten, roughly how much, and when, then call your vet, the ASPCA Animal Poison Control Center at (888) 426-4435, or the Pet Poison Helpline at (855) 764-7661. Do NOT induce vomiting unless a professional tells you to — for some substances it makes things worse.",
+      },
+    ],
+  },
+  {
+    slug: 'is-xylitol-dangerous-for-dogs',
+    emoji: '🚨',
+    tag: 'Safe & Toxic Foods',
+    title: 'Is Xylitol Dangerous for Dogs?',
+    metaDescription:
+      "Xylitol is arguably the most dangerous common food toxin for dogs — hidden in gum, peanut butter, and baked goods. Here's the dose, the symptoms, and why it's a real emergency.",
+    lead:
+      "Yes — xylitol is arguably the most dangerous common food toxin for dogs, because it's potent and hidden in everyday products: sugar-free gum, mints, many peanut butters, baked goods, and 'keto'/low-sugar foods. In dogs it triggers a massive insulin release. A single piece of some sugar-free gum can contain enough to harm a small dog.",
+    faqs: [
+      {
+        q: 'How much xylitol is toxic to a dog?',
+        a: 'Hypoglycemia (dangerously low blood sugar) can occur at roughly 0.1 g per kg of body weight, and liver failure at around 0.5 g/kg. Because products vary so much in xylitol content, there\'s no safe "just a little" — treat any known ingestion as an emergency.',
+      },
+      {
+        q: 'What products commonly contain xylitol?',
+        a: 'Sugar-free gum and mints are the most concentrated common sources, but it also turns up in many peanut butters, baked goods, some toothpastes, and low-sugar/keto-marketed foods. Always check the label before giving your dog peanut butter or anything sugar-free.',
+      },
+      {
+        q: 'What should I do if my dog ate xylitol?',
+        a: 'Call your vet or poison control immediately — this is a genuine emergency, not a wait-and-see situation. Symptoms (vomiting, weakness, collapse, seizures) come from a sudden insulin surge and can appear within 30-60 minutes.',
+      },
+    ],
+  },
+  {
+    slug: 'how-much-chocolate-is-toxic-to-dogs',
+    emoji: '🍫',
+    tag: 'Safe & Toxic Foods',
+    title: 'How Much Chocolate Is Toxic to a Dog?',
+    metaDescription:
+      "It depends on the type of chocolate and your dog's weight. The theobromine thresholds for symptoms, cardiac effects, and seizures — and how urgently to act.",
+    lead:
+      "It depends on the type of chocolate and the dog's weight, because the toxic agent is theobromine (plus caffeine). The darker the chocolate, the more theobromine: baker's and dark chocolate are far more dangerous than milk chocolate, and white chocolate has almost none. A few M&Ms won't hurt a large dog, but a bar of dark chocolate can seriously harm a small one.",
+    faqs: [
+      {
+        q: 'What are the theobromine thresholds for dogs?',
+        a: 'As a rough guide, signs start around 20 mg of theobromine per kg of body weight, serious cardiac effects around 40–50 mg/kg, and seizures around 60 mg/kg. Darker, more bitter chocolate has far more theobromine per ounce than milk chocolate.',
+      },
+      {
+        q: 'What are the symptoms of chocolate poisoning in dogs?',
+        a: "Vomiting, restlessness, a racing heart, and tremors — and symptoms can take 6–12 hours to appear after eating. Call poison control with the type and amount eaten so they can calculate the actual risk for your dog's size.",
+      },
+    ],
+  },
+  {
+    slug: 'are-grapes-and-raisins-toxic-to-dogs',
+    emoji: '🍇',
+    tag: 'Safe & Toxic Foods',
+    title: 'Are Grapes and Raisins Toxic to Dogs?',
+    metaDescription:
+      "Yes — even a few grapes or raisins can cause acute kidney failure in dogs, and there's no established safe amount. What the research says and what to do.",
+    lead:
+      "Yes — grapes, raisins, currants, and foods containing them can cause acute kidney failure in dogs, and the reaction is unpredictable. There is no established 'safe' amount: some dogs eat several with no effect while others have severe reactions to just a few, so all ingestion is treated as a potential emergency.",
+    faqs: [
+      {
+        q: 'What actually makes grapes toxic to dogs?',
+        a: 'Recent research points to tartaric acid as the likely toxic component, which dogs handle poorly. Raisins are more concentrated than grapes and considered higher-risk gram for gram.',
+      },
+      {
+        q: 'My dog ate a grape and seems fine — is that normal?',
+        a: "It can happen, but it doesn't mean it's safe next time. Because the reaction is so unpredictable dog to dog, vets treat every ingestion the same way: contact your vet or poison control right away. Early treatment is the key factor in outcomes.",
+      },
+    ],
+  },
+  {
+    slug: 'are-onions-and-garlic-toxic-to-dogs',
+    emoji: '🧅',
+    tag: 'Safe & Toxic Foods',
+    title: 'Are Onions and Garlic Toxic to Dogs?',
+    metaDescription:
+      "Onions are a clear yes on toxic. Garlic is more contested — including as a flea remedy — here's the honest, evidence-based answer on both.",
+    lead:
+      "Onions: yes, toxic. Onions, leeks, shallots, and chives are in the allium family and contain compounds that damage red blood cells and cause hemolytic anemia. Garlic is the more contested one — including a popular claim that it repels fleas — and the current evidence leans toward caution rather than the traditional holistic 'safe in small amounts' framing.",
+    faqs: [
+      {
+        q: 'How much onion is toxic to a dog?',
+        a: 'Toxic effects are generally seen around 5 grams of onion per kg of body weight, and the effect is cumulative — small amounts over time, or one larger dose, can both cause it. Cooked or powdered onion (common in broths and seasonings) is just as dangerous, often more concentrated. Signs (weakness, pale gums, dark urine, lethargy) can be delayed several days.',
+      },
+      {
+        q: 'Is garlic actually safe and effective to give my dog for fleas?',
+        a: "Weak-mixed leaning UNSAFE on safety, and unsupported on efficacy — this is a genuine controversy worth taking seriously. Garlic's organosulfur compounds cause oxidative damage to canine red blood cells; a 2025 in-vitro study found ALL forms of garlic damaged red blood cells, with dried/granulated garlic causing MORE damage than fresh (~15% of cells injured vs. ~5% with fresh vs. ~2% in untreated controls) — meaning the powdered forms used in most supplements are the more concerning ones. On efficacy, a 2020 veterinary evidence review found no in-vivo studies showing garlic prevents, kills, or repels fleas at any life stage in dogs. Certain breeds (Japanese breeds like Akita/Shiba) are extra-sensitive. There are effective, safer flea options — recommending garlic means accepting an unproven benefit against a measurable risk.",
+      },
+    ],
+  },
+  {
+    slug: 'can-dogs-eat-macadamia-nuts',
+    emoji: '🌰',
+    tag: 'Safe & Toxic Foods',
+    title: 'Can Dogs Eat Macadamia Nuts?',
+    metaDescription:
+      'No — macadamia nuts are uniquely toxic to dogs, even though the exact mechanism is unknown. Symptoms, dose, and what other nuts to watch for.',
+    lead:
+      'No — macadamia nuts are uniquely toxic to dogs, though the exact mechanism is unknown. Signs can appear at doses as low as about 2 grams per kg of body weight and include weakness (especially in the hind legs), tremors, vomiting, depression, and hyperthermia.',
+    faqs: [
+      {
+        q: 'Is macadamia nut poisoning fatal in dogs?',
+        a: "It's rarely fatal and dogs usually recover within 24–48 hours, but it's distressing and warrants a call to your vet. Watch out for macadamias hidden in cookies and trail mix.",
+      },
+      {
+        q: 'Are other nuts safe for dogs?',
+        a: "Most other nuts aren't 'toxic' in the macadamia sense, but they're high-fat (pancreatitis risk) and a choking/obstruction hazard, so they're not a great regular treat either.",
+      },
+    ],
+  },
+  {
+    slug: 'can-dogs-eat-avocado',
+    emoji: '🥑',
+    tag: 'Safe & Toxic Foods',
+    title: 'Can Dogs Eat Avocado?',
+    metaDescription:
+      "Mostly yes — avocado toxicity in dogs is often overstated. What's actually risky (the pit, the fat) versus what's fine in small amounts.",
+    lead:
+      "Mostly yes, with caveats — this one is often overstated. Avocado contains persin, which is highly toxic to birds and some livestock, but dogs are fairly resistant, and the flesh in small amounts is generally fine (it's even in some dog foods).",
+    faqs: [
+      {
+        q: 'What part of the avocado is actually dangerous?',
+        a: 'The large pit is the real hazard — a serious choking and intestinal-obstruction risk, not a poison risk. The skin isn\'t meant to be eaten either. The high fat content of the flesh can also trigger stomach upset or pancreatitis in sensitive dogs if overdone.',
+      },
+      {
+        q: 'How much avocado can I give my dog?',
+        a: "A little plain avocado flesh is okay for most dogs as an occasional treat, but skip the pit and skin and don't make it a fatty daily habit.",
+      },
+    ],
+  },
+  {
+    slug: 'can-dogs-have-peanut-butter',
+    emoji: '🥜',
+    tag: 'Safe & Toxic Foods',
+    title: 'Can Dogs Have Peanut Butter?',
+    metaDescription:
+      'Yes, but check the label first — some peanut butters contain xylitol, which is deadly to dogs. What to look for and how to use it safely.',
+    lead:
+      'Yes — but you must check the label for xylitol first, because some peanut butters use that sweetener and it can be deadly to dogs. Choose a plain peanut butter whose only ingredient is peanuts, with no added sugar, salt, or sweeteners.',
+    faqs: [
+      {
+        q: 'How can I tell if a peanut butter is safe for my dog?',
+        a: 'Read the ingredient list: it should say just "peanuts" (sometimes with a small amount of salt). If it lists xylitol, sorbitol substitutes, or anything marketed as "sugar-free" or "keto," don\'t use it — see our xylitol page for why that matters.',
+      },
+      {
+        q: 'Is peanut butter healthy for dogs?',
+        a: "In moderation, yes — it's a useful high-value treat and a great way to give pills or stuff a frozen enrichment toy. Keep portions small since it's calorie- and fat-dense; it shouldn't become a daily habit for a dog watching its weight.",
+      },
+    ],
+  },
+  {
+    slug: 'can-dogs-eat-dairy',
+    emoji: '🧀',
+    tag: 'Safe & Toxic Foods',
+    title: 'Can Dogs Eat Dairy Like Milk, Cheese, and Yogurt?',
+    metaDescription:
+      'It depends on the dog and the type. Plain yogurt and kefir are usually fine and even beneficial — milk and heavy cheese are more likely to cause trouble.',
+    lead:
+      'It depends on the dog and the type. Many adult dogs are somewhat lactose intolerant, so milk and heavy cheese can cause gas, loose stools, or upset. Plain unsweetened yogurt and kefir are usually well tolerated and even beneficial.',
+    faqs: [
+      {
+        q: "Why is yogurt okay if milk usually isn't?",
+        a: 'Fermentation reduces the lactose content and adds gut-friendly probiotics, which is why plain yogurt and kefir are typically better tolerated than straight milk — and can be a genuine holistic addition for gut health.',
+      },
+      {
+        q: 'What dairy should I avoid giving my dog?',
+        a: 'Avoid sweetened or flavored yogurts (watch for xylitol) and go easy on fatty cheeses, especially in dogs prone to pancreatitis. Start with a small amount of any dairy to see how your dog handles it before making it a regular thing.',
+      },
+    ],
+  },
+  {
+    slug: 'what-human-foods-can-dogs-eat-safely',
+    emoji: '🥕',
+    tag: 'Safe & Toxic Foods',
+    title: 'What Human Foods Can Dogs Eat Safely?',
+    metaDescription:
+      "Blueberries, eggs, pumpkin, carrots, and more — the whole-food human foods that make genuinely healthy additions to a dog's bowl, and the portion rule to follow.",
+    lead:
+      "Plenty of whole foods make excellent, healthy additions to a dog's diet. Great options include blueberries, carrots, plain cooked pumpkin, eggs, plain yogurt or kefir, apple slices (no seeds), green beans, and watermelon (no seeds or rind). The general rule: keep additions to about 10% of daily calories, introduce one new thing at a time, and serve them plain.",
+    faqs: [
+      {
+        q: 'Can dogs eat blueberries?',
+        a: "Yes — blueberries are one of the best treats you can give. They're low in sugar and calories and packed with antioxidants, vitamin C, and fiber. Serve fresh or frozen — frozen makes a great crunchy hot-weather treat.",
+      },
+      {
+        q: 'Can dogs eat eggs?',
+        a: 'Yes — eggs are a fantastic whole-food protein, rich in highly digestible amino acids plus biotin, riboflavin, and selenium. Cooked plain (no butter or salt) is the safe default. An egg a few times a week is a great topper for most dogs.',
+      },
+      {
+        q: 'Can dogs eat pumpkin?',
+        a: "Yes — plain cooked pumpkin (not pie filling) is a holistic staple. Its soluble fiber helps with both diarrhea and constipation, and it provides beta-carotene and potassium. A common amount is roughly a teaspoon to a tablespoon per meal depending on the dog's size.",
+      },
+      {
+        q: 'Are fatty or salty foods bad for dogs?',
+        a: "Yes, in their own way — not 'toxic' like xylitol, but they cause real problems. High-fat foods can trigger pancreatitis, especially in prone breeds and overweight dogs. Very salty foods can cause excessive thirst and, in extreme cases, sodium ion poisoning.",
+      },
+      {
+        q: 'What other fruits and veggies are safe for dogs?',
+        a: 'Carrots, green beans, cucumber, celery, watermelon (no seeds or rind), and small amounts of banana are all good options. Stick to plain, washed, appropriately sized pieces, and remember pits and large seeds are choking/obstruction hazards.',
+      },
+    ],
+  },
+
+  // ── Batch 2: Condition & symptom pages (from condition Q&A packs) ──
+  {
+    slug: 'how-to-help-a-dogs-itchy-skin-naturally',
+    emoji: '🐾',
+    tag: 'Skin & Allergies',
+    title: "How to Help a Dog's Itchy Skin Naturally",
+    metaDescription:
+      "Why your dog is itchy and how to calm it holistically — the diet, omega-3s, gut support, and supplements that address the root inflammation, not just the symptom.",
+    lead:
+      "Chronic itching almost always traces back to inflammation, and the four biggest drivers are diet, environmental allergens, yeast overgrowth, and fleas. The skin is a mirror of what's happening inside — a dog on a heavily processed, high-omega-6 diet runs 'hot' and inflamed. Rather than just suppressing the itch, the goal is to find and remove the root irritant (often the food) and calm the whole system with anti-inflammatory whole foods and omega-3s.",
+    faqs: [
+      {
+        q: "Is my dog's itching from a food allergy or an environmental allergy?",
+        a: "A rough rule: itching that's year-round and steady often points to food, while itching that flares seasonally (spring/fall, after walks in grass) points to environmental allergens like pollen, mold, and dust mites. Food-related issues frequently show up as itchy paws, recurring ear infections, and rear-end irritation. The only way to truly confirm a food trigger is a strict elimination diet — blood and saliva food-allergy tests are notoriously unreliable in dogs.",
+      },
+      {
+        q: "Can omega-3s help my dog's itchy skin?",
+        a: 'Yes — omega-3s (EPA and DHA) are one of the best-supported tools for itchy, inflamed skin because they directly lower the inflammatory cascade. Most kibble is loaded with omega-6 and very little omega-3, tipping dogs into a pro-inflammatory state; adding a quality whole-food omega-3 helps rebalance that. Good sources are sardines, anchovies, and a clean fish or krill oil, dosed to weight. Give it time — skin and coat improvements usually take 6 to 12 weeks.',
+      },
+      {
+        q: "What natural supplements help with a dog's itchy skin?",
+        a: "The core stack is omega-3s (to lower inflammation), a quality probiotic (to heal the gut where allergies start), and quercetin — often called 'nature's Benadryl' — for histamine response. Many owners also add coconut oil, local honey for seasonal allergies, and functional mushrooms (reishi, turkey tail) to modulate an overactive immune system. Introduce one thing at a time so you can tell what's working.",
+      },
+    ],
+  },
+  {
+    slug: 'why-does-my-dog-keep-getting-ear-and-yeast-infections',
+    emoji: '👂',
+    tag: 'Skin & Allergies',
+    title: 'Why Does My Dog Keep Getting Ear and Yeast Infections?',
+    metaDescription:
+      'Recurrent ear and yeast infections are almost always a symptom of an underlying allergy. What actually causes the overgrowth, the most proven treatment, and how to stop the cycle.',
+    lead:
+      "Recurrent ear infections and yeast overgrowth are one of the biggest tells of an underlying allergy. Malassezia yeast is normal on healthy dog skin — it only becomes a problem when something (usually a food or environmental allergy) disrupts the skin's balance and lets it bloom. That's why yeast keeps coming back if you only treat the yeast: the fix is finding and managing the trigger underneath, not more cleaning.",
+    faqs: [
+      {
+        q: 'What are the signs of a yeast problem in my dog?',
+        a: "Yeast overgrowth classically shows up as itchy, red, greasy skin with a musty or 'corn chip' smell, often with brown/black waxy buildup in skin folds and ears. Common spots are the paws (lots of licking, with reddish-brown saliva staining), ears (waxy, smelly, recurrent), armpits, groin, and folds. It frequently looks just like allergies — which is no coincidence.",
+      },
+      {
+        q: "What's the most proven way to treat yeast on a dog's skin?",
+        a: 'The strongest evidence is for topical antifungal washing: a shampoo with 2% miconazole and 2% chlorhexidine, used about twice weekly, has good clinical evidence for clearing Malassezia — let it sit ~10 minutes before rinsing. Severe cases may add oral antifungals under a vet. Even within a holistic plan, regular medicated bathing is the practical workhorse while you address the root cause.',
+      },
+      {
+        q: "How do I clean my dog's ears safely?",
+        a: "Use a proper dog ear cleaner, wet the canal, gently massage the base for a few seconds (you'll hear a squish), let your dog shake, then wipe out the loosened debris with a cotton pad. Never push cotton swabs down into the canal. Don't over-clean healthy ears, and keep them dry after swimming. If the ear is very painful, swollen, or bleeding, stop and see a vet.",
+      },
+    ],
+  },
+  {
+    slug: 'how-to-help-dog-arthritis-naturally',
+    emoji: '🦴',
+    tag: 'Joints & Mobility',
+    title: "How to Help a Dog's Arthritis and Joint Pain Naturally",
+    metaDescription:
+      "The evidence-based holistic plan for canine arthritis — weight, omega-3s, exercise, and diet — plus an honest take on glucosamine, turmeric, and CBD.",
+    lead:
+      "The best results come from a multimodal approach, not one magic supplement. The pillars with the strongest support are: keeping your dog lean (weight management is huge for joints), omega-3 fatty acids (the best-evidenced supplement for OA pain), appropriate low-impact exercise, and an anti-inflammatory whole-food diet. Stacking several proven levers beats relying on any single product.",
+    faqs: [
+      {
+        q: 'Do omega-3s really help dogs with arthritis?',
+        a: 'Yes — this is one of the best-supported nutritional interventions for canine osteoarthritis. Systematic reviews found strong evidence that omega-3 (EPA/DHA)-enriched diets and supplements provide real clinical pain relief, and they\'re now recommended as a first-line non-drug option. Use a quality fish, krill, or green-lipped mussel source dosed to weight, and give it weeks to build. This is the joint supplement to reach for first.',
+      },
+      {
+        q: 'Does glucosamine and chondroitin actually work for dogs?',
+        a: "Honestly, the evidence is mixed — it's more popular than proven. Some trials show improvements in pain and weight-bearing by around day 70, but at least one systematic review found no significant overall effect. It may help some dogs, it's very safe, and it takes 6–8 weeks to judge — but it's not the reliable performer that omega-3 and green-lipped mussel are. Treat it as a low-risk add-on, not the foundation.",
+      },
+      {
+        q: 'How much does weight matter for a dog with arthritis?',
+        a: "Enormously — keeping your dog lean is arguably the single most powerful thing you can do for arthritic joints, and it's free. Every extra pound adds mechanical load, and body fat also produces inflammatory signals, so excess weight hurts on two fronts. Many dogs improve meaningfully from weight loss alone — feed to a lean body condition where you can easily feel the ribs.",
+      },
+      {
+        q: 'Can turmeric or CBD help dog arthritis?',
+        a: 'Both are reasonable to consider. Turmeric/curcumin is a genuine anti-inflammatory but needs a bioavailable formulation (with black pepper/fat) and rigorous canine trials are limited. CBD has more promising early data — a few small controlled studies reported improved comfort and activity — but product quality varies widely and it can interact with other medications. Use quality products, dose conservatively, and loop in a holistic vet.',
+      },
+    ],
+  },
+  {
+    slug: 'best-diet-for-a-dog-with-kidney-disease',
+    emoji: '🫘',
+    tag: 'Organ Health',
+    title: 'The Best Diet for a Dog with Kidney Disease',
+    metaDescription:
+      'Phosphorus restriction — not low protein — is the most proven dietary change for canine kidney disease. What the research actually shows and how to feed a kidney dog.',
+    lead:
+      'The most evidence-backed change is phosphorus restriction — it\'s the single most important nutritional modification and has been shown to slow the progression of canine kidney disease. Therapeutic renal diets combine moderately restricted phosphorus, protein, and sodium with added omega-3s and potassium, and studies show these diets can roughly double survival time.',
+    faqs: [
+      {
+        q: 'Should I feed a low-protein diet to a dog with kidney disease?',
+        a: "This is genuinely controversial. Severe protein restriction is no longer favored, because too little protein causes muscle wasting. The current thinking is a moderate amount of HIGH-QUALITY, highly digestible protein combined with the other modifications — enough to maintain muscle while reducing the protein-waste burden. So it's not 'low protein,' it's 'the right amount of the right protein.' Phosphorus control matters more than aggressive protein cutting.",
+      },
+      {
+        q: 'Why is phosphorus restriction so important?',
+        a: "Damaged kidneys can't clear phosphorus well, so it builds up in the blood, which accelerates further kidney damage and drives the mineral imbalances that make dogs feel sick. Controlling dietary phosphorus is the most proven way to slow that spiral — limiting high-phosphorus ingredients (organ meats, bones, dairy, some fish) and sometimes adding phosphate binders under vet guidance.",
+      },
+      {
+        q: "What supports a dog's liver, and do milk thistle and SAMe help?",
+        a: "For the liver, a well-balanced, energy-rich diet with enough high-quality protein supports healing (severe protein restriction is only needed with hepatic encephalopathy). Milk thistle (silymarin) and SAMe are the two most-used liver-support supplements, with reasonable backing — both are antioxidants that protect liver cells and are generally safe. Honest caveat: they support the liver rather than cure the underlying disease. Both kidney and liver disease need veterinary diagnosis and monitoring.",
+      },
+    ],
+  },
+  {
+    slug: 'natural-thyroid-support-for-hypothyroid-dogs',
+    emoji: '🦋',
+    tag: 'Organ Health',
+    title: 'Natural Support for a Hypothyroid Dog (Alongside Medication)',
+    metaDescription:
+      "The honest answer on holistic thyroid support for dogs — what genuinely helps alongside levothyroxine, what to avoid, and why medication still matters.",
+    lead:
+      "Here's the honest take: true hypothyroidism cannot be cured or safely managed by natural remedies alone. The standard, evidence-based treatment is lifelong thyroid hormone replacement (levothyroxine), and it works well — most dogs return to normal on it. Holistic support is genuinely useful, but as an ADJUNCT to support the gland, skin, and overall health alongside medication, not to replace it.",
+    faqs: [
+      {
+        q: 'What are the signs of hypothyroidism in dogs?',
+        a: "The classic signs are weight gain without eating more, low energy, a dull or thinning coat, symmetrical hair loss (the 'rat tail'), dry skin, recurrent skin/ear infections, and cold intolerance (seeking warm spots). It's most common in middle-aged, medium-to-large breeds. These signs overlap with other conditions, so a blood test (T4/free T4 + TSH) is the only way to confirm.",
+      },
+      {
+        q: "What's the best natural support alongside medication?",
+        a: "Think 'support the gland's machinery,' not 'replace the hormone.' The thyroid needs specific nutrients: selenium and zinc (to convert storage hormone T4 into active T3), tyrosine (a building block), and iodine (the raw material — but don't over-supplement). A whole-food, minimally-processed diet with quality protein covers most of this. Omega-3 fish oil and vitamin E help the skin and coat problems. Introduce one thing at a time — supplements can shift how much medication your dog needs.",
+      },
+      {
+        q: 'Is kelp or seaweed good for a hypothyroid dog?',
+        a: "It's double-edged. Kelp is concentrated iodine, which the thyroid needs — but too much can worsen hypothyroidism and interfere with medication. Kibble-fed dogs usually already get plenty of fortified iodine, so the risk is over-supplementing; raw or home-cooked diets may genuinely need a measured source. Never free-feed kelp to a medicated dog without your vet.",
+      },
+    ],
+  },
+  {
+    slug: 'dog-urinary-health-utis-and-bladder-stones',
+    emoji: '💧',
+    tag: 'Organ Health',
+    title: "Dog Urinary Health: UTIs, Bladder Stones, and Diet",
+    metaDescription:
+      "The signs of a urinary problem, why the stone type completely changes the plan, and the single most important at-home factor for a dog's urinary health.",
+    lead:
+      "Watch for frequent urination or straining, only small amounts passed, blood in the urine, accidents in a house-trained dog, or excessive genital licking. A UTI can ascend to the kidneys, and straining could mean stones or, in male dogs, a dangerous blockage. Inability to pass urine is an emergency. For anything beyond mild, get a urinalysis rather than guessing.",
+    faqs: [
+      {
+        q: 'Can diet dissolve my dog\'s bladder stones?',
+        a: 'It depends on the stone type — and this distinction is crucial. Struvite stones (usually caused by UTIs) are the ONLY common stone that can be completely dissolved with a therapeutic diet, no surgery, over a few weeks to about three months. Calcium oxalate stones CANNOT be dissolved by any diet and must be removed; for these, diet is about preventing recurrence. Always identify the stone type with your vet first — it completely changes the plan.',
+      },
+      {
+        q: 'Do cranberry or D-mannose help with dog UTIs?',
+        a: "They have a modest, mainly preventive role — helping keep bacteria like E. coli from adhering to the bladder wall in UTI-prone dogs. Two honest caveats: they're supportive, not a reliable treatment for an established infection (which usually needs a culture-based antibiotic), and cranberry should NOT be given to dogs that form calcium oxalate stones, because it raises urinary oxalate.",
+      },
+      {
+        q: 'How important is water and hydration for urinary health?',
+        a: "It's arguably the single most important at-home factor. Dilute urine is protective urine — plenty of water flushes out bacteria and mineral crystals before they build into infections or stones. Feed moisture-rich food (canned, fresh, or rehydrated), offer multiple water sources or a fountain, and add water or a splash of low-sodium broth to meals. It fits the fresh-food approach perfectly.",
+      },
+    ],
+  },
+
+  // ── Batch 3: Supplement pages (from probiotics & supplement-evidence packs) ──
+  {
+    slug: 'do-probiotics-help-dogs',
+    emoji: '🦠',
+    tag: 'Supplements',
+    title: 'Do Probiotics Help Dogs? Gut Health, Allergies & Digestion',
+    metaDescription:
+      "What probiotics genuinely do for dogs — the research on diarrhea, the gut-skin allergy link, the best natural sources, and how long they take to work.",
+    lead:
+      "Probiotics are one of the most evidence-supported supplements in dogs, especially for stress- and antibiotic-related diarrhea, and there's real research behind the gut-skin link to allergies too. They work best as a support alongside a less-processed diet — not a magic cure, but a genuinely useful tool for digestion, immune balance, and itchy skin.",
+    faqs: [
+      {
+        q: "Can probiotics actually help my dog's allergies and itchy skin?",
+        a: 'Yes — this link is real and backed by research. Studies show dogs with allergic skin disease have lower gut microbial diversity, and probiotic blends have measurably reduced itching, skin inflammation, and blood markers of allergy. The mechanism is the gut-skin axis: a healthier gut calms the overactive immune response that drives allergies. They work best alongside diet changes that remove the root irritant.',
+      },
+      {
+        q: 'What are the best natural sources of probiotics for dogs?',
+        a: "Whole-food probiotics are excellent and gentle: plain unsweetened kefir, fermented goat's milk, a spoonful of plain live-culture yogurt, and green tripe (which brings both probiotics and digestive enzymes). Small amounts of fermented vegetables help too. Start small and slow so the gut adjusts without loose stools.",
+      },
+      {
+        q: 'How long do probiotics take to work in dogs?',
+        a: 'For acute digestive upset, you may see firmer stools within a few days. For deeper goals like calming allergies and rebalancing the microbiome, give it several weeks to a couple of months of consistent daily use. The gut rebuilds gradually, so consistency matters more than a high one-time dose.',
+      },
+    ],
+  },
+  {
+    slug: 'green-lipped-mussel-for-dogs',
+    emoji: '🦪',
+    tag: 'Supplements',
+    title: 'Does Green-Lipped Mussel Work for Dog Joints?',
+    metaDescription:
+      "The honest, trial-by-trial evidence on green-lipped mussel for canine joint pain — what works, the form that matters, and how it compares to drugs.",
+    lead:
+      "The evidence is real but mixed. A randomized, double-blinded trial (Hielm-Björkman et al., 2009) in 45 dogs with osteoarthritis found the green-lipped mussel group improved more than placebo on pain and mobility — but a 2022 crossover trial found improvement over baseline without beating placebo. So several trials show benefit, not all beat placebo. Confidence: MEDIUM — it's one of the better-evidenced joint options, worth trying alongside omega-3 and weight management.",
+    faqs: [
+      {
+        q: 'How long does green-lipped mussel take to help a dog\'s joints?',
+        a: "It's slow-acting, like most joint nutraceuticals — give it a solid 8 or more weeks of consistent daily use before judging whether it's helping. Pair it with the higher-confidence levers (weight management and omega-3s) rather than relying on it alone.",
+      },
+      {
+        q: 'Does the form of green-lipped mussel matter?',
+        a: 'It can. The active anti-inflammatory components are marine lipids, so cold-processed or oil-extract forms that preserve those lipids are generally preferred over heat-treated powders that may degrade them. Look for products that specify a stabilized or lipid-rich extract.',
+      },
+      {
+        q: 'Is green-lipped mussel safe for dogs?',
+        a: "It's generally very well tolerated, which is part of its appeal as a low-risk add-on. The main caution is shellfish allergy. As always, dose to your dog's weight and introduce it on its own so you can tell whether it's helping.",
+      },
+    ],
+  },
+  {
+    slug: 'does-l-theanine-calm-anxious-dogs',
+    emoji: '🧘',
+    tag: 'Supplements',
+    title: 'Does L-Theanine Calm Anxious Dogs?',
+    metaDescription:
+      "L-theanine is among the better-studied calming supplements for dogs — here's the honest evidence, what kind of anxiety it suits, and whether it sedates.",
+    lead:
+      "L-theanine is among the better-studied calming supplements, with consistent positive owner reports but weak study designs. Owners of storm-sensitive and noise-phobic dogs report reduced drooling, pacing, panting, and hiding. It's non-sedating — a key appeal, since the dog stays responsive enough to keep training through triggers. Confidence: LOW-to-MEDIUM, best used as part of a plan.",
+    faqs: [
+      {
+        q: 'What kind of anxiety is L-theanine best for?',
+        a: 'Situational, predictable anxiety — thunderstorms, fireworks, noise phobia — rather than severe generalized anxiety. It works best as part of a plan with behavioral training, and sustained daily use (leading into anxiety season) tends to beat a single last-minute dose.',
+      },
+      {
+        q: 'Does L-theanine make dogs sleepy or sedated?',
+        a: "No — that's the main appeal. It promotes a calm-but-alert state rather than sedation, so the dog stays responsive. That makes it useful for working through triggers with training, unlike a sedative that just knocks the edge off.",
+      },
+      {
+        q: 'Is L-theanine safe for dogs?',
+        a: 'It has a wide safety margin and is generally very well tolerated. Match the dose to your dog\'s size (some chews underdose big dogs), and it can be combined with other calming approaches like melatonin for nighttime or a DAP pheromone diffuser. Loop in your vet for a dog on other medications.',
+      },
+    ],
+  },
 ]
 
 export const getAnswer = (slug: string) => answerPages.find((a) => a.slug === slug)
 export const getAnswerSlugs = () => answerPages.map((a) => a.slug)
+
+// Contextual internal links — same-tag pages first (topical relevance for SEO +
+// keeps a searcher moving deeper into the site), backfilled with others so every
+// page has a few links out. No nav wall; these live only at the bottom of a page.
+export const getRelatedAnswers = (slug: string, limit = 3) => {
+  const current = getAnswer(slug)
+  if (!current) return []
+  const sameTag = answerPages.filter((a) => a.slug !== slug && a.tag === current.tag)
+  const rest = answerPages.filter((a) => a.slug !== slug && a.tag !== current.tag)
+  return [...sameTag, ...rest].slice(0, limit)
+}

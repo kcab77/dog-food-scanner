@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getAnswer, getAnswerSlugs } from '@/lib/answers-data'
+import { getAnswer, getAnswerSlugs, getRelatedAnswers } from '@/lib/answers-data'
 
 export function generateStaticParams() {
   return getAnswerSlugs().map((slug) => ({ slug }))
@@ -20,6 +20,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 export default function AnswerPage({ params }: { params: { slug: string } }) {
   const a = getAnswer(params.slug)
   if (!a) notFound()
+
+  const related = getRelatedAnswers(a.slug)
 
   // FAQPage structured data → eligible for Google FAQ rich results.
   const faqLd = {
@@ -63,6 +65,12 @@ export default function AnswerPage({ params }: { params: { slug: string } }) {
         .qa p { font-size: 15.5px; line-height: 1.75; color: #333; }
         .disclaimer { font-size: 12px; color: var(--muted); font-style: italic; margin-top: 34px; text-align: center; line-height: 1.7; }
         .disclaimer a { color: var(--green); }
+        .related { margin-top: 40px; border-top: 1px solid var(--border); padding-top: 22px; }
+        .related h2 { font-family: Georgia, serif; font-size: 18px; margin-bottom: 14px; }
+        .related-list { display: flex; flex-direction: column; gap: 10px; }
+        .related-link { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-size: 15px; font-weight: 600; padding: 12px 14px; background: var(--green-pale); border-radius: 11px; }
+        .related-link:hover { background: #E2ECE3; }
+        .related-link .r-emoji { font-size: 18px; }
       `}</style>
 
       {/* Minimal top — just the logo home. No nav, no browsing, no overwhelm. */}
@@ -98,6 +106,20 @@ export default function AnswerPage({ params }: { params: { slug: string } }) {
             </div>
           ))}
         </div>
+
+        {related.length > 0 && (
+          <div className="related">
+            <h2>Related questions</h2>
+            <div className="related-list">
+              {related.map((r) => (
+                <Link key={r.slug} href={`/answers/${r.slug}`} className="related-link">
+                  <span className="r-emoji">{r.emoji}</span>
+                  <span>{r.title}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
 
         <p className="disclaimer">
           Educational only — not veterinary advice. Always work with your vet, especially if your dog is on medication.<br />
