@@ -592,6 +592,228 @@ export const answerPages: AnswerPage[] = [
       },
     ],
   },
+
+  // ── Batch 4: Urgent conditions (pancreatitis, bloat, anxiety, cancer) ──
+  {
+    slug: 'what-to-feed-a-dog-with-pancreatitis',
+    emoji: '🔥',
+    tag: 'Digestive Health',
+    title: 'What to Feed a Dog with Pancreatitis',
+    metaDescription:
+      'Low fat is the cornerstone of managing canine pancreatitis. The diet rules, the outdated fasting advice you should ignore, and how to prevent the next attack.',
+    lead:
+      "Low fat is the cornerstone — dietary fat is the main stimulant of pancreatic enzyme secretion, so reducing it lets the inflamed pancreas rest. The general target is under ~10% fat on a dry-matter basis (5–8% for severe or recurrent cases), paired with moderate, digestible protein. Pancreatitis ranges from mild to life-threatening, so an acute attack is a vet emergency.",
+    faqs: [
+      {
+        q: 'What are the signs of pancreatitis in dogs?',
+        a: "Classic signs are vomiting, loss of appetite, abdominal pain (a dog may take a 'praying' position with front end down, rear up), lethargy, diarrhea, and sometimes fever. It's often triggered by a fatty meal or treat. If you see repeated vomiting plus pain and your dog won't eat, get to a vet promptly.",
+      },
+      {
+        q: 'Should I fast my dog during a pancreatitis attack?',
+        a: "The old advice to fast for days is now outdated. Current evidence favors EARLY feeding — appropriate low-fat nutrition sooner is well tolerated and linked to fewer complications than prolonged fasting. But this is a hospital-level decision during an acute attack: don't force-feed a vomiting dog at home, get veterinary care where controlled early feeding is managed with anti-nausea meds and fluids.",
+      },
+      {
+        q: 'How do I prevent pancreatitis?',
+        a: "Prevention is mostly about fat and weight. Keep your dog lean, avoid fatty table scraps and rich treats entirely (no bacon grease or greasy leftovers), and make diet changes gradual. Be extra vigilant around holidays and the grill. Higher-risk breeds (like Miniature Schnauzers) or dogs with a prior episode should hold a consistently low-fat diet.",
+      },
+    ],
+  },
+  {
+    slug: 'signs-of-bloat-in-dogs',
+    emoji: '🚑',
+    tag: 'Digestive Health',
+    title: 'Signs of Bloat (GDV) in Dogs — and How to Prevent It',
+    metaDescription:
+      'Bloat/GDV is a minutes-matter emergency. The warning signs that can save your dog, plus the raised-bowl and kibble-swelling myths the research has reversed.',
+    lead:
+      "Know these signs — they can save your dog's life: unproductive retching (trying to vomit but nothing comes up), a swollen or hard belly, restlessness and pacing, drooling, and a hunched posture. The combination of retching with nothing coming up plus a bloating abdomen in a large dog is a red-alert emergency. Do not wait to 'see if it passes' — get to an emergency vet immediately. Minutes matter.",
+    faqs: [
+      {
+        q: 'Do raised food bowls prevent bloat?',
+        a: "No — and the advice actually reversed. Older guidance recommended elevated bowls, but later research found the opposite: feeding from a raised bowl was associated with INCREASED GDV risk, particularly in large and giant breeds. Feed at-risk dogs from floor level. (Raised bowls may still be fine for arthritis/mobility, just not as bloat prevention.)",
+      },
+      {
+        q: 'Does dry kibble swell in the stomach and cause bloat?',
+        a: "This is one of the most common bloat myths, and research disproves it. GDV is driven by GAS accumulation and the stomach twisting, NOT food physically swelling. Moistening kibble to 'pre-expand' it doesn't reliably help and can backfire. The real diet-related risk factors are fat or oil among the first four ingredients, one large daily meal, and fast/gulping eating. Grain does not increase bloat risk either.",
+      },
+      {
+        q: "How can I reduce my dog's risk of bloat?",
+        a: "You can't eliminate it (much is anatomy and genetics), but sensible feeding helps: feed 2–3 smaller meals instead of one large one, slow down fast eaters with a slow-feeder bowl, feed from floor level, and avoid vigorous exercise about an hour before and after meals. For high-risk breeds, the most effective prevention is a surgical one — a gastropexy — worth discussing with your vet.",
+      },
+    ],
+  },
+  {
+    slug: 'how-to-calm-an-anxious-dog-naturally',
+    emoji: '🐕',
+    tag: 'Behavior & Anxiety',
+    title: 'How to Calm an Anxious Dog Naturally',
+    metaDescription:
+      'The evidence-based foundation for canine anxiety — exercise, enrichment, and routine — plus the best-supported calming aids and when to get professional help.',
+    lead:
+      "Build from the foundation up: the most effective base is plenty of physical exercise, mental enrichment (sniff walks, puzzle feeders, training), and a predictable routine — these address the root and have the strongest support. On top of that, the best-evidenced calming aids are L-theanine, dog-appeasing pheromones (Adaptil), alpha-casozepine (Zylkene), and gut-brain probiotics. Think of supplements as adjuncts, not cures.",
+    faqs: [
+      {
+        q: 'Does exercise and enrichment really help an anxious dog?',
+        a: "Yes — this is foundational and the most reliably effective natural anxiety tool. Physical exercise burns off nervous energy and releases feel-good neurochemicals, while mental enrichment (sniff walks, lick mats, nose work, training games) tires the brain and builds confidence. A tired, mentally-satisfied dog is a calmer dog. Add a predictable daily routine and you've addressed the root more powerfully than any supplement.",
+      },
+      {
+        q: 'Do calming pheromones like Adaptil work for dogs?',
+        a: "Yes — dog-appeasing pheromone (DAP, sold as Adaptil) has reasonable evidence. It's a synthetic copy of the pheromone a mother dog releases while nursing, which signals safety, and studies show it can reduce anxiety around being home alone, thunderstorms, and vet visits. It comes as a diffuser, collar, or spray, is drug-free, and is safe to layer with training. Effects are usually modest.",
+      },
+      {
+        q: 'When does my dog\'s anxiety need professional help?',
+        a: "For severe anxiety — panic, self-harm, destructive behavior, or a dog that truly can't be left alone — natural aids usually aren't enough, and it's time for a vet or veterinary behaviorist. Match the tool to the severity: foundational work plus mild calming aids for mild-to-moderate anxiety, professional help (which may include medication) for severe cases.",
+      },
+    ],
+  },
+  {
+    slug: 'can-diet-prevent-cancer-in-dogs',
+    emoji: '🎗️',
+    tag: 'Cancer & Prevention',
+    title: 'Can Diet or Natural Approaches Prevent Cancer in Dogs?',
+    metaDescription:
+      'The honest answer on diet and canine cancer — what genuinely reduces risk (lean weight, omega-3s), what\'s promising but unproven (keto, mushrooms), and why nothing replaces oncology.',
+    lead:
+      "Here's the honest framing: nutrition and holistic care can help REDUCE risk and SUPPORT a dog through cancer, but no diet, supplement, or natural remedy is a proven cure, and none should replace veterinary oncology. What genuinely has support: keeping your dog lean, an anti-inflammatory whole-food diet, omega-3s, and reducing carcinogen exposure. Anyone promising a natural cure is not being straight with you.",
+    faqs: [
+      {
+        q: 'Does keeping my dog lean reduce cancer risk?',
+        a: "Yes — this is one of the better-supported, and freest, preventive levers. Obesity is a well-established cancer risk factor because excess fat tissue drives chronic low-grade inflammation and altered hormonal signaling that create a pro-tumor environment. Keeping your dog at a lean body condition (you should easily feel the ribs) reduces that inflammatory burden. Of all the things you can control, maintaining a lean weight is near the top for cancer-risk reduction.",
+      },
+      {
+        q: "Does a keto or low-carb diet 'starve' cancer in dogs?",
+        a: "Be honest about where the science is: there is NO evidence a ketogenic diet prevents cancer in the first place. The 'tumors rely on glucose' theory is plausible and being studied, and keto may help slow progression alongside standard therapy, but it's unproven and emerging in dogs. It's also high-fat (a concern for pancreatitis-prone dogs). A lower-carb whole-food diet is reasonable, but don't treat keto as a proven treatment or a replacement for oncology.",
+      },
+      {
+        q: 'Does turkey tail mushroom help dogs with cancer?',
+        a: "This one has a real (if small) study behind it. University of Pennsylvania researchers gave PSP — the active compound in turkey tail — to dogs with hemangiosarcoma; dogs on high-dose PSP (100 mg/kg daily) had a median survival of ~199 days, longer than lower doses and typical historical comparisons. It's about 15 dogs, so promising rather than proven, but genuine evidence for an immune-modulating mushroom — best as a complement to veterinary care, not a replacement.",
+      },
+    ],
+  },
+
+  // ── Batch 5: Flea/tick & parasites (high search intent) ──
+  {
+    slug: 'natural-flea-and-tick-prevention-for-dogs',
+    emoji: '🌿',
+    tag: 'Parasite Prevention',
+    title: 'Natural Flea and Tick Prevention for Dogs',
+    metaDescription:
+      'How to repel fleas and ticks before they bite — a natural repellent spray recipe, yard control, and when environmental methods are enough versus when you need more.',
+    lead:
+      "The holistic goal is to repel insects before they bite, rather than kill them after they've already fed. That means a layered approach: a natural repellent spray on the dog, environmental control in the yard, and regular grooming with a flea comb. For low-risk, healthy dogs without flea-allergic dermatitis, these methods are often sufficient on their own.",
+    faqs: [
+      {
+        q: 'How do I make a natural flea and tick repellent spray?',
+        a: 'Mix 5 tablespoons (75ml) witch hazel with aloe vera, 2 tablespoons (30ml) liquid coconut oil, 1ml neem oil, and 1ml (about 20 drops) turmeric essential oil in a spray bottle. Apply twice weekly and use a flea comb to distribute it. This roughly 1% essential-oil barrier repels insects before they bite, unlike systemic pesticides that only kill after feeding. Always patch-test a small area first and stop if any irritation occurs.',
+      },
+      {
+        q: 'Do you need year-round flea prevention or only in warm months?',
+        a: "It depends on climate and exposure. In warm regions fleas are active all year; in cold climates, outdoor activity drops in winter, though indoor fleas survive in heated homes. For an indoor-only dog in a cold climate, winter prevention may be unnecessary. And 'prevention' doesn't require neurotoxic systemic drugs — environmental control (yard nematodes), grooming, and natural repellents are often enough for a low-risk dog.",
+      },
+      {
+        q: 'What about flea control in the yard?',
+        a: "Beneficial nematodes (microscopic organisms applied to the yard) prey on flea larvae and pupae in the soil, targeting the ~95% of the flea population that isn't the adult fleas on your dog. Combined with regular vacuuming indoors and washing bedding, this attacks the life cycle at the source without a systemic chemical — a strong complement to an on-dog repellent.",
+      },
+    ],
+  },
+  {
+    slug: 'are-flea-and-tick-medications-safe-for-dogs',
+    emoji: '⚠️',
+    tag: 'Parasite Prevention',
+    title: 'Are Flea and Tick Medications Safe? (Isoxazolines Explained)',
+    metaDescription:
+      'What isoxazolines like NexGard, Bravecto, and Simparica actually are, the honest adverse-event data, which dogs are highest-risk, and what to do after a reaction.',
+    lead:
+      "Isoxazolines (Bravecto, NexGard, Simparica) are systemic neurotoxic pesticides designed to stay in a dog's bloodstream for 1–12 months. They block nerve-signal channels to paralyze and kill insects. They're meant to affect only insects, but research shows they can cross the blood-brain barrier in mammals, creating a risk of neurological toxicity in some dogs. This is a real risk-vs-benefit conversation, not a simple 'safe' or 'dangerous.'",
+    faqs: [
+      {
+        q: 'What are the real adverse event rates for isoxazolines?',
+        a: "Companies cite '0.01%' rates, but U.S. reporting is voluntary. FDA data from 2013–2017 documented 1,728 seizures and 801 deaths. The Project Jake survey (2,751 respondents, 2020) found that of 1,594 treated dogs, 66.6% experienced an adverse event including tremors, ataxia, or seizures. Europe's mandatory reporting showed 7–10 times higher death and seizure rates than U.S. voluntary reports, suggesting significant underreporting.",
+      },
+      {
+        q: 'Do these medications repel fleas and ticks, or kill them after they bite?',
+        a: "They don't repel — they only kill after the parasite has already bitten and fed on medicated blood. The label states parasites 'need to start feeding to become exposed to the medication.' For a dog with flea-allergic dermatitis, that's a failure of the point of treatment, because a single bite triggers weeks of inflammation. And for ticks, disease transmission can occur before the tick dies.",
+      },
+      {
+        q: 'What should I do if my dog has a reaction?',
+        a: "There's no antidote. If your dog shows tremors, ataxia, seizures, or behavioral changes: (1) contact your vet or an emergency clinic immediately; (2) seek neurological evaluation; (3) begin supportive care; (4) report it to the FDA (1-888-FDA-VETS); (5) do not re-administer that product or its class. Screening high-risk breeds (see MDR1 testing) before the first dose is the best prevention.",
+      },
+    ],
+  },
+  {
+    slug: 'natural-dewormer-for-dogs',
+    emoji: '🪱',
+    tag: 'Parasite Prevention',
+    title: 'Natural Dewormers for Dogs (and How to Use Them Safely)',
+    metaDescription:
+      'The holistic approach to worms — pumpkin seeds, the herbal deworming triad, and diatomaceous earth — with honest safety cautions and when to still see a vet.',
+    lead:
+      "The holistic philosophy is that a strong immune system and clean gut make the body inhospitable to parasites — the focus is proactive daily support rather than only reacting to an infestation with harsh chemicals. Several food- and herb-based dewormers can help, but potency and dosing matter, and some carry real safety cautions, so this is best done with holistic-vet guidance.",
+    faqs: [
+      {
+        q: 'Do pumpkin seeds get rid of worms in dogs?',
+        a: "Pumpkin seeds are the most recommended natural dewormer. They contain cucurbitin, credited with paralyzing worms (especially tapeworms and roundworms) so the body can expel them. The catch: they must be raw, organic, and ground fine — whole seeds often pass straight through undigested. A common approach is adding ground seeds to food for a stretch of days. Gentle and food-based, which is why it's a holistic favorite.",
+      },
+      {
+        q: "What is the herbal deworming 'triad'?",
+        a: "The triad of wormwood, black walnut, and cloves is a classic, potent natural dewormer: wormwood kills adult parasites, black walnut hull helps expel various worms, and cloves contain eugenol, which destroys parasite eggs to break the life cycle. Because it's potent, dosing matters a lot — wormwood and black walnut can be hard on the liver and kidneys at the wrong dose, so use it with a holistic vet rather than freelancing.",
+      },
+      {
+        q: 'Does diatomaceous earth work for deworming, and how do I use it safely?',
+        a: "Food-grade diatomaceous earth (DE) acts as a mechanical dewormer — its microscopic fragments irritate parasites so they lose grip on the intestinal wall — often used daily for about 30 days. Two safety rules are essential: only ever use FOOD-GRADE DE (never pool-grade), and always mix it thoroughly into wet food, because inhaling the dry powder can irritate the lungs.",
+      },
+    ],
+  },
+
+  // ── Batch 6: Myths & dental ──
+  {
+    slug: 'does-grain-free-dog-food-cause-heart-disease',
+    emoji: '❤️',
+    tag: 'Nutrition Myths',
+    title: 'Does Grain-Free Dog Food Cause Heart Disease (DCM)?',
+    metaDescription:
+      'The honest, current state of the grain-free DCM question — what the FDA data actually shows, why legumes matter more than grain, and what causation has and hasn\'t been proven.',
+    lead:
+      "This is widely misunderstood, so here's the current state of the evidence. In 2018 the FDA flagged a spike in dilated cardiomyopathy (DCM) reports; over 90% of the diets were grain-free and ~93% contained peas or lentils. So there IS a real signal — but it points more at legumes/formulation than at the absence of grain itself. Causation has NOT been proven, the mechanism is still unknown, and taurine deficiency turned out not to be the primary cause.",
+    faqs: [
+      {
+        q: 'So should I avoid grain-free food entirely?',
+        a: "The practical takeaway is to be cautious of legume-heavy boutique kibbles (the 'BEG' pattern: boutique, exotic, grain-free, legume-heavy) — not to panic about the word 'grain-free' itself. A well-formulated whole-food or fresh diet is a very different thing from a pea-protein-loaded grain-free kibble. It's an association under active investigation, not a settled 'grain-free equals heart disease' fact.",
+      },
+      {
+        q: "Does 'complete and balanced' mean a food is healthy?",
+        a: "Not necessarily. 'Complete and balanced' means the food meets AAFCO's minimum nutrient profile on paper, but says nothing about ingredient quality, digestibility, processing, or whether nutrients come from whole foods or cheap synthetics. A highly processed kibble full of fillers can be 'complete and balanced' and still mediocre. Think of it as a floor (won't cause deficiency), not a ceiling (optimal nutrition).",
+      },
+      {
+        q: 'Are dogs carnivores or omnivores?',
+        a: "In between, and both extremes are wrong. Dogs aren't obligate carnivores like cats — they evolved extra copies of the AMY2B gene to digest starch better than wolves, so they CAN use some carbohydrates. But they're not true omnivores either; they're best described as scavenging carnivores that thrive on a meat-forward diet with no actual carbohydrate requirement. Build the diet around quality animal protein and fat, while recognizing they can handle some whole-food carbs.",
+      },
+    ],
+  },
+  {
+    slug: 'how-to-prevent-dental-disease-in-dogs',
+    emoji: '🦷',
+    tag: 'Dental Care',
+    title: 'How to Prevent Dental Disease in Dogs',
+    metaDescription:
+      'Daily brushing is the gold standard for canine dental health. What actually works (VOHC-approved products), the raw-bone myth, and what bad breath is really telling you.',
+    lead:
+      "Daily tooth brushing is the gold standard — the single most effective, best-evidenced way to prevent plaque, tartar, and periodontal disease. Use a dog-specific toothpaste (never human toothpaste — xylitol and fluoride are unsafe) and build it up gradually as a positive routine. If daily isn't realistic, even every-other-day brushing meaningfully helps. Consistency beats intensity.",
+    faqs: [
+      {
+        q: 'Do dental chews and products actually work?',
+        a: "The good ones do — the key is the VOHC seal. The Veterinary Oral Health Council independently reviews dental products and awards its Seal of Acceptance only to those proven to reduce plaque and/or tartar. Without that seal, 'dental' on the package is just marketing. VOHC-approved chews are a legitimate helper, not a full substitute for brushing — and watch the calories.",
+      },
+      {
+        q: 'Do raw bones clean a dog\'s teeth?',
+        a: "This is a popular belief, and the honest evidence is thin. Chewing may knock off some surface tartar, but it's not well-proven, and bones carry real risks: fractured teeth (common, painful, expensive), choking, and obstruction. Cooked bones should never be given — they splinter. If you choose raw meaty bones, use appropriately sized softer ones and supervise. For proven benefit with less risk, brushing and VOHC products are the better bet.",
+      },
+      {
+        q: 'Why does my dog have bad breath?',
+        a: "The most common cause by far is dental disease — plaque, tartar, and gum infection produce that foul odor, so persistent bad breath usually means the mouth needs attention (check for red gums, brown tartar, loose teeth). But breath is also a window into the body: a sweet/fruity smell can signal diabetes, a urine-like odor can point to kidney issues. Don't just mask it — treat bad breath as a diagnostic clue.",
+      },
+    ],
+  },
 ]
 
 export const getAnswer = (slug: string) => answerPages.find((a) => a.slug === slug)
