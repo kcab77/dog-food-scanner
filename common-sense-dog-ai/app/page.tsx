@@ -52,7 +52,7 @@ export default function Home() {
           <span className="nav-logo-sub">Holistic dog nutrition — just ask</span>
         </Link>
         <div className="nav-links">
-          <Link href="#ask">Ask</Link>
+          <Link href="/answers">Directory</Link>
           <Link href="/recommended">Picks</Link>
           <Link href="/blog">Articles</Link>
           <a href={APP_URL} target="_blank" rel="noopener noreferrer" className="nav-cta">📱 Get the App</a>
@@ -76,7 +76,7 @@ export default function Home() {
 
       <footer>
         <p className="links">
-          <Link href="/recommended">Trusted picks</Link> · <Link href="/blog">Browse articles</Link> · <Link href="/library">Health A–Z</Link> · <Link href="/scan">Ingredient checker</Link> · <a href={APP_URL} target="_blank" rel="noopener noreferrer">PawGrade app</a>
+          <Link href="/answers">Safety directory</Link> · <Link href="/recommended">Trusted picks</Link> · <Link href="/blog">Browse articles</Link> · <Link href="/library">Health A–Z</Link> · <Link href="/scan">Ingredient checker</Link> · <a href={APP_URL} target="_blank" rel="noopener noreferrer">PawGrade app</a>
         </p>
         <p>
           © Common Sense Dog · Educational only — not veterinary advice. Always consult your vet for medical decisions.

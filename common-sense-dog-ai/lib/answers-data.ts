@@ -1167,3 +1167,88 @@ export const getRelatedAnswers = (slug: string, limit = 3) => {
   const rest = answerPages.filter((a) => a.slug !== slug && a.tag !== current.tag)
   return [...sameTag, ...rest].slice(0, limit)
 }
+
+// ── Directory categories (powers the browsable /answers hub) ──
+// Every page tag maps into exactly one top-level category. When you add a new
+// tag, add it to a category's `tags` list so its pages appear in the directory.
+export type AnswerCategory = {
+  key: string
+  label: string
+  emoji: string
+  blurb: string
+  tags: string[]
+}
+
+export const answerCategories: AnswerCategory[] = [
+  {
+    key: 'food',
+    label: 'Food & Ingredients',
+    emoji: '🍖',
+    blurb: "What's safe in the bowl — and what isn't.",
+    tags: ['Safe & Toxic Foods', 'Nutrition', 'Nutrition Myths'],
+  },
+  {
+    key: 'household',
+    label: 'Home & Household',
+    emoji: '🏠',
+    blurb: 'Detergents, cleaners, oils, and everyday products around your dog.',
+    tags: ['Home & Household'],
+  },
+  {
+    key: 'health',
+    label: 'Health & Conditions',
+    emoji: '🩺',
+    blurb: 'Common conditions and how diet and holistic care actually help.',
+    tags: [
+      'Skin & Allergies',
+      'Joints & Mobility',
+      'Organ Health',
+      'Digestive Health',
+      'Behavior & Anxiety',
+      'Cancer & Prevention',
+      'Dental Care',
+      'Safety',
+      'Holistic Organ Support',
+      'Holistic Liver Support',
+    ],
+  },
+  {
+    key: 'supplements',
+    label: 'Supplements',
+    emoji: '💊',
+    blurb: 'What the evidence actually shows, supplement by supplement.',
+    tags: ['Supplements'],
+  },
+  {
+    key: 'parasites',
+    label: 'Parasites & Prevention',
+    emoji: '🐛',
+    blurb: 'Fleas, ticks, and worms — conventional and natural options.',
+    tags: ['Parasite Prevention'],
+  },
+]
+
+// Groups every answer page under its category (alphabetized within each), and
+// drops any empty category. Orphan-safe: pages whose tag isn't in any category
+// are collected under a fallback so nothing silently disappears from the hub.
+export const getAnswersByCategory = () => {
+  const mapped = answerCategories.map((c) => ({
+    ...c,
+    pages: answerPages
+      .filter((p) => c.tags.includes(p.tag))
+      .sort((a, b) => a.title.localeCompare(b.title)),
+  }))
+  const claimed = new Set(answerCategories.flatMap((c) => c.tags))
+  const orphans = answerPages.filter((p) => !claimed.has(p.tag))
+  if (orphans.length) {
+    mapped.push({
+      key: 'more',
+      label: 'More Topics',
+      emoji: '📋',
+      blurb: 'Everything else.',
+      tags: [],
+      pages: orphans.sort((a, b) => a.title.localeCompare(b.title)),
+    })
+  }
+  return mapped.filter((c) => c.pages.length > 0)
+}

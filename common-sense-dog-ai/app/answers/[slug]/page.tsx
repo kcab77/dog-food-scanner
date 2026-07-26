@@ -41,9 +41,11 @@ export default function AnswerPage({ params }: { params: { slug: string } }) {
         * { box-sizing: border-box; margin: 0; padding: 0; }
         :root { --green: #2A5C2E; --green-pale: #EDF4EE; --cream: #FDFAF5; --border: #E2D9CA; --text: #1A1A1A; --muted: #6B6B6B; --white: #fff; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--cream); color: var(--text); }
-        .top { display: flex; justify-content: center; padding: 22px; }
+        .top { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 22px; max-width: 680px; margin: 0 auto; }
         .brand { display: flex; align-items: center; gap: 9px; text-decoration: none; }
         .brand-name { font-size: 15px; font-weight: 700; color: var(--green); }
+        .browse-link { font-size: 13px; font-weight: 700; color: var(--green); text-decoration: none; white-space: nowrap; }
+        .browse-link:hover { text-decoration: underline; }
         .wrap { max-width: 680px; margin: 0 auto; padding: 8px 24px 64px; }
         .tag { display: inline-block; background: var(--green-pale); color: var(--green); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 5px 13px; border-radius: 20px; }
         .emoji { font-size: 46px; display: block; margin: 22px 0 12px; }
@@ -73,12 +75,13 @@ export default function AnswerPage({ params }: { params: { slug: string } }) {
         .related-link .r-emoji { font-size: 18px; }
       `}</style>
 
-      {/* Minimal top — just the logo home. No nav, no browsing, no overwhelm. */}
+      {/* Minimal top — logo home, plus a browse link into the full directory. */}
       <div className="top">
         <Link href="/" className="brand">
           <span style={{ fontSize: 20 }}>🐾</span>
           <span className="brand-name">Common Sense Dog</span>
         </Link>
+        <Link href="/answers" className="browse-link">Browse all topics →</Link>
       </div>
 
       <div className="wrap">
