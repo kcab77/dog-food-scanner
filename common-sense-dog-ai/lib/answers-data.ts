@@ -814,6 +814,104 @@ export const answerPages: AnswerPage[] = [
       },
     ],
   },
+
+  // ── Batch 7: Home & Household — dog-safe products (from household-chemicals & fragrance packs) ──
+  {
+    slug: 'dog-safe-laundry-detergent',
+    emoji: '🧺',
+    tag: 'Home & Household',
+    title: 'Dog-Safe Laundry Detergent: What to Wash Bedding With',
+    metaDescription:
+      "Detergent residue on bedding is a common hidden cause of dog itching. The best 'free and clear' choice, why to skip dryer sheets, and the ingredients to avoid.",
+    lead:
+      "Choose a 'free and clear' detergent — fragrance-free, dye-free, and free of optical brighteners. Use less than you think you need (excess detergent is what gets trapped in fibers), and run an extra rinse cycle to flush residue out. Dog beds and blankets are in constant contact with skin, so detergent residue is one of the most common hidden triggers for itching.",
+    faqs: [
+      {
+        q: "Can laundry detergent on my dog's bedding cause itching or allergies?",
+        a: "Absolutely — the laundry your dog lies on is in constant contact with their skin, and detergent residue is a very common hidden trigger for irritation. The biggest offenders are added fragrances, dyes, and optical brighteners, which stay in the fibers after washing and rub against the skin all night. If your dog is itchy with no obvious food cause, switching to a fragrance-free detergent and re-washing their bedding is a cheap, fast thing to test — many owners see less scratching within a week or two.",
+      },
+      {
+        q: 'Are dryer sheets and fabric softener safe to use on dog bedding?',
+        a: "Best to skip them on anything your dog uses. Dryer sheets and liquid fabric softeners coat fabric with fragrances and waxy chemicals that sit right against the skin and can trigger contact irritation. They offer no benefit for your dog. A great natural swap is wool dryer balls — they soften and reduce static with zero chemicals or scent.",
+      },
+      {
+        q: 'What ingredients in detergents should I avoid for my dog?',
+        a: "Watch for added 'fragrance' or 'parfum' (a catch-all that can hide many undisclosed chemicals), artificial dyes, optical brighteners, and harsh sulfates. The cleaner-rinsing and more fragrance-free a product is, the less residue ends up on your dog's skin and paws. Simpler ingredient lists are almost always safer.",
+      },
+    ],
+  },
+  {
+    slug: 'is-dish-soap-safe-for-dog-bowls',
+    emoji: '🧼',
+    tag: 'Home & Household',
+    title: "Is Dish Soap Safe for Your Dog's Bowls?",
+    metaDescription:
+      "Soap residue on a dog's bowl gets eaten with every meal. Why it can cause irritation, how to wash bowls properly, and natural alternatives that rinse clean.",
+    lead:
+      "Soap film left on a bowl gets eaten with every meal, and the fragrances, dyes, and surfactants in conventional dish soap add to a dog's daily chemical load — which can show up as lip and chin irritation, upset stomach, or general inflammation in a sensitive dog. The fix is simple: rinse bowls thoroughly until there's zero slick or smell, and switch to a fragrance-free, dye-free dish soap.",
+    faqs: [
+      {
+        q: "What's the best way to wash my dog's food and water bowls?",
+        a: "Wash them daily with hot water and a fragrance-free, dye-free dish soap, then rinse until completely free of any soapy film or scent. Water bowls build an invisible slimy biofilm fast, so scrub them too, not just the food bowl. Once a week, sanitize naturally with a baking soda scrub or a soak in equal parts white vinegar and water, then rinse well. Letting bowls air-dry fully also discourages bacteria and yeast.",
+      },
+      {
+        q: 'What natural alternatives can I use to clean bowls?',
+        a: "Baking soda makes a great gentle scrub, and a soak in equal parts white vinegar and water naturally sanitizes and cuts biofilm — just rinse well afterward. These clean effectively while keeping your dog's chemical exposure low, which matters most for itchy or allergy-prone dogs.",
+      },
+      {
+        q: 'Should I use a stainless steel or plastic bowl?',
+        a: "Stainless steel is generally the better choice — it doesn't scratch and harbor bacteria the way plastic does over time, and it won't leach or hold onto soap residue and odors. Plastic bowls can also cause contact irritation on the chin in some dogs. Whatever the material, the daily-wash-and-rinse habit matters more than anything.",
+      },
+    ],
+  },
+  {
+    slug: 'are-household-cleaners-safe-around-dogs',
+    emoji: '🧹',
+    tag: 'Home & Household',
+    title: 'Are Household Cleaners and Floor Cleaners Safe Around Dogs?',
+    metaDescription:
+      "Dogs walk on floors then lick their paws, so cleaner residue gets ingested. Which cleaning ingredients to avoid, safer swaps, and how to lower your dog's chemical load.",
+    lead:
+      "Yes, household cleaners can affect your dog — dogs walk on floors and then lick their paws, so whatever residue is left behind gets ingested, and low paws and bellies contact it directly. Strong disinfectants, fragranced multi-surface sprays, and 'quat' cleaners can irritate paws and airways, especially in small dogs close to the ground. Choose fragrance-free or simple natural cleaners, and let floors dry fully before letting your dog back on them.",
+    faqs: [
+      {
+        q: 'What cleaning ingredients should I avoid around my dog?',
+        a: "Watch for added 'fragrance'/'parfum,' artificial dyes, harsh sulfates, antibacterial agents like triclosan, and quaternary ammonium 'quat' disinfectants. Around pets these are the ones most worth avoiding. The more fragrance-free and simple-ingredient a product is, the less residue ends up on your dog's paws and in the air they breathe.",
+      },
+      {
+        q: 'What are safer natural cleaning options?',
+        a: "Diluted white vinegar works for many hard surfaces, and simple fragrance-free cleaners cover most jobs. Let floors dry fully before letting the dog back on them, and keep concentrated products stored well away. This is part of lowering the overall chemical load for a sensitive or itchy dog.",
+      },
+      {
+        q: 'How does household chemical exposure affect my dog overall?',
+        a: "It adds up. Every small residue source — bowl soap, bedding detergent, floor cleaner, fragranced sprays — contributes to a dog's total daily chemical load, which can drive low-grade inflammation and show up as itchy skin, irritation, or general sensitivity. Reducing these hidden exposures is one of the cheapest levers for an allergy-prone dog.",
+      },
+    ],
+  },
+  {
+    slug: 'fragrance-free-dog-products',
+    emoji: '🌸',
+    tag: 'Home & Household',
+    title: 'Fragrance-Free vs Unscented Dog Products: What to Look For',
+    metaDescription:
+      "'Unscented' and 'fragrance-free' aren't the same thing. Why fragrance is a labeling loophole, how it can cause skin problems, and which label claim to actually trust.",
+    lead:
+      "The safest default is fragrance-free wherever you can find it — shampoo, toys, bedding, cleaning products. Two real reasons it matters: 'fragrance' is a legal labeling loophole where one word can hide dozens of undisclosed chemicals, and a dog's sense of smell is dramatically more sensitive than ours, so a scent level a person finds mild can be genuinely overwhelming at nose-level for a dog.",
+    faqs: [
+      {
+        q: "What's the difference between 'unscented' and 'fragrance-free'?",
+        a: "They are not the same, and this trips people up. 'Fragrance-free' means no fragrance ingredients were added at all. 'Unscented' often means a masking fragrance WAS added specifically to cancel out the base smell — so an 'unscented' product can still contain fragrance chemicals under that undisclosed 'fragrance' label term. To minimize fragrance exposure for a sensitive dog, look specifically for 'fragrance-free,' not 'unscented.'",
+      },
+      {
+        q: 'Can fragranced dog shampoo actually cause skin problems?',
+        a: "Yes — synthetic fragrance is a recognized cause of allergic contact dermatitis in dogs, showing up as itching, redness, or a dog rubbing and scratching right after a bath. Fragrance mixtures often use phthalates as fixatives to make the scent last, which are established endocrine disruptors in toxicology literature. If your dog scratches or gets red skin/ears after a bath, fragrance is one of the first ingredients worth ruling out — try a fragrance-free shampoo and see if the reaction stops.",
+      },
+      {
+        q: "Why is 'fragrance' allowed to be just one word on a label?",
+        a: "It's a real regulatory gap — the same loophole that exists in human cosmetics. Regulators generally let manufacturers list 'fragrance' or 'parfum' as a single ingredient without disclosing the individual chemicals, treating the blend as a protected trade secret. That one word can legally represent dozens of compounds, including synthetic musks and phthalate fixatives. This is exactly why 'fragrance-free' is the more reliable label claim to look for.",
+      },
+    ],
+  },
 ]
 
 export const getAnswer = (slug: string) => answerPages.find((a) => a.slug === slug)
