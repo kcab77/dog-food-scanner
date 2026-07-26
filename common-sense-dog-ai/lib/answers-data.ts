@@ -1066,6 +1066,92 @@ export const answerPages: AnswerPage[] = [
       },
     ],
   },
+
+  // ── Batch 9: Essential oils (web-verified) + more foods ──
+  {
+    slug: 'are-essential-oils-safe-for-dogs',
+    emoji: '🌿',
+    tag: 'Home & Household',
+    title: 'Are Essential Oils and Diffusers Safe for Dogs?',
+    metaDescription:
+      'Which essential oils are toxic to dogs, why tea tree oil is especially dangerous, and how to use a diffuser safely around pets. Based on ASPCA and Merck veterinary guidance.',
+    lead:
+      "Some are genuinely dangerous, so this needs real caution. Essential oils toxic to dogs include tea tree (melaleuca), pennyroyal, wintergreen, pine, sweet birch, cinnamon, citrus, peppermint, eucalyptus, and ylang ylang. They can cause anything from drooling and vomiting to tremors, and pennyroyal, tea tree, and eucalyptus have been linked to seizures or liver injury. Dogs are far more sensitive than people — never apply concentrated oils to a dog or let them ingest them.",
+    faqs: [
+      {
+        q: 'Why is tea tree oil so dangerous for dogs?',
+        a: "Tea tree (melaleuca) oil is one of the most frequently reported essential-oil poisonings in pets. Per the ASPCA, as few as 7 to 8 drops of concentrated (100%) tea tree oil can cause serious toxicity in a dog — including weakness, tremors, and difficulty walking. It's often in 'natural' shampoos and skin products, so check labels; a product safe for you can be harmful applied to or licked by your dog. (Source: ASPCA; Merck Veterinary Manual.)",
+      },
+      {
+        q: 'Is it safe to run an essential-oil diffuser around my dog?',
+        a: "It depends on the type. Passive/reed diffusers are generally safer because they don't release actual oil droplets into the air — the main risk is if a dog knocks one over and contacts the liquid directly. Active/nebulizing diffusers disperse micro-droplets that can land on the coat (then get licked) and irritate airways, especially for flat-faced dogs or those with breathing issues. If you use one, keep it in a room your dog can't access, run it briefly, and ventilate well. (Source: ASPCA.)",
+      },
+      {
+        q: 'What are the signs my dog reacted to an essential oil?',
+        a: "Watch for drooling, vomiting, lethargy, wobbliness or difficulty walking, tremors, low body temperature, or scent/fragrance on the coat or breath. If you suspect exposure — especially tea tree, pennyroyal, wintergreen, or eucalyptus — call your vet or the ASPCA Animal Poison Control Center (888-426-4435). Don't wait for it to pass; some effects are delayed, and there's no home antidote.",
+      },
+    ],
+  },
+  {
+    slug: 'can-dogs-eat-carrots',
+    emoji: '🥕',
+    tag: 'Safe & Toxic Foods',
+    title: 'Can Dogs Eat Carrots?',
+    metaDescription:
+      'Yes — carrots are a crunchy, low-calorie favorite that many dogs love, and good for teeth. How to serve them safely and why frozen carrots make a great chew.',
+    lead:
+      "Yes — carrots are one of the safest, most dog-friendly vegetables: a crunchy, low-calorie favorite that's good for the teeth and packed with beta-carotene and fiber. They make an excellent low-guilt training treat or chew, raw or lightly cooked.",
+    faqs: [
+      {
+        q: 'How should I serve carrots to my dog?',
+        a: "Wash them and cut into appropriately sized pieces or sticks — for small dogs, smaller pieces to avoid a choking risk. Raw carrots give a satisfying crunch (a frozen carrot can even soothe a teething puppy), and lightly steamed makes the nutrients a bit more available. Serve plain, no butter or seasoning.",
+      },
+      {
+        q: 'Are carrots good for a dog on a diet?',
+        a: "Very much — they're low in calories and high in fiber, so they're a great swap for richer treats when you're managing weight. Still count them toward the roughly 10%-of-daily-calories treat allowance, but as far as treats go, carrots are one of the better choices.",
+      },
+    ],
+  },
+  {
+    slug: 'can-dogs-eat-watermelon',
+    emoji: '🍉',
+    tag: 'Safe & Toxic Foods',
+    title: 'Can Dogs Eat Watermelon?',
+    metaDescription:
+      'Yes — watermelon is a hydrating hot-weather treat for dogs, with one rule: no seeds and no rind. How to serve it safely and how much is okay.',
+    lead:
+      "Yes — watermelon is a great hydrating summer treat, mostly water with vitamins A and C. The one rule that matters: remove the seeds and never give the rind. The rind is tough to digest and a real obstruction risk, and the seeds can cause blockage in quantity, especially in small dogs.",
+    faqs: [
+      {
+        q: 'How should I serve watermelon to my dog?',
+        a: "Cut seedless (or de-seeded) flesh into bite-sized chunks and skip the rind entirely. Frozen chunks make a great crunchy hot-weather treat. Serve plain — no watermelon candy, juice, or anything with added sugar.",
+      },
+      {
+        q: 'Can watermelon upset my dog\'s stomach?',
+        a: "In large amounts, the water and natural sugar can cause loose stool, so keep it to a treat-sized portion within the roughly 10%-of-daily-calories rule. Introduce it in a small amount the first time, like any new food.",
+      },
+    ],
+  },
+  {
+    slug: 'can-dogs-eat-bananas',
+    emoji: '🍌',
+    tag: 'Safe & Toxic Foods',
+    title: 'Can Dogs Eat Bananas?',
+    metaDescription:
+      "Yes — bananas are a safe treat for dogs in small amounts, but they're higher in sugar than most fruit. How much is okay and the best way to serve them.",
+    lead:
+      "Yes — bananas are safe for dogs and many love them, offering potassium, vitamin B6, and fiber. The one caveat is sugar: bananas are higher in natural sugar than most dog-safe fruit, so they're a small-portion, occasional treat rather than an everyday snack — especially for overweight or diabetic dogs.",
+    faqs: [
+      {
+        q: 'How much banana can I give my dog?',
+        a: "A few small slices for most dogs, less for small breeds — keep it within the roughly 10%-of-daily-calories treat allowance. Because of the sugar, bananas are better as an occasional treat than a daily one.",
+      },
+      {
+        q: 'What\'s a good way to serve banana to a dog?',
+        a: "Plain slices are simplest. You can also mash a little into a stuffable toy or freeze slices for a longer-lasting treat. Skip the peel — it isn't toxic but it's hard to digest and can cause an upset stomach or blockage.",
+      },
+    ],
+  },
 ]
 
 export const getAnswer = (slug: string) => answerPages.find((a) => a.slug === slug)
