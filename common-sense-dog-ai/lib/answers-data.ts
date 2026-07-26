@@ -912,6 +912,160 @@ export const answerPages: AnswerPage[] = [
       },
     ],
   },
+
+  // ── Batch 8: Health (diabetes, heat, GI, bone broth) + individual foods ──
+  {
+    slug: 'can-i-manage-my-dogs-diabetes-with-diet',
+    emoji: '🩸',
+    tag: 'Organ Health',
+    title: "Can You Manage a Dog's Diabetes with Diet?",
+    metaDescription:
+      "The honest answer on canine diabetes and diet — why insulin is almost always required, how diet and weight genuinely help, and why 'natural cure' claims are dangerous.",
+    lead:
+      "Here's the honest truth: no — canine diabetes is almost always insulin-dependent (similar to Type 1 in people), so the pancreas can't make enough insulin, and food can't replace it. Diet and weight management are powerful SUPPORTS that make blood sugar easier to control and reduce insulin needs, but nearly every diabetic dog requires insulin for life. Be very cautious of anything promising a natural cure — skipping insulin can be dangerous.",
+    faqs: [
+      {
+        q: "What's the best diet for a diabetic dog?",
+        a: "For dogs, consistency matters more than any 'magic' food — eating the same thing in the same amount on the same schedule is essential so insulin can be matched to nutrient absorption. The commonly recommended profile is balanced, with moderate-to-high insoluble fiber (which slows glucose absorption and blunts post-meal spikes), modest fat, and complex rather than simple-sugar carbohydrates. A whole-food, lower-glycemic diet fits well — the key is keeping it consistent meal to meal.",
+      },
+      {
+        q: 'Can canine diabetes be reversed naturally?',
+        a: "No — and this matters for safety. It's typically a permanent, insulin-dependent condition, and no diet, herb, or supplement reliably restores insulin production. Stopping insulin for a 'natural cure' can cause life-threatening ketoacidosis. What holistic management genuinely does: a consistent high-fiber whole-food diet, a lean weight, and exercise improve control and can lower insulin needs — alongside insulin, never instead of it.",
+      },
+      {
+        q: 'What are the signs of diabetes in dogs?',
+        a: "The classic early signs are increased thirst, increased urination, increased appetite but weight loss, and sometimes cloudy eyes (cataracts). These warrant a prompt vet visit. After diagnosis, contact your vet urgently for not eating, repeated vomiting, weakness or collapse, disorientation, or seizures — these can signal dangerously low blood sugar or ketoacidosis, both emergencies.",
+      },
+    ],
+  },
+  {
+    slug: 'signs-of-heatstroke-in-dogs',
+    emoji: '🌡️',
+    tag: 'Safety',
+    title: 'Signs of Heatstroke in Dogs — and What to Do',
+    metaDescription:
+      "Heatstroke can kill within minutes. The warning signs, the right way to cool a dog down (never ice-cold), and which dogs overheat most easily.",
+    lead:
+      "Heatstroke is a true emergency, so know the signs: frantic or excessive panting, thick drooling, bright red or dark/bluish gums, glassy eyes, weakness, stumbling, vomiting, disorientation, and eventually collapse or seizures. Normal dog temperature is about 101–102.5°F; above ~104°F is dangerous and above ~106°F is critical. If you see these signs, act immediately — heatstroke can damage organs and kill within minutes.",
+    faqs: [
+      {
+        q: 'What should I do if my dog overheats?',
+        a: "Cool him down, then get to a vet. Move him to shade or AC, offer small amounts of cool water, and cool his body with COOL (not ice-cold) water over the belly, groin, armpits, and paws, using a fan to boost evaporation. Do NOT use ice or ice-cold water — it can constrict blood vessels and trap heat. Then see a vet even if he seems to bounce back, because heatstroke can cause delayed internal organ damage.",
+      },
+      {
+        q: 'How can I exercise my dog safely in hot weather?',
+        a: "Work with your dog's cooling limits. Exercise in the cooler parts of the day and skip midday heat; on hot or humid days, trade sprints for steady low-intensity activity or swimming. Bring water, take shade breaks, and check the pavement — if it's too hot for your palm for 5 seconds, it'll burn paw pads. Let your dog set the pace; a self-imposed break is smart self-preservation, not laziness.",
+      },
+      {
+        q: 'Which dogs overheat most easily?',
+        a: "Flat-faced (brachycephalic) breeds like Bulldogs, Pugs, and Boxers are highest risk because their airways make panting inefficient. Dark-coated and thick double-coated dogs trap more heat; overweight dogs, seniors, puppies, and dogs with heart or breathing conditions all struggle more. If your dog fits any of these, be especially conservative — shorter sessions, more shade and water, and lean on swimming as the safest hot-weather exercise.",
+      },
+    ],
+  },
+  {
+    slug: 'dog-sensitive-stomach-and-chronic-diarrhea',
+    emoji: '🤢',
+    tag: 'Digestive Health',
+    title: 'Dog with a Sensitive Stomach or Chronic Diarrhea: Where to Start',
+    metaDescription:
+      "Most dogs with chronic GI issues are 'food-responsive' — diet alone resolves them. The elimination-diet approach, whether pumpkin helps, and what to avoid.",
+    lead:
+      "Start with diet — it's the single highest-yield step with the best evidence. Most dogs with chronic GI issues fall under 'chronic enteropathy,' and the largest group are 'food-responsive,' meaning a proper diet change alone resolves them without drugs. The approach is a strict diet trial (a single novel or hydrolyzed protein) for several weeks, supported by probiotics and fiber. Rule out the simple stuff first (parasites, abrupt changes, table scraps).",
+    faqs: [
+      {
+        q: "What's the best diet for a dog with chronic diarrhea or IBD?",
+        a: "The evidence points to an elimination diet built on a single protein the dog has never eaten (novel protein) or a hydrolyzed protein, fed exclusively for 6–8+ weeks with zero treats or extras. Holistically, a fresh, gently cooked or raw novel-protein diet (rabbit, venison, or another new-to-them protein with a simple digestible carb) accomplishes the elimination while cutting the ultra-processed load. Strict consistency is everything — one cheat treat can invalidate the trial.",
+      },
+      {
+        q: 'Does pumpkin or added fiber help with dog diarrhea?',
+        a: "Yes — fiber is genuinely useful, especially for large-bowel diarrhea. Plain cooked pumpkin is the easy at-home version: its soluble fiber helps regulate stool in both directions (firming up diarrhea, easing constipation). Start with about a teaspoon to a tablespoon depending on size. Fiber works best as part of the picture (with diet and probiotics), not as a sole fix for a chronic problem.",
+      },
+      {
+        q: 'What should I avoid for a dog with a sensitive stomach?',
+        a: "Cut the things most likely to irritate: ultra-processed kibble with lots of fillers, fatty foods and rich table scraps (which can inflame the gut or trigger pancreatitis), and the dog's known or suspected allergen protein (often one it's eaten for years, like chicken or beef). Abrupt diet changes and a parade of different treats also keep a sensitive gut stirred up. Simplify: one clean novel protein, minimal extras, consistent feeding.",
+      },
+    ],
+  },
+  {
+    slug: 'bone-broth-for-dogs',
+    emoji: '🍲',
+    tag: 'Nutrition',
+    title: 'Bone Broth for Dogs: Benefits and How to Make It',
+    metaDescription:
+      "Bone broth is one of the best whole-food additions for a dog — gut-supporting collagen and glycine, hydrating, and gentle for sick or fasting dogs. How to make it safely.",
+    lead:
+      "Bone broth is one of the best whole-food additions you can give. It's rich in collagen, gelatin, and glycine that support the gut lining (great for leaky gut and digestion), supplies joint-supporting compounds, and is wonderfully hydrating and palatable. It's gentle enough for sick, recovering, or fasting dogs, and a great way to get fluids into a dog that's off its food. Keep it plain and unsalted, with no onion or garlic.",
+    faqs: [
+      {
+        q: 'How do I make a frozen bone broth treat for my dog?',
+        a: "It's easy: use plain, unsalted bone broth (homemade or a clean store-bought one with no onion, garlic, or added salt), pour it into an ice cube tray, silicone mold, or a lick-friendly toy, and freeze. Give one when your dog is restless or needs something to do. Freezing it in a stuffable toy makes it last longer — hydrating, gut-supporting, and low-impact enough to use during fasting windows.",
+      },
+      {
+        q: 'Why would I fast my dog, and is it healthy?',
+        a: "Short, intermittent fasting (skipping a meal or a longer overnight gap) gives the digestive system a rest, helps lower insulin, and supports natural repair. Many healthy adult dogs do well on it. But fasting is NOT for puppies, pregnant or nursing dogs, diabetic dogs, or very small/toy breeds prone to low blood sugar. When in doubt, check with a holistic vet before starting.",
+      },
+    ],
+  },
+  {
+    slug: 'can-dogs-eat-blueberries',
+    emoji: '🫐',
+    tag: 'Safe & Toxic Foods',
+    title: 'Can Dogs Eat Blueberries?',
+    metaDescription:
+      'Yes — blueberries are one of the best treats for dogs: low in sugar, packed with antioxidants and fiber. How to serve them and how much is safe.',
+    lead:
+      "Yes — blueberries are one of the best treats you can give. They're low in sugar and calories and packed with antioxidants (anthocyanins), vitamin C, and fiber that support the immune system and fight inflammation, which fits a holistic anti-inflammatory approach perfectly. A genuinely healthy, dog-safe superfood.",
+    faqs: [
+      {
+        q: 'How should I serve blueberries to my dog?',
+        a: 'Fresh or frozen both work — frozen makes a great crunchy hot-weather treat. Serve them plain, and for small dogs you can halve them to be safe. Keep the quantity reasonable as part of the roughly 10%-of-daily-calories treat allowance.',
+      },
+      {
+        q: 'Can dogs have too many blueberries?',
+        a: "As a treat they're very safe, but too many at once can cause loose stool simply from the extra fiber, and they still count toward daily calories. A small handful for most dogs is plenty — they're a topper and snack, not a meal component.",
+      },
+    ],
+  },
+  {
+    slug: 'can-dogs-eat-eggs',
+    emoji: '🥚',
+    tag: 'Safe & Toxic Foods',
+    title: 'Can Dogs Eat Eggs?',
+    metaDescription:
+      'Yes — eggs are a fantastic whole-food protein for dogs. Cooked vs raw, the shell as a calcium source, and how much to feed by size.',
+    lead:
+      "Yes — eggs are a fantastic whole-food protein for dogs, rich in highly digestible amino acids plus biotin, riboflavin, and selenium. Cooked plain (no butter or salt) is the safe default. An egg a few times a week is a great topper for most dogs — scale the amount to your dog's size.",
+    faqs: [
+      {
+        q: 'Can dogs eat raw eggs?',
+        a: "Some raw-feeders give raw eggs, which is generally fine from a clean source, though it carries a small salmonella consideration, and large amounts of raw egg white over time can affect biotin absorption. Cooked plain is the lower-risk default; occasional raw from a trusted source is a personal choice.",
+      },
+      {
+        q: 'Can dogs eat eggshells?',
+        a: "Yes — finely ground eggshell adds calcium and is sometimes used to balance home-cooked diets. It must be ground fine (a coarse shell can be a GI irritant), and it's only relevant if you're intentionally balancing minerals; a dog on a complete diet doesn't need extra.",
+      },
+    ],
+  },
+  {
+    slug: 'can-dogs-eat-pumpkin',
+    emoji: '🎃',
+    tag: 'Safe & Toxic Foods',
+    title: 'Can Dogs Eat Pumpkin?',
+    metaDescription:
+      "Yes — plain cooked pumpkin is a holistic staple for dogs. How its fiber helps both diarrhea and constipation, how much to give, and what to avoid (pie filling).",
+    lead:
+      "Yes — plain cooked pumpkin (not pie filling, which has sugar and spices) is a holistic staple. Its soluble fiber helps with both diarrhea and constipation, it's gentle on the stomach, and it provides beta-carotene and potassium. Canned 100% pumpkin or fresh-cooked both work — just make sure there are no added sweeteners.",
+    faqs: [
+      {
+        q: 'How much pumpkin should I give my dog?',
+        a: "A common amount is roughly a teaspoon to a tablespoon per meal depending on the dog's size. It's also a good carrier for supplements. Start on the smaller side and adjust — too much fiber too fast can loosen stool.",
+      },
+      {
+        q: 'What kind of pumpkin is safe — and is pie filling okay?',
+        a: "Use plain canned 100% pumpkin or fresh-cooked pumpkin with nothing added. Avoid canned pumpkin pie filling — it contains sugar and spices (and sometimes xylitol in 'sugar-free' versions) that aren't appropriate for dogs.",
+      },
+    ],
+  },
 ]
 
 export const getAnswer = (slug: string) => answerPages.find((a) => a.slug === slug)
