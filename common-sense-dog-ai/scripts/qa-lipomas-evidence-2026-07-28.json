@@ -1,0 +1,80 @@
+[
+  {
+    "question": "What is a lipoma in dogs, and are they dangerous?",
+    "answer": "🟢 Strong (settled pathology): A lipoma is a benign tumor of mature fat cells (adipocytes) wrapped in a thin fibrous capsule, sitting just under the skin. Under the microscope the cells look like normal fat — what makes it a tumor is that it's a discrete, encapsulated mass that grows on its own. Classic (simple) lipomas do NOT spread (metastasize) and aren't dangerous in themselves; they only cause problems mechanically — getting in the way of a leg when they sit in the armpit or groin, rubbing under a harness, or occasionally growing large. Most need nothing beyond monitoring. Two important caveats: a lipoma is NOT 'stored toxins' — it's a growth of real cells, not waste to be drained; and there are less-common variants (infiltrative lipoma, which invades muscle, and liposarcoma, a rare genuinely malignant fat tumor), which is one reason every lump should be checked rather than assumed. (Source: settled veterinary pathology; O'Neill et al., Canine Genetics & Epidemiology 2018.)",
+    "topic": "lipomas",
+    "source": "Common Sense Dog — Lipomas evidence pack 2026-07"
+  },
+  {
+    "question": "How do I know a lump is actually a lipoma and not something dangerous?",
+    "answer": "🟢 Strong — this is THE most important point about lipomas, and skipping it is where real harm happens: you cannot tell a lipoma by feel, and neither can your vet. Subcutaneous mast cell tumors — a genuinely malignant cancer — frequently feel exactly like lipomas: soft, movable, painless, slow-growing. The only way to know is a fine needle aspirate (FNA): a small needle into the lump, cells onto a slide, looked at under a microscope. It's quick, usually needs no sedation, is inexpensive, and is the standard first step. Mast cell tumors have a very distinctive look under the microscope (round cells full of purple granules), so FNA is one of the more reliable tests in veterinary cytology. Every month spent putting turmeric paste on an undiagnosed lump is a month a mast cell tumor could be growing and spreading — the natural remedy isn't the danger, the DELAY is. Bottom line: every new lump, every time, gets aspirated before you decide it's 'just a fatty tumor.' (Source: Clinician's Brief; Merck Veterinary Manual — cytology.)",
+    "topic": "lipomas",
+    "source": "Common Sense Dog — Lipomas evidence pack 2026-07"
+  },
+  {
+    "question": "What causes lipomas in dogs, and which dogs are most likely to get them?",
+    "answer": "🟢 Strong for the associations (observational): The best data is the UK VetCompass study of 384,284 dogs (O'Neill et al. 2018) — one-year prevalence 1.94%. The biggest MODIFIABLE risk factor by far is body condition: dogs at or above their breed/sex average bodyweight had about 1.96× the odds, and in the study overweight dogs (body condition score ≥7/9) had roughly 5× the odds of leaner dogs. Age matters even more but isn't modifiable — dogs aged 9–12 had dramatically higher odds than younger dogs. Neutered dogs showed higher odds than intact females (though this is likely tangled up with the weight gain that follows neutering). Breed predisposition is real: Weimaraner (7.84%), Dobermann (6.96%), German Pointer, Springer Spaniel, and Labrador (~5%) all sit well above the ~1.94% baseline. Honest framing: these are associations, not proof — but since lipomas don't make dogs fat, the 'keeping a dog lean lowers risk' reading is reasonable. (Source: O'Neill et al., Canine Genetics & Epidemiology 2018 — web-verified.)",
+    "topic": "lipomas",
+    "source": "Common Sense Dog — Lipomas evidence pack 2026-07"
+  },
+  {
+    "question": "Can I prevent my dog from getting lipomas?",
+    "answer": "🟡 Moderate–Strong (observational): The only prevention lever with meaningful evidence is keeping your dog lean — maintain a body condition score of 4–5/9 across their whole life, measure food, and keep them moving. Overweight dogs (BCS ≥7) carried roughly 5× the odds and above-average-weight dogs about 2× the odds in the VetCompass data, making body condition by far the largest thing you can actually control. Being honest about the rest: age and breed are the strongest risk factors and you can't change them, and there is NO controlled evidence that diet composition, 'toxin load,' grain content, kibble-vs-raw, or vaccination cause or prevent lipomas. So a lean body condition is the evidence-based prevention story; anything else marketed as 'lipoma prevention' isn't backed by data. (Source: O'Neill et al. 2018.)",
+    "topic": "lipomas",
+    "source": "Common Sense Dog — Lipomas evidence pack 2026-07"
+  },
+  {
+    "question": "Can you dissolve or shrink a dog's lipoma naturally with turmeric, herbs, or a detox?",
+    "answer": "⚪ No evidence found — and this is an honest, important answer even though it goes against a lot of popular advice. A search for controlled evidence on herbal or nutritional lipoma treatment in dogs turns up nothing: no trial, no case series, not even a single published case report for turmeric, bromelain, chickweed, dandelion, flaxseed oil, apple cider vinegar, or castor oil. That absence IS the finding. The usual claim is that turmeric's anti-inflammatory action shrinks the mass — but a lipoma isn't an inflammatory lesion, it's a benign growth of mature fat cells, so reducing inflammation has no route to dissolving it. The mechanism doesn't fit the pathology. Are these supplements harmful? Mostly not directly (turmeric, fish oil, bromelain at sensible doses are low-risk). The real harms are: (1) diagnostic delay — treating an undiagnosed lump 'naturally' when it's actually a mast cell tumor; (2) false attribution — lipomas look smaller with weight loss and hydration changes, so a dog who starts turmeric AND loses weight gets credited to the turmeric; (3) opportunity cost. Bottom line: no supplement, herb, oil, or diet has evidence of shrinking a canine lipoma. Fish oil and a lean body are worth doing on their own merits — just not as a lipoma 'treatment,' and never as a substitute for a needle aspirate. (Source: no primary evidence located; contrasted with holistic practitioner commentary.)",
+    "topic": "lipomas",
+    "source": "Common Sense Dog — Lipomas evidence pack 2026-07"
+  },
+  {
+    "question": "Will helping my dog lose weight get rid of a lipoma?",
+    "answer": "🟡 Moderate (for volume reduction only): Weight loss commonly makes an existing lipoma smaller and softer, because the fat cells inside it lose their lipid the same way fat cells everywhere else in the body do. That's genuinely useful — a lipoma that shrinks below the size where it interferes with movement may no longer need surgery. But understand exactly what happened: weight loss reduces the VOLUME, not the tumor. The cells and the capsule are still there, and the mass re-expands if the weight comes back. So 'it got smaller' and 'it went away' are very different claims — there's good evidence for the first and none for the second. Keep your dog lean for prevention and to keep existing lipomas manageable, but don't expect it to eliminate one. (Source: adipocyte physiology; O'Neill et al. 2018.)",
+    "topic": "lipomas",
+    "source": "Common Sense Dog — Lipomas evidence pack 2026-07"
+  },
+  {
+    "question": "Is there a way to shrink a dog's lipoma without surgery?",
+    "answer": "🟡 Moderate (n=15, uncontrolled) — yes, and most owners are never told it exists. The best-supported non-surgical option is an intralesional steroid injection: in a 2012 study (Lamagna et al., PLOS ONE), 15 dogs got ultrasound-guided injections of triamcinolone acetonide (40 mg/mL) directly into the lipoma. Nine subcutaneous/subfascial tumors regressed completely, and the rest shrank in diameter, with some dogs' discomfort and lameness resolving. The only side effect was increased drinking and urination for about two weeks in six dogs. It works best on exactly the small lipomas (<3 cm) that owners most want dealt with. The honest caveat: it's a single small study with no control group, not replicated at scale — so it's the best-evidenced non-surgical reduction method, not a guarantee. Worth specifically asking your vet about, because the options usually offered are just 'monitor' or 'surgery,' with this middle path going unmentioned. (Source: Lamagna et al., PLOS ONE 2012 — web-verified.)",
+    "topic": "lipomas",
+    "source": "Common Sense Dog — Lipomas evidence pack 2026-07"
+  },
+  {
+    "question": "I read about injecting calcium chloride to dissolve a dog's lipoma — is that safe?",
+    "answer": "🟠 Emerging for shrinking, but poor safety — not recommended, and definitely not as a DIY. Intralesional calcium chloride does shrink lipomas by chemically destroying the fat cells, but that same caustic action damages the skin: in one series (Albers & Theilen 1985), 10% calcium chloride shrank most masses but caused skin necrosis over the tumor in 3 of 10 dogs, and higher concentrations caused the skin to rupture into a draining wound needing antibiotics. It shows up in DIY discussions as a 'natural' option because calcium chloride sounds like a harmless mineral — it isn't; it's a caustic agent. This should not be attempted outside a veterinary setting, if at all. If you want a non-surgical option, ask about intralesional triamcinolone instead, which has a much better safety profile. (Source: Parsemus Foundation summary of Albers & Theilen 1985 — figures flagged for primary-source confirmation.)",
+    "topic": "lipomas",
+    "source": "Common Sense Dog — Lipomas evidence pack 2026-07"
+  },
+  {
+    "question": "When does a dog's lipoma need to be surgically removed?",
+    "answer": "🟢 Strong: Surgery to completely remove an encapsulated simple lipoma is curative for that particular mass (though it doesn't stop new ones forming elsewhere). Standard reasons to operate: the lipoma is mechanically interfering — especially in the armpit (axilla) or groin (inguinal) where it restricts leg movement; it's growing rapidly; there's diagnostic uncertainty; or it's getting big enough to compromise the overlying skin. A key practical point: earlier is easier — a small lipoma in an awkward spot is a much simpler surgery than a large one. For most stable, soft, confirmed lipomas that aren't in the way, though, monitoring is all that's needed rather than surgery. (Source: standard veterinary surgical practice.)",
+    "topic": "lipomas",
+    "source": "Common Sense Dog — Lipomas evidence pack 2026-07"
+  },
+  {
+    "question": "What is an infiltrative lipoma, and how is it treated?",
+    "answer": "🟡 Moderate (3 consistent retrospective series): An infiltrative lipoma is a variant that's benign under the microscope but invades the surrounding muscle and fascia instead of staying in a neat capsule — so it can't be cleanly cut out, and it historically had poor local control. Radiation therapy has changed the outlook: a multi-institutional study of 29 dogs (Matsuyama et al., Vet Comp Oncol 2025) reported median progression-free and overall survival both around 1,483 days — roughly four years — with progression only in dogs who received less than 51 Gy, suggesting a dose threshold. Metastasis of infiltrative lipoma hasn't been reported in dogs. A CT scan is recommended first to map how far it extends. This is a genuinely different problem from a simple lipoma and belongs with a veterinary oncology/radiation team. (Source: Matsuyama et al. 2025; Hauser et al. 2024; JAVMA 2023.)",
+    "topic": "lipomas",
+    "source": "Common Sense Dog — Lipomas evidence pack 2026-07"
+  },
+  {
+    "question": "My dog already had a lump diagnosed as a lipoma — when should I get it re-checked?",
+    "answer": "🟢 Strong: A benign diagnosis on one lump says nothing about a new lump, and even a confirmed lipoma can warrant another look if it changes. Get prompt re-evaluation (and re-aspiration) for any of these red flags: rapid growth; the texture changing from soft to firm; the mass becoming fixed in place rather than freely movable; ulceration or skin change over it; pain; or size that waxes and wanes — mast cell tumors can swell and shrink as they degranulate, and a true lipoma should not do that. Practical habit: map and measure every mass (location, size, date), and photograph it with a coin for scale, because many dogs get multiples and a written map is the only reliable way to notice one behaving differently. Re-aspirate anything that changes, and aspirate every NEW lump from scratch. (Source: Clinician's Brief; standard of care.)",
+    "topic": "lipomas",
+    "source": "Common Sense Dog — Lipomas evidence pack 2026-07"
+  },
+  {
+    "question": "Can a lipoma turn into cancer?",
+    "answer": "🟢 Strong: A classic (simple) lipoma does not transform into a malignant tumor — it's a benign growth of mature fat cells and stays that way. The genuinely malignant fat tumor, liposarcoma, is a separate entity that is malignant from the start rather than a lipoma 'turning bad,' and it's rare. This is exactly why the fine needle aspirate matters: the concern was never that your lipoma will become cancer, it's that the lump you ASSUMED was a lipoma might have been something else (like a mast cell tumor or liposarcoma) from the beginning. Diagnose it once, correctly, and a confirmed simple lipoma can be monitored with confidence — while staying alert to the change-red-flags that would prompt a re-check. (Source: settled veterinary pathology.)",
+    "topic": "lipomas",
+    "source": "Common Sense Dog — Lipomas evidence pack 2026-07"
+  },
+  {
+    "question": "What is the sensible, evidence-based plan for a dog with a fatty lump?",
+    "answer": "🟢 Strong (standard of care, distilled): A defensible protocol: (1) Get it aspirated — every new lump, every time, no matter how classically 'fatty' it feels, to rule out a mast cell tumor. (2) Map and measure — record location, size, and date, and photograph with a coin for scale, since many dogs get multiples. (3) Get and keep your dog at a body condition score of 4–5/9 — the best-supported step for both prevention and keeping existing lipomas smaller. (4) For most confirmed, stable, soft, movable lipomas that aren't in the way — just monitor with regular rechecks. (5) Ask specifically about an intralesional triamcinolone injection for small, awkwardly located lipomas — most owners are never offered it. (6) Choose surgery when it's mechanical (armpit, groin, or anything restricting movement) or fast-growing — earlier is easier. (7) Re-aspirate anything that changes. (8) If you want to give turmeric or fish oil, that's fine — as long as steps 1 and 3 have happened. The supplement isn't the problem; substituting it for a diagnosis is. (Source: synthesis of the evidence above.)",
+    "topic": "lipomas",
+    "source": "Common Sense Dog — Lipomas evidence pack 2026-07"
+  }
+]

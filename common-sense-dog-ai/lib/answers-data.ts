@@ -1152,6 +1152,64 @@ export const answerPages: AnswerPage[] = [
       },
     ],
   },
+
+  // ── Batch 10: Lipomas / fatty lumps (from the evidence-based lipoma pack) ──
+  {
+    slug: 'how-to-shrink-a-dogs-lipoma',
+    emoji: '🔬',
+    tag: 'Lumps & Growths',
+    title: "How to Shrink a Dog's Lipoma — What Actually Works",
+    metaDescription:
+      "The honest, evidence-based answer on shrinking a dog's fatty tumor — why no herb or 'detox' dissolves one, what weight loss really does, and the injection most owners are never offered.",
+    lead:
+      "Here's the honest version: no supplement, herb, oil, or 'detox' has any evidence of dissolving a canine lipoma — and the popular turmeric rationale doesn't even fit the biology, because a lipoma is a benign growth of fat cells, not an inflammatory lesion. What genuinely helps: keeping your dog lean shrinks the volume (though not the tumor itself), and there's a rarely-offered injection that can actually regress small ones. But step one is never skipped — get the lump aspirated first.",
+    faqs: [
+      {
+        q: 'Can you dissolve a dog\'s lipoma naturally with turmeric or herbs?',
+        a: "No — there's no trial, case series, or even a case report showing turmeric, bromelain, chickweed, apple cider vinegar, or castor oil shrinks a lipoma in dogs. The usual claim is that turmeric's anti-inflammatory effect dissolves it, but a lipoma isn't inflamed tissue — it's a mass of normal fat cells, so reducing inflammation has no route to removing it. These supplements are mostly harmless, but the real risks are diagnostic delay (treating an undiagnosed lump that's actually a mast cell tumor) and false credit (a dog who starts turmeric and loses weight gets attributed to the turmeric).",
+      },
+      {
+        q: 'Does weight loss get rid of a lipoma?',
+        a: "It reduces the volume, not the tumor. Fat cells inside a lipoma lose their lipid when a dog slims down, so the lump often gets smaller and softer — genuinely useful, and it may shrink below the size where it interferes with movement. But the cells and capsule remain, and it re-expands if the weight comes back. Keeping your dog at a body condition score of 4–5/9 is the single best-supported step for both preventing and managing lipomas.",
+      },
+      {
+        q: 'Is there a way to shrink a lipoma without surgery?',
+        a: "Yes, and most owners are never told about it: an intralesional steroid injection. In a 2012 study, 15 dogs got ultrasound-guided triamcinolone injected directly into the lipoma — 9 regressed completely and the rest shrank, with the only side effect being extra drinking/urinating for about two weeks. It works best on small lipomas (under 3 cm). It's a single small study, not a guarantee, but worth asking your vet about, since the options usually offered are just 'monitor' or 'surgery.'",
+      },
+      {
+        q: 'When does a lipoma need surgery?',
+        a: "When it's mechanical — in the armpit or groin restricting leg movement, or anywhere it's getting in the way — or when it's growing fast or the diagnosis is uncertain. Surgery is curative for that mass (though new ones can still form elsewhere), and earlier is easier: a small lipoma in an awkward spot is a much simpler operation than a large one.",
+      },
+    ],
+  },
+  {
+    slug: 'is-my-dogs-lump-a-lipoma',
+    emoji: '⚠️',
+    tag: 'Lumps & Growths',
+    title: "Is My Dog's Lump a Lipoma? Why You Can't Tell by Feel",
+    metaDescription:
+      "Soft, movable lumps aren't automatically harmless — some cancers feel exactly like a lipoma. Why a quick needle test matters, the red flags, and whether lipomas are dangerous.",
+    lead:
+      "This is the most important thing to know about fatty lumps: you can't tell a lipoma by feel, and neither can your vet. Some genuinely malignant cancers — especially mast cell tumors — frequently feel exactly like a lipoma: soft, movable, painless, slow-growing. The only way to know is a quick needle test (a fine needle aspirate). It's fast, usually needs no sedation, and it's the reason no lump should ever be assumed to be 'just a fatty tumor.'",
+    faqs: [
+      {
+        q: 'How do vets tell if a lump is a lipoma?',
+        a: "With a fine needle aspirate (FNA): a small needle draws cells from the lump onto a slide to be examined under a microscope. A lipoma gives mature fat cells (often a greasy smear); a mast cell tumor gives a very distinctive picture of round cells packed with purple granules. It's quick, inexpensive, usually done without sedation, and it's the standard first step for any new lump. Every month spent treating an undiagnosed lump 'naturally' is a month a mast cell tumor could be growing — the needle test isn't the risky part, the delay is.",
+      },
+      {
+        q: 'Are lipomas dangerous in dogs?',
+        a: "A classic (simple) lipoma isn't dangerous in itself — it's benign, doesn't spread, and doesn't turn into cancer. It only causes problems mechanically, by getting in the way when it sits in a joint area like the armpit or groin. The danger is never that your confirmed lipoma will 'become' cancer — it's that a lump you assumed was a lipoma might have been something else from the start. Diagnose it once, correctly, and a confirmed lipoma can be monitored with confidence.",
+      },
+      {
+        q: 'What are the warning signs a lump needs re-checking?',
+        a: "Get prompt re-evaluation (and re-aspiration) if a lump grows rapidly, changes from soft to firm, becomes fixed in place instead of freely movable, ulcerates or changes the skin over it, becomes painful, or waxes and wanes in size — mast cell tumors can swell and shrink as they release their granules, and a true lipoma shouldn't do that. Map and measure every lump (location, size, date) and photograph it with a coin for scale, since many dogs get several and that's the only reliable way to spot one behaving differently.",
+      },
+      {
+        q: 'Which dogs are most prone to lipomas?',
+        a: "Overweight and older dogs most of all — in a large UK study, heavier dogs had roughly 2× the odds and dogs aged 9–12 far higher odds than younger ones, with about 1.94% of all dogs affected in a year. Breed matters too: Weimaraners, Dobermanns, German Pointers, Springer Spaniels, and Labradors all sit well above average. Keeping your dog lean is the one risk factor you can actually control.",
+      },
+    ],
+  },
 ]
 
 export const getAnswer = (slug: string) => answerPages.find((a) => a.slug === slug)
@@ -1208,6 +1266,7 @@ export const answerCategories: AnswerCategory[] = [
       'Cancer & Prevention',
       'Dental Care',
       'Safety',
+      'Lumps & Growths',
       'Holistic Organ Support',
       'Holistic Liver Support',
     ],
