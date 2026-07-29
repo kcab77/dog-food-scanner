@@ -90,15 +90,18 @@ export async function POST(req: Request) {
       })
     }
 
-    // 2) Retrieve with the relevance floor. For a short/referential follow-up
-    // ("what product do you recommend?"), the message alone is meaningless — so
-    // we prepend the previous USER turn to give retrieval (and product matching)
-    // the real topic. Standalone first questions are unaffected.
+    // 2) Retrieve with the relevance floor. Only for a genuinely REFERENTIAL
+    // follow-up ("what do you recommend?", "which one?", "how much of it?") do
+    // we borrow the previous user turn for context — because those have no
+    // standalone meaning. A short question that names a NEW subject
+    // ("what do you think of Simparica?") must retrieve on its own, or prior
+    // context bleeds in and produces a mismatched citation. Detect referential
+    // intent explicitly rather than by length.
     const prevUser = [...history].reverse().find((m) => m.role === 'user')?.content
-    const retrievalText =
-      prevUser && message.trim().split(/\s+/).length <= 8
-        ? `${prevUser}\n${message}`
-        : message
+    const referential =
+      /\b(it|that|those|these|this|them|one|ones|him|her)\b/i.test(message) ||
+      /\b(recommend|which|how (much|many|often|do i)|what should i|any (of )?(others?|else))\b/i.test(message)
+    const retrievalText = prevUser && referential ? `${prevUser}\n${message}` : message
     const queryEmbedding = await embedQuery(retrievalText)
     const { matches, sources, topSimilarity } = await retrieve(expert.id, queryEmbedding)
 
