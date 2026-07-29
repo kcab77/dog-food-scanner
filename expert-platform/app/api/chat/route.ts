@@ -97,11 +97,23 @@ export async function POST(req: Request) {
     // ("what do you think of Simparica?") must retrieve on its own, or prior
     // context bleeds in and produces a mismatched citation. Detect referential
     // intent explicitly rather than by length.
+    // Strip conversational/opinion framing that dilutes the topical signal.
+    // "do you think a raw diet is good?" -> "a raw diet is good" retrieves far
+    // better, because the embedding isn't dominated by "do you think ... is good".
+    const stripped =
+      message
+        .replace(/^\s*(so|and|but|well|ok|okay|hey|hi)[,\s]+/i, '')
+        .replace(
+          /^(do you (really )?think( that)?|what do you (really )?think( about| of)?|what('?s| is) your (take|opinion|view|thoughts?)( on| about)?|do you recommend|would you recommend|how do you feel about|(any )?thoughts on|is it true that|can you tell me about|tell me about|i('?m| am) wondering( about| if)?|i want to know( about)?|i'?d like to know( about)?)\s+/i,
+          '',
+        )
+        .trim() || message
+
     const prevUser = [...history].reverse().find((m) => m.role === 'user')?.content
     const referential =
       /\b(it|that|those|these|this|them|one|ones|him|her)\b/i.test(message) ||
       /\b(recommend|which|how (much|many|often|do i)|what should i|any (of )?(others?|else))\b/i.test(message)
-    const retrievalText = prevUser && referential ? `${prevUser}\n${message}` : message
+    const retrievalText = prevUser && referential ? `${prevUser}\n${stripped}` : stripped
     const queryEmbedding = await embedQuery(retrievalText)
     const { matches, sources, topSimilarity } = await retrieve(expert.id, queryEmbedding)
 
@@ -180,8 +192,21 @@ ${context}${
         .join('')
         .trim() || refusalText(expert.name)
 
-    const citations: Citation[] = sources
-    await logMessage('assistant', answer, citations, false)
+    // Safety net: with a lower retrieval floor we sometimes pull a weakly-related
+    // chunk, and the model honestly answers "I don't have that in the material."
+    // In that case DON'T attach a citation (it would be misleading) — treat it as
+    // a refusal, and log the gap. This lets us keep recall high without ever
+    // stapling a wrong source onto a non-answer.
+    const softRefusal =
+      /couldn'?t find|don'?t have (anything|that)|isn'?t (in|part of)|not (in|part of) (the|what)|only answer from|point you to/i.test(
+        answer,
+      )
+
+    const citations: Citation[] = softRefusal ? [] : sources
+    if (softRefusal) {
+      await sb.from('unanswered').insert({ expert_id: expert.id, question: message, embedding: queryEmbedding })
+    }
+    await logMessage('assistant', answer, citations, softRefusal)
 
     // 5) Usage metering.
     await sb.from('usage_events').insert({
@@ -195,8 +220,8 @@ ${context}${
       conversationId: convoId,
       answer,
       citations,
-      products: relevantProducts.map((p) => ({ name: p.name, url: p.url })),
-      refused: false,
+      products: softRefusal ? [] : relevantProducts.map((p) => ({ name: p.name, url: p.url })),
+      refused: softRefusal,
       topSimilarity,
       floor: RELEVANCE_FLOOR,
       disclaimer: DISCLAIMER,

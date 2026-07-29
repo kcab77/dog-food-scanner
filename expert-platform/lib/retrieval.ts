@@ -3,7 +3,12 @@ import { serviceClient } from './supabase'
 // The relevance floor. If the best chunk doesn't clear this cosine similarity,
 // we do NOT call the model to "try anyway" — we take the refusal path. Tune per
 // embedding model; voyage-3 cosine tends to sit ~0.4–0.7 for genuine matches.
-export const RELEVANCE_FLOOR = Number(process.env.RELEVANCE_FLOOR ?? '0.55')
+// Tuned against real scores: her dog-focused chunks score a genuine topic
+// (e.g. "raw diet") around 0.42+, while truly off-topic queries (a flea/tick
+// brand she never names) sit near 0.28 — so 0.40 cleanly separates "she covers
+// this" from "she doesn't." The route's soft-refusal safety net catches any
+// weak match that still leads to a non-answer, so no misleading citations.
+export const RELEVANCE_FLOOR = Number(process.env.RELEVANCE_FLOOR ?? '0.40')
 export const MATCH_COUNT = Number(process.env.MATCH_COUNT ?? '8')
 
 export type Match = {
