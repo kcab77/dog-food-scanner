@@ -62,6 +62,19 @@ export async function POST(req: Request) {
       })
     }
 
+    // Conversation memory: pull the recent turns (BEFORE logging the new one)
+    // so follow-ups like "what do you recommend for that?" keep their context.
+    let history: { role: 'user' | 'assistant'; content: string }[] = []
+    if (convoId) {
+      const { data: past } = await sb
+        .from('messages')
+        .select('role, content')
+        .eq('conversation_id', convoId)
+        .order('created_at', { ascending: false })
+        .limit(6)
+      history = ((past ?? []) as { role: 'user' | 'assistant'; content: string }[]).reverse()
+    }
+
     await logMessage('user', message)
 
     // 1) Emergency short-circuit — BEFORE any retrieval or model call.
@@ -77,8 +90,16 @@ export async function POST(req: Request) {
       })
     }
 
-    // 2) Retrieve with the relevance floor.
-    const queryEmbedding = await embedQuery(message)
+    // 2) Retrieve with the relevance floor. For a short/referential follow-up
+    // ("what product do you recommend?"), the message alone is meaningless — so
+    // we prepend the previous USER turn to give retrieval (and product matching)
+    // the real topic. Standalone first questions are unaffected.
+    const prevUser = [...history].reverse().find((m) => m.role === 'user')?.content
+    const retrievalText =
+      prevUser && message.trim().split(/\s+/).length <= 8
+        ? `${prevUser}\n${message}`
+        : message
+    const queryEmbedding = await embedQuery(retrievalText)
     const { matches, sources, topSimilarity } = await retrieve(expert.id, queryEmbedding)
 
     // 3) Refusal path: nothing cleared the floor -> do NOT call the model.
@@ -105,15 +126,19 @@ export async function POST(req: Request) {
       .map((m, i) => `[Source ${i + 1}] (similarity ${m.similarity.toFixed(2)})\n${m.content}`)
       .join('\n\n---\n\n')
 
-    // Products whose keywords appear in the question (simple, deterministic).
-    const { data: productRows } = await sb
-      .from('products')
-      .select('name, url, keywords')
-      .eq('expert_id', expert.id)
-    const q = message.toLowerCase()
-    const relevantProducts = (productRows ?? [])
-      .filter((p) => (p.keywords ?? []).some((k: string) => q.includes(k.toLowerCase())))
-      .slice(0, 3)
+    // Products matched by REAL semantic similarity (reuses the same question
+    // embedding already computed above — no extra embedding cost), against
+    // each expert's actual catalog. This is deliberately precise: it returns
+    // the single best-fit item(s) above a relevance floor, not every product
+    // that happens to share a keyword. If nothing is specifically relevant,
+    // it returns nothing rather than shotgunning the whole catalog.
+    const { data: productMatches } = await sb.rpc('match_products', {
+      p_expert: expert.id,
+      query_embedding: queryEmbedding,
+      match_count: 2,
+      similarity_threshold: Number(process.env.PRODUCT_RELEVANCE_FLOOR ?? '0.42'),
+    })
+    const relevantProducts = (productMatches ?? []) as { name: string; url: string | null; similarity: number }[]
 
     const system = `${expert.persona_prompt}
 
@@ -132,12 +157,17 @@ ${context}${
         : ''
     }`
 
+    // Give the model the recent conversation so follow-ups keep their thread,
+    // then the current question last. History is still answered ONLY from the
+    // freshly-retrieved CONTEXT above — memory adds continuity, not new facts.
+    const priorTurns = history.map((m) => ({ role: m.role, content: m.content }))
+
     const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_KEY })
     const completion = await anthropic.messages.create({
       model: MODEL,
       max_tokens: 700,
       system,
-      messages: [{ role: 'user', content: message }],
+      messages: [...priorTurns, { role: 'user', content: message }],
     })
 
     const answer =
