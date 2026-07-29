@@ -7,6 +7,45 @@ export const runtime = 'nodejs'
 export const maxDuration = 60 // headroom for Voyage 429 backoff (up to ~24s) + generation
 
 const MODEL = 'claude-sonnet-5'
+const REWRITE_MODEL = 'claude-haiku-4-5-20251001' // cheap/fast query understanding
+
+// Turn a possibly-messy user message (typos, slang, a bare follow-up like
+// "what do you recommend?") into a clean, standalone search query, using recent
+// context. Improves retrieval robustness without touching the strict
+// answer-only-from-context + refusal behavior. Falls back to the raw message on
+// any error, so a hiccup here can never break a request.
+async function rewriteQuery(
+  anthropic: Anthropic,
+  history: { role: 'user' | 'assistant'; content: string }[],
+  message: string,
+): Promise<string> {
+  try {
+    const convo = history
+      .slice(-4)
+      .map((m) => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`)
+      .join('\n')
+    const res = await anthropic.messages.create({
+      model: REWRITE_MODEL,
+      max_tokens: 60,
+      system:
+        'You rewrite a pet owner\'s latest message into a concise standalone search query for a veterinary knowledge base. Fix spelling and typos (e.g. brand/drug/ingredient names), expand what they clearly mean, and resolve references ("it", "that", "which one") using the conversation. Output ONLY the rewritten query text — no quotes, no preamble. Keep it short. Do NOT invent a topic that is not implied by the message.',
+      messages: [
+        {
+          role: 'user',
+          content: `${convo ? `Conversation so far:\n${convo}\n\n` : ''}Latest message: ${message}\n\nRewritten search query:`,
+        },
+      ],
+    })
+    const out = res.content
+      .filter((b): b is Anthropic.TextBlock => b.type === 'text')
+      .map((b) => b.text)
+      .join('')
+      .trim()
+    return out || message
+  } catch {
+    return message
+  }
+}
 const DISCLAIMER =
   'This is educational information drawn from published content, not veterinary advice. For anything specific to your pet, please consult your veterinarian.'
 const EMERGENCY_REPLY =
@@ -90,30 +129,14 @@ export async function POST(req: Request) {
       })
     }
 
-    // 2) Retrieve with the relevance floor. Only for a genuinely REFERENTIAL
-    // follow-up ("what do you recommend?", "which one?", "how much of it?") do
-    // we borrow the previous user turn for context — because those have no
-    // standalone meaning. A short question that names a NEW subject
-    // ("what do you think of Simparica?") must retrieve on its own, or prior
-    // context bleeds in and produces a mismatched citation. Detect referential
-    // intent explicitly rather than by length.
-    // Strip conversational/opinion framing that dilutes the topical signal.
-    // "do you think a raw diet is good?" -> "a raw diet is good" retrieves far
-    // better, because the embedding isn't dominated by "do you think ... is good".
-    const stripped =
-      message
-        .replace(/^\s*(so|and|but|well|ok|okay|hey|hi)[,\s]+/i, '')
-        .replace(
-          /^(do you (really )?think( that)?|what do you (really )?think( about| of)?|what('?s| is) your (take|opinion|view|thoughts?)( on| about)?|do you recommend|would you recommend|how do you feel about|(any )?thoughts on|is it true that|can you tell me about|tell me about|i('?m| am) wondering( about| if)?|i want to know( about)?|i'?d like to know( about)?)\s+/i,
-          '',
-        )
-        .trim() || message
-
-    const prevUser = [...history].reverse().find((m) => m.role === 'user')?.content
-    const referential =
-      /\b(it|that|those|these|this|them|one|ones|him|her)\b/i.test(message) ||
-      /\b(recommend|which|how (much|many|often|do i)|what should i|any (of )?(others?|else))\b/i.test(message)
-    const retrievalText = prevUser && referential ? `${prevUser}\n${stripped}` : stripped
+    // 2) Understand the question, THEN retrieve. A cheap model pass fixes typos
+    // ("simperica" -> "Simparica"), expands intent, and resolves bare follow-ups
+    // ("what do you recommend?") into a standalone query using context — so
+    // retrieval is robust to messy input. This only shapes the SEARCH; the
+    // answer is still generated strictly from what's retrieved, and still refuses
+    // when nothing relevant is found.
+    const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_KEY })
+    const retrievalText = await rewriteQuery(anthropic, history, message)
     const queryEmbedding = await embedQuery(retrievalText)
     const { matches, sources, topSimilarity } = await retrieve(expert.id, queryEmbedding)
 
@@ -158,9 +181,9 @@ export async function POST(req: Request) {
     const system = `${expert.persona_prompt}
 
 You are an assistant that answers ONLY using the CONTEXT passages below, which are drawn from ${expert.name}'s own published work. Absolute rules:
-- Never use outside knowledge. If the CONTEXT doesn't clearly answer the question, say you don't have that in the material and suggest asking ${expert.name} directly. Do not improvise or fill gaps.
-- Write in ${expert.name}'s voice: warm, practical, holistic.
-- Keep it concise and directly useful. Do not fabricate studies, doses, or product names.
+- Never use outside knowledge. Do not improvise or fill gaps.
+- If the CONTEXT does not genuinely address the question, begin your reply with the exact token [[NOCTX]] on its own, then a brief, warm one-sentence redirect to ${expert.name}. Do this whenever the passages are off-topic or only tangentially related — do not stretch unrelated content to force an answer.
+- Otherwise, write in ${expert.name}'s voice: warm, practical, holistic. Keep it concise and directly useful. Do not fabricate studies, doses, or product names.
 - End with the exact disclaimer provided by the app (do not restate it yourself).
 
 CONTEXT:
@@ -177,7 +200,6 @@ ${context}${
     // freshly-retrieved CONTEXT above — memory adds continuity, not new facts.
     const priorTurns = history.map((m) => ({ role: m.role, content: m.content }))
 
-    const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_KEY })
     const completion = await anthropic.messages.create({
       model: MODEL,
       max_tokens: 700,
@@ -185,22 +207,20 @@ ${context}${
       messages: [...priorTurns, { role: 'user', content: message }],
     })
 
-    const answer =
+    const raw =
       completion.content
         .filter((b): b is Anthropic.TextBlock => b.type === 'text')
         .map((b) => b.text)
         .join('')
-        .trim() || refusalText(expert.name)
+        .trim() || `[[NOCTX]] ${refusalText(expert.name)}`
 
-    // Safety net: with a lower retrieval floor we sometimes pull a weakly-related
-    // chunk, and the model honestly answers "I don't have that in the material."
-    // In that case DON'T attach a citation (it would be misleading) — treat it as
-    // a refusal, and log the gap. This lets us keep recall high without ever
-    // stapling a wrong source onto a non-answer.
-    const softRefusal =
-      /couldn'?t find|don'?t have (anything|that)|isn'?t (in|part of)|not (in|part of) (the|what)|only answer from|point you to/i.test(
-        answer,
-      )
+    // Deterministic refusal signal: with a lower retrieval floor we sometimes
+    // pull a weakly-related chunk. Rather than guess from wording, the model
+    // emits [[NOCTX]] when the context doesn't genuinely answer. On refusal we
+    // strip the token, drop citations/products (no misleading source), and log
+    // the gap.
+    const softRefusal = raw.includes('[[NOCTX]]')
+    const answer = raw.replace('[[NOCTX]]', '').trim() || refusalText(expert.name)
 
     const citations: Citation[] = softRefusal ? [] : sources
     if (softRefusal) {
