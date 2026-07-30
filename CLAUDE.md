@@ -38,8 +38,8 @@ dog-food-scanner/
 │       ├── seed-blog-content.mjs    # Seeds full blog articles (9 entries)
 │       ├── process_content.mjs     # Generates Q&A pairs from any file → Pinecone
 │       └── ingest_pack.js          # Upserts a pre-written Q&A JSON pack → Pinecone (no Claude gen)
-├── NUTRITION_NOTES.md          # Master dog nutrition reference
-├── BLOG_POSTS.md               # Blog post tracker
+├── docs/NUTRITION_NOTES.md          # Master dog nutrition reference
+├── docs/BLOG_POSTS.md               # Blog post tracker
 └── CLAUDE.md                   # This file
 ```
 
@@ -113,7 +113,7 @@ Embeds (voyage-3) and upserts directly — no Claude generation. IDs are `qa-<to
 ## PawGrade Scoring System (current app: v1.9.0)
 
 Scoring algorithm (**do not change scoring without asking Kyle** — full detail + rationale in
-`APP_SPEC.md` § 3, keep that file in sync too):
+`docs/APP_SPEC.md` § 3, keep that file in sync too):
 - Base score: 60
 - **Processing method is bonus-based, not cap-based (changed 2026-07-19).** Kibble is the
   neutral baseline — no penalty, no cap. Gentler formats earn a bonus instead: Raw/Freeze-dried

@@ -57,3 +57,6 @@ knowledge-vault/
 **/.venv/
 *.log
 _icloud-duplicates/
+
+# Archived dormant projects (kept on disk, not in git)
+_archive/
