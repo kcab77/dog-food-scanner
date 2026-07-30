@@ -52,17 +52,49 @@ export async function retrieve(
   const sourceIds = Array.from(new Set(rows.map((m) => m.source_id)))
   const { data: sourceRows } = await sb
     .from('sources')
-    .select('id, title, url, type')
+    .select('id, title, url, type, metadata')
     .in('id', sourceIds)
 
   const byId = new Map((sourceRows ?? []).map((s) => [s.id, s]))
+
+  // A matched chunk may belong to a COMPILED page (type='wiki'), which is our own
+  // synthesis and has no URL — citing it would be unverifiable. Resolve those
+  // through metadata.derived_from back to the expert's real videos/articles, so a
+  // citation always points at something the user can actually go read/watch.
+  const derivedIds = new Set<string>()
+  for (const s of sourceRows ?? []) {
+    if (s.type === 'wiki') {
+      for (const id of (s.metadata as { derived_from?: string[] })?.derived_from ?? []) derivedIds.add(id)
+    }
+  }
+  if (derivedIds.size) {
+    const { data: originals } = await sb
+      .from('sources')
+      .select('id, title, url, type, metadata')
+      .in('id', Array.from(derivedIds))
+    for (const o of originals ?? []) if (!byId.has(o.id)) byId.set(o.id, o)
+  }
+
   const seen = new Set<string>()
   const sources: RetrievedSource[] = []
+  const push = (id: string) => {
+    if (seen.has(id)) return
+    const s = byId.get(id)
+    if (!s || s.type === 'wiki') return // never cite our own synthesis
+    seen.add(id)
+    sources.push({ source_id: s.id, title: s.title, url: s.url, type: s.type })
+  }
   for (const m of rows) {
-    if (seen.has(m.source_id)) continue
-    seen.add(m.source_id)
     const s = byId.get(m.source_id)
-    if (s) sources.push({ source_id: s.id, title: s.title, url: s.url, type: s.type })
+    if (!s) continue
+    if (s.type === 'wiki') {
+      // Cite the sources this page was compiled from, best-first, capped so one
+      // broad compiled page doesn't flood the citation list.
+      const from = (s.metadata as { derived_from?: string[] })?.derived_from ?? []
+      from.slice(0, 4).forEach(push)
+    } else {
+      push(m.source_id)
+    }
   }
 
   return { matches: rows, sources, topSimilarity: rows[0]?.similarity ?? 0 }
