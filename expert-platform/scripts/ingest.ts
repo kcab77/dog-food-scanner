@@ -34,6 +34,7 @@ const TARGET_TOKENS = 500
 const OVERLAP_TOKENS = 50
 const EMBED_BATCH = 96 // Voyage per-request cap is generous; stay well under
 const CHARS_PER_TOKEN = 4 // heuristic; swap for a real tokenizer if needed
+const YT_LANG = process.env.YT_LANG ?? 'en' // caption track language; see loadYouTube
 
 // ---- tiny arg parser --------------------------------------------------------
 type Args = Record<string, string | boolean>
@@ -322,8 +323,16 @@ async function loadYouTube(channel: string, apiKey: string, limit?: number): Pro
   const docs: Doc[] = []
   for (const v of capped) {
     try {
-      const segments = await YoutubeTranscript.fetchTranscript(v.id)
-      const text = segments.map((s: { text: string }) => s.text).join(' ')
+      // Pin the language. Without this YouTube serves whatever track it likes —
+      // verified in testing: a request with no lang returned an Arabic
+      // translation, which would silently poison an English knowledge base.
+      let segments
+      try {
+        segments = await YoutubeTranscript.fetchTranscript(v.id, { lang: YT_LANG })
+      } catch {
+        segments = await YoutubeTranscript.fetchTranscript(v.id) // fall back to default track
+      }
+      const text = cleanTranscript(segments.map((s: { text: string }) => s.text).join(' '))
       if (text.length > 200) {
         docs.push({ type: 'video', title: v.title, url: `https://youtube.com/watch?v=${v.id}`, text })
       } else {
@@ -334,6 +343,24 @@ async function loadYouTube(channel: string, apiKey: string, limit?: number): Pro
     }
   }
   return docs
+}
+
+/**
+ * Captions are not prose. They arrive wrapped mid-sentence, peppered with
+ * non-speech annotations ([Music], [Applause], ♪) and doubled spaces. Left raw,
+ * that noise gets embedded and competes with real content at retrieval time —
+ * which is the main reason video is a lower-quality source than a book.
+ */
+function cleanTranscript(raw: string): string {
+  return raw
+    .replace(/\[[^\]]{0,40}\]/g, ' ')      // [Music], [Applause], [Laughter]
+    .replace(/\([^)]{0,30}\)/g, ' ')       // (upbeat music)
+    .replace(/[♪♫]/g, ' ')
+    .replace(/&amp;#39;/g, "'").replace(/&amp;quot;/g, '"').replace(/&amp;amp;/g, '&')
+    .replace(/&#39;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, '&')
+    .replace(/\s*\n\s*/g, ' ')             // caption line wraps split sentences
+    .replace(/\s{2,}/g, ' ')
+    .trim()
 }
 
 // ---- embeddings (Voyage) ----------------------------------------------------
