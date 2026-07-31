@@ -5,7 +5,7 @@
  * Supabase (sources + chunks). Idempotent per (expert, url).
  *
  * Usage:
- *   tsx scripts/ingest.ts --expert <slug> --folder ./docs
+ *   tsx scripts/ingest.ts --expert <slug> --folder ./docs        (.txt .md .html .pdf)
  *   tsx scripts/ingest.ts --expert <slug> --sitemap https://site.com/sitemap.xml
  *   tsx scripts/ingest.ts --expert <slug> --youtube <channelId|@handle>
  *   tsx scripts/ingest.ts --expert <slug> --urls ./pages.txt   (one URL per line)
@@ -148,29 +148,93 @@ function htmlToText(html: string): { title: string; text: string } {
 // ---- document loaders -------------------------------------------------------
 type Doc = { type: 'book' | 'video' | 'post'; title: string; url: string | null; text: string }
 
-function loadFolder(dir: string, defaultType: Doc['type']): Doc[] {
+/**
+ * Extract text from a PDF. Books/PDFs are the highest-signal source an expert has
+ * (edited and authoritative), so this matters more than volume from other sources.
+ *
+ * Returns null for scanned PDFs: those are page images with no text layer, and
+ * silently ingesting a handful of garbage characters from a 300-page book would
+ * quietly poison the knowledge base. Better to skip loudly and tell the user OCR
+ * is needed.
+ */
+async function pdfToText(path: string): Promise<{ title: string; text: string } | null> {
+  // pdf.js (inside unpdf) calls Math.sumPrecise, a newer JS proposal missing on
+  // current Node. Without this it logs a warning per page and falls back to less
+  // accurate layout math. Plain summation is fine for text extraction.
+  const M = Math as unknown as { sumPrecise?: (nums: Iterable<number>) => number }
+  if (typeof M.sumPrecise !== 'function') {
+    M.sumPrecise = (nums) => { let s = 0; for (const n of nums) s += n; return s }
+  }
+
+  const { getDocumentProxy, extractText } = await import('unpdf').catch(() => {
+    throw new Error('PDF ingest needs the `unpdf` package: npm i unpdf')
+  })
+  const buf = new Uint8Array(readFileSync(path))
+  const pdf = await getDocumentProxy(buf)
+  const { text, totalPages } = await extractText(pdf, { mergePages: true })
+  const clean = String(text)
+    .replace(/\r\n/g, '\n')
+    .replace(/[ \t]+\n/g, '\n')
+    .replace(/\n{3,}/g, '\n\n')
+    // Rejoin words split across line breaks by PDF layout ("nutri-\ntion").
+    .replace(/(\w)-\n(\w)/g, '$1$2')
+    .trim()
+
+  const perPage = clean.length / Math.max(totalPages, 1)
+  if (perPage < 120) {
+    console.warn(
+      `  · SKIPPED (looks scanned): ${basename(path)} — ${totalPages} pages but only ` +
+      `${clean.length} chars of text. Needs OCR before it can be ingested.`,
+    )
+    return null
+  }
+
+  // Prefer the PDF's own metadata title; fall back to the filename.
+  let title = ''
+  try {
+    const meta = await pdf.getMetadata()
+    title = String((meta?.info as { Title?: string })?.Title ?? '').trim()
+  } catch { /* metadata is optional */ }
+
+  console.log(`  · ${basename(path)} — ${totalPages} pages, ~${estimateTokens(clean).toLocaleString()} tokens`)
+  return { title: title || basename(path, '.pdf'), text: clean }
+}
+
+async function loadFolder(dir: string, defaultType: Doc['type']): Promise<Doc[]> {
   const docs: Doc[] = []
+  const files: string[] = []
   const walk = (d: string) => {
     for (const entry of readdirSync(d)) {
       const p = join(d, entry)
-      const st = statSync(p)
-      if (st.isDirectory()) {
-        walk(p)
-        continue
-      }
-      const ext = extname(p).toLowerCase()
-      if (!['.txt', '.md', '.markdown', '.html', '.htm'].includes(ext)) continue
-      const raw = readFileSync(p, 'utf-8')
-      if (ext === '.html' || ext === '.htm') {
-        const { title, text } = htmlToText(raw)
-        docs.push({ type: defaultType, title: title || basename(p), url: null, text })
-      } else {
-        const firstHeading = raw.match(/^#\s+(.+)$/m)?.[1]?.trim()
-        docs.push({ type: defaultType, title: firstHeading || basename(p), url: null, text: raw })
-      }
+      if (statSync(p).isDirectory()) walk(p)
+      else files.push(p)
     }
   }
   walk(dir)
+
+  for (const p of files) {
+    const ext = extname(p).toLowerCase()
+    if (!['.txt', '.md', '.markdown', '.html', '.htm', '.pdf'].includes(ext)) continue
+
+    if (ext === '.pdf') {
+      try {
+        const res = await pdfToText(p)
+        if (res) docs.push({ type: defaultType, title: res.title, url: null, text: res.text })
+      } catch (e) {
+        console.warn(`  · failed to read ${basename(p)}: ${(e as Error).message}`)
+      }
+      continue
+    }
+
+    const raw = readFileSync(p, 'utf-8')
+    if (ext === '.html' || ext === '.htm') {
+      const { title, text } = htmlToText(raw)
+      docs.push({ type: defaultType, title: title || basename(p), url: null, text })
+    } else {
+      const firstHeading = raw.match(/^#\s+(.+)$/m)?.[1]?.trim()
+      docs.push({ type: defaultType, title: firstHeading || basename(p), url: null, text: raw })
+    }
+  }
   return docs
 }
 
@@ -392,7 +456,7 @@ async function main() {
   let docs: Doc[] = []
   if (args.folder) {
     console.log(`Loading folder: ${args.folder}`)
-    docs = loadFolder(args.folder as string, defaultType)
+    docs = await loadFolder(args.folder as string, defaultType)
   } else if (args.urls) {
     console.log(`Loading URL list: ${args.urls}`)
     docs = await loadUrlFile(args.urls as string, defaultType)
