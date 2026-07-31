@@ -7,3 +7,7 @@ node_modules
 next-env.d.ts
 .vercel
 .env*
+
+# .env.example is a secret-free template — it must be committed so the
+# project can actually be set up by anyone (including future you).
+!.env.example
