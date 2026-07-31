@@ -24,6 +24,7 @@ export type RetrievedSource = {
   title: string
   url: string | null
   type: string
+  image: string | null
 }
 
 /**
@@ -108,7 +109,8 @@ export async function retrieve(
     const s = byId.get(id)
     if (!s || s.type === 'wiki') return // never cite our own synthesis
     seen.add(id)
-    sources.push({ source_id: s.id, title: s.title, url: s.url, type: s.type })
+    const image = (s.metadata as { image?: string } | null)?.image ?? null
+    sources.push({ source_id: s.id, title: s.title, url: s.url, type: s.type, image })
   }
   for (const m of rows) {
     const s = byId.get(m.source_id)

@@ -51,7 +51,7 @@ const DISCLAIMER =
 const EMERGENCY_REPLY =
   "This sounds like it could be an emergency. Please contact your veterinarian or the nearest emergency animal hospital right now — or call the ASPCA Animal Poison Control Center at (888) 426-4435 if a toxin may be involved. Don't wait for an online answer."
 
-type Citation = { source_id: string; title: string; url: string | null; type: string }
+type Citation = { source_id: string; title: string; url: string | null; type: string; image: string | null }
 
 function refusalText(expertName: string): string {
   return `I can only answer from ${expertName}'s published material, and I couldn't find anything in it that covers this. Rather than guess, I'd point you to ${expertName} directly for this one.`
