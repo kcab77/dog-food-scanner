@@ -37,16 +37,42 @@ export async function retrieve(
 ): Promise<{ matches: Match[]; sources: RetrievedSource[]; topSimilarity: number }> {
   const sb = serviceClient()
 
+  // Over-fetch, then BLEND. Compiled pages (type='wiki') are dense syntheses and
+  // can dominate a pure top-N by similarity — measured: a broad question returned
+  // 3 compiled pages and ZERO original articles, so the model had none of the
+  // expert's actual wording to ground on. Conversely a narrow question can return
+  // only originals and lose the cross-source overview. Reserving slots for each
+  // means the model always gets the best of BOTH, which is the point of a hybrid
+  // index. Falls back gracefully when only one kind exists.
   const { data: matches, error } = await sb.rpc('match_chunks', {
     p_expert: expertId,
     query_embedding: queryEmbedding,
-    match_count: MATCH_COUNT,
+    match_count: MATCH_COUNT * 3,
     similarity_threshold: RELEVANCE_FLOOR,
   })
   if (error) throw new Error(`match_chunks failed: ${error.message}`)
 
-  const rows = (matches ?? []) as Match[]
-  if (rows.length === 0) return { matches: [], sources: [], topSimilarity: 0 }
+  const candidates = (matches ?? []) as Match[]
+  if (candidates.length === 0) return { matches: [], sources: [], topSimilarity: 0 }
+
+  // Need source types to partition candidates.
+  const candIds = Array.from(new Set(candidates.map((m) => m.source_id)))
+  const { data: candSources } = await sb.from('sources').select('id, type').in('id', candIds)
+  const typeOf = new Map((candSources ?? []).map((s) => [s.id, s.type]))
+
+  const compiled = candidates.filter((m) => typeOf.get(m.source_id) === 'wiki')
+  const original = candidates.filter((m) => typeOf.get(m.source_id) !== 'wiki')
+  const half = Math.ceil(MATCH_COUNT / 2)
+  const picked = [...compiled.slice(0, half), ...original.slice(0, half)]
+  // Backfill if one side was short, so we still use the full budget.
+  if (picked.length < MATCH_COUNT) {
+    for (const m of candidates) {
+      if (picked.length >= MATCH_COUNT) break
+      if (!picked.includes(m)) picked.push(m)
+    }
+  }
+  // Best-first, so the strongest evidence leads the prompt.
+  const rows = picked.sort((a, b) => b.similarity - a.similarity).slice(0, MATCH_COUNT)
 
   // Fetch source metadata for citations (deduped, order preserved by first hit)
   const sourceIds = Array.from(new Set(rows.map((m) => m.source_id)))
