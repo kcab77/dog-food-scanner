@@ -13,7 +13,12 @@ import type { NextRequest } from 'next/server'
  * token at all, and scanning without an account is a hard requirement.
  */
 
-const SUPABASE_URL = 'https://dyzupdctgejwyuocqbtw.supabase.co'
+// The PawGrade app's Supabase project — where auth users and dog_profiles live.
+// Deliberately NOT the NEXT_PUBLIC_SUPABASE_* pair: those point at the website's
+// own (older) project, and validating an app-issued token against the wrong
+// project's key fails silently, so profiles would never load and nobody would
+// notice. Kept as its own env var to make that separation explicit.
+const SUPABASE_URL = process.env.APP_SUPABASE_URL || 'https://dyzupdctgejwyuocqbtw.supabase.co'
 
 export type DogProfile = {
   dog_name: string
@@ -31,8 +36,11 @@ export async function getDogProfileFromRequest(req: NextRequest): Promise<DogPro
   const token = auth.toLowerCase().startsWith('bearer ') ? auth.slice(7).trim() : ''
   if (!token) return null
 
-  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY
-  if (!anonKey) return null
+  const anonKey = process.env.APP_SUPABASE_ANON_KEY
+  if (!anonKey) {
+    console.warn('[dogProfile] APP_SUPABASE_ANON_KEY not set — profiles cannot load')
+    return null
+  }
 
   try {
     // Scope the client to the caller's token so RLS enforces "own rows only".
