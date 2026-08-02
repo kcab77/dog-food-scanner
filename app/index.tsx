@@ -2124,6 +2124,61 @@ export default function App() {
   // results-screen prompt. Null when signed out — scanning never requires an account.
   const [dogProfileName, setDogProfileName] = useState<string | null>(null);
 
+  // ── Food comparison ──────────────────────────────────────────────────────
+  // A scan wipes the previous result, so the food being compared against is
+  // snapshotted here before the next scan starts.
+  type SavedFood = {
+    name: string; score: number; flagged: string[];
+    processing: string; ingredients: string[];
+  };
+  const [compareFood, setCompareFood] = useState<SavedFood | null>(null);
+  const [compareVisible, setCompareVisible] = useState(false);
+  const [compareVerdict, setCompareVerdict] = useState<string | null>(null);
+  const [compareLoading, setCompareLoading] = useState(false);
+
+  const saveForComparison = () => {
+    if (score === null) return;
+    setCompareFood({
+      name: productName,
+      score,
+      flagged: flagged.map((f) => f.name),
+      processing: processing?.method ?? "Unknown",
+      ingredients,
+    });
+    Alert.alert(
+      "Saved to compare",
+      `Now scan another food and we'll show you how it stacks up against ${productName}.`,
+    );
+  };
+
+  /** Ask the coach which food is better, with the dog's profile in play. */
+  const runComparison = async () => {
+    if (!compareFood || score === null) return;
+    setCompareVerdict(null);
+    setCompareLoading(true);
+    const question =
+      `Compare these two dog foods and tell me which is the better choice, and why.\n\n` +
+      `FOOD A — ${compareFood.name}\n` +
+      `Score: ${compareFood.score}/100 · Processing: ${compareFood.processing}\n` +
+      `Concerning ingredients: ${compareFood.flagged.join(", ") || "none flagged"}\n` +
+      `Ingredients: ${compareFood.ingredients.slice(0, 30).join(", ")}\n\n` +
+      `FOOD B — ${productName}\n` +
+      `Score: ${score}/100 · Processing: ${processing?.method ?? "Unknown"}\n` +
+      `Concerning ingredients: ${flagged.map((f) => f.name).join(", ") || "none flagged"}\n` +
+      `Ingredients: ${ingredients.slice(0, 30).join(", ")}\n\n` +
+      `Say clearly which one you'd pick and the main reasons. If neither is good, say that too. ` +
+      `Keep it to 4-6 sentences.`;
+    const reply = await askNutritionCoach(
+      `${compareFood.name} vs ${productName}`,
+      ingredients.join(", "),
+      score,
+      flagged.map((f) => f.name),
+      [{ role: "user", content: question }],
+    );
+    setCompareVerdict(reply);
+    setCompareLoading(false);
+  };
+
   // Refresh whenever the coach opens, so a profile saved mid-session shows up
   // without needing an app restart.
   useEffect(() => {
@@ -5312,6 +5367,43 @@ export default function App() {
                 </TouchableOpacity>
               )}
 
+              {/* Compare two foods. Either save this one as the baseline, or — if a
+                  baseline is already saved — jump straight to the head-to-head. */}
+              {score !== null && (
+                <TouchableOpacity
+                  onPress={() => {
+                    if (compareFood && compareFood.name !== productName) {
+                      setCompareVerdict(null);
+                      setCompareVisible(true);
+                    } else {
+                      saveForComparison();
+                    }
+                  }}
+                  style={{
+                    flexDirection: "row", alignItems: "center", gap: 12,
+                    backgroundColor: t.surfaceAlt, borderRadius: 18, padding: 16,
+                    marginHorizontal: 16, marginBottom: 14,
+                    borderWidth: 1, borderColor: t.border,
+                  }}
+                  accessibilityLabel="Compare this food with another"
+                >
+                  <Text style={{ fontSize: 24 }}>⚖️</Text>
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ color: t.textStrong, fontSize: 15, fontWeight: "800" }}>
+                      {compareFood && compareFood.name !== productName
+                        ? `Compare with ${compareFood.name}`
+                        : "Compare with another food"}
+                    </Text>
+                    <Text style={{ color: t.textMuted, fontSize: 12.5, lineHeight: 18, marginTop: 2 }}>
+                      {compareFood && compareFood.name !== productName
+                        ? "See them side by side and which one wins."
+                        : "Save this one, scan another, and see which is better."}
+                    </Text>
+                  </View>
+                  <Text style={{ color: t.textMuted, fontSize: 20, fontWeight: "700" }}>›</Text>
+                </TouchableOpacity>
+              )}
+
               {scoreBreakdown.length > 0 && (
                 <View style={styles.section}>
                   <Text style={styles.sectionTitle}>Why This Score</Text>
@@ -5934,6 +6026,41 @@ export default function App() {
                         </Text>
                       </View>
                     )}
+
+                    {/* What the claim is actually based on. Shown for every
+                        ingredient — including when the honest answer is "no dog
+                        trials, this is mechanistic" — so nothing reads as more
+                        proven than it is. */}
+                    {ingredientDetailData.evidence && (
+                      <View style={styles.detailSection}>
+                        <Text style={styles.detailSectionTitle}>
+                          Evidence{" "}
+                          {ingredientDetailData.evidence_strength && (
+                            <Text
+                              style={{
+                                fontSize: 11,
+                                fontWeight: "800",
+                                color:
+                                  ingredientDetailData.evidence_strength === "strong" ? t.good
+                                  : ingredientDetailData.evidence_strength === "moderate" ? t.goodDeep
+                                  : ingredientDetailData.evidence_strength === "emerging" ? t.high
+                                  : t.textMuted,
+                              }}
+                            >
+                              · {String(ingredientDetailData.evidence_strength).toUpperCase()}
+                            </Text>
+                          )}
+                        </Text>
+                        <Text style={styles.detailSectionBody}>
+                          {ingredientDetailData.evidence}
+                        </Text>
+                        {ingredientDetailData.from_knowledge_base && (
+                          <Text style={{ color: t.textDim, fontSize: 11, marginTop: 6 }}>
+                            Sourced from the Common Sense Dog knowledge base
+                          </Text>
+                        )}
+                      </View>
+                    )}
                   </>
                 )}
 
@@ -6000,6 +6127,103 @@ export default function App() {
             </>
           )}
         </View>
+      </Modal>
+
+      {/* Head-to-head comparison of the saved food vs the one just scanned. */}
+      <Modal
+        visible={compareVisible}
+        animationType="slide"
+        onRequestClose={() => setCompareVisible(false)}
+      >
+        <SafeAreaView style={{ flex: 1, backgroundColor: t.bg }}>
+          <View style={styles.coachHeader}>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.coachHeaderTitle}>Which is better?</Text>
+              <Text style={styles.coachHeaderSub}>
+                {dogProfileName ? `Judged for ${dogProfileName}` : "Sign in to judge it for your dog"}
+              </Text>
+            </View>
+            <TouchableOpacity
+              onPress={() => setCompareVisible(false)}
+              accessibilityLabel="Close comparison"
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+            >
+              <Text style={{ color: t.textMuted, fontSize: 22, fontWeight: "700" }}>✕</Text>
+            </TouchableOpacity>
+          </View>
+
+          <ScrollView contentContainerStyle={{ padding: 16, gap: 14 }}>
+            {compareFood && score !== null && (
+              <>
+                <View style={{ flexDirection: "row", gap: 12 }}>
+                  {[
+                    { label: compareFood.name, s: compareFood.score, fl: compareFood.flagged, pr: compareFood.processing },
+                    { label: productName, s: score, fl: flagged.map((f) => f.name), pr: processing?.method ?? "Unknown" },
+                  ].map((f, i) => {
+                    const wins = f.s === Math.max(compareFood.score, score);
+                    const tie = compareFood.score === score;
+                    return (
+                      <View
+                        key={i}
+                        style={{
+                          flex: 1, backgroundColor: t.surfaceAlt, borderRadius: 16, padding: 14,
+                          borderWidth: wins && !tie ? 2 : 1,
+                          borderColor: wins && !tie ? t.good : t.border,
+                        }}
+                      >
+                        {wins && !tie && (
+                          <Text style={{ color: t.good, fontSize: 10, fontWeight: "800", letterSpacing: 1, marginBottom: 4 }}>
+                            HIGHER SCORE
+                          </Text>
+                        )}
+                        <Text numberOfLines={2} style={{ color: t.textStrong, fontSize: 13.5, fontWeight: "700", minHeight: 36 }}>
+                          {f.label}
+                        </Text>
+                        <Text style={{ color: getScoreColor(f.s), fontSize: 34, fontWeight: "800", marginTop: 6 }}>
+                          {f.s}
+                        </Text>
+                        <Text style={{ color: t.textDim, fontSize: 11 }}>out of 100</Text>
+                        <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 8 }}>{f.pr}</Text>
+                        <Text style={{ color: f.fl.length ? t.critical : t.good, fontSize: 12, marginTop: 6 }}>
+                          {f.fl.length ? `${f.fl.length} flagged` : "No flags"}
+                        </Text>
+                      </View>
+                    );
+                  })}
+                </View>
+
+                {compareVerdict ? (
+                  <View style={{ backgroundColor: t.goodTint, borderRadius: 16, padding: 16, borderWidth: 1, borderColor: t.good }}>
+                    <Text style={{ color: t.textStrong, fontSize: 15, lineHeight: 22 }}>{compareVerdict}</Text>
+                  </View>
+                ) : (
+                  <TouchableOpacity
+                    onPress={runComparison}
+                    disabled={compareLoading}
+                    style={{
+                      backgroundColor: t.good, borderRadius: 14, paddingVertical: 15,
+                      alignItems: "center", opacity: compareLoading ? 0.5 : 1,
+                    }}
+                  >
+                    {compareLoading
+                      ? <ActivityIndicator color={t.onAccent} />
+                      : (
+                        <Text style={{ color: t.onAccent, fontSize: 15, fontWeight: "800" }}>
+                          {dogProfileName ? `Which is better for ${dogProfileName}?` : "Which one should I pick?"}
+                        </Text>
+                      )}
+                  </TouchableOpacity>
+                )}
+
+                <TouchableOpacity onPress={() => { setCompareFood(null); setCompareVisible(false); setCompareVerdict(null); }}>
+                  <Text style={{ color: t.textMuted, fontSize: 13, textAlign: "center", paddingVertical: 10 }}>
+                    Clear comparison
+                  </Text>
+                </TouchableOpacity>
+              </>
+            )}
+          </ScrollView>
+        </SafeAreaView>
       </Modal>
 
       {/* AI Nutrition Coach — the chat itself. The state, handlers and styles for

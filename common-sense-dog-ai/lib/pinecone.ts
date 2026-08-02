@@ -52,14 +52,25 @@ export type ScoredChunk = { text: string; score: number }
 // Pinecone-first retrieval: returns matches WITH their confidence scores so the
 // caller can decide whether the knowledge base answers the question (priority)
 // or whether to fall back to the model's general knowledge.
-export async function searchKnowledgeScored(query: string, topK = 8): Promise<ScoredChunk[]> {
+/**
+ * `minScore` is caller-tunable because query LENGTH shifts the score range: a full
+ * owner question ("is menadione safe in dog food?") scores well above a bare
+ * ingredient name, even on the identical passage. A fixed 0.5 floor silently
+ * returned nothing for short lookups, so callers doing ingredient-style queries
+ * pass a lower floor.
+ */
+export async function searchKnowledgeScored(
+  query: string,
+  topK = 8,
+  minScore = 0.5,
+): Promise<ScoredChunk[]> {
   if (!process.env.VOYAGE_API_KEY) return []
   try {
     const values = await embedText(query)
     const results = await index.query({ vector: values, topK, includeMetadata: true })
     return results.matches
       .map(m => ({ text: (m.metadata as { text: string })?.text ?? '', score: m.score ?? 0 }))
-      .filter(c => c.text && c.score > 0.5)
+      .filter(c => c.text && c.score > minScore)
       .sort((a, b) => b.score - a.score)
   } catch {
     return []
