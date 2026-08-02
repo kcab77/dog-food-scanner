@@ -1,7 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import * as ImageManipulator from "expo-image-manipulator";
-import React, { useRef, useState } from "react";
+import { router, type Href } from "expo-router";
+import React, { useEffect, useRef, useState } from "react";
 import {
     ActivityIndicator,
     Alert,
@@ -10,6 +11,7 @@ import {
     Linking,
     Modal,
     Platform,
+    SafeAreaView,
     ScrollView,
     StyleSheet,
     Text,
@@ -20,7 +22,7 @@ import {
 } from "react-native";
 import { auditIngredientList } from "../lib/ingredientDatabase";
 import { analyzeIngredients } from "../lib/ingredientLookup";
-import { logScan, submitFeedback } from "../lib/supabase";
+import { getDogProfile, getSession, logScan, submitFeedback } from "../lib/supabase";
 import { t } from "../lib/theme";
 import {
     askNutritionCoach,
@@ -2118,6 +2120,26 @@ export default function App() {
   const [coachInput, setCoachInput] = useState("");
   const [coachLoading, setCoachLoading] = useState(false);
   const [showCoachPaywall, setShowCoachPaywall] = useState(false);
+  // The signed-in owner's dog, used to personalise the coach header and the
+  // results-screen prompt. Null when signed out — scanning never requires an account.
+  const [dogProfileName, setDogProfileName] = useState<string | null>(null);
+
+  // Refresh whenever the coach opens, so a profile saved mid-session shows up
+  // without needing an app restart.
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const session = await getSession();
+        if (!session) { if (!cancelled) setDogProfileName(null); return; }
+        const profile = await getDogProfile();
+        if (!cancelled) setDogProfileName(profile?.dog_name ?? null);
+      } catch {
+        if (!cancelled) setDogProfileName(null);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [coachVisible]);
   const [ingredientDetailVisible, setIngredientDetailVisible] = useState(false);
   const [selectedIngredient, setSelectedIngredient] = useState("");
   const [ingredientDetailData, setIngredientDetailData] = useState<any>(null);
@@ -2156,7 +2178,8 @@ export default function App() {
 
   if (!permission) return <View />;
 
-  if (!permission.granted) {
+  // [PREVIEW-ONLY, uncommitted] let web fall through so demo buttons are reachable
+  if (!permission.granted && Platform.OS !== "web") {
     return (
       <View style={styles.center}>
         <Text style={styles.message}>
@@ -5260,6 +5283,35 @@ export default function App() {
                 </View>
               )}
 
+              {/* Entry point to the AI coach. Placed straight after the score and the
+                  "how to improve" card, because that's the moment the owner has a
+                  question. Personalised once a dog profile exists. */}
+              {score !== null && (
+                <TouchableOpacity
+                  onPress={openCoach}
+                  style={{
+                    flexDirection: "row", alignItems: "center", gap: 12,
+                    backgroundColor: t.goodTint, borderRadius: 18, padding: 16,
+                    marginHorizontal: 16, marginBottom: 14,
+                    borderWidth: 1, borderColor: t.good,
+                  }}
+                  accessibilityLabel="Ask the AI nutrition coach about this food"
+                >
+                  <Text style={{ fontSize: 24 }}>💬</Text>
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ color: t.textStrong, fontSize: 15, fontWeight: "800" }}>
+                      {dogProfileName ? `Ask about this for ${dogProfileName}` : "Ask about this food"}
+                    </Text>
+                    <Text style={{ color: t.textMuted, fontSize: 12.5, lineHeight: 18, marginTop: 2 }}>
+                      {dogProfileName
+                        ? "Answers account for their diet, supplements and health issues."
+                        : "Get holistic answers — add your dog's profile to make them specific."}
+                    </Text>
+                  </View>
+                  <Text style={{ color: t.good, fontSize: 20, fontWeight: "700" }}>›</Text>
+                </TouchableOpacity>
+              )}
+
               {scoreBreakdown.length > 0 && (
                 <View style={styles.section}>
                   <Text style={styles.sectionTitle}>Why This Score</Text>
@@ -5948,6 +6000,98 @@ export default function App() {
             </>
           )}
         </View>
+      </Modal>
+
+      {/* AI Nutrition Coach — the chat itself. The state, handlers and styles for
+          this existed but nothing ever rendered it, so the coach was unreachable. */}
+      <Modal
+        visible={coachVisible}
+        animationType="slide"
+        onRequestClose={() => setCoachVisible(false)}
+      >
+        <SafeAreaView style={styles.coachModal}>
+          <View style={styles.coachHeader}>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.coachHeaderTitle}>AI Nutrition Coach</Text>
+              <Text style={styles.coachHeaderSub}>
+                {dogProfileName
+                  ? `Answers tailored to ${dogProfileName}`
+                  : "Sign in to get answers tailored to your dog"}
+              </Text>
+            </View>
+            <TouchableOpacity
+              onPress={() => setCoachVisible(false)}
+              accessibilityLabel="Close coach"
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+            >
+              <Text style={{ color: t.textMuted, fontSize: 22, fontWeight: "700" }}>✕</Text>
+            </TouchableOpacity>
+          </View>
+
+          {!dogProfileName && (
+            <TouchableOpacity
+              onPress={() => { setCoachVisible(false); router.push("/login" as Href); }}
+              style={{
+                margin: 12, padding: 12, borderRadius: 12,
+                backgroundColor: t.goodTint, borderWidth: 1, borderColor: t.good,
+              }}
+            >
+              <Text style={{ color: t.textStrong, fontWeight: "700", fontSize: 14 }}>
+                🐾 Add your dog&apos;s profile
+              </Text>
+              <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 2, lineHeight: 17 }}>
+                Save their diet, supplements and health issues once — every answer gets
+                tailored to them.
+              </Text>
+            </TouchableOpacity>
+          )}
+
+          <ScrollView style={styles.coachMessages} contentContainerStyle={{ padding: 16, gap: 10 }}>
+            {coachMessages.map((m, i) => (
+              <View
+                key={i}
+                style={[styles.coachBubble, m.role === "user" && styles.coachBubbleUser]}
+              >
+                <Text style={{ color: m.role === "user" ? t.onAccent : t.textStrong, fontSize: 15, lineHeight: 21 }}>
+                  {m.content}
+                </Text>
+              </View>
+            ))}
+            {coachLoading && (
+              <View style={styles.coachBubble}>
+                <ActivityIndicator color={t.textMuted} />
+              </View>
+            )}
+          </ScrollView>
+
+          <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : undefined}>
+            <View style={styles.coachInputRow}>
+              <TextInput
+                style={styles.coachInput}
+                value={coachInput}
+                onChangeText={setCoachInput}
+                placeholder="Ask about this food…"
+                placeholderTextColor={t.textDim}
+                editable={!coachLoading}
+                onSubmitEditing={sendCoachMessage}
+                returnKeyType="send"
+                multiline
+              />
+              <TouchableOpacity
+                onPress={sendCoachMessage}
+                disabled={!coachInput.trim() || coachLoading}
+                style={{
+                  backgroundColor: t.good, borderRadius: 20, width: 40, height: 40,
+                  alignItems: "center", justifyContent: "center",
+                  opacity: !coachInput.trim() || coachLoading ? 0.4 : 1,
+                }}
+                accessibilityLabel="Send message"
+              >
+                <Text style={{ color: t.onAccent, fontSize: 18, fontWeight: "700" }}>↑</Text>
+              </TouchableOpacity>
+            </View>
+          </KeyboardAvoidingView>
+        </SafeAreaView>
       </Modal>
 
       <Modal
