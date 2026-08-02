@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { isValidAppRequest } from '@/lib/auth'
+import { getDogProfileFromRequest, profilePromptBlock } from '@/lib/dogProfile'
 import { searchKnowledgeScored } from '@/lib/pinecone'
 import { isAllowed } from '@/lib/ratelimit'
 import { DISCLAIMER } from '@/lib/disclaimer'
@@ -29,12 +30,20 @@ export async function POST(req: NextRequest) {
     const strongChunks = scored.filter(c => c.score >= STRONG_THRESHOLD).map(c => c.text)
     const weakChunks = scored.filter(c => c.score < STRONG_THRESHOLD).map(c => c.text)
 
+    // The owner's saved dog profile, resolved from their auth token and read from
+    // the database (never trusted from the request body). Null for anonymous
+    // callers and for app versions already shipped that send no token — those
+    // must keep working exactly as before.
+    const dogProfile = await getDogProfileFromRequest(req)
+
     let systemText = `${COACH_PHILOSOPHY}
 
 Product being reviewed: ${productName}
 Score: ${score}/100
 Concerning ingredients: ${flaggedNames?.length > 0 ? flaggedNames.join(', ') : 'None detected'}
 Full ingredient list: ${ingredientList}`
+
+    if (dogProfile) systemText += profilePromptBlock(dogProfile)
 
     if (strongChunks.length > 0) {
       systemText += `\n\n---\nKNOWLEDGE BASE (PRIMARY SOURCE — USE THIS FIRST):\nThis curated Common Sense Dog knowledge directly addresses the question. Build your answer on it first; do not contradict it. Only add general knowledge to fill small gaps, and keep it within the holistic philosophy above.\n\n${strongChunks.join('\n\n---\n\n')}`
