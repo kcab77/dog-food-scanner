@@ -2135,6 +2135,7 @@ export default function App() {
   const [compareVisible, setCompareVisible] = useState(false);
   const [compareVerdict, setCompareVerdict] = useState<string | null>(null);
   const [compareLoading, setCompareLoading] = useState(false);
+  const [compareSavedNotice, setCompareSavedNotice] = useState(false);
 
   const saveForComparison = () => {
     if (score === null) return;
@@ -2145,10 +2146,11 @@ export default function App() {
       processing: processing?.method ?? "Unknown",
       ingredients,
     });
-    Alert.alert(
-      "Saved to compare",
-      `Now scan another food and we'll show you how it stacks up against ${productName}.`,
-    );
+    // Deliberately NOT Alert.alert: it silently does nothing on react-native-web,
+    // so the button looked completely dead in the browser preview. In-app state
+    // renders everywhere.
+    setCompareSavedNotice(true);
+    setTimeout(() => setCompareSavedNotice(false), 4000);
   };
 
   /** Ask the coach which food is better, with the dog's profile in play. */
@@ -4466,6 +4468,35 @@ export default function App() {
                   {scanMode === "manual" ? "Type in ingredients" : "Scan a food"}
                 </Text>
               </View>
+              {/* Dog profile / sign-in. Previously the only route to the profile was
+                  buried inside the coach modal, so there was no way to reach it from
+                  the main screen at all. */}
+              <TouchableOpacity
+                onPress={async () => {
+                  const session = await getSession();
+                  router.push((session ? "/dog-profile" : "/login") as Href);
+                }}
+                accessibilityLabel={dogProfileName ? `Edit ${dogProfileName}'s profile` : "Add your dog's profile"}
+                style={{
+                  height: 34,
+                  borderRadius: 17,
+                  paddingHorizontal: 12,
+                  marginRight: 8,
+                  backgroundColor: dogProfileName ? t.goodTint : t.surface,
+                  borderWidth: 1,
+                  borderColor: dogProfileName ? t.good : t.border,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexDirection: "row",
+                  gap: 5,
+                }}
+              >
+                <Text style={{ fontSize: 14 }}>🐾</Text>
+                <Text style={{ color: dogProfileName ? t.good : t.textMuted, fontSize: 12, fontWeight: "700" }}>
+                  {dogProfileName ?? "Add dog"}
+                </Text>
+              </TouchableOpacity>
+
               <TouchableOpacity
                 onPress={() => { setShowFeedbackModal(true); setFeedbackSubmitted(false); }}
                 style={{
@@ -5395,13 +5426,32 @@ export default function App() {
                         : "Compare with another food"}
                     </Text>
                     <Text style={{ color: t.textMuted, fontSize: 12.5, lineHeight: 18, marginTop: 2 }}>
-                      {compareFood && compareFood.name !== productName
-                        ? "See them side by side and which one wins."
-                        : "Save this one, scan another, and see which is better."}
+                      {compareSavedNotice
+                        ? "✓ Saved — now scan another food to compare it against."
+                        : compareFood && compareFood.name !== productName
+                          ? "See them side by side and which one wins."
+                          : "Save this one, scan another, and see which is better."}
                     </Text>
                   </View>
                   <Text style={{ color: t.textMuted, fontSize: 20, fontWeight: "700" }}>›</Text>
                 </TouchableOpacity>
+              )}
+
+              {/* Persistent reminder that a food is queued for comparison, so the
+                  saved state isn't invisible once the confirmation fades. */}
+              {compareFood && compareFood.name === productName && (
+                <View style={{
+                  marginHorizontal: 16, marginBottom: 14, padding: 12,
+                  borderRadius: 12, backgroundColor: t.goodTint,
+                  borderWidth: 1, borderColor: t.good,
+                }}>
+                  <Text style={{ color: t.textStrong, fontSize: 13, fontWeight: "700" }}>
+                    ⚖️ Saved for comparison
+                  </Text>
+                  <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 2, lineHeight: 17 }}>
+                    Scan another food and the compare button will show you which one wins.
+                  </Text>
+                </View>
               )}
 
               {scoreBreakdown.length > 0 && (
