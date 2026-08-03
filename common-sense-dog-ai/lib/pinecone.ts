@@ -5,7 +5,22 @@ const index = pc.index(process.env.PINECONE_INDEX || 'dog-knowledge-database')
 
 // Voyage AI embeddings — 768 dimensions to match the Pinecone index
 // Free tier: 50M tokens/month at voyageai.com
-async function embedText(text: string): Promise<number[]> {
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))
+
+/**
+ * Embed with retry on 429.
+ *
+ * Without this, a rate-limited embedding throws, searchKnowledgeScored swallows it
+ * and returns [], and the assistant quietly answers from general AI knowledge with
+ * NO curated research behind it — no error, nothing in the UI, indistinguishable
+ * from a normal answer. On the current Voyage plan (3 requests/minute) that
+ * happens whenever two people ask a question in the same minute.
+ *
+ * Retrying trades a couple of seconds of latency for keeping the knowledge base in
+ * play. It's a mitigation, not a cure: the real fix is putting the payment method
+ * on the organisation that owns the API key.
+ */
+async function embedText(text: string, attempt = 0): Promise<number[]> {
   const res = await fetch('https://api.voyageai.com/v1/embeddings', {
     method: 'POST',
     headers: {
@@ -17,6 +32,12 @@ async function embedText(text: string): Promise<number[]> {
       input: text,
     }),
   })
+
+  if (res.status === 429 && attempt < 3) {
+    await sleep(2500 * (attempt + 1)) // 2.5s, 5s, 7.5s
+    return embedText(text, attempt + 1)
+  }
+
   const data = await res.json()
   if (!data.data?.[0]?.embedding) {
     throw new Error(`Voyage embedding failed: ${JSON.stringify(data)}`)
