@@ -25,6 +25,11 @@ and burned Anthropic tokens.
 
 ## 📱 PawGrade app
 
+- [ ] **Fix omega handling — not all omega-3 is equally bioavailable** (added 2026-08-02). Triggered by Simple Food Project. The app currently treats "omega-3" as one thing and credits the omega-6:3 ratio without asking where the omega-3 actually comes from. That overstates plant sources:
+  - **Marine omega-3 (fish, krill, algae) = EPA/DHA**, the forms a dog can actually use.
+  - **Plant omega-3 (flax, chia, canola) = ALA**, which a dog must convert to EPA/DHA — and dogs convert it *poorly* (commonly cited as well under ~10%). A flax-heavy food can advertise a great ratio while delivering little usable EPA/DHA.
+  - **What to do:** distinguish the omega-3 SOURCE when scoring/explaining, and say so in the results copy (e.g. "this ratio comes mostly from flaxseed — dogs convert that form poorly"). Check what Simple Food Project's ~0.85:1 ratio is actually made of before repeating that number as an anti-inflammatory selling point (it's currently cited in Hershey's protocol and in the KB).
+  - ⚠️ Touches scoring math → confirm the approach with Kyle before changing any numbers. Also worth a Pinecone pack + an answer page, since "is flaxseed omega-3 as good as fish oil for dogs?" is a real search query.
 - [ ] **Change the app logo + App Store description** (added 2026-08-02) — new icon/branding and a rewritten listing. Description should now mention the dog profile + personalised AI coach, since that's new since the current listing was written.
 - [ ] **Fix the Voyage billing organisation** (added 2026-08-02) — the payment method is on a different Voyage org than the one owning the API key, so it's still capped at 3 requests/min. Mitigated in code (retries on 429) but not cured: heavy traffic can still lose knowledge-base grounding. Easiest fix is creating a new API key under the org that HAS the card, then swapping it in the website, expert-platform, and local `.env`.
 - [ ] Submit PawGrade v1.7.0 to App Store
