@@ -25,10 +25,13 @@ and burned Anthropic tokens.
 
 ## 📱 PawGrade app
 
+- [ ] **Change the app logo + App Store description** (added 2026-08-02) — new icon/branding and a rewritten listing. Description should now mention the dog profile + personalised AI coach, since that's new since the current listing was written.
+- [ ] **Fix the Voyage billing organisation** (added 2026-08-02) — the payment method is on a different Voyage org than the one owning the API key, so it's still capped at 3 requests/min. Mitigated in code (retries on 429) but not cured: heavy traffic can still lose knowledge-base grounding. Easiest fix is creating a new API key under the org that HAS the card, then swapping it in the website, expert-platform, and local `.env`.
 - [ ] Submit PawGrade v1.7.0 to App Store
 - [ ] Fill in affiliate links
 - [ ] Fix Supabase RLS on scans table
 - [ ] Upgrade UPC Item DB to paid plan (one-line code change once API key is ready)
+- [ ] **Set up a real email provider for sign-in** (added 2026-08-02) — Supabase's built-in email only sends a few per hour, fine for testing but not launch. Add Resend/SendGrid SMTP under Authentication → Emails before the profile feature ships publicly.
 
 ## 🌐 Website / AI
 
