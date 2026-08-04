@@ -26,29 +26,93 @@ Kyle keeps a single source-of-truth Obsidian vault at **`~/Documents/Obsidian Va
 
 ---
 
+## 🥇 Precedence — who wins when two files disagree
+
+There are several places that describe how things work. When they conflict, this is the
+order. Without it, every duplicated fact is an unresolved argument.
+
+1. **The code and the database** — always win over any prose. If `app.json` says the version
+   and this file says something else, `app.json` is right and this file is a bug.
+2. **This file** (repo `CLAUDE.md`) — the authority on *code, build, deploy, scoring, and app
+   behaviour*.
+3. **Vault `CLAUDE.md`** (`~/Documents/Obsidian Vault/`) — the authority on *knowledge:*
+   how notes are written, filed, graded, and ingested. It does not govern code.
+4. **`PINECONE_PROTOCOL.md`** — overrides everything on *what may enter the knowledge base*.
+   Nothing else can relax it.
+5. **Memory notes** (`~/.claude/projects/.../memory/`) — background only. Point-in-time
+   observations that can be stale; verify against 1–2 before acting on them.
+
+**When you find a conflict, fix the loser** — don't just work around it. That's how these
+drift in the first place.
+
+---
+
 ## Project Structure
+
+**Every top-level directory is listed here.** An unlisted folder is invisible to a fresh
+session — it won't get searched, and you'll be told something isn't there when it is.
+Add a line here whenever you add a directory. (Full product-level map: `PROJECTS.md`.)
 
 ```
 dog-food-scanner/
-├── app/                        # React Native / Expo app (PawGrade iOS)
-│   └── index.tsx               # Main app — scanning, scoring, supplement recs
-├── lib/
-│   └── supabase.js             # Supabase logging (scans, feedback tables)
-├── common-sense-dog-ai/        # Next.js website — commonsensedog.com
+│
+│  ── 1. PawGrade iOS app (repo root IS the app) ──
+├── app/                        # React Native / Expo screens
+│   ├── index.tsx               # Main app — scanning, scoring, supplement recs
+│   ├── dog-profile.tsx         # Dog profile form (feeds the AI coach)
+│   └── login.tsx               # Email OTP sign-in
+├── lib/                        # App-side helpers
+│   ├── supabase.js             # Auth, dog profiles, scan/feedback logging
+│   └── theme.ts                # 🎨 SINGLE SOURCE OF TRUTH for all app colour
+├── components/ constants/ hooks/   # Expo starter scaffolding (largely unused)
+├── storage/ assets/            # App storage helpers · icons, images, fonts
+├── credentials/                # 🔒 iOS signing (gitignored — never commit)
+│
+│  ── 2. commonsensedog.com (Next.js website) ──
+├── common-sense-dog-ai/
 │   ├── app/
 │   │   ├── page.tsx            # Home page with AI chat
-│   │   └── api/chat/route.ts   # Claude API endpoint (RAG via Pinecone)
+│   │   ├── answers/[slug]/     # SEO answer pages
+│   │   ├── library/[slug]/     # Health A–Z (generated from the Obsidian vault)
+│   │   └── api/                # chat · coach · scan · ingredient · barcode
 │   ├── lib/
 │   │   ├── pinecone.ts         # Pinecone search + upsert helpers
-│   │   └── blog-data.ts        # Full blog post content (9 articles)
+│   │   ├── blog-data.ts        # ⚠️ Blog content lives HERE, not in the root lib/
+│   │   ├── answers-data.ts     # SEO answer page content
+│   │   └── library-data.ts     # AUTO-GENERATED — do not hand-edit
 │   └── scripts/
-│       ├── seed-pinecone.mjs        # Seeds knowledge summaries (30 entries)
-│       ├── seed-blog-content.mjs    # Seeds full blog articles (9 entries)
-│       ├── process_content.mjs     # Generates Q&A pairs from any file → Pinecone
-│       └── ingest_pack.js          # Upserts a pre-written Q&A JSON pack → Pinecone (no Claude gen)
-├── docs/NUTRITION_NOTES.md          # Master dog nutrition reference
-├── docs/BLOG_POSTS.md               # Blog post tracker
+│       ├── sync-library.mjs        # Obsidian vault → library-data.ts
+│       ├── seed-pinecone.mjs       # Seeds knowledge summaries (--new-only supported)
+│       ├── seed-blog-content.mjs   # Seeds full blog articles
+│       ├── process_content.mjs     # File → Q&A pairs → Pinecone (uses Claude)
+│       ├── ingest_pack.js          # Pre-written Q&A JSON → Pinecone (no Claude)
+│       └── qa-*.json               # The Q&A packs themselves
+├── common-sense-dog-ai-backup/ # ⚠️ KEY STORE ONLY — code has drifted, never run from it
+│
+│  ── 3. Expert platform (separate product, separate brain) ──
+├── expert-platform/            # White-label expert AI — has its own CLAUDE.md
+│                               # ⚠️ Run Claude FROM this dir for expert work
+│
+│  ── 4. Other ventures & tooling ──
+├── pet-store-chat-agent/       # PetChat SaaS (embeddable pet-store agent)
+├── agent-os/ brain-os/ daily-brief/   # Local dashboards + vault browser
+├── supabase/                   # SQL migrations
+├── scripts/                    # Repo-level utility scripts
+│
+│  ── 5. Docs & records ──
+├── docs/                       # TODO.md · APP_SPEC.md · NUTRITION_NOTES.md · BLOG_POSTS.md
+├── audits/                     # /os-audit reports (dated)
+├── drafts/                     # Work-in-progress writing
+├── PROJECTS.md                 # The four products, mapped
+├── PINECONE_PROTOCOL.md        # 🔒 MANDATORY before any KB addition
+├── PINECONE_TODO.md            # Knowledge-pack tracker
 └── CLAUDE.md                   # This file
+│
+│  ── 6. Inert (gitignored — nothing reads these) ──
+├── _archive/                   # 403 MB of old material
+├── _icloud-duplicates/         # Quarantined " 2" files; several DIFFER from originals
+├── knowledge-vault/            # ⚠️ NOT the knowledge base — folded in, see its README
+└── memory/                     # Legacy; Claude's real memory is in ~/.claude/projects/
 ```
 
 ---
@@ -126,7 +190,9 @@ Embeds (voyage-3) and upserts directly — no Claude generation. IDs are `qa-<to
 
 ---
 
-## PawGrade Scoring System (current app: v1.9.0)
+## PawGrade Scoring System
+
+*(Current version is whatever `app.json` → `version` says — don't trust a number written here.)*
 
 Scoring algorithm (**do not change scoring without asking Kyle** — full detail + rationale in
 `docs/APP_SPEC.md` § 3, keep that file in sync too):
@@ -152,7 +218,8 @@ app.** Never do this. When restyling:
    section from memory. Read the real code first, then make targeted edits.
 2. **Delete nothing.** Restyling changes *how* info is shown, never *whether* it's
    shown. If you think something should be cut → **ask Kyle, don't cut it.**
-3. **Colours only via `lib/theme.ts` tokens.** Zero raw hex in components (currently 0 — keep it 0).
+3. **Colours only via `lib/theme.ts` tokens.** The invariant is **zero** raw hex in components.
+   Verify rather than trust: `grep -cE "#[0-9a-fA-F]{3,8}\b" app/index.tsx` must print `0`.
 4. **Never touch the scoring math**, API calls, Supabase, or keys.
 5. Before saying "done": run `npx tsc --noEmit` (app/ + lib/ must be zero errors), then
    walk the checklist below and report ✅ per item. You cannot run the app — say so.
@@ -199,8 +266,9 @@ value there and it propagates across the whole app automatically.
   and `severityColor` — so grading *presentation* is themed in one place too.
 
 **Hard rule: never reintroduce a raw hex literal into a component.** Add a token to
-`lib/theme.ts` instead. As of 2026-07-14 there are **zero** hex literals in `app/index.tsx`
-(all 495 were migrated); keep it that way or the app becomes un-revampable again.
+`lib/theme.ts` instead. A one-off migration on 2026-07-14 moved every hex literal out of
+`app/index.tsx`; the count must stay at zero or the app becomes un-revampable again.
+Check it, don't assume: `grep -cE "#[0-9a-fA-F]{3,8}\b" app/index.tsx`.
 
 **Light/Dark mode (added 2026-07-19):** `lib/theme.ts` now defines a full `lightPalette` and
 `darkPalette` (both real Apple system-colour pairs, not a naive invert), mapped through the
@@ -220,7 +288,7 @@ Scoring *math* is NOT in the theme — only presentation. Don't change scoring (
 
 ---
 
-## Results Screen & Scan Behavior (v1.9.0 — UI layer)
+## Results Screen & Scan Behavior (UI layer)
 
 Post-scan results render in `app/index.tsx` in this section order (reordered 2026-07-12 for an
 "inform, don't judge" flow — factual/actionable content leads, the red-flag callout is opt-in):
