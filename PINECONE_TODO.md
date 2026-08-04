@@ -62,34 +62,51 @@ knowledge as possible so the assistant becomes THE go-to instead of normal blog 
 - [x] **Liver, Kidney & Environmental Detox — Batch 4** — Kyle-supplied evidence-graded brief, new ground (excluded already-covered SAMe/milk-thistle/dandelion/cranberry/DE/turmeric etc.): NAC (acute antidote not daily supplement), copper hepatopathy (organ meat is the WORST advice for Lab/Doberman/Bedlington/Dalmatian/Westie — a real differentiator), phosphorus restriction (strongest CKD evidence; separates phosphorus from protein), omega-3 renal (+ omega-6 harm), Azodyl myth-check (independent trial null), TCVM Rehmannia (traditional/no trials), lawn herbicides & bladder cancer (Purdue ORs 3.62/7.19), glyphosate (exposure real, harm unproven, detection≠diagnosis), sulforaphane (mechanism strong/no dog data), chlorella-cilantro (gut-binding ≠ stored-metal removal). Web-verified the two load-bearing figures (Finco CKD phosphorus + Purdue Scottie ORs) directly; skipped isoxazolines (already covered). Dropped the doc's flagged 33%/75% CKD survival figures (didn't match primary Finco data) (10 pairs) — ingested 2026-07-28. Obsidian summary: `commonsensedog knowledge/Liver Kidney and Environmental Detox — Batch 4 (2026-07-28).md`
 
 ## 🔍 In review (drafted, awaiting Kyle's approval before ingest)
-*(none right now — all caught up; all Brain/Nutrition/ vault notes are now packed)*
+- [ ] **`qa-thickeners-aflatoxin-2026-08-03.json`** — 12 pairs, all web-verified per `PINECONE_PROTOCOL.md`.
+      Aflatoxin (4, 🟢 strong — FDA + the Midwestern/Sportmix recall), carrageenan (4), gums (4).
+      ⚠️ **Needs a brand-voice decision from Kyle before ingest:** the carrageenan evidence goes
+      *against* the holistic consensus. Weiner 2014 (Crit Rev Toxicol 44:3), JECFA 2001 and EFSA
+      2018 + a dog/cat-specific EFSA opinion in 2023 all clear food-grade carrageenan; the harm
+      studies used *poligeenan*, a different, unapproved substance. The pack says so honestly.
+      Approve, soften, or drop the carrageenan pairs.
+- [ ] Also still open from the tick fold-in: 5 new claims in
+      `commonsensedog knowledge/Tick-Borne Disease & Collar Safety…` (24–36h attachment window,
+      deer vs dog tick, NE prevalence, reinfection/4DX, doxycycline) + the Seresto controversy.
 
 ## 📝 Queue — next up
 *(empty — pick from backlog below)*
 
 ## 💡 Backlog — high-value ideas (prioritized)
+> ✅ **Reconciled 2026-08-03 by `/os-audit`.** Nine of the eleven boxes below were already done —
+> the packs shipped and the boxes were never ticked. Verified against the 58 `qa-*.json` packs on
+> disk *and* the 35 notes in `commonsensedog knowledge/`. Named pack given for each.
+
 **Condition → holistic diet fixes (goldmine):**
-- [ ] Yeast & ear infections · hot spots *(some hot-spot/yeast covered in allergy pack — expand)*
-- [ ] Sensitive stomach / chronic diarrhea / IBD
-- [ ] Pancreatitis (low-fat holistic approach)
-- [ ] Kidney & liver support
-- [ ] Diabetes
-- [ ] Anal gland issues · bad breath / dental · coprophagia (poop eating)
+- [x] Yeast & ear infections · hot spots → `qa-yeast-ears.json`, `qa-itchy-skin-allergies.json`, `qa-post-antibiotic-yeast.json`
+- [x] Sensitive stomach / chronic diarrhea / IBD → `qa-sensitive-stomach-gi.json`, `qa-gi-motility-recovery.json`
+- [x] Pancreatitis (low-fat holistic approach) → `qa-pancreatitis.json`
+- [x] Kidney & liver support → `qa-kidney-liver.json`, `qa-liver-kidney-detox-2026-07-28.json`
+- [x] Diabetes → `qa-diabetes.json`
+- [x] Bad breath / dental → `qa-dental-health.json`, `qa-tooth-enamel-remineralization-2026-07-24.json`
+- [ ] ⚠️ *Still open from that line:* **anal gland issues · coprophagia (poop eating)** — zero coverage anywhere
 
 **Life stages:**
-- [ ] Puppy feeding · senior dog needs · pregnant/nursing · weight loss / obesity
+- [x] Puppy feeding · senior dog needs · pregnant/nursing · weight loss / obesity → `qa-life-stages.json`, `qa-myth-busters.json`
 
 **Ingredient deep-dives (also feeds the scanner's brain):**
-- [ ] Legumes & the DCM story · carrageenan · guar/xanthan gum · glyphosate & mycotoxins in kibble ·
-      "natural flavors" · rendered fats · pea protein
+- [x] Legumes & the DCM story → 3 packs + 3 answer pages
+- [x] Glyphosate & mycotoxins in kibble → `qa-household-chemicals.json` + KB note
+- [ ] ⚠️ *Still open:* **carrageenan · guar gum · xanthan gum · aflatoxin** — **zero** coverage.
+      (A grep for "guar" looked covered but every hit was the word *"guaranteed"*.)
+- [ ] "Natural flavors" · rendered fats · pea protein
 
 **Myth-busters (rank well in search + match the voice):**
-- [ ] "Grain-free causes DCM" · "by-products are fine" · "AAFCO complete = healthy" ·
-      "dogs are basically omnivores"
+- [x] "Grain-free causes DCM" · "by-products are fine" · "AAFCO complete = healthy" ·
+      "dogs are basically omnivores" → `qa-myth-busters.json`, `qa-aafco-nutrient-profiles-2026-07-13.json`
 
 **Practical how-tos:**
-- [ ] Transitioning kibble → fresh safely · raw feeding 80/10/10 basics · balancing a homemade bowl ·
-      reading a label (ingredient splitting, dry-matter basis)
+- [x] Transitioning kibble → fresh safely · raw feeding 80/10/10 · balancing a homemade bowl ·
+      reading a label → `qa-processing-methods.json`, `qa-reading-labels.json`, `qa-salt-divider-rule-2026-07-19.json`
 
 ## ⚙️ Smartest ongoing source
 - [ ] **Mine real chat questions from Supabase** (especially "no match" fallbacks) → turn the actual
