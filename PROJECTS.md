@@ -102,7 +102,7 @@ runtime by `sync-library.mjs` — **do not move them.**
 ## 🧹 Junk / archives — safe to ignore
 | Folder | Note |
 |---|---|
-| `_icloud-duplicates/` | 23 quarantined `" 2"` files from iCloud sync. ⚠️ `app/index 2.tsx` and `lib/theme 2.ts` **differ** from the originals — check before deleting the folder. |
+| `_icloud-duplicates/` | 26 quarantined `" 2"` files from iCloud sync, mirroring their original paths. ⚠️ Several **differ** from the originals — check before deleting the folder. Worst: `common-sense-dog-ai/lib/answers-data 2.ts` is 609 lines vs the live 1,313 (about half the answer pages missing). Also `app/index 2.tsx`, `lib/theme 2.ts`. Quarantined here so a stray restore can't overwrite live code. |
 | `common-sense-dog-ai-backup/` | **Key store, not a working copy.** Value = the intact `.env.local`. Its code has DRIFTED from live (2026-08-03: no Voyage 429 retry in `pinecone.ts`, no `answers-data.ts`). Copy keys *out*; never run ingests from it. |
 | `dog-food-scanner-fresh/` | Redundant app copy |
 | `joint-health-ingest/` | Python ingest experiment; **172MB** (`.venv` now gitignored) |
