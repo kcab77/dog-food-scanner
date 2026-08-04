@@ -608,6 +608,48 @@ const ADDED_VITAMINS = [
 // Items already caught by HARMFUL_INGREDIENTS (menadione, cholecalciferol, sodium selenite,
 // copper sulfate, zinc oxide, ferric oxide, retinyl forms, pyridoxine HCl, etc.) are excluded
 // to avoid double-counting
+/**
+ * How much of each nutrient survives heat.
+ *
+ * This is the "why" behind the processing-method score, stated in numbers instead
+ * of adjectives. "Kibble degrades nutrients" is a claim an owner has to take on
+ * faith; "thiamine retention drops from about 90% to as low as 30%" is something
+ * they can weigh for themselves — and it explains why heat-processed food needs a
+ * vitamin premix while raw and freeze-dried generally don't.
+ *
+ * Ranges are wide on purpose. Actual retention depends on temperature, duration,
+ * moisture, pH and light, so a single number would be false precision. Sources:
+ * food-science retention literature (Lešková et al., heat-treatment retention
+ * models) and AAFCO/pet-food formulation practice.
+ */
+const NUTRIENT_HEAT_LOSS: {
+  nutrient: string;
+  retention: string;
+  note: string;
+  fragile: boolean;
+}[] = [
+  { nutrient: "Thiamine (B1)", retention: "20–80% survives", fragile: true,
+    note: "The most heat-fragile nutrient in the bowl, and the reason cooked foods add thiamine mononitrate — the heat-stable synthetic form. Deficiency causes neurological damage, so this one genuinely has to be replaced." },
+  { nutrient: "Folate (B9)", retention: "~40% survives", fragile: true,
+    note: "Leaches into cooking water as well as degrading, so wet cooking methods lose the most." },
+  { nutrient: "Vitamin C", retention: "Heavily degraded", fragile: true,
+    note: "Rarely matters for dogs — unlike humans, healthy dogs synthesise their own vitamin C." },
+  { nutrient: "Vitamin A (retinol)", retention: "~33% in boiled veg", fragile: true,
+    note: "More stable in fat and in organ meat than in vegetables. Liver is dense enough that losses still leave plenty." },
+  { nutrient: "Riboflavin (B2)", retention: "Mostly survives heat", fragile: false,
+    note: "Heat-stable but degrades fast in light — a packaging problem more than a cooking one." },
+  { nutrient: "Niacin (B3)", retention: "Largely intact", fragile: false,
+    note: "One of the most durable vitamins across every cooking method." },
+  { nutrient: "Vitamin D", retention: "Largely survives cooking", fragile: false,
+    note: "Fat-soluble and heat-stable, so gentle cooking costs little. Storage matters more: D3 fell 59–62% over six months at room temperature. Dogs cannot make vitamin D from sunlight, so diet is the only source." },
+  { nutrient: "Vitamin E", retention: "Mostly survives", fragile: false,
+    note: "Stable to heat but lost to oxidation over time — which is why fats need a preservative, natural (mixed tocopherols) or otherwise." },
+  { nutrient: "Minerals", retention: "Not destroyed by heat", fragile: false,
+    note: "Calcium, zinc, selenium and the rest survive cooking intact. What changes is the FORM used to add them back — chelates and proteinates absorb better than sulfates and oxides." },
+  { nutrient: "Enzymes", retention: "Denatured by heat", fragile: true,
+    note: "Fully destroyed by cooking. Their importance in dog diets is debated — dogs make their own digestive enzymes — so treat this as a reason to favour raw, not proof that cooked food is deficient." },
+];
+
 const VITAMIN_MINERAL_PENALTIES: { term: string; penalty: number; label: string }[] = [
   // Not in HARMFUL_INGREDIENTS — inorganic selenium poor form
   { term: "sodium selenate", penalty: 7, label: "Sodium selenate — inorganic selenium, oxidative kidney damage" },
@@ -5672,6 +5714,49 @@ export default function App() {
 
               {ingredients.length > 0 && (
                 <AccordionSection
+                  title="🔥 What heat does to nutrients"
+                  askLabel="Ask AI"
+                  onAskAI={() =>
+                    askAboutSection(
+                      `This food is ${processing?.method ?? "processed"}. Which nutrients does that processing actually degrade, how much, and does it matter for my dog in practice?`,
+                    )
+                  }
+                >
+                  <Text style={[styles.sectionNote, { marginBottom: 10 }]}>
+                    Why processing method affects the score. Ranges are wide because
+                    retention depends on temperature, time and moisture — a single
+                    number would be false precision.
+                  </Text>
+                  {NUTRIENT_HEAT_LOSS.map((n, i) => (
+                    <View
+                      key={i}
+                      style={{
+                        backgroundColor: t.surface,
+                        borderRadius: 9,
+                        padding: 10,
+                        marginBottom: 6,
+                        borderLeftWidth: 3,
+                        borderLeftColor: n.fragile ? t.high : t.good,
+                      }}
+                    >
+                      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                        <Text style={{ color: t.textStrong, fontSize: 13, fontWeight: "700", flex: 1 }}>
+                          {n.nutrient}
+                        </Text>
+                        <Text style={{ color: n.fragile ? t.high : t.good, fontSize: 11, fontWeight: "700" }}>
+                          {n.retention}
+                        </Text>
+                      </View>
+                      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>
+                        {n.note}
+                      </Text>
+                    </View>
+                  ))}
+                </AccordionSection>
+              )}
+
+              {ingredients.length > 0 && (
+                <AccordionSection
                   title="Ingredient Breakdown"
                   defaultOpen
                   askLabel="Ask AI"
@@ -5681,6 +5766,29 @@ export default function App() {
                     )
                   }
                 >
+                  {/* The single most useful thing an owner can know about a label, and
+                      almost nobody is told it. Everything downstream — the salt divider,
+                      ingredient splitting, "it has blueberries!" — depends on it. */}
+                  <View
+                    style={{
+                      backgroundColor: t.surface,
+                      borderRadius: 10,
+                      padding: 11,
+                      marginBottom: 10,
+                      borderLeftWidth: 3,
+                      borderLeftColor: t.info,
+                    }}
+                  >
+                    <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>
+                      Order matters: heaviest first
+                    </Text>
+                    <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>
+                      Pet food labels are required to list ingredients by weight, heaviest
+                      to lightest. The first few make up most of the food. Anything near the
+                      end is present in a small amount — so a superfood listed last is a
+                      sprinkle, not a serving.
+                    </Text>
+                  </View>
                   <Text style={styles.pillHint}>
                     Tap any ingredient to learn more
                   </Text>
