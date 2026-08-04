@@ -450,15 +450,15 @@ const HARMFUL_INGREDIENTS: {
   // Vitamins & Minerals — tiered by severity per research
   {
     term: "cholecalciferol",
-    severity: "severe",
+    severity: "mild",
     reason:
-      "Cholecalciferol (synthetic Vitamin D3) has an extremely narrow margin between beneficial and toxic doses in dogs. Multiple pet food recalls have involved Vitamin D3 overdose causing hypercalcemia, kidney failure, and death. Dogs cannot tolerate excess Vitamin D the way humans can.",
+      "Cholecalciferol is vitamin D3 — the standard, AAFCO-required form of vitamin D in complete dog food, and its presence on a label is expected rather than alarming. Dogs cannot make meaningful vitamin D in their skin from sunlight the way people do, so it has to come from the diet. Two things are worth knowing. D3 is more potent than D2 (ergocalciferol) and has a narrower safety margin — it is the form used in rodenticides. And the real-world risk is manufacturing error, not the ingredient: FDA recalls in 2018–19 found dog foods containing up to 70x the intended vitamin D, causing hypercalcemia, kidney failure and deaths across brands including Hill's, Nutrisca, Sunshine Mills, Kroger and ELM. An ingredient label cannot tell you the amount, only that it is present — so this is flagged for awareness, not as a mark against the food.",
   },
   {
     term: "vitamin d3 supplement",
-    severity: "severe",
+    severity: "mild",
     reason:
-      "Synthetic Vitamin D3 supplementation has one of the narrowest safe ranges of any nutrient in dogs. Several major pet food recalls involved Vitamin D3 toxicity causing hypercalcemia, kidney failure, and death. One of the most dangerous vitamins for dogs in excess.",
+      "Cholecalciferol is vitamin D3 — the standard, AAFCO-required form of vitamin D in complete dog food, and its presence on a label is expected rather than alarming. Dogs cannot make meaningful vitamin D in their skin from sunlight the way people do, so it has to come from the diet. Two things are worth knowing. D3 is more potent than D2 (ergocalciferol) and has a narrower safety margin — it is the form used in rodenticides. And the real-world risk is manufacturing error, not the ingredient: FDA recalls in 2018–19 found dog foods containing up to 70x the intended vitamin D, causing hypercalcemia, kidney failure and deaths across brands including Hill's, Nutrisca, Sunshine Mills, Kroger and ELM. An ingredient label cannot tell you the amount, only that it is present — so this is flagged for awareness, not as a mark against the food.",
   },
   {
     term: "ferric oxide",
