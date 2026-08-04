@@ -107,7 +107,7 @@ runtime by `sync-library.mjs` — **do not move them.**
 | `dog-food-scanner-fresh/` | Redundant app copy |
 | `joint-health-ingest/` | Python ingest experiment; **172MB** (`.venv` now gitignored) |
 | `dist/` | Expo web build output (regenerated; gitignored) |
-| `knowledge-vault/` | Older notes dir (gitignored) |
+| `knowledge-vault/` | ⚠️ **NOT the knowledge base** despite the name (gitignored). A 2026-06-14 evidence-tiered `addClaim` experiment whose pipeline was never finished — 13 claims sat unreachable for 7 weeks. **Folded into the vault 2026-08-03** → `commonsensedog knowledge/Tick-Borne Disease & Collar Safety…`. Kept as the original record; see its `README.md`. The real KB is Pinecone + `commonsensedog knowledge/`. |
 
 ---
 
