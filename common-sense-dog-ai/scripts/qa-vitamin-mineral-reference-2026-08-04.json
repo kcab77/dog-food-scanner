@@ -1,0 +1,782 @@
+[
+ {
+  "question": "What does a Vitamin A deficiency look like in a dog?",
+  "answer": "⚪ Established veterinary nutrition: Night blindness first, then dry eye, dull flaky coat, recurring infections and poor growth in puppies. Rare on any complete diet — liver is so rich in vitamin A that excess is the far more realistic risk. Vitamin A supports: Supports vision, immune system, skin health. Affects: Liver, bones, kidneys, skin. Typical safe range: 50–100 IU/kg body weight/day. ⚠️ Educational only — deficiency is diagnosed on bloodwork and clinical signs by a vet, not from an ingredient label.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "vitamin-vitamin-a",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What happens if a dog gets too much Vitamin A?",
+  "answer": "⚪ Established veterinary nutrition: Toxicity (hypervitaminosis A): bone pain, calcification of soft tissues, liver damage. Accumulates in fat. Affects: Liver, bones, kidneys, skin. Typical safe range: 50–100 IU/kg body weight/day. ⚠️ An ingredient label shows only that a nutrient is present, never how much — so presence on a label is not evidence of excess.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "vitamin-vitamin-a",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "Is the synthetic form of Vitamin A in dog food safe?",
+  "answer": "⚪ Formulation guidance: the form usually added is Retinyl Palmitate / Acetate. Form matters here. Caution in excess. As a rule: chelates, proteinates and amino-acid complexes absorb better than sulfates and oxides. Not all synthetics are worse than natural — several (Vitamin A included where marked safe) are identical in the body. The ones worth avoiding are specific: menadione (K3), sodium selenite, copper sulfate, ferric oxide and dl-alpha tocopherol.",
+  "confidence": "traditional",
+  "sources": [
+   "Pet food formulation practice; AAFCO"
+  ],
+  "topic": "vitamin-vitamin-a",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What does a Vitamin B1 (Thiamine) deficiency look like in a dog?",
+  "answer": "⚪ Established veterinary nutrition: The most dangerous deficiency on this list and the reason cooked foods add it back. Starts as appetite loss and wobbliness, progresses to head tilt, dilated pupils, seizures and heart failure. Can appear within weeks on a thiamine-poor diet. Raw fish containing thiaminase and heavily heat-processed food are the classic causes. Vitamin B1 (Thiamine) supports: Supports nerve function, energy metabolism. Affects: Brain, nervous system, heart. Typical safe range: 0.02 mg/kg body weight/day. ⚠️ Educational only — deficiency is diagnosed on bloodwork and clinical signs by a vet, not from an ingredient label.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "vitamin-vitamin-b1",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What happens if a dog gets too much Vitamin B1 (Thiamine)?",
+  "answer": "⚪ Established veterinary nutrition: Deficiency is more dangerous than excess. Excess excreted in urine. Very low toxicity risk. Affects: Brain, nervous system, heart. Typical safe range: 0.02 mg/kg body weight/day. ⚠️ An ingredient label shows only that a nutrient is present, never how much — so presence on a label is not evidence of excess.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "vitamin-vitamin-b1",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "Is the synthetic form of Vitamin B1 (Thiamine) in dog food safe?",
+  "answer": "⚪ Formulation guidance: the form usually added is Thiamine Mononitrate / HCl. This is a safe synthetic form — chemically equivalent to the natural one, and adding it is not a mark against the food. Not all synthetics are worse than natural — several (Vitamin B1 (Thiamine) included where marked safe) are identical in the body. The ones worth avoiding are specific: menadione (K3), sodium selenite, copper sulfate, ferric oxide and dl-alpha tocopherol.",
+  "confidence": "traditional",
+  "sources": [
+   "Pet food formulation practice; AAFCO"
+  ],
+  "topic": "vitamin-vitamin-b1",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What does a Vitamin B2 (Riboflavin) deficiency look like in a dog?",
+  "answer": "⚪ Established veterinary nutrition: Flaky dermatitis (often around the eyes), weight loss, weakness, eye changes and a slowed heart rate. Uncommon on commercial food. Vitamin B2 (Riboflavin) supports: Energy production, healthy skin and eyes. Affects: Eyes, skin, liver, adrenal glands. Typical safe range: 0.05 mg/kg body weight/day. ⚠️ Educational only — deficiency is diagnosed on bloodwork and clinical signs by a vet, not from an ingredient label.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "vitamin-vitamin-b2",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What happens if a dog gets too much Vitamin B2 (Riboflavin)?",
+  "answer": "⚪ Established veterinary nutrition: Minimal toxicity risk. Excess safely excreted. Urine may turn yellow (harmless). Affects: Eyes, skin, liver, adrenal glands. Typical safe range: 0.05 mg/kg body weight/day. ⚠️ An ingredient label shows only that a nutrient is present, never how much — so presence on a label is not evidence of excess.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "vitamin-vitamin-b2",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "Is the synthetic form of Vitamin B2 (Riboflavin) in dog food safe?",
+  "answer": "⚪ Formulation guidance: the form usually added is Riboflavin (synthetic). This is a safe synthetic form — chemically equivalent to the natural one, and adding it is not a mark against the food. Not all synthetics are worse than natural — several (Vitamin B2 (Riboflavin) included where marked safe) are identical in the body. The ones worth avoiding are specific: menadione (K3), sodium selenite, copper sulfate, ferric oxide and dl-alpha tocopherol.",
+  "confidence": "traditional",
+  "sources": [
+   "Pet food formulation practice; AAFCO"
+  ],
+  "topic": "vitamin-vitamin-b2",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What does a Vitamin B3 (Niacin) deficiency look like in a dog?",
+  "answer": "⚪ Established veterinary nutrition: Classic presentation is 'black tongue' — mouth ulcers, thick drooling, foul breath and bloody diarrhoea. Historically seen on all-corn diets; corn's niacin is bound and poorly available. Vitamin B3 (Niacin) supports: DNA repair, metabolism, skin health. Affects: Liver, skin, GI tract. Typical safe range: 0.45 mg/kg body weight/day. ⚠️ Educational only — deficiency is diagnosed on bloodwork and clinical signs by a vet, not from an ingredient label.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "vitamin-vitamin-b3",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What happens if a dog gets too much Vitamin B3 (Niacin)?",
+  "answer": "⚪ Established veterinary nutrition: High doses: liver damage, flushing, GI issues. Dogs are sensitive to niacin deficiency (black tongue disease). Affects: Liver, skin, GI tract. Typical safe range: 0.45 mg/kg body weight/day. ⚠️ An ingredient label shows only that a nutrient is present, never how much — so presence on a label is not evidence of excess.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "vitamin-vitamin-b3",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "Is the synthetic form of Vitamin B3 (Niacin) in dog food safe?",
+  "answer": "⚪ Formulation guidance: the form usually added is Niacin / Niacinamide. This is a safe synthetic form — chemically equivalent to the natural one, and adding it is not a mark against the food. Not all synthetics are worse than natural — several (Vitamin B3 (Niacin) included where marked safe) are identical in the body. The ones worth avoiding are specific: menadione (K3), sodium selenite, copper sulfate, ferric oxide and dl-alpha tocopherol.",
+  "confidence": "traditional",
+  "sources": [
+   "Pet food formulation practice; AAFCO"
+  ],
+  "topic": "vitamin-vitamin-b3",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What does a Vitamin B5 (Pantothenic Acid) deficiency look like in a dog?",
+  "answer": "⚪ Established veterinary nutrition: Rare. Appetite loss, low blood sugar, coat changes and GI upset. Vitamin B5 (Pantothenic Acid) supports: Hormone synthesis, energy metabolism. Affects: Adrenal glands, liver. Typical safe range: 0.4 mg/kg body weight/day. ⚠️ Educational only — deficiency is diagnosed on bloodwork and clinical signs by a vet, not from an ingredient label.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "vitamin-vitamin-b5",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What happens if a dog gets too much Vitamin B5 (Pantothenic Acid)?",
+  "answer": "⚪ Established veterinary nutrition: Very low toxicity. Excess excreted. GI upset only at extreme doses. Affects: Adrenal glands, liver. Typical safe range: 0.4 mg/kg body weight/day. ⚠️ An ingredient label shows only that a nutrient is present, never how much — so presence on a label is not evidence of excess.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "vitamin-vitamin-b5",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "Is the synthetic form of Vitamin B5 (Pantothenic Acid) in dog food safe?",
+  "answer": "⚪ Formulation guidance: the form usually added is Calcium Pantothenate. This is a safe synthetic form — chemically equivalent to the natural one, and adding it is not a mark against the food. Not all synthetics are worse than natural — several (Vitamin B5 (Pantothenic Acid) included where marked safe) are identical in the body. The ones worth avoiding are specific: menadione (K3), sodium selenite, copper sulfate, ferric oxide and dl-alpha tocopherol.",
+  "confidence": "traditional",
+  "sources": [
+   "Pet food formulation practice; AAFCO"
+  ],
+  "topic": "vitamin-vitamin-b5",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What does a Vitamin B6 (Pyridoxine) deficiency look like in a dog?",
+  "answer": "⚪ Established veterinary nutrition: Microcytic anaemia, poor growth, weight loss and in severe cases seizures and kidney damage. Both too little and chronic excess damage nerves — the safe window is narrower than most B vitamins. Vitamin B6 (Pyridoxine) supports: Protein metabolism, neurotransmitter production, immune function. Affects: Nervous system, liver, kidneys. Typical safe range: 0.04 mg/kg body weight/day. ⚠️ Educational only — deficiency is diagnosed on bloodwork and clinical signs by a vet, not from an ingredient label.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "vitamin-vitamin-b6",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What happens if a dog gets too much Vitamin B6 (Pyridoxine)?",
+  "answer": "⚪ Established veterinary nutrition: Long-term excess: peripheral neuropathy (nerve damage in limbs), loss of coordination, sensory dysfunction. Affects: Nervous system, liver, kidneys. Typical safe range: 0.04 mg/kg body weight/day. ⚠️ An ingredient label shows only that a nutrient is present, never how much — so presence on a label is not evidence of excess.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "vitamin-vitamin-b6",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "Is the synthetic form of Vitamin B6 (Pyridoxine) in dog food safe?",
+  "answer": "⚪ Formulation guidance: the form usually added is Pyridoxine Hydrochloride. Form matters here. Caution in excess. As a rule: chelates, proteinates and amino-acid complexes absorb better than sulfates and oxides. Not all synthetics are worse than natural — several (Vitamin B6 (Pyridoxine) included where marked safe) are identical in the body. The ones worth avoiding are specific: menadione (K3), sodium selenite, copper sulfate, ferric oxide and dl-alpha tocopherol.",
+  "confidence": "traditional",
+  "sources": [
+   "Pet food formulation practice; AAFCO"
+  ],
+  "topic": "vitamin-vitamin-b6",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What does a Vitamin B9 (Folic Acid) deficiency look like in a dog?",
+  "answer": "⚪ Established veterinary nutrition: Macrocytic anaemia (large, immature red cells), poor growth and weight loss. Seen with long antibiotic courses or malabsorption. Vitamin B9 (Folic Acid) supports: Cell division, DNA synthesis, red blood cell formation. Affects: Bone marrow, liver, kidneys. Typical safe range: 0.004 mg/kg body weight/day. ⚠️ Educational only — deficiency is diagnosed on bloodwork and clinical signs by a vet, not from an ingredient label.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "vitamin-vitamin-b9",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What happens if a dog gets too much Vitamin B9 (Folic Acid)?",
+  "answer": "⚪ Established veterinary nutrition: Low toxicity. Excess excreted. Very rarely causes issues in dogs. Affects: Bone marrow, liver, kidneys. Typical safe range: 0.004 mg/kg body weight/day. ⚠️ An ingredient label shows only that a nutrient is present, never how much — so presence on a label is not evidence of excess.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "vitamin-vitamin-b9",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "Is the synthetic form of Vitamin B9 (Folic Acid) in dog food safe?",
+  "answer": "⚪ Formulation guidance: the form usually added is Folic Acid (synthetic). This is a safe synthetic form — chemically equivalent to the natural one, and adding it is not a mark against the food. Not all synthetics are worse than natural — several (Vitamin B9 (Folic Acid) included where marked safe) are identical in the body. The ones worth avoiding are specific: menadione (K3), sodium selenite, copper sulfate, ferric oxide and dl-alpha tocopherol.",
+  "confidence": "traditional",
+  "sources": [
+   "Pet food formulation practice; AAFCO"
+  ],
+  "topic": "vitamin-vitamin-b9",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What does a Vitamin B12 (Cobalamin) deficiency look like in a dog?",
+  "answer": "⚪ Established veterinary nutrition: Lethargy, appetite loss, weight loss and anaemia; can cause neurological signs. Genuinely common in dogs with EPI, IBD or chronic gut disease — the gut can't absorb it regardless of how much is in the bowl. Worth testing rather than guessing in any dog with chronic diarrhoea. Vitamin B12 (Cobalamin) supports: Nerve health, red blood cell production, DNA synthesis. Affects: Nervous system, bone marrow, liver. Typical safe range: 0.001 mg/kg body weight/day. ⚠️ Educational only — deficiency is diagnosed on bloodwork and clinical signs by a vet, not from an ingredient label.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "vitamin-vitamin-b12",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What happens if a dog gets too much Vitamin B12 (Cobalamin)?",
+  "answer": "⚪ Established veterinary nutrition: Extremely low toxicity. Excess excreted. Cyanocobalamin contains trace cyanide but negligible amounts. Affects: Nervous system, bone marrow, liver. Typical safe range: 0.001 mg/kg body weight/day. ⚠️ An ingredient label shows only that a nutrient is present, never how much — so presence on a label is not evidence of excess.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "vitamin-vitamin-b12",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "Is the synthetic form of Vitamin B12 (Cobalamin) in dog food safe?",
+  "answer": "⚪ Formulation guidance: the form usually added is Cyanocobalamin / Methylcobalamin. This is a safe synthetic form — chemically equivalent to the natural one, and adding it is not a mark against the food. Not all synthetics are worse than natural — several (Vitamin B12 (Cobalamin) included where marked safe) are identical in the body. The ones worth avoiding are specific: menadione (K3), sodium selenite, copper sulfate, ferric oxide and dl-alpha tocopherol.",
+  "confidence": "traditional",
+  "sources": [
+   "Pet food formulation practice; AAFCO"
+  ],
+  "topic": "vitamin-vitamin-b12",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What does a Vitamin C (Ascorbic Acid) deficiency look like in a dog?",
+  "answer": "⚪ Established veterinary nutrition: Not applicable in practice — healthy dogs synthesise their own vitamin C in the liver. This is a required nutrient for people, not for dogs. Vitamin C (Ascorbic Acid) supports: Antioxidant, immune support, collagen synthesis. Affects: Kidneys, immune system, joints. Typical safe range: Not required — dogs self-synthesize. ⚠️ Educational only — deficiency is diagnosed on bloodwork and clinical signs by a vet, not from an ingredient label.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "vitamin-vitamin-c",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What happens if a dog gets too much Vitamin C (Ascorbic Acid)?",
+  "answer": "⚪ Established veterinary nutrition: Dogs synthesize their own Vitamin C. Excess from supplements can cause oxalate kidney stones in predisposed dogs. Affects: Kidneys, immune system, joints. Typical safe range: Not required — dogs self-synthesize. ⚠️ An ingredient label shows only that a nutrient is present, never how much — so presence on a label is not evidence of excess.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "vitamin-vitamin-c",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "Is the synthetic form of Vitamin C (Ascorbic Acid) in dog food safe?",
+  "answer": "⚪ Formulation guidance: the form usually added is Ascorbic Acid / Sodium Ascorbate. This is a safe synthetic form — chemically equivalent to the natural one, and adding it is not a mark against the food. Not all synthetics are worse than natural — several (Vitamin C (Ascorbic Acid) included where marked safe) are identical in the body. The ones worth avoiding are specific: menadione (K3), sodium selenite, copper sulfate, ferric oxide and dl-alpha tocopherol.",
+  "confidence": "traditional",
+  "sources": [
+   "Pet food formulation practice; AAFCO"
+  ],
+  "topic": "vitamin-vitamin-c",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What does a Vitamin D3 (Cholecalciferol) deficiency look like in a dog?",
+  "answer": "⚪ Established veterinary nutrition: Rickets in growing puppies — bowed legs, swollen joints, bone pain. In adults, softened bones and pathological fractures. Because dogs cannot make vitamin D from sunlight, diet is the only source, so a home-made diet without a D source is the real-world risk. Vitamin D3 (Cholecalciferol) supports: Calcium & phosphorus absorption, bone health. Affects: Kidneys, heart, blood vessels, bones. Typical safe range: 3.4 IU/kg body weight/day (STRICT). ⚠️ Educational only — deficiency is diagnosed on bloodwork and clinical signs by a vet, not from an ingredient label.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "vitamin-vitamin-d3",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What happens if a dog gets too much Vitamin D3 (Cholecalciferol)?",
+  "answer": "⚪ Established veterinary nutrition: TOXICITY RISK: Hypercalcemia — calcium deposits in kidneys, heart, blood vessels. Kidney failure and death possible. Dogs cannot tolerate excess Vitamin D like humans. Affects: Kidneys, heart, blood vessels, bones. Typical safe range: 3.4 IU/kg body weight/day (STRICT). ⚠️ An ingredient label shows only that a nutrient is present, never how much — so presence on a label is not evidence of excess.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "vitamin-vitamin-d3",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "Is the synthetic form of Vitamin D3 (Cholecalciferol) in dog food safe?",
+  "answer": "⚪ Formulation guidance: the form usually added is Cholecalciferol (synthetic). Form matters here. Toxic in excess. As a rule: chelates, proteinates and amino-acid complexes absorb better than sulfates and oxides. Not all synthetics are worse than natural — several (Vitamin D3 (Cholecalciferol) included where marked safe) are identical in the body. The ones worth avoiding are specific: menadione (K3), sodium selenite, copper sulfate, ferric oxide and dl-alpha tocopherol.",
+  "confidence": "traditional",
+  "sources": [
+   "Pet food formulation practice; AAFCO"
+  ],
+  "topic": "vitamin-vitamin-d3",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What does a Vitamin E (Tocopherol) deficiency look like in a dog?",
+  "answer": "⚪ Established veterinary nutrition: Muscle weakness and degeneration, retinal degeneration affecting vision, and reproductive problems. Risk rises when a diet is high in polyunsaturated fat (lots of fish oil) without matching vitamin E — the fat increases the requirement. Vitamin E (Tocopherol) supports: Antioxidant, immune function, skin and coat health. Affects: Immune system, skin, muscles, reproductive system. Typical safe range: 2 IU/kg body weight/day. ⚠️ Educational only — deficiency is diagnosed on bloodwork and clinical signs by a vet, not from an ingredient label.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "vitamin-vitamin-e",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What happens if a dog gets too much Vitamin E (Tocopherol)?",
+  "answer": "⚪ Established veterinary nutrition: Synthetic dl-alpha tocopherol is less bioavailable. Very high doses may interfere with Vitamin K absorption. Affects: Immune system, skin, muscles, reproductive system. Typical safe range: 2 IU/kg body weight/day. ⚠️ An ingredient label shows only that a nutrient is present, never how much — so presence on a label is not evidence of excess.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "vitamin-vitamin-e",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "Is the synthetic form of Vitamin E (Tocopherol) in dog food safe?",
+  "answer": "⚪ Formulation guidance: the form usually added is dl-Alpha Tocopherol (synthetic) / d-Alpha Tocopherol (natural). Form matters here. Prefer natural form. As a rule: chelates, proteinates and amino-acid complexes absorb better than sulfates and oxides. Not all synthetics are worse than natural — several (Vitamin E (Tocopherol) included where marked safe) are identical in the body. The ones worth avoiding are specific: menadione (K3), sodium selenite, copper sulfate, ferric oxide and dl-alpha tocopherol.",
+  "confidence": "traditional",
+  "sources": [
+   "Pet food formulation practice; AAFCO"
+  ],
+  "topic": "vitamin-vitamin-e",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What does a Vitamin K deficiency look like in a dog?",
+  "answer": "⚪ Established veterinary nutrition: Prolonged clotting and abnormal bleeding — nosebleeds, bruising, blood in stool. Rare from diet; almost always caused by rodenticide poisoning or long antibiotic courses wiping out gut bacteria that make it. Vitamin K supports: Blood clotting, bone metabolism. Affects: Liver, blood, bones. Typical safe range: Not established — usually sufficient from food. ⚠️ Educational only — deficiency is diagnosed on bloodwork and clinical signs by a vet, not from an ingredient label.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "vitamin-vitamin-k",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What happens if a dog gets too much Vitamin K?",
+  "answer": "⚪ Established veterinary nutrition: Menadione (K3 synthetic): linked to liver toxicity, hemolytic anemia, and immune system damage in long-term use. K1 (phylloquinone) is safe. Affects: Liver, blood, bones. Typical safe range: Not established — usually sufficient from food. ⚠️ An ingredient label shows only that a nutrient is present, never how much — so presence on a label is not evidence of excess.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "vitamin-vitamin-k",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "Is the synthetic form of Vitamin K in dog food safe?",
+  "answer": "⚪ Formulation guidance: the form usually added is Menadione (K3 - synthetic). Form matters here. Avoid Menadione. As a rule: chelates, proteinates and amino-acid complexes absorb better than sulfates and oxides. Not all synthetics are worse than natural — several (Vitamin K included where marked safe) are identical in the body. The ones worth avoiding are specific: menadione (K3), sodium selenite, copper sulfate, ferric oxide and dl-alpha tocopherol.",
+  "confidence": "traditional",
+  "sources": [
+   "Pet food formulation practice; AAFCO"
+  ],
+  "topic": "vitamin-vitamin-k",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What does a Biotin (B7) deficiency look like in a dog?",
+  "answer": "⚪ Established veterinary nutrition: Crusty dermatitis, hair loss, brittle claws and dull coat. The classic cause is large amounts of raw egg white — avidin binds biotin. Whole eggs including the yolk are fine. Biotin (B7) supports: Fatty acid synthesis, metabolism, healthy coat and paws. Affects: Skin, coat, liver, nervous system. Typical safe range: 0.02 mg/kg body weight/day. ⚠️ Educational only — deficiency is diagnosed on bloodwork and clinical signs by a vet, not from an ingredient label.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "vitamin-biotin",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What happens if a dog gets too much Biotin (B7)?",
+  "answer": "⚪ Established veterinary nutrition: No known toxicity in dogs. Excess excreted safely. Affects: Skin, coat, liver, nervous system. Typical safe range: 0.02 mg/kg body weight/day. ⚠️ An ingredient label shows only that a nutrient is present, never how much — so presence on a label is not evidence of excess.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "vitamin-biotin",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "Is the synthetic form of Biotin (B7) in dog food safe?",
+  "answer": "⚪ Formulation guidance: the form usually added is D-Biotin (synthetic). This is a safe synthetic form — chemically equivalent to the natural one, and adding it is not a mark against the food. Not all synthetics are worse than natural — several (Biotin (B7) included where marked safe) are identical in the body. The ones worth avoiding are specific: menadione (K3), sodium selenite, copper sulfate, ferric oxide and dl-alpha tocopherol.",
+  "confidence": "traditional",
+  "sources": [
+   "Pet food formulation practice; AAFCO"
+  ],
+  "topic": "vitamin-biotin",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What does a Choline Chloride deficiency look like in a dog?",
+  "answer": "⚪ Established veterinary nutrition: Fatty liver (hepatic lipidosis) and raised liver enzymes. Choline is often the first thing short in an unbalanced home-made diet. Choline Chloride supports: Brain function, liver health, fat transport. Affects: Liver, brain, kidneys. Typical safe range: 50–100 mg/kg food. ⚠️ Educational only — deficiency is diagnosed on bloodwork and clinical signs by a vet, not from an ingredient label.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "vitamin-choline-chloride",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What happens if a dog gets too much Choline Chloride?",
+  "answer": "⚪ Established veterinary nutrition: Excess: fishy body odor, GI issues, low blood pressure. Liver can be stressed at very high doses. Affects: Liver, brain, kidneys. Typical safe range: 50–100 mg/kg food. ⚠️ An ingredient label shows only that a nutrient is present, never how much — so presence on a label is not evidence of excess.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "vitamin-choline-chloride",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "Is the synthetic form of Choline Chloride in dog food safe?",
+  "answer": "⚪ Formulation guidance: the form usually added is Choline Chloride (synthetic). This is a safe synthetic form — chemically equivalent to the natural one, and adding it is not a mark against the food. Not all synthetics are worse than natural — several (Choline Chloride included where marked safe) are identical in the body. The ones worth avoiding are specific: menadione (K3), sodium selenite, copper sulfate, ferric oxide and dl-alpha tocopherol.",
+  "confidence": "traditional",
+  "sources": [
+   "Pet food formulation practice; AAFCO"
+  ],
+  "topic": "vitamin-choline-chloride",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What does a Calcium deficiency look like in a dog?",
+  "answer": "⚪ Established veterinary nutrition: Nutritional secondary hyperparathyroidism — the body strips calcium from bone to hold blood levels steady, causing pain, limping and fractures from ordinary activity. The classic cause is an all-meat home-made diet with no bone or calcium source. Puppies are most at risk. Calcium supports: Bone and teeth formation, muscle contraction, nerve signaling. Affects: Bones, kidneys, heart, muscles. Typical safe range: 50 mg/kg body weight/day. ⚠️ Educational only — deficiency is diagnosed on bloodwork and clinical signs by a vet, not from an ingredient label.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "mineral-calcium",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What happens if a dog gets too much Calcium?",
+  "answer": "⚪ Established veterinary nutrition: Excess: skeletal deformities in large-breed puppies, soft tissue calcification, kidney stones. Deficiency causes rickets. Affects: Bones, kidneys, heart, muscles. Typical safe range: 50 mg/kg body weight/day. ⚠️ An ingredient label shows only that a nutrient is present, never how much — so presence on a label is not evidence of excess.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "mineral-calcium",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "Is the synthetic form of Calcium in dog food safe?",
+  "answer": "⚪ Formulation guidance: the form usually added is Calcium Carbonate / Dicalcium Phosphate. Form matters here. Caution in excess. As a rule: chelates, proteinates and amino-acid complexes absorb better than sulfates and oxides. Not all synthetics are worse than natural — several (Calcium included where marked safe) are identical in the body. The ones worth avoiding are specific: menadione (K3), sodium selenite, copper sulfate, ferric oxide and dl-alpha tocopherol.",
+  "confidence": "traditional",
+  "sources": [
+   "Pet food formulation practice; AAFCO"
+  ],
+  "topic": "mineral-calcium",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What does a Phosphorus deficiency look like in a dog?",
+  "answer": "⚪ Established veterinary nutrition: Rare, since meat is phosphorus-rich. Poor growth, weakness and bone pain. The realistic issue is the ratio, not the amount — too much phosphorus relative to calcium harms bone. Phosphorus supports: Bone structure, energy metabolism (ATP), cell membrane health. Affects: Kidneys, bones, liver. Typical safe range: 40 mg/kg body weight/day. ⚠️ Educational only — deficiency is diagnosed on bloodwork and clinical signs by a vet, not from an ingredient label.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "mineral-phosphorus",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What happens if a dog gets too much Phosphorus?",
+  "answer": "⚪ Established veterinary nutrition: Excess phosphorus damages kidneys over time. Dogs with CKD (chronic kidney disease) must have restricted phosphorus. Affects: Kidneys, bones, liver. Typical safe range: 40 mg/kg body weight/day. ⚠️ An ingredient label shows only that a nutrient is present, never how much — so presence on a label is not evidence of excess.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "mineral-phosphorus",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "Is the synthetic form of Phosphorus in dog food safe?",
+  "answer": "⚪ Formulation guidance: the form usually added is Dicalcium Phosphate / Monocalcium Phosphate. Form matters here. Caution. As a rule: chelates, proteinates and amino-acid complexes absorb better than sulfates and oxides. Not all synthetics are worse than natural — several (Phosphorus included where marked safe) are identical in the body. The ones worth avoiding are specific: menadione (K3), sodium selenite, copper sulfate, ferric oxide and dl-alpha tocopherol.",
+  "confidence": "traditional",
+  "sources": [
+   "Pet food formulation practice; AAFCO"
+  ],
+  "topic": "mineral-phosphorus",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What does a Magnesium deficiency look like in a dog?",
+  "answer": "⚪ Established veterinary nutrition: Muscle weakness and tremors, heart rhythm disturbance, and low blood potassium and calcium that won't correct until magnesium does. Magnesium supports: Muscle and nerve function, protein synthesis, energy production. Affects: Muscles, nerves, kidneys, heart. Typical safe range: 8.8 mg/kg body weight/day. ⚠️ Educational only — deficiency is diagnosed on bloodwork and clinical signs by a vet, not from an ingredient label.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "mineral-magnesium",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What happens if a dog gets too much Magnesium?",
+  "answer": "⚪ Established veterinary nutrition: Excess: diarrhea, low blood pressure, muscle weakness. Magnesium oxide poorly absorbed — can cause GI upset. Affects: Muscles, nerves, kidneys, heart. Typical safe range: 8.8 mg/kg body weight/day. ⚠️ An ingredient label shows only that a nutrient is present, never how much — so presence on a label is not evidence of excess.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "mineral-magnesium",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "Is the synthetic form of Magnesium in dog food safe?",
+  "answer": "⚪ Formulation guidance: the form usually added is Magnesium Oxide / Sulfate. Form matters here. Poor bioavailability (oxide). As a rule: chelates, proteinates and amino-acid complexes absorb better than sulfates and oxides. Not all synthetics are worse than natural — several (Magnesium included where marked safe) are identical in the body. The ones worth avoiding are specific: menadione (K3), sodium selenite, copper sulfate, ferric oxide and dl-alpha tocopherol.",
+  "confidence": "traditional",
+  "sources": [
+   "Pet food formulation practice; AAFCO"
+  ],
+  "topic": "mineral-magnesium",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What does a Potassium deficiency look like in a dog?",
+  "answer": "⚪ Established veterinary nutrition: Weakness (especially a dropped, ventroflexed neck), poor appetite and dangerous heart rhythms. Usually caused by chronic vomiting, diarrhoea or kidney disease rather than diet. Potassium supports: Heart rhythm, fluid balance, muscle contraction. Affects: Heart, kidneys, muscles. Typical safe range: 1.3 mg/kg body weight/day (minimum). ⚠️ Educational only — deficiency is diagnosed on bloodwork and clinical signs by a vet, not from an ingredient label.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "mineral-potassium",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What happens if a dog gets too much Potassium?",
+  "answer": "⚪ Established veterinary nutrition: Excess rare from food. Deficiency (hypokalemia) causes muscle weakness, heart arrhythmia. Affects: Heart, kidneys, muscles. Typical safe range: 1.3 mg/kg body weight/day (minimum). ⚠️ An ingredient label shows only that a nutrient is present, never how much — so presence on a label is not evidence of excess.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "mineral-potassium",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "Is the synthetic form of Potassium in dog food safe?",
+  "answer": "⚪ Formulation guidance: the form usually added is Potassium Chloride. This is a safe synthetic form — chemically equivalent to the natural one, and adding it is not a mark against the food. Not all synthetics are worse than natural — several (Potassium included where marked safe) are identical in the body. The ones worth avoiding are specific: menadione (K3), sodium selenite, copper sulfate, ferric oxide and dl-alpha tocopherol.",
+  "confidence": "traditional",
+  "sources": [
+   "Pet food formulation practice; AAFCO"
+  ],
+  "topic": "mineral-potassium",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What does a Sodium deficiency look like in a dog?",
+  "answer": "⚪ Established veterinary nutrition: Rare — most foods carry plenty. Restlessness, excessive thirst, dry mucous membranes and eventual neurological signs. Restricting sodium too hard in heart-disease dogs can cause it. Sodium supports: Fluid balance, nerve transmission, blood pressure regulation. Affects: Kidneys, heart, blood vessels, brain. Typical safe range: 13 mg/kg body weight/day (max ~100mg). ⚠️ Educational only — deficiency is diagnosed on bloodwork and clinical signs by a vet, not from an ingredient label.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "mineral-sodium",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What happens if a dog gets too much Sodium?",
+  "answer": "⚪ Established veterinary nutrition: Excess: hypertension, kidney strain, heart disease worsening. Dogs with heart/kidney disease need low sodium. Affects: Kidneys, heart, blood vessels, brain. Typical safe range: 13 mg/kg body weight/day (max ~100mg). ⚠️ An ingredient label shows only that a nutrient is present, never how much — so presence on a label is not evidence of excess.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "mineral-sodium",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "Is the synthetic form of Sodium in dog food safe?",
+  "answer": "⚪ Formulation guidance: the form usually added is Sodium Chloride (salt). Form matters here. Caution. As a rule: chelates, proteinates and amino-acid complexes absorb better than sulfates and oxides. Not all synthetics are worse than natural — several (Sodium included where marked safe) are identical in the body. The ones worth avoiding are specific: menadione (K3), sodium selenite, copper sulfate, ferric oxide and dl-alpha tocopherol.",
+  "confidence": "traditional",
+  "sources": [
+   "Pet food formulation practice; AAFCO"
+  ],
+  "topic": "mineral-sodium",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What does a Zinc deficiency look like in a dog?",
+  "answer": "⚪ Established veterinary nutrition: The most visible deficiency in dogs: crusted, scaling skin around the mouth, eyes, ears and paw pads, plus poor coat, slow wound healing and weakened immunity. Two distinct causes — a genetic absorption defect in Huskies and Malamutes, and high-phytate or high-calcium diets blocking absorption in any breed. Responds dramatically to correct supplementation. Zinc supports: Immune function, wound healing, skin and coat health, enzyme function. Affects: Liver, kidneys, immune system, skin. Typical safe range: 2 mg/kg body weight/day. ⚠️ Educational only — deficiency is diagnosed on bloodwork and clinical signs by a vet, not from an ingredient label.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "mineral-zinc",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What happens if a dog gets too much Zinc?",
+  "answer": "⚪ Established veterinary nutrition: Zinc oxide: poor bioavailability. Zinc toxicity: hemolytic anemia, liver and kidney damage. Some breeds (Huskies, Malamutes) have zinc malabsorption. Affects: Liver, kidneys, immune system, skin. Typical safe range: 2 mg/kg body weight/day. ⚠️ An ingredient label shows only that a nutrient is present, never how much — so presence on a label is not evidence of excess.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "mineral-zinc",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "Is the synthetic form of Zinc in dog food safe?",
+  "answer": "⚪ Formulation guidance: the form usually added is Zinc Sulfate / Zinc Oxide / Zinc Proteinate. Form matters here. Form matters. As a rule: chelates, proteinates and amino-acid complexes absorb better than sulfates and oxides. Not all synthetics are worse than natural — several (Zinc included where marked safe) are identical in the body. The ones worth avoiding are specific: menadione (K3), sodium selenite, copper sulfate, ferric oxide and dl-alpha tocopherol.",
+  "confidence": "traditional",
+  "sources": [
+   "Pet food formulation practice; AAFCO"
+  ],
+  "topic": "mineral-zinc",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What does a Iron deficiency look like in a dog?",
+  "answer": "⚪ Established veterinary nutrition: Microcytic hypochromic anaemia — pale gums, exercise intolerance, weakness. Chronic blood loss (fleas, hookworms, GI bleeding) causes it far more often than diet does. Iron supports: Oxygen transport (hemoglobin), energy metabolism. Affects: Liver, bone marrow, spleen. Typical safe range: 1.32 mg/kg body weight/day. ⚠️ Educational only — deficiency is diagnosed on bloodwork and clinical signs by a vet, not from an ingredient label.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "mineral-iron",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What happens if a dog gets too much Iron?",
+  "answer": "⚪ Established veterinary nutrition: Iron overload: liver damage, oxidative stress. Ferric oxide is essentially unabsorbable and used as a colorant. Affects: Liver, bone marrow, spleen. Typical safe range: 1.32 mg/kg body weight/day. ⚠️ An ingredient label shows only that a nutrient is present, never how much — so presence on a label is not evidence of excess.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "mineral-iron",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "Is the synthetic form of Iron in dog food safe?",
+  "answer": "⚪ Formulation guidance: the form usually added is Ferrous Sulfate / Ferric Oxide. Form matters here. Ferric oxide is poor. As a rule: chelates, proteinates and amino-acid complexes absorb better than sulfates and oxides. Not all synthetics are worse than natural — several (Iron included where marked safe) are identical in the body. The ones worth avoiding are specific: menadione (K3), sodium selenite, copper sulfate, ferric oxide and dl-alpha tocopherol.",
+  "confidence": "traditional",
+  "sources": [
+   "Pet food formulation practice; AAFCO"
+  ],
+  "topic": "mineral-iron",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What does a Copper deficiency look like in a dog?",
+  "answer": "⚪ Established veterinary nutrition: Anaemia that doesn't respond to iron, loss of coat pigment (black hair turning reddish), and connective-tissue and bone abnormalities. Rare — for Labradors specifically, copper ACCUMULATION is the real concern, not shortage. Copper supports: Iron metabolism, collagen formation, nervous system health. Affects: Liver (primary), nervous system. Typical safe range: 0.33 mg/kg body weight/day. ⚠️ Educational only — deficiency is diagnosed on bloodwork and clinical signs by a vet, not from an ingredient label.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "mineral-copper",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What happens if a dog gets too much Copper?",
+  "answer": "⚪ Established veterinary nutrition: Copper storage disease: Bedlington Terriers, Labrador Retrievers, Dalmatians genetically predisposed to copper accumulation in liver. Cirrhosis and liver failure. Affects: Liver (primary), nervous system. Typical safe range: 0.33 mg/kg body weight/day. ⚠️ An ingredient label shows only that a nutrient is present, never how much — so presence on a label is not evidence of excess.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "mineral-copper",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "Is the synthetic form of Copper in dog food safe?",
+  "answer": "⚪ Formulation guidance: the form usually added is Copper Sulfate / Copper Proteinate. Form matters here. Caution. As a rule: chelates, proteinates and amino-acid complexes absorb better than sulfates and oxides. Not all synthetics are worse than natural — several (Copper included where marked safe) are identical in the body. The ones worth avoiding are specific: menadione (K3), sodium selenite, copper sulfate, ferric oxide and dl-alpha tocopherol.",
+  "confidence": "traditional",
+  "sources": [
+   "Pet food formulation practice; AAFCO"
+  ],
+  "topic": "mineral-copper",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What does a Manganese deficiency look like in a dog?",
+  "answer": "⚪ Established veterinary nutrition: Skeletal abnormalities, shortened bowed limbs, poor growth and impaired reproduction. Rare on commercial diets; a risk on unsupplemented home-made ones. Manganese supports: Bone development, enzyme activation, antioxidant defense. Affects: Bones, liver, pancreas. Typical safe range: 0.28 mg/kg body weight/day. ⚠️ Educational only — deficiency is diagnosed on bloodwork and clinical signs by a vet, not from an ingredient label.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "mineral-manganese",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What happens if a dog gets too much Manganese?",
+  "answer": "⚪ Established veterinary nutrition: Low toxicity from food sources. Very high doses: neurological effects (rare from diet). Affects: Bones, liver, pancreas. Typical safe range: 0.28 mg/kg body weight/day. ⚠️ An ingredient label shows only that a nutrient is present, never how much — so presence on a label is not evidence of excess.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "mineral-manganese",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "Is the synthetic form of Manganese in dog food safe?",
+  "answer": "⚪ Formulation guidance: the form usually added is Manganese Sulfate / Manganese Proteinate. This is a safe synthetic form — chemically equivalent to the natural one, and adding it is not a mark against the food. Not all synthetics are worse than natural — several (Manganese included where marked safe) are identical in the body. The ones worth avoiding are specific: menadione (K3), sodium selenite, copper sulfate, ferric oxide and dl-alpha tocopherol.",
+  "confidence": "traditional",
+  "sources": [
+   "Pet food formulation practice; AAFCO"
+  ],
+  "topic": "mineral-manganese",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What does a Selenium deficiency look like in a dog?",
+  "answer": "⚪ Established veterinary nutrition: Muscular dystrophy ('white muscle disease') — stiffness, weakness, heart muscle damage — plus impaired immunity and thyroid function. The safe window is genuinely narrow in both directions. Selenium supports: Antioxidant (glutathione peroxidase), thyroid hormone metabolism, immune function. Affects: Thyroid, liver, kidneys, immune system. Typical safe range: 0.11 mg/kg body weight/day (STRICT). ⚠️ Educational only — deficiency is diagnosed on bloodwork and clinical signs by a vet, not from an ingredient label.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "mineral-selenium",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What happens if a dog gets too much Selenium?",
+  "answer": "⚪ Established veterinary nutrition: NARROW margin between deficiency and toxicity. Excess (selenosis): vomiting, diarrhea, hair loss, neurological damage, death at high doses. Affects: Thyroid, liver, kidneys, immune system. Typical safe range: 0.11 mg/kg body weight/day (STRICT). ⚠️ An ingredient label shows only that a nutrient is present, never how much — so presence on a label is not evidence of excess.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "mineral-selenium",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "Is the synthetic form of Selenium in dog food safe?",
+  "answer": "⚪ Formulation guidance: the form usually added is Sodium Selenite / Selenium Yeast. Form matters here. Selenite caution. As a rule: chelates, proteinates and amino-acid complexes absorb better than sulfates and oxides. Not all synthetics are worse than natural — several (Selenium included where marked safe) are identical in the body. The ones worth avoiding are specific: menadione (K3), sodium selenite, copper sulfate, ferric oxide and dl-alpha tocopherol.",
+  "confidence": "traditional",
+  "sources": [
+   "Pet food formulation practice; AAFCO"
+  ],
+  "topic": "mineral-selenium",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What does a Iodine deficiency look like in a dog?",
+  "answer": "⚪ Established veterinary nutrition: Hypothyroidism — goitre, lethargy, weight gain, hair loss, cold intolerance, slow heart rate. Both too little AND too much cause thyroid disease, which is why doubling up on potassium iodide plus kelp is worth checking. Iodine supports: Thyroid hormone production, metabolic rate regulation. Affects: Thyroid gland, metabolism. Typical safe range: 0.22 mg/kg body weight/day. ⚠️ Educational only — deficiency is diagnosed on bloodwork and clinical signs by a vet, not from an ingredient label.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "mineral-iodine",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What happens if a dog gets too much Iodine?",
+  "answer": "⚪ Established veterinary nutrition: Excess iodine can CAUSE hypothyroidism or hyperthyroidism paradoxically. Some dogs sensitive to iodine spikes from seaweed/kelp additives. Affects: Thyroid gland, metabolism. Typical safe range: 0.22 mg/kg body weight/day. ⚠️ An ingredient label shows only that a nutrient is present, never how much — so presence on a label is not evidence of excess.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "mineral-iodine",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "Is the synthetic form of Iodine in dog food safe?",
+  "answer": "⚪ Formulation guidance: the form usually added is Potassium Iodide / Calcium Iodate. Form matters here. Caution. As a rule: chelates, proteinates and amino-acid complexes absorb better than sulfates and oxides. Not all synthetics are worse than natural — several (Iodine included where marked safe) are identical in the body. The ones worth avoiding are specific: menadione (K3), sodium selenite, copper sulfate, ferric oxide and dl-alpha tocopherol.",
+  "confidence": "traditional",
+  "sources": [
+   "Pet food formulation practice; AAFCO"
+  ],
+  "topic": "mineral-iodine",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What does a Taurine deficiency look like in a dog?",
+  "answer": "⚪ Established veterinary nutrition: Dilated cardiomyopathy (DCM) — an enlarged, weakened heart that can cause sudden death — plus retinal degeneration and vision loss. Dogs normally make their own from methionine and cysteine, but Golden Retrievers, Newfoundlands, Cockers and some legume-heavy grain-free diets are documented exceptions. Often reversible if caught early, which makes it worth testing rather than assuming. Taurine supports: Heart muscle function, eye health, bile acid conjugation, antioxidant. Affects: Heart, eyes, brain, liver. Typical safe range: Not established — endogenous synthesis + dietary. ⚠️ Educational only — deficiency is diagnosed on bloodwork and clinical signs by a vet, not from an ingredient label.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "mineral-taurine",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What happens if a dog gets too much Taurine?",
+  "answer": "⚪ Established veterinary nutrition: Taurine deficiency linked to DCM (dilated cardiomyopathy) — especially in grain-free diets with legumes. No known toxicity from excess. Affects: Heart, eyes, brain, liver. Typical safe range: Not established — endogenous synthesis + dietary. ⚠️ An ingredient label shows only that a nutrient is present, never how much — so presence on a label is not evidence of excess.",
+  "confidence": "traditional",
+  "sources": [
+   "Canine nutrition reference; AAFCO nutrient profiles"
+  ],
+  "topic": "mineral-taurine",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "Is the synthetic form of Taurine in dog food safe?",
+  "answer": "⚪ Formulation guidance: the form usually added is Taurine (synthetic). This is a safe synthetic form — chemically equivalent to the natural one, and adding it is not a mark against the food. Not all synthetics are worse than natural — several (Taurine included where marked safe) are identical in the body. The ones worth avoiding are specific: menadione (K3), sodium selenite, copper sulfate, ferric oxide and dl-alpha tocopherol.",
+  "confidence": "traditional",
+  "sources": [
+   "Pet food formulation practice; AAFCO"
+  ],
+  "topic": "mineral-taurine",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ }
+]
