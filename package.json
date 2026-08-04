@@ -10,7 +10,8 @@
     "web": "expo start --web",
     "lint": "expo lint",
     "build:web": "expo export --platform web",
-    "brief": "node daily-brief/brief.mjs"
+    "brief": "node daily-brief/brief.mjs",
+    "check:docs": "node scripts/check-doc-freshness.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.105.0",
