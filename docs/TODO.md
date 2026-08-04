@@ -45,7 +45,7 @@ and burned Anthropic tokens.
 - [ ] **Fix the Voyage billing organisation** (added 2026-08-02) — the payment method is on a different Voyage org than the one owning the API key, so it's still capped at 3 requests/min. Mitigated in code (retries on 429) but not cured: heavy traffic can still lose knowledge-base grounding. Easiest fix is creating a new API key under the org that HAS the card, then swapping it in the website, expert-platform, and local `.env`.
 - [ ] Submit PawGrade v1.7.0 to App Store
 - [x] Fill in affiliate links — DONE (verified 2026-08-03: 7 real `amzn.to` links in `SUPPLEMENT_RECS`, zero placeholders)
-- [ ] Fix Supabase RLS on scans table
+- [x] Fix Supabase RLS on scans table — DONE 2026-08-03. `scans` had an INSERT policy but no SELECT policy. Added a nullable `user_id` + scoped policy (`auth.uid() = user_id`) so signed-in users read only their own scans, and `is_dev` so Kyle's own testing can be filtered out. A blanket SELECT for `anon` was deliberately NOT used — the anon key is extractable from the app bundle.
 - [x] Upgrade UPC Item DB to paid plan — DONE May 2026 ($75 plan; lookups working, results cached in Supabase)
 - [ ] **Set up a real email provider for sign-in** (added 2026-08-02) — Supabase's built-in email only sends a few per hour, fine for testing but not launch. Add Resend/SendGrid SMTP under Authentication → Emails before the profile feature ships publicly.
 
