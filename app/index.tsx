@@ -425,9 +425,9 @@ const HARMFUL_INGREDIENTS: {
   },
   {
     term: "garlic",
-    severity: "toxic",
+    severity: "moderate",
     reason:
-      "The ASPCA and veterinary toxicologists classify garlic as toxic to dogs and cats. It contains thiosulfates that can damage red blood cells and cause hemolytic anemia, even in relatively small amounts",
+      "Garlic's toxic reputation traces to Lee et al. (2000), which fed dogs 5 g/kg body weight daily for a week — roughly 20 cloves a day for a 20kg dog. That produced Heinz bodies and reduced hematocrit, but no dog developed clinical hemolytic anemia. Typical holistic dosing (about a quarter clove per 10 lb) is roughly 20x lower than that study. A 2025 in-vitro study (Beleć, Barć & Lasek, Animals) found no safe threshold has been established, so caution is still warranted — but garlic is not in the same category as onion, which carries stronger evidence of harm. In commercial food it is usually a trace flavoring listed below salt.",
   },
   {
     term: "onion",
@@ -443,9 +443,9 @@ const HARMFUL_INGREDIENTS: {
   },
   {
     term: "garlic powder",
-    severity: "toxic",
+    severity: "moderate",
     reason:
-      "Garlic powder is considered more concentrated than fresh garlic and has been associated with toxicity in dogs and cats at lower doses. The ASPCA classifies all garlic-derived ingredients as toxic to companion animals",
+      "The dried, granulated form — and form appears to matter. A 2025 in-vitro study (Beleć, Barć & Lasek, Animals, Univ. of Agriculture Krakow) found granulated garlic produced Heinz bodies in about 15% of canine red blood cells versus about 5% for fresh garlic, suggesting drying increases release of the reactive compounds. The authors concluded no safe intake threshold has been established for dogs. Amount matters as much as form: as a flavoring this is usually present in trace quantities below salt.",
   },
   // Vitamins & Minerals — tiered by severity per research
   {
