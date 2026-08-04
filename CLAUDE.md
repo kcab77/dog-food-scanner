@@ -12,7 +12,15 @@
 
 Kyle keeps a single source-of-truth Obsidian vault at **`~/Documents/Obsidian Vault/`** (WITH a space — ignore the old, redundant no-space `~/Documents/ObsidianVault/`). It holds curated memory, full past conversation transcripts, and dog-nutrition knowledge.
 
-- **Before answering** project/dog/nutrition questions, read the routing maps at the vault root FIRST so you load only what's relevant (don't scan everything): **`_Vault Map.md`** (topic → which note) and **`_Skills Map.md`** (task → which agent/tool/workflow). Then open only the matched note(s) — e.g. `Brain/claude-memory/dog-food-scanner/` (facts), `Brain/transcripts/dog-food-scanner/` (history), `Brain/Nutrition/`, `commonsensedog knowledge/`.
+- **Before answering** project/dog/nutrition questions, read **`index.md`** at the vault root FIRST — it's the maintained catalog of every page, and the entry point as of 2026-07-29. Load only what it matches (don't scan everything). Secondary routing: **`_Vault Map.md`** (topic → folder) and **`_Skills Map.md`** (task → which agent/tool/workflow). Then open only the matched note(s) — e.g. `Brain/claude-memory/dog-food-scanner/` (facts), `Brain/transcripts/dog-food-scanner/` (history), `Brain/Nutrition/`, `commonsensedog knowledge/`.
+- **⚠️ The vault holds TWO brains** (separated 2026-08-03). 🐕 **Dog brain** = everything above.
+  💼 **Expert brain** = `wiki/expert-platform/` only — the white-label assistant sold to other
+  experts (code: `expert-platform/`, knowledge: Supabase pgvector, *not* the vault). File expert
+  work there, never in `wiki/business/`. Never put a client expert's content in this vault. Map:
+  `wiki/projects/Two Brains - separation map.md`.
+- **Working on `expert-platform/`? Launch Claude from that directory** (`cd expert-platform && claude`)
+  so the SessionEnd hook files transcripts/memory under `expert-platform` instead of lumping them
+  into `dog-food-scanner`. The hook labels by launch directory.
 - **Auto-sync:** a `SessionEnd` hook (`~/.claude/hooks/obsidian-sync.mjs`) exports memory + transcripts into the vault after **every** session — automatic, don't duplicate it. Kyle's standing wish: every session ends up in this vault.
 - When you learn something durable, write a note (`Brain/Inbox/` by default) with frontmatter + `[[wikilinks]]`. Additive only — never delete vault content.
 
