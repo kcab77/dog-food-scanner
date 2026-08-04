@@ -1873,18 +1873,62 @@ if (
 }
 
 // Collapsible results section — collapsed by default, animates open/closed.
+/**
+ * A small "Ask AI" chip for section headers.
+ *
+ * The point of this component is *restraint*. Every fact the app could show — the
+ * trials, the effect sizes, the citations — makes the screen heavier and the owner
+ * less likely to read any of it. Putting that depth one tap away keeps the results
+ * screen calm while making the evidence genuinely reachable for the people who
+ * want it. Depth on demand, not depth by default.
+ */
+function AskAIChip({ label = "Ask AI", onPress }: { label?: string; onPress: () => void }) {
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      activeOpacity={0.7}
+      accessibilityRole="button"
+      accessibilityLabel={label}
+      // Generous hitSlop: the chip is deliberately small so it doesn't compete with
+      // the section title, which makes an untouchable-feeling target without this.
+      hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 4,
+        paddingHorizontal: 9,
+        paddingVertical: 4,
+        borderRadius: 999,
+        backgroundColor: t.aiTint,
+        borderWidth: 1,
+        borderColor: t.ai,
+        marginRight: 8,
+      }}
+    >
+      <Text style={{ fontSize: 11 }}>✨</Text>
+      <Text style={{ color: t.ai, fontSize: 11, fontWeight: "700" }}>{label}</Text>
+    </TouchableOpacity>
+  );
+}
+
 function AccordionSection({
   title,
   children,
   defaultOpen = false,
   bare = false,
   titleColor,
+  onAskAI,
+  askLabel,
 }: {
   title: string;
   children: React.ReactNode;
   defaultOpen?: boolean;
   bare?: boolean;
   titleColor?: string;
+  /** When provided, renders an "Ask AI" chip that opens the coach with a question
+   *  already framed for this section — instead of dumping evidence into the UI. */
+  onAskAI?: () => void;
+  askLabel?: string;
 }) {
   const [open, setOpen] = useState(defaultOpen);
   const toggle = () => {
@@ -1906,6 +1950,9 @@ function AccordionSection({
       }}
     >
       <Text style={[styles.sectionTitle, { marginBottom: 0, flex: 1 }, titleColor ? { color: titleColor } : null]}>{title}</Text>
+      {/* Sits inside the header's TouchableOpacity but handles its own press, so
+          asking the AI never toggles the section open or closed underneath you. */}
+      {onAskAI && <AskAIChip label={askLabel} onPress={onAskAI} />}
       {/* A chevron in a soft chip reads as an affordance; a bare glyph reads as decoration. */}
       <View
         style={{
@@ -3751,6 +3798,49 @@ export default function App() {
     setCoachVisible(true);
   };
 
+  /**
+   * Open the coach with a question already asked on the owner's behalf.
+   *
+   * This is what keeps the evidence out of the results screen. Rather than
+   * printing trials and effect sizes under every section — which makes the page
+   * heavier and gets read less — each section offers one tap that asks the
+   * question a curious owner would have asked anyway, and the depth arrives as a
+   * conversation they can keep pulling on.
+   *
+   * The seeded question is shown as if the owner typed it, because pretending the
+   * app asked it for them would make the follow-ups feel disconnected.
+   */
+  const askAboutSection = async (question: string) => {
+    // Same metering as a typed message — a free tap shouldn't be a way around it.
+    const countStr = await AsyncStorage.getItem("coach_message_count");
+    const count = parseInt(countStr || "0", 10);
+    if (count >= 5) {
+      setShowCoachPaywall(true);
+      setCoachVisible(true);
+      return;
+    }
+
+    const opener = `Ask me anything about **${productName}** — I'll answer for ${
+      dogProfileName ?? "your dog"
+    }.`;
+    const userMsg = { role: "user", content: question };
+    const seeded = [{ role: "assistant", content: opener }, userMsg];
+    setCoachMessages(seeded);
+    setCoachVisible(true);
+    setCoachLoading(true);
+
+    const reply = await askNutritionCoach(
+      productName,
+      ingredients.join(", "),
+      score ?? 0,
+      flagged.map((f) => f.name),
+      seeded,
+    );
+    setCoachMessages([...seeded, { role: "assistant", content: reply }]);
+    setCoachLoading(false);
+    await AsyncStorage.setItem("coach_message_count", String(count + 1));
+  };
+
   const sendCoachMessage = async () => {
     if (!coachInput.trim() || coachLoading) return;
 
@@ -4468,6 +4558,35 @@ export default function App() {
                   {scanMode === "manual" ? "Type in ingredients" : "Scan a food"}
                 </Text>
               </View>
+              {/* Ask AI — the assistant's front door. It only appears once a food has
+                  been scored, because a coach with no food to talk about invites the
+                  general-chatbot questions this assistant deliberately doesn't answer. */}
+              {score !== null && (
+                <TouchableOpacity
+                  onPress={openCoach}
+                  accessibilityRole="button"
+                  accessibilityLabel={
+                    dogProfileName ? `Ask AI about this food for ${dogProfileName}` : "Ask AI about this food"
+                  }
+                  style={{
+                    height: 34,
+                    borderRadius: 17,
+                    paddingHorizontal: 12,
+                    marginRight: 8,
+                    backgroundColor: t.aiTint,
+                    borderWidth: 1,
+                    borderColor: t.ai,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexDirection: "row",
+                    gap: 5,
+                  }}
+                >
+                  <Text style={{ fontSize: 13 }}>✨</Text>
+                  <Text style={{ color: t.ai, fontSize: 12, fontWeight: "700" }}>Ask AI</Text>
+                </TouchableOpacity>
+              )}
+
               {/* Dog profile / sign-in. Previously the only route to the profile was
                   buried inside the coach modal, so there was no way to reach it from
                   the main screen at all. */}
@@ -4912,7 +5031,15 @@ export default function App() {
                 </Text>
 
                 {scoreBreakdown.length > 0 && (
-                  <AccordionSection title="Why This Score">
+                  <AccordionSection
+                    title="Why This Score"
+                    askLabel="Explain"
+                    onAskAI={() =>
+                      askAboutSection(
+                        `Why did ${productName} score ${score}/100? Walk me through what helped and what hurt, in plain language.`,
+                      )
+                    }
+                  >
                     {scoreBreakdown.map((item, i) => (
                       <View key={i} style={styles.breakdownRow}>
                         <Text style={[styles.breakdownLabel, {
@@ -4973,7 +5100,15 @@ export default function App() {
                 )}
 
                 {scoreBreakdown.length > 0 && (
-                  <AccordionSection title="💊 Recommended Supplements">
+                  <AccordionSection
+                    title="💊 Recommended Supplements"
+                    askLabel="For my dog"
+                    onAskAI={() =>
+                      askAboutSection(
+                        `Out of these supplement options, which would actually be worth it for my dog given this food and his situation — and which would be a waste of money? Say what the evidence supports for each one you recommend.`,
+                      )
+                    }
+                  >
                     {SUPPLEMENT_RECS.map((s, i) => (
                       <View key={i} style={{ marginBottom: 12, backgroundColor: s.bg, borderRadius: 10, padding: 12, borderWidth: 1, borderColor: s.borderColor }}>
                         <Text style={{ color: s.color, fontWeight: '700', fontSize: 14, marginBottom: 4 }}>{s.emoji} {s.name}</Text>
@@ -5536,7 +5671,16 @@ export default function App() {
               )}
 
               {ingredients.length > 0 && (
-                <AccordionSection title="Ingredient Breakdown" defaultOpen>
+                <AccordionSection
+                  title="Ingredient Breakdown"
+                  defaultOpen
+                  askLabel="Ask AI"
+                  onAskAI={() =>
+                    askAboutSection(
+                      `Looking at the full ingredient list for ${productName}, which ingredients matter most for my dog specifically — good or bad — and why? Skip the ones that don't matter much.`,
+                    )
+                  }
+                >
                   <Text style={styles.pillHint}>
                     Tap any ingredient to learn more
                   </Text>
@@ -5570,7 +5714,16 @@ export default function App() {
               )}
 
               {flagged.length > 0 && (
-                <AccordionSection title={`Biggest Concerns (${flagged.length})`} titleColor={t.critical}>
+                <AccordionSection
+                  title={`Biggest Concerns (${flagged.length})`}
+                  titleColor={t.critical}
+                  askLabel="Evidence"
+                  onAskAI={() =>
+                    askAboutSection(
+                      `For each of these flagged ingredients in ${productName} (${flagged.map((f) => f.name).join(", ")}), tell me how strong the evidence actually is. Name real studies or regulatory findings where they exist, and say plainly when a concern is mechanistic or traditional rather than proven. Don't overstate it.`,
+                    )
+                  }
+                >
                   <Text style={[styles.omegaNote, { marginBottom: 12 }]}>Tap a concern to see why it matters.</Text>
                   {/* Apple grouped-card row: a coloured icon badge carries the
                       severity at a glance (matching the approved prototype),
@@ -5765,7 +5918,15 @@ export default function App() {
               )}
 
               {scoreBreakdown.length > 0 && (
-                <AccordionSection title="💊 Recommended Supplements">
+                <AccordionSection
+                    title="💊 Recommended Supplements"
+                    askLabel="For my dog"
+                    onAskAI={() =>
+                      askAboutSection(
+                        `Out of these supplement options, which would actually be worth it for my dog given this food and his situation — and which would be a waste of money? Say what the evidence supports for each one you recommend.`,
+                      )
+                    }
+                  >
                   {/* Accent moved to a left rule + heading rather than a saturated
                       card fill — seven full-colour tinted cards in a row was visually
                       loud and made the copy harder to read. */}

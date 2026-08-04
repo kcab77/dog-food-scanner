@@ -211,6 +211,13 @@ function buildTokens(palette: Record<keyof typeof lightPalette, string>) {
     info: palette.berry,
     infoSoft: palette.sky,
 
+    // AI assistant — its own semantic token so every "Ask AI" affordance reads as
+    // the same one thing wherever it appears, and the whole assistant surface can
+    // be re-themed by changing this single mapping. Deliberately NOT a severity
+    // colour: asking a question is neutral, not a warning.
+    ai: palette.violet,
+    aiTint: palette.violetTint,
+
     // accent set for the supplement + grocery cards
     accents: {
       probiotic: { fg: palette.violet, bg: palette.violetTint },
