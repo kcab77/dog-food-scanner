@@ -100,7 +100,15 @@ This uses Claude to generate 50+ Q&A pairs from the file, embeds them, and upser
 ```bash
 node common-sense-dog-ai/scripts/ingest_pack.js <pairs.json>
 ```
-Embeds (voyage-3) and upserts directly — no Claude generation. IDs are `qa-<topic>-<n>` (collision-safe); skips near-duplicates (>0.95). If the main folder's `.env.local` or scripts are ever missing (iCloud loss), run it from **`common-sense-dog-ai-backup/`** (intact keys + script). After ingesting, also write a readable summary note into the Obsidian vault's `commonsensedog knowledge/`.
+Embeds (voyage-3) and upserts directly — no Claude generation. IDs are `qa-<topic>-<n>` (collision-safe); skips near-duplicates (>0.95). After ingesting, also write a readable summary note into the Obsidian vault's `commonsensedog knowledge/`.
+
+> ⚠️ **Do NOT run ingestion from `common-sense-dog-ai-backup/`.** That folder is a **key store**,
+> not a working copy. Its scripts have drifted from live and verified different as of 2026-08-03:
+> `lib/pinecone.ts` 116 lines vs live 99 (**the backup lacks the Voyage 429 retry/backoff**),
+> `seed-pinecone.mjs` 364 vs 187, and it has no `lib/answers-data.ts` at all (none of the 50 live
+> answer pages). Running from it succeeds silently while behaving differently from production.
+> **If `.env.local` goes missing, copy the keys OUT of the backup into `common-sense-dog-ai/` and
+> run from there.** Never the reverse.
 
 ---
 
@@ -243,7 +251,8 @@ now "Below Average"/"Low Quality" (colors/thresholds/scoring math unchanged, pre
 
 ## Build, Deploy & Repo State (important)
 
-- **Canonical working copy:** `~/Documents/Projects/dog-food-scanner` — full files + working git; edit and build here. (`~/pawgrade-clean` is a redundant app-only copy; `common-sense-dog-ai-backup/` is an intact website backup with a working `.env.local` + extra scripts.)
+- **Canonical working copy:** `~/Documents/Projects/dog-food-scanner` — full files + working git; edit and build here. (`~/pawgrade-clean` is a redundant app-only copy.)
+- **`common-sense-dog-ai-backup/` is a KEY STORE, not a working copy.** Its value is the intact `.env.local` that survived the iCloud loss. Its *code* has drifted from live and is no longer interchangeable (verified 2026-08-03 — see the ingestion warning above). Treat it as read-only reference: copy keys out of it, never run from it, never copy code out of it without diffing first.
 - **Git can be flaky** (past iCloud corruption). If EAS errors on git, build with `EAS_NO_VCS=1` (archives the working dir via `.easignore`):
   ```bash
   EAS_NO_VCS=1 eas build -p ios --profile production

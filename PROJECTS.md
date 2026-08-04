@@ -103,7 +103,7 @@ runtime by `sync-library.mjs` — **do not move them.**
 | Folder | Note |
 |---|---|
 | `_icloud-duplicates/` | 23 quarantined `" 2"` files from iCloud sync. ⚠️ `app/index 2.tsx` and `lib/theme 2.ts` **differ** from the originals — check before deleting the folder. |
-| `common-sense-dog-ai-backup/` | Intact website backup (has working `.env.local` + extra scripts) — useful if iCloud eats the main one |
+| `common-sense-dog-ai-backup/` | **Key store, not a working copy.** Value = the intact `.env.local`. Its code has DRIFTED from live (2026-08-03: no Voyage 429 retry in `pinecone.ts`, no `answers-data.ts`). Copy keys *out*; never run ingests from it. |
 | `dog-food-scanner-fresh/` | Redundant app copy |
 | `joint-health-ingest/` | Python ingest experiment; **172MB** (`.venv` now gitignored) |
 | `dist/` | Expo web build output (regenerated; gitignored) |
