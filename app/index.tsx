@@ -6359,6 +6359,27 @@ export default function App() {
                       </View>
                     )}
 
+                    {/* The clinical trial behind the ratio target. Owners are told
+                        "good omega ratio" constantly; almost nobody is shown the study. */}
+                    <View style={{ backgroundColor: t.goodTint, borderRadius: 9, padding: 11, marginBottom: 8 }}>
+                      <Text style={{ color: t.good, fontWeight: "700", fontSize: 12.5 }}>
+                        Roush et al., 2010 · JAVMA 236(1):59–66
+                      </Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>
+                        A randomised, double-blinded, controlled trial across 18 clinics: 127 dogs
+                        with osteoarthritis fed for six months on a food with{" "}
+                        <Text style={{ fontWeight: "700" }}>31× more omega-3 and a 34× lower
+                        omega-6:3 ratio</Text>. Blood work confirmed it worked — higher serum omega-3
+                        and lower arachidonic acid at every timepoint. Owners reported better ability
+                        to rise and play by 6 weeks, and better walking by 12 and 24 weeks.
+                      </Text>
+                      <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 5, lineHeight: 16, fontStyle: "italic" }}>
+                        Reviews of this literature put the anti-inflammatory range from about 5.5:1
+                        down to roughly 1:3.75 — meaning ratios well below the usual 5:1 target, and
+                        even inverted ones with more omega-3 than omega-6, still show benefit.
+                      </Text>
+                    </View>
+
                     <View
                       style={{
                         backgroundColor: t.surface,
