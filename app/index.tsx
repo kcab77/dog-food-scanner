@@ -127,7 +127,7 @@ const HARMFUL_INGREDIENTS: {
     term: "sodium metabisulfite",
     severity: "moderate",
     reason:
-      "This sulfite preservative has been associated with the destruction of thiamine (vitamin B1) in pet food and may trigger sensitivity reactions in some animals",
+      "This one is more serious than its 'moderate' tier suggests. Sulfite preservatives destroy thiamine (vitamin B1), and thiamine deficiency in dogs is a documented, sometimes fatal outcome — published cases describe dogs developing deficiency specifically from eating sulphite-preserved meat. The signs are neurological: head tilt, disorientation, wobbliness, progressing to seizures and paralysis. The FDA's position is that sulfite preservatives should not be added to foods, and specifically not to pet foods marketed as complete and balanced or listing thiamine as an ingredient — because the preservative destroys the very nutrient the label claims to provide. Most often found in fresh meat rolls, minces and bully sticks, where it is used to control colour and odour.",
   },
   {
     term: "potassium sorbate",
@@ -157,7 +157,7 @@ const HARMFUL_INGREDIENTS: {
     term: "sodium selenite",
     severity: "severe",
     reason:
-      "Sodium selenite is an inorganic selenium compound with one of the narrowest safe dose ranges in pet nutrition — the gap between adequate and toxic is extremely small. Unlike organic selenomethionine (which is self-regulated through body proteins), inorganic selenite generates free radicals during metabolism, causing oxidative stress to liver and kidney cells. Research in Biological Trace Element Research shows long-term inorganic selenium accumulation causes progressive kidney tubule damage before obvious clinical symptoms appear. Selenomethionine from yeast is the safer, better-regulated alternative.",
+      "Sodium selenite is inorganic selenium, and selenium has one of the narrowest safe ranges of any nutrient — the gap between adequate and toxic is small enough that form matters. Unlike organic selenomethionine, which the body incorporates into proteins and regulates, inorganic selenite generates free radicals during metabolism, causing oxidative stress in liver and kidney tissue. Research published in Biological Trace Element Research links long-term inorganic selenium accumulation to progressive kidney tubule damage that develops before any obvious clinical signs. Kyle's own formulation rule applies here: prefer selenium yeast (selenomethionine) over sodium selenite.",
   },
   {
     term: "zinc oxide",
@@ -169,13 +169,13 @@ const HARMFUL_INGREDIENTS: {
     term: "dl-methionine",
     severity: "moderate",
     reason:
-      "The presence of synthetic dl-methionine is often considered an indicator of low biological value protein sources in the formula, as high quality whole meat proteins typically provide adequate methionine naturally",
+      "⚪ Synthetic form, generally safe: DL-methionine is a synthetic amino acid added to meet methionine requirements and, in some foods, to acidify urine. It's a legitimate and widely used feed additive with no evidence of harm at label levels. The 'DL-' indicates a racemic mixture — dogs use the L-form directly and convert the D-form, which they do adequately. Flagged as a formulation signal rather than a hazard: its presence usually indicates plant-heavy protein that needed topping up, since meat-based diets generally supply enough methionine on their own.",
   },
   {
     term: "corn syrup",
     severity: "severe",
     reason:
-      "Added sugars like corn syrup have been associated with blood sugar dysregulation, obesity, and dental disease in companion animals. Dogs and cats have limited ability to process high sugar loads",
+      "⚪ Mechanistic, not trial-based: corn syrup is refined sugar added for palatability. Dogs have no dietary requirement for sugar, and adding it to a food serves the manufacturer (dogs eat more of it) rather than the dog. The concerns follow from what sugar does generally — spikes in blood glucose, a contribution to obesity and dental disease, and feeding of oral and gut yeast — rather than from controlled canine trials on corn syrup specifically. Its presence is also a signal: a food good enough to eat on its own merits doesn't need sweetening.",
   },
   {
     term: "corn gluten meal",
@@ -187,31 +187,25 @@ const HARMFUL_INGREDIENTS: {
     term: "wheat gluten",
     severity: "moderate",
     reason:
-      "Wheat gluten is a common allergen in dogs. It was prominently associated with the 2007 pet food recall after contaminated wheat gluten from overseas caused widespread illness and deaths in pets",
+      "⚪ Mechanistic / formulation signal: wheat gluten is concentrated plant protein used to raise the crude protein figure on the guaranteed analysis without meat. That matters because the protein percentage on a label doesn't distinguish sources, so a food can advertise strong protein while much of it is plant-derived and lower in the amino acids dogs need most. Also a wheat allergen source. Historical note: wheat gluten was the vehicle for melamine contamination in the 2007 recalls, though the melamine was the adulterant, not the gluten.",
   },
   {
     term: "soy protein isolate",
     severity: "moderate",
     reason:
-      "Soy protein isolate is a heavily processed ingredient that some veterinary nutritionists have associated with digestive issues and possible endocrine disruption in sensitive animals",
+      "⚪ Mechanistic / formulation signal: soy protein isolate is highly concentrated plant protein used to boost the protein figure cheaply. Two considerations. It contributes to the crude protein number without contributing meat, so the label overstates the quality of the protein. And soy contains phytates, which bind zinc and other minerals and reduce their absorption — relevant because zinc absorption is already the weak point in plant-heavy foods. Soy is also a recognised allergen in dogs, though less common than chicken or beef.",
   },
   {
     term: "cellulose",
     severity: "mild",
     reason:
-      "Cellulose used in pet food is often derived from wood pulp or plant stalks. While technically a fiber source, it provides minimal nutritional value compared to whole food fiber sources like pumpkin or chicory root",
+      "Powdered cellulose is wood pulp used as a cheap bulking fibre, and the comparative research is unflattering. In Beagle feeding trials (Journal of Animal Science), apparent total tract digestibility was 11% for cellulose against 29% for beet pulp — less than half. Cellulose is insoluble and poorly fermentable, so it passes through largely untouched: it reduces overall dry matter and organic matter digestibility, increases stool volume, and produces lower concentrations of beneficial short-chain fatty acids with a less acidic fecal pH than fermentable fibres. It adds bulk and satiety without feeding the gut. Fermentable fibres — beet pulp, pumpkin, chicory — do the job better.",
   },
   {
     term: "peanut hulls",
     severity: "mild",
     reason:
       "Peanut hulls are an agricultural waste byproduct with negligible nutritional value. Pet nutrition researchers consider their inclusion an indicator of low quality formulation focused on reducing cost rather than nutrition",
-  },
-  {
-    term: "beet pulp",
-    severity: "mild",
-    reason:
-      "Beet pulp is a controversial ingredient. While some consider it a fiber source, critics note it is often sourced from sugar beets and may contain residual sugars. Many premium brands have moved away from it",
   },
   {
     term: "brewer rice",
@@ -229,7 +223,7 @@ const HARMFUL_INGREDIENTS: {
     term: "ground wheat",
     severity: "mild",
     reason:
-      "Ground wheat is a common allergen in companion animals and provides limited nutritional value for carnivores. It is primarily used as an inexpensive filler and binder in dry pet food formulas",
+      "⚪ Mechanistic / formulation signal: ground wheat is an inexpensive carbohydrate that supplies bulk calories and helps kibble hold together during extrusion. Dogs have no carbohydrate requirement (see the carbohydrate section), and wheat is among the more common grain allergens, though far less common than chicken or beef. It isn't harmful to most dogs — it's a cost and filler question, and a reason to check where the protein is actually coming from.",
   },
   {
     term: "grain fragments",
@@ -253,13 +247,13 @@ const HARMFUL_INGREDIENTS: {
     term: "artificial flavor",
     severity: "moderate",
     reason:
-      "Artificial flavors are often used to make lower quality ingredients more palatable to pets. Their presence may indicate the base ingredients lack sufficient natural palatability",
+      "⚪ By definition undisclosed: 'artificial flavor' is a category, not an ingredient, and manufacturers aren't required to say what's in it. There's no evidence that flavourings at label levels harm dogs, and this is not flagged as toxic. It is flagged because it's unknowable — you cannot assess or avoid what isn't named — and because a food needing engineered flavour is telling you the ingredients alone weren't palatable.",
   },
   {
     term: "artificial flavour",
     severity: "moderate",
     reason:
-      "Artificial flavours are often used to mask the taste of lower quality ingredients. Their presence may indicate the base ingredients lack sufficient natural palatability",
+      "⚪ By definition undisclosed: 'artificial flavour' is a category rather than a named ingredient, and its contents need not be disclosed. No evidence of harm at label levels, and it isn't flagged as toxic. It's flagged because it can't be assessed or avoided, and because needing engineered flavour says something about the underlying ingredients.",
   },
   {
     term: "red 40",
@@ -343,7 +337,7 @@ const HARMFUL_INGREDIENTS: {
     term: "hydrolyzed protein",
     severity: "moderate",
     reason:
-      "Hydrolyzed proteins are produced through chemical or enzymatic breakdown of animal or plant tissue. While sometimes used therapeutically, in standard pet food they may indicate lower quality protein sources and have been associated with sensitivity reactions in some animals",
+      "⚪ Context-dependent, and worth reading carefully: hydrolysis breaks protein into fragments too small for the immune system to recognise, which is exactly why prescription hypoallergenic diets use it — for a dog with confirmed food allergy this is a therapeutic ingredient, not a defect. The concern is different: in an ordinary food it's often used as a cheap palatability enhancer (the same role as 'animal digest'), and the source protein is usually unnamed. Judge it by context — a veterinary elimination diet and a supermarket kibble are using it for opposite reasons.",
   },
   {
     term: "blood meal",
@@ -355,13 +349,13 @@ const HARMFUL_INGREDIENTS: {
     term: "bone meal",
     severity: "mild",
     reason:
-      "Rendered bone meal has variable digestibility and may contribute to phosphorus imbalances when used as a primary calcium source. Whole ground bone from identified species is generally preferred by veterinary nutritionists",
+      "⚪ Mechanistic / sourcing signal: bone meal supplies calcium and phosphorus, and in that sense it works. The concerns are about origin: it's rendered from unnamed animal sources, so species and quality are undisclosed, and bone is where heavy metals such as lead concentrate in an animal's body. Raw meaty bone or whole ground bone in a fresh food is preferable and traceable. Not a hazard at label levels — a transparency and quality question.",
   },
   {
     term: "feather meal",
     severity: "moderate",
     reason:
-      "Feather meal is produced by processing poultry feathers under high heat and pressure. Research suggests its digestibility is considerably lower than whole meat proteins, and it is sometimes used to artificially inflate crude protein percentages",
+      "⚪ Mechanistic / quality signal: feather meal is hydrolysed poultry feathers, used as a cheap protein source. It's genuinely high in crude protein by analysis, but the protein is largely keratin, which is poorly digestible and unbalanced in the amino acids dogs need — low in lysine and methionine in particular. This is the clearest example of why crude protein on a label can mislead: the number can be high while the usable protein is low. Its presence signals cost-driven formulation.",
   },
   {
     term: "chicken by-product",
@@ -373,13 +367,13 @@ const HARMFUL_INGREDIENTS: {
     term: "sugar",
     severity: "moderate",
     reason:
-      "Added sugars in pet food have been associated with obesity, dental disease, and blood sugar dysregulation in companion animals. Dogs and cats have no nutritional requirement for added sugars",
+      "⚪ Mechanistic, not trial-based: dogs have no dietary requirement for added sugar. It's included for palatability, and the concerns are the general ones — calories without nutrition, contribution to obesity and dental disease, and feeding oral and gut yeast populations. There are no controlled canine trials on added sugar in commercial food specifically; this is reasoning from established physiology. The clearer signal is what it says about the formulation: sweetening is how you make a food palatable when the ingredients alone won't do it.",
   },
   {
     term: "sucrose",
     severity: "moderate",
     reason:
-      "Sucrose (table sugar) provides empty calories with no nutritional benefit for pets. Its inclusion has been associated with obesity and dental disease in companion animals",
+      "⚪ Mechanistic, not trial-based: sucrose is table sugar, added for palatability. Dogs require no dietary sugar. Same reasoning as other added sugars — empty calories, dental and yeast implications, and a signal that palatability is being engineered rather than earned. No canine-specific trials on sucrose in pet food; this is physiology, not evidence of harm at label levels.",
   },
   {
     term: "fructose",
@@ -391,25 +385,25 @@ const HARMFUL_INGREDIENTS: {
     term: "glucose",
     severity: "moderate",
     reason:
-      "Added glucose provides empty calories and has been associated with blood sugar spikes in companion animals. Dogs and cats have no nutritional requirement for added simple sugars",
+      "⚪ Mechanistic, not trial-based: added glucose is a simple sugar used for palatability and, in some products, texture. Dogs generate the glucose they need from protein and fat and have no dietary requirement for it. Concerns are the general sugar ones rather than glucose-specific findings in dogs.",
   },
   {
     term: "molasses",
     severity: "mild",
     reason:
-      "Molasses is a sugar byproduct used to improve palatability in pet food. While it contains some minerals, its high sugar content is considered unnecessary and potentially problematic for blood sugar management in companion animals",
+      "⚪ Mechanistic, with a small caveat in its favour: molasses is added as a sweetener and binder, and it does carry trace minerals (iron, calcium, magnesium) unlike refined sugars. That doesn't make it a nutritional ingredient — the amounts are small and the sugar is not. Treat it as added sugar with a marginal upside, and as a signal that palatability is being engineered.",
   },
   {
     term: "sorbitol",
     severity: "mild",
     reason:
-      "Sorbitol is a sugar alcohol that can cause osmotic digestive upset and diarrhea in some animals, particularly at higher intake levels. It is considered unnecessary in quality pet food formulations",
+      "⚪ Mechanistic: sorbitol is a sugar alcohol used as a sweetener and humectant. Unlike xylitol — which is genuinely dangerous to dogs — sorbitol is not toxic, and conflating the two is a common error. The practical issue is that sugar alcohols are poorly absorbed and draw water into the gut, so meaningful amounts cause loose stools and gas. Present in small amounts in soft treats, it's a minor concern rather than a hazard.",
   },
   {
     term: "melamine",
     severity: "toxic",
     reason:
-      "Melamine is an industrial chemical not approved for use in pet food. It was linked to the 2007 pet food contamination crisis that resulted in thousands of pet deaths and is now tested for specifically in pet food safety screenings",
+      "Melamine is an industrial chemical with no approved use in food of any kind. It was the adulterant behind the 2007 pet food contamination — added to wheat gluten and rice protein concentrate to inflate apparent protein readings, because standard protein tests measure nitrogen and melamine is nitrogen-rich. Combined with cyanuric acid it forms crystals that cause acute kidney failure. Thousands of pets died, the FDA recall was one of the largest in pet food history, and melamine is now specifically screened for in safety testing. Its presence on an ingredient list would indicate adulteration, not formulation.",
   },
   {
     term: "rendered fat",
@@ -421,7 +415,7 @@ const HARMFUL_INGREDIENTS: {
     term: "vegetable oil",
     severity: "mild",
     reason:
-      "Unspecified vegetable oils are typically high in omega-6 fatty acids. Without a named source, quality and origin cannot be verified, and an imbalanced omega-6 to omega-3 ratio has been associated with increased inflammation in companion animals",
+      "⚪ Mechanistic / transparency: 'vegetable oil' doesn't say which plant, so you can't know the fatty acid profile — and that's the whole point of the ingredient. The common cheap sources (corn, soybean, sunflower, safflower) are heavily weighted toward omega-6 linoleic acid, which is why unnamed vegetable oil tends to push a food's omega-6:3 ratio in the wrong direction. Named oils are assessable; this isn't.",
   },
   {
     term: "garlic",
@@ -482,13 +476,13 @@ const HARMFUL_INGREDIENTS: {
     term: "pyridoxine hydrochloride",
     severity: "mild",
     reason:
-      "Pyridoxine hydrochloride (synthetic Vitamin B6) is safe at normal dietary levels but chronic excess has been associated with peripheral neuropathy in dogs — nerve damage in the limbs causing loss of coordination and sensory dysfunction.",
+      "⚪ Safe synthetic at label levels: pyridoxine HCl is synthetic vitamin B6, and it's the standard, effective form used across pet food. Dogs require B6 for protein metabolism and neurotransmitter production, and deficiency causes anaemia and seizures. The reason for noting it at all is that B6 has an unusually narrow window at the top end for a B vitamin: chronic excess causes peripheral neuropathy — nerve damage in the limbs and loss of coordination. That's a concern for over-supplementation, not for its presence in a balanced food.",
   },
   {
     term: "dl-alpha tocopherol",
     severity: "mild",
     reason:
-      "The 'dl-' prefix is the tell: this is synthetic vitamin E, and the difference is measurable rather than philosophical. Natural vitamin E (d-alpha or RRR-alpha-tocopherol) is a single stereoisomer that matches the alpha-tocopherol transport protein in the liver. Synthetic dl-alpha-tocopherol is a mixture of eight isomers, of which only about 12.5% is the RRR form the body handles best. The practical conversion used in nutrition is that 1 mg of natural equals roughly 2 mg of synthetic — natural has around twice the bioavailability and tissue retention. It isn't harmful; it's simply a weaker version of the same nutrient, and 'mixed tocopherols' on a label indicates the better one.",
+      "The 'dl-' prefix is the tell: this is synthetic vitamin E. Natural vitamin E (d-alpha, or RRR-alpha-tocopherol) is a single stereoisomer that matches the alpha-tocopherol transport protein in the liver. Synthetic dl-alpha-tocopherol is a mixture of eight isomers, only about 12.5% of which is that RRR form. The conversion used in nutrition — 1 mg natural equals roughly 2 mg synthetic — reflects roughly double the bioavailability and tissue retention for the natural form. Not harmful, simply a weaker version of the same nutrient. 'Mixed tocopherols' on a label indicates the better one, and is also a natural preservative.",
   },
 ];
 
@@ -6080,6 +6074,71 @@ export default function App() {
                   </Text>
                 </AccordionSection>
               )}
+
+              {/* Named vs generic meals. The distinction owners are most often given
+                  backwards: "meal = bad" is wrong, "unnamed = bad" is right. */}
+              {(() => {
+                const low = ingredients.map((i) => i.toLowerCase());
+                const generic = ingredients.filter((_, i) =>
+                  GENERIC_MEALS.some((g) => low[i].includes(g)),
+                );
+                const named = ingredients.filter((_, i) =>
+                  NAMED_MEALS.some((n) => low[i].includes(n)),
+                );
+                if (generic.length === 0 && named.length === 0) return null;
+                return (
+                  <AccordionSection
+                    title="🏷️ Named vs unnamed meals"
+                    defaultOpen={generic.length > 0}
+                    askLabel="Ask AI"
+                    onAskAI={() =>
+                      askAboutSection(
+                        `This food contains ${generic.length ? `unnamed meals (${generic.join(", ")})` : ""}${generic.length && named.length ? " and " : ""}${named.length ? `named meals (${named.join(", ")})` : ""}. What does that mean for quality and for my dog if he has any food sensitivities?`,
+                      )
+                    }
+                  >
+                    <Text style={[styles.sectionNote, { marginBottom: 10 }]}>
+                      &quot;Meal&quot; isn&apos;t the problem — <Text style={{ fontWeight: "700" }}>unnamed</Text> is.
+                      A meal is rendered protein with the water removed, so it&apos;s concentrated
+                      rather than inferior. What matters is whether the label tells you which animal.
+                    </Text>
+
+                    {generic.length > 0 && (
+                      <View style={{ backgroundColor: t.highTint, borderRadius: 9, padding: 11, marginBottom: 8 }}>
+                        <Text style={{ color: t.highDeep, fontWeight: "700", fontSize: 13 }}>
+                          ⚠ Unnamed: {generic.join(", ")}
+                        </Text>
+                        <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 4, lineHeight: 17 }}>
+                          &quot;Meat meal&quot; or &quot;poultry meal&quot; can be any mammal or any bird,
+                          and the species can change between batches depending on what&apos;s cheapest.
+                          Two consequences: you can&apos;t judge the quality, and{" "}
+                          <Text style={{ fontWeight: "700" }}>a dog with a food allergy cannot avoid
+                          the trigger</Text> — you have no way to know whether this batch contains
+                          the protein that sets him off.
+                        </Text>
+                      </View>
+                    )}
+
+                    {named.length > 0 && (
+                      <View style={{ backgroundColor: t.goodTint, borderRadius: 9, padding: 11, marginBottom: 8 }}>
+                        <Text style={{ color: t.good, fontWeight: "700", fontSize: 13 }}>
+                          ✓ Named: {named.join(", ")}
+                        </Text>
+                        <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 4, lineHeight: 17 }}>
+                          The species is declared, so you can judge it and avoid it if needed. A named
+                          meal like chicken meal is a legitimately good ingredient — roughly 300% the
+                          protein density of fresh chicken, because the water is already gone.
+                        </Text>
+                      </View>
+                    )}
+
+                    <Text style={{ color: t.textMuted, fontSize: 11.5, lineHeight: 16 }}>
+                      Rule of thumb: if a manufacturer is confident in the source, they name it.
+                      Anonymity on a label is a choice, not an oversight.
+                    </Text>
+                  </AccordionSection>
+                );
+              })()}
 
               {/* Protein profile — allergen risk tracks exposure, not badness. */}
               {(() => {
