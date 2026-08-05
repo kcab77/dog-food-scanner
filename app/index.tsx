@@ -1859,7 +1859,7 @@ const PROTEIN_PROFILES: {
   { term: "whitefish", label: "Whitefish", risk: "medium", digestibility: "Very high",
     note: "Good lean protein. Generic 'whitefish' with no species named is a transparency concern rather than a safety one." },
   { term: "pork", label: "Pork", risk: "medium", digestibility: "High",
-    note: "A novel protein for many dogs. Watch fat content." },
+    note: "A novel protein for many dogs. Watch fat content. In TCVM pork is neutral-to-cooling — a good choice for a dog who runs hot, and one of the few common proteins that is." },
   { term: "herring", label: "Herring", risk: "medium", digestibility: "Very high",
     note: "Excellent omega-3 source with lower mercury than large predatory fish." },
   { term: "tuna", label: "Tuna", risk: "medium", digestibility: "Very high",
@@ -2311,9 +2311,10 @@ function HersheyProtocolSection() {
       {/* Protein Rotation */}
       <Text style={{ color: t.info, fontWeight: "700", fontSize: 13, marginTop: 12, marginBottom: 8 }}>🌿 Protein Rotation (Hershey runs hot)</Text>
       <View style={{ marginBottom: 6, paddingLeft: 10, borderLeftWidth: 2, borderLeftColor: t.info }}>
-        <Text style={{ color: t.infoSoft, fontSize: 12, lineHeight: 18 }}>❄️ <Text style={{ fontWeight: "600" }}>Cooling (best):</Text> Duck, rabbit, white fish, salmon</Text>
-        <Text style={{ color: t.text, fontSize: 12, lineHeight: 18 }}>⚖️ <Text style={{ fontWeight: "600" }}>Neutral (fine):</Text> Beef, turkey, eggs</Text>
-        <Text style={{ color: t.critical, fontSize: 12, lineHeight: 18 }}>🔥 <Text style={{ fontWeight: "600" }}>Warming (limit as staple):</Text> Chicken, lamb</Text>
+        <Text style={{ color: t.infoSoft, fontSize: 12, lineHeight: 18 }}>❄️ <Text style={{ fontWeight: "600" }}>Cooling (best):</Text> Duck, rabbit, whitefish/cod, pork, wild boar</Text>
+        <Text style={{ color: t.text, fontSize: 12, lineHeight: 18 }}>⚖️ <Text style={{ fontWeight: "600" }}>Neutral (fine):</Text> Beef, beef liver, eggs, tripe, wild-caught salmon</Text>
+        <Text style={{ color: t.critical, fontSize: 12, lineHeight: 18 }}>🔥 <Text style={{ fontWeight: "600" }}>Warming (limit as staple):</Text> Chicken, turkey, lamb, venison, trout, farmed salmon</Text>
+        <Text style={{ color: t.textDim, fontSize: 11, marginTop: 4, lineHeight: 15 }}>Corrected 2026-08-05: venison and turkey are WARMING (venison is often listed as hot), and farmed salmon is warming while wild is nearer neutral — worth knowing, since venison gets recommended for allergies without anyone mentioning it heats a dog up.</Text>
         <Text style={{ color: t.textDim, fontSize: 11, marginTop: 4 }}>Goal: cooling proteins 4-5x/week, neutral 2-3x, warming occasionally</Text>
       </View>
 
