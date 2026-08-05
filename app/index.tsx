@@ -491,12 +491,6 @@ const HARMFUL_INGREDIENTS: {
       "dl-Alpha tocopherol is the synthetic form of Vitamin E with significantly lower bioavailability than natural d-alpha tocopherol. Very high doses may interfere with Vitamin K absorption. The synthetic dl form (note the 'l') is considered a lower quality ingredient compared to the natural d form.",
   },
   {
-    term: "cyanocobalamin",
-    severity: "mild",
-    reason:
-      "Cyanocobalamin is an inferior synthetic form of Vitamin B12 with lower bioavailability than methylcobalamin, the preferred form. It contains trace cyanide compounds (negligible in context) and is generally considered a lower quality formulation signal by veterinary nutritionists.",
-  },
-  {
     term: "zinc oxide",
     severity: "moderate",
     reason:
@@ -806,6 +800,49 @@ const ORGAN_COVERAGE = [
  * of who's eating it, and letting a profile move the number would make two dogs'
  * scores for the same bag incomparable. The risk is personal; the score stays shared.
  */
+/**
+ * Prebiotic fibre — the half of gut health the app was missing.
+ *
+ * PROBIOTIC_SOURCES recognises bacteria going in. Nothing recognised the fermentable
+ * fibre that feeds the bacteria already there. That's a real gap: probiotics without
+ * prebiotic fibre are far less useful, and prebiotics alone still help, because they
+ * feed an existing population rather than trying to establish a new one.
+ *
+ * It also fits the whole-food-first philosophy exactly — nearly every entry here is
+ * a vegetable, root or fruit rather than an isolated supplement.
+ */
+const PREBIOTIC_SOURCES = [
+  "chicory",
+  "chicory root",
+  "inulin",
+  "dandelion",
+  "dandelion greens",
+  "dandelion root",
+  "jerusalem artichoke",
+  "sunchoke",
+  "burdock",
+  "burdock root",
+  "asparagus",
+  "pumpkin",
+  "sweet potato",
+  "green banana",
+  "plantain",
+  "mushroom",
+  "shiitake",
+  "reishi",
+  "apple pectin",
+  "pectin",
+  "flaxseed",
+  "psyllium",
+  "beet pulp", // genuinely prebiotic despite its reputation as cheap filler
+  "fructooligosaccharide",
+  "fos",
+  "mannanoligosaccharide",
+  "mos",
+  "yeast cell wall",
+  "acacia",
+];
+
 const COPPER_SENSITIVE_BREEDS = [
   "labrador",
   "lab ",
@@ -1671,6 +1708,191 @@ function detectProcessingMethod(
  * moves the same distinction into the score without calling a good ingredient bad.
  * Optional param so existing call sites keep working unchanged.
  */
+/**
+ * The salt divider.
+ *
+ * AAFCO requires ingredients in descending order by weight, and salt is typically
+ * included at around 1%. So everything listed BELOW salt is present at roughly 1% or
+ * less — trace amounts.
+ *
+ * ⚠️ The critical nuance, and the reason this isn't a blanket penalty: plenty of
+ * ingredients belong below the line and work perfectly well there. Added vitamins and
+ * minerals, probiotics, preservatives and potent extracts are all dosed in fractions
+ * of a percent by design. Flagging those would be wrong.
+ *
+ * What the rule actually catches is MARKETING ingredients — the blueberries and kale
+ * on the front of the bag that turn out to be a sprinkle. Naming that plainly does
+ * more for an owner than any score change: "the blueberries are listed below salt,
+ * so this is a sprinkle, not a serving."
+ */
+/**
+ * Ingredient splitting.
+ *
+ * A manufacturer can take one ingredient and list it as several — rice, brewers rice
+ * and rice flour, or pea protein, pea starch and pea fibre. Because the label is
+ * ordered by weight, splitting pushes each fragment further down and keeps the
+ * combined weight out of the top few slots. The bag reads as meat-first when, added
+ * up, grain or legume is the real bulk.
+ *
+ * It's the companion to the salt divider: both are ways the ordering rule gets worked
+ * around, and neither is visible unless you're looking for it.
+ *
+ * Deliberately conservative — only bases where splitting is a KNOWN practice, and
+ * only reported when two or more fragments actually appear. Naming an ingredient
+ * "split" when a food simply contains rice and rice bran for real reasons would be
+ * a false accusation.
+ */
+const SPLIT_BASES: { base: string; label: string; forms: string[] }[] = [
+  { base: "rice", label: "Rice", forms: ["rice", "brewers rice", "brewer's rice", "rice flour", "rice bran", "broken rice", "white rice", "brown rice"] },
+  { base: "corn", label: "Corn", forms: ["corn", "ground corn", "corn gluten meal", "corn flour", "corn bran", "corn starch", "cornmeal", "corn germ meal"] },
+  { base: "pea", label: "Peas", forms: ["peas", "pea protein", "pea starch", "pea fiber", "pea fibre", "pea flour", "green peas", "yellow peas"] },
+  { base: "potato", label: "Potato", forms: ["potato", "potato protein", "potato starch", "potato flour", "dried potato"] },
+  { base: "wheat", label: "Wheat", forms: ["wheat", "wheat flour", "wheat gluten", "wheat bran", "wheat middlings", "ground wheat"] },
+  { base: "soy", label: "Soy", forms: ["soybean meal", "soy protein", "soy flour", "soybean hulls", "soy protein isolate"] },
+  { base: "barley", label: "Barley", forms: ["barley", "pearled barley", "barley flour", "ground barley"] },
+];
+
+/**
+ * Protein profiles — allergen risk, digestibility and what to watch.
+ *
+ * Straight from Kyle's own March spreadsheet (sheet 3), which graded 15 proteins and
+ * then sat unread for five months. Two things worth stating because they run against
+ * common assumptions:
+ *
+ * Allergen risk tracks EXPOSURE, not inherent badness. Chicken is the most common
+ * allergen because it's in almost everything, not because there's anything wrong with
+ * chicken. Novel proteins (venison, rabbit, bison) are "low risk" precisely because
+ * most dogs have never eaten them.
+ *
+ * And chicken meal is not inferior to chicken — it's concentrated, with the water
+ * already removed. That's Kyle's own note, and it contradicts a lot of internet advice.
+ */
+const PROTEIN_PROFILES: {
+  term: string;
+  label: string;
+  risk: "low" | "medium-low" | "medium" | "medium-high" | "high";
+  digestibility: string;
+  note: string;
+}[] = [
+  { term: "chicken meal", label: "Chicken meal", risk: "high", digestibility: "High (concentrated)",
+    note: "Not inferior to fresh chicken — it's concentrated, with the water already removed, so more protein per gram. Same allergen risk as chicken though." },
+  { term: "chicken", label: "Chicken", risk: "high", digestibility: "High (90%+)",
+    note: "The most common allergen in dogs, largely because it's in almost everything. Excellent protein otherwise. If your dog has itching or recurring ear infections, this is the first thing to trial removing." },
+  { term: "beef", label: "Beef", risk: "medium-high", digestibility: "High",
+    note: "A common allergen and worth watching in dogs with skin or GI sensitivity. Nutritionally strong." },
+  { term: "turkey", label: "Turkey", risk: "medium-high", digestibility: "High",
+    note: "A good alternative for chicken-allergic dogs, though cross-reactivity between poultry is possible." },
+  { term: "egg", label: "Egg", risk: "medium-high", digestibility: "Highest (100% biological value)",
+    note: "The highest-quality protein available by biological value. Some dogs react to egg white specifically rather than the whole egg." },
+  { term: "salmon", label: "Salmon", risk: "medium", digestibility: "Very high (95%+)",
+    note: "Excellent protein and a real source of EPA/DHA. Wild is preferable to farmed where the label says which." },
+  { term: "lamb", label: "Lamb", risk: "medium", digestibility: "High",
+    note: "Well tolerated by many food-sensitive dogs. Higher in fat — worth noting for overweight dogs." },
+  { term: "whitefish", label: "Whitefish", risk: "medium", digestibility: "Very high",
+    note: "Good lean protein. Generic 'whitefish' with no species named is a transparency concern rather than a safety one." },
+  { term: "pork", label: "Pork", risk: "medium", digestibility: "High",
+    note: "A novel protein for many dogs. Watch fat content." },
+  { term: "herring", label: "Herring", risk: "medium", digestibility: "Very high",
+    note: "Excellent omega-3 source with lower mercury than large predatory fish." },
+  { term: "tuna", label: "Tuna", risk: "medium", digestibility: "Very high",
+    note: "⚠️ Fine occasionally, but as a primary daily protein the mercury load is a genuine concern — especially in small dogs." },
+  { term: "duck", label: "Duck", risk: "medium-low", digestibility: "High",
+    note: "A novel protein, useful in elimination diets. Higher in fat. In TCVM it's a cooling protein, suited to dogs who run hot." },
+  { term: "venison", label: "Venison", risk: "low", digestibility: "High",
+    note: "Rarely allergenic and excellent for elimination diets. Premium novel protein." },
+  { term: "rabbit", label: "Rabbit", risk: "low", digestibility: "High",
+    note: "The best novel protein for severely allergic dogs — very few have ever been exposed to it." },
+  { term: "bison", label: "Bison", risk: "low", digestibility: "High",
+    note: "Premium novel protein, good for allergy-prone dogs. A positive signal on a label." },
+];
+
+function findProteins(ingredientList: string[]) {
+  const seen = new Set<string>();
+  const out: (typeof PROTEIN_PROFILES)[number][] = [];
+  // Only the first few ingredients — a trace of egg near the end isn't the food's protein.
+  for (const ing of ingredientList.slice(0, 8)) {
+    const l = ing.toLowerCase();
+    for (const p of PROTEIN_PROFILES) {
+      if (l.includes(p.term) && !seen.has(p.label)) {
+        // "chicken meal" must not also match "chicken" — longest term wins, and
+        // PROTEIN_PROFILES is ordered so meal is checked first.
+        if (p.term === "chicken" && l.includes("chicken meal")) continue;
+        seen.add(p.label);
+        out.push(p);
+      }
+    }
+  }
+  return out;
+}
+
+function findSplitIngredients(
+  ingredientList: string[],
+): { label: string; forms: string[]; topHalf: boolean }[] {
+  const lower = ingredientList.map((i) => i.toLowerCase());
+  const out: { label: string; forms: string[]; topHalf: boolean }[] = [];
+  for (const { label, forms } of SPLIT_BASES) {
+    const hits: string[] = [];
+    const positions: number[] = [];
+    lower.forEach((ing, idx) => {
+      if (forms.some((f) => ing === f || ing.includes(f))) {
+        // Don't count the same literal twice.
+        if (!hits.includes(ingredientList[idx])) {
+          hits.push(ingredientList[idx]);
+          positions.push(idx);
+        }
+      }
+    });
+    // Two or more distinct forms of the same base is the signal.
+    if (hits.length >= 2) {
+      out.push({
+        label,
+        forms: hits,
+        // Splitting matters most when the fragments sit high — that's where it's
+        // hiding real bulk from the top of the list.
+        topHalf: positions.some((pos) => pos < Math.max(6, ingredientList.length / 2)),
+      });
+    }
+  }
+  return out;
+}
+
+function analyseSaltDivider(ingredientList: string[]): {
+  saltIndex: number;
+  marketing: string[];
+  legitimate: string[];
+} | null {
+  const idx = ingredientList.findIndex((ing) => {
+    const l = ing.toLowerCase().trim();
+    return l === "salt" || l === "sea salt" || l === "sodium chloride" || l.endsWith(" salt");
+  });
+  // No salt found, or it's so late that nothing meaningful sits below it.
+  if (idx === -1 || idx >= ingredientList.length - 1) return null;
+
+  const below = ingredientList.slice(idx + 1);
+  const marketing: string[] = [];
+  const legitimate: string[] = [];
+
+  for (const ing of below) {
+    const l = ing.toLowerCase();
+    // Things that BELONG below the line — dosed in fractions of a percent by design.
+    const belongsHere =
+      ADDED_VITAMINS.some((v) => l.includes(v.toLowerCase())) ||
+      PROBIOTIC_SOURCES.some((pb) => l.includes(pb)) ||
+      /vitamin|mineral|supplement|tocopherol|preserv|acid|chloride|sulfate|oxide|selenite|proteinate|chelate|biotin|niacin|thiamine|riboflavin|folic|choline|taurine|zinc|iron|copper|manganese|iodine|rosemary|extract|culture|fermentation/i.test(
+        l,
+      );
+    if (belongsHere) legitimate.push(ing);
+    // Things sold on the front of the bag that turn out to be a sprinkle.
+    else if (
+      SUPERFOODS.some((sf) => l.includes(sf)) ||
+      WHOLE_FOOD_PRODUCE.some((w) => l.includes(w)) ||
+      ANTI_INFLAMMATORY_FOODS.some((a) => l.includes(a))
+    )
+      marketing.push(ing);
+  }
+  return { saltIndex: idx, marketing, legitimate };
+}
+
 function computeOmegaRating(
   omega3: string[],
   omega6: string[],
@@ -2217,6 +2439,7 @@ export default function App() {
   } | null>(null);
   const [fiberFound, setFiberFound] = useState<string[]>([]);
   const [probioticsFound, setProbioticsFound] = useState<string[]>([]);
+  const [prebioticsFound, setPrebioticsFound] = useState<string[]>([]);
   const [sourcingIssues, setSourcingIssues] = useState<string[]>([]);
   const [aafcoStatus, setAafcoStatus] = useState("");
   const [onTAPFList, setOnTAPFList] = useState(false);
@@ -3737,6 +3960,11 @@ export default function App() {
     setOmegaRating(omegaRatingResult);
     setFiberFound(foundFiber);
     setProbioticsFound(foundProbiotics);
+    setPrebioticsFound(
+      ingredientList.filter((ing) =>
+        PREBIOTIC_SOURCES.some((pb) => ing.toLowerCase().includes(pb)),
+      ),
+    );
     setSourcingIssues(genericInTop5);
     setAafcoStatus(aafco);
     setOnTAPFList(tapf);
@@ -5791,6 +6019,180 @@ export default function App() {
                       </Text>
                     </>
                   ) : null}
+                </View>
+              )}
+
+              {/* Protein profile — allergen risk tracks exposure, not badness. */}
+              {(() => {
+                const proteins = findProteins(ingredients);
+                if (proteins.length === 0) return null;
+                const colourFor = (r: string) =>
+                  r === "low" ? t.good : r === "medium-low" ? t.goodDeep : r === "medium" ? t.moderate : r === "medium-high" ? t.high : t.critical;
+                return (
+                  <AccordionSection
+                    title="🥩 Protein profile"
+                    askLabel="Ask AI"
+                    onAskAI={() =>
+                      askAboutSection(
+                        `This food's main proteins are ${proteins.map((pr) => pr.label).join(", ")}. Given my dog, is that a good choice — and if he has any itching, ear infections or sensitivity, which of these would you suspect first?`,
+                      )
+                    }
+                  >
+                    <Text style={[styles.sectionNote, { marginBottom: 10 }]}>
+                      Allergen risk reflects how <Text style={{ fontStyle: "italic" }}>common</Text> a
+                      protein is, not how good it is. Chicken tops the list because it&apos;s in almost
+                      everything — novel proteins rank low precisely because most dogs have never
+                      eaten them.
+                    </Text>
+                    {proteins.map((pr, i) => (
+                      <View
+                        key={i}
+                        style={{
+                          backgroundColor: t.surface,
+                          borderRadius: 9,
+                          padding: 11,
+                          marginBottom: 6,
+                          borderLeftWidth: 3,
+                          borderLeftColor: colourFor(pr.risk),
+                        }}
+                      >
+                        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                          <Text style={{ color: t.textStrong, fontSize: 13.5, fontWeight: "700", flex: 1 }}>
+                            {pr.label}
+                          </Text>
+                          <Text style={{ color: colourFor(pr.risk), fontSize: 10.5, fontWeight: "800", textTransform: "uppercase", letterSpacing: 0.4 }}>
+                            {pr.risk.replace("-", " ")} allergen risk
+                          </Text>
+                        </View>
+                        <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 2 }}>
+                          Digestibility: {pr.digestibility}
+                        </Text>
+                        <Text style={{ color: t.text, fontSize: 12.5, marginTop: 4, lineHeight: 18 }}>
+                          {pr.note}
+                        </Text>
+                      </View>
+                    ))}
+                  </AccordionSection>
+                );
+              })()}
+
+              {/* Ingredient splitting — the other way the ordering rule gets worked around. */}
+              {(() => {
+                const splits = findSplitIngredients(ingredients);
+                if (splits.length === 0) return null;
+                const anyTop = splits.some((sp) => sp.topHalf);
+                return (
+                  <View
+                    style={{
+                      backgroundColor: anyTop ? t.highTint : t.surface,
+                      borderRadius: 12,
+                      padding: 13,
+                      marginHorizontal: 16,
+                      marginBottom: 12,
+                      borderLeftWidth: 4,
+                      borderLeftColor: anyTop ? t.high : t.moderate,
+                    }}
+                  >
+                    <Text style={{ color: anyTop ? t.highDeep : t.textStrong, fontWeight: "800", fontSize: 13.5 }}>
+                      ✂️ Split ingredients — the same thing, listed several times
+                    </Text>
+                    {splits.map((sp, i) => (
+                      <Text key={i} style={{ color: t.text, fontSize: 12.5, marginTop: 5, lineHeight: 18 }}>
+                        <Text style={{ fontWeight: "700" }}>{sp.label}</Text> appears as{" "}
+                        {sp.forms.length} separate ingredients: {sp.forms.join(", ")}.
+                      </Text>
+                    ))}
+                    <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 7, lineHeight: 16 }}>
+                      {anyTop
+                        ? "Because labels are ordered by weight, splitting one ingredient into several pushes each fragment lower and keeps the combined weight out of the top slots. Added together, these may outweigh ingredients listed above them — which can make a food look more meat-first than it is."
+                        : "Split forms appear here, but low enough on the list that the combined weight is unlikely to change the picture much."}
+                    </Text>
+                  </View>
+                );
+              })()}
+
+              {/* The salt divider. Only shown when there's something worth saying —
+                  a food with nothing marketing-ish below the line gets no panel. */}
+              {(() => {
+                const salt = analyseSaltDivider(ingredients);
+                if (!salt || salt.marketing.length === 0) return null;
+                return (
+                  <View
+                    style={{
+                      backgroundColor: t.moderateTint,
+                      borderRadius: 12,
+                      padding: 13,
+                      marginHorizontal: 16,
+                      marginBottom: 12,
+                      borderLeftWidth: 4,
+                      borderLeftColor: t.moderate,
+                    }}
+                  >
+                    <Text style={{ color: t.moderateDeep, fontWeight: "800", fontSize: 13.5 }}>
+                      🧂 Below the salt line — a sprinkle, not a serving
+                    </Text>
+                    <Text style={{ color: t.text, fontSize: 12.5, marginTop: 5, lineHeight: 18 }}>
+                      Salt is ingredient #{salt.saltIndex + 1} and is usually included at about 1%.
+                      Everything after it is present at roughly that much or less. These are listed
+                      below it:
+                    </Text>
+                    <Text style={{ color: t.moderateDeep, fontSize: 13, fontWeight: "700", marginTop: 6, lineHeight: 19 }}>
+                      {salt.marketing.join(" · ")}
+                    </Text>
+                    <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 7, lineHeight: 16 }}>
+                      These are the ingredients that sell the bag. At trace amounts they contribute
+                      far less than their placement on the front of the packet suggests.
+                      {salt.legitimate.length > 0
+                        ? " Not everything below salt is a problem, though — the vitamins, minerals and preservatives down there are dosed in fractions of a percent by design, exactly as they should be."
+                        : ""}
+                    </Text>
+                  </View>
+                );
+              })()}
+
+              {/* Gut health, both halves. The pairing is the point: probiotics add
+                  bacteria, prebiotics feed the ones already there, and almost no
+                  other scanner makes that distinction. */}
+              {(probioticsFound.length > 0 || prebioticsFound.length > 0) && (
+                <View
+                  style={{
+                    backgroundColor: t.surface,
+                    borderRadius: 12,
+                    padding: 13,
+                    marginHorizontal: 16,
+                    marginBottom: 12,
+                    borderLeftWidth: 4,
+                    borderLeftColor:
+                      probioticsFound.length > 0 && prebioticsFound.length > 0 ? t.good : t.moderate,
+                  }}
+                >
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13.5 }}>
+                    🦠 Gut support:{" "}
+                    {probioticsFound.length > 0 && prebioticsFound.length > 0
+                      ? "both halves present"
+                      : probioticsFound.length > 0
+                        ? "probiotics, but nothing feeding them"
+                        : "prebiotic fibre, no live cultures"}
+                  </Text>
+                  {probioticsFound.length > 0 && (
+                    <Text style={{ color: t.text, fontSize: 12.5, marginTop: 5, lineHeight: 18 }}>
+                      <Text style={{ fontWeight: "700", color: t.good }}>Probiotics</Text> — {probioticsFound.join(", ")}. These add
+                      bacteria to the gut.
+                    </Text>
+                  )}
+                  {prebioticsFound.length > 0 && (
+                    <Text style={{ color: t.text, fontSize: 12.5, marginTop: 4, lineHeight: 18 }}>
+                      <Text style={{ fontWeight: "700", color: t.good }}>Prebiotic fibre</Text> — {prebioticsFound.join(", ")}. This feeds
+                      the bacteria already living there.
+                    </Text>
+                  )}
+                  <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 6, lineHeight: 16 }}>
+                    {probioticsFound.length > 0 && prebioticsFound.length > 0
+                      ? "The pairing is what matters — probiotics without fibre to feed them do far less."
+                      : probioticsFound.length > 0
+                        ? "Probiotics work better with fermentable fibre alongside them. Pumpkin, dandelion greens or chicory root would round this out."
+                        : "Prebiotic fibre still helps on its own — it feeds the population already in the gut rather than trying to establish a new one."}
+                  </Text>
                 </View>
               )}
 
