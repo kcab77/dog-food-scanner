@@ -99,5 +99,26 @@
   ],
   "topic": "omega-sources",
   "source": "Common Sense Dog — Omega Sources Pack"
+ },
+ {
+  "question": "What foods are high in omega-6 for dogs, and does my dog get enough?",
+  "answer": "🟢 Strong evidence, and the answer is almost certainly yes. Omega-6 (linoleic acid) is an essential fatty acid — dogs cannot synthesise it — and AAFCO sets a minimum of 1.1% dry matter for adult maintenance, 1.3% for growth. Richest sources, roughly in order: sunflower, safflower, corn, soybean and grapeseed oils (near-pure omega-6, and what pushes commercial ratios to 20:1 or worse); then poultry — chicken fat, chicken, duck, turkey — which is the highest among common meats; then pork, egg yolk, and nuts and seeds. Organ meats carry a moderate amount alongside dense vitamins and minerals. Beef, lamb and venison sit meaningfully lower, which is why a beef formula often shows a better ratio than a chicken one. ⚪ In practice, omega-6 deficiency is close to unheard of on any meat-based diet. Deficiency would show as poor coat, skin problems, slow wound healing and weakened immunity. The reason the omega-6:3 ratio matters is that omega-6 is abundant and omega-3 is scarce — the lever worth pulling is adding marine omega-3, not cutting omega-6.",
+  "confidence": "strong",
+  "sources": [
+   "AAFCO Dog Food Nutrient Profiles — linoleic acid minimum 1.1% DM adult maintenance, 1.3% growth",
+   "Comparative fatty acid composition of common pet food fats"
+  ],
+  "topic": "omega-sources",
+  "source": "Common Sense Dog — Omega Sources Pack"
+ },
+ {
+  "question": "Do dogs need arachidonic acid like cats do?",
+  "answer": "🟢 Strong evidence: No — this is one of the real metabolic differences between the species. Arachidonic acid (AA) is an omega-6 fatty acid that cats must get preformed from the diet, because they lack sufficient delta-6 desaturase to make it from linoleic acid. Dogs have that enzyme and convert linoleic acid to arachidonic acid perfectly well, so AA is not a dietary essential for them. Practical consequence: a plant-oil-based fat source can meet a dog's omega-6 needs but not a cat's, which is one reason cat food cannot simply be dog food with a different label — and why feeding cat food to a dog, or vice versa, isn't a like-for-like swap.",
+  "confidence": "strong",
+  "sources": [
+   "Comparative essential fatty acid requirements, dogs vs cats (delta-6 desaturase activity)"
+  ],
+  "topic": "omega-sources",
+  "source": "Common Sense Dog — Omega Sources Pack"
  }
 ]

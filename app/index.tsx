@@ -842,6 +842,35 @@ const COPPER_SENSITIVE_BREEDS = [
   "skye terrier",
 ];
 
+/**
+ * Where omega-6 actually comes from — for explanation, NOT for scoring.
+ *
+ * Deliberately separate from OMEGA6_SOURCES, which feeds computeOmegaRating. Adding
+ * "chicken" to the scoring list would penalise every poultry food, which is wrong:
+ * linoleic acid is an ESSENTIAL nutrient that dogs cannot make, with an AAFCO minimum
+ * of 1.1% DM for adult maintenance.
+ *
+ * The honest framing owners rarely hear: omega-6 deficiency is close to unheard of on
+ * any meat-based diet. It's in every animal fat. The ratio matters because omega-6 is
+ * abundant and omega-3 is scarce — not because omega-6 is bad.
+ */
+const OMEGA6_FOOD_SOURCES: { source: string; level: "very high" | "high" | "moderate"; note: string }[] = [
+  { source: "Sunflower, safflower, corn, soybean, grapeseed oil", level: "very high",
+    note: "The cheap oils used to hit a fat target. Almost pure omega-6 — these are what push a food's ratio to 20:1 or worse." },
+  { source: "Chicken fat, chicken, duck, turkey", level: "high",
+    note: "Poultry is the richest omega-6 source among common meats. A chicken-based food will never be short of it." },
+  { source: "Pork and pork fat", level: "high",
+    note: "Comparable to poultry, and a common fat source in kibble." },
+  { source: "Egg yolk", level: "high",
+    note: "Also carries fat-soluble vitamins and choline — omega-6 arriving with company rather than alone." },
+  { source: "Nuts and seeds", level: "high",
+    note: "Sunflower and sesame especially. Rare in dog food except as oil." },
+  { source: "Organ meats — liver, heart, kidney", level: "moderate",
+    note: "Present alongside a dense supply of vitamins, minerals and taurine." },
+  { source: "Beef, lamb, venison", level: "moderate",
+    note: "Ruminant fats sit meaningfully lower in omega-6 than poultry — one reason a beef formula often shows a better ratio than a chicken one." },
+];
+
 const OMEGA3_MARINE = [
   "salmon",
   "sardine",
@@ -6430,6 +6459,46 @@ export default function App() {
                         Reviews of this literature put the anti-inflammatory range from about 5.5:1
                         down to roughly 1:3.75 — meaning ratios well below the usual 5:1 target, and
                         even inverted ones with more omega-3 than omega-6, still show benefit.
+                      </Text>
+                    </View>
+
+                    {/* The other side of the ratio. Owners hear "omega-6 bad" constantly
+                        and are rarely told it's an essential nutrient they can't skip. */}
+                    <View style={{ backgroundColor: t.surface, borderRadius: 9, padding: 11, marginBottom: 8 }}>
+                      <Text style={{ color: t.textStrong, fontWeight: "700", fontSize: 12.5 }}>
+                        And where omega-6 comes from
+                      </Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 4, lineHeight: 17 }}>
+                        Omega-6 (linoleic acid) is <Text style={{ fontWeight: "700" }}>essential</Text> —
+                        dogs can&apos;t make it, and AAFCO sets a minimum of 1.1% for adult
+                        maintenance. Deficiency causes poor coat, skin problems, slow wound healing
+                        and weakened immunity. In practice it&apos;s almost never seen, because
+                        omega-6 is in every animal fat. The ratio matters because omega-6 is
+                        abundant and omega-3 is scarce — not because omega-6 is bad.
+                      </Text>
+                      {OMEGA6_FOOD_SOURCES.map((o, i) => (
+                        <View key={i} style={{ flexDirection: "row", marginTop: 7, gap: 8 }}>
+                          <View
+                            style={{
+                              width: 4,
+                              borderRadius: 2,
+                              backgroundColor:
+                                o.level === "very high" ? t.high : o.level === "high" ? t.moderate : t.good,
+                            }}
+                          />
+                          <View style={{ flex: 1 }}>
+                            <Text style={{ color: t.text, fontSize: 12, fontWeight: "700" }}>
+                              {o.source}
+                            </Text>
+                            <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 1, lineHeight: 16 }}>
+                              {o.note}
+                            </Text>
+                          </View>
+                        </View>
+                      ))}
+                      <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 8, lineHeight: 16, fontStyle: "italic" }}>
+                        Practical upshot: if your dog eats meat, he has enough omega-6. The lever
+                        worth pulling is adding marine omega-3, not cutting omega-6.
                       </Text>
                     </View>
 
