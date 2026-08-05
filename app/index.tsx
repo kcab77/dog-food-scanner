@@ -125,7 +125,7 @@ const HARMFUL_INGREDIENTS: {
   },
   {
     term: "sodium metabisulfite",
-    severity: "moderate",
+    severity: "severe",
     reason:
       "This one is more serious than its 'moderate' tier suggests. Sulfite preservatives destroy thiamine (vitamin B1), and thiamine deficiency in dogs is a documented, sometimes fatal outcome — published cases describe dogs developing deficiency specifically from eating sulphite-preserved meat. The signs are neurological: head tilt, disorientation, wobbliness, progressing to seizures and paralysis. The FDA's position is that sulfite preservatives should not be added to foods, and specifically not to pet foods marketed as complete and balanced or listing thiamine as an ingredient — because the preservative destroys the very nutrient the label claims to provide. Most often found in fresh meat rolls, minces and bully sticks, where it is used to control colour and odour.",
   },
@@ -6253,6 +6253,55 @@ export default function App() {
                       {anyTop
                         ? "Because labels are ordered by weight, splitting one ingredient into several pushes each fragment lower and keeps the combined weight out of the top slots. Added together, these may outweigh ingredients listed above them — which can make a food look more meat-first than it is."
                         : "Split forms appear here, but low enough on the list that the combined weight is unlikely to change the picture much."}
+                    </Text>
+                  </View>
+                );
+              })()}
+
+              {/* Sulfite preservatives. Its own callout because the mechanism is
+                  specific and serious: the preservative destroys the very nutrient
+                  the label promises. Fires whenever a sulfite is detected. */}
+              {(() => {
+                const sulfites = ingredients.filter((i) =>
+                  /metabisulfite|metabisulphite|sodium sulfite|sulphite|sulfur dioxide/i.test(i),
+                );
+                if (sulfites.length === 0) return null;
+                return (
+                  <View
+                    style={{
+                      backgroundColor: t.criticalTint,
+                      borderRadius: 12,
+                      padding: 13,
+                      marginHorizontal: 16,
+                      marginBottom: 12,
+                      borderLeftWidth: 4,
+                      borderLeftColor: t.critical,
+                    }}
+                  >
+                    <Text style={{ color: t.critical, fontWeight: "800", fontSize: 13.5 }}>
+                      ⚠️ Sulfite preservative — destroys vitamin B1
+                    </Text>
+                    <Text style={{ color: t.text, fontSize: 12.5, marginTop: 5, lineHeight: 18 }}>
+                      This food contains <Text style={{ fontWeight: "700" }}>{sulfites.join(", ")}</Text>.
+                      Sulfite preservatives destroy thiamine (vitamin B1) — and thiamine deficiency
+                      in dogs is documented, sometimes fatal, and has been traced specifically to
+                      eating sulphite-preserved meat.
+                    </Text>
+                    <Text style={{ color: t.text, fontSize: 12.5, marginTop: 6, lineHeight: 18 }}>
+                      The signs are neurological: appetite loss and wobbliness first, then head tilt
+                      and disorientation, progressing to seizures and paralysis.
+                    </Text>
+                    <Text style={{ color: t.text, fontSize: 12.5, marginTop: 6, lineHeight: 18 }}>
+                      <Text style={{ fontWeight: "700" }}>The FDA&apos;s position</Text> is that sulfite
+                      preservatives should not be added to foods — and specifically not to pet foods
+                      marketed as complete and balanced, or listing thiamine as an ingredient,
+                      because the preservative destroys the very nutrient the label promises.
+                    </Text>
+                    <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 7, lineHeight: 16 }}>
+                      Most often found in fresh meat rolls, minces and bully sticks, where it&apos;s
+                      used to control colour and odour. Thiamine is already the most heat-fragile
+                      nutrient in the bowl — see the heat section — so a food that both cooks it and
+                      preserves it with sulfites is losing B1 twice over.
                     </Text>
                   </View>
                 );

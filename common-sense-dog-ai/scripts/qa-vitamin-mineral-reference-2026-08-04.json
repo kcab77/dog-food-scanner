@@ -778,5 +778,16 @@
   ],
   "topic": "mineral-taurine",
   "source": "Common Sense Dog — Vitamin & Mineral Reference"
+ },
+ {
+  "question": "What is sodium metabisulfite in dog food and is it dangerous?",
+  "answer": "🟢 Strong evidence: Sodium metabisulfite is a sulfite preservative used to keep meat looking red and to control odour — most often in fresh meat rolls, minces and bully sticks. The specific danger is that sulfite preservatives DESTROY thiamine (vitamin B1). Thiamine deficiency in dogs is documented and sometimes fatal, and published cases trace it directly to eating sulphite-preserved meat. The signs are neurological: appetite loss and unsteadiness first, then head tilt and disorientation, progressing to seizures and paralysis. The FDA's position is that sulfite preservatives should not be added to foods, and specifically not to pet foods marketed as complete and balanced or listing thiamine as an ingredient — because the preservative destroys the very nutrient the label promises to supply. ⚠️ If your dog eats a sulphite-preserved fresh meat product and shows any wobbliness, head tilt or disorientation, treat it as urgent and see a vet — thiamine deficiency is reversible if caught early and devastating if not.",
+  "confidence": "strong",
+  "sources": [
+   "FDA position on sulfite preservatives in pet food",
+   "Published cases of thiamine deficiency in dogs fed sulphite-preserved meat"
+  ],
+  "topic": "preservatives",
+  "source": "Common Sense Dog — Vitamin & Mineral Reference"
  }
 ]
