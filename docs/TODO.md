@@ -25,7 +25,8 @@ and burned Anthropic tokens.
 
 ## 📱 PawGrade app
 
-- [ ] **Fix omega handling — not all omega-3 is equally bioavailable** (added 2026-08-02). Triggered by Simple Food Project. The app currently treats "omega-3" as one thing and credits the omega-6:3 ratio without asking where the omega-3 actually comes from. That overstates plant sources:
+- [x] **Fix omega handling — not all omega-3 is equally bioavailable** — DONE 2026-08-05. Split `OMEGA3_MARINE` / `OMEGA3_PLANT`, added a "Where the omega-3 comes from" results section, and credited marine sources with a +3 scoring bonus (a credit for fish/krill/algae rather than a penalty for flax). Knowledge pack `qa-omega-sources-2026-08-05.json` written for the assistant. Hershey's protocol corrected — its ~0.85:1 ratio is flax-driven; the krill, cod liver oil, salmon oil and added fish oil do the real work. Original note follows:
+- [ ] ~~Fix omega handling~~ (original, 2026-08-02). Triggered by Simple Food Project. The app currently treats "omega-3" as one thing and credits the omega-6:3 ratio without asking where the omega-3 actually comes from. That overstates plant sources:
   - **Marine omega-3 (fish, krill, algae) = EPA/DHA**, the forms a dog can actually use.
   - **Plant omega-3 (flax, chia, canola) = ALA**, which a dog must convert to EPA/DHA — and dogs convert it *poorly* (commonly cited as well under ~10%). A flax-heavy food can advertise a great ratio while delivering little usable EPA/DHA.
   - **What to do:** distinguish the omega-3 SOURCE when scoring/explaining, and say so in the results copy (e.g. "this ratio comes mostly from flaxseed — dogs convert that form poorly"). Check what Simple Food Project's ~0.85:1 ratio is actually made of before repeating that number as an anti-inflammatory selling point (it's currently cited in Hershey's protocol and in the KB).

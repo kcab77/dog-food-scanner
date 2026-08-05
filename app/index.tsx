@@ -790,6 +790,33 @@ const ORGAN_COVERAGE = [
  * true and the benefit is overstated. Splitting these lets the app say where the
  * omega-3 actually comes from instead of crediting the number alone.
  */
+/**
+ * Breeds with a genetic predisposition to copper accumulation.
+ *
+ * Kyle's own spreadsheet rule ("Labrador, Bedlington Terrier, Dalmatian — flag high
+ * copper content for these breeds") existed as written guidance for two years while
+ * the app knew the dog's breed and never used it.
+ *
+ * These breeds can't regulate copper excretion normally, so inorganic copper sulfate
+ * accumulates in liver tissue and causes chronic hepatitis — silently, until the
+ * damage is advanced. Copper proteinate is the safer form for any dog and especially
+ * these.
+ *
+ * This changes the WARNING, never the score. A food isn't objectively worse because
+ * of who's eating it, and letting a profile move the number would make two dogs'
+ * scores for the same bag incomparable. The risk is personal; the score stays shared.
+ */
+const COPPER_SENSITIVE_BREEDS = [
+  "labrador",
+  "lab ",
+  "bedlington",
+  "dalmatian",
+  "doberman",
+  "west highland",
+  "westie",
+  "skye terrier",
+];
+
 const OMEGA3_MARINE = [
   "salmon",
   "sardine",
@@ -1630,34 +1657,56 @@ function detectProcessingMethod(
   };
 }
 
+/**
+ * `hasMarine` credits the omega-3 that a dog can actually use.
+ *
+ * The ratio alone can't tell you this. A food built on flaxseed can post an
+ * excellent omega-6:3 number while delivering little usable EPA/DHA, because the
+ * ratio counts ALA the same as fish oil and the dog's body does not (conversion
+ * runs well under 10%).
+ *
+ * Deliberately implemented as a BONUS for marine sources rather than a penalty for
+ * plant ones. Flaxseed is a decent ingredient — fibre, lignans, some ALA — and
+ * punishing it would misrepresent that. Rewarding fish, krill and algae instead
+ * moves the same distinction into the score without calling a good ingredient bad.
+ * Optional param so existing call sites keep working unchanged.
+ */
 function computeOmegaRating(
   omega3: string[],
   omega6: string[],
   actualRatio?: string | null,
   processingMethod?: string,
+  hasMarine?: boolean,
 ): { label: string; bonus: number } {
+  // Applied to whatever the ratio logic below decides.
+  const marineBonus = hasMarine ? 3 : 0;
+  const marineNote = hasMarine
+    ? " · backed by marine EPA/DHA"
+    : omega3.length > 0
+      ? " · plant-source omega-3, poorly converted"
+      : "";
   // If we have an actual GA ratio, always use it — never fall through to ingredient estimation
   if (actualRatio && actualRatio !== "unknown") {
     const ratio = parseFloat(actualRatio.split(":")[0]);
     if (!isNaN(ratio)) {
       if (ratio <= 5)
         return {
-          label: `🐟 Excellent omega ratio (${actualRatio}) — anti-inflammatory`,
-          bonus: 10,
+          label: `🐟 Excellent omega ratio (${actualRatio})${marineNote}`,
+          bonus: 10 + marineBonus,
         };
       if (ratio <= 8)
         return {
-          label: `🐟 Good omega ratio (${actualRatio})`,
-          bonus: 5,
+          label: `🐟 Good omega ratio (${actualRatio})${marineNote}`,
+          bonus: 5 + marineBonus,
         };
       if (ratio < 15)
         return {
-          label: `🔴 Poor omega ratio (${actualRatio}) — pro-inflammatory`,
-          bonus: -10,
+          label: `🔴 Poor omega ratio (${actualRatio})${marineNote}`,
+          bonus: -10 + marineBonus,
         };
       return {
-        label: `🔴 Very poor omega ratio (${actualRatio}) — highly pro-inflammatory`,
-        bonus: -15,
+        label: `🔴 Very poor omega ratio (${actualRatio})${marineNote}`,
+        bonus: -15 + marineBonus,
       };
     }
   }
@@ -2237,6 +2286,8 @@ export default function App() {
   // The signed-in owner's dog, used to personalise the coach header and the
   // results-screen prompt. Null when signed out — scanning never requires an account.
   const [dogProfileName, setDogProfileName] = useState<string | null>(null);
+  // Breed drives the copper warning below — see COPPER_SENSITIVE_BREEDS.
+  const [dogProfileBreed, setDogProfileBreed] = useState<string | null>(null);
 
   // ── Food comparison ──────────────────────────────────────────────────────
   // A scan wipes the previous result, so the food being compared against is
@@ -2302,11 +2353,11 @@ export default function App() {
     (async () => {
       try {
         const session = await getSession();
-        if (!session) { if (!cancelled) setDogProfileName(null); return; }
+        if (!session) { if (!cancelled) { setDogProfileName(null); setDogProfileBreed(null); } return; }
         const profile = await getDogProfile();
-        if (!cancelled) setDogProfileName(profile?.dog_name ?? null);
+        if (!cancelled) { setDogProfileName(profile?.dog_name ?? null); setDogProfileBreed(profile?.breed ?? null); }
       } catch {
-        if (!cancelled) setDogProfileName(null);
+        if (!cancelled) { setDogProfileName(null); setDogProfileBreed(null); }
       }
     })();
     return () => { cancelled = true; };
@@ -3633,6 +3684,9 @@ export default function App() {
       foundOmega6,
       knownOmegaRatio ?? nutritionalProfile?.omega_ratio,
       sheetProcessingMethod,
+      ingredientList.some((ing) =>
+        OMEGA3_MARINE.some((m) => ing.toLowerCase().includes(m)),
+      ),
     );
     const noProbiotics = foundProbiotics.length === 0;
     const vitCount = foundVitamins.length;
@@ -4266,7 +4320,10 @@ export default function App() {
         foundOmega6,
         nutritionalProfile?.omega_ratio,
         sheetProcessingMethod,
-      );
+        ingredientList.some((ing) =>
+          OMEGA3_MARINE.some((mm) => ing.toLowerCase().includes(mm)),
+        ),
+);
 
       const vitCount = foundVitamins.length;
       let vitLoadPenalty = 0;
@@ -5736,6 +5793,48 @@ export default function App() {
                   ) : null}
                 </View>
               )}
+
+              {/* Breed-specific copper warning. Only fires when BOTH are true: this dog
+                  is a copper-sensitive breed AND the food contains inorganic copper.
+                  Shown as a warning, never a score change — see COPPER_SENSITIVE_BREEDS. */}
+              {(() => {
+                if (!dogProfileBreed) return null;
+                const breedLower = dogProfileBreed.toLowerCase();
+                const sensitive = COPPER_SENSITIVE_BREEDS.some((b) => breedLower.includes(b.trim()));
+                if (!sensitive) return null;
+                const copper = ingredients.filter((i) => i.toLowerCase().includes("copper"));
+                if (copper.length === 0) return null;
+                const inorganic = copper.some((c) => /sulfate|sulphate|oxide|carbonate/i.test(c));
+                return (
+                  <View
+                    style={{
+                      backgroundColor: inorganic ? t.criticalTint : t.moderateTint,
+                      borderRadius: 12,
+                      padding: 13,
+                      marginHorizontal: 16,
+                      marginBottom: 12,
+                      borderLeftWidth: 4,
+                      borderLeftColor: inorganic ? t.critical : t.moderate,
+                    }}
+                  >
+                    <Text style={{ color: inorganic ? t.critical : t.moderateDeep, fontWeight: "800", fontSize: 13.5 }}>
+                      ⚠️ Copper — specific to {dogProfileName ?? "your dog"}
+                    </Text>
+                    <Text style={{ color: t.text, fontSize: 12.5, marginTop: 5, lineHeight: 18 }}>
+                      {dogProfileName ?? "Your dog"} is a {dogProfileBreed}, one of the breeds
+                      that can&apos;t clear copper normally. This food contains{" "}
+                      <Text style={{ fontWeight: "700" }}>{copper.join(", ")}</Text>.
+                      {inorganic
+                        ? " That's the inorganic form, which bypasses the liver's regulation and accumulates over years of daily feeding until damage is already advanced. Copper proteinate is the safer form to look for."
+                        : " That looks like a chelated form, which the body regulates far better than copper sulfate — the preferable choice for this breed."}
+                    </Text>
+                    <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 6, fontStyle: "italic" }}>
+                      This warning is personal to {dogProfileName ?? "your dog"} — the food&apos;s
+                      score is unchanged, because the risk depends on who&apos;s eating it.
+                    </Text>
+                  </View>
+                );
+              })()}
 
               {/* Where the omega-3 actually comes from. Only shown when there IS
                   omega-3 to talk about — an empty "no omega sources" panel is noise. */}
