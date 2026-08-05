@@ -6155,6 +6155,75 @@ export default function App() {
                 </AccordionSection>
               )}
 
+              {/* Life stages. Exists because "adult maintenance" confuses everyone, and
+                  the reason it's confusing is that the category system is incomplete. */}
+              <AccordionSection
+                title="🎂 Puppy, adult, senior — what actually differs"
+                askLabel="Ask AI"
+                onAskAI={() =>
+                  askAboutSection(
+                    `What life stage is this food for, and is it right for my dog's age? Explain what actually changes nutritionally between puppy, adult and senior foods.`,
+                  )
+                }
+              >
+                <View style={{ backgroundColor: t.highTint, borderRadius: 9, padding: 11, marginBottom: 10, borderLeftWidth: 3, borderLeftColor: t.high }}>
+                  <Text style={{ color: t.highDeep, fontWeight: "800", fontSize: 13 }}>
+                    There is no such thing as &quot;senior&quot; food, legally
+                  </Text>
+                  <Text style={{ color: t.text, fontSize: 12.5, marginTop: 4, lineHeight: 18 }}>
+                    AAFCO recognises exactly <Text style={{ fontWeight: "700" }}>two</Text> life
+                    stages: <Text style={{ fontWeight: "700" }}>Growth &amp; Reproduction</Text>{" "}
+                    (puppies, pregnancy, nursing) and{" "}
+                    <Text style={{ fontWeight: "700" }}>Adult Maintenance</Text>. Neither AAFCO nor
+                    the NRC defines a senior profile. So a bag labelled &quot;senior&quot; is
+                    meeting the ordinary adult standard — the word is marketing, not a
+                    specification, and the manufacturer can put whatever they like behind it.
+                  </Text>
+                </View>
+
+                {[
+                  { t: "🍼 Puppy / Growth & Reproduction", c: t.good,
+                    b: "The stricter of the two profiles — higher protein, fat, calcium, phosphorus and DHA for brain development. Large-breed puppy formulas additionally CAP calcium, because too much accelerates bone growth and causes joint disease. That cap is the one genuine reason a large-breed puppy food exists." },
+                  { t: "🐕 Adult Maintenance", c: t.info,
+                    b: "The baseline every non-puppy food meets. Lower minimums than growth across the board. This is what \"complete and balanced for adult maintenance\" on a label means — it clears the floor, nothing more." },
+                  { t: "♾️ All Life Stages", c: t.good,
+                    b: "Meets the STRICTER growth profile, so it's suitable for any age. Often a better food than an adult-maintenance one, with one caveat: it carries more calories and minerals than a sedentary adult needs, so portion accordingly." },
+                  { t: "👴 Senior", c: t.high,
+                    b: "Not a regulated category. In practice these are usually adult-maintenance foods with fewer calories, added joint supplements — and often LESS PROTEIN, which is the part worth questioning." },
+                ].map((x, i) => (
+                  <View key={i} style={{ backgroundColor: t.surface, borderRadius: 9, padding: 11, marginBottom: 6, borderLeftWidth: 3, borderLeftColor: x.c }}>
+                    <Text style={{ color: t.textStrong, fontSize: 13, fontWeight: "700" }}>{x.t}</Text>
+                    <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>{x.b}</Text>
+                  </View>
+                ))}
+
+                <View style={{ backgroundColor: t.goodTint, borderRadius: 9, padding: 11, marginTop: 4 }}>
+                  <Text style={{ color: t.good, fontWeight: "800", fontSize: 13 }}>
+                    The senior protein myth — reversed
+                  </Text>
+                  <Text style={{ color: t.text, fontSize: 12.5, marginTop: 4, lineHeight: 18 }}>
+                    Older dogs were long fed less protein &quot;to protect the kidneys.&quot; That
+                    advice traces to old rat studies that never translated to dogs, and the
+                    veterinary position has since reversed. Senior dogs need{" "}
+                    <Text style={{ fontWeight: "700" }}>more</Text> protein, not less — roughly
+                    28–30% on a dry matter basis, because ageing bodies synthesise protein less
+                    efficiently and lose muscle to sarcopenia.
+                  </Text>
+                  <Text style={{ color: t.text, fontSize: 12.5, marginTop: 6, lineHeight: 18 }}>
+                    Restricting protein in a dog with healthy kidneys doesn&apos;t protect
+                    anything — it accelerates muscle loss. Protein restriction is for dogs with{" "}
+                    <Text style={{ fontWeight: "700" }}>diagnosed</Text> kidney disease, and even
+                    then phosphorus control matters more.
+                  </Text>
+                  <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 6, lineHeight: 16 }}>
+                    Practical upshot: a &quot;senior&quot; food that lowers protein may be doing the
+                    opposite of what an old dog needs. Check the protein figure rather than the word
+                    on the front. What genuinely helps an ageing dog is fewer calories (metabolism
+                    slows), more protein, and joint and cognitive support — not less of everything.
+                  </Text>
+                </View>
+              </AccordionSection>
+
               {/* Organ profiles. Only shows the organs actually in this food, so it
                   reads as information about the bag rather than a textbook. */}
               {(() => {

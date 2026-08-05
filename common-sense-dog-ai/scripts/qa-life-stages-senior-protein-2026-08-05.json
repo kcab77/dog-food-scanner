@@ -1,0 +1,34 @@
+[
+ {
+  "question": "What is the difference between puppy food, adult food and senior food?",
+  "answer": "🟢 Strong evidence — and the answer surprises most owners: AAFCO recognises only TWO life stages. Growth & Reproduction (puppies, pregnancy, nursing) and Adult Maintenance. That's it. Neither AAFCO nor the NRC defines a senior profile, so a bag labelled 'senior' is meeting the ordinary adult standard and the word is marketing rather than a specification. What genuinely differs: Growth formulas have higher minimums for protein, fat, calcium, phosphorus and DHA, and large-breed puppy foods additionally CAP calcium because excess accelerates bone growth and causes joint disease — that cap is the one real reason large-breed puppy food exists as a category. 'All Life Stages' means the food meets the stricter growth profile, so it suits any age, though it carries more calories and minerals than a sedentary adult needs. 'Senior' in practice usually means an adult food with fewer calories, added joint supplements, and often less protein — which is the part worth questioning.",
+  "confidence": "strong",
+  "sources": ["AAFCO Dog Food Nutrient Profiles — Growth & Reproduction and Adult Maintenance are the only two profiles", "NRC Nutrient Requirements of Dogs and Cats"],
+  "topic": "life-stages",
+  "source": "Common Sense Dog — Life Stages Pack"
+ },
+ {
+  "question": "Do senior dogs need less protein?",
+  "answer": "🟢 Strong evidence: No — the opposite, and this is where veterinary thinking has reversed most decisively. Older dogs were fed reduced protein for decades to 'protect the kidneys'. That advice traces back to old rat studies that never translated to dogs, and studies in healthy dogs have not shown protein at sensible levels causing kidney damage. Current guidance is that healthy senior dogs need MORE protein — around 28–30% on a dry matter basis, with some sources suggesting requirements rise substantially above middle age — because ageing bodies synthesise protein less efficiently and lose muscle to sarcopenia. Restricting protein in a dog with healthy kidneys doesn't protect anything; it accelerates the muscle loss that ageing is already causing. ⚠️ The exception is real but narrow: protein restriction is appropriate for dogs with DIAGNOSED kidney disease, and even there, controlling phosphorus matters more than cutting protein. Educational only — a dog with kidney disease needs a vet-directed diet, not a general rule.",
+  "confidence": "strong",
+  "sources": ["Current canine geriatric nutrition guidance on sarcopenia and protein synthesis efficiency", "Reviews finding no evidence of renal damage from dietary protein in healthy dogs"],
+  "topic": "life-stages",
+  "source": "Common Sense Dog — Life Stages Pack"
+ },
+ {
+  "question": "What does 'complete and balanced for adult maintenance' actually mean?",
+  "answer": "⚪ Regulatory plain English: it means the food meets AAFCO's minimum nutrient levels for a non-growing, non-pregnant adult dog. It's a floor, not a grade. Two foods can both carry that statement while being very different in quality — the statement says nothing about ingredient sourcing, digestibility, processing method or whether the nutrients come from whole foods or a synthetic premix. It also comes in two flavours worth distinguishing: 'formulated to meet' means the recipe was calculated on paper, while 'animal feeding tests using AAFCO procedures substantiate' means dogs actually ate it and were monitored. The second is a meaningfully higher bar and is rarer, because feeding trials cost money.",
+  "confidence": "traditional",
+  "sources": ["AAFCO labelling requirements — nutritional adequacy statements"],
+  "topic": "life-stages",
+  "source": "Common Sense Dog — Life Stages Pack"
+ },
+ {
+  "question": "Is a high protein and high fat diet good or bad for a senior dog?",
+  "answer": "🟡 Moderate evidence: High protein is good for a healthy senior — see the sarcopenia evidence — but fat deserves a more nuanced answer than protein does. Fat is the densest calorie source, and metabolism slows with age, so a senior on the same fat level and the same portions gains weight, which is hard on ageing joints. That's an argument for portion control rather than for low-fat food, and fat quality matters more than quantity: the omega-3 in fat is actively useful for arthritic seniors (see the Roush 2010 trial). ⚠️ Where high fat is genuinely wrong: dogs with a history of pancreatitis, and some dogs with hyperlipidaemia. Those are specific medical situations, not general senior advice. The practical shape for most healthy old dogs is more protein, moderate quality fat weighted toward omega-3, fewer total calories, and joint and cognitive support.",
+  "confidence": "moderate",
+  "sources": ["Canine geriatric nutrition guidance", "Roush et al., 2010, JAVMA 236(1):59-66 (omega-3 in canine osteoarthritis)"],
+  "topic": "life-stages",
+  "source": "Common Sense Dog — Life Stages Pack"
+ }
+]
