@@ -67,4 +67,4 @@ and burned Anthropic tokens.
 
 ---
 
-*Last updated: 2026-08-03*
+*Last updated: 2026-08-05*
