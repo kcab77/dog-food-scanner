@@ -1,0 +1,66 @@
+[
+ {
+  "question": "Is flaxseed omega-3 as good as fish oil for dogs?",
+  "answer": "🟡 Moderate evidence: No — and this is one of the most useful things to understand on a label. Flaxseed supplies ALA (alpha-linolenic acid). Fish, krill and algae supply EPA and DHA. Those are the forms that actually do the anti-inflammatory work, and a dog's body uses them directly. To get EPA and DHA out of flaxseed, a dog has to convert the ALA — and dogs convert it poorly, commonly cited at well under 10%, with conversion onward to DHA lower still. So a food built on flaxseed can show an excellent omega-6:3 ratio on paper while delivering a fraction of the usable omega-3 that number implies. Flaxseed isn't bad — it's fibre, lignans and some ALA. It just shouldn't be counted as equivalent to fish oil.",
+  "confidence": "moderate",
+  "sources": ["Comparative canine fatty-acid metabolism; ALA-to-EPA/DHA conversion literature"],
+  "topic": "omega-sources",
+  "source": "Common Sense Dog — Omega Sources Pack"
+ },
+ {
+  "question": "My dog food says it has a great omega-6 to omega-3 ratio. Can I trust that number?",
+  "answer": "🟡 Moderate evidence: Trust it as arithmetic, not as a promise. The ratio counts all omega-3 the same, whether it came from salmon oil or flaxseed — but your dog's body doesn't. Marine omega-3 (EPA/DHA) is usable on arrival; plant omega-3 (ALA, from flax, chia, canola, hemp) has to be converted at a rate well under 10%. The practical check takes five seconds: read the ingredient list and ask where the omega-3 is coming from, and how high up it sits. A food whose only omega-3 sources are flaxseed and chia has a real ratio and a weak delivery. A food with salmon oil, krill, sardines or algal oil is giving your dog the finished product.",
+  "confidence": "moderate",
+  "sources": ["AAFCO labelling practice; canine fatty-acid conversion literature"],
+  "topic": "omega-sources",
+  "source": "Common Sense Dog — Omega Sources Pack"
+ },
+ {
+  "question": "What are the best omega-3 sources for dogs?",
+  "answer": "🟢 Strong evidence for the marine forms: sardines (whole, in water, no salt added), salmon and salmon oil, herring, anchovy, mackerel, krill, green lipped mussel, and algal oil for a plant-based option that still supplies EPA/DHA directly. Algae is the exception among plant sources — it makes EPA and DHA itself, so no conversion is needed. ⚪ Whole-food first where you can: sardines give you EPA/DHA plus protein, calcium from the soft bones, and CoQ10, rather than an isolated oil. ⚠️ One caution: cod liver oil is a marine source but also concentrated in vitamins A and D, both of which accumulate. If a food already contains cod liver oil, adding more from a bottle can stack those. Plain fish oil and sardines don't carry that risk.",
+  "confidence": "strong",
+  "sources": ["Marine omega-3 EPA/DHA content; FDA vitamin A/D accumulation guidance"],
+  "topic": "omega-sources",
+  "source": "Common Sense Dog — Omega Sources Pack"
+ },
+ {
+  "question": "Why is the omega-6 to omega-3 ratio important for dogs?",
+  "answer": "🟡 Moderate evidence: Omega-6 and omega-3 compete for the same enzymes. Omega-6 (from chicken fat, sunflower, safflower, corn and soybean oils) feeds inflammatory pathways; omega-3, specifically EPA, feeds resolving ones. When the diet skews heavily to omega-6 the balance tips toward chronic low-grade inflammation — the background condition behind arthritis, skin flare-ups and lipomas. Holistic practice targets roughly 5:1 or lower; most kibble runs 15:1 to 30:1. ⚠️ Honest framing: the 5:1 target is practitioner guidance, not a controlled-trial endpoint. The underlying mechanism — EPA and DHA competing with arachidonic acid — is well established.",
+  "confidence": "moderate",
+  "sources": ["Holistic veterinary practice consensus; established EPA/arachidonic acid competition mechanism"],
+  "topic": "omega-sources",
+  "source": "Common Sense Dog — Omega Sources Pack"
+ },
+ {
+  "question": "Does my dog need fish oil if the food already has flaxseed?",
+  "answer": "🟡 Moderate evidence: Probably yes. Flaxseed contributes ALA, not EPA/DHA, and your dog converts very little of it. If flaxseed or chia are the only omega-3 sources on the label, the food is effectively asking your dog's metabolism to manufacture the active form — which it does badly. Adding sardines a few times a week, or a plain fish oil, supplies what's missing directly. If the food already contains salmon oil, krill or fish, the usable omega-3 is present and supplementing is optional rather than corrective. ⚠️ Educational only — dose matters, and high-fat additions need care in dogs with pancreatitis history. Ask your vet, ideally a holistic one, for amounts.",
+  "confidence": "moderate",
+  "sources": ["Canine ALA conversion literature; clinical supplementation practice"],
+  "topic": "omega-sources",
+  "source": "Common Sense Dog — Omega Sources Pack"
+ },
+ {
+  "question": "Is chia seed a good source of omega-3 for dogs?",
+  "answer": "🟡 Moderate evidence: Chia is in the same category as flaxseed — genuinely high in omega-3, but it is ALA, the plant form. The conversion problem is identical: dogs turn well under 10% of it into EPA, and less into DHA. Chia brings real value as soluble fibre and it counts toward a label's omega ratio, but it should not be read as equivalent to fish. If a food lists chia and flaxseed but no marine source, the usable omega-3 is thinner than the number suggests.",
+  "confidence": "moderate",
+  "sources": ["Canine ALA conversion literature"],
+  "topic": "omega-sources",
+  "source": "Common Sense Dog — Omega Sources Pack"
+ },
+ {
+  "question": "Which ingredients are high in omega-6 in dog food?",
+  "answer": "⚪ Established formulation knowledge: The common ones are sunflower oil, safflower oil, corn oil, soybean oil, cottonseed oil and generic 'vegetable oil'. Poultry is the quieter contributor — chicken and duck fat are notably higher in omega-6 (linoleic acid) than beef, lamb or fish. Omega-6 isn't a villain; it's an essential fatty acid dogs require for skin, coat and cell function. The issue is proportion. A poultry-based food using sunflower or corn oil as its fat source, with only flaxseed for omega-3, is where ratios climb into the 15:1 to 30:1 range.",
+  "confidence": "traditional",
+  "sources": ["Fatty-acid composition of common pet food fats; pet food formulation practice"],
+  "topic": "omega-sources",
+  "source": "Common Sense Dog — Omega Sources Pack"
+ },
+ {
+  "question": "Is algae oil a good omega-3 source for dogs?",
+  "answer": "🟡 Moderate evidence: Yes — and it's the one plant-derived exception worth knowing. Algae produce EPA and DHA directly, which is where fish get theirs from in the first place, so algal oil delivers the usable forms without the conversion problem that limits flaxseed and chia. It's a genuine option for dogs with fish sensitivities, and it avoids the heavy-metal and sustainability questions around some fish oils. Typically more expensive per unit of EPA/DHA than fish oil.",
+  "confidence": "moderate",
+  "sources": ["Algal EPA/DHA composition; marine food chain origin of EPA/DHA"],
+  "topic": "omega-sources",
+  "source": "Common Sense Dog — Omega Sources Pack"
+ }
+]

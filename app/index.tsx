@@ -778,7 +778,19 @@ const ORGAN_COVERAGE = [
     benefits: "Probiotics, digestive enzymes, balanced omega ratio",
   },
 ];
-const OMEGA3_SOURCES = [
+/**
+ * Omega-3 is not one thing, and treating it as one thing flatters plant-heavy foods.
+ *
+ * MARINE sources supply EPA and DHA directly — the forms a dog's body actually uses.
+ * PLANT sources supply ALA, which a dog must convert to EPA/DHA, and dogs convert it
+ * poorly (commonly cited at well under 10%, with conversion to DHA lower still).
+ *
+ * The practical consequence: a food can advertise an excellent omega-6:3 ratio built
+ * almost entirely on flaxseed and deliver very little usable omega-3. The ratio is
+ * true and the benefit is overstated. Splitting these lets the app say where the
+ * omega-3 actually comes from instead of crediting the number alone.
+ */
+const OMEGA3_MARINE = [
   "salmon",
   "sardine",
   "herring",
@@ -787,14 +799,27 @@ const OMEGA3_SOURCES = [
   "trout",
   "fish oil",
   "salmon oil",
-  "flaxseed",
-  "flax seed",
-  "chia seed",
+  "cod liver oil",
   "krill",
   "krill oil",
+  "green lipped mussel",
   "algae",
-  "algal oil",
+  "algal oil", // algae is plant-derived but supplies EPA/DHA directly — no conversion needed
 ];
+const OMEGA3_PLANT = [
+  "flaxseed",
+  "flax seed",
+  "flaxseed oil",
+  "linseed",
+  "chia seed",
+  "chia",
+  "canola oil",
+  "hemp seed",
+  "walnut",
+];
+// Union kept under the original name so existing pill-colouring and detection
+// behave exactly as before — this change adds a distinction, it doesn't remove one.
+const OMEGA3_SOURCES = [...OMEGA3_MARINE, ...OMEGA3_PLANT];
 const OMEGA3_OILS = [
   "fish oil",
   "salmon oil",
@@ -5711,6 +5736,90 @@ export default function App() {
                   ) : null}
                 </View>
               )}
+
+              {/* Where the omega-3 actually comes from. Only shown when there IS
+                  omega-3 to talk about — an empty "no omega sources" panel is noise. */}
+              {(() => {
+                const low = ingredients.map((i) => i.toLowerCase());
+                const marine = ingredients.filter((_, idx) =>
+                  OMEGA3_MARINE.some((m) => low[idx].includes(m)),
+                );
+                const plant = ingredients.filter((_, idx) =>
+                  OMEGA3_PLANT.some((pl) => low[idx].includes(pl)),
+                );
+                if (marine.length === 0 && plant.length === 0) return null;
+                const plantOnly = marine.length === 0 && plant.length > 0;
+                return (
+                  <AccordionSection
+                    title="🐟 Where the omega-3 comes from"
+                    defaultOpen={plantOnly}
+                    askLabel="Ask AI"
+                    onAskAI={() =>
+                      askAboutSection(
+                        `This food's omega-3 comes from ${marine.length ? `marine sources (${marine.join(", ")})` : "no marine sources"}${plant.length ? ` and plant sources (${plant.join(", ")})` : ""}. What does that mean for how much usable EPA and DHA my dog actually gets, and should I be adding fish oil or sardines?`,
+                      )
+                    }
+                  >
+                    <Text style={[styles.sectionNote, { marginBottom: 10 }]}>
+                      Omega-3 isn&apos;t one thing. A great-looking ratio built on flaxseed
+                      delivers far less usable omega-3 than the number suggests.
+                    </Text>
+
+                    {marine.length > 0 && (
+                      <View style={{ backgroundColor: t.goodTint, borderRadius: 9, padding: 11, marginBottom: 8 }}>
+                        <Text style={{ color: t.good, fontWeight: "700", fontSize: 13 }}>
+                          ✓ Marine sources — EPA &amp; DHA, ready to use
+                        </Text>
+                        <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>
+                          {marine.join(", ")} — these supply the forms a dog&apos;s body uses
+                          directly, with no conversion needed. This is the omega-3 that does
+                          the anti-inflammatory work.
+                        </Text>
+                      </View>
+                    )}
+
+                    {plant.length > 0 && (
+                      <View style={{ backgroundColor: t.moderateTint, borderRadius: 9, padding: 11, marginBottom: 8 }}>
+                        <Text style={{ color: t.moderateDeep, fontWeight: "700", fontSize: 13 }}>
+                          ⚠ Plant sources — ALA, poorly converted
+                        </Text>
+                        <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>
+                          {plant.join(", ")} — these supply ALA, which a dog has to convert
+                          into EPA and DHA. Dogs convert it poorly, commonly cited at well
+                          under 10%, and conversion to DHA is lower still. It still counts
+                          toward the advertised ratio, which is why the ratio alone can
+                          flatter a food.
+                        </Text>
+                      </View>
+                    )}
+
+                    <View
+                      style={{
+                        backgroundColor: t.surface,
+                        borderRadius: 9,
+                        padding: 11,
+                        borderLeftWidth: 3,
+                        borderLeftColor: plantOnly ? t.high : t.good,
+                      }}
+                    >
+                      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>
+                        {plantOnly
+                          ? "Worth adding a marine source"
+                          : plant.length > 0
+                            ? "Covered, but the ratio overstates it"
+                            : "Well covered"}
+                      </Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>
+                        {plantOnly
+                          ? "Every omega-3 here is the plant form. Sardines or a fish oil would add the EPA and DHA this food is relying on your dog to manufacture."
+                          : plant.length > 0
+                            ? "There are real marine sources here, so the usable omega-3 is present. Just don't read the headline ratio as all being the good kind — part of it is plant ALA."
+                            : "The omega-3 here comes from marine sources, so it's already in the form your dog can use."}
+                      </Text>
+                    </View>
+                  </AccordionSection>
+                );
+              })()}
 
               {ingredients.length > 0 && (
                 <AccordionSection
