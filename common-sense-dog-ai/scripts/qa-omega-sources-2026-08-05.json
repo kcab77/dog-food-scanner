@@ -120,5 +120,26 @@
   ],
   "topic": "omega-sources",
   "source": "Common Sense Dog — Omega Sources Pack"
+ },
+ {
+  "question": "If I switch my dog from chicken to beef, will he still get enough omega-6?",
+  "answer": "🟢 Strong evidence: Yes, provided you're feeding a complete and balanced food — and the switch actually improves the ratio. Linoleic acid is essential and AAFCO sets a minimum of 1.1% dry matter for adult maintenance, but any food carrying an AAFCO complete-and-balanced statement has been formulated to meet it regardless of protein source. That's precisely what the statement certifies. Ruminant fats (beef, lamb, venison) are genuinely lower in omega-6 than poultry: conventional chicken runs around 30:1 omega-6 to omega-3, grain-fed beef around 8:1, and grass-fed beef better still, with more omega-3 and more CLA. So beef is the improvement, not the risk. ⚠️ The one situation to watch is a HOMEMADE all-beef diet with no added fat source — ruminant fat alone can fall short of the linoleic acid minimum, which is exactly why many commercial beef formulas include sunflower oil or chicken fat. On a complete commercial food, this isn't a concern.",
+  "confidence": "strong",
+  "sources": [
+   "AAFCO Dog Food Nutrient Profiles — linoleic acid 1.1% DM adult maintenance",
+   "Comparative fatty acid composition: poultry vs ruminant fat"
+  ],
+  "topic": "omega-sources",
+  "source": "Common Sense Dog — Omega Sources Pack"
+ },
+ {
+  "question": "Which organ meats are highest in omega-6?",
+  "answer": "⚪ Worth reframing: organs aren't where omega-6 comes from. Liver, kidney, heart and spleen are all LEAN — their value is vitamins, minerals and taurine, not fat. Omega-6 comes from adipose fat and skin, so it's the fat trimmings, chicken skin and added oils that carry it, not the offal. The one exception is brain, which is the fattiest organ, and even there the notable fat is DHA (an omega-3) rather than omega-6. So if you're choosing organs, choose them for what they carry: liver for vitamin A, B12 and copper; heart for taurine and CoQ10; kidney for B12 and selenium in its organic selenomethionine form; spleen for iron; pancreas for digestive enzymes. Let the fat source handle the fatty acids.",
+  "confidence": "traditional",
+  "sources": [
+   "Comparative nutrient composition of organ meats; fatty acid distribution in animal tissues"
+  ],
+  "topic": "organ-meats",
+  "source": "Common Sense Dog — Omega Sources Pack"
  }
 ]

@@ -854,6 +854,57 @@ const COPPER_SENSITIVE_BREEDS = [
  * any meat-based diet. It's in every animal fat. The ratio matters because omega-6 is
  * abundant and omega-3 is scarce — not because omega-6 is bad.
  */
+/**
+ * Organ profiles — what each one actually delivers.
+ *
+ * "Organ meat is good for dogs" is true but useless: it doesn't tell an owner why
+ * heart and liver aren't interchangeable, or why liver has a ceiling when heart
+ * doesn't. Naming what each organ carries makes the raw-feeding ratios make sense
+ * instead of being rules to memorise.
+ *
+ * Note on omega-6: organs are LEAN, so they're not a meaningful fat source either
+ * way. Omega-6 comes from adipose fat and skin, not offal. Brain is the exception,
+ * and it's mostly DHA rather than omega-6.
+ */
+const ORGAN_PROFILES: {
+  term: string;
+  label: string;
+  headline: string;
+  carries: string;
+  note: string;
+  limit?: string;
+}[] = [
+  { term: "liver", label: "Liver", headline: "Nature's multivitamin",
+    carries: "Vitamin A (by far the richest source), B12, folate, riboflavin, copper, iron, zinc, CoQ10",
+    note: "The most nutrient-dense food available to a dog. One of the few single ingredients that meaningfully moves several requirements at once — which is exactly why it has a ceiling.",
+    limit: "Cap at about 5% of the diet. Vitamin A and copper are both fat-soluble or accumulative, and liver is dense enough in each that more is not better." },
+  { term: "heart", label: "Heart", headline: "The taurine and CoQ10 organ",
+    carries: "Taurine, CoQ10, B12, riboflavin, iron, phosphorus",
+    note: "Technically a muscle, not an organ — which is why it can be fed far more freely than liver. The best natural taurine source there is, which matters for heart health and is directly relevant to the DCM conversation around legume-heavy diets." },
+  { term: "kidney", label: "Kidney", headline: "B12 and selenium",
+    carries: "B12, riboflavin, iron, selenium, complete amino acid profile",
+    note: "Selenium here comes as selenomethionine — the organic, self-regulating form, rather than the sodium selenite added to kibble. 'Like feeds like' in TCVM puts kidney with kidney support.",
+    limit: "Counts toward the ~10% organ allowance alongside liver." },
+  { term: "spleen", label: "Spleen", headline: "The iron organ",
+    carries: "Iron (the highest of any organ), B12, vitamin C",
+    note: "Unusually rich in vitamin C for an animal tissue. The organ to reach for with anaemia or low iron, and often overlooked in favour of liver." },
+  { term: "pancreas", label: "Pancreas", headline: "Digestive enzymes",
+    carries: "Lipase, protease, amylase — the enzymes themselves",
+    note: "Fed as a natural enzyme source, and the traditional whole-food approach for dogs with exocrine pancreatic insufficiency (EPI). Genuinely functional rather than just nutritious." },
+  { term: "tripe", label: "Green tripe", headline: "Gut support",
+    carries: "Probiotics, digestive enzymes, a naturally near-ideal calcium:phosphorus ratio",
+    note: "Stomach lining of a ruminant, unbleached. The smell is the point — bleached white tripe from a supermarket has had the useful part processed out of it." },
+  { term: "brain", label: "Brain", headline: "DHA",
+    carries: "DHA, phosphatidylserine, cholesterol",
+    note: "The fattiest organ and the only one that's a real omega-3 source. Traditionally fed for cognitive support in seniors." },
+  { term: "lung", label: "Lung", headline: "Lean protein",
+    carries: "Protein, modest B vitamins",
+    note: "Low in fat and lower in nutrient density than other organs. Common as a light training treat rather than a nutritional centrepiece." },
+  { term: "gizzard", label: "Gizzard", headline: "Muscle, not organ",
+    carries: "Protein, iron, B12, zinc",
+    note: "Like heart, this is muscle rather than secreting organ, so it doesn't count toward the 10% organ allowance." },
+];
+
 const OMEGA6_FOOD_SOURCES: { source: string; level: "very high" | "high" | "moderate"; note: string }[] = [
   { source: "Sunflower, safflower, corn, soybean, grapeseed oil", level: "very high",
     note: "The cheap oils used to hit a fat target. Almost pure omega-6 — these are what push a food's ratio to 20:1 or worse." },
@@ -6103,6 +6154,69 @@ export default function App() {
                   </Text>
                 </AccordionSection>
               )}
+
+              {/* Organ profiles. Only shows the organs actually in this food, so it
+                  reads as information about the bag rather than a textbook. */}
+              {(() => {
+                const low = ingredients.map((i) => i.toLowerCase());
+                const found = ORGAN_PROFILES.filter((o) => low.some((ing) => ing.includes(o.term)));
+                if (found.length === 0) return null;
+                return (
+                  <AccordionSection
+                    title={`🫀 Organs in this food (${found.length})`}
+                    askLabel="Ask AI"
+                    onAskAI={() =>
+                      askAboutSection(
+                        `This food contains ${found.map((o) => o.label).join(", ")}. What is each one giving my dog, is the amount right, and is there an organ he'd benefit from that isn't in here?`,
+                      )
+                    }
+                  >
+                    <Text style={[styles.sectionNote, { marginBottom: 10 }]}>
+                      &quot;Organ meat is good&quot; doesn&apos;t tell you much. Here&apos;s what each
+                      one in this food actually carries — and why liver has a ceiling while heart
+                      doesn&apos;t.
+                    </Text>
+                    {found.map((o, i) => (
+                      <View
+                        key={i}
+                        style={{
+                          backgroundColor: t.surface,
+                          borderRadius: 9,
+                          padding: 11,
+                          marginBottom: 6,
+                          borderLeftWidth: 3,
+                          borderLeftColor: o.limit ? t.moderate : t.good,
+                        }}
+                      >
+                        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                          <Text style={{ color: t.textStrong, fontSize: 13.5, fontWeight: "700" }}>
+                            {o.label}
+                          </Text>
+                          <Text style={{ color: t.good, fontSize: 11, fontWeight: "700" }}>
+                            {o.headline}
+                          </Text>
+                        </View>
+                        <Text style={{ color: t.text, fontSize: 12, marginTop: 4, lineHeight: 17 }}>
+                          <Text style={{ fontWeight: "700" }}>Carries: </Text>{o.carries}
+                        </Text>
+                        <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 4, lineHeight: 17 }}>
+                          {o.note}
+                        </Text>
+                        {o.limit && (
+                          <Text style={{ color: t.moderateDeep, fontSize: 11.5, marginTop: 5, lineHeight: 16, fontWeight: "600" }}>
+                            ⚠ {o.limit}
+                          </Text>
+                        )}
+                      </View>
+                    ))}
+                    <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 4, lineHeight: 16 }}>
+                      The usual raw-feeding target is about 10% organ, with liver no more than half
+                      of that. Heart and gizzard are muscle rather than secreting organs, so they
+                      don&apos;t count toward it.
+                    </Text>
+                  </AccordionSection>
+                );
+              })()}
 
               {/* Named vs generic meals. The distinction owners are most often given
                   backwards: "meal = bad" is wrong, "unnamed = bad" is right. */}
