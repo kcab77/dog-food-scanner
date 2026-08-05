@@ -6022,6 +6022,71 @@ export default function App() {
                 </View>
               )}
 
+              {/* The carbohydrate evidence. Shown when a food leans carb-heavy, because
+                  that's when an owner is being told "dogs need energy from grains" by
+                  someone selling the bag. */}
+              {highCarbs.length >= 2 && (
+                <AccordionSection
+                  title="🌾 Do dogs actually need carbs?"
+                  askLabel="Evidence"
+                  onAskAI={() =>
+                    askAboutSection(
+                      `This food contains ${highCarbs.join(", ")}. Do dogs actually need carbohydrates, what does the research say, and does it matter for my dog specifically?`,
+                    )
+                  }
+                >
+                  <Text style={{ color: t.textStrong, fontSize: 13.5, fontWeight: "700", marginBottom: 6 }}>
+                    No — and there is no dietary requirement for them.
+                  </Text>
+                  <Text style={{ color: t.text, fontSize: 12.5, lineHeight: 18, marginBottom: 10 }}>
+                    Neither AAFCO nor the NRC sets a carbohydrate minimum for dogs, because dogs make
+                    the glucose they need from protein and fat. This is one of the few places where
+                    holistic practice and formal nutrition science agree outright.
+                  </Text>
+
+                  <View style={{ backgroundColor: t.goodTint, borderRadius: 9, padding: 11, marginBottom: 7 }}>
+                    <Text style={{ color: t.good, fontWeight: "700", fontSize: 12.5 }}>
+                      Kronfeld et al., 1977 · Am J Clin Nutr
+                    </Text>
+                    <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>
+                      18 racing sled dogs, 28 weeks of training, three diets: zero carbohydrate
+                      (39% protein / 61% fat), 23% carb, and 38% carb. The zero-carbohydrate group
+                      showed <Text style={{ fontWeight: "700" }}>better endurance and less exertional
+                      muscle damage</Text> — not merely equal results.
+                    </Text>
+                  </View>
+
+                  <View style={{ backgroundColor: t.goodTint, borderRadius: 9, padding: 11, marginBottom: 7 }}>
+                    <Text style={{ color: t.good, fontWeight: "700", fontSize: 12.5 }}>
+                      Gal et al., 2021 · PLOS ONE
+                    </Text>
+                    <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>
+                      22 farm working dogs, randomised. The ultra-low-carbohydrate group showed
+                      <Text style={{ fontWeight: "700" }}> significantly higher activity</Text> and
+                      better insulin sensitivity — the opposite of what the researchers expected.
+                    </Text>
+                  </View>
+
+                  <View style={{ backgroundColor: t.surface, borderRadius: 9, padding: 11, borderLeftWidth: 3, borderLeftColor: t.moderate }}>
+                    <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>
+                      The honest limits
+                    </Text>
+                    <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>
+                      Both studies are small (18 and 22 dogs) and both used working athletes rather
+                      than pet dogs. They establish firmly that dogs don&apos;t <Text style={{ fontStyle: "italic" }}>need</Text> carbohydrate
+                      and can do well without it. They don&apos;t establish that carbohydrate is harmful,
+                      or that every dog should eat none.
+                    </Text>
+                  </View>
+
+                  <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 9, lineHeight: 16 }}>
+                    Why it&apos;s in the bag anyway: extrusion physically needs starch to form kibble,
+                    it&apos;s the cheapest calorie available, and grain raises the protein figure on the
+                    label without meat.
+                  </Text>
+                </AccordionSection>
+              )}
+
               {/* Protein profile — allergen risk tracks exposure, not badness. */}
               {(() => {
                 const proteins = findProteins(ingredients);

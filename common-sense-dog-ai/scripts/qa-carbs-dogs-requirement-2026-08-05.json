@@ -1,0 +1,42 @@
+[
+ {
+  "question": "Do dogs actually need carbohydrates?",
+  "answer": "🟢 Strong evidence: No. Dogs have no established dietary carbohydrate requirement — neither AAFCO nor the NRC sets a minimum, because dogs can meet their glucose needs through gluconeogenesis from protein and fat. This is one of the few places where the holistic position and the formal nutrition literature agree completely. Carbohydrates in dog food serve manufacturing purposes: they are cheap calories, and starch is what makes extrusion (kibble) physically possible. That doesn't make them poisonous — dogs digest cooked starch perfectly well — but it does mean carbohydrate content reflects how a food was made and priced, not what a dog requires.",
+  "confidence": "strong",
+  "sources": ["AAFCO Dog Food Nutrient Profiles (no carbohydrate minimum)", "NRC Nutrient Requirements of Dogs and Cats"],
+  "topic": "carbohydrates",
+  "source": "Common Sense Dog — Carbohydrate Requirement Pack"
+ },
+ {
+  "question": "Is there a study showing dogs perform fine without carbs?",
+  "answer": "🟢 Strong evidence: Yes — two, forty-four years apart, pointing the same way. Kronfeld and colleagues (1977, American Journal of Clinical Nutrition) fed 18 racing sled dogs three diets across a 28-week training period: zero carbohydrate (39% protein / 61% fat), 23% carbohydrate, and 38% carbohydrate, on an available-energy basis. The zero-carbohydrate group showed BETTER endurance performance and less evidence of exertional muscle damage — not merely equal results. Gal and colleagues (2021, PLOS ONE) randomised 22 New Zealand farm working dogs to ultra-low-carbohydrate or high-carbohydrate diets and found the ultra-low group had significantly HIGHER activity levels and improved insulin sensitivity (lower HOMA-IR), despite lower circulating glucose — the opposite of what the researchers hypothesised.",
+  "confidence": "strong",
+  "sources": ["Kronfeld AS et al., 1977, Am J Clin Nutr — 'Metabolic responses to exhaustive exercise in racing sled dogs fed diets containing medium, low, or zero carbohydrate' (PMID 842492) and the companion training paper (PMID 842493)", "Gal A et al., 2021, PLOS ONE — 'Less is more? Ultra-low carbohydrate diet and working dogs' performance' (10.1371/journal.pone.0261506)"],
+  "topic": "carbohydrates",
+  "source": "Common Sense Dog — Carbohydrate Requirement Pack"
+ },
+ {
+  "question": "What are the limits of the sled dog carbohydrate studies?",
+  "answer": "🟡 Moderate — honest limits, because overstating this weakens the argument. Both studies are small: 18 dogs (Kronfeld) and 22 (Gal). Both used WORKING athletes — racing sled dogs and farm dogs — not pet dogs on a sofa, so extrapolating to a sedentary Labrador is reasonable inference rather than proven fact. Gal also found that low-glucose events, while uncommon overall at 3.12% of readings, occurred overwhelmingly in the ultra-low-carbohydrate group (92.4% of them), mostly at rest overnight. What these studies establish firmly is that dogs do not NEED dietary carbohydrate to perform, and can perform better without it. What they do not establish is that every dog should eat zero carbohydrate, or that carbohydrate is harmful in itself.",
+  "confidence": "moderate",
+  "sources": ["Kronfeld AS et al., 1977, Am J Clin Nutr (n=18)", "Gal A et al., 2021, PLOS ONE (n=22)"],
+  "topic": "carbohydrates",
+  "source": "Common Sense Dog — Carbohydrate Requirement Pack"
+ },
+ {
+  "question": "Why is there so much corn and rice in dog food if dogs don't need carbs?",
+  "answer": "⚪ Manufacturing reality: Three reasons, none of them nutritional. Starch is structurally necessary for extrusion — the kibble-making process needs it to form and hold a shape, typically requiring at least 30-40% of the formula. Carbohydrate is the cheapest calorie available, so it lowers cost per bag. And grains raise the crude protein figure on the guaranteed analysis without meat, which is why a food can advertise good protein while much of it comes from corn gluten meal or pea protein rather than muscle. This is also why genuinely low-carbohydrate commercial foods are almost always raw, freeze-dried or gently cooked: those formats don't need starch to hold together.",
+  "confidence": "traditional",
+  "sources": ["Pet food extrusion process requirements; commercial formulation practice"],
+  "topic": "carbohydrates",
+  "source": "Common Sense Dog — Carbohydrate Requirement Pack"
+ },
+ {
+  "question": "How do I work out how much carbohydrate is in my dog's food?",
+  "answer": "⚪ Practical method: Manufacturers are not required to declare carbohydrate, so you calculate it. Take the guaranteed analysis and subtract everything else from 100: 100 − protein − fat − moisture − ash − fibre = carbohydrate (this is 'nitrogen-free extract'). If ash isn't listed, 6-8% is a reasonable estimate for most dry foods. Typical results surprise people: many premium kibbles land at 40-50% carbohydrate, grain-free kibbles often no lower because legumes replace grain. Raw and freeze-dried foods usually come in under 15%. ⚠️ The figure is approximate — it captures everything not otherwise declared, not starch specifically.",
+  "confidence": "traditional",
+  "sources": ["Nitrogen-free extract calculation, standard feed analysis"],
+  "topic": "carbohydrates",
+  "source": "Common Sense Dog — Carbohydrate Requirement Pack"
+ }
+]
