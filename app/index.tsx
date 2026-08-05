@@ -1484,7 +1484,7 @@ function scoreTreats(ingredientList: string[], processingMethod?: string, produc
     breakdown.push({ label: `${dentalIngredients.length} dental-benefit ingredient(s)`, value: Math.min(dentalIngredients.length * 3, 9) });
   }
 
-  total = Math.max(10, Math.min(100, Math.round(total)));
+  total = Math.max(5, Math.min(100, Math.round(total)));
   return {
     score: total,
     flags,
@@ -1922,6 +1922,73 @@ function findSplitIngredients(
     }
   }
   return out;
+}
+
+/**
+ * Carbohydrate penalty — a taper, not a staircase.
+ *
+ * The old version stepped 32/25/22/12/10/5, which meant a food at 44% carbs and one
+ * at 36% could take the same hit while 35% and 36% differed by 10 points. Cliff edges
+ * in a score are unfair in both directions.
+ *
+ * Now: nothing below 20% (dogs have no carbohydrate requirement, but a modest amount
+ * isn't a fault), then a straight line up to a cap. Max is 24 rather than 32 — high
+ * carbohydrate is genuinely poor, but it was previously outweighing several harmful
+ * additives combined, which misrepresented what this app is actually about.
+ */
+function carbPenaltyFor(estCarbPct: number): number {
+  if (estCarbPct <= 20) return 0;
+  return Math.min(24, Math.round((estCarbPct - 20) * 0.8));
+}
+
+/**
+ * Synthetic vitamin/mineral load — weighted by WHICH, not just how many.
+ *
+ * Counting every added vitamin equally was the flaw: thiamine mononitrate, riboflavin
+ * and calcium pantothenate are safe synthetic forms, chemically equivalent to the
+ * natural ones. A food using twelve of those is not worse than one using four
+ * problem forms. Kyle's own research says exactly this.
+ *
+ * So concerning forms are weighted 3x, poor-absorption forms 1x, and the total tapers
+ * to a cap instead of stepping.
+ */
+const VITAMIN_CONCERN_HIGH = [
+  "menadione",
+  "sodium selenite",
+  "sodium selenate",
+  "copper sulfate",
+  "ferric oxide",
+];
+const VITAMIN_CONCERN_LOW = [
+  "zinc oxide",
+  "zinc sulfate",
+  "magnesium oxide",
+  "dl-alpha tocopherol",
+  "retinyl palmitate",
+  "retinyl acetate",
+  "pyridoxine hydrochloride",
+  "cholecalciferol",
+  "vitamin d3 supplement",
+  "vitamin d supplement",
+  "vitamin a supplement",
+  "dl-methionine",
+];
+
+function vitaminLoadPenalty(ingredientList: string[]): { penalty: number; level: string; high: string[] } {
+  const low = ingredientList.map((i) => i.toLowerCase());
+  const high = ingredientList.filter((_, i) =>
+    VITAMIN_CONCERN_HIGH.some((v) => low[i].includes(v)),
+  );
+  const minor = ingredientList.filter((_, i) =>
+    VITAMIN_CONCERN_LOW.some((v) => low[i].includes(v)),
+  );
+  // Weighted count: a problem form counts as three ordinary ones.
+  const weighted = high.length * 3 + minor.length;
+  if (weighted === 0) return { penalty: 0, level: "", high: [] };
+  const penalty = Math.min(14, Math.round(weighted * 1.6));
+  const level =
+    high.length > 0 ? "Concerning forms present" : weighted > 6 ? "Heavy synthetic load" : "Some synthetic forms";
+  return { penalty, level, high };
 }
 
 function analyseSaltDivider(ingredientList: string[]): {
@@ -3981,18 +4048,12 @@ export default function App() {
     );
     const noProbiotics = foundProbiotics.length === 0;
     const vitCount = foundVitamins.length;
-    let vitLoadPenalty = 0;
-    let vitLevel = "";
-    if (vitCount > 15) {
-      vitLoadPenalty = 12;
-      vitLevel = "Severe";
-    } else if (vitCount > 10) {
-      vitLoadPenalty = 8;
-      vitLevel = "High";
-    } else if (vitCount > 7) {
-      vitLoadPenalty = 5;
-      vitLevel = "Moderate";
-    }
+    // Weighted by WHICH forms are present, not how many. Safe synthetics
+    // (thiamine, riboflavin, niacin, pantothenate, folate, biotin, choline) cost
+    // nothing; problem forms are weighted 3x. See vitaminLoadPenalty().
+    const vitLoad = vitaminLoadPenalty(ingredientList);
+    const vitLoadPenalty = vitLoad.penalty;
+    const vitLevel = vitLoad.level;
     const vitPenalty = vitLoadPenalty;
     const fullText = (name + " " + rawIngredients).toLowerCase();
     const hasAAFCOTrial = AAFCO_TRIAL_KEYWORDS.some((k) =>
@@ -4113,27 +4174,25 @@ export default function App() {
         .slice(0, 5)
         .some((ing) => HIGH_CARB_INGREDIENTS.some((c) => ing.toLowerCase().includes(c)));
       const carbCount = foundCarbs.length;
-      let carbPenalty = 0;
-      let carbLabel = "";
-      if (carbIsFirst && carbCount >= 2) {
-        carbPenalty = 32;
-        carbLabel = "Est. ~45%+ carbs — carb is #1 ingredient with multiple carb sources";
-      } else if (carbIsFirst) {
-        carbPenalty = 25;
-        carbLabel = "Est. ~35–45% carbs — carb is the primary ingredient";
-      } else if (carbInTop2 && carbCount >= 2) {
-        carbPenalty = 22;
-        carbLabel = "Est. ~35–40% carbs — multiple carbs in primary ingredients";
-      } else if (carbInTop2) {
-        carbPenalty = 12;
-        carbLabel = "Est. ~25–35% carbs — carb is a primary ingredient";
-      } else if (carbCount >= 3) {
-        carbPenalty = 10;
-        carbLabel = "Est. ~25–30% carbs — multiple carb sources";
-      } else if (carbCount >= 2 && carbInTop5) {
-        carbPenalty = 5;
-        carbLabel = "Est. ~20–25% carbs — approaching threshold";
-      }
+      // Estimate the carbohydrate share from label position and count, then taper.
+      // Same signals as before — this changes how they map to a penalty, not what's read.
+      let estCarb = 0;
+      if (carbIsFirst && carbCount >= 2) estCarb = 48;
+      else if (carbIsFirst) estCarb = 40;
+      else if (carbInTop2 && carbCount >= 2) estCarb = 37;
+      else if (carbInTop2) estCarb = 30;
+      else if (carbCount >= 3) estCarb = 27;
+      else if (carbCount >= 2 && carbInTop5) estCarb = 22;
+      const carbPenalty = carbPenaltyFor(estCarb);
+      const carbLabel = estCarb
+        ? `Est. ~${estCarb}% carbohydrate — ${
+            carbIsFirst
+              ? "a carb is the #1 ingredient"
+              : carbInTop2
+                ? "a carb is a primary ingredient"
+                : "multiple carb sources"
+          }`
+        : "";
       // Single carb not in top 5: est. <20% — no penalty
       if (carbPenalty > 0) {
         total -= carbPenalty;
@@ -4622,18 +4681,10 @@ export default function App() {
 );
 
       const vitCount = foundVitamins.length;
-      let vitLoadPenalty = 0;
-      let vitLevel = "";
-      if (vitCount > 15) {
-        vitLoadPenalty = 12;
-        vitLevel = "Severe";
-      } else if (vitCount > 10) {
-        vitLoadPenalty = 8;
-        vitLevel = "High";
-      } else if (vitCount > 7) {
-        vitLoadPenalty = 5;
-        vitLevel = "Moderate";
-      }
+      // Weighted by WHICH forms, not how many — see vitaminLoadPenalty().
+      const vitLoad = vitaminLoadPenalty(ingredientList);
+      const vitLoadPenalty = vitLoad.penalty;
+      const vitLevel = vitLoad.level;
       const vitPenalty = vitLoadPenalty;
 
       const fullText = (name + " " + rawIngredients).toLowerCase();
@@ -4754,27 +4805,24 @@ export default function App() {
           .slice(0, 5)
           .some((ing) => HIGH_CARB_INGREDIENTS.some((c) => ing.toLowerCase().includes(c)));
         const carbCount = foundCarbs.length;
-        let carbPenalty = 0;
-        let carbLabel = "";
-        if (carbIsFirst && carbCount >= 2) {
-          carbPenalty = 32;
-          carbLabel = "Est. ~45%+ carbs — carb is #1 ingredient with multiple carb sources";
-        } else if (carbIsFirst) {
-          carbPenalty = 25;
-          carbLabel = "Est. ~35–45% carbs — carb is the primary ingredient";
-        } else if (carbInTop2 && carbCount >= 2) {
-          carbPenalty = 22;
-          carbLabel = "Est. ~35–40% carbs — multiple carbs in primary ingredients";
-        } else if (carbInTop2) {
-          carbPenalty = 12;
-          carbLabel = "Est. ~25–35% carbs — carb is a primary ingredient";
-        } else if (carbCount >= 3) {
-          carbPenalty = 10;
-          carbLabel = "Est. ~25–30% carbs — multiple carb sources";
-        } else if (carbCount >= 2 && carbInTop5) {
-          carbPenalty = 5;
-          carbLabel = "Est. ~20–25% carbs — approaching threshold";
-        }
+        // Estimate carbohydrate share from label position, then taper — see carbPenaltyFor().
+        let estCarb = 0;
+        if (carbIsFirst && carbCount >= 2) estCarb = 48;
+        else if (carbIsFirst) estCarb = 40;
+        else if (carbInTop2 && carbCount >= 2) estCarb = 37;
+        else if (carbInTop2) estCarb = 30;
+        else if (carbCount >= 3) estCarb = 27;
+        else if (carbCount >= 2 && carbInTop5) estCarb = 22;
+        const carbPenalty = carbPenaltyFor(estCarb);
+        const carbLabel = estCarb
+          ? `Est. ~${estCarb}% carbohydrate — ${
+              carbIsFirst
+                ? "a carb is the #1 ingredient"
+                : carbInTop2
+                  ? "a carb is a primary ingredient"
+                  : "multiple carb sources"
+            }`
+          : "";
         // Single carb not in top 5: est. <20% — no penalty
         if (carbPenalty > 0) {
           total -= carbPenalty;
