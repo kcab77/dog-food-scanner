@@ -971,6 +971,95 @@ const OMEGA6_FOOD_SOURCES: { source: string; level: "very high" | "high" | "mode
  * Most of these arise from unbalanced home-prepared diets, malabsorption, or a
  * specific breed defect — not from ordinary commercial food.
  */
+/**
+ * AAFCO Dog Food Nutrient Profiles — transcribed from the source document, not recalled.
+ *
+ * Values are DRY MATTER basis, presuming 4,000 kcal ME/kg. Foods denser than that should
+ * be corrected for energy density before comparing.
+ *
+ * Reference data only. AAFCO's Official Publication is the authoritative source; this app
+ * is not affiliated with or endorsed by AAFCO.
+ *
+ * ⚠️ An absent maximum does NOT mean unlimited. AAFCO's own wording: it "reflects the lack
+ * of information in dogs and cats on toxic concentrations of that nutrient," and setting a
+ * maximum arbitrarily "might prove worse than no maximum at all."
+ */
+const AAFCO_PROFILES: {
+  group: string;
+  rows: { nutrient: string; unit: string; growth: string; adult: string; max: string; note?: string }[];
+}[] = [
+  {
+    group: "Protein & amino acids",
+    rows: [
+      { nutrient: "Crude protein", unit: "%", growth: "22.5", adult: "18.0", max: "—" },
+      { nutrient: "Arginine", unit: "%", growth: "1.0", adult: "0.51", max: "—" },
+      { nutrient: "Histidine", unit: "%", growth: "0.44", adult: "0.19", max: "—" },
+      { nutrient: "Isoleucine", unit: "%", growth: "0.71", adult: "0.38", max: "—" },
+      { nutrient: "Leucine", unit: "%", growth: "1.29", adult: "0.68", max: "—" },
+      { nutrient: "Lysine", unit: "%", growth: "0.90", adult: "0.63", max: "—" },
+      { nutrient: "Methionine", unit: "%", growth: "0.35", adult: "0.33", max: "—" },
+      { nutrient: "Methionine-cystine", unit: "%", growth: "0.70", adult: "0.65", max: "—" },
+      { nutrient: "Phenylalanine", unit: "%", growth: "0.83", adult: "0.45", max: "—" },
+      { nutrient: "Phenylalanine-tyrosine", unit: "%", growth: "1.30", adult: "0.74", max: "—" },
+      { nutrient: "Threonine", unit: "%", growth: "1.04", adult: "0.48", max: "—" },
+      { nutrient: "Tryptophan", unit: "%", growth: "0.20", adult: "0.16", max: "—" },
+      { nutrient: "Valine", unit: "%", growth: "0.68", adult: "0.49", max: "—" },
+    ],
+  },
+  {
+    group: "Fat & fatty acids",
+    rows: [
+      { nutrient: "Crude fat", unit: "%", growth: "8.5", adult: "5.5", max: "—" },
+      { nutrient: "Linoleic acid (omega-6)", unit: "%", growth: "1.3", adult: "1.1", max: "—" },
+      { nutrient: "Alpha-linolenic (ALA)", unit: "%", growth: "0.08", adult: "ND", max: "—" },
+      { nutrient: "EPA + DHA", unit: "%", growth: "0.05", adult: "ND", max: "—",
+        note: "No adult minimum set — but enough omega-3 is still needed to meet the ratio cap below." },
+      { nutrient: "Omega-6 : omega-3 ratio", unit: "ratio", growth: "—", adult: "—", max: "30:1",
+        note: "(LA+AA) : (ALA+EPA+DHA). This MAXIMUM is the only fatty-acid ratio AAFCO enforces. The 5:1 target used in holistic practice is far stricter than the legal ceiling." },
+    ],
+  },
+  {
+    group: "Minerals",
+    rows: [
+      { nutrient: "Calcium", unit: "%", growth: "1.2", adult: "0.5", max: "2.5",
+        note: "Max drops to 1.8% for formulas that may be fed to large-breed puppies (70+ lb as adults) — excess calcium accelerates bone growth and causes joint disease." },
+      { nutrient: "Phosphorus", unit: "%", growth: "1.0", adult: "0.4", max: "1.6" },
+      { nutrient: "Ca:P ratio", unit: "ratio", growth: "1:1", adult: "1:1", max: "2:1" },
+      { nutrient: "Potassium", unit: "%", growth: "0.6", adult: "0.6", max: "—" },
+      { nutrient: "Sodium", unit: "%", growth: "0.3", adult: "0.08", max: "—" },
+      { nutrient: "Chloride", unit: "%", growth: "0.45", adult: "0.12", max: "—" },
+      { nutrient: "Magnesium", unit: "%", growth: "0.06", adult: "0.06", max: "—" },
+      { nutrient: "Iron", unit: "mg/kg", growth: "88", adult: "40", max: "—",
+        note: "Iron from CARBONATE or OXIDE sources doesn't count toward the minimum — too poorly absorbed. This is AAFCO agreeing that ferric oxide is a colorant, not a nutrient." },
+      { nutrient: "Copper", unit: "mg/kg", growth: "12.4", adult: "7.3", max: "—",
+        note: "Copper from OXIDE sources is excluded from the minimum for poor bioavailability." },
+      { nutrient: "Manganese", unit: "mg/kg", growth: "7.2", adult: "5.0", max: "—" },
+      { nutrient: "Zinc", unit: "mg/kg", growth: "100", adult: "80", max: "—" },
+      { nutrient: "Iodine", unit: "mg/kg", growth: "1.0", adult: "1.0", max: "11" },
+      { nutrient: "Selenium", unit: "mg/kg", growth: "0.35", adult: "0.35", max: "2" },
+    ],
+  },
+  {
+    group: "Vitamins",
+    rows: [
+      { nutrient: "Vitamin A", unit: "IU/kg", growth: "5,000", adult: "5,000", max: "250,000" },
+      { nutrient: "Vitamin D", unit: "IU/kg", growth: "500", adult: "500", max: "3,000",
+        note: "Lowered from 5,000 — 1,000 IU/kg below the level shown to disrupt bone formation in growing Great Dane puppies." },
+      { nutrient: "Vitamin E", unit: "IU/kg", growth: "50", adult: "50", max: "—",
+        note: "Maximum DELETED — no evidence of vitamin E toxicity in dogs to base one on. AAFCO recommends the ratio of vitamin E (IU) to polyunsaturated fat (g) stay above 0.6:1; 50 IU covers up to 83g PUFA, and above that add 0.6 IU per extra gram." },
+      { nutrient: "Thiamine (B1)", unit: "mg/kg", growth: "2.25", adult: "2.25", max: "—",
+        note: "Processing can destroy up to 90% of thiamine, so formulas must be built to hit the minimum AFTER processing." },
+      { nutrient: "Riboflavin (B2)", unit: "mg/kg", growth: "5.2", adult: "5.2", max: "—" },
+      { nutrient: "Pantothenic acid (B5)", unit: "mg/kg", growth: "12", adult: "12", max: "—" },
+      { nutrient: "Niacin (B3)", unit: "mg/kg", growth: "13.6", adult: "13.6", max: "—" },
+      { nutrient: "Pyridoxine (B6)", unit: "mg/kg", growth: "1.5", adult: "1.5", max: "—" },
+      { nutrient: "Folic acid (B9)", unit: "mg/kg", growth: "0.216", adult: "0.216", max: "—" },
+      { nutrient: "Vitamin B12", unit: "mg/kg", growth: "0.028", adult: "0.028", max: "—" },
+      { nutrient: "Choline", unit: "mg/kg", growth: "1,360", adult: "1,360", max: "—" },
+    ],
+  },
+];
+
 const DEFICIENCY_SIGNS: {
   nutrient: string;
   visible: string;
@@ -6451,6 +6540,71 @@ export default function App() {
                   </Text>
                 </AccordionSection>
               )}
+
+              {/* AAFCO reference table. Transcribed from the source document. */}
+              <AccordionSection
+                title="📋 AAFCO minimums & maximums (full table)"
+                askLabel="Ask AI"
+                onAskAI={() =>
+                  askAboutSection(
+                    `Using the AAFCO minimums, does this food look adequate, and is anything close to a maximum? Explain which numbers actually matter for my dog.`,
+                  )
+                }
+              >
+                <View style={{ backgroundColor: t.surface, borderRadius: 9, padding: 11, marginBottom: 10, borderLeftWidth: 3, borderLeftColor: t.info }}>
+                  <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>
+                    How to read this
+                  </Text>
+                  <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>
+                    All values are <Text style={{ fontWeight: "700" }}>dry matter</Text>, assuming
+                    4,000 kcal/kg. To compare a label, convert first: divide the as-fed percentage by
+                    (1 − moisture). A 70%-moisture fresh food at 15.5% protein is 52% on dry matter.
+                  </Text>
+                  <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 5, lineHeight: 17 }}>
+                    <Text style={{ fontWeight: "700" }}>A blank maximum doesn&apos;t mean unlimited.</Text>{" "}
+                    In AAFCO&apos;s own words it reflects &quot;the lack of information in dogs and cats
+                    on toxic concentrations,&quot; and setting one arbitrarily &quot;might prove worse
+                    than no maximum at all.&quot;
+                  </Text>
+                </View>
+
+                {AAFCO_PROFILES.map((g, gi) => (
+                  <View key={gi} style={{ marginBottom: 12 }}>
+                    <Text style={{ color: t.info, fontSize: 12, fontWeight: "800", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 5 }}>
+                      {g.group}
+                    </Text>
+                    <View style={{ flexDirection: "row", paddingBottom: 4, borderBottomWidth: 1, borderBottomColor: t.border }}>
+                      <Text style={{ flex: 2.4, color: t.textDim, fontSize: 10, fontWeight: "700" }}>NUTRIENT</Text>
+                      <Text style={{ flex: 0.9, color: t.textDim, fontSize: 10, fontWeight: "700" }}>UNIT</Text>
+                      <Text style={{ flex: 1, color: t.textDim, fontSize: 10, fontWeight: "700", textAlign: "right" }}>PUPPY</Text>
+                      <Text style={{ flex: 1, color: t.textDim, fontSize: 10, fontWeight: "700", textAlign: "right" }}>ADULT</Text>
+                      <Text style={{ flex: 1.1, color: t.textDim, fontSize: 10, fontWeight: "700", textAlign: "right" }}>MAX</Text>
+                    </View>
+                    {g.rows.map((r, ri) => (
+                      <View key={ri}>
+                        <View style={{ flexDirection: "row", paddingVertical: 4, borderBottomWidth: 1, borderBottomColor: t.borderBright }}>
+                          <Text style={{ flex: 2.4, color: t.text, fontSize: 11.5 }}>{r.nutrient}</Text>
+                          <Text style={{ flex: 0.9, color: t.textDim, fontSize: 11 }}>{r.unit}</Text>
+                          <Text style={{ flex: 1, color: t.textMuted, fontSize: 11.5, textAlign: "right" }}>{r.growth}</Text>
+                          <Text style={{ flex: 1, color: t.textStrong, fontSize: 11.5, textAlign: "right", fontWeight: "700" }}>{r.adult}</Text>
+                          <Text style={{ flex: 1.1, color: r.max === "—" ? t.textDim : t.moderateDeep, fontSize: 11.5, textAlign: "right", fontWeight: r.max === "—" ? "400" : "700" }}>{r.max}</Text>
+                        </View>
+                        {r.note && (
+                          <Text style={{ color: t.textMuted, fontSize: 11, lineHeight: 15, paddingVertical: 4, paddingLeft: 6, fontStyle: "italic" }}>
+                            {r.note}
+                          </Text>
+                        )}
+                      </View>
+                    ))}
+                  </View>
+                ))}
+
+                <Text style={{ color: t.textMuted, fontSize: 11, lineHeight: 15, marginTop: 4 }}>
+                  Source: AAFCO Dog Food Nutrient Profiles, dry matter basis. Reference data only —
+                  AAFCO&apos;s Official Publication is authoritative, and this app is not affiliated
+                  with or endorsed by AAFCO.
+                </Text>
+              </AccordionSection>
 
               {/* Deficiency signs. Framed as "how to recognise", not "what to fear" —
                   on complete food these are rare, and the section says so first. */}
