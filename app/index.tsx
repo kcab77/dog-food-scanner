@@ -943,6 +943,81 @@ const OMEGA6_FOOD_SOURCES: { source: string; level: "very high" | "high" | "mode
  * Buying "collagen" without knowing which you need is how owners end up giving a
  * scoop of skin-and-coat powder for a joint problem.
  */
+/**
+ * Medicinal mushrooms — graded honestly.
+ *
+ * This category is drowning in marketing, and the honest position is narrower than
+ * the sellers suggest: exactly ONE has a real trial in dogs (turkey tail, and it was
+ * a 15-dog pilot). Everything else is human data, in-vitro work, or mechanism, applied
+ * to dogs by inference.
+ *
+ * That doesn't make them worthless — beta-glucan immune modulation is well established
+ * across species. It means the confidence tier has to be stated, per PINECONE_PROTOCOL:
+ * never round up.
+ *
+ * The buying guidance at the end matters as much as the species: most supplements on
+ * the shelf are mycelium grown on grain, which is largely starch.
+ */
+const MEDICINAL_MUSHROOMS: {
+  name: string;
+  latin: string;
+  tier: "moderate" | "emerging" | "traditional";
+  headline: string;
+  actives: string;
+  evidence: string;
+  useFor: string;
+}[] = [
+  {
+    name: "Turkey Tail", latin: "Trametes versicolor", tier: "moderate",
+    headline: "The only one with a real canine trial",
+    actives: "PSP and PSK (polysaccharopeptides), beta-glucans",
+    evidence: "Brown & Reetz, 2012, Integrative Cancer Therapies (Univ. of Pennsylvania) — 15 dogs with naturally occurring splenic hemangiosarcoma, given PSP at 25, 50 or 100 mg/kg/day. Median time to abdominal metastasis was 112 days versus 30 days in historical controls (p=0.046); the highest-dose group reached a median survival of 199 days, described at the time as the longest reported for this cancer. ⚠️ Small pilot with historical rather than concurrent controls — encouraging, not definitive. In humans, PSK is an approved adjunct cancer therapy in Japan with far larger datasets behind it.",
+    useFor: "Immune support, and the one with genuine standing as a cancer adjunct. Most relevant to haemangiosarcoma-prone breeds and dogs already under oncology care — alongside treatment, never instead of it.",
+  },
+  {
+    name: "Reishi", latin: "Ganoderma lucidum", tier: "moderate",
+    headline: "The calming immune modulator",
+    actives: "Beta-glucans, triterpenes (ganoderic acids)",
+    evidence: "17+ human randomised trials covering immune modulation and sleep, typically at 1,500–5,400 mg daily. The triterpenes are the calming/liver-supportive fraction and need alcohol extraction; the beta-glucans need hot water — which is why a good product uses both. No canine trials located.",
+    useFor: "Immune balance, anxiety and sleep, liver support. Traditionally the 'calm' mushroom, and the one to pair with a stressed or reactive dog.",
+  },
+  {
+    name: "Lion's Mane", latin: "Hericium erinaceus", tier: "moderate",
+    headline: "The nerve and brain one",
+    actives: "Hericenones (fruiting body), erinacines (mycelium)",
+    evidence: "The strongest cognitive data of the group. A randomised human trial in adults with mild cognitive impairment showed improved memory scores over 16 weeks. Mechanistically, hericenones and erinacines stimulate nerve growth factor (NGF), which is the plausible route to nerve and cognitive effects. No canine trials located.",
+    useFor: "Cognitive decline in seniors (canine cognitive dysfunction), nerve support and recovery. The one worth considering for an ageing dog showing confusion or night restlessness.",
+  },
+  {
+    name: "Shiitake", latin: "Lentinula edodes", tier: "moderate",
+    headline: "The everyday immune one",
+    actives: "Lentinan (beta-glucan), eritadenine",
+    evidence: "Lentinan is used as an approved cancer adjuvant in Japan, so the human immune data is real. Eritadenine has cholesterol-lowering activity. Limited but genuine human data; no canine trials located. Also a normal food mushroom, so the safety record is long.",
+    useFor: "General immune support and a whole-food route in — shiitake can simply be cooked and added to food rather than bought as an extract.",
+  },
+  {
+    name: "Maitake", latin: "Grifola frondosa", tier: "emerging",
+    headline: "The blood sugar one",
+    actives: "D-fraction and MD-fraction beta-glucans",
+    evidence: "Limited but real human data on immune activation and glucose metabolism. The D-fraction is the studied component. Preliminary rather than settled; no canine trials located.",
+    useFor: "Immune support, and of most interest where blood sugar regulation matters. Also a food mushroom.",
+  },
+  {
+    name: "Cordyceps", latin: "Cordyceps militaris", tier: "emerging",
+    headline: "The stamina and kidney one",
+    actives: "Cordycepin, adenosine, beta-glucans",
+    evidence: "Moderate human results for exercise performance and oxygen utilisation; evidence still emerging and dosing not standardised. Traditional use for kidney support is long-standing but not trial-backed. No canine trials located. Note most commercial product is C. militaris, not the wild C. sinensis of the traditional literature.",
+    useFor: "Energy, stamina and endurance in working or ageing dogs; traditionally used for kidney support.",
+  },
+  {
+    name: "Chaga", latin: "Inonotus obliquus", tier: "emerging",
+    headline: "The antioxidant one",
+    actives: "Betulinic acid, melanin, beta-glucans, very high polyphenol content",
+    evidence: "Limited human data; most work is in vitro or in animal models, largely on antioxidant capacity. ⚠️ Genuine caution: chaga is high in oxalates, and case reports in people link high-dose long-term use to kidney damage. Not one for a dog with kidney disease or a history of oxalate stones.",
+    useFor: "Antioxidant support. The one to use with the most restraint, and to avoid entirely in kidney-compromised dogs.",
+  },
+];
+
 const COLLAGEN_TYPES: {
   type: string;
   share: string;
@@ -6305,6 +6380,92 @@ export default function App() {
                   </Text>
                 </AccordionSection>
               )}
+
+              {/* Medicinal mushrooms. Heavily marketed, thinly evidenced in dogs —
+                  so the section leads with how much is actually known. */}
+              <AccordionSection
+                title="🍄 Medicinal mushrooms — what the evidence says"
+                askLabel="Ask AI"
+                onAskAI={() =>
+                  askAboutSection(
+                    `Would any medicinal mushroom actually help my dog, and which one? Be honest about how strong the evidence is for a dog rather than a human.`,
+                  )
+                }
+              >
+                <View style={{ backgroundColor: t.moderateTint, borderRadius: 9, padding: 11, marginBottom: 10, borderLeftWidth: 3, borderLeftColor: t.moderate }}>
+                  <Text style={{ color: t.moderateDeep, fontWeight: "800", fontSize: 13 }}>
+                    Start here: only ONE has a trial in dogs
+                  </Text>
+                  <Text style={{ color: t.text, fontSize: 12.5, marginTop: 4, lineHeight: 18 }}>
+                    Turkey tail, and it was a 15-dog pilot. Everything else below is human data,
+                    lab work, or mechanism — applied to dogs by inference. That doesn&apos;t make
+                    them useless; beta-glucan immune activity is well established across species.
+                    It means the confidence level should be stated plainly instead of implied.
+                  </Text>
+                </View>
+
+                {MEDICINAL_MUSHROOMS.map((m, i) => (
+                  <View
+                    key={i}
+                    style={{
+                      backgroundColor: t.surface,
+                      borderRadius: 9,
+                      padding: 11,
+                      marginBottom: 6,
+                      borderLeftWidth: 3,
+                      borderLeftColor: m.tier === "moderate" ? t.good : t.moderate,
+                    }}
+                  >
+                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                      <Text style={{ color: t.textStrong, fontSize: 13.5, fontWeight: "800" }}>{m.name}</Text>
+                      <Text style={{ color: m.tier === "moderate" ? t.good : t.moderateDeep, fontSize: 10, fontWeight: "800", textTransform: "uppercase", letterSpacing: 0.4 }}>
+                        {m.tier === "moderate" ? "🟡 Moderate" : "🟠 Emerging"}
+                      </Text>
+                    </View>
+                    <Text style={{ color: t.textDim, fontSize: 11, fontStyle: "italic" }}>{m.latin}</Text>
+                    <Text style={{ color: t.good, fontSize: 12, fontWeight: "700", marginTop: 3 }}>{m.headline}</Text>
+                    <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 4, lineHeight: 16 }}>
+                      <Text style={{ fontWeight: "700" }}>Actives: </Text>{m.actives}
+                    </Text>
+                    <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 3, lineHeight: 16 }}>
+                      <Text style={{ fontWeight: "700" }}>Evidence: </Text>{m.evidence}
+                    </Text>
+                    <Text style={{ color: t.text, fontSize: 11.5, marginTop: 3, lineHeight: 16 }}>
+                      <Text style={{ fontWeight: "700" }}>Use for: </Text>{m.useFor}
+                    </Text>
+                  </View>
+                ))}
+
+                <View style={{ backgroundColor: t.goodTint, borderRadius: 9, padding: 11, marginTop: 4 }}>
+                  <Text style={{ color: t.good, fontWeight: "800", fontSize: 13 }}>
+                    Buying: this matters more than which species
+                  </Text>
+                  <Text style={{ color: t.text, fontSize: 12.5, marginTop: 5, lineHeight: 18 }}>
+                    <Text style={{ fontWeight: "700" }}>Fruiting body, not &quot;mycelium on grain&quot;.</Text>{" "}
+                    Most cheap supplements are mycelium grown on rice or oats and sold with the grain
+                    still in it — so a large share of what you buy is starch, not mushroom. If the
+                    label says &quot;myceliated grain&quot; or lists rice, that&apos;s what you&apos;re paying for.
+                  </Text>
+                  <Text style={{ color: t.text, fontSize: 12.5, marginTop: 6, lineHeight: 18 }}>
+                    <Text style={{ fontWeight: "700" }}>Look for a beta-glucan percentage.</Text> That&apos;s
+                    the active fraction and the only honest measure of potency. Products quoting
+                    &quot;polysaccharides&quot; instead are usually hiding starch in the number —
+                    starch is a polysaccharide too.
+                  </Text>
+                  <Text style={{ color: t.text, fontSize: 12.5, marginTop: 6, lineHeight: 18 }}>
+                    <Text style={{ fontWeight: "700" }}>Dual extraction for reishi and chaga.</Text> Beta-glucans
+                    need hot water; triterpenes need alcohol. A single extraction gets you half the
+                    mushroom. Less critical for turkey tail and lion&apos;s mane, where the beta-glucans
+                    do most of the work.
+                  </Text>
+                  <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 7, lineHeight: 16 }}>
+                    ⚠️ Educational only. Mushrooms modulate the immune system, which means they need a
+                    conversation with your vet for any dog on immunosuppressants, with an autoimmune
+                    condition, or undergoing cancer treatment — and chaga should be avoided in dogs
+                    with kidney disease or oxalate stones.
+                  </Text>
+                </View>
+              </AccordionSection>
 
               {/* Collagen. Its own section because the type II distinction is genuinely
                   counterintuitive and owners routinely buy the wrong thing. */}
