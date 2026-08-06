@@ -141,5 +141,28 @@
   ],
   "topic": "organ-meats",
   "source": "Common Sense Dog — Omega Sources Pack"
+ },
+ {
+  "question": "How much fish oil should I give my dog?",
+  "answer": "🟢 Strong evidence: Dose to EPA+DHA content, not to 'fish oil mg' — a 1000 mg capsule is often only ~300 mg of the active part. Dosing scales to metabolic body weight (kg^0.75), not straight bodyweight. For coat and general health, roughly 20–55 mg EPA+DHA per kg of bodyweight. For anti-inflammatory effect (arthritis, skin, lipomas), 230–370 mg per kg^0.75. The NRC safe upper limit is 370 mg per kg^0.75, equivalent to 2,800 mg per 1,000 kcal of diet. Worked example: a 34 kg (75 lb) dog needs roughly 3,200–5,200 mg EPA+DHA daily at therapeutic levels — which is why liquid oil is far more practical than capsules at that size. ⚠️ Start at a quarter of the target and build over 2–4 weeks; loose stools are the practical limit and appear well before anything harmful. Omega-3 takes 6–8 weeks to fully incorporate into cell membranes, so don't judge results earlier than that.",
+  "confidence": "strong",
+  "sources": [
+   "NRC safe upper limit: 370 mg EPA+DHA per kg^0.75 / 2,800 mg per 1,000 kcal",
+   "Therapeutic dosing range 230–370 mg/kg^0.75, veterinary nutrition guidance"
+  ],
+  "topic": "omega-sources",
+  "source": "Common Sense Dog — Omega Sources Pack"
+ },
+ {
+  "question": "Does fish oil need vitamin E, and can it affect clotting or vitamin K?",
+  "answer": "🟡 Moderate evidence, and both halves are real. VITAMIN E: polyunsaturated fats oxidise readily and vitamin E is what protects them, so the requirement rises with intake. AAFCO recommends 10 IU of vitamin E per gram of fish oil, and long-term supplementation alongside grain-based diets may deplete stores. Practical answer: choose an oil preserved with mixed tocopherols (natural vitamin E) — that protects the oil in the bottle and contributes to the dog. CLOTTING: high-dose omega-3 does lengthen bleeding time. It alters platelet function, and animal work shows it reduces vitamin K-dependent clotting factors (prothrombin, factor VII), most markedly on low-fat diets. Human databases show no clinical interaction and the effect is at least partly vitamin K-independent, so supplementing vitamin K is NOT the standard countermeasure. ⚠️ What matters practically: tell your vet before any surgery or dental procedure, and use caution alongside NSAIDs or aspirin.",
+  "confidence": "moderate",
+  "sources": [
+   "AAFCO vitamin E recommendation for fish-oil-containing diets (10 IU per gram fish oil)",
+   "Vitamin K-dependent and independent hypocoagulant effects of dietary fish oil (rat model)",
+   "Veterinary guidance on omega-3 and platelet function"
+  ],
+  "topic": "omega-sources",
+  "source": "Common Sense Dog — Omega Sources Pack"
  }
 ]

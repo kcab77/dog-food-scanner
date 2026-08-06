@@ -6743,6 +6743,65 @@ export default function App() {
                       </Text>
                     </View>
 
+                    {/* Dosing. The ratio tells you the balance; this tells you the amount,
+                        which is the number owners actually need and almost never see. */}
+                    <View style={{ backgroundColor: t.surface, borderRadius: 9, padding: 11, marginBottom: 8, borderLeftWidth: 3, borderLeftColor: t.info }}>
+                      <Text style={{ color: t.textStrong, fontWeight: "700", fontSize: 12.5 }}>
+                        How much EPA/DHA does a dog actually need?
+                      </Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 4, lineHeight: 17 }}>
+                        Dosing scales to metabolic body weight (kg^0.75), not straight bodyweight —
+                        which is why a big dog needs proportionally less than the simple maths
+                        suggests.
+                      </Text>
+                      <View style={{ marginTop: 7 }}>
+                        {[
+                          ["Coat & general health", "20–55 mg/kg bodyweight"],
+                          ["Anti-inflammatory (joints, skin, lipomas)", "230–370 mg/kg^0.75"],
+                          ["NRC safe upper limit", "370 mg/kg^0.75 · 2,800 mg per 1,000 kcal"],
+                        ].map(([k, v], i) => (
+                          <View key={i} style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 3 }}>
+                            <Text style={{ color: t.text, fontSize: 11.5, flex: 1 }}>{k}</Text>
+                            <Text style={{ color: t.good, fontSize: 11.5, fontWeight: "700" }}>{v}</Text>
+                          </View>
+                        ))}
+                      </View>
+                      <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 7, lineHeight: 16 }}>
+                        For a 75 lb (34 kg) dog that&apos;s roughly{" "}
+                        <Text style={{ fontWeight: "700" }}>3,200–5,200 mg EPA+DHA daily</Text> at
+                        therapeutic levels. Read labels for &quot;EPA + DHA per serving&quot;, not
+                        &quot;fish oil 1000 mg&quot; — a 1000 mg capsule is often only ~300 mg of the
+                        active part.
+                      </Text>
+                    </View>
+
+                    {/* The three things nobody tells you when they tell you to add fish oil. */}
+                    <View style={{ backgroundColor: t.moderateTint, borderRadius: 9, padding: 11, marginBottom: 8, borderLeftWidth: 3, borderLeftColor: t.moderate }}>
+                      <Text style={{ color: t.moderateDeep, fontWeight: "700", fontSize: 12.5 }}>
+                        Before you add fish oil — three things
+                      </Text>
+                      <Text style={{ color: t.text, fontSize: 12, marginTop: 5, lineHeight: 17 }}>
+                        <Text style={{ fontWeight: "700" }}>1. Vitamin E goes up with it.</Text>{" "}
+                        Polyunsaturated fats oxidise easily, and vitamin E is what protects them.
+                        AAFCO recommends 10 IU of vitamin E per gram of fish oil. Long-term
+                        supplementation can deplete stores — buy an oil preserved with mixed
+                        tocopherols (natural E), which covers both the bottle and the dog.
+                      </Text>
+                      <Text style={{ color: t.text, fontSize: 12, marginTop: 6, lineHeight: 17 }}>
+                        <Text style={{ fontWeight: "700" }}>2. It lengthens bleeding time.</Text>{" "}
+                        High-dose omega-3 alters platelet function and reduces vitamin K-dependent
+                        clotting factors. Not a day-to-day risk, but{" "}
+                        <Text style={{ fontWeight: "700" }}>tell your vet before any surgery or
+                        dental</Text>, and take care alongside NSAIDs or aspirin.
+                      </Text>
+                      <Text style={{ color: t.text, fontSize: 12, marginTop: 6, lineHeight: 17 }}>
+                        <Text style={{ fontWeight: "700" }}>3. Go slowly.</Text> Start at a quarter
+                        dose and build over 2–4 weeks. Loose stools are the practical limit and show
+                        up long before anything concerning. Omega-3 takes 6–8 weeks to fully
+                        incorporate into cell membranes, so judge nothing before then.
+                      </Text>
+                    </View>
+
                     {/* The other side of the ratio. Owners hear "omega-6 bad" constantly
                         and are rarely told it's an essential nutrient they can't skip. */}
                     <View style={{ backgroundColor: t.surface, borderRadius: 9, padding: 11, marginBottom: 8 }}>
