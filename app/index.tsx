@@ -931,6 +931,52 @@ const OMEGA6_FOOD_SOURCES: { source: string; level: "very high" | "high" | "mode
  * of depends on why you're supplementing — a fact that would let an owner buy far
  * more intelligently and that essentially nothing tells them.
  */
+/**
+ * Collagen — three types, and one of them works nothing like the others.
+ *
+ * The distinction that matters and that almost no product page explains: hydrolyzed
+ * collagen is a BUILDING BLOCK, dosed in grams. Undenatured type II (UC-II) is an
+ * IMMUNE SIGNAL, dosed in milligrams. Effective UC-II doses run 0.01–30 mg/kg/day
+ * against 100–500 mg/kg/day for collagen peptides — a hundredfold difference that
+ * only makes sense once you know they're doing different things.
+ *
+ * Buying "collagen" without knowing which you need is how owners end up giving a
+ * scoop of skin-and-coat powder for a joint problem.
+ */
+const COLLAGEN_TYPES: {
+  type: string;
+  share: string;
+  jobs: string;
+  sources: string;
+  dose: string;
+  best: string;
+}[] = [
+  {
+    type: "Type I",
+    share: "~90% of the body's collagen",
+    jobs: "Skin, tendons, ligaments, bone, teeth, blood vessel walls",
+    sources: "Bovine hide, fish skin and scales (marine collagen is almost all Type I), chicken feet, eggshell membrane",
+    dose: "Hydrolyzed peptides, grams per day — it's a raw material, so you need real quantity",
+    best: "Coat and skin quality, nail and paw pad condition, tendon and ligament support, recovery in active dogs.",
+  },
+  {
+    type: "Type II",
+    share: "The cartilage one",
+    jobs: "Articular cartilage — the surface inside joints",
+    sources: "Chicken sternum and cartilage, trachea, poultry necks and feet",
+    dose: "TWO forms, and they are not interchangeable — see below",
+    best: "Joints. This is the one to reach for with stiffness, arthritis, or a large-breed dog you're getting ahead of.",
+  },
+  {
+    type: "Type III",
+    share: "Usually alongside Type I",
+    jobs: "Skin elasticity, blood vessels, organ and gut structure",
+    sources: "Bovine, almost always paired with Type I in the same product",
+    best: "Comes along for the ride with Type I. Relevant to gut lining and vascular health rather than something you'd buy on its own.",
+    dose: "Hydrolyzed, grams per day, generally combined with Type I",
+  },
+];
+
 const OMEGA3_TYPES: {
   code: string;
   name: string;
@@ -6259,6 +6305,91 @@ export default function App() {
                   </Text>
                 </AccordionSection>
               )}
+
+              {/* Collagen. Its own section because the type II distinction is genuinely
+                  counterintuitive and owners routinely buy the wrong thing. */}
+              <AccordionSection
+                title="🦴 Collagen — the three types"
+                askLabel="Ask AI"
+                onAskAI={() =>
+                  askAboutSection(
+                    `Would collagen help my dog, and if so which type and form? He's mid-life and I'm thinking about joints and coat.`,
+                  )
+                }
+              >
+                <Text style={[styles.sectionNote, { marginBottom: 10 }]}>
+                  &quot;Collagen&quot; isn&apos;t one supplement. Buying the wrong type is how owners
+                  end up giving a skin-and-coat powder for a joint problem.
+                </Text>
+
+                {COLLAGEN_TYPES.map((c, i) => (
+                  <View
+                    key={i}
+                    style={{
+                      backgroundColor: t.surface,
+                      borderRadius: 9,
+                      padding: 11,
+                      marginBottom: 6,
+                      borderLeftWidth: 3,
+                      borderLeftColor: i === 1 ? t.good : t.info,
+                    }}
+                  >
+                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                      <Text style={{ color: t.textStrong, fontSize: 13.5, fontWeight: "800" }}>{c.type}</Text>
+                      <Text style={{ color: t.textDim, fontSize: 10.5 }}>{c.share}</Text>
+                    </View>
+                    <Text style={{ color: t.text, fontSize: 12, marginTop: 4, lineHeight: 17 }}>
+                      <Text style={{ fontWeight: "700" }}>Builds: </Text>{c.jobs}
+                    </Text>
+                    <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 3, lineHeight: 16 }}>
+                      <Text style={{ fontWeight: "700" }}>From: </Text>{c.sources}
+                    </Text>
+                    <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 3, lineHeight: 16 }}>
+                      <Text style={{ fontWeight: "700" }}>Dose: </Text>{c.dose}
+                    </Text>
+                    <Text style={{ color: t.good, fontSize: 11.5, marginTop: 4, lineHeight: 16 }}>
+                      <Text style={{ fontWeight: "700" }}>Best for: </Text>{c.best}
+                    </Text>
+                  </View>
+                ))}
+
+                <View style={{ backgroundColor: t.goodTint, borderRadius: 9, padding: 11, marginTop: 4 }}>
+                  <Text style={{ color: t.good, fontWeight: "800", fontSize: 13 }}>
+                    The distinction that actually matters
+                  </Text>
+                  <Text style={{ color: t.text, fontSize: 12.5, marginTop: 5, lineHeight: 18 }}>
+                    Type II comes in two forms that work by completely different mechanisms:
+                  </Text>
+                  <Text style={{ color: t.text, fontSize: 12.5, marginTop: 6, lineHeight: 18 }}>
+                    <Text style={{ fontWeight: "700" }}>Hydrolyzed (peptides)</Text> — broken into
+                    fragments the body reassembles. A raw material. Effective around{" "}
+                    <Text style={{ fontWeight: "700" }}>100–500 mg per kg daily</Text>, which means
+                    grams, and a tub that empties fast.
+                  </Text>
+                  <Text style={{ color: t.text, fontSize: 12.5, marginTop: 6, lineHeight: 18 }}>
+                    <Text style={{ fontWeight: "700" }}>Undenatured (UC-II)</Text> — deliberately left
+                    intact, and it isn&apos;t a building block at all. It works by{" "}
+                    <Text style={{ fontWeight: "700" }}>oral tolerance</Text>: the immune system
+                    encounters intact type II collagen in the gut and stops attacking the dog&apos;s
+                    own joint cartilage. Effective at{" "}
+                    <Text style={{ fontWeight: "700" }}>0.01–30 mg per kg</Text> — around 40 mg total
+                    for an average dog.
+                  </Text>
+                  <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 7, lineHeight: 16 }}>
+                    That&apos;s a hundredfold difference in dose, and it only makes sense once you
+                    know they aren&apos;t doing the same job. 🟢 UC-II has been tested head-to-head
+                    against NSAIDs in dogs with naturally occurring osteoarthritis (versus cimicoxib
+                    and robenacoxib) — an unusually strong evidence base for a supplement. No adverse
+                    effects reported in dogs, humans or horses.
+                  </Text>
+                  <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 7, lineHeight: 16 }}>
+                    <Text style={{ fontWeight: "700" }}>Practical read:</Text> joints → UC-II, and check
+                    the label says &quot;undenatured&quot;, because a tiny milligram figure on a
+                    hydrolyzed product means an underdose. Skin, coat and connective tissue → Types I
+                    and III, in grams. Whole-food routes to both: chicken feet, trachea and bone broth.
+                  </Text>
+                </View>
+              </AccordionSection>
 
               {/* Life stages. Exists because "adult maintenance" confuses everyone, and
                   the reason it's confusing is that the category system is incomplete. */}
