@@ -922,6 +922,62 @@ const OMEGA6_FOOD_SOURCES: { source: string; level: "very high" | "high" | "mode
     note: "Ruminant fats sit meaningfully lower in omega-6 than poultry — one reason a beef formula often shows a better ratio than a chicken one." },
 ];
 
+/**
+ * The omega-3 family — because "omega-3" on a label is five different molecules
+ * doing different jobs, and the label almost never says which.
+ *
+ * The two that matter most are EPA and DHA, and they are NOT interchangeable:
+ * EPA is the anti-inflammatory one, DHA is the structural one. Which you want more
+ * of depends on why you're supplementing — a fact that would let an owner buy far
+ * more intelligently and that essentially nothing tells them.
+ */
+const OMEGA3_TYPES: {
+  code: string;
+  name: string;
+  chain: string;
+  job: string;
+  sources: string;
+  verdict: "best" | "good" | "weak";
+  note: string;
+}[] = [
+  {
+    code: "EPA", name: "Eicosapentaenoic acid", chain: "20:5", verdict: "best",
+    job: "The anti-inflammatory one",
+    sources: "Fish oil, krill, algae, sardines",
+    note: "Competes with arachidonic acid for the same enzymes, so it displaces inflammatory signalling at the source. This is the one doing the work for joints, skin, allergies, lipomas and kidney disease. If you're supplementing for inflammation, EPA is the number to read first.",
+  },
+  {
+    code: "DHA", name: "Docosahexaenoic acid", chain: "22:6", verdict: "best",
+    job: "The structural one",
+    sources: "Fish oil, algae, krill",
+    note: "A physical building block of brain, retina and nerve membranes rather than a signalling molecule. Matters most for puppies (brain development), seniors (cognitive decline) and eye health. Less about inflammation than EPA.",
+  },
+  {
+    code: "DPA", name: "Docosapentaenoic acid", chain: "22:5", verdict: "good",
+    job: "The overlooked bridge",
+    sources: "Fatty fish, mother's milk, seal oil",
+    note: "Sits between EPA and DHA and converts to either as the body needs, so it works as a reservoir. Far less studied than the other two and rarely listed on labels, but it shares much of their activity.",
+  },
+  {
+    code: "ETA", name: "Eicosatetraenoic acid", chain: "20:4 n-3", verdict: "good",
+    job: "The rare dual-pathway one",
+    sources: "Almost exclusively green lipped mussel",
+    note: "Unusual because it inhibits BOTH the COX and LOX inflammatory pathways — most omega-3s only affect COX. That mechanism is documented and is the genuine reason green lipped mussel behaves differently from fish oil. ⚠️ Treat the big potency multipliers in supplement marketing with caution; the mechanism is real, head-to-head canine trials proving a specific multiple are not.",
+  },
+  {
+    code: "SDA", name: "Stearidonic acid", chain: "18:4", verdict: "good",
+    job: "The better plant option",
+    sources: "Echium, blackcurrant seed, hemp (trace)",
+    note: "A plant omega-3 that skips the slow first step in the conversion chain, so it reaches EPA far more efficiently than ALA does. Rare in pet food, but the one plant source worth knowing about.",
+  },
+  {
+    code: "ALA", name: "Alpha-linolenic acid", chain: "18:3", verdict: "weak",
+    job: "The plant one dogs convert badly",
+    sources: "Flaxseed, chia, hemp, walnut, canola",
+    note: "Essential, and not useless — but a dog must convert it to EPA and DHA, and converts well under 10% (less again to DHA). It counts fully toward the omega-3 figure on a label, which is exactly how a flax-heavy food advertises a great ratio while delivering little usable omega-3.",
+  },
+];
+
 const OMEGA3_MARINE = [
   "salmon",
   "sardine",
@@ -6741,6 +6797,68 @@ export default function App() {
                         down to roughly 1:3.75 — meaning ratios well below the usual 5:1 target, and
                         even inverted ones with more omega-3 than omega-6, still show benefit.
                       </Text>
+                    </View>
+
+                    {/* The omega-3 family. "Omega-3" on a label is five different
+                        molecules doing different jobs, and the label rarely says which. */}
+                    <View style={{ backgroundColor: t.surface, borderRadius: 9, padding: 11, marginBottom: 8 }}>
+                      <Text style={{ color: t.textStrong, fontWeight: "700", fontSize: 12.5 }}>
+                        Not all omega-3 is the same molecule
+                      </Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 4, lineHeight: 17 }}>
+                        &quot;Omega-3&quot; covers at least six different fatty acids. They do
+                        different jobs, and a label that only gives you a total is hiding which ones
+                        you&apos;re actually buying.
+                      </Text>
+
+                      {OMEGA3_TYPES.map((o, i) => (
+                        <View
+                          key={i}
+                          style={{
+                            marginTop: 8,
+                            paddingLeft: 9,
+                            borderLeftWidth: 3,
+                            borderLeftColor:
+                              o.verdict === "best" ? t.good : o.verdict === "good" ? t.goodDeep : t.high,
+                          }}
+                        >
+                          <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
+                            <Text style={{ color: t.textStrong, fontSize: 13, fontWeight: "800" }}>{o.code}</Text>
+                            <Text style={{ color: t.textDim, fontSize: 10.5 }}>{o.chain}</Text>
+                            <Text
+                              style={{
+                                color: o.verdict === "weak" ? t.high : t.good,
+                                fontSize: 10.5,
+                                fontWeight: "700",
+                                marginLeft: "auto",
+                              }}
+                            >
+                              {o.job}
+                            </Text>
+                          </View>
+                          <Text style={{ color: t.textDim, fontSize: 11, marginTop: 1 }}>
+                            {o.name} · {o.sources}
+                          </Text>
+                          <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 3, lineHeight: 16 }}>
+                            {o.note}
+                          </Text>
+                        </View>
+                      ))}
+
+                      <View style={{ backgroundColor: t.goodTint, borderRadius: 8, padding: 10, marginTop: 10 }}>
+                        <Text style={{ color: t.good, fontSize: 12, fontWeight: "700" }}>
+                          Match the EPA:DHA ratio to why you&apos;re buying
+                        </Text>
+                        <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 3, lineHeight: 16 }}>
+                          <Text style={{ fontWeight: "700" }}>More EPA</Text> for inflammation — joints,
+                          itchy skin, allergies, lipomas, kidney disease.{" "}
+                          <Text style={{ fontWeight: "700" }}>More DHA</Text> for brains and eyes —
+                          puppies, and seniors showing cognitive change. Most fish oils are
+                          EPA-dominant, which suits the majority of adult dogs. Algal oils tend to be
+                          DHA-dominant. Almost nobody tells owners this, and it&apos;s the difference
+                          between buying the right supplement and the popular one.
+                        </Text>
+                      </View>
                     </View>
 
                     {/* Dosing. The ratio tells you the balance; this tells you the amount,
