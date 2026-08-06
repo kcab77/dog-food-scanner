@@ -2913,6 +2913,15 @@ export default function App() {
   const [fiberFound, setFiberFound] = useState<string[]>([]);
   const [probioticsFound, setProbioticsFound] = useState<string[]>([]);
   const [prebioticsFound, setPrebioticsFound] = useState<string[]>([]);
+  // Omega calculator — lets an owner do the arithmetic this app kept doing by hand.
+  const [calcWeight, setCalcWeight] = useState("");
+  const [calcKcalA, setCalcKcalA] = useState("");
+  const [calcO3A, setCalcO3A] = useState("");
+  const [calcKcalB, setCalcKcalB] = useState("");
+  const [calcO3B, setCalcO3B] = useState("");
+  const [calcSuppMg, setCalcSuppMg] = useState("");
+  const [calcSuppServ, setCalcSuppServ] = useState("");
+  const [calcMarineShare, setCalcMarineShare] = useState(30);
   const [sourcingIssues, setSourcingIssues] = useState<string[]>([]);
   const [aafcoStatus, setAafcoStatus] = useState("");
   const [onTAPFList, setOnTAPFList] = useState(false);
@@ -6540,6 +6549,178 @@ export default function App() {
                   </Text>
                 </AccordionSection>
               )}
+
+              {/* Omega calculator — the arithmetic this app kept doing by hand.
+                  Labels rarely give EPA/DHA, so the marine-share slider makes the
+                  guess explicit instead of hiding it. */}
+              <AccordionSection
+                title="🧮 Omega-3 calculator"
+                askLabel="Ask AI"
+                onAskAI={() =>
+                  askAboutSection(
+                    `Help me work out how much EPA and DHA my dog is actually getting from his food and supplements, and whether that's enough.`,
+                  )
+                }
+              >
+                <Text style={[styles.sectionNote, { marginBottom: 10 }]}>
+                  Work out what your dog actually gets. Use GRAMS fed per day, not calories —
+                  omega-3 percentages are by weight, and a wet food and a freeze-dried one have
+                  completely different calorie densities. Blanks count as zero.
+                </Text>
+
+                {(() => {
+                  const num = (v: string) => {
+                    const n = parseFloat(v);
+                    return isNaN(n) ? 0 : n;
+                  };
+                  const lb = num(calcWeight);
+                  const kg = lb * 0.4536;
+                  const mbw = kg > 0 ? Math.pow(kg, 0.75) : 0;
+                  const share = calcMarineShare / 100;
+
+                  // Grams/day x omega-3% is direct — no calorie-density assumption.
+                  // An earlier version took kcal and divided by a fixed 4.75 kcal/g, which
+                  // is roughly right for freeze-dried and badly wrong for a 70%-moisture
+                  // fresh food (~1.6 kcal/g), understating it by a factor of three.
+                  const marineFrom = (grams: string, o3pct: string) =>
+                    num(grams) * (num(o3pct) / 100) * 1000 * share;
+
+                  const a = marineFrom(calcKcalA, calcO3A);
+                  const b = marineFrom(calcKcalB, calcO3B);
+                  const supp = num(calcSuppMg) * num(calcSuppServ);
+                  const total = a + b + supp;
+
+                  const maintLo = kg * 20, maintHi = kg * 55;
+                  const therLo = mbw * 230, therHi = mbw * 370;
+
+                  const verdict =
+                    kg === 0 ? null
+                    : total === 0 ? null
+                    : total < maintLo ? { txt: "Below maintenance", c: t.high }
+                    : total < therLo ? { txt: "Maintenance — fine for general health", c: t.good }
+                    : total <= therHi ? { txt: "Therapeutic — anti-inflammatory range", c: t.good }
+                    : { txt: "Above the NRC safe upper limit", c: t.critical };
+
+                  const field = (label: string, val: string, set: (v: string) => void, ph: string) => (
+                    <View style={{ flex: 1 }}>
+                      <Text style={{ color: t.textDim, fontSize: 10.5, marginBottom: 2 }}>{label}</Text>
+                      <TextInput
+                        value={val}
+                        onChangeText={set}
+                        placeholder={ph}
+                        placeholderTextColor={t.textDim}
+                        keyboardType="decimal-pad"
+                        style={{
+                          backgroundColor: t.surface,
+                          borderWidth: 1,
+                          borderColor: t.border,
+                          borderRadius: 8,
+                          paddingHorizontal: 9,
+                          paddingVertical: 7,
+                          color: t.textStrong,
+                          fontSize: 13,
+                        }}
+                      />
+                    </View>
+                  );
+
+                  return (
+                    <View>
+                      <View style={{ marginBottom: 10 }}>
+                        {field("Dog's weight (lbs)", calcWeight, setCalcWeight, "75")}
+                      </View>
+
+                      <Text style={{ color: t.info, fontSize: 11, fontWeight: "800", marginBottom: 4, letterSpacing: 0.4 }}>
+                        FOOD 1
+                      </Text>
+                      <View style={{ flexDirection: "row", gap: 8, marginBottom: 9 }}>
+                        {field("grams/day", calcKcalA, setCalcKcalA, "714")}
+                        {field("omega-3 %", calcO3A, setCalcO3A, "0.41")}
+                      </View>
+
+                      <Text style={{ color: t.info, fontSize: 11, fontWeight: "800", marginBottom: 4, letterSpacing: 0.4 }}>
+                        FOOD 2 (optional)
+                      </Text>
+                      <View style={{ flexDirection: "row", gap: 8, marginBottom: 9 }}>
+                        {field("grams/day", calcKcalB, setCalcKcalB, "67")}
+                        {field("omega-3 %", calcO3B, setCalcO3B, "4.93")}
+                      </View>
+
+                      <Text style={{ color: t.info, fontSize: 11, fontWeight: "800", marginBottom: 4, letterSpacing: 0.4 }}>
+                        SUPPLEMENT (optional)
+                      </Text>
+                      <View style={{ flexDirection: "row", gap: 8, marginBottom: 10 }}>
+                        {field("mg EPA+DHA / serving", calcSuppMg, setCalcSuppMg, "1325")}
+                        {field("servings/day", calcSuppServ, setCalcSuppServ, "1.5")}
+                      </View>
+
+                      <View style={{ backgroundColor: t.surface, borderRadius: 9, padding: 11, marginBottom: 10 }}>
+                        <Text style={{ color: t.textStrong, fontSize: 12, fontWeight: "700" }}>
+                          How much of the food&apos;s omega-3 is marine? {calcMarineShare}%
+                        </Text>
+                        <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 3, lineHeight: 16 }}>
+                          Labels give TOTAL omega-3, but only the marine part (EPA/DHA) is usable —
+                          plant ALA from flax and chia converts at under 10%. If a food lists
+                          flaxseed high and fish oil low, drop this. All-marine, raise it.
+                        </Text>
+                        <View style={{ flexDirection: "row", gap: 6, marginTop: 8 }}>
+                          {[15, 30, 50, 80].map((v) => (
+                            <TouchableOpacity
+                              key={v}
+                              onPress={() => setCalcMarineShare(v)}
+                              style={{
+                                flex: 1,
+                                paddingVertical: 7,
+                                borderRadius: 7,
+                                alignItems: "center",
+                                backgroundColor: calcMarineShare === v ? t.good : t.surfaceAlt,
+                                borderWidth: 1,
+                                borderColor: calcMarineShare === v ? t.good : t.border,
+                              }}
+                            >
+                              <Text style={{ color: calcMarineShare === v ? t.onAccent : t.textMuted, fontSize: 12, fontWeight: "700" }}>
+                                {v}%
+                              </Text>
+                            </TouchableOpacity>
+                          ))}
+                        </View>
+                      </View>
+
+                      <View style={{ backgroundColor: t.goodTint, borderRadius: 10, padding: 13 }}>
+                        <Text style={{ color: t.textDim, fontSize: 11, textTransform: "uppercase", letterSpacing: 0.6 }}>
+                          Estimated daily EPA + DHA
+                        </Text>
+                        <Text style={{ color: t.good, fontSize: 30, fontWeight: "800", marginTop: 2 }}>
+                          {Math.round(total).toLocaleString()} mg
+                        </Text>
+                        {verdict && (
+                          <Text style={{ color: verdict.c, fontSize: 13, fontWeight: "700", marginTop: 2 }}>
+                            {verdict.txt}
+                          </Text>
+                        )}
+                        {kg > 0 && (
+                          <View style={{ marginTop: 8, paddingTop: 8, borderTopWidth: 1, borderTopColor: t.border }}>
+                            {[
+                              ["Maintenance", `${Math.round(maintLo).toLocaleString()}–${Math.round(maintHi).toLocaleString()} mg`],
+                              ["Therapeutic", `${Math.round(therLo).toLocaleString()}–${Math.round(therHi).toLocaleString()} mg`],
+                              ["NRC ceiling", `${Math.round(therHi).toLocaleString()} mg`],
+                            ].map(([k, v], i) => (
+                              <View key={i} style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 2 }}>
+                                <Text style={{ color: t.textMuted, fontSize: 11.5 }}>{k}</Text>
+                                <Text style={{ color: t.text, fontSize: 11.5, fontWeight: "600" }}>{v}</Text>
+                              </View>
+                            ))}
+                          </View>
+                        )}
+                        <Text style={{ color: t.textMuted, fontSize: 10.5, marginTop: 8, lineHeight: 14 }}>
+                          Estimate only — the marine share is a judgement, not a measurement. Ask the
+                          manufacturer for EPA/DHA in mg to replace it with a real number.
+                        </Text>
+                      </View>
+                    </View>
+                  );
+                })()}
+              </AccordionSection>
 
               {/* AAFCO reference table. Transcribed from the source document. */}
               <AccordionSection
