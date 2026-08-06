@@ -6802,6 +6802,51 @@ export default function App() {
                       </Text>
                     </View>
 
+                    {/* Buying guide. The fish oil aisle is the single easiest place for an
+                        owner to waste money or actively make things worse. */}
+                    <View style={{ backgroundColor: t.goodTint, borderRadius: 9, padding: 11, marginBottom: 8 }}>
+                      <Text style={{ color: t.good, fontWeight: "800", fontSize: 13 }}>
+                        🛒 How to buy fish oil without wasting money
+                      </Text>
+
+                      {[
+                        {
+                          h: "1. Read EPA + DHA, not \"fish oil 1000 mg\"",
+                          b: "A 1000 mg capsule is often only ~300 mg of the part that works. If a label won't tell you EPA and DHA separately, that's usually because the numbers are unflattering. Compare products on cost per gram of EPA+DHA — price ÷ (servings × mg per serving). It reorders the shelf.",
+                        },
+                        {
+                          h: "2. It must contain mixed tocopherols",
+                          b: "Fish oil is the most unstable fat there is, and RANCID FISH OIL IS PRO-INFLAMMATORY — it does the opposite of what you bought it for. Mixed tocopherols (natural vitamin E) are what stop it oxidising. No antioxidant listed means you're gambling on how it was stored before it reached you.",
+                        },
+                        {
+                          h: "3. Smell it, and keep smelling it",
+                          b: "Good fish oil smells mild and oceanic. Sharp, bitter, paint-like or aggressively fishy means it's turned — throw it out rather than finish the bottle. Buy a size you'll use within 2–3 months, keep it dark, and refrigerate after opening.",
+                        },
+                        {
+                          h: "4. Body oil, not liver oil",
+                          b: "Salmon, sardine, anchovy and krill oils are body oils — EPA/DHA with no meaningful vitamin A or D. COD LIVER oil is concentrated in both, which accumulate. If a food already contains cod liver oil, adding more from a bottle stacks them. Plain fish oil avoids the issue entirely.",
+                        },
+                        {
+                          h: "5. Watch what else is in it",
+                          b: "Blends with plant oils (hemp, flax) count toward the headline omega-3 number while contributing ALA, which dogs convert at under 10% — and hemp seed oil is majority omega-6. Not wrong, but it means fewer usable milligrams per ml than a straight marine oil.",
+                        },
+                        {
+                          h: "6. Liquid beats capsules for big dogs",
+                          b: "At therapeutic doses a large dog would need 8–11 standard capsules daily. A concentrated liquid does it in a pump or two, and lets you titrate precisely as you build up.",
+                        },
+                      ].map((x, i) => (
+                        <View key={i} style={{ marginTop: 8 }}>
+                          <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{x.h}</Text>
+                          <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 2, lineHeight: 17 }}>{x.b}</Text>
+                        </View>
+                      ))}
+
+                      <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 10, lineHeight: 16, fontStyle: "italic" }}>
+                        The two that matter most: EPA+DHA on the label, and a natural antioxidant in
+                        the bottle. Get those right and the rest is preference.
+                      </Text>
+                    </View>
+
                     {/* The other side of the ratio. Owners hear "omega-6 bad" constantly
                         and are rarely told it's an essential nutrient they can't skip. */}
                     <View style={{ backgroundColor: t.surface, borderRadius: 9, padding: 11, marginBottom: 8 }}>
