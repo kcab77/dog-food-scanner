@@ -7577,6 +7577,26 @@ export default function App() {
                           </View>
                         </View>
                       ))}
+                      <View style={{ backgroundColor: t.surface, borderRadius: 8, padding: 10, marginTop: 9 }}>
+                        <Text style={{ color: t.textStrong, fontSize: 12, fontWeight: "700" }}>
+                          One omega-6 worth knowing by name: arachidonic acid (AA)
+                        </Text>
+                        <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 3, lineHeight: 16 }}>
+                          AA is the one the body turns into inflammatory signals — and{" "}
+                          <Text style={{ fontWeight: "700" }}>EPA competes with it for the same
+                          enzymes</Text>. Whichever is more abundant wins.
+                        </Text>
+                        <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 5, lineHeight: 16 }}>
+                          You don&apos;t want zero AA — it&apos;s needed for normal healing and
+                          immunity. You want enough EPA sitting next to it. Poultry is higher in AA
+                          than beef or lamb, so a chicken-based food asks more of your omega-3.
+                        </Text>
+                        <Text style={{ color: t.good, fontSize: 11.5, marginTop: 5, lineHeight: 16, fontWeight: "600" }}>
+                          Two ways to shift it: add marine omega-3, or choose a lower-AA protein.
+                          Adding EPA is the faster lever.
+                        </Text>
+                      </View>
+
                       <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 8, lineHeight: 16, fontStyle: "italic" }}>
                         Practical upshot: if your dog eats meat, he has enough omega-6. The lever
                         worth pulling is adding marine omega-3, not cutting omega-6.
