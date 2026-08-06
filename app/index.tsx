@@ -958,6 +958,77 @@ const OMEGA6_FOOD_SOURCES: { source: string; level: "very high" | "high" | "mode
  * The buying guidance at the end matters as much as the species: most supplements on
  * the shelf are mycelium grown on grain, which is largely starch.
  */
+/**
+ * Deficiency signs an owner could actually notice.
+ *
+ * Deliberately not all 26 nutrients — only the ones with a visible, recognisable
+ * presentation. A list of vague symptoms ("lethargy, poor coat") helps nobody; a
+ * list of specific patterns ("crusted skin around the muzzle and paw pads, in a
+ * Husky") turns an owner into a useful observer.
+ *
+ * ⚠️ Framing matters: on a complete-and-balanced diet these are RARE. This exists so
+ * an owner can recognise a real problem, not so they diagnose one that isn't there.
+ * Most of these arise from unbalanced home-prepared diets, malabsorption, or a
+ * specific breed defect — not from ordinary commercial food.
+ */
+const DEFICIENCY_SIGNS: {
+  nutrient: string;
+  visible: string;
+  cause: string;
+  urgency: "urgent" | "watch";
+}[] = [
+  {
+    nutrient: "Thiamine (B1)", urgency: "urgent",
+    visible: "Appetite loss and wobbliness first, then head tilt, dilated pupils, disorientation — progressing to seizures. Can appear within weeks.",
+    cause: "Sulfite-preserved meat (destroys thiamine), raw fish containing thiaminase, or heavily heat-processed food without adequate replacement. THE most dangerous deficiency here and a genuine emergency.",
+  },
+  {
+    nutrient: "Zinc", urgency: "watch",
+    visible: "Crusted, scaling, cracked skin specifically around the muzzle, eyes, ears and paw pads. Dull coat, slow wound healing.",
+    cause: "A genetic absorption defect in Huskies and Malamutes, or high-phytate plant-heavy diets binding the zinc. Responds dramatically to correct supplementation.",
+  },
+  {
+    nutrient: "Taurine", urgency: "urgent",
+    visible: "Exercise intolerance, coughing, collapse — signs of dilated cardiomyopathy. Sometimes vision loss from retinal degeneration.",
+    cause: "Legume-heavy grain-free diets, or breed predisposition (Goldens, Newfoundlands, Cockers). Often reversible if caught early, which is why it's worth testing rather than assuming.",
+  },
+  {
+    nutrient: "Calcium", urgency: "urgent",
+    visible: "Limping, reluctance to move, pain, and fractures from ordinary activity. Puppies most at risk — bowed legs and swollen joints.",
+    cause: "All-meat home-prepared diets with no bone or calcium source. The body strips calcium from bone to hold blood levels steady.",
+  },
+  {
+    nutrient: "Vitamin E", urgency: "watch",
+    visible: "Muscle weakness and wasting, and in prolonged cases retinal degeneration affecting vision.",
+    cause: "Rare on complete food — stores last months. Demand rises with high polyunsaturated fat intake, so long-term high-dose fish oil without matching vitamin E is the realistic route in.",
+  },
+  {
+    nutrient: "Vitamin B12", urgency: "watch",
+    visible: "Lethargy, appetite and weight loss, sometimes neurological signs.",
+    cause: "Genuinely common in dogs with EPI, IBD or chronic gut disease — the gut can't absorb it however much is in the bowl. Worth testing in any dog with chronic diarrhoea rather than guessing.",
+  },
+  {
+    nutrient: "Niacin (B3)", urgency: "watch",
+    visible: "Classic 'black tongue' — mouth ulceration, thick drooling, foul breath, bloody diarrhoea.",
+    cause: "Historically all-corn diets; corn's niacin is bound and poorly available. Rare now.",
+  },
+  {
+    nutrient: "Iron", urgency: "watch",
+    visible: "Pale gums, exercise intolerance, weakness.",
+    cause: "Chronic blood loss — fleas, hookworms, GI bleeding — far more often than diet. Check the gums, then look for the leak.",
+  },
+  {
+    nutrient: "Iodine", urgency: "watch",
+    visible: "Hypothyroid picture — lethargy, weight gain, hair loss, cold intolerance, slow heart rate.",
+    cause: "Both too little AND too much cause thyroid disease, which is why doubling up on potassium iodide plus kelp is worth checking on a label.",
+  },
+  {
+    nutrient: "Biotin", urgency: "watch",
+    visible: "Crusty dermatitis, hair loss, brittle claws, dull coat.",
+    cause: "Large amounts of RAW egg white — avidin binds biotin. Whole eggs including the yolk are fine.",
+  },
+];
+
 const MEDICINAL_MUSHROOMS: {
   name: string;
   latin: string;
@@ -6380,6 +6451,67 @@ export default function App() {
                   </Text>
                 </AccordionSection>
               )}
+
+              {/* Deficiency signs. Framed as "how to recognise", not "what to fear" —
+                  on complete food these are rare, and the section says so first. */}
+              <AccordionSection
+                title="🔍 Deficiency signs worth recognising"
+                askLabel="Ask AI"
+                onAskAI={() =>
+                  askAboutSection(
+                    `Given this food and my dog, is he at risk of any nutrient deficiency? Be honest — is this actually likely or am I worrying about something rare?`,
+                  )
+                }
+              >
+                <View style={{ backgroundColor: t.goodTint, borderRadius: 9, padding: 11, marginBottom: 10 }}>
+                  <Text style={{ color: t.good, fontWeight: "700", fontSize: 12.5 }}>
+                    Read this first: these are rare on complete food
+                  </Text>
+                  <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>
+                    A food carrying an AAFCO complete-and-balanced statement is formulated to prevent
+                    all of these. Most real cases come from unbalanced home-prepared diets, a gut
+                    that can&apos;t absorb, or a specific breed defect — not from ordinary commercial
+                    food. This is here so you can recognise a genuine problem, not diagnose one that
+                    isn&apos;t there.
+                  </Text>
+                </View>
+
+                {DEFICIENCY_SIGNS.map((d, i) => (
+                  <View
+                    key={i}
+                    style={{
+                      backgroundColor: t.surface,
+                      borderRadius: 9,
+                      padding: 11,
+                      marginBottom: 6,
+                      borderLeftWidth: 3,
+                      borderLeftColor: d.urgency === "urgent" ? t.critical : t.moderate,
+                    }}
+                  >
+                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                      <Text style={{ color: t.textStrong, fontSize: 13, fontWeight: "700" }}>{d.nutrient}</Text>
+                      {d.urgency === "urgent" && (
+                        <Text style={{ color: t.critical, fontSize: 10, fontWeight: "800", letterSpacing: 0.4 }}>
+                          SEE A VET
+                        </Text>
+                      )}
+                    </View>
+                    <Text style={{ color: t.text, fontSize: 12, marginTop: 4, lineHeight: 17 }}>
+                      <Text style={{ fontWeight: "700" }}>Looks like: </Text>{d.visible}
+                    </Text>
+                    <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 3, lineHeight: 16 }}>
+                      <Text style={{ fontWeight: "700" }}>Usually because: </Text>{d.cause}
+                    </Text>
+                  </View>
+                ))}
+
+                <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 4, lineHeight: 16 }}>
+                  ⚠️ Educational only. Every one of these is diagnosed on bloodwork and examination,
+                  never from a label — and several look like other conditions entirely. If something
+                  here matches your dog, that&apos;s a reason to book an appointment, not to start
+                  supplementing.
+                </Text>
+              </AccordionSection>
 
               {/* Medicinal mushrooms. Heavily marketed, thinly evidenced in dogs —
                   so the section leads with how much is actually known. */}
