@@ -1,0 +1,133 @@
+                  {/* ── TCVM FIVE-ELEMENT FEEDING ────────────────────────────────
+                      Added 2026-08-22. Sits under the gap-checker deliberately:
+                      the energetics decide WHAT goes in the bowl, the checker
+                      above confirms it actually adds up. Two halves of one job. */}
+                  <View style={{ height: 1, backgroundColor: t.border, marginVertical: 16 }} />
+
+                  <Text style={{ color: t.textStrong, fontSize: 15, fontWeight: "800", letterSpacing: -0.2 }}>
+                    Five-element feeding (TCVM)
+                  </Text>
+                  <Text style={{ color: t.textMuted, fontSize: 12.5, lineHeight: 18, marginTop: 4 }}>
+                    TCVM formulates around five elements — Fire, Earth, Metal, Water and Wood —
+                    to restore balance through ingredients chosen for their thermal nature
+                    (cooling, warming, neutral) and what they tonify: Chi, Blood, Yin, Yang.
+                  </Text>
+
+                  {/* Universal method — the set-it-and-forget-it card. */}
+                  <View style={{ backgroundColor: t.goodTint, borderRadius: 10, padding: 12, marginTop: 12, borderLeftWidth: 3, borderLeftColor: t.good }}>
+                    <Text style={{ color: t.good, fontWeight: "800", fontSize: 13 }}>
+                      The universal method
+                    </Text>
+                    <Text style={{ color: t.text, fontSize: 12.5, lineHeight: 18, marginTop: 4 }}>
+                      Add the ingredients plus ½–1 cup of water or broth to a slow cooker · cook on
+                      <Text style={{ fontWeight: "800" }}> LOW for 6–8 hours</Text> · immersion blend
+                      if needed. That&apos;s the whole thing.
+                    </Text>
+                  </View>
+
+                  {/* The four bowls. */}
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 14, marginBottom: 2 }}>
+                    The four recipes
+                  </Text>
+                  {TCVM_RECIPES.map((r, i) => (
+                    <View key={i} style={{ backgroundColor: t.surface, borderRadius: 10, padding: 12, marginTop: 8, borderWidth: 1, borderColor: t.border }}>
+                      <Text style={{ color: t.textStrong, fontSize: 13.5, fontWeight: "800" }}>{r.name}</Text>
+                      <Text style={{ color: t.good, fontSize: 11, fontWeight: "700", marginTop: 1 }}>{r.tcvm}</Text>
+                      <Text style={{ color: t.text, fontSize: 12, lineHeight: 17, marginTop: 4 }}>{r.goal}</Text>
+                      <View style={{ marginTop: 7 }}>
+                        {r.ingredients.map((ing, j) => (
+                          <Text key={j} style={{ color: t.textMuted, fontSize: 12, lineHeight: 18 }}>
+                            • {ing}
+                          </Text>
+                        ))}
+                      </View>
+                    </View>
+                  ))}
+
+                  {/* Five elements → which foods, and why. */}
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>
+                    Which foods, and which organ they feed
+                  </Text>
+                  {TCVM_ELEMENTS.map((el, i) => (
+                    <View key={i} style={{ backgroundColor: t.surfaceSunken, borderRadius: 10, padding: 12, marginTop: 8 }}>
+                      <View style={{ flexDirection: "row", alignItems: "center", gap: 7 }}>
+                        <Text style={{ fontSize: 15 }}>{el.icon}</Text>
+                        <Text style={{ color: t.textStrong, fontSize: 13, fontWeight: "800", flex: 1 }}>
+                          {el.element} — {el.organs}
+                        </Text>
+                      </View>
+                      <Text style={{ color: t.text, fontSize: 12, lineHeight: 17, marginTop: 4 }}>{el.rules}</Text>
+                      {el.weakness !== "" && (
+                        <Text style={{ color: t.textMuted, fontSize: 11.5, lineHeight: 16, marginTop: 2 }}>
+                          {el.weakness}
+                        </Text>
+                      )}
+                      {el.foods.map(([food, why], j) => (
+                        <View key={j} style={{ marginTop: 6 }}>
+                          <Text style={{ color: t.good, fontSize: 12, fontWeight: "700" }}>{food}</Text>
+                          <Text style={{ color: t.textMuted, fontSize: 11.5, lineHeight: 16 }}>{why}</Text>
+                        </View>
+                      ))}
+                    </View>
+                  ))}
+
+                  {/* Cooking methods. */}
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>
+                    How to cook it
+                  </Text>
+                  {TCVM_METHODS.map((m, i) => (
+                    <View key={i} style={{ marginTop: 8 }}>
+                      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{m.method}</Text>
+                      <Text style={{ color: t.good, fontSize: 12, fontWeight: "600", marginTop: 2, lineHeight: 17 }}>{m.how}</Text>
+                      <Text style={{ color: t.textMuted, fontSize: 11.5, lineHeight: 16, marginTop: 2 }}>{m.why}</Text>
+                    </View>
+                  ))}
+
+                  {/* Prep + serving rules. */}
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>
+                    The rules that decide whether it&apos;s absorbed
+                  </Text>
+                  {TCVM_PREP.map((p, i) => (
+                    <View key={i} style={{ marginTop: 7 }}>
+                      <Text style={{ color: t.good, fontSize: 12, fontWeight: "700" }}>{p.rule}</Text>
+                      <Text style={{ color: t.text, fontSize: 11.5, lineHeight: 16.5, marginTop: 1 }}>{p.detail}</Text>
+                    </View>
+                  ))}
+
+                  {/* Measuring. */}
+                  <View style={{ backgroundColor: t.surfaceSunken, borderRadius: 10, padding: 12, marginTop: 14 }}>
+                    <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13 }}>
+                      How to measure
+                    </Text>
+                    <Text style={{ color: t.textMuted, fontSize: 11.5, lineHeight: 16, marginTop: 3 }}>
+                      A digital kitchen scale is the gold standard. Consistency comes from
+                      weighing, not from eyeballing.
+                    </Text>
+                    {TCVM_MEASURING.map(([what, how], i) => (
+                      <View
+                        key={i}
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          gap: 10,
+                          marginTop: 7,
+                          paddingTop: 7,
+                          borderTopWidth: i === 0 ? 0 : 1,
+                          borderTopColor: t.border,
+                        }}
+                      >
+                        <Text style={{ color: t.textStrong, fontSize: 12, fontWeight: "700", flex: 1 }}>{what}</Text>
+                        <Text style={{ color: t.text, fontSize: 11.5, flex: 1.3, textAlign: "right", lineHeight: 16 }}>{how}</Text>
+                      </View>
+                    ))}
+                  </View>
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16 }}>
+                    Save this
+                  </Text>
+                  <Image
+                    source={require("../assets/images/tcvm-healing-bowls.jpg")}
+                    style={{ width: "100%", aspectRatio: 1211 / 1800, borderRadius: 9, marginTop: 6 }}
+                    resizeMode="contain"
+                    accessibilityLabel="TCVM recipe card — the slow cooker method plus four recipes: warming stew, heart health, kidney support and a whole-food loaf, each with full ingredient lists"
+                  />

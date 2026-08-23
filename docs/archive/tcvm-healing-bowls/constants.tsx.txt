@@ -1,0 +1,187 @@
+// ── TCVM HEALING BOWLS ───────────────────────────────────────────────────────
+// Added 2026-08-22 from Kyle's TCVM research. De-branded 2026-08-22: the source
+// practitioner's name and branding were removed from the feature and the image,
+// because using a named practitioner's brand in a commercial app implies an
+// endorsement that hasn't been given. The knowledge is TCVM, which is centuries
+// old and nobody's property. Companion image:
+// assets/images/tcvm-healing-bowls.jpg · printable: docs/handouts/tcvm-healing-bowls.html
+//
+// Ingredients are chosen for thermal nature (cooling / warming / neutral) and for
+// which energy they tonify — Chi, Blood, Yin, Yang. Five elements, five organ
+// systems. This sits ALONGSIDE the nutrient gap-checker in the same section:
+// energetics decides WHAT goes in the bowl, the checker confirms it adds up.
+const TCVM_ELEMENTS: {
+  element: string;
+  organs: string;
+  icon: string;
+  rules: string;
+  weakness: string;
+  foods: [string, string][];
+}[] = [
+  {
+    element: "Fire", organs: "Heart & Small Intestine", icon: "❤️",
+    rules: "Rules circulation and the spirit.",
+    weakness: "Deficiency shows as heart failure, high blood pressure, insomnia.",
+    foods: [
+      ["Beef & pork heart", "Neutral. Tonifies Blood and Chi — for palpitations and weak heart function."],
+      ["Beef tongue", "Neutral. Tonifies Chi for heart Chi deficiency."],
+      ["Spinach", "Cooling. A diuretic for fluid build-up from heart failure; quenches thirst."],
+      ["Asparagus", "Cooling. Drains the heart so fluid runs through the kidneys, and detoxifies."],
+      ["Carrots", "Neutral. Tonifies Blood, soothes Liver Chi, drains dampness."],
+    ],
+  },
+  {
+    element: "Water", organs: "Kidney & Bladder", icon: "💧",
+    rules: "Rules bones, teeth and the brain.",
+    weakness: "Deficiency shows as kidney failure, arthritis, urinary incontinence.",
+    foods: [
+      ["Cod, salmon, sardines", "The ocean is the beginning of life — fish is ideal for the Kidney element."],
+      ["Beef kidney", "Tonifies Kidney Jing, Chi and Yang, and dispels cold."],
+      ["Oysters & mussels", "Rich in zinc, and life from the ocean — straight Kidney support."],
+      ["Cranberries", "Cooling. Clears heat and toxins from the blood; prevents UTIs, dissolves stones."],
+      ["Millet", "The carbohydrate used in kidney diets to decrease protein while adding volume."],
+    ],
+  },
+  {
+    element: "Metal", organs: "Lungs & Large Intestine", icon: "🌬️",
+    rules: "Tied to the dry season of autumn — the job is moisturising the respiratory tract.",
+    weakness: "Deficiency shows as dry cough and sinusitis.",
+    foods: [
+      ["Ground turkey", "Neutral to cool. Tonifies Yin and Chi — for Yin deficiency."],
+      ["Apples", "Neutral. Tonify Yin and Chi, promote digestion, moisten the lungs."],
+      ["Shiitake mushrooms", "Neutral. Tonify Blood and Chi while dissolving phlegm."],
+      ["Thyme", "Warming. Dispels wind-cold and transforms phlegm in the respiratory tract."],
+      ["Kelp", "Drains water and transforms phlegm."],
+    ],
+  },
+  {
+    element: "Earth", organs: "Spleen & Stomach", icon: "🌾",
+    rules: "Centred on digestion. The spleen does not like cold and damp, so warming foods are preferred.",
+    weakness: "Deficiency shows as loose stools and muscle weakness.",
+    foods: [
+      ["Chicken & chicken gizzards", "Warming. Gizzards are like-treats-like for the stomach and promote digestion."],
+      ["Ginger", "Pungent and warm. Warms the middle to treat vomiting and diarrhoea."],
+      ["Turnips", "Drain dampness and promote appetite."],
+      ["Collard greens", "Clear damp heat and move stagnation in the digestive tract."],
+    ],
+  },
+  {
+    element: "General tonics", organs: "Blood, Chi & structure", icon: "🥚",
+    rules: "The ingredients that support everything rather than one element.",
+    weakness: "",
+    foods: [
+      ["Eggs", "Yolks give fat-soluble A, D, E and K; whites give B vitamins. Powerful blood tonics."],
+      ["Eggshell powder", "The primary calcium source, used to balance the phosphorus in meat."],
+      ["Kale", "A potent blood tonic that moves stagnation and supports the liver."],
+      ["Butternut squash", "Tonifies Chi and helps circulate blood."],
+    ],
+  },
+];
+
+// The four bowls. Recipe ingredient lists are functional facts, not protected
+// expression — but the branded recipe NAME was changed.
+const TCVM_RECIPES: {
+  name: string;
+  tcvm: string;
+  goal: string;
+  ingredients: string[];
+}[] = [
+  {
+    name: "The Warming Stew", tcvm: "Yang Tonic · Earth Element",
+    goal: "Boosts energy (Chi) and spleen/stomach health.",
+    ingredients: [
+      "1 lb chicken (50/50 breast & thigh)",
+      "8 oz chicken liver, heart & gizzards",
+      "4 oz pumpkin",
+      "4 oz broccoli or cabbage",
+      "Ginger & turmeric",
+    ],
+  },
+  {
+    name: "Heart Health Recipe", tcvm: "Fire Element",
+    goal: "Supports circulation and nutrient-dense blood.",
+    ingredients: [
+      "1 lb ground beef",
+      "1 lb beef heart",
+      "4 oz beef liver",
+      "4 oz salmon",
+      "6 oz squash",
+      "Asparagus (to drain fluid)",
+      "Kale and cranberries",
+    ],
+  },
+  {
+    name: "Kidney Support Recipe", tcvm: "Water Element",
+    goal: "Low-phosphorus nutrition for renal vitality.",
+    ingredients: [
+      "16 oz cod",
+      "1 oz beef liver",
+      "2 oz oysters (zinc source)",
+      "1.5 oz sardines",
+      "4 oz green beans",
+      "4 oz sweet potato",
+      "2 oz cooked millet",
+    ],
+  },
+  {
+    name: "Whole-food loaf", tcvm: "General Vitality",
+    goal: "A complete high-protein whole-food foundation.",
+    ingredients: [
+      "3 lbs lean beef",
+      "20 oz gizzards",
+      "12 oz veggie medley (kale, spinach, peppers)",
+      "9 oz sardines",
+      "8 oz beef heart",
+      "5 oz liver",
+      "5 eggs",
+    ],
+  },
+];
+
+// Cooking methods, in the order the source presents them.
+const TCVM_METHODS: { method: string; how: string; why: string }[] = [
+  {
+    method: "Slow cooker — preferred",
+    how: "Add ingredients plus ¼–½ cup water or bone broth. Cook on LOW for 6–8 hours.",
+    why: "Pre-digests the food, which makes it easier for seniors or dogs with kidney issues to absorb nutrients.",
+  },
+  {
+    method: "Baking (loaf)",
+    how: "Mix and press into loaf pans or muffin tins. Bake at 325°F for 30–60 minutes.",
+    why: "The loaf should be moist in the centre — overcooking costs nutritional value.",
+  },
+  {
+    method: "Pressure cooker",
+    how: "Add ½–1 cup of liquid. Cook on HIGH for 8 minutes.",
+    why: "The fast route when you don't have the day.",
+  },
+  {
+    method: "Raw",
+    how: "Most recipes can be served raw if you're comfortable with it.",
+    why: "Vegetables still have to be processed or steamed first — that part isn't optional.",
+  },
+];
+
+// Prep and serving rules that change whether the food is actually absorbed.
+const TCVM_PREP: { rule: string; detail: string }[] = [
+  { rule: "Steam or process the vegetables", detail: "Dogs can't digest plant cell walls. Lightly steam, or finely grind or puree, or the nutrients pass straight through." },
+  { rule: "Grind small seeds", detail: "Sunflower and hemp seeds go through a coffee grinder — whole seeds aren't digestible." },
+  { rule: "Cook grains well", detail: "Millet or brown rice should be well cooked so they expand in volume and digest properly." },
+  { rule: "Keep the juices", detail: "Always include the cooking liquid. Vitamins and minerals leach into it during cooking — pouring it off throws them away." },
+  { rule: "Blend for bad teeth", detail: "An immersion blender after cooking makes a puree for dogs with dental issues or poor digestion." },
+  { rule: "Serve warm, not cold", detail: "Room temperature or slightly warm. Cold food straight from the fridge is harder for some dogs to digest." },
+  { rule: "Supplements go in AFTER cooking", detail: "Heat-sensitive vitamins like D3 and B-complex are added once the food is off the heat. Calcium and minerals are essential for long-term feeding, to balance the phosphorus in meat." },
+  { rule: "Feed 2–3% of ideal body weight", detail: "Daily, adjusted for age, metabolism and activity. Ideal weight, not current weight." },
+];
+
+// How to measure. The source is emphatic that this is where consistency lives.
+const TCVM_MEASURING: [string, string][] = [
+  ["Proteins & organs", "Kitchen scale — ounces / pounds"],
+  ["Vegetables & fruits", "Kitchen scale — weigh before processing"],
+  ["Grains (e.g. millet)", "Kitchen scale, DRY weight — 2 oz cooked millet ≈ ½ oz dry"],
+  ["Oils & ground seeds", "Measuring spoons — tsp / tbsp"],
+  ["Commercial supplements", "The scoop in the container, not a kitchen spoon"],
+  ["Eggs", "Count"],
+  ["Cooking liquids", "Measuring cups — ¼–½ cup, up to 1 cup for an 8-quart pot"],
+];
+

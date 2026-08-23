@@ -1233,6 +1233,149 @@ const DEFICIENCY_SIGNS: {
 //                  Need HOT WATER extraction.
 //   TERPENES     — cross the blood-brain barrier, act on the nervous system and
 //                  stabilise mast cells. Need ALCOHOL extraction.
+// ── TCVM FOOD THERAPY ────────────────────────────────────────────────────────
+// Added 2026-08-22 from Kyle's TCVM food-therapy research. Companion image:
+// assets/images/tcvm-energetic-bowl.jpg
+//
+// The framework: TCVM works energetically rather than mechanistically. Instead of
+// suppressing a symptom, it identifies the underlying imbalance and restores
+// harmony so the body heals itself. Food therapy is one of four pillars, and
+// ingredients are chosen for thermal nature, preparation, and taste — each of
+// which acts on specific organ systems.
+const TCVM_PILLARS: [string, string][] = [
+  ["Acupuncture", "Moves Chi through the meridians to clear stagnation."],
+  ["Herbs", "Formulas matched to a pattern diagnosis, not to a symptom."],
+  ["Tui-na", "Bodywork — manual therapy along the same meridians."],
+  ["Food therapy", "The one you control three times a day. Whole foods chosen to rebalance."],
+];
+
+// Reading the dog in front of you. This is the step everything else depends on.
+const TCVM_STATES: {
+  state: string;
+  icon: string;
+  signs: string;
+  meaning: string;
+  feed: string;
+}[] = [
+  {
+    state: "The HOT dog", icon: "🔥",
+    signs: "Red ears, red eyes or tongue, panting, seeks cool surfaces and tile floors.",
+    meaning: "Internal heat. Often shows up as allergies, hot spots, pancreatitis, IBD, hot joints, or what TCVM calls Liver Fire.",
+    feed: "COOLING foods to clear the heat and add moisture.",
+  },
+  {
+    state: "The COLD dog", icon: "❄️",
+    signs: "Stiffness, chilly limbs, pale tongue, weak hind end, low energy, slow to get going in the morning.",
+    meaning: "Chi or Yang deficiency — a lack of warmth and energy. Common in seniors and in dogs who struggle through winter.",
+    feed: "WARMING, tonifying foods to boost circulation and energy.",
+  },
+];
+
+// Thermal food lists. The practical core of the whole system.
+const TCVM_FOOD_THERAPY: {
+  temp: "Cooling" | "Warming" | "Neutral";
+  icon: string;
+  useFor: string;
+  proteins: string;
+  plants: string;
+}[] = [
+  {
+    temp: "Cooling", icon: "🧊",
+    useFor: "Allergies, red eyes, inflammation, and hot personalities.",
+    proteins: "Duck, alligator, cod, rabbit, pork, pork kidney, scallops, clams, mussels, octopus, oysters, chicken egg whites.",
+    plants: "Celery, cucumber, cabbage, dandelion greens, lettuce, mushrooms, radish, seaweed and kelp, spinach, broccoli, green beans, asparagus, cranberries, banana, mango, lemon, apple, aloe, green algae, flaxseed, peppermint, chamomile, coriander.",
+  },
+  {
+    temp: "Warming", icon: "🔥",
+    useFor: "Seniors, chronic weakness, cold-sensitive dogs, and cold personalities.",
+    proteins: "Lamb, venison, goat, chicken, lean grass-fed beef, shrimp, sardines, wild-caught salmon.",
+    plants: "Oats, sweet rice, cinnamon, ginger, sage, turmeric.",
+  },
+  {
+    temp: "Neutral", icon: "⚖️",
+    useFor: "Maintenance. Safe for any constitution.",
+    proteins: "Beef, pork, turkey.",
+    plants: "These hold balance without swinging body temperature in either direction — the default when you're unsure of the pattern.",
+  },
+];
+
+// The Spleen/Stomach rules. Separated out because this is where most owners are
+// unknowingly working against themselves every single day.
+const TCVM_DIGESTION = {
+  principle:
+    "In TCVM the Spleen is not the physical organ — it's the whole process of taking food in, transforming it, absorbing it and moving it around. The Spleen system HATES cold and dampness. Both make Chi and Blood stagnate, which surfaces as acid reflux, IBD, burping, or flat energy.",
+  serve:
+    "Always thaw and warm food to room or body temperature. Cold or frozen food straight from the fridge dampens the stomach fire and makes digestion sluggish.",
+  use: [
+    ["Gently cooked fresh food", "Highly digestible — the right call for a sensitive or senior gut."],
+    ["Warm oatmeal", "An excellent Chi tonic that restores the GI tract."],
+    ["Ginger", "Warming. Resolves food stagnation, moves food out of the stomach, assists compromised digestion."],
+    ["Sweet potato, yam, winter squash", "Butternut or acorn. Beneficial starches that help carb-dependent dogs hold weight and energy."],
+  ] as [string, string][],
+  avoid:
+    "Cold or frozen food, refined carbohydrates (kibble, cookies), excess fat, and damp-promoting foods — dairy, peanut butter, heavy fats.",
+};
+
+// Organ-specific patterns. Liver gets the most detail because it produces the
+// complaints owners actually walk in with.
+const TCVM_ORGANS: {
+  organ: string;
+  element: string;
+  rules: string;
+  patterns: [string, string][];
+}[] = [
+  {
+    organ: "Liver", element: "Wood Element",
+    rules: "Rules the eyes, ears, paws and nails, and the tendons and ligaments.",
+    patterns: [
+      ["Liver Fire / stagnation — chronic ear infections, red gooey eyes, itchy feet, seizures", "Dandelion greens and root, or bitter greens like mustard greens, to drain heat and stagnation. Feed cooling proteins; avoid warming ones."],
+      ["Liver Blood or Yin deficiency — dry eye, dry dandruff, brittle nails, ligament tears and blown cruciates", "Blood tonics to build and enrich the blood: very clean beef liver, bison heart and liver, egg yolks, dates, and dark leafy greens (kale, dandelion, kelp)."],
+      ["Wind — seizures and itching", "Ground cicada casings (exoskeletons), the classic Chinese herbal addition used to calm internal wind."],
+    ],
+  },
+  {
+    organ: "Kidneys", element: "Water Element",
+    rules: "Store the Jing (life essence) and rule the hindquarters, hearing and bones.",
+    patterns: [
+      ["Supporting Kidney Yin and Jing", "Black sesame seeds, chia seeds, and tremella mushrooms."],
+    ],
+  },
+  {
+    organ: "Lungs", element: "Metal Element",
+    rules: "Rule the hair coat and the skin pores.",
+    patterns: [
+      ["Weak lungs — coughing, thin hair, respiratory stress", "Feed white foods and mushrooms."],
+    ],
+  },
+];
+
+// The three that change behaviour immediately.
+const TCVM_CLINICAL: { title: string; icon: string; detail: string }[] = [
+  {
+    title: "The temperature rule", icon: "🌡️",
+    detail: "Never feed frozen or cold food. The Spleen hates cold — food should be served at room or body temperature to avoid stagnation and acid reflux. This is the single easiest change most owners can make, and it costs nothing.",
+  },
+  {
+    title: "The kibble problem", icon: "🍖",
+    detail: "Dry kibble is energetically HOT and dehydrating. Long term that drives Yin deficiency and chronic inflammation — which is why a hot, itchy, allergic dog on kibble is such a common picture.",
+  },
+  {
+    title: "Senior support for the aging Jing", icon: "💊",
+    detail: "For seniors, supplement CoQ10 at 5–10 mg per pound twice daily, and vitamin D (tested by a vet), to support cognitive function and heart health.",
+  },
+];
+
+// Eye diagnostics — each region maps to an organ system.
+const TCVM_EYE: [string, string][] = [
+  ["Pupil", "Kidney. Cataracts suggest Jing deficiency."],
+  ["White / conjunctiva", "Heart. Deep red means Heart Heat."],
+  ["Upper & lower eyelids", "Spleen. Drooping or squinting suggests Qi deficiency."],
+  ["Inner corner", "Small and large intestine. Watch for discharge or inflammation."],
+  ["Outer corner", "Liver. Redness or a toxic brick-red colour."],
+];
+
+
+
 const MEDICINAL_MUSHROOMS: {
   name: string;
   latin: string;
@@ -5660,7 +5803,7 @@ export default function App() {
             letterSpacing: 0.4,
           }}
         >
-          BUILD CHECK · omega guide + image · 22 Aug
+          BUILD CHECK · TCVM food therapy + bowls · 22 Aug
         </Text>
       </View>
     );
@@ -10275,6 +10418,7 @@ export default function App() {
                     Stockman, Fascetti, Kass & Larsen · Journal of the American Veterinary Medical
                     Association, 2013 · plus Dog Aging Project survey data on 1,726 home-prepared diets.
                   </Text>
+
                 </AccordionSection>
               )}
 
@@ -12770,6 +12914,169 @@ export default function App() {
                   <LipomaSection />
                 </AccordionSection>
               )}
+
+              {/* ── TCVM FOOD THERAPY ────────────────────────────────────────
+                  Added 2026-08-22. Gated on (score || learnMode) rather than on
+                  scoreBreakdown, so the TCVM chip actually opens something without
+                  a scan — the two Protein Energetics sections are gated on
+                  scoreBreakdown.length and therefore render nothing in Learn. */}
+              {(score !== null || learnMode) && (
+                <AccordionSection
+                  title="🌿 TCVM food therapy"
+                  topic="TCVM"
+                  door="learn"
+                  askLabel="Ask AI"
+                  onAskAI={() =>
+                    askAboutSection(
+                      `Is my dog hot or cold in TCVM terms, and which foods should I be feeding to bring him back into balance?`,
+                    )
+                  }
+                >
+                  <Text style={{ color: t.text, fontSize: 12.5, lineHeight: 18.5 }}>
+                    TCVM works energetically rather than mechanistically. Instead of suppressing a
+                    symptom, it looks for the underlying imbalance and restores harmony so the body
+                    heals itself. Foods are chosen by thermal nature — cooling, warming or neutral —
+                    by how they&apos;re prepared, and by taste, each of which acts on particular
+                    organ systems.
+                  </Text>
+                  <View style={{ backgroundColor: t.goodTint, borderRadius: 10, padding: 12, marginTop: 10, borderLeftWidth: 3, borderLeftColor: t.good }}>
+                    <Text style={{ color: t.goodDeep, fontSize: 13, fontWeight: "800", lineHeight: 18 }}>
+                      &ldquo;You cannot out-supplement a bad diet.&rdquo;
+                    </Text>
+                    <Text style={{ color: t.text, fontSize: 12, lineHeight: 17, marginTop: 4 }}>
+                      Fresh, high-quality food is the foundation. Highly processed food introduces
+                      excess internal heat and stagnation — which no supplement undoes.
+                    </Text>
+                  </View>
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 14, marginBottom: 4 }}>
+                    The four pillars
+                  </Text>
+                  {TCVM_PILLARS.map(([name, what], i) => (
+                    <View key={i} style={{ flexDirection: "row", gap: 8, marginTop: 5 }}>
+                      <Text style={{ color: t.good, fontSize: 12, fontWeight: "800", width: 92 }}>{name}</Text>
+                      <Text style={{ color: t.text, fontSize: 11.5, lineHeight: 16.5, flex: 1 }}>{what}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>
+                    Start here: is your dog hot or cold?
+                  </Text>
+                  {TCVM_STATES.map((s, i) => (
+                    <View key={i} style={{ backgroundColor: t.surface, borderRadius: 10, padding: 12, marginTop: 8, borderWidth: 1, borderColor: t.border }}>
+                      <View style={{ flexDirection: "row", alignItems: "center", gap: 7 }}>
+                        <Text style={{ fontSize: 15 }}>{s.icon}</Text>
+                        <Text style={{ color: t.textStrong, fontSize: 13, fontWeight: "800" }}>{s.state}</Text>
+                      </View>
+                      <Text style={{ color: t.text, fontSize: 12, lineHeight: 17, marginTop: 5 }}>{s.signs}</Text>
+                      <Text style={{ color: t.textMuted, fontSize: 11.5, lineHeight: 16.5, marginTop: 3 }}>{s.meaning}</Text>
+                      <Text style={{ color: t.good, fontSize: 12, fontWeight: "700", marginTop: 5 }}>{s.feed}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>
+                    The food therapy lists
+                  </Text>
+                  {TCVM_FOOD_THERAPY.map((f, i) => (
+                    <View key={i} style={{ backgroundColor: t.surfaceSunken, borderRadius: 10, padding: 12, marginTop: 8 }}>
+                      <View style={{ flexDirection: "row", alignItems: "center", gap: 7 }}>
+                        <Text style={{ fontSize: 14 }}>{f.icon}</Text>
+                        <Text style={{ color: t.textStrong, fontSize: 13, fontWeight: "800" }}>{f.temp} foods</Text>
+                      </View>
+                      <Text style={{ color: t.good, fontSize: 12, fontWeight: "700", marginTop: 3 }}>{f.useFor}</Text>
+                      <Text style={{ color: t.text, fontSize: 11.5, lineHeight: 16.5, marginTop: 5 }}>
+                        <Text style={{ fontWeight: "700" }}>Proteins: </Text>{f.proteins}
+                      </Text>
+                      <Text style={{ color: t.text, fontSize: 11.5, lineHeight: 16.5, marginTop: 3 }}>
+                        <Text style={{ fontWeight: "700" }}>
+                          {f.temp === "Neutral" ? "Why: " : "Plants & herbs: "}
+                        </Text>{f.plants}
+                      </Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>
+                    The digestive system (Spleen &amp; Stomach)
+                  </Text>
+                  <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>{TCVM_DIGESTION.principle}</Text>
+                  <View style={{ backgroundColor: t.moderateTint, borderRadius: 9, padding: 11, marginTop: 8, borderLeftWidth: 3, borderLeftColor: t.moderate }}>
+                    <Text style={{ color: t.moderateDeep, fontSize: 12, fontWeight: "800" }}>How to serve it</Text>
+                    <Text style={{ color: t.text, fontSize: 11.5, lineHeight: 16.5, marginTop: 3 }}>{TCVM_DIGESTION.serve}</Text>
+                  </View>
+                  {TCVM_DIGESTION.use.map(([food, why], i) => (
+                    <View key={i} style={{ marginTop: 7 }}>
+                      <Text style={{ color: t.good, fontSize: 12, fontWeight: "700" }}>{food}</Text>
+                      <Text style={{ color: t.text, fontSize: 11.5, lineHeight: 16.5 }}>{why}</Text>
+                    </View>
+                  ))}
+                  <Text style={{ color: t.critical, fontSize: 12, fontWeight: "700", marginTop: 9 }}>Avoid</Text>
+                  <Text style={{ color: t.text, fontSize: 11.5, lineHeight: 16.5 }}>{TCVM_DIGESTION.avoid}</Text>
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>
+                    Feeding a specific organ
+                  </Text>
+                  {TCVM_ORGANS.map((o, i) => (
+                    <View key={i} style={{ backgroundColor: t.surface, borderRadius: 10, padding: 12, marginTop: 8, borderWidth: 1, borderColor: t.border }}>
+                      <Text style={{ color: t.textStrong, fontSize: 13, fontWeight: "800" }}>
+                        {o.organ} <Text style={{ color: t.textDim, fontSize: 11 }}>· {o.element}</Text>
+                      </Text>
+                      <Text style={{ color: t.textMuted, fontSize: 11.5, lineHeight: 16, marginTop: 2 }}>{o.rules}</Text>
+                      {o.patterns.map(([pattern, fix], j) => (
+                        <View key={j} style={{ marginTop: 7 }}>
+                          <Text style={{ color: t.good, fontSize: 11.5, fontWeight: "700", lineHeight: 16 }}>{pattern}</Text>
+                          <Text style={{ color: t.text, fontSize: 11.5, lineHeight: 16.5, marginTop: 1 }}>{fix}</Text>
+                        </View>
+                      ))}
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>
+                    Critical clinical insights
+                  </Text>
+                  {TCVM_CLINICAL.map((c, i) => (
+                    <View key={i} style={{ flexDirection: "row", gap: 9, marginTop: 8, alignItems: "flex-start" }}>
+                      <Text style={{ fontSize: 15 }}>{c.icon}</Text>
+                      <View style={{ flex: 1 }}>
+                        <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "800" }}>{c.title}</Text>
+                        <Text style={{ color: t.text, fontSize: 11.5, lineHeight: 16.5, marginTop: 2 }}>{c.detail}</Text>
+                      </View>
+                    </View>
+                  ))}
+
+                  <View style={{ backgroundColor: t.surfaceSunken, borderRadius: 10, padding: 12, marginTop: 14 }}>
+                    <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13 }}>
+                      The eye as a window to the organs
+                    </Text>
+                    {TCVM_EYE.map(([part, meaning], i) => (
+                      <View
+                        key={i}
+                        style={{
+                          flexDirection: "row",
+                          gap: 10,
+                          marginTop: 7,
+                          paddingTop: 7,
+                          borderTopWidth: i === 0 ? 0 : 1,
+                          borderTopColor: t.border,
+                        }}
+                      >
+                        <Text style={{ color: t.good, fontSize: 11.5, fontWeight: "800", width: 108 }}>{part}</Text>
+                        <Text style={{ color: t.text, fontSize: 11.5, lineHeight: 16, flex: 1 }}>{meaning}</Text>
+                      </View>
+                    ))}
+                  </View>
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16 }}>
+                    Save this
+                  </Text>
+                  <Image
+                    source={require("../assets/images/tcvm-energetic-bowl.jpg")}
+                    style={{ width: "100%", aspectRatio: 1900 / 1060, borderRadius: 9, marginTop: 6 }}
+                    resizeMode="contain"
+                    accessibilityLabel="The energetic bowl — a guide to TCVM food therapy: identifying a hot or cold pet, the five element personalities, the four pillars, cooling warming and neutral food lists, and the eye as a window to the organs"
+                  />
+                </AccordionSection>
+              )}
+
 
               {scoreBreakdown.length > 0 && (
                 <AccordionSection title="🌿 Protein Energetics (TCVM)"
