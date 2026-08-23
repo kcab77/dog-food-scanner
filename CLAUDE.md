@@ -257,6 +257,20 @@ Scoring algorithm (**do not change scoring without asking Kyle** — full detail
   → `mild`. **Rationale: those entries' own reason text said no canine harm had been shown while
   the score punished as if it had.** Penalties: mild 2 · moderate 10 · severe 18 · toxic 28.
   Full record: `docs/EVIDENCE_AUDIT.md` § C6.
+- **Mineral forms completed + retiered (changed 2026-08-23, Kyle approved).** The grading is
+  **chelate > sulfate > oxide**, from `docs/MINERAL_FORMS_CHEATSHEET.md`. Six terms the cheat
+  sheet listed as gaps were never scored at all — `ferrous sulfate` `zinc sulfate`
+  `manganese sulfate` (→ `mild`) and `manganese oxide` `iron oxide` `copper oxide` (→ `moderate`).
+  Two were retiered: **`copper sulfate` severe → mild** (sulfate is the acceptable middle; the
+  real copper concern is TOTAL LOAD in a species with no AAFCO maximum, which is now written into
+  the entry) and **`zinc oxide` mild → moderate** (oxide is the worst grade — AAFCO won't let
+  copper oxide count toward a minimum at all). **Trigger: a mid-tier food with named meat first,
+  no corn, no wheat and tocopherol-preserved fat scored 6/100**, largely on sulfates.
+- **Legume/DCM penalty no longer stops at position 5 (changed 2026-08-23, Kyle approved).**
+  Was a cliff: −15 each in the top 3, −7 each in positions 4–5, **nothing after**. A kibble with
+  potatoes at #5 and peas at #6 took no legume hit and scored **100**. Added a third band,
+  positions 6–10 at −3 each. `docs/THE_LADDER.md` § Level 4 says count every occurrence rather
+  than stop at an arbitrary line.
 - Score floor: 5
 - Labels (softened 2026-07-12): 90–100 Excellent, 75–89 Great, 60–74 Good, 45–59 Fair,
   30–44 Below Average, <30 Low Quality

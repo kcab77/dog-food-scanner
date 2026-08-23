@@ -150,9 +150,9 @@ const HARMFUL_INGREDIENTS: {
   },
   {
     term: "copper sulfate",
-    severity: "severe",
+    severity: "mild",
     reason:
-      "Inorganic copper sulfate bypasses normal liver regulation and accumulates in liver tissue over years of daily feeding. A 2015 Veterinary Pathology study found commercial pet foods with elevated inorganic copper were directly associated with progressive chronic hepatitis in Labrador Retrievers. Unlike organic copper proteinate, the body cannot efficiently regulate inorganic copper absorption, allowing it to build up silently until liver damage is already advanced. Bedlington Terriers, Dobermans, and Labs are especially susceptible.",
+      "⚠️ Read this one carefully, because it is flagged for the OPPOSITE reason to every other mineral here. As a form, sulfate is the acceptable middle — chelates absorb best, sulfates adequately, oxides barely at all. Copper sulfate is not a poor form. The concern is TOTAL COPPER LOAD: copper accumulates in the liver, dogs have no good way to dump the excess, and AAFCO deleted the copper maximum in 2007 and still has none. So 'meets AAFCO' tells you nothing about the ceiling. Matters most in copper-predisposed breeds — Bedlington Terrier, West Highland White, Doberman, Labrador, Dalmatian — where the target is under ~1.2mg per 1,000 kcal. Liver enzymes are NOT sensitive early, so normal bloodwork does not rule it out. Demoted from severe to mild on 2026-08-23: the form itself is fine, and scoring it as severe punished a mid-tier food for using an adequate mineral.",
   },
   {
     term: "sodium selenite",
@@ -160,11 +160,54 @@ const HARMFUL_INGREDIENTS: {
     reason:
       "Sodium selenite is inorganic selenium, and selenium has one of the narrowest safe ranges of any nutrient. AAFCO sets the adult minimum at 0.35 mg/kg dry matter and the maximum at 2.0 — a window of only about 5.7x. For comparison, most nutrients have margins in the hundreds. That narrowness is precisely why the FORM matters here and matters less elsewhere. Two measured differences separate the forms. ABSORPTION: inorganic selenite is absorbed at roughly 50-60%, against 70-85% for organic selenomethionine and selenium yeast — so more selenite must be added to deliver the same nutrition, eating into an already tight margin. TOXICITY: comparative work found sodium selenite around 2.94x more toxic than selenium yeast, and organic forms test as less toxic than inorganic selenite and selenate generally. Mechanistically, selenomethionine is incorporated into proteins and released under regulation, whereas inorganic selenite generates free radicals during metabolism and causes oxidative stress in liver and kidney tissue; work in Biological Trace Element Research links long-term inorganic accumulation to kidney tubule damage that precedes any visible signs. So the case here is stronger than for most flagged ingredients: worse absorption AND higher toxicity AND the narrowest safety window in the profile. Prefer selenium yeast or selenomethionine.",
   },
+  // ── MINERAL FORMS, completed 2026-08-23 ──────────────────────────────────
+  // docs/MINERAL_FORMS_CHEATSHEET.md listed these as scoring gaps and they were
+  // never added, so a food using the cheapest forms available scored the same as
+  // one using chelates. The grading is chelate > sulfate > oxide:
+  //   proteinate / amino acid chelate / methionine / yeast → not flagged at all
+  //   sulfate → mild, the acceptable middle
+  //   oxide   → moderate, barely absorbed
   {
-    term: "zinc oxide",
+    term: "ferrous sulfate",
     severity: "mild",
     reason:
-      "Zinc oxide is a poorly absorbed inorganic zinc source. Comparative bioavailability work in dogs (Journal of Nutrition) found plasma zinc significantly higher across a full six-hour period after zinc propionate than after zinc oxide. In-vitro comparison of sources put zinc proteinate highest at about 42% bioaccessibility, against roughly 24% for inorganic zinc sulphate — and the chelated forms were far more resistant to phytic acid, the compound in grains and legumes that binds zinc and blocks absorption. That matters because plant-heavy foods are exactly where zinc is hardest to absorb. Zinc deficiency shows up as crusted, scaling skin around the muzzle, eyes and paw pads. Huskies and Malamutes have a genetic absorption defect that makes the form especially important. Zinc proteinate or amino-acid chelate is the preferable form.",
+      "⚪ Formulation signal, not a hazard. Sulfate is the adequate middle grade of mineral — better absorbed than oxide, not as well as a chelate, and mildly pro-oxidant. Iron proteinate or iron amino acid chelate is the upgrade. Seeing sulfates rather than oxides means the manufacturer did not buy the cheapest option available, which is worth knowing.",
+  },
+  {
+    term: "zinc sulfate",
+    severity: "mild",
+    reason:
+      "⚪ Formulation signal. The acceptable middle grade — adequately absorbed, behind zinc proteinate or zinc amino acid chelate, well ahead of zinc oxide. Not a reason to reject a food on its own.",
+  },
+  {
+    term: "manganese sulfate",
+    severity: "mild",
+    reason:
+      "⚪ Formulation signal. Adequate absorption; manganese proteinate or amino acid chelate is better, manganese oxide is worse. On its own this is unremarkable.",
+  },
+  {
+    term: "manganese oxide",
+    severity: "moderate",
+    reason:
+      "Oxide is the cheapest, least absorbable mineral grade. Manganese matters for joint cartilage and bone, so poor availability is not harmless in a large or growing dog. Count the oxides on a label — two or more means the manufacturer bought the cheapest forms available, and that tells you what they did on every line you cannot see.",
+  },
+  {
+    term: "iron oxide",
+    severity: "moderate",
+    reason:
+      "Barely absorbed as a nutrient — and worth knowing that iron oxide is also used as a COLOURING agent to make food look meatier. Either way it is not delivering usable iron. Look for iron proteinate or iron amino acid chelate; ferrous sulfate is the acceptable middle.",
+  },
+  {
+    term: "copper oxide",
+    severity: "moderate",
+    reason:
+      "The clearest case in the whole mineral block: AAFCO will not allow copper oxide to count toward a food's copper minimum at all, citing 'very poor apparent digestibility'. A regulator refusing to count an ingredient as the nutrient it is named after settles the argument. If copper oxide is the copper source, the food is effectively not delivering copper.",
+  },
+  {
+    term: "zinc oxide",
+    severity: "moderate",
+    reason:
+      "Oxide is the cheapest and least absorbable grade of mineral there is. The regulator's own position makes the point: AAFCO will not let copper oxide count toward a food's copper minimum AT ALL, citing 'very poor apparent digestibility' — a regulator saying an ingredient cannot count as the nutrient it is named after is as clear as this gets, and the same absorption problem applies across the oxides. Zinc specifically matters because zinc deficiency shows up as exactly the skin and coat problems owners blame on allergies. Look for zinc proteinate or zinc amino acid chelate; zinc sulfate is an acceptable middle. Raised from mild to moderate on 2026-08-23 to match the chelate > sulfate > oxide grading.",
   },
   {
     term: "dl-methionine",
@@ -6030,7 +6073,7 @@ export default function App() {
             letterSpacing: 0.4,
           }}
         >
-          BUILD CHECK · gut cheat sheet · 23 Aug
+          BUILD CHECK · scoring fixes · minerals + legumes · 23 Aug
         </Text>
       </View>
     );
@@ -7369,6 +7412,20 @@ export default function App() {
       total -= p;
       breakdown.push({ label: `Legumes in top 5 ingredients (${legumesTop5NotTop3}) — DCM link`, value: -p });
     }
+    // Positions 6-10. Added 2026-08-23 — the penalty used to STOP at position 5,
+    // which is a cliff, not a taper. A kibble with peas at #6 took no legume hit
+    // at all and could score 100. That is the most common grain-free pattern on
+    // the shelf, and docs/THE_LADDER.md says to count every occurrence rather
+    // than stop at an arbitrary line. Small per item, because position further
+    // down the label genuinely does mean less.
+    const foundLegumes6to10 = ingredientList.slice(5, 10).filter((ing) =>
+      LENTIL_LEGUME.some((l) => ing.toLowerCase().includes(l)),
+    );
+    if (foundLegumes6to10.length > 0) {
+      const p6 = foundLegumes6to10.length * 3;
+      total -= p6;
+      breakdown.push({ label: `Legumes further down the label (${foundLegumes6to10.length}) — DCM link`, value: -p6 });
+    }
     // Carb scoring: estimate % from ingredient position and count
     // Penalties kick in above ~25% carbs — dogs are carnivores, high carbs are problematic
     if (foundCarbs.length > 0) {
@@ -7999,6 +8056,20 @@ export default function App() {
         const p = legumesTop5NotTop3 * 7;
         total -= p;
         breakdown.push({ label: `Legumes in top 5 ingredients (${legumesTop5NotTop3}) — DCM link`, value: -p });
+      }
+      // Positions 6-10. Added 2026-08-23 — the penalty used to STOP at position 5,
+      // which is a cliff, not a taper. A kibble with peas at #6 took no legume hit
+      // at all and could score 100. That is the most common grain-free pattern on
+      // the shelf, and docs/THE_LADDER.md says to count every occurrence rather
+      // than stop at an arbitrary line. Small per item, because position further
+      // down the label genuinely does mean less.
+      const foundLegumes6to10 = ingredientList.slice(5, 10).filter((ing) =>
+        LENTIL_LEGUME.some((l) => ing.toLowerCase().includes(l)),
+      );
+      if (foundLegumes6to10.length > 0) {
+        const p6 = foundLegumes6to10.length * 3;
+        total -= p6;
+        breakdown.push({ label: `Legumes further down the label (${foundLegumes6to10.length}) — DCM link`, value: -p6 });
       }
       // Carb scoring: estimate % from ingredient position and count
       // Penalties kick in above ~25% carbs — dogs are carnivores, high carbs are problematic

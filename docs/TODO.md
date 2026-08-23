@@ -22,6 +22,38 @@ and burned Anthropic tokens.
 - [ ] **Deploy commonsensedog.com (Vercel)** — pushes the holistic + Pinecone-first Coach live to ALL existing PawGrade installs (server-side, no App Store resubmission needed). ⚠️ Do the SECURITY items above FIRST.
 - [x] **Ship holistic-vet legal disclaimer** — DONE 2026-06-24. Verified the holistic-vet + "educational, not medical advice" framing in both system prompts, AND added a deterministic server-side append (`lib/disclaimer.ts`) so a fixed disclaimer lands on EVERY `/api/coach` + `/api/chat` reply. Renders in both the website chat and the app's coach screen (no app rebuild needed). Ships with the redeploy.
 - [ ] **Build standalone AI assistant section** (no-scan chat) — THE GOLDMINE. Own entry point + paywall. Reuses existing holistic+Pinecone backend. ⚠️ Make sure rate limiting is live before this ships — a free-to-chat screen is the #1 abuse target.
+- [ ] **🔁 SWAP SUGGESTIONS — tell them what to look for instead** *(added 2026-08-23, Kyle's idea)*
+
+  **The problem.** A flagged ingredient with a red score tells an owner what's wrong and
+  leaves them stuck in the aisle holding the bag. `chicken by-product meal` scores badly;
+  nothing on screen says what a better label would have said.
+
+  **The feature, in Kyle's words:** *"near the bad score in parentheses maybe just say look
+  for 'chicken' instead. same for beef meal etc."* So the flagged row reads:
+
+  ```text
+  Chicken by-product meal        −10   (look for "chicken" instead)
+  Animal fat                      −8   (look for "chicken fat" instead)
+  Ground corn                     −6   (look for a named meat in the top 5)
+  ```
+
+  **Why it matters.** This is `docs/THE_LADDER.md`'s core rule made literal — *never "this
+  food is bad", always "here's what's in it and here's a better option."* It also turns the
+  scanner from a judge into a shopping tool, which is the retention difference: a flag you
+  can act on in the aisle beats a score you can only feel bad about.
+
+  **What ships first — ONE rung.** A `swap` field on `HARMFUL_INGREDIENTS`, rendered in
+  parentheses on the flagged row. Nothing else. Not a full alternatives engine, not product
+  recommendations — just the words to look for.
+
+  **What it rests on.** All existing. `HARMFUL_INGREDIENTS` already carries `term` /
+  `reason` / `severity`; this adds a fourth optional key. The `KIBBLE_GUIDE` entries already
+  prove the pattern — every one ends in an `instead` field for exactly this reason. The
+  flagged-row renderer already exists in the "Ingredients to Watch" section and the
+  72-ingredient reference.
+
+  **Not every entry needs one** — leave `swap` undefined where there's no clean substitute
+  (xylitol has no better version), and render nothing in that case.
 
 ## 🔬 TOMORROW (2026-08-14) — apply the evidence-audit fixes
 
