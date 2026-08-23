@@ -1356,6 +1356,110 @@ const GUT_HERBS: { group: string; icon: string; herbs: [string, string][] }[] = 
 ];
 
 
+// ── GUT CHEAT SHEET ──────────────────────────────────────────────────────────
+// Added 2026-08-23. Sits at the end of the gut section as the printable summary:
+// which of the three supplement types you actually need, which product does what,
+// and the warnings that change a decision.
+const GUT_PILLARS: { type: string; icon: string; what: string; purpose: string; benefit: string }[] = [
+  {
+    type: "Probiotics", icon: "🦠",
+    what: "Live beneficial bacteria and yeasts.",
+    purpose: "Repopulate and balance the microbiome so pathogens get crowded out.",
+    benefit: "Boosts immune function — 80% of the immune system lives in the gut.",
+  },
+  {
+    type: "Digestive enzymes", icon: "⚗️",
+    what: "Biological catalysts — protease, amylase, lipase — that break macromolecules apart.",
+    purpose: "Physically break food down into absorbable nutrients.",
+    benefit: "Maximises absorption and clears food stagnation — bloating, gas, undigested food in the stool.",
+  },
+  {
+    type: "Soothing / leaky gut powders", icon: "🩹",
+    what: "Herbal blends built on mucilaginous compounds.",
+    purpose: "Heal the mucosal lining and tighten the cellular junctions.",
+    benefit: "Stops toxins and undigested proteins leaking into the bloodstream.",
+  },
+];
+
+// Named formulas, so the label in the shop maps onto the job.
+const GUT_FORMULAS: { name: string; makeup: string; role: string; insight: string }[] = [
+  {
+    name: "Love Bugs", makeup: "14-strain pre/probiotic + larch",
+    role: "The baseline diversity builder for most dogs.",
+    insight: "Maintains a species-rich gut and prevents the narrowing of the microbiome that comes with a poor diet. This is the maintenance option, not the repair one.",
+  },
+  {
+    name: "Healthy Gut", makeup: "Probiotics + enzymes + betaine HCL",
+    role: "Digestive support and repopulation in one.",
+    insight: "The counter-intuitive one: it's often the right pick for ACID REFLUX. Reflux is frequently caused by too LITTLE stomach acid rather than too much — weak acid means proteins never break down properly, and the digestive rebellion that follows is what you're seeing. Betaine HCL supports the acid instead of suppressing it.",
+  },
+  {
+    name: "Gut Soothe", makeup: "Probiotics + slippery elm, marshmallow root, aloe",
+    role: "The first-aid and healing formula.",
+    insight: "Calms heat — acute inflammation — and repairs the gut wall in leaky gut or IBD. Short-term repair, not daily maintenance.",
+  },
+];
+
+// Use it / don't use it, per pillar. The right-hand column is the useful half.
+const GUT_WHEN: { type: string; use: string; avoid: string }[] = [
+  {
+    type: "Probiotics",
+    use: "Diet transitions, travel and stress, and during a course of antibiotics — use Saccharomyces boulardii for that, because it's a yeast and survives the medication.",
+    avoid: "Don't run a single strain long-term. Rotation is what prevents microbiome narrowing.",
+  },
+  {
+    type: "Digestive enzymes",
+    use: "Senior dogs, any dog on kibble or a cooked diet, and any dog showing food stagnation.",
+    avoid: "Avoid blends containing BROMELAIN in warm dogs — panting, red tongue, seeking cool floors.",
+  },
+  {
+    type: "Soothing herbs",
+    use: "Acute flares of hot diarrhoea, bloody or mucusy stools, suspected leaky gut.",
+    avoid: "Never indefinitely. They also interfere with absorption of other medications and nutrients.",
+  },
+];
+
+// Diversity ranking — where the strains actually come from.
+const GUT_HIERARCHY: { tier: string; icon: string; detail: string }[] = [
+  {
+    tier: "FMT — the platinum standard", icon: "🥇",
+    detail: "For severe dysbiosis or a completely nuked microbiome, a fecal microbiota transplant is the gold standard: the highest possible diversity of organisms, from a healthy donor.",
+  },
+  {
+    tier: "Whole foods — the diversity leaders", icon: "🥛",
+    detail: "Raw goat's milk and kefir carry over 3,000 strains of beneficial bacteria and yeasts — far wider species richness than any lab-grown powder, plus natural assimilation and the high-fat benefits.",
+  },
+  {
+    tier: "Concentrated powders — targeted therapy", icon: "💊",
+    detail: "Highly effective for a specific job: SIBO, post-antibiotic recovery, an active flare. Used indefinitely without rotation, they narrow the microbiome. Dogs need wide genetic variety to hold a robust immune system.",
+  },
+];
+
+// The activation technique as four discrete steps.
+const GUT_ACTIVATION: [string, string][] = [
+  ["Selection", "Pick a liquid: full-fat plain yogurt, raw milk, or room-temperature bone broth."],
+  ["The mix", "Open the capsule or scoop the powder and stir it thoroughly into the liquid."],
+  ["The wait", "Let it sit at ROOM TEMPERATURE for 30–60 minutes. This hydrates and wakes the bacteria so they're active and firing."],
+  ["The delivery", "Feed the fermented drink 30 minutes BEFORE the main meal."],
+];
+
+// The three that change a decision.
+const GUT_WARNINGS: { title: string; icon: string; detail: string }[] = [
+  {
+    title: "Bromelain sensitivity", icon: "🌡️",
+    detail: "Many enzyme blends use bromelain. Warm dogs — frequent panting, seeking cool floors, bright red tongue — often react poorly, and it can make acid reflux worse. Use a bromelain-free enzyme for those dogs.",
+  },
+  {
+    title: "The Monster Within", icon: "👹",
+    detail: "Never use slippery elm or other soothing herbs indefinitely. If a dog NEEDS them daily to produce a normal stool, the herbs are masking something — a hidden pathogen or bacterial overgrowth. That's a signal to investigate the root cause with microbiome testing, not to keep bandaging it. A dog who can't hold a normal stool without herbal support has an unanswered question, not a supplement requirement.",
+  },
+  {
+    title: "Glyphosate — 32× exposure", icon: "☠️",
+    detail: "Dogs carry 32 times the glyphosate humans do. To shield the gut's tight junctions from that environmental napalm, use humic and fulvic acid — found in soil and sea products — as a systemic protector.",
+  },
+];
+
+
 // ── TCVM FOOD THERAPY ────────────────────────────────────────────────────────
 // Added 2026-08-22 from Kyle's TCVM food-therapy research. Companion image:
 // assets/images/tcvm-energetic-bowl.jpg
@@ -5926,7 +6030,7 @@ export default function App() {
             letterSpacing: 0.4,
           }}
         >
-          BUILD CHECK · gut health section · 22 Aug
+          BUILD CHECK · gut cheat sheet · 23 Aug
         </Text>
       </View>
     );
@@ -13157,6 +13261,131 @@ export default function App() {
                       ))}
                     </View>
                   ))}
+
+                  {/* ── THE CHEAT SHEET ────────────────────────────────────────
+                      Added 2026-08-23. The decision layer: which of the three
+                      supplement types you need, which product does what, and the
+                      warnings that change a choice. */}
+                  <View style={{ height: 1, backgroundColor: t.border, marginVertical: 16 }} />
+                  <Text style={{ color: t.textStrong, fontSize: 15, fontWeight: "800", letterSpacing: -0.2 }}>
+                    The cheat sheet
+                  </Text>
+                  <Text style={{ color: t.textMuted, fontSize: 12.5, lineHeight: 18, marginTop: 4 }}>
+                    Three pillars, and most dogs don&apos;t need all three at once. Work out
+                    which job you&apos;re actually trying to do before you buy anything.
+                  </Text>
+
+                  {GUT_PILLARS.map((p, i) => (
+                    <View key={i} style={{ backgroundColor: t.surface, borderRadius: 10, padding: 12, marginTop: 8, borderWidth: 1, borderColor: t.border }}>
+                      <View style={{ flexDirection: "row", alignItems: "center", gap: 7 }}>
+                        <Text style={{ fontSize: 14 }}>{p.icon}</Text>
+                        <Text style={{ color: t.textStrong, fontSize: 13, fontWeight: "800" }}>{p.type}</Text>
+                      </View>
+                      <Text style={{ color: t.textMuted, fontSize: 11.5, lineHeight: 16, marginTop: 3 }}>{p.what}</Text>
+                      <Text style={{ color: t.text, fontSize: 11.5, lineHeight: 16.5, marginTop: 4 }}>
+                        <Text style={{ fontWeight: "700" }}>Job: </Text>{p.purpose}
+                      </Text>
+                      <Text style={{ color: t.good, fontSize: 11.5, lineHeight: 16.5, marginTop: 3 }}>{p.benefit}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>
+                    Which formula does what
+                  </Text>
+                  {GUT_FORMULAS.map((f, i) => (
+                    <View key={i} style={{ backgroundColor: t.surfaceSunken, borderRadius: 10, padding: 12, marginTop: 8 }}>
+                      <Text style={{ color: t.textStrong, fontSize: 13, fontWeight: "800" }}>{f.name}</Text>
+                      <Text style={{ color: t.textDim, fontSize: 11, marginTop: 1 }}>{f.makeup}</Text>
+                      <Text style={{ color: t.good, fontSize: 12, fontWeight: "700", marginTop: 4 }}>{f.role}</Text>
+                      <Text style={{ color: t.text, fontSize: 11.5, lineHeight: 16.5, marginTop: 4 }}>{f.insight}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>
+                    When to use it — and when not to
+                  </Text>
+                  {GUT_WHEN.map((w, i) => (
+                    <View key={i} style={{ marginTop: 9 }}>
+                      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "800" }}>{w.type}</Text>
+                      <View style={{ flexDirection: "row", gap: 7, marginTop: 3 }}>
+                        <Text style={{ color: t.good, fontSize: 11.5, fontWeight: "800", width: 16 }}>✓</Text>
+                        <Text style={{ color: t.text, fontSize: 11.5, lineHeight: 16.5, flex: 1 }}>{w.use}</Text>
+                      </View>
+                      <View style={{ flexDirection: "row", gap: 7, marginTop: 3 }}>
+                        <Text style={{ color: t.critical, fontSize: 11.5, fontWeight: "800", width: 16 }}>✕</Text>
+                        <Text style={{ color: t.text, fontSize: 11.5, lineHeight: 16.5, flex: 1 }}>{w.avoid}</Text>
+                      </View>
+                    </View>
+                  ))}
+
+                  <View style={{ backgroundColor: t.moderateTint, borderRadius: 10, padding: 12, marginTop: 14, borderLeftWidth: 3, borderLeftColor: t.moderate }}>
+                    <Text style={{ color: t.moderateDeep, fontSize: 13, fontWeight: "800" }}>
+                      On a cooked diet? Enzymes are permanent
+                    </Text>
+                    <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5, marginTop: 4 }}>
+                      Raw diets carry their own enzymes from fresh tissue. Cooking — even gently —
+                      destroys them, so a heat-processed diet is enzymatically dead and the pancreas
+                      works overtime to make up the chemistry. Daily active enzymes are a permanent
+                      requirement on cooked or kibble diets, not a temporary fix. Soothing herbs are
+                      the opposite: a short-term bandage while the lining heals, then you go back to
+                      enzymes. Seniors and dogs showing Earth deficiency — muscle loss, fatigue,
+                      loose stools — need them most, because they can no longer make enough
+                      themselves to prevent stagnation and hold muscle.
+                    </Text>
+                  </View>
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>
+                    Where the strains actually come from
+                  </Text>
+                  {GUT_HIERARCHY.map((h, i) => (
+                    <View key={i} style={{ flexDirection: "row", gap: 9, marginTop: 8, alignItems: "flex-start" }}>
+                      <Text style={{ fontSize: 15 }}>{h.icon}</Text>
+                      <View style={{ flex: 1 }}>
+                        <Text style={{ color: t.good, fontSize: 12, fontWeight: "800" }}>{h.tier}</Text>
+                        <Text style={{ color: t.text, fontSize: 11.5, lineHeight: 16.5, marginTop: 2 }}>{h.detail}</Text>
+                      </View>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>
+                    The wake-up technique, step by step
+                  </Text>
+                  {GUT_ACTIVATION.map(([step, how], i) => (
+                    <View key={i} style={{ flexDirection: "row", gap: 9, marginTop: 7, alignItems: "flex-start" }}>
+                      <View style={{ width: 21, height: 21, borderRadius: 11, backgroundColor: t.good, alignItems: "center", justifyContent: "center" }}>
+                        <Text style={{ color: t.onAccent, fontSize: 11, fontWeight: "800" }}>{i + 1}</Text>
+                      </View>
+                      <View style={{ flex: 1 }}>
+                        <Text style={{ color: t.textStrong, fontSize: 12, fontWeight: "700" }}>{step}</Text>
+                        <Text style={{ color: t.text, fontSize: 11.5, lineHeight: 16.5 }}>{how}</Text>
+                      </View>
+                    </View>
+                  ))}
+                  <View style={{ backgroundColor: t.criticalTint, borderRadius: 9, padding: 11, marginTop: 9, borderLeftWidth: 3, borderLeftColor: t.critical }}>
+                    <Text style={{ color: t.criticalDeep, fontSize: 12, fontWeight: "800" }}>Never add dry powder to food</Text>
+                    <Text style={{ color: t.text, fontSize: 11.5, lineHeight: 16.5, marginTop: 3 }}>
+                      Especially onto kibble. The stomach acid produced for a full meal is chemical
+                      napalm — it neutralises the bacteria before they ever reach the intestines.
+                    </Text>
+                  </View>
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>
+                    ⚠️ The warnings that change a decision
+                  </Text>
+                  {GUT_WARNINGS.map((w, i) => (
+                    <View key={i} style={{ backgroundColor: t.criticalTint, borderRadius: 10, padding: 12, marginTop: 8, borderLeftWidth: 3, borderLeftColor: t.critical }}>
+                      <View style={{ flexDirection: "row", alignItems: "center", gap: 7 }}>
+                        <Text style={{ fontSize: 14 }}>{w.icon}</Text>
+                        <Text style={{ color: t.criticalDeep, fontSize: 12.5, fontWeight: "800", flex: 1 }}>{w.title}</Text>
+                      </View>
+                      <Text style={{ color: t.text, fontSize: 11.5, lineHeight: 16.5, marginTop: 4 }}>{w.detail}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.good, fontSize: 12.5, fontWeight: "800", marginTop: 14, lineHeight: 18 }}>
+                    Diversity is king. Rotate your strains, activate your powders, and feed the
+                    individual — not the condition.
+                  </Text>
 
                   <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16 }}>
                     Save this
