@@ -1233,6 +1233,129 @@ const DEFICIENCY_SIGNS: {
 //                  Need HOT WATER extraction.
 //   TERPENES     — cross the blood-brain barrier, act on the nervous system and
 //                  stabilise mast cells. Need ALCOHOL extraction.
+// ── GUT HEALTH ───────────────────────────────────────────────────────────────
+// Added 2026-08-22 from Kyle's gut-health research. Companion image:
+// assets/images/gut-health-guide.jpg
+//
+// The framing: 70–80% of the immune system sits behind the gut wall in the GALT.
+// Balanced, it keeps the immune system calm. Irritated, the GALT goes into
+// overdrive and produces systemic inflammation — which is why skin, behaviour and
+// organ problems so often trace back here.
+const GUT_AXES: { axis: string; icon: string; detail: string }[] = [
+  {
+    axis: "The gut–skin axis", icon: "🔥",
+    detail: "Red inflamed skin, recurring hot spots, ear infections and obsessive paw-chewing are the smoke and flames of a house fire happening in the gut. Standard skin treatments mask the symptom and leave the GI root cause running.",
+  },
+  {
+    axis: "The gut–brain axis", icon: "🧠",
+    detail: "The microbiome steers emotional state like a puppeteer, using the vagus nerve as a direct line. Imbalances drive behaviour problems, aggression, thunderstorm phobia, training difficulty and mood disorders. In older dogs, poor oral and gut microbiomes are linked to cognitive decline and dementia.",
+  },
+  {
+    axis: "Liver & lymphatics", icon: "🫀",
+    detail: "The gut never works alone. All blood from the GI tract filters through the liver, and the liver's ability to clear chemicals depends heavily on gut methylation. The gut's lymphatic capillaries — including Peyer's patches — absorb fat-soluble nutrients and carry fat-soluble toxins away. Stagnation in either network cascades outward.",
+  },
+];
+
+// Leaky gut, mechanically.
+const GUT_LEAKY = {
+  what: "Chronic inflammation damages the mucosal lining, and the tight cellular junctions that act as gatekeepers start pulling apart. That's gut hyperpermeability — leaky gut.",
+  how: "As the barrier degrades, the gut-lining protein ZONULIN rises and widens the gaps between cells. Environmental toxins, pathogens and large undigested food proteins pass straight into the bloodstream.",
+  result: "The immune system sees those misplaced proteins as invaders and attacks. That cascade is where chronic food sensitivities, allergies and autoimmune conditions come from — including rheumatoid arthritis and immune-mediated polyarthritis (IMPA).",
+};
+
+// What breaks it. Ordered by how much of it an owner actually controls.
+const GUT_DISRUPTORS: { name: string; icon: string; detail: string }[] = [
+  {
+    name: "Processed kibble", icon: "🍖",
+    detail: "Cooked at high temperature multiple times, which makes it dead food. High carbohydrate levels feed pathogenic bacteria, there are no live enzymes left, and chemical preservatives act like chemical napalm on beneficial flora.",
+  },
+  {
+    name: "Glyphosate", icon: "☠️",
+    detail: "Dogs carry the highest measured glyphosate levels of any animal — averaging 32 times more than humans. It's water-soluble and falls in rainwater globally. In the body it behaves like an antibiotic: it destroys the microbiome and tears apart tight cell junctions. Non-GMO crops sprayed at harvest to dry them — oats, peas, chickpeas, lentils — are why grain-free foods are so often saturated with it.",
+  },
+  {
+    name: "Pharmaceutical overuse", icon: "💊",
+    detail: "Metronidazole (Flagyl) is routinely overprescribed for diarrhoea and obliterates the microbiome's dark matter for months or permanently. Acid reducers like famotidine lower stomach acid, so proteins never break down into harmless amino acids — that directly causes severe food sensitivities. NSAIDs and steroids damage the lining too.",
+  },
+  {
+    name: "Stress", icon: "😰",
+    detail: "Anxiety in the dog AND in the owner triggers the fight-or-flight response, which halts digestion and promotes gut inflammation and permeability.",
+  },
+];
+
+// Food that rebuilds it.
+const GUT_FOODS: { food: string; detail: string }[] = [
+  { food: "Fresh, species-appropriate food", detail: "Moving off processed kibble to fresh, raw or gently cooked meat-based food — with real variety across proteins, organs and raw parts — is what restores a diverse, species-rich microbiome." },
+  { food: "Bone broth", detail: "The healing potion for the gut. Rich in collagen and gelatin, which directly seal and repair damaged intestinal membranes." },
+  { food: "Fermented raw dairy", detail: "Raw goat's milk, raw cow's milk, fermented goat's milk kefir or ghee — natural viable probiotics and yeasts, easily absorbed without inflammatory risk." },
+  { food: "Vegetable fibre", detail: "Small amounts of plants — pureed leafy greens, sweet potato, butternut squash — are the prebiotic. Lactobacillus and bacteroides REQUIRE plant fibre to survive, colonise and regulate the immune system." },
+  { food: "Warm, never cold", detail: "The digestive system is the cooking pot, and it doesn't like cold. Food straight from the fridge freezes the digestive fire. Serve at room or body temperature." },
+  { food: "Well-sourced fats", detail: "Fats from grass-fed, pasture-raised animals — pork lard, raw egg yolks — transport the fat-soluble gut-healing vitamins A, D and K2. Healthy raw fats do not cause pancreatitis; processed carbs, rancid fats and sugars do." },
+];
+
+// Protocols, including the one most people get wrong.
+const GUT_PROTOCOLS: { name: string; icon: string; detail: string }[] = [
+  {
+    name: "Probiotic activation — do this, it matters", icon: "⏱️",
+    detail: "Never dump dry freeze-dried probiotic capsules onto kibble; stomach acid destroys them. Open the capsule into a cup of full-fat probiotic yogurt, or bone broth with water, and let it sit at ROOM TEMPERATURE for 30–60 minutes to wake the bacteria up. Feed that liquid 30 minutes before the meal so it slips straight into the small intestine.",
+  },
+  {
+    name: "The SIBO feeding schedule", icon: "🕐",
+    detail: "Constant treating stops the gut cleaning itself. Leave 2.5 to 3 hours between meals and treats so the migrating motor complex — the gut's janitor — can sweep pathogens out of the small intestine. That's what prevents small intestinal bacterial overgrowth and the leaky gut behind it.",
+  },
+  {
+    name: "Fecal microbiota transplant (FMT)", icon: "🏆",
+    detail: "The gold standard for restoring diversity. Uses the entire fecal biome of a hyper-screened, multi-generational healthy donor dog, introducing billions of diverse bacteria, viruses, fungi and yeasts — eliminating antibiotic resistance and dramatically increasing diversity.",
+  },
+  {
+    name: "S. boulardii + colostrum", icon: "🛡️",
+    detail: "Rebuild the protective glycocalyx and the secretory IgA (sIgA) lining. Run it up to six months to prepare the gut wall so beneficial bacteria can actually adhere and colonise instead of passing straight through. S. boulardii also resolves acute diarrhoea, outperforming metronidazole.",
+  },
+  {
+    name: "Humic & fulvic acid", icon: "🌱",
+    detail: "Natural soil extracts that detoxify heavy metals, protect the lining from daily glyphosate damage, and help repair tight cell junctions.",
+  },
+  {
+    name: "Digestive enzymes", icon: "⚗️",
+    detail: "Vital on cooked diets, on kibble, and through any transition — they break proteins down and maximise absorption.",
+  },
+  {
+    name: "Ozone therapy", icon: "💨",
+    detail: "Rectal ozone insufflation beforehand oxygenates and heals intestinal tissue, creating a welcoming environment for newly introduced bacteria to colonise.",
+  },
+];
+
+// Herbs, chosen by constitution rather than by symptom.
+const GUT_HERBS: { group: string; icon: string; herbs: [string, string][] }[] = [
+  {
+    group: "For WARM dogs — hot-seeking, panting, red tongue", icon: "🔥",
+    herbs: [
+      ["Aloe, slippery elm, marshmallow root", "Demulcents. Form a soothing barrier that heals ulcerated pockets and calms inflammation."],
+      ["Yarrow", "Treats histamine, dampness, pain, and the oesophageal sphincter relaxation behind acid reflux."],
+      ["Plantain", "Brings heat down, heals wounds inside the gut, and helps good bacteria stick to the gut wall."],
+      ["Cleavers", "Safely moves stagnant lymphatic fluid to clear fat-soluble toxins."],
+    ],
+  },
+  {
+    group: "For COOL dogs — blanket-loving, cold-sensitive", icon: "❄️",
+    herbs: [
+      ["Turmeric", "Warms the middle and improves phase-two liver detoxification."],
+      ["Ginger", "Eases nausea, warms the digestive tract, and helps with both constipation and diarrhoea."],
+      ["Calendula", "A bacteriostatic police officer that disperses pathogenic biofilms, and herbal sunshine for healing wounds inside the gut."],
+    ],
+  },
+  {
+    group: "Universal — any constitution", icon: "🌿",
+    herbs: [
+      ["Blackberry leaf", "A highly effective astringent that halts acute explosive diarrhoea and soothes leaky anal glands."],
+      ["Milk thistle", "Protects liver pathways and drains liver heat."],
+      ["Nettles", "Infuses vital minerals to get sluggish organs working again."],
+      ["Lion's mane & tremella", "Soothe the nervous system, lower gut pain, and coat and seal tight junctions."],
+    ],
+  },
+];
+
+
 // ── TCVM FOOD THERAPY ────────────────────────────────────────────────────────
 // Added 2026-08-22 from Kyle's TCVM food-therapy research. Companion image:
 // assets/images/tcvm-energetic-bowl.jpg
@@ -4803,7 +4926,7 @@ const DoorContext = React.createContext<string | null>(null);
 const TopicContext = React.createContext<string | null>(null);
 
 export const LEARN_TOPICS = [
-  "AAFCO", "Bloat", "Carbs", "Collagen", "Deficiency signs", "Heart",
+  "AAFCO", "Bloat", "Carbs", "Collagen", "Deficiency signs", "Gut health", "Heart",
   "Kibble", "Life stages", "Lifespan", "Lipomas", "Missing nutrients",
   "Mushrooms", "Omega-3", "Recalls & facts", "TCVM",
 ] as const;
@@ -5803,7 +5926,7 @@ export default function App() {
             letterSpacing: 0.4,
           }}
         >
-          BUILD CHECK · TCVM food therapy + bowls · 22 Aug
+          BUILD CHECK · gut health section · 22 Aug
         </Text>
       </View>
     );
@@ -12914,6 +13037,145 @@ export default function App() {
                   <LipomaSection />
                 </AccordionSection>
               )}
+
+              {/* ── GUT HEALTH ───────────────────────────────────────────────
+                  Added 2026-08-22. New "Gut health" chip in LEARN_TOPICS. */}
+              {(score !== null || learnMode) && (
+                <AccordionSection
+                  title="🦠 Gut health"
+                  topic="Gut health"
+                  door="learn"
+                  askLabel="Ask AI"
+                  onAskAI={() =>
+                    askAboutSection(
+                      `My dog has itchy skin and digestive trouble. How do I actually rebuild his gut, and in what order?`,
+                    )
+                  }
+                >
+                  <View style={{ backgroundColor: t.goodTint, borderRadius: 10, padding: 12, borderLeftWidth: 3, borderLeftColor: t.good }}>
+                    <Text style={{ color: t.goodDeep, fontSize: 13, fontWeight: "800" }}>
+                      The 80% rule
+                    </Text>
+                    <Text style={{ color: t.text, fontSize: 12.5, lineHeight: 18, marginTop: 4 }}>
+                      Between <Text style={{ fontWeight: "800" }}>70% and 80% of the immune
+                      system</Text> sits directly behind the gut wall, in the GALT — the
+                      gut-associated lymphoid tissue. Balanced, the microbiome digests food,
+                      synthesises nutrients and keeps the immune system calm. Irritated, the GALT
+                      goes into overdrive and generates chronic systemic inflammation. That is why
+                      the gut is the first place to look, not the last.
+                    </Text>
+                  </View>
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 14, marginBottom: 2 }}>
+                    Why gut problems show up somewhere else
+                  </Text>
+                  {GUT_AXES.map((a, i) => (
+                    <View key={i} style={{ flexDirection: "row", gap: 9, marginTop: 8, alignItems: "flex-start" }}>
+                      <Text style={{ fontSize: 15 }}>{a.icon}</Text>
+                      <View style={{ flex: 1 }}>
+                        <Text style={{ color: t.good, fontSize: 12, fontWeight: "800" }}>{a.axis}</Text>
+                        <Text style={{ color: t.text, fontSize: 11.5, lineHeight: 16.5, marginTop: 2 }}>{a.detail}</Text>
+                      </View>
+                    </View>
+                  ))}
+
+                  <View style={{ backgroundColor: t.criticalTint, borderRadius: 10, padding: 12, marginTop: 14, borderLeftWidth: 3, borderLeftColor: t.critical }}>
+                    <Text style={{ color: t.criticalDeep, fontSize: 13, fontWeight: "800" }}>
+                      Leaky gut, mechanically
+                    </Text>
+                    <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5, marginTop: 4 }}>{GUT_LEAKY.what}</Text>
+                    <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5, marginTop: 6 }}>{GUT_LEAKY.how}</Text>
+                    <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5, marginTop: 6 }}>{GUT_LEAKY.result}</Text>
+                  </View>
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>
+                    What breaks it
+                  </Text>
+                  {GUT_DISRUPTORS.map((d, i) => (
+                    <View key={i} style={{ backgroundColor: t.surface, borderRadius: 10, padding: 12, marginTop: 8, borderWidth: 1, borderColor: t.border }}>
+                      <View style={{ flexDirection: "row", alignItems: "center", gap: 7 }}>
+                        <Text style={{ fontSize: 14 }}>{d.icon}</Text>
+                        <Text style={{ color: t.textStrong, fontSize: 13, fontWeight: "800" }}>{d.name}</Text>
+                      </View>
+                      <Text style={{ color: t.text, fontSize: 11.5, lineHeight: 16.5, marginTop: 4 }}>{d.detail}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>
+                    What rebuilds it
+                  </Text>
+                  {GUT_FOODS.map((f, i) => (
+                    <View key={i} style={{ marginTop: 7 }}>
+                      <Text style={{ color: t.good, fontSize: 12, fontWeight: "700" }}>{f.food}</Text>
+                      <Text style={{ color: t.text, fontSize: 11.5, lineHeight: 16.5, marginTop: 1 }}>{f.detail}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>
+                    Protocols
+                  </Text>
+                  {GUT_PROTOCOLS.map((p, i) => (
+                    <View
+                      key={i}
+                      style={{
+                        backgroundColor: i < 2 ? t.moderateTint : t.surfaceSunken,
+                        borderRadius: 10,
+                        padding: 12,
+                        marginTop: 8,
+                        borderLeftWidth: i < 2 ? 3 : 0,
+                        borderLeftColor: t.moderate,
+                      }}
+                    >
+                      <View style={{ flexDirection: "row", alignItems: "center", gap: 7 }}>
+                        <Text style={{ fontSize: 14 }}>{p.icon}</Text>
+                        <Text style={{ color: i < 2 ? t.moderateDeep : t.textStrong, fontSize: 12.5, fontWeight: "800", flex: 1 }}>
+                          {p.name}
+                        </Text>
+                      </View>
+                      <Text style={{ color: t.text, fontSize: 11.5, lineHeight: 16.5, marginTop: 4 }}>{p.detail}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>
+                    Herbs, chosen by constitution
+                  </Text>
+                  <Text style={{ color: t.textMuted, fontSize: 11.5, lineHeight: 16.5, marginBottom: 2 }}>
+                    Pick the group that matches your dog, not the symptom. A warming herb in a hot
+                    dog makes things worse.
+                  </Text>
+                  {GUT_HERBS.map((g, i) => (
+                    <View key={i} style={{ backgroundColor: t.surfaceSunken, borderRadius: 10, padding: 12, marginTop: 8 }}>
+                      <View style={{ flexDirection: "row", alignItems: "center", gap: 7 }}>
+                        <Text style={{ fontSize: 14 }}>{g.icon}</Text>
+                        <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "800", flex: 1 }}>{g.group}</Text>
+                      </View>
+                      {g.herbs.map(([herb, what], j) => (
+                        <View key={j} style={{ marginTop: 6 }}>
+                          <Text style={{ color: t.good, fontSize: 11.5, fontWeight: "700" }}>{herb}</Text>
+                          <Text style={{ color: t.text, fontSize: 11.5, lineHeight: 16 }}>{what}</Text>
+                        </View>
+                      ))}
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16 }}>
+                    Save this
+                  </Text>
+                  <Image
+                    source={require("../assets/images/gut-health-guide.jpg")}
+                    style={{ width: "100%", aspectRatio: 1900 / 1060, borderRadius: 9, marginTop: 6 }}
+                    resizeMode="contain"
+                    accessibilityLabel="The garden within — a dog's guide to gut health: the modern saboteurs, the 80 percent rule, leaky gut syndrome, the microbiome toolkit, herbal support and dietary foundations"
+                  />
+
+                  <Text style={{ color: t.textDim, fontSize: 11, lineHeight: 17, marginTop: 12 }}>
+                    ⚠️ Educational only, not veterinary advice. FMT and ozone therapy are done
+                    through a vet, and any dog on antibiotics, acid reducers or steroids needs that
+                    conversation before you change anything.
+                  </Text>
+                </AccordionSection>
+              )}
+
 
               {/* ── TCVM FOOD THERAPY ────────────────────────────────────────
                   Added 2026-08-22. Gated on (score || learnMode) rather than on
