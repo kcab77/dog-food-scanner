@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Holistic Canine Heart Health — one-page guide</title>
+<style>
+  @page { size: letter portrait; margin: 0.5in; }
+
+  :root{
+    --paper:#FFFFFF; --wash:#FBF8F3; --line:#E0D9CE; --rule:#C9BFB0;
+    --ink:#1A1714; --dim:#544C43; --faint:#8A7F72;
+    --heart:#A02C2C; --heart-t:#FBEDEA;
+    --leaf:#3F6B45;  --leaf-t:#EDF3ED;
+    --gold:#8A6410;  --gold-t:#FBF3DF;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--wash);color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    font-size:10.2pt;line-height:1.42;-webkit-font-smoothing:antialiased;
+  }
+  .sheet{max-width:7.5in;margin:0 auto;padding:0.35in 0.1in 0.5in;background:var(--wash)}
+
+  header{text-align:center;border-bottom:2px solid var(--rule);padding-bottom:11px;margin-bottom:14px}
+  h1{margin:0 0 5px;font-size:23pt;line-height:1.08;letter-spacing:-.01em;font-weight:600}
+  .sub{margin:0;font-size:9.4pt;color:var(--dim);max-width:5.6in;margin-inline:auto;font-style:italic}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+  .full{grid-column:1 / -1}
+
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:5px;padding:11px 13px;break-inside:avoid}
+  .card h2{
+    margin:0 0 7px;font-size:8.2pt;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+    font-family:ui-sans-serif,-apple-system,"Segoe UI",sans-serif;
+  }
+  .c-heart{border-top:3px solid var(--heart)} .c-heart h2{color:var(--heart)}
+  .c-leaf{border-top:3px solid var(--leaf)}   .c-leaf h2{color:var(--leaf)}
+  .c-gold{border-top:3px solid var(--gold)}   .c-gold h2{color:var(--gold)}
+
+  p{margin:0 0 6px} p:last-child{margin-bottom:0}
+  b{font-weight:700}
+  ul{margin:0;padding-left:15px} li{margin-bottom:4px} li:last-child{margin-bottom:0}
+
+  .banner{
+    background:var(--heart-t);border:1.5px solid var(--heart);border-radius:5px;
+    padding:11px 13px;margin-bottom:14px;break-inside:avoid;
+  }
+  .banner .h{
+    font-family:ui-sans-serif,-apple-system,sans-serif;font-size:8.2pt;font-weight:700;
+    letter-spacing:.11em;text-transform:uppercase;color:var(--heart);margin-bottom:5px;
+  }
+  .banner p{font-size:10pt}
+
+  .rrr{display:flex;align-items:center;gap:13px;margin-top:8px;padding-top:8px;border-top:1px solid var(--rule)}
+  .rrr .num{
+    font-family:ui-sans-serif,-apple-system,sans-serif;font-size:26pt;font-weight:800;
+    color:var(--heart);line-height:1;white-space:nowrap;font-variant-numeric:tabular-nums;
+  }
+  .rrr .lab{font-size:9.2pt;line-height:1.32}
+
+  table{width:100%;border-collapse:collapse;font-size:9.4pt}
+  td{padding:4px 3px;border-bottom:1px solid var(--line);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  td.n{font-weight:700;width:38%;padding-right:8px}
+  td.d{color:var(--heart);font-weight:700;white-space:nowrap;text-align:right;
+       font-family:ui-sans-serif,-apple-system,sans-serif;font-size:8.8pt}
+
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:11px;font-size:9.4pt}
+  .split .k{font-weight:700;color:var(--leaf);margin-bottom:2px}
+
+  .cat{margin-bottom:6px}
+  .cat .k{font-weight:700;color:var(--leaf)}
+  .cat .v{color:var(--dim)}
+
+  footer{
+    margin-top:14px;padding-top:9px;border-top:1px solid var(--rule);
+    font-size:8pt;color:var(--faint);line-height:1.4;
+  }
+  footer b{color:var(--dim)}
+  .brand{
+    display:flex;justify-content:space-between;align-items:baseline;
+    margin-top:7px;font-family:ui-sans-serif,-apple-system,sans-serif;
+  }
+  .brand .n{font-weight:700;color:var(--ink);font-size:9.4pt;letter-spacing:-.01em}
+  .brand .u{color:var(--faint);font-size:8.4pt}
+
+  .noprint{
+    max-width:7.5in;margin:14px auto 0;padding:9px 12px;background:var(--gold-t);
+    border:1px solid var(--gold);border-radius:5px;font-size:9pt;color:var(--gold);
+    font-family:ui-sans-serif,-apple-system,sans-serif;
+  }
+  @media print{ .noprint{display:none} body,.sheet{background:#fff} }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header>
+    <h1>Holistic Canine Heart Health</h1>
+    <p class="sub">What to watch for, what to feed, and what to count at home —
+    used <b>alongside</b> your vet's treatment, never instead of it.</p>
+  </header>
+
+  <div class="banner">
+    <div class="h">Read this first</div>
+    <p>Everything here runs <b>alongside</b> Vetmedin and prescribed diuretics like Lasix
+    (furosemide). In congestive failure, furosemide is what keeps fluid out of the lungs.
+    <b>Never reduce or replace a prescribed diuretic with an herbal one.</b> Add, tell your vet,
+    and let them adjust.</p>
+    <div class="rrr">
+      <span class="num">&lt;30–35</span>
+      <span class="lab"><b>Resting breaths per minute.</b> Count for one full minute while your dog is
+      asleep. A rate climbing over several days means fluid is building — often before any cough.
+      <b>Write it down daily and bring the trend to your vet.</b></span>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <div class="card c-heart">
+      <h2>Warning signs</h2>
+      <ul>
+        <li><b>The night cough.</b> Coughing at night, or being unable to settle and get comfortable
+        lying down. Lying flat makes it harder to breathe around fluid — a dog that suddenly wants to
+        sleep sitting up is telling you something.</li>
+        <li><b>Restlessness after dark.</b> Repositioning, pacing, unable to sleep.</li>
+        <li><b>Rising resting breath rate</b> — the earliest signal of all.</li>
+        <li><b>Exercise intolerance</b> — tiring on the walk they used to finish easily.</li>
+      </ul>
+      <p style="margin-top:6px;color:var(--heart);font-weight:700;font-size:9.4pt">
+        Sudden laboured breathing is an emergency. Go now — don't manage it at home.</p>
+    </div>
+
+    <div class="card c-heart">
+      <h2>Know your breed's risk</h2>
+      <div class="split">
+        <div>
+          <div class="k">Small breeds</div>
+          <div>Poodles · Cavalier King Charles Spaniels</div>
+          <div style="margin-top:3px"><b>Mitral valve disease.</b> Usually announces itself as a murmur
+          first, then progresses slowly.</div>
+        </div>
+        <div>
+          <div class="k">Large breeds</div>
+          <div>Dobermans · Great Danes</div>
+          <div style="margin-top:3px"><b>DCM.</b> The more dangerous pattern — it can stay silent, then
+          present suddenly. <b>Screen before symptoms.</b></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card c-leaf">
+      <h2>What to feed</h2>
+      <ul>
+        <li><b>Heart and organ meat</b> — beef heart, pork heart, liver, tongue, gizzards.
+        <i>Like feeds like.</i></li>
+        <li><b>Dark meat, not breast.</b> Thighs and legs carry far more of the heart-relevant amino
+        acids — and cost less.</li>
+        <li><b>Fresh omega-3</b> — sardines in water, salmon, cod skin, minnows. Lowers inflammation in
+        the heart muscle itself.</li>
+        <li><b>Raw goat's milk</b> — naturally carries carnitine, taurine, vitamin D and GABA.</li>
+      </ul>
+    </div>
+
+    <div class="card c-leaf">
+      <h2>TCVM food categories</h2>
+      <div class="cat"><span class="k">Qi tonics (pumping energy) · </span>
+        <span class="v">beef, dark poultry, rabbit, pumpkin, butternut &amp; acorn squash, shiitake</span></div>
+      <div class="cat"><span class="k">Blood tonics · </span>
+        <span class="v">red meat, egg yolk, carrot, spinach, kale, dates, figs</span></div>
+      <div class="cat"><span class="k">Fluid-draining · </span>
+        <span class="v">asparagus (drains the heart via the kidneys), celery, watermelon, parsley,
+        dandelion greens, radish, turnip</span></div>
+      <div class="cat"><span class="k">Lung protection · </span>
+        <span class="v">shiitake — dissolves phlegm, drains damp</span></div>
+    </div>
+
+    <div class="card c-gold full">
+      <h2>Supplements &amp; doses</h2>
+      <table>
+        <tr><td class="n">CoQ10</td>
+          <td>Supports failing heart muscle cells. Most bottles suggest ~1 mg/lb — considered too low to
+          affect heart size. <i>Cats under 10 lb: 50–100 mg twice daily.</i></td>
+          <td class="d">100 mg / 20 lb<br>twice daily</td></tr>
+        <tr><td class="n">Taurine</td>
+          <td>Concentrated in heart muscle. Grain-free kibbles that swap meat for pea protein are the ones
+          linked to deficiency. <b>No known toxic dose.</b></td>
+          <td class="d">up to 8,000 mg<br>daily (large breeds)</td></tr>
+        <tr><td class="n">Dandelion leaf + root</td>
+          <td>Herbal diuretic — helps clear airway fluid and cardiac cough.
+          <b>An addition to prescribed diuretics, never a replacement.</b></td>
+          <td class="d">0.5 mL / 20 lb<br>twice daily</td></tr>
+        <tr><td class="n">CBD</td>
+          <td>Vasodilator — lowers the pressure the heart pumps against. <b>Tell your vet:</b> shares liver
+          enzyme pathways with cardiac drugs.</td>
+          <td class="d">1 mg / 10 lb<br>twice daily</td></tr>
+        <tr><td class="n">Omega-3 oil</td>
+          <td>Sardine, anchovy or salmon. <b>Brushed aluminium or glass pump bottle only</b> — clear plastic
+          lets it oxidise. Algae oil works for fish-sensitive dogs. Always pair with vitamin E.</td>
+          <td class="d">—</td></tr>
+        <tr><td class="n">D-ribose · Vitamin E · D3 · PEA · Hawthorn</td>
+          <td>D-ribose feeds heart muscle directly. Vitamin E is required alongside fish oil.
+          <b>Test D3 before supplementing.</b> PEA lowers mitral-valve inflammation. Hawthorn is the classic
+          heart herb.</td>
+          <td class="d">—</td></tr>
+      </table>
+      <p style="margin-top:7px;font-size:8.8pt;color:var(--dim)"><b>Single-ingredient products beat blends</b>
+      — blends rarely reach a therapeutic dose of anything.</p>
+    </div>
+
+    <div class="card c-heart full">
+      <h2>The mouth–heart connection</h2>
+      <p>Bacteria from dental disease enter the bloodstream and filter directly through the
+      <b>heart valves and kidneys</b>, accelerating damage to both. The consequence catches people out:
+      <b>dental cleanings should still be performed on heart patients</b> — with close anaesthetic and
+      cardiac monitoring — rather than avoided out of fear. Skipping dental care in a heart patient is not
+      the safe choice it feels like.</p>
+    </div>
+
+  </div>
+
+  <footer>
+    <p><b>Where this comes from.</b> The diet and supplement protocols are holistic and TCVM veterinary
+    <b>clinical practice</b> — they are what integrative vets use and the doses they use. They have not been
+    tested against canine heart disease in controlled trials. <b>Resting respiratory rate monitoring and the
+    dental–heart link are the exceptions</b>: both are also standard cardiology practice.</p>
+    <p><b>On sudden death.</b> Cardiac disease is among the leading identified causes of sudden death in
+    dogs — but rankings are unstable, and <b>37% of sudden deaths have no cause found even after
+    necropsy.</b> That uncertainty is the argument for watching for signs, not for panic.</p>
+    <p><b>Educational only. Not veterinary advice.</b> Heart disease is managed with a vet — this is what to
+    bring to that conversation.</p>
+    <div class="brand">
+      <span class="n">🐾 PawGrade</span>
+      <span class="u">commonsensedog.com</span>
+    </div>
+  </footer>
+
+</div>
+
+<div class="noprint">
+  <b>To save as PDF:</b> ⌘P (or Ctrl+P) → Destination <b>“Save as PDF”</b> → Margins <b>Default</b> →
+  make sure <b>Background graphics</b> is ticked, or the coloured headers won't print.
+  This box won't appear in the PDF.
+</div>
+
+</body>
+</html>

@@ -2,14 +2,14 @@
   "expo": {
     "name": "PawGrade",
     "slug": "pawgrade",
-    "version": "1.9.0",
+    "version": "1.9.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "petscan",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "buildNumber": "16",
+      "buildNumber": "18",
       "bundleIdentifier": "com.kyle.petscan",
       "supportsTablet": true,
       "infoPlist": {

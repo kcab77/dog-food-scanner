@@ -60,3 +60,16 @@ _icloud-duplicates/
 
 # Archived dormant projects (kept on disk, not in git)
 _archive/
+
+# Raw source transcripts (YouTube/podcast) — personal study copies of other
+# people's copyrighted words. Never committed, never ingested into Pinecone.
+# Kyle's own notes derived from these live in the Obsidian vault instead.
+docs/research/transcripts/
+
+# Full-resolution source infographics (~38 MB). The app ships the compressed
+# JPEGs in assets/images/ instead. Originals stay on disk, out of git history.
+/Canine_Omega_Fatty_Acids_Guide.png
+/Kibble_vs_Whole_Pet_Food.png
+/Medicinal_Mushroom_Guide_for_Dogs.png
+/Medicinal_Mushrooms_for_Pet_Health.png
+/Holistic_Canine_Heart_Health_Guide.pdf

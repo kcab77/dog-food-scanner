@@ -4,6 +4,7 @@ import * as ImageManipulator from "expo-image-manipulator";
 import { router, type Href } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
 import {
+  Image,
     ActivityIndicator,
     Alert,
     KeyboardAvoidingView,
@@ -113,15 +114,15 @@ const HARMFUL_INGREDIENTS: {
   },
   {
     term: "tbhq",
-    severity: "severe",
+    severity: "moderate",
     reason:
-      "Some animal studies have associated TBHQ with immune system concerns and tumor development at high doses. It is banned in several countries for use in food",
+      "⚠️ Cited honestly: TBHQ is a synthetic antioxidant preservative. The concerns come from rodent feeding studies at high doses reporting immune effects and, in some work, precursor stomach lesions — and several countries restrict its use in human food. What we have NOT found is canine data at pet-food inclusion levels. So this is rodent evidence plus a regulatory signal, not demonstrated harm to dogs. Our position: prefer foods preserved with mixed tocopherols instead, because a better option exists — not because harm to dogs has been shown.",
   },
   {
     term: "sodium nitrite",
-    severity: "severe",
+    severity: "moderate",
     reason:
-      "Research suggests sodium nitrite can form nitrosamines during digestion, some of which have been associated with cancer risk in animal studies",
+      "⚠️ Mechanism, stated honestly: sodium nitrite can react with amines under stomach conditions to form nitrosamines, several of which are established carcinogens in animal studies. That chemistry is real and well described. What's missing is the dose question — how much actually forms at pet-food inclusion levels, and whether it reaches amounts that matter in a dog. Nobody has measured that in dogs. Also worth knowing vitamin C inhibits nitrosamine formation, which is why cured human foods often include it. Our position: a preservative worth avoiding on mechanism, not a demonstrated canine harm.",
   },
   {
     term: "sodium metabisulfite",
@@ -131,21 +132,21 @@ const HARMFUL_INGREDIENTS: {
   },
   {
     term: "potassium sorbate",
-    severity: "moderate",
+    severity: "mild",
     reason:
-      "Some in vitro studies have suggested potential DNA-damaging effects. While generally regarded as safe at low levels, some pet nutrition researchers consider it unnecessary in pet food",
+      "The in vitro evidence is real and specific. Mamur et al. (Toxicology in Vitro, 2010) exposed human lymphocytes to potassium sorbate and found significant chromosomal aberrations at 500-1000 µg/ml, elevated sister-chromatid exchanges from 125 µg/ml, and DNA strand breaks at every concentration tested. ⚖️ But the in vivo picture does not follow it. EFSA's 2015 re-evaluation reviewed exactly these findings, concluded that live-animal studies did NOT confirm genotoxicity at realistic exposure, and maintained an acceptable daily intake of 3 mg/kg body weight. The concentrations used in those cell studies are in the 0.5-2 mM range, which dietary intake doesn't reach — potassium sorbate is metabolised much like a fatty acid. There is one more specific concern worth knowing: potassium sorbate reacting with ASCORBIC ACID in the presence of an IRON salt produces mutagenic decomposition products. Pet foods routinely contain all three. That interaction is a better reason for caution than the raw cell data. Our position: a preference against, not a demonstrated harm — and stronger where vitamin C and an iron source appear on the same label.",
   },
   {
     term: "calcium propionate",
     severity: "mild",
     reason:
-      "Some animal behavior researchers have explored possible links between propionate exposure and behavioral changes. It is considered a lower-concern preservative but unnecessary in quality pet food",
+      "The behavioural claim traces to two places, and both need their caveats stated. FIRST, MacFabe's rat work: propionic acid produced repetitive behaviour, hyperactivity, impaired social interaction and seizure activity within minutes — but it was delivered by INTRACEREBROVENTRICULAR INJECTION, straight into the fluid around the brain. That is a model of what propionate does to a brain, not evidence about what eating it does. Anyone citing those rats as a reason to avoid a preservative in food has skipped the most important line of the methods. SECOND, Dengate & Ruben (Journal of Paediatrics and Child Health, 2002): 27 children in a double-blind placebo-controlled crossover, fed four slices of bread daily for three days. Fourteen showed worse irritability, restlessness, inattention and sleep disturbance on the preservative. That is a genuine controlled trial — but small, and the children were pre-selected as responders to an elimination diet, so it describes a sensitive subgroup rather than the general population. THIRD, and most relevant here: there is no canine data at all. Our position: a low-concern preservative that a good food doesn't need, flagged for that reason rather than because harm to dogs has been shown. It hasn't been studied.",
   },
   {
     term: "menadione",
-    severity: "severe",
+    severity: "moderate",
     reason:
-      "Menadione is synthetic vitamin K3. The mechanism of concern is well established: it generates reactive oxygen species and depletes glutathione, causing oxidative stress that can damage red blood cells and liver cells — the route to hemolytic anemia. The FDA has banned it from over-the-counter human supplements, and doses as low as 10 mg have been linked to hemolytic anemia in susceptible people. ⚖️ In fairness: the FDA does permit it in animal feed, and over 50+ years of use there are no published reports of nutritional toxicity in dogs at pet-food inclusion levels — the studies showing harm used doses orders of magnitude higher, often injected or force-fed. Worth knowing too that neither K1 nor K2 is approved for pet food, so a manufacturer wanting to supplement vitamin K has no alternative. Our position: the mechanism and the human ban justify preferring foods without it, especially since dogs on a whole-food diet get K1 from plants and K2 from animal sources. We don't claim it has been shown to harm dogs at label doses, because it hasn't.",
+      "Menadione is synthetic vitamin K3. The mechanism of concern is well established: it generates reactive oxygen species and depletes glutathione, causing oxidative stress that can damage red blood cells and liver cells — the route to hemolytic anemia. The FDA has banned it from over-the-counter human supplements, and doses as low as 10 mg have been linked to hemolytic anemia in susceptible people. ⚖️ In fairness: the FDA does permit it in animal feed, and over 50+ years of use there are no published reports of nutritional toxicity in dogs at pet-food inclusion levels — the studies showing harm used doses orders of magnitude higher, often injected or force-fed. Worth knowing too that neither K1 nor K2 is approved for pet food, so a manufacturer wanting to supplement vitamin K has no alternative. AAFCO does recognise menadione sodium bisulfite complex as a vitamin K source while noting that natural forms are preferred where available — which is roughly where the evidence sits. It's also worth knowing dogs synthesise vitamin K in the gut, so supplementation is rarely necessary in the first place; its presence often says more about the formulation being cheap than about the dog needing K. Our position: the mechanism and the human ban justify preferring foods without it, especially since dogs on a whole-food diet get K1 from plants and K2 from animal sources. We don't claim it has been shown to harm dogs at label doses, because it hasn't.",
   },
   {
     term: "copper sulfate",
@@ -157,23 +158,23 @@ const HARMFUL_INGREDIENTS: {
     term: "sodium selenite",
     severity: "severe",
     reason:
-      "Sodium selenite is inorganic selenium, and selenium has one of the narrowest safe ranges of any nutrient — the gap between adequate and toxic is small enough that form matters. Unlike organic selenomethionine, which the body incorporates into proteins and regulates, inorganic selenite generates free radicals during metabolism, causing oxidative stress in liver and kidney tissue. Research published in Biological Trace Element Research links long-term inorganic selenium accumulation to progressive kidney tubule damage that develops before any obvious clinical signs. Kyle's own formulation rule applies here: prefer selenium yeast (selenomethionine) over sodium selenite.",
+      "Sodium selenite is inorganic selenium, and selenium has one of the narrowest safe ranges of any nutrient. AAFCO sets the adult minimum at 0.35 mg/kg dry matter and the maximum at 2.0 — a window of only about 5.7x. For comparison, most nutrients have margins in the hundreds. That narrowness is precisely why the FORM matters here and matters less elsewhere. Two measured differences separate the forms. ABSORPTION: inorganic selenite is absorbed at roughly 50-60%, against 70-85% for organic selenomethionine and selenium yeast — so more selenite must be added to deliver the same nutrition, eating into an already tight margin. TOXICITY: comparative work found sodium selenite around 2.94x more toxic than selenium yeast, and organic forms test as less toxic than inorganic selenite and selenate generally. Mechanistically, selenomethionine is incorporated into proteins and released under regulation, whereas inorganic selenite generates free radicals during metabolism and causes oxidative stress in liver and kidney tissue; work in Biological Trace Element Research links long-term inorganic accumulation to kidney tubule damage that precedes any visible signs. So the case here is stronger than for most flagged ingredients: worse absorption AND higher toxicity AND the narrowest safety window in the profile. Prefer selenium yeast or selenomethionine.",
   },
   {
     term: "zinc oxide",
-    severity: "moderate",
+    severity: "mild",
     reason:
       "Zinc oxide is a poorly absorbed inorganic zinc source. Comparative bioavailability work in dogs (Journal of Nutrition) found plasma zinc significantly higher across a full six-hour period after zinc propionate than after zinc oxide. In-vitro comparison of sources put zinc proteinate highest at about 42% bioaccessibility, against roughly 24% for inorganic zinc sulphate — and the chelated forms were far more resistant to phytic acid, the compound in grains and legumes that binds zinc and blocks absorption. That matters because plant-heavy foods are exactly where zinc is hardest to absorb. Zinc deficiency shows up as crusted, scaling skin around the muzzle, eyes and paw pads. Huskies and Malamutes have a genetic absorption defect that makes the form especially important. Zinc proteinate or amino-acid chelate is the preferable form.",
   },
   {
     term: "dl-methionine",
-    severity: "moderate",
+    severity: "mild",
     reason:
       "⚪ Synthetic form, generally safe: DL-methionine is a synthetic amino acid added to meet methionine requirements and, in some foods, to acidify urine. It's a legitimate and widely used feed additive with no evidence of harm at label levels. The 'DL-' indicates a racemic mixture — dogs use the L-form directly and convert the D-form, which they do adequately. Flagged as a formulation signal rather than a hazard: its presence usually indicates plant-heavy protein that needed topping up, since meat-based diets generally supply enough methionine on their own.",
   },
   {
     term: "corn syrup",
-    severity: "severe",
+    severity: "mild",
     reason:
       "⚪ Mechanistic, not trial-based: corn syrup is refined sugar added for palatability. Dogs have no dietary requirement for sugar, and adding it to a food serves the manufacturer (dogs eat more of it) rather than the dog. The concerns follow from what sugar does generally — spikes in blood glucose, a contribution to obesity and dental disease, and feeding of oral and gut yeast — rather than from controlled canine trials on corn syrup specifically. Its presence is also a signal: a food good enough to eat on its own merits doesn't need sweetening.",
   },
@@ -181,17 +182,17 @@ const HARMFUL_INGREDIENTS: {
     term: "corn gluten meal",
     severity: "mild",
     reason:
-      "Corn gluten meal is a plant-based protein concentrate with lower biological value for carnivores compared to animal-based proteins. Pet nutrition researchers note it is sometimes used to artificially inflate crude protein percentages on labels",
+      "⚪ Formulation signal: corn gluten meal is a concentrated plant protein. It counts toward the crude protein figure on the guaranteed analysis without contributing meat — and since that figure doesn't distinguish sources, a food can advertise strong protein while much of it is plant-derived and lower in the amino acids dogs use most. That's a labelling limitation, not a toxicity claim. No canine harm has been shown at label levels.",
   },
   {
     term: "wheat gluten",
-    severity: "moderate",
+    severity: "mild",
     reason:
       "⚪ Mechanistic / formulation signal: wheat gluten is concentrated plant protein used to raise the crude protein figure on the guaranteed analysis without meat. That matters because the protein percentage on a label doesn't distinguish sources, so a food can advertise strong protein while much of it is plant-derived and lower in the amino acids dogs need most. Also a wheat allergen source. Historical note: wheat gluten was the vehicle for melamine contamination in the 2007 recalls, though the melamine was the adulterant, not the gluten.",
   },
   {
     term: "soy protein isolate",
-    severity: "moderate",
+    severity: "mild",
     reason:
       "⚪ Mechanistic / formulation signal: soy protein isolate is highly concentrated plant protein used to boost the protein figure cheaply. Two considerations. It contributes to the crude protein number without contributing meat, so the label overstates the quality of the protein. And soy contains phytates, which bind zinc and other minerals and reduce their absorption — relevant because zinc absorption is already the weak point in plant-heavy foods. Soy is also a recognised allergen in dogs, though less common than chicken or beef.",
   },
@@ -205,19 +206,19 @@ const HARMFUL_INGREDIENTS: {
     term: "peanut hulls",
     severity: "mild",
     reason:
-      "Peanut hulls are an agricultural waste byproduct with negligible nutritional value. Pet nutrition researchers consider their inclusion an indicator of low quality formulation focused on reducing cost rather than nutrition",
+      "⚪ Formulation signal: peanut hulls are the shells left over from peanut processing, used as cheap insoluble fibre. They add bulk and very little else. Like powdered cellulose, they're poorly fermentable, so they don't feed the gut the way beet pulp, pumpkin or chicory do. Flagged as a cost-driven filler choice rather than a hazard — no canine harm has been demonstrated.",
   },
   {
     term: "brewer rice",
     severity: "mild",
     reason:
-      "Brewer rice consists of small broken rice fragments left over from the beer brewing process. Pet nutrition researchers consider it a low quality carbohydrate filler with minimal nutritional benefit compared to whole grains",
+      "⚪ Formulation signal: brewers rice is the small broken fragments left after milling — the pieces too small to sell for human food. It's a perfectly digestible starch, so this isn't a safety flag. What it lacks is the bran and germ that make whole grains worth eating, so it delivers calories with little of the fibre or micronutrients. Its presence usually says the recipe was built to a price.",
   },
   {
     term: "ground corn",
     severity: "mild",
     reason:
-      "Ground corn is a high glycemic carbohydrate with relatively low digestibility for dogs and cats. Pet nutrition researchers note it is primarily used as an inexpensive calorie source rather than for nutritional benefit",
+      "⚪ Formulation signal, not a hazard: ground corn is an inexpensive source of bulk calories and starch, which extrusion physically requires to form a kibble. We're not going to repeat the common claim that it's poorly digested — cooked, ground corn is actually digested well by dogs, and saying otherwise would be wrong. The honest criticism is what it displaces: every percentage point of corn is a point not coming from meat. Judge it on that, and on where it sits in the ingredient list.",
   },
   {
     term: "ground wheat",
@@ -229,7 +230,7 @@ const HARMFUL_INGREDIENTS: {
     term: "grain fragments",
     severity: "mild",
     reason:
-      "Grain fragments are the leftover pieces from grain milling after the more nutritious portions have been removed for human food. Pet nutrition researchers consider them low quality filler ingredients",
+      "⚪ Formulation signal: 'grain fragments' is an unnamed collective term for milling leftovers — and the unnamed part is the real problem. It doesn't tell you which grain, which portion, or from what batch, so you can't assess it and it can change between production runs without the label changing. Not a demonstrated hazard; a transparency one. A food confident in its ingredients names them.",
   },
   {
     term: "artificial color",
@@ -298,16 +299,52 @@ const HARMFUL_INGREDIENTS: {
       "Some research has associated degraded carrageenan with intestinal inflammation. While food-grade carrageenan is considered different, some veterinary nutritionists recommend avoiding it, particularly for pets with sensitive digestive systems",
   },
   {
+    term: "canola oil",
+    severity: "mild",
+    reason:
+      "⚪ Formulation signal: canola is a cheap plant oil used to hit the fat percentage. It carries far more omega-6 than omega-3, so it pushes the ratio in the wrong direction in a food that is usually already omega-6 heavy. It is typically solvent-extracted and usually from GMO crops. Not toxic — but it is fat that does nothing useful, where fish oil or named animal fat would.",
+  },
+  {
+    term: "vegetable oil",
+    severity: "mild",
+    reason:
+      "⚪ Formulation signal: an unnamed plant oil. Like 'animal fat', the absence of a source means it can change batch to batch depending on commodity prices, and you cannot know the omega-6 to omega-3 ratio you are feeding. Named oils — salmon, sunflower, coconut — tell you what you are getting.",
+  },
+  {
+    term: "soybean",
+    severity: "mild",
+    reason:
+      "⚪ Formulation signal: soybean meal is concentrated plant protein used to raise the crude protein number on the guaranteed analysis without meat. The protein percentage on a label does not distinguish source, so a food can advertise strong protein while much of it is plant-derived and lower in the amino acids dogs actually need. Soy is also a common allergen and usually a GMO, glyphosate-treated crop. Matters most in the top five.",
+  },
+  {
+    term: "soy protein",
+    severity: "mild",
+    reason:
+      "⚪ Formulation signal: isolated plant protein used to inflate the crude protein figure without meat. Lower in the amino acids dogs need most, and a common allergen. Matters most in the top five ingredients.",
+  },
+  {
+    term: "natural flavor",
+    severity: "mild",
+    reason:
+      "⚪ Transparency signal: 'natural flavor' in pet food is most often animal digest — hydrolysed animal tissue sprayed on the outside of the kibble to make it palatable. It is not required to name the species. The concern is not toxicity, it is that a bag can list an unnamed animal product and disclose nothing about what it was.",
+  },
+  {
+    term: "yeast culture",
+    severity: "mild",
+    reason:
+      "⚪ Formulation signal: yeast culture and hydrolysed yeast are used as cheap palatants — the same job as animal digest. Note the distinction: BREWER'S YEAST is a genuine whole-food source of B vitamins and is not flagged here. It is the processed flavouring forms that signal a food needing help to be eaten.",
+  },
+  {
     term: "meat by-product",
     severity: "moderate",
     reason:
-      "AAFCO defines meat by-products as non-rendered parts other than meat, which may include lungs, spleen, kidneys, brain, and other organs. The lack of species identification makes quality and sourcing difficult to verify",
+      "By-products come from animals that have died — and the source stream includes 4D animals: dead, dying, diseased and disabled. Dr. Andrew Jones, DVM, states this includes roadkill and animals that have been euthanised. The species is never named on the label, so you have no way to know what went into the batch you bought.\n\n⚫ THE EVIDENCE: in February 2018 the FDA and J.M. Smucker recalled over 107 million cans of Gravy Train, Kibbles 'n Bits, Skippy and Ol' Roy after pentobarbital — the drug used to euthanise animals — was found in the food. Smucker confirmed the source was the TALLOW: rendered animal fat. Independent lab testing found 60% of Gravy Train cans sampled came back positive. The FDA states pentobarbital should never be present and any amount makes a product adulterated.\n\nEuthanised animals entered the pet food supply through rendering, a company admitted it, and 107 million cans went out before anyone caught it. AAFCO's written definition says by-products come from SLAUGHTERED animals — 2018 is what that definition is worth in practice.\n\nNote on one point: FDA DNA testing has not found dog or cat material in pet food, so the specific claim that by-products contain euthanised PETS is not something the testing has confirmed.",
   },
   {
     term: "meat by-products",
     severity: "moderate",
     reason:
-      "AAFCO defines meat by-products as non-rendered parts other than meat, which may include lungs, spleen, kidneys, brain, and other organs. The lack of species identification makes quality and sourcing difficult to verify",
+      "By-products come from animals that have died — and the source stream includes 4D animals: dead, dying, diseased and disabled. Dr. Andrew Jones, DVM, states this includes roadkill and animals that have been euthanised. The species is never named on the label, so you have no way to know what went into the batch you bought.\n\n⚫ THE EVIDENCE: in February 2018 the FDA and J.M. Smucker recalled over 107 million cans of Gravy Train, Kibbles 'n Bits, Skippy and Ol' Roy after pentobarbital — the drug used to euthanise animals — was found in the food. Smucker confirmed the source was the TALLOW: rendered animal fat. Independent lab testing found 60% of Gravy Train cans sampled came back positive. The FDA states pentobarbital should never be present and any amount makes a product adulterated.\n\nEuthanised animals entered the pet food supply through rendering, a company admitted it, and 107 million cans went out before anyone caught it. AAFCO's written definition says by-products come from SLAUGHTERED animals — 2018 is what that definition is worth in practice.\n\nNote on one point: FDA DNA testing has not found dog or cat material in pet food, so the specific claim that by-products contain euthanised PETS is not something the testing has confirmed.",
   },
   {
     term: "poultry by-product",
@@ -470,7 +507,7 @@ const HARMFUL_INGREDIENTS: {
     term: "retinyl acetate",
     severity: "mild",
     reason:
-      "Retinyl acetate is synthetic preformed vitamin A, the same category as retinyl palmitate. Excess preformed vitamin A accumulates in the liver and can cause hypervitaminosis A — GI upset first, then lethargy and weakness, and bone changes with chronic overdose. In fairness to the evidence, dogs tolerate vitamin A far better than most species: a 44-week safety evaluation in growing dogs at 100,000 IU per 1,000 kcal found no adverse effects. Treat this as a preference for whole-food vitamin A (liver, egg yolk, fish) rather than as a red flag, with genuine caution reserved for foods stacking liver AND synthetic vitamin A together.",
+      "Retinyl acetate is synthetic preformed vitamin A, the same category as retinyl palmitate. Excess preformed vitamin A accumulates in the liver and can cause hypervitaminosis A — GI upset first, then lethargy and weakness, and bone changes with chronic overdose. In fairness to the evidence, dogs tolerate vitamin A far better than most species. In a 44-week safety evaluation, 49 puppies — Labrador Retrievers and Miniature Schnauzers — were fed 5,000, 12,500, 75,000 or 100,000 IU per 1,000 kcal from weaning to one year. Even the highest intake, twenty times the lowest, produced no adverse effects, and the authors proposed 100,000 IU per 1,000 kcal as the safe upper limit for growth diets (Safety evaluation of vitamin A in growing dogs, British Journal of Nutrition, 2012). Treat this as a preference for whole-food vitamin A (liver, egg yolk, fish) rather than as a red flag, with genuine caution reserved for foods stacking liver AND synthetic vitamin A together — and note the same logic applies to fish oil: choose a body oil over a second cod liver oil.",
   },
   {
     term: "pyridoxine hydrochloride",
@@ -493,6 +530,46 @@ const SEVERITY_PENALTIES: Record<string, number> = {
   toxic: 28,
 };
 
+/**
+ * Per-ingredient impact, for DISPLAY only — it does not compute or alter the
+ * score. It reads the same inputs the scorer already produced.
+ *
+ * ⚠️ An honest limitation worth preserving: only HARMFUL ingredients carry a
+ * true per-ingredient score. Carb load, vitamin load, legume clustering and
+ * vague protein sourcing are computed in aggregate, and format bonus, TAPF and
+ * AAFCO status are properties of the FOOD, not of any ingredient.
+ *
+ * So the negative numbers here are exact — they are the same points the scorer
+ * subtracted, using identical position scaling. The positives are deliberately
+ * qualitative, because assigning a number to "kale" would be a number I made up,
+ * and the column wouldn't add up to the total. Better an honest gap than a
+ * fabricated one.
+ */
+function ingredientImpact(
+  item: string,
+  index: number,
+  flagged: { name: string; severity: string; position?: number }[],
+  good: { omega3: string[]; fiber: string[]; probiotic?: string[] },
+  meals: string[],
+  legumes: string[],
+): { points: number | null; tier: "harm" | "good" | "watch" | "neutral"; label: string } {
+  const harm = flagged.find((f) => f.name === item);
+  if (harm) {
+    // Identical to the scorer: base penalty, scaled by position, clamped 1–10.
+    const base = SEVERITY_PENALTIES[harm.severity] || 8;
+    const pos = harm.position ?? index;
+    const mult = pos < 5 ? 1.0 : pos < 10 ? 0.65 : pos < 20 ? 0.4 : 0.2;
+    const p = Math.min(10, Math.max(1, Math.round(base * mult)));
+    return { points: -p, tier: "harm", label: harm.severity };
+  }
+  if (good.omega3.includes(item)) return { points: null, tier: "good", label: "omega-3 source" };
+  if (good.fiber.includes(item)) return { points: null, tier: "good", label: "fibre source" };
+  if (good.probiotic?.includes(item)) return { points: null, tier: "good", label: "probiotic" };
+  if (meals.includes(item)) return { points: null, tier: "watch", label: "unnamed meal" };
+  if (legumes.includes(item)) return { points: null, tier: "watch", label: "legume" };
+  return { points: null, tier: "neutral", label: "" };
+}
+
 const SEVERITY_COLORS: Record<string, string> = {
   mild: t.high,
   moderate: t.high,
@@ -503,26 +580,26 @@ const SEVERITY_COLORS: Record<string, string> = {
 const SUPPLEMENT_RECS = [
   {
     emoji: "🦠", name: "Probiotics", color: t.accents.probiotic.fg, borderColor: t.accents.probiotic.fg, bg: t.accents.probiotic.bg,
-    body: "Multi-strain probiotics support gut microbiome diversity, immune function, and stool quality. Look for at least 1 billion CFU with Lactobacillus and Bifidobacterium strains. Most beneficial for dogs on kibble, after antibiotics, or with chronic digestive issues.",
-    note: "Pair with fish oil for a synergistic gut + inflammation benefit",
+    body: "Multi-strain probiotics support gut microbiome diversity, immune function, and stool quality. Look for at least 1 billion CFU with Lactobacillus and Bifidobacterium strains — and check whether the CFU count is guaranteed AT EXPIRY or only at manufacture, since live cultures die off in storage. Dog-specific strains are preferable to human formulas. Most beneficial for dogs on kibble, after antibiotics, or with chronic digestive issues.",
+    note: "Fine to give alongside fish oil — they do different jobs (gut vs inflammation). Nobody has tested the combination, so we won't claim they multiply each other.",
     link: "https://amzn.to/4dPRAWP", linkText: "🛒 Shop Probiotics →",
   },
   {
     emoji: "🐟", name: "Fish Oil (Omega-3)", color: t.good, borderColor: t.good, bg: t.goodTint,
-    body: "Wild-caught sardine or anchovy oil reduces inflammation and supports coat, joints, and brain function. Look for triglyceride form — not ethyl ester — and store in fridge after opening to prevent rancidity.",
-    note: "Target: ~20mg EPA+DHA per pound of body weight daily",
+    body: "Wild-caught sardine or anchovy oil reduces inflammation and supports coat, joints and brain function. Look for triglyceride form — not ethyl ester — and refrigerate after opening to prevent rancidity.\n\nTHE NUMBER ON THE BOTTLE IS NOT THE NUMBER THAT MATTERS. A '1,000mg fish oil' softgel is often only about 300mg of EPA+DHA combined. Read the EPA and DHA lines and add them — that's your actual dose, and mistaking one for the other is how most people under-dose this threefold.\n\nTwo different targets, because they're two different jobs:\n\nGENERAL WELLNESS — roughly 20mg EPA+DHA per pound of body weight daily. Comfortably above the NRC adequate intake, and plenty for coat, skin and everyday support.\n\nJOINTS AND ARTHRITIS — the trials used far more. A randomised, double-blind, multicentre trial dosed 69 mg/kg/day for three months and found significant improvement in pain, lameness and joint disease; a synthesis of 23 randomised trials puts efficacy at 60-100 mg/kg/day. That's roughly 30-45mg per pound — about double the wellness dose. The NRC safe upper limit is 370 mg/kg^0.75, so the therapeutic range sits well inside it.\n\nWorked example: a 75lb (34kg) dog. Wellness ≈ 1,500mg. Joints ≈ 2,040-3,400mg. Safe ceiling ≈ 5,200mg. And whatever the food already provides counts toward it — check the guaranteed analysis before adding.",
+    note: "Trial · randomised, in dogs, for osteoarthritis. Wellness ~20mg/lb; joints 60-100 mg/kg.",
     link: "https://amzn.to/4efzKxO", linkText: "🛒 Shop Fish Oil →",
   },
   {
     emoji: "🌊", name: "Green Lipped Mussel", color: t.accents.mussel.fg, borderColor: t.accents.mussel.fg, bg: t.accents.mussel.bg,
-    body: "New Zealand green lipped mussel contains unique omega-3s (ETA) not found in fish oil, plus natural glucosamine and chondroitin. One of the most potent natural anti-inflammatories for joints — ideal for active, senior, or large-breed dogs.",
-    note: "Works synergistically with fish oil for broader omega-3 coverage",
+    body: "New Zealand green lipped mussel contains unique omega-3s (ETA) not found in fish oil, plus natural glucosamine and chondroitin. A systematic review of the canine trials concluded there is 'a moderate amount of evidence' for real clinical benefit in dogs with osteoarthritis — while noting the underlying studies had methodological weaknesses. That's genuinely good for a supplement, and we'd rather tell you the honest strength than oversell it. Buy the plain freeze-dried powder rather than a chew — chews carry starch and glycerin binders you don't need.",
+    note: "Trial · moderate evidence in dogs. Give alongside fish oil if you like — they cover different ground, though no one has tested the pair together.",
     link: "https://amzn.to/4vpJKdX", linkText: "🛒 Shop Green Lipped Mussel →",
   },
   {
     emoji: "❤️", name: "Heart Treats", color: t.accents.heart.fg, borderColor: t.accents.heart.fg, bg: t.accents.heart.bg,
-    body: "Beef or chicken heart is the #1 dietary source of CoQ10 and naturally rich in taurine — critical for cardiac function. Unlike liver, heart is a muscle meat so the organ cap is less strict, but keep all treats under 10% of total diet.",
-    note: "Especially important for breeds with known taurine deficiency concerns",
+    body: "Beef or chicken heart is among the richest dietary sources of CoQ10 and naturally high in taurine — both directly relevant to cardiac function, and taurine is the nutrient at the centre of the grain-free heart conversation. Unlike liver, heart is a muscle meat, so the organ cap is less strict, but keep all treats under 10% of total diet.\n\nOn 'richest source': heart is genuinely at the top of the list among common foods, but we've stopped claiming it's number one — that's a superlative we can't verify against a full comparison.",
+    note: "Whole-food source rather than a trialled intervention — no canine trial has tested heart treats as a treatment.",
     link: "https://amzn.to/4vkvZgs", linkText: "🛒 Shop Heart Treats →",
   },
   {
@@ -533,14 +610,14 @@ const SUPPLEMENT_RECS = [
   },
   {
     emoji: "🌿", name: "Detox & Liver Support", color: t.accents.detox.fg, borderColor: t.accents.detox.fg, bg: t.accents.detox.bg,
-    body: "Dogs are exposed to pesticides, lawn chemicals, and environmental toxins year-round — especially in summer. The liver has to filter all of it. Milk thistle (silymarin) is one of the most well-studied natural liver protectants in dogs, helping the liver detox and regenerate. Pair with turkey tail mushroom for added immune support.",
-    note: "Especially valuable after flea treatments, vaccines, or heavy outdoor exposure",
+    body: "Milk thistle (silymarin) has more canine evidence behind it than most supplements — but it's worth knowing exactly what that evidence is. The dramatic results come from Amanita mushroom poisoning, where dogs given INTRAVENOUS silymarin survived while around 30% of untreated controls died. That's a genuine finding, and it's about an IV drug for acute poisoning, not a daily capsule. For oral use, Twedt et al. (2003) showed a silybin-phospholipid complex raised liver glutathione in dogs, and several small studies report lower ALT and ALP — but these are small, mostly without placebo controls, and no large randomised trial in dogs exists.\n\nSo: good safety record, real mechanism, genuine canine data for liver injury. What has NOT been shown is that it does anything useful as routine 'detox' in a healthy dog. Most valuable where there's actual hepatic stress — known toxin exposure, liver enzyme elevation, or chemotherapy.",
+    note: "Trial · canine evidence for liver injury, mostly IV or small oral studies. No evidence for routine detox in a healthy dog.",
     link: "https://amzn.to/4dZ2ZDT", linkText: "🛒 Shop Detox Support →",
   },
   {
     emoji: "🍃", name: "Four Leaf Rover", color: t.accents.rover.fg, borderColor: t.accents.rover.fg, bg: t.accents.rover.bg,
-    body: "Four Leaf Rover makes research-backed supplements formulated specifically for dogs — including liver support, toxin binders, probiotics, and more. One of the most trusted brands in holistic dog health.",
-    note: "Browse their full line — each product targets a specific need",
+    body: "A dog-specific supplement line worth knowing by product rather than by brand, so here are the ones with a clear job and what the evidence behind each actually is.\n\nYEAST GUARD — herbal antifungal blend for dogs with recurring yeast. Traditional herbal use, not trial-backed in dogs. Note it carries a California Prop 65 warning for goldenseal.\n\nPROTECT / SOIL-BASED PROBIOTICS — spore-forming strains that survive stomach acid better than standard Lactobacillus. Mechanism is sound; canine outcome trials are thin.\n\nLIVER / MILK THISTLE PRODUCTS — silymarin has real canine data for liver injury, though the strongest results are intravenous for mushroom poisoning rather than daily oral use. See the Detox card for the honest version.\n\nMUSHROOM BLENDS — check whether it's FRUITING BODY or mycelium grown on grain. Myceliated grain is largely starch, and the beta-glucans you're paying for are mostly in the fruiting body. This is the single most useful thing to check on any mushroom product, from any brand.\n\nWe earn a commission if you buy through this link, and that's exactly why the descriptions above name what each product does and doesn't have behind it.",
+    note: "Buy by product and by evidence, not by brand. Affiliate link — disclosed.",
     link: "https://amzn.to/43FJ5sK", linkText: "🛒 Shop Four Leaf Rover →",
   },
 ];
@@ -842,6 +919,32 @@ const COPPER_SENSITIVE_BREEDS = [
   "skye terrier",
 ];
 
+// Copper is the ONE nutrient where "AAFCO complete" tells you nothing about the
+// top end — because there is no top end. Worth its own block: this is real,
+// current, contested in the veterinary literature, and almost nobody knows it.
+const COPPER_CEILING_GAP = [
+  {
+    h: "AAFCO has no maximum for copper. It used to.",
+    b: "Until 1997 the ceiling was 71 mg per 1,000 kcal. It was removed after research showed copper OXIDE — the form then in use — is barely absorbed. The industry moved to well-absorbed forms like copper sulfate and copper proteinate, and the upper limit disappeared at the same time. Minimums remain (1.83 mg/1,000 kcal for adults, 3.1 for puppies). There is no maximum at all.\n\nSo a food can carry the complete-and-balanced claim at almost any copper level. For every other nutrient on this app's AAFCO table, that claim bounds both ends. For copper it bounds only the bottom.",
+  },
+  {
+    h: "And the disease tracked the rule change",
+    b: "Clinical opinion is that copper-associated hepatopathy in dogs began rising after 1997, coinciding with the switch in premix copper forms. It is contested enough that a 2021 paper in the Journal of the American Veterinary Medical Association is titled 'Is it time to reconsider current guidelines for copper content in commercial dog foods?' — and AAFCO convened an expert panel on it.\n\nBe precise about what that is: an observed trend and a plausible mechanism, not a proven causal chain. Nobody has run the trial. It is enough to justify caution and not enough to call any particular food unsafe.",
+  },
+  {
+    h: "⚠️ Labradors carry the genetic version",
+    b: "The ATP7B mutation associated with primary copper-associated hepatopathy is a LABRADOR RETRIEVER mutation. Bedlington Terriers are the classic textbook breed (COMMD1), but Labs, Dobermans, Dalmatians, West Highland Whites and Skye Terriers all carry recognised predisposition.\n\nIf you have one of these breeds, copper is the single nutrient where the usual reassurances don't cover you.",
+  },
+  {
+    h: "The check is free and you may already have it",
+    b: "ALT — a liver enzyme — is on every standard blood panel. Copper accumulation raises ALT long before a dog looks unwell, which is how this gets caught.\n\nSo the useful move isn't avoiding liver. It's asking for the ACTUAL NUMBER on your dog's next panel rather than accepting 'everything looked good', and watching whether it drifts upward year over year. A single ALT inside the reference range means little; the same value climbing across three panels means a lot. You can only see that if you have the numbers.",
+  },
+  {
+    h: "What this does and doesn't mean for liver in food",
+    b: "Liver is the densest natural source of copper, which is why raw-feeding models cap it at about 5% of the diet. That convention exists for copper and vitamin A specifically.\n\nBut whole-food copper at a controlled inclusion is not the pattern that drove the trend — that was synthetic premix copper becoming highly bioavailable while the ceiling vanished. Liver stays one of the most valuable ingredients in a bowl. Keep it near 5%, prefer foods that publish their analysis, and if your breed is on the list above, watch the ALT.",
+  },
+];
+
 /**
  * Where omega-6 actually comes from — for explanation, NOT for scoring.
  *
@@ -880,7 +983,7 @@ const ORGAN_PROFILES: {
     limit: "Cap at about 5% of the diet. Vitamin A and copper are both fat-soluble or accumulative, and liver is dense enough in each that more is not better." },
   { term: "heart", label: "Heart", headline: "The taurine and CoQ10 organ",
     carries: "Taurine, CoQ10, B12, riboflavin, iron, phosphorus",
-    note: "Technically a muscle, not an organ — which is why it can be fed far more freely than liver. The best natural taurine source there is, which matters for heart health and is directly relevant to the DCM conversation around legume-heavy diets." },
+    note: "Technically a muscle, not an organ — which is why it can be fed far more freely than liver. The best natural taurine source there is, which matters for heart health and is directly relevant to the DCM conversation around legume-heavy diets.\n\nPORTIONING, BECAUSE THE SIZES ARE WILDLY DIFFERENT: one turkey heart is worth roughly five chicken hearts. A chicken heart averages about 6g; a turkey heart runs somewhere around 25–35g, because a turkey is several times the bird. (The chicken figure is measured; the turkey one is derived from body-size scaling rather than weighed, so treat 1:5 as a working rule for portioning, not a precise conversion.) If you switch between them without adjusting, you'll either massively under- or over-shoot.\n\nIF YOUR DOG'S BREED CARRIES HEART RISK — Dobermans, Great Danes, Boxers, Cocker Spaniels, Irish Wolfhounds, Newfoundlands — adding heart is a reasonable, low-risk thing to do, and it's what the author feeds his own Labrador. Be clear on why, though: heart is the densest natural source of taurine and CoQ10, and taurine deficiency is one established route to dilated cardiomyopathy. What has NOT been tested is whether feeding heart prevents DCM in a predisposed dog — no trial has asked that question. So this is mechanism plus practice, not proven prevention. It's cheap, it's food rather than a supplement, and there's no plausible downside; that's the honest case for it, and it's enough." },
   { term: "kidney", label: "Kidney", headline: "B12 and selenium",
     carries: "B12, riboflavin, iron, selenium, complete amino acid profile",
     note: "Selenium here comes as selenomethionine — the organic, self-regulating form, rather than the sodium selenite added to kibble. 'Like feeds like' in TCVM puts kidney with kidney support.",
@@ -1118,64 +1221,135 @@ const DEFICIENCY_SIGNS: {
   },
 ];
 
+// ── MEDICINAL MUSHROOMS ──────────────────────────────────────────────────────
+// Rewritten 2026-08-22 from Kyle's mushroom research. The previous version was
+// replaced wholesale at his direction — this is the source of truth for the
+// section now. Functional mushrooms as a "Swiss Army knife" supplement:
+// targeted support for immunity, organs and the ageing brain.
+//
+// Two compound families do the work and it's worth knowing which is which,
+// because it decides how a product has to be extracted:
+//   BETA-GLUCANS — polysaccharides that activate and balance the immune system.
+//                  Need HOT WATER extraction.
+//   TERPENES     — cross the blood-brain barrier, act on the nervous system and
+//                  stabilise mast cells. Need ALCOHOL extraction.
 const MEDICINAL_MUSHROOMS: {
   name: string;
   latin: string;
-  tier: "moderate" | "emerging" | "traditional";
   headline: string;
   actives: string;
-  evidence: string;
+  body: string;
   useFor: string;
 }[] = [
   {
-    name: "Turkey Tail", latin: "Trametes versicolor", tier: "moderate",
-    headline: "The only one with a real canine trial",
-    actives: "PSP and PSK (polysaccharopeptides), beta-glucans",
-    evidence: "Brown & Reetz, 2012, Integrative Cancer Therapies (Univ. of Pennsylvania) — 15 dogs with naturally occurring splenic hemangiosarcoma, given PSP at 25, 50 or 100 mg/kg/day. Median time to abdominal metastasis was 112 days versus 30 days in historical controls (p=0.046); the highest-dose group reached a median survival of 199 days, described at the time as the longest reported for this cancer. ⚠️ Small pilot with historical rather than concurrent controls — encouraging, not definitive. In humans, PSK is an approved adjunct cancer therapy in Japan with far larger datasets behind it.",
-    useFor: "Immune support, and the one with genuine standing as a cancer adjunct. Most relevant to haemangiosarcoma-prone breeds and dogs already under oncology care — alongside treatment, never instead of it.",
+    name: "Turkey Tail", latin: "Trametes versicolor",
+    headline: "The cancer fighter",
+    actives: "PSP and PSK (polysaccharopeptides) — the highest beta-glucan content of the group",
+    body: "The powerhouse for immune modulation, and the most famous of the medicinal mushrooms for a reason. It is best known for its role against haemangiosarcoma, where studies show it extends survival times in dogs with this aggressive cancer. It also supports the gut as a prebiotic, and helps regenerate bone marrow — the red and white blood cells that chemotherapy depletes.",
+    useFor: "Cancer support, immune modulation, gut health, and recovery of blood counts during and after chemotherapy.",
   },
   {
-    name: "Reishi", latin: "Ganoderma lucidum", tier: "moderate",
-    headline: "The calming immune modulator",
+    name: "Reishi", latin: "Ganoderma lucidum",
+    headline: "The natural antihistamine",
     actives: "Beta-glucans, triterpenes (ganoderic acids)",
-    evidence: "17+ human randomised trials covering immune modulation and sleep, typically at 1,500–5,400 mg daily. The triterpenes are the calming/liver-supportive fraction and need alcohol extraction; the beta-glucans need hot water — which is why a good product uses both. No canine trials located.",
-    useFor: "Immune balance, anxiety and sleep, liver support. Traditionally the 'calm' mushroom, and the one to pair with a stressed or reactive dog.",
+    body: "Known as the Mushroom of Immortality. It is highly effective for allergies because its terpenes stabilise mast cell membranes — the cells that release histamine — which is what makes it act as a natural antihistamine. It also supports the liver and heart, and has a centering, calming effect on an anxious dog.",
+    useFor: "Allergies and itch, anxiety and reactivity, liver and heart support. The one to reach for in an itchy, wound-up dog.",
   },
   {
-    name: "Lion's Mane", latin: "Hericium erinaceus", tier: "moderate",
-    headline: "The nerve and brain one",
+    name: "Lion's Mane", latin: "Hericium erinaceus",
+    headline: "The brain booster",
     actives: "Hericenones (fruiting body), erinacines (mycelium)",
-    evidence: "The strongest cognitive data of the group. A randomised human trial in adults with mild cognitive impairment showed improved memory scores over 16 weeks. Mechanistically, hericenones and erinacines stimulate nerve growth factor (NGF), which is the plausible route to nerve and cognitive effects. No canine trials located.",
-    useFor: "Cognitive decline in seniors (canine cognitive dysfunction), nerve support and recovery. The one worth considering for an ageing dog showing confusion or night restlessness.",
+    body: "Stimulates Nerve Growth Factor, which makes it the primary choice for canine cognitive dysfunction — dog dementia — and for neurological conditions such as degenerative myelopathy. It also has a long history of use for digestive health, including IBD and gastritis.",
+    useFor: "Cognitive decline and dementia in seniors, nerve and spinal support, and inflammatory gut conditions.",
   },
   {
-    name: "Shiitake", latin: "Lentinula edodes", tier: "moderate",
-    headline: "The everyday immune one",
-    actives: "Lentinan (beta-glucan), eritadenine",
-    evidence: "Lentinan is used as an approved cancer adjuvant in Japan, so the human immune data is real. Eritadenine has cholesterol-lowering activity. Limited but genuine human data; no canine trials located. Also a normal food mushroom, so the safety record is long.",
-    useFor: "General immune support and a whole-food route in — shiitake can simply be cooked and added to food rather than bought as an extract.",
-  },
-  {
-    name: "Maitake", latin: "Grifola frondosa", tier: "emerging",
-    headline: "The blood sugar one",
-    actives: "D-fraction and MD-fraction beta-glucans",
-    evidence: "Limited but real human data on immune activation and glucose metabolism. The D-fraction is the studied component. Preliminary rather than settled; no canine trials located.",
-    useFor: "Immune support, and of most interest where blood sugar regulation matters. Also a food mushroom.",
-  },
-  {
-    name: "Cordyceps", latin: "Cordyceps militaris", tier: "emerging",
-    headline: "The stamina and kidney one",
+    name: "Cordyceps", latin: "Cordyceps militaris",
+    headline: "The kidney guardian",
     actives: "Cordycepin, adenosine, beta-glucans",
-    evidence: "Moderate human results for exercise performance and oxygen utilisation; evidence still emerging and dosing not standardised. Traditional use for kidney support is long-standing but not trial-backed. No canine trials located. Note most commercial product is C. militaris, not the wild C. sinensis of the traditional literature.",
-    useFor: "Energy, stamina and endurance in working or ageing dogs; traditionally used for kidney support.",
+    body: "A vital mushroom for kidney health — it has been shown to lower creatinine and protect the kidneys from damage. It also benefits the lungs, helping with asthma and chronic cough, and acts as an adaptogen that helps the body manage stress and adrenal problems such as Cushing's disease.",
+    useFor: "Chronic kidney disease, respiratory conditions, adrenal and stress support, stamina in working or ageing dogs.",
   },
   {
-    name: "Chaga", latin: "Inonotus obliquus", tier: "emerging",
-    headline: "The antioxidant one",
+    name: "Chaga", latin: "Inonotus obliquus",
+    headline: "The antioxidant powerhouse",
     actives: "Betulinic acid, melanin, beta-glucans, very high polyphenol content",
-    evidence: "Limited human data; most work is in vitro or in animal models, largely on antioxidant capacity. ⚠️ Genuine caution: chaga is high in oxalates, and case reports in people link high-dose long-term use to kidney damage. Not one for a dog with kidney disease or a history of oxalate stones.",
-    useFor: "Antioxidant support. The one to use with the most restraint, and to avoid entirely in kidney-compromised dogs.",
+    body: "One of the most antioxidant-rich foods available. It supports the immune system and fights inflammation and oxidative stress, and is often used for bladder issues, asthma, and as part of a cancer-fighting protocol. Along with reishi it helps harmonise an overactive immune system.",
+    useFor: "Chronic inflammation, oxidative stress, bladder support, and as part of a cancer protocol.",
   },
+  {
+    name: "Maitake", latin: "Grifola frondosa",
+    headline: "The immune specialist",
+    actives: "D-fraction and MD-fraction beta-glucans",
+    body: "Used for immune support, and specifically noted for its potential in treating canine lymphoma. Alongside turkey tail and reishi it stimulates the immune system to target the uncontrolled cell growth behind cancer.",
+    useFor: "Immune support and lymphoma. Also a food mushroom, so it can simply be cooked into the bowl.",
+  },
+  {
+    name: "Shiitake", latin: "Lentinula edodes",
+    headline: "The dental one",
+    actives: "Lentinan (beta-glucan), eritadenine",
+    body: "In addition to immune support, shiitake has anti-gingivitis properties, which makes it useful for dental health — a rare thing to get from a supplement rather than a toothbrush.",
+    useFor: "Everyday immune support and gum health. A normal culinary mushroom, so the cheapest way in.",
+  },
+  {
+    name: "Snow Mushroom", latin: "Tremella fuciformis",
+    headline: "The hydrator",
+    actives: "Tremella polysaccharides",
+    body: "Contains polysaccharides similar to hyaluronic acid, which aid hydration and skin health. It also offers cognitive benefits, and pairs with lion's mane for an ageing brain — including reducing sundowner symptoms in seniors.",
+    useFor: "Dry skin and coat, hydration, and cognitive support in older dogs.",
+  },
+  {
+    name: "Golden Oyster", latin: "Pleurotus citrinopileatus",
+    headline: "The longevity one",
+    actives: "Ergothioneine, beta-glucans",
+    body: "An exceptional source of ergothioneine, a potent antioxidant that supports mitochondrial function and longevity. Mushrooms are far and away the richest dietary source of it, and the oyster family sits at the top of that list.",
+    useFor: "Everyday antioxidant and mitochondrial support, and health span in an ageing dog.",
+  },
+  {
+    name: "Button / Crimini", latin: "Agaricus bisporus",
+    headline: "The one already in your fridge",
+    actives: "Beta-glucans, ergothioneine, conjugated linoleic acid",
+    body: "Even common grocery store mushrooms provide real medicinal value. Consuming just a small amount daily may help prevent certain cancers and support the microbiome. ⚠️ These must be COOKED — sauté or steam for 15–20 minutes to break down the tough cell walls so your dog can actually absorb the nutrients.",
+    useFor: "Daily whole-food immune and microbiome support at grocery-store cost.",
+  },
+];
+
+// Practitioner dosing. Deliberately separated from the species table above,
+// because it comes from a different KIND of source: holistic veterinary practice
+// (Dr. Judy Morgan and others), not from the trials. None of the studies cited
+// above establish a dose for a dog — so presenting these as trial-derived would
+// be dishonest. They're a starting point used in the field, labelled as such.
+const MUSHROOM_DOSING: { level: string; amount: string; note: string }[] = [
+  {
+    level: "Wellness / prevention",
+    amount: "⅛ tsp powder per 10–20 lb, once daily",
+    note: "The everyday amount. Works by accumulation over weeks and months, not by dose — consistency beats quantity here.",
+  },
+  {
+    level: "Moderate illness",
+    amount: "¼ tsp per 20 lb, once daily",
+    note: "Stepped up for an active problem, alongside veterinary treatment rather than instead of it.",
+  },
+  {
+    level: "Serious illness (e.g. cancer)",
+    amount: "¼–½ tsp twice daily, or up to 100 mg per 10 lb",
+    note: "The therapeutic end, used for acute conditions like cancer or severe infection.",
+  },
+];
+
+// When a dog most benefits. Mushrooms work at any life stage, but these are the
+// three windows where they earn their place.
+const MUSHROOM_WHEN: { stage: string; why: string }[] = [
+  { stage: "Puppyhood", why: "Supports a developing immune system and helps establish a healthy microbiome from the start." },
+  { stage: "Senior years", why: "Combats cognitive decline, supports organ function, and helps prevent cancer." },
+  { stage: "Illness", why: "Higher doses for acute conditions — cancer, severe infection, organ disease." },
+];
+
+// How they work against specific disease patterns.
+const MUSHROOM_DISEASE: { area: string; detail: string }[] = [
+  { area: "Cancer", detail: "Turkey tail, reishi and maitake stimulate the immune system to target uncontrolled cell growth. They also help regenerate the bone marrow — red and white blood cells — that chemotherapy depletes." },
+  { area: "Allergies & autoimmune", detail: "Reishi and chaga harmonise an overactive immune system. Their terpenes stabilise the cells that release histamine, reducing itching and inflammation." },
+  { area: "Cognitive decline", detail: "Lion's mane and tremella support brain health, helping senior dogs stay focused and reducing sundowner symptoms." },
+  { area: "Organ support", detail: "Cordyceps is the primary choice for renal disease. Reishi and chaga are the ones for bladder and liver." },
 ];
 
 const COLLAGEN_TYPES: {
@@ -1257,6 +1431,963 @@ const OMEGA3_TYPES: {
     sources: "Flaxseed, chia, hemp, walnut, canola",
     note: "Essential, and not useless — but a dog must convert it to EPA and DHA, and converts well under 10% (less again to DHA). It counts fully toward the omega-3 figure on a label, which is exactly how a flax-heavy food advertises a great ratio while delivering little usable omega-3.",
   },
+];
+
+
+// ── THE OMEGA GUIDE ──────────────────────────────────────────────────────────
+// Added 2026-08-22 from Kyle's omega research. Replaces the previous omega
+// education wholesale. Companion image: assets/images/omega-guide.jpg.
+//
+// The through-line: dogs cannot make these fats, processed food is drowning in
+// omega-6 and starved of omega-3, and the SOURCE decides how much your dog can
+// actually use.
+
+// Why they matter — what omega-3 is doing in the body, system by system.
+const OMEGA_BENEFITS: { area: string; icon: string; detail: string }[] = [
+  {
+    area: "Skin & coat", icon: "✨",
+    detail: "Highly effective at preventing and managing allergic skin disease. Targets dry skin, hair loss, constant scratching, paw chewing and itching directly.",
+  },
+  {
+    area: "Joints & mobility", icon: "🦴",
+    detail: "Relieves joint pain and reduces inflammation in dogs with arthritis.",
+  },
+  {
+    area: "Brain & cognition", icon: "🧠",
+    detail: "Crucial for senior brain health. Markedly improves signs of cognitive dysfunction — pacing, altered sleep patterns, barking at walls, changed interaction with owners.",
+  },
+  {
+    area: "Heart & organs", icon: "❤️",
+    detail: "Reduces systemic inflammation, decreases the risk of dangerous arrhythmias, and lowers high triglycerides. Normalises fat metabolism, which makes omega-3 highly beneficial for pancreatitis and fatty liver disease.",
+  },
+  {
+    area: "Gut lining", icon: "🛡️",
+    detail: "EPA and DHA embed directly into the cell walls of the gut, reinforcing the lining like a strong mesh strainer. That's what stops toxic substances passing through and causing leaky gut and the immune imbalance that follows.",
+  },
+  {
+    area: "Cancer", icon: "🎗️",
+    detail: "Acts as a receptor agonist that decreases inflammatory responses, improves chemotherapy efficacy, and enhances survival and quality of life. DHA can also be directly cytotoxic to cancer cells — growing in acidic microenvironments they take in too much DHA and essentially engorge themselves to death.",
+  },
+];
+
+// Source comparison. This is the section that actually changes what someone buys.
+const OMEGA_SOURCES: {
+  name: string;
+  kind: "marine" | "plant" | "shellfish";
+  verdict: "best" | "good" | "caution";
+  headline: string;
+  detail: string;
+}[] = [
+  {
+    name: "Krill oil", kind: "marine", verdict: "best",
+    headline: "The most bioavailable, and the cleanest",
+    detail: "Significantly more bioavailable and more easily absorbed in the intestinal tract than standard fish oil — so you need a much lower dose for the same therapeutic effect. Krill sits very low on the food chain, so it has virtually no detectable toxins, and it contains only moderate, safe levels of vitamin A, meaning no toxicity risk.",
+  },
+  {
+    name: "Fish oil", kind: "marine", verdict: "good",
+    headline: "Effective, but it comes with rules",
+    detail: "A direct, effective source of EPA and DHA for general systemic health. But it carries handling requirements green-lipped mussel doesn't: contamination risk from mercury and PCBs when sourced from higher up the food chain, rapid oxidation, and a bleeding-time effect that matters before surgery. Buy one verified as tested for contaminants, or use a lower food-chain option like krill.",
+  },
+  {
+    name: "Algal oil", kind: "marine", verdict: "best",
+    headline: "The sustainable DHA source",
+    detail: "Exceptionally heavy in DHA and sourced directly from the algae at the very bottom of the food chain — the same algae the fish eat. Highly direct, pure and sustainable, with no toxin accumulation. The strongest choice where brain and eye health is the goal.",
+  },
+  {
+    name: "Green-lipped mussel", kind: "shellfish", verdict: "best",
+    headline: "The joint and mobility specialist",
+    detail: "Heavily favoured in canine therapeutic formulations as a specialised joint and mobility aid, typically paired with deer antler velvet, chondroitin and ginseng to target heart health and severe mobility issues in senior dogs. Sits low on the food chain, so virtually no toxins — and it doesn't carry fish oil's storage and surgical cautions.",
+  },
+  {
+    name: "Ahiflower oil", kind: "plant", verdict: "good",
+    headline: "The plant option that actually works",
+    detail: "The answer for a dog who can't tolerate marine sources. Unlike flax it contains SDA (stearidonic acid), which bypasses the conversion bottleneck and converts to EPA four times better than the ALA in flaxseed. Sustainable and plant-based.",
+  },
+  {
+    name: "Flax · sesame · sunflower", kind: "plant", verdict: "caution",
+    headline: "The conversion bottleneck",
+    detail: "Dogs lack the efficient biological pathways needed to convert plant-based ALA into the active forms EPA and DHA. A food listing flaxseed as its omega-3 source has not given your dog meaningful EPA or DHA. Marine sources providing direct, pre-formed EPA and DHA are far more biologically valuable.",
+  },
+  {
+    name: "Cod liver oil", kind: "marine", verdict: "caution",
+    headline: "⚠️ Vitamin A toxicity risk",
+    detail: "Made from the LIVER of the fish, where vitamins are heavily concentrated. Using cod liver oil as a general omega-3 source carries a high risk of vitamin A toxicity — malaise, peeling skin, tremors, convulsions, paralysis, and even death. Salmon and krill oils contain safe, moderate levels. Do not use cod liver oil as your everyday omega source.",
+  },
+];
+
+// Dosing, straight off the guide.
+const OMEGA_DOSING: { level: string; amount: string }[] = [
+  { level: "Standard health (EPA/DHA)", amount: "30–60 mg per pound of body weight" },
+  { level: "Therapeutic (arthritis / inflammation)", amount: "1,000 mg of oil per 10 lb of body weight" },
+  { level: "Krill oil", amount: "500 mg per 20 lb of body weight, daily" },
+  { level: "Fish oil", amount: "1,000 mg per 20 lb of body weight, daily" },
+];
+
+// The safety-first protocol. Every one of these has a real consequence attached.
+const OMEGA_SAFETY: { rule: string; icon: string; detail: string }[] = [
+  {
+    rule: "The freshness rule — a 4-week window", icon: "🕐",
+    detail: "Oils oxidise and become rancid quickly, and rancid oil is highly toxic — it causes the very inflammation and bodily damage you're trying to treat. Buy smaller bottles, use within 4 weeks of opening, and discard immediately if a strong fishy odour develops.",
+  },
+  {
+    rule: "Storage and packaging matter", icon: "🧊",
+    detail: "Keep it cool and dark. Refrigerate once opened. Store in dark glass or brushed aluminium — never plastic, which can leach chemicals into the oil.",
+  },
+  {
+    rule: "Stop 7–14 days before surgery", icon: "🩺",
+    detail: "Fish oil decreases platelet stickiness and delays clotting time, making it a modest blood thinner. It must be stopped 7 to 14 days before any scheduled surgery to prevent excess bleeding.",
+  },
+  {
+    rule: "Give it with fatty food", icon: "🍽️",
+    detail: "Always administer omega-3 with some food in the stomach — specifically food containing healthy fats, such as safflower oil. This markedly increases absorption.",
+  },
+];
+
+// How much EPA+DHA each fish actually carries, per 100 g of flesh. The reason
+// this table exists: "feed fish" is useless advice when the spread between the
+// best and worst choice is fifteen-fold. Figures are approximate — fat content
+// varies with season, wild vs farmed, and water temperature — but the ORDER is
+// stable and that's what a decision needs.
+//
+// Mercury is tracked separately because the two don't correlate: the highest
+// omega-3 fish are mostly LOW mercury, and the worst mercury offenders are
+// mediocre omega-3 sources. There is no trade-off to manage — the good choices
+// are good on both axes.
+const FISH_EPA_DHA: {
+  fish: string;
+  mg: string;
+  mercury: "low" | "moderate" | "high";
+  verdict: "best" | "good" | "limited";
+  note: string;
+}[] = [
+  {
+    fish: "Mackerel (Atlantic)", mg: "2,670", mercury: "low", verdict: "best",
+    note: "The richest common fish there is, and low in mercury. ⚠️ ATLANTIC mackerel only — KING mackerel is a completely different fish and one of the highest-mercury species in the sea. The names are close enough that this mix-up is common and it genuinely matters.",
+  },
+  {
+    fish: "Salmon (wild sockeye)", mg: "2,150", mercury: "low", verdict: "best",
+    note: "Excellent, and the astaxanthin that makes it red is a potent antioxidant in its own right. Wild beats farmed here — farmed salmon are raised on grain-based feed and carry noticeably more omega-6.",
+  },
+  {
+    fish: "Herring", mg: "1,730", mercury: "low", verdict: "best",
+    note: "Underrated and cheap. Small, short-lived, oily — everything you want. Often sold pickled, which adds salt; look for plain.",
+  },
+  {
+    fish: "Sardines", mg: "1,480", mercury: "low", verdict: "best",
+    note: "The most practical option for most owners: shelf-stable, cheap, portion-sized, and eaten whole so you get bone calcium and organ nutrients alongside the oil. Choose water-packed with no added salt.",
+  },
+  {
+    fish: "Anchovies", mg: "1,400", mercury: "low", verdict: "best",
+    note: "Tiny and short-lived, which is why nearly every high-potency fish oil is built from them. Whole anchovies are usually heavily salted — the oil is the practical form.",
+  },
+  {
+    fish: "Rainbow trout", mg: "~1,000–1,250", mercury: "low", verdict: "good",
+    note: "A solid mid-tier option. Freshwater, farmed responsibly in most places, and mild enough that picky dogs accept it.",
+  },
+  {
+    fish: "Tuna (albacore/white)", mg: "~700–1,000", mercury: "high", verdict: "limited",
+    note: "Decent omega-3, but albacore is a large predatory fish that accumulates mercury for years. The omega-3 doesn't justify the exposure when sardines deliver more for less risk. Occasional is fine; daily is not.",
+  },
+  {
+    fish: "Tuna (canned light)", mg: "~150–300", mercury: "moderate", verdict: "limited",
+    note: "The worst of both worlds — a fraction of the omega-3 of sardines, with more mercury. Popular because it's familiar, not because it's good. There's no reason to choose this over sardines.",
+  },
+  {
+    fish: "Cod", mg: "~175", mercury: "low", verdict: "limited",
+    note: "A lean whitefish — fine protein, negligible omega-3. Note this is the FLESH: cod LIVER oil is a different product entirely, concentrated in omega-3 but also in vitamin A and D, which accumulate.",
+  },
+];
+
+// ── DEFICIENCY CHECKLIST ─────────────────────────────────────────────────────
+// Organised by WHAT AN OWNER SEES, not by nutrient — because nobody notices
+// "zinc deficiency", they notice crusting around the muzzle. A nutrient-first
+// list only works for someone who already suspects the answer.
+//
+// Companion to DEFICIENCY_SIGNS, which stays nutrient-first for reference.
+//
+// urgency: "urgent" = today · "soon" = book an appointment · "watch" = mention
+// it at the next visit and look for a pattern first.
+const DEFICIENCY_CHECKLIST: {
+  area: string;
+  emoji: string;
+  signs: { see: string; likely: string; urgency: "urgent" | "soon" | "watch"; note: string }[];
+}[] = [
+  {
+    area: "Brain & nerves", emoji: "🧠",
+    signs: [
+      {
+        see: "Wobbling, seizures, head tilt, circling, disorientation",
+        likely: "Thiamine (B1)", urgency: "urgent",
+        note: "The one genuine emergency on this whole list. Thiamine deficiency damages the brain and can kill, but it reverses fast if caught. Causes: sulfite-preserved meat rolls, a diet built mostly on raw fish, or heavily processed food without enough added back. Don't wait to see if it settles.",
+      },
+      {
+        see: "Weakness in the back end, wobbly gait, muscle tremors",
+        likely: "Vitamin E, B12", urgency: "soon",
+        note: "Slow-developing rather than sudden. Worth distinguishing from arthritis and from normal age — a deficiency version usually comes with coat or energy changes too.",
+      },
+    ],
+  },
+  {
+    area: "Coat & skin", emoji: "🐕",
+    signs: [
+      {
+        see: "Dull, dry, brittle coat · flaking · more shedding than usual",
+        likely: "Omega-3, omega-6, vitamin E", urgency: "watch",
+        note: "The most common thing on this list AND the most over-diagnosed. Season, bathing, sun, swimming and allergies all cause exactly this. If a dog is otherwise well, try 8 weeks of fish oil before assuming anything — that's both the likeliest fix and the cheapest test.",
+      },
+      {
+        see: "Crusting and scaling AROUND THE MUZZLE, EYES, EARS — symmetric, often with hair loss",
+        likely: "Zinc", urgency: "soon",
+        note: "This specific pattern is what zinc deficiency looks like: FACE FIRST, both sides equally, then footpads and pressure points. Crusty ELBOWS on their own are almost always just a callus from lying on hard floors — that's not this. Northern breeds are most prone.",
+      },
+      {
+        see: "Coat colour fading — black going rusty, dark going pale",
+        likely: "Copper", urgency: "watch",
+        note: "Copper is needed to make the pigment in dark fur, so a genuine shortage shows as colour loss. Sun bleaching does the same thing and is far more common — check whether it's only the sun-exposed areas.",
+      },
+      {
+        see: "Cuts and scrapes healing slowly",
+        likely: "Zinc, protein", urgency: "watch",
+        note: "Rarely appears alone. If healing is slow AND the coat is poor AND there's crusting, that's a more meaningful cluster than any one sign.",
+      },
+    ],
+  },
+  {
+    area: "Energy & muscle", emoji: "⚡",
+    signs: [
+      {
+        see: "Pale gums, tiring quickly, weakness",
+        likely: "Iron, B12, copper", urgency: "soon",
+        note: "Pale gums means anaemia until proven otherwise, and anaemia has causes far more common than diet — bleeding, parasites, tick disease. Check the gums against your own; they should be bubblegum pink.",
+      },
+      {
+        see: "Muscle loss over the spine and hind end despite eating well",
+        likely: "Protein, vitamin E", urgency: "soon",
+        note: "Some muscle loss is normal with age. Losing it while eating normally is not, and it's worth a vet visit for reasons beyond nutrition.",
+      },
+    ],
+  },
+  {
+    area: "Heart", emoji: "❤️",
+    signs: [
+      {
+        see: "Coughing at night, tiring on walks he used to manage, fainting after excitement",
+        likely: "Taurine", urgency: "urgent",
+        note: "Taurine-deficient heart disease (DCM) is reversible if caught early and fatal if it isn't. Highest risk on legume-heavy grain-free food, in Goldens, and on lamb-and-rice diets. Heart meat and organ-rich diets are protective. Coughing plus exercise intolerance together is a same-week vet call.",
+      },
+    ],
+  },
+  {
+    area: "Bones & joints", emoji: "🦴",
+    signs: [
+      {
+        see: "Limping with no injury · reluctance to jump · bowed legs in a puppy",
+        likely: "Calcium, vitamin D, Ca:P imbalance", urgency: "urgent",
+        note: "In a GROWING dog this is an emergency — skeletal damage from an all-meat diet becomes permanent quickly. In an adult it develops slowly. The classic cause is home-cooked food with no calcium source, since muscle meat is nearly calcium-free and phosphorus-rich.",
+      },
+    ],
+  },
+  {
+    area: "Gut & appetite", emoji: "🥣",
+    signs: [
+      {
+        see: "Long-running loose stool with weight loss",
+        likely: "B12, folate, zinc", urgency: "soon",
+        note: "Usually the RESULT of gut disease rather than the cause — a damaged gut stops absorbing B12. Either way it needs looking at, and B12 is easy and cheap to measure.",
+      },
+      {
+        see: "Appetite dropping off for no clear reason",
+        likely: "Thiamine, zinc, B vitamins", urgency: "soon",
+        note: "Non-specific on its own. It matters most as an EARLY sign — appetite often goes before anything visible, especially with thiamine.",
+      },
+    ],
+  },
+  {
+    area: "Whole-body & metabolic", emoji: "⚖️",
+    signs: [
+      {
+        see: "Weight gain on the same food · seeking heat · thinning coat · low energy",
+        likely: "Iodine (thyroid)", urgency: "soon",
+        note: "Both too little AND too much iodine cause thyroid disease — the safe window is narrower than people assume, which is why eyeballing kelp powder is a bad idea. This cluster is worth a T4 test; it's cheap and usually on a senior panel already.",
+      },
+    ],
+  },
+];
+
+// Said before the checklist, deliberately. A list of deficiency signs handed to
+// a worried owner without this framing does more harm than good.
+const DEFICIENCY_CONTEXT = [
+  {
+    h: "Most dogs will never have one",
+    b: "If your dog eats a complete-and-balanced commercial food, true nutrient deficiency is genuinely rare — the profile was formulated to prevent exactly this. This checklist matters most for HOME-COOKED and RAW diets, long-term single-food feeding, dogs with absorption problems, and after months on an unbalanced homemade recipe.",
+  },
+  {
+    h: "Every sign here has commoner explanations",
+    b: "Dry coat is far more often season, bathing, sun, swimming, fleas or allergies than any deficiency. Slow healing is more often age or infection. Pale gums are more often bleeding or parasites. Read this list as 'these are worth ruling out', never as 'this is what it is'.",
+  },
+  {
+    h: "Clusters matter more than single signs",
+    b: "One sign on its own is weak evidence. Dry coat AND slow healing AND crusting at the muzzle together is a pattern worth acting on. A single dull coat in August on a dog who swims is a dog who swims.",
+  },
+  {
+    h: "Blood tests mostly won't answer this",
+    b: "A standard senior panel does NOT include zinc, copper, selenium, iodine, vitamin A, vitamin D or most B vitamins — those need separately ordered assays. And blood levels of many minerals stay normal while body stores fall, because the body pulls from tissue to hold the blood level steady. Vitamin D (25-OH), B12 and taurine are the ones where a test genuinely tells you something.",
+  },
+];
+
+// ── INGREDIENT COMPOSITION DATABASE ──────────────────────────────────────────
+// Per 100 g raw, edible portion. Values are standard food-composition figures
+// (USDA FoodData Central reference ranges).
+//
+// ⚠️ PROVENANCE — READ BEFORE RELYING ON THIS COMMERCIALLY.
+// These are reference-table values entered by hand, not pulled live from a
+// verified database. They are good enough to catch a bowl that is badly short on
+// calcium or choline. They are NOT good enough to certify a diet as complete, and
+// they should be re-verified against USDA FDC record-by-record before any version
+// of this is sold or used to formulate for someone else's dog.
+//
+// Nutrients chosen deliberately: these are the ones the literature says actually
+// fail in home diets. Adding twenty more fields would look more authoritative
+// while catching nothing extra.
+//
+// ca/p/choline in mg · vitD in IU · vitE in mg · zinc in mg · all per 100 g
+const INGREDIENT_DB: {
+  name: string;
+  cat: "meat" | "organ" | "fish" | "egg" | "calcium" | "veg" | "extra";
+  kcal: number; protein: number; fat: number;
+  ca: number; p: number; vitD: number; vitE: number; zinc: number; choline: number;
+}[] = [
+  // ── MUSCLE MEAT ──
+  { name: "Beef, lean ground (85%)", cat: "meat", kcal: 215, protein: 18.6, fat: 15, ca: 18, p: 175, vitD: 2, vitE: 0.2, zinc: 4.5, choline: 65 },
+  { name: "Beef heart", cat: "meat", kcal: 112, protein: 17.7, fat: 3.9, ca: 7, p: 212, vitD: 0, vitE: 0.3, zinc: 1.7, choline: 194 },
+  { name: "Chicken thigh, boneless", cat: "meat", kcal: 177, protein: 18.5, fat: 11, ca: 8, p: 160, vitD: 2, vitE: 0.3, zinc: 1.5, choline: 70 },
+  { name: "Chicken breast", cat: "meat", kcal: 120, protein: 22.5, fat: 2.6, ca: 5, p: 213, vitD: 1, vitE: 0.2, zinc: 0.7, choline: 82 },
+  { name: "Turkey, ground", cat: "meat", kcal: 148, protein: 19.7, fat: 7.4, ca: 14, p: 200, vitD: 3, vitE: 0.2, zinc: 2.4, choline: 75 },
+  { name: "Lamb, lean", cat: "meat", kcal: 202, protein: 19.5, fat: 13, ca: 10, p: 175, vitD: 1, vitE: 0.2, zinc: 3.9, choline: 78 },
+  { name: "Pork, lean loin", cat: "meat", kcal: 143, protein: 21, fat: 5.9, ca: 16, p: 216, vitD: 20, vitE: 0.2, zinc: 1.9, choline: 82 },
+  // ── ORGANS ──
+  { name: "Beef liver", cat: "organ", kcal: 135, protein: 20.4, fat: 3.6, ca: 5, p: 387, vitD: 16, vitE: 0.4, zinc: 4, choline: 333 },
+  { name: "Chicken liver", cat: "organ", kcal: 116, protein: 16.9, fat: 4.8, ca: 8, p: 297, vitD: 0, vitE: 0.7, zinc: 2.7, choline: 194 },
+  { name: "Beef kidney", cat: "organ", kcal: 99, protein: 17.4, fat: 3.1, ca: 13, p: 257, vitD: 0, vitE: 0.2, zinc: 1.9, choline: 513 },
+  { name: "Beef spleen", cat: "organ", kcal: 105, protein: 18.3, fat: 3, ca: 10, p: 296, vitD: 0, vitE: 0.3, zinc: 2.1, choline: 100 },
+  // ── FISH ──
+  { name: "Sardines, canned w/ bones", cat: "fish", kcal: 208, protein: 24.6, fat: 11.5, ca: 382, p: 490, vitD: 193, vitE: 2, zinc: 1.3, choline: 75 },
+  { name: "Salmon, wild", cat: "fish", kcal: 142, protein: 19.8, fat: 6.3, ca: 12, p: 200, vitD: 441, vitE: 1.1, zinc: 0.6, choline: 91 },
+  { name: "Mackerel, Atlantic", cat: "fish", kcal: 205, protein: 18.6, fat: 13.9, ca: 12, p: 217, vitD: 643, vitE: 1.5, zinc: 0.6, choline: 65 },
+  // ── EGG ──
+  { name: "Egg, whole", cat: "egg", kcal: 143, protein: 12.6, fat: 9.5, ca: 56, p: 198, vitD: 82, vitE: 1.1, zinc: 1.3, choline: 294 },
+  { name: "Egg yolk", cat: "egg", kcal: 322, protein: 15.9, fat: 26.5, ca: 129, p: 390, vitD: 218, vitE: 2.6, zinc: 2.3, choline: 820 },
+  // ── CALCIUM SOURCES ──
+  { name: "Eggshell powder", cat: "calcium", kcal: 0, protein: 0, fat: 0, ca: 38000, p: 120, vitD: 0, vitE: 0, zinc: 0, choline: 0 },
+  { name: "Bone meal (feed grade)", cat: "calcium", kcal: 0, protein: 0, fat: 0, ca: 24000, p: 12000, vitD: 0, vitE: 0, zinc: 0, choline: 0 },
+  { name: "Chicken neck, raw w/ bone", cat: "calcium", kcal: 172, protein: 14.9, fat: 12, ca: 1200, p: 700, vitD: 1, vitE: 0.2, zinc: 1.6, choline: 55 },
+  // ── VEGETABLES ──
+  { name: "Kale", cat: "veg", kcal: 49, protein: 4.3, fat: 0.9, ca: 150, p: 92, vitD: 0, vitE: 1.5, zinc: 0.6, choline: 0 },
+  { name: "Broccoli", cat: "veg", kcal: 34, protein: 2.8, fat: 0.4, ca: 47, p: 66, vitD: 0, vitE: 0.8, zinc: 0.4, choline: 19 },
+  { name: "Carrot", cat: "veg", kcal: 41, protein: 0.9, fat: 0.2, ca: 33, p: 35, vitD: 0, vitE: 0.7, zinc: 0.2, choline: 9 },
+  { name: "Butternut squash", cat: "veg", kcal: 45, protein: 1, fat: 0.1, ca: 48, p: 33, vitD: 0, vitE: 1.4, zinc: 0.2, choline: 10 },
+  { name: "Spinach", cat: "veg", kcal: 23, protein: 2.9, fat: 0.4, ca: 99, p: 49, vitD: 0, vitE: 2, zinc: 0.5, choline: 19 },
+  { name: "Pumpkin, canned plain", cat: "veg", kcal: 34, protein: 1.1, fat: 0.3, ca: 26, p: 42, vitD: 0, vitE: 1.1, zinc: 0.2, choline: 8 },
+  { name: "Sweet potato, cooked", cat: "veg", kcal: 90, protein: 2, fat: 0.2, ca: 38, p: 54, vitD: 0, vitE: 0.7, zinc: 0.3, choline: 13 },
+  // ── EXTRAS ──
+  { name: "Pumpkin seeds", cat: "extra", kcal: 559, protein: 30, fat: 49, ca: 46, p: 1233, vitD: 0, vitE: 0.6, zinc: 7.8, choline: 63 },
+  { name: "Sunflower seeds", cat: "extra", kcal: 584, protein: 21, fat: 51, ca: 78, p: 660, vitD: 0, vitE: 35, zinc: 5, choline: 55 },
+  { name: "Yogurt, plain whole", cat: "extra", kcal: 61, protein: 3.5, fat: 3.3, ca: 121, p: 95, vitD: 0, vitE: 0.1, zinc: 0.6, choline: 15 },
+  { name: "Green lipped mussel powder", cat: "extra", kcal: 350, protein: 60, fat: 8, ca: 800, p: 700, vitD: 0, vitE: 1, zinc: 3, choline: 60 },
+];
+
+// AAFCO adult maintenance minimums expressed PER 1,000 kcal ME. Derived from the
+// dry-matter profile in AAFCO_PROFILES at the standard 4,000 kcal/kg assumption.
+// Per-1,000-kcal is the right basis here because it cancels both moisture and
+// calorie density — a wet bowl and a dry one compare directly.
+const AAFCO_PER_1000: { key: string; label: string; min: number; unit: string; max?: number }[] = [
+  { key: "protein", label: "Protein", min: 45, unit: "g" },
+  { key: "fat", label: "Fat", min: 13.8, unit: "g" },
+  { key: "ca", label: "Calcium", min: 1250, unit: "mg", max: 6250 },
+  { key: "p", label: "Phosphorus", min: 1000, unit: "mg", max: 4000 },
+  { key: "vitD", label: "Vitamin D", min: 125, unit: "IU", max: 750 },
+  { key: "vitE", label: "Vitamin E", min: 12.5, unit: "mg", max: 250 },
+  { key: "zinc", label: "Zinc", min: 20, unit: "mg" },
+  { key: "choline", label: "Choline", min: 340, unit: "mg" },
+];
+
+// ── HOME-COOKED BUILDER ──────────────────────────────────────────────────────
+// Deliberately built as a GAP DETECTOR rather than a recipe generator, because
+// the evidence says recipe generators are where this goes wrong. Stockman et al.
+// (JAVMA 2013) evaluated 200 recipes — 129 of them written by VETERINARIANS —
+// and only 9 met AAFCO. Rotation didn't rescue it either.
+//
+// So this tool tells an owner what their bowl is probably MISSING and how to fix
+// it with food. It does not certify anything, and it says so.
+const HOMEMADE_EVIDENCE = [
+  {
+    h: "95% of homemade recipes fail — including the ones vets wrote",
+    b: "Stockman, Fascetti and Larsen evaluated 200 home-prepared maintenance recipes from 34 sources — textbooks, pet care books, websites — 129 of them authored by veterinarians. ONLY 9 met AAFCO nutrient standards. Only 5 met the stricter NRC guidelines. Most were also vague about ingredient amounts or supplement details, so an owner following them exactly still couldn't land in the same place twice.",
+  },
+  {
+    h: "And rotating recipes doesn't fix it",
+    b: "The most common defence of home cooking is that variety balances out over time. The same authors tested that directly: when groups of recipes were evaluated as a rotation, they STILL did not provide a complete diet. Larger surveys agree — the Dog Aging Project looked at 1,726 owner-reported homemade diets and found only about 6% could even potentially be complete.",
+  },
+  {
+    h: "The same nutrients fail every time",
+    b: "This isn't random. Homemade diets fail predictably on CALCIUM, VITAMIN D, ZINC, CHOLINE and VITAMIN E. Muscle meat is rich in phosphorus and almost devoid of calcium. Dogs synthesise almost no vitamin D in skin, so all of it must come from food. Choline deficiency drives fat accumulation in the liver. Knowing the five that break means you can aim at them directly — which is what the checklist below does.",
+  },
+  {
+    h: "What this tool is, and isn't",
+    b: "It is a gap detector. It gives you a proven structural framework, tells you which nutrients that framework tends to leave short, and shows you the whole foods that close each gap. It does NOT calculate your specific recipe against all 40+ AAFCO minimums, and it cannot certify a diet as complete and balanced. Only a formulation run against a food-composition database can do that. For a dog with kidney, liver, heart or urinary disease, use a board-certified veterinary nutritionist instead — the margins there are too tight for any app.",
+  },
+];
+
+// The structural framework that actually works — and the one every good fresh
+// brand uses. AllProvide's beef recipe reads exactly like this: heart, muscle,
+// bone, liver, kidney, vegetables. That is not a coincidence, it's the answer.
+const HOMEMADE_FRAMEWORK: {
+  part: string;
+  pct: string;
+  why: string;
+  examples: string;
+}[] = [
+  {
+    part: "Muscle meat", pct: "50–60%",
+    why: "Protein, all essential amino acids, B vitamins, iron. The base of the bowl — but on its own it is calcium-free and will fail every time.",
+    examples: "Beef, lamb, pork, chicken thigh, turkey. Include HEART here (technically muscle) for taurine and CoQ10 — it can be 10–15% of the total.",
+  },
+  {
+    part: "Calcium source — RAW and COOKED differ here", pct: "10–15%",
+    why: "THE most common failure point, and the one line of this framework that changes completely depending on how you prepare the food. Calcium matters, and so does the calcium-to-phosphorus ratio — AAFCO wants roughly 1:1 to 2:1, and muscle meat alone runs badly phosphorus-heavy.",
+    examples: "IF FEEDING RAW: raw meaty bones — chicken necks, wings, turkey necks — at 10–15%. IF COOKING: NEVER use bone. Cooking makes bone brittle and it splinters. Use ground eggshell instead, about ½ tsp per pound of finished food (~1,000 mg calcium per tsp), or bone meal, and make up the missing weight in muscle meat. Canned sardines with softened bones work for either.",
+  },
+  {
+    part: "Liver", pct: "5%",
+    why: "Vitamin A, copper, B12, folate, iron. Close to irreplaceable — very little else supplies vitamin A and copper at useful levels.",
+    examples: "Beef, chicken, lamb liver. Hold at 5%: liver is so dense in vitamin A and copper that more becomes a ceiling problem rather than a benefit.",
+  },
+  {
+    part: "Other secreting organ", pct: "5%",
+    why: "Selenium, B vitamins, and nutrients muscle meat lacks. Skipping this is the second most common gap after calcium.",
+    examples: "Kidney, spleen, pancreas, testicle. NOT heart or gizzard — those are muscle, and they don't do this job.",
+  },
+  {
+    part: "Vegetables and fruit", pct: "10–20%",
+    why: "Fibre for the microbiome, potassium, magnesium, manganese, polyphenols. Not strictly required, genuinely useful.",
+    examples: "Kale, broccoli, butternut squash, carrots, parsnips, blueberries, pumpkin. Lightly steamed or puréed — dogs extract far less from whole raw vegetables.",
+  },
+];
+
+// The five that break, and the food that fixes each. Whole food first, because
+// that was the brief — a supplement is listed only where food struggles.
+const HOMEMADE_GAPS: {
+  nutrient: string;
+  risk: string;
+  fix: string;
+  supplement: string;
+}[] = [
+  {
+    nutrient: "Calcium", risk: "Muscle meat is near-zero calcium and high phosphorus. Deficiency in a growing dog causes skeletal deformity; in an adult, bone demineralisation.",
+    fix: "Edible bone at 10–15%, OR ground eggshell at roughly ½ tsp per pound of finished food. Canned sardines with the bones contribute too — 300–350 mg per can.",
+    supplement: "Eggshell powder or bone meal if you can't feed bone. Avoid calcium carbonate alone — it supplies no phosphorus and can skew the ratio the other way.",
+  },
+  {
+    nutrient: "Vitamin D", risk: "Dogs make almost none in skin — roughly ten times less precursor than we have — so 100% is dietary. One of the most frequently missed.",
+    fix: "Oily fish is the strongest food source: sardines, mackerel, salmon. Egg YOLK and liver contribute. Pasture-raised egg yolks carry 3–4x the vitamin D of caged.",
+    supplement: "Cod liver oil covers D and A together — but then don't stack more vitamin A on top.",
+  },
+  {
+    nutrient: "Choline", risk: "Rarely discussed and commonly deficient. Choline moves fat out of the liver; chronic shortage leads to fat accumulation there.",
+    fix: "EGG YOLK is the single best fix and the easiest — one yolk daily covers a lot of ground. Liver is second.",
+    supplement: "Rarely needed if eggs are in the rotation.",
+  },
+  {
+    nutrient: "Zinc", risk: "Deficiency shows first in skin and coat — crusting around the muzzle and eyes, poor healing, dull coat. Northern breeds are especially prone.",
+    fix: "Red meat, beef liver, and oysters (by far the richest food source of zinc there is). Pumpkin seeds contribute.",
+    supplement: "Zinc as a chelate, proteinate or amino acid complex if food can't reach it. Not zinc oxide — poorly absorbed.",
+  },
+  {
+    nutrient: "Vitamin E", risk: "The hardest one to hit from food alone, and it matters more as you add omega-3 — vitamin E is what stops those fats oxidising.",
+    fix: "Sunflower seeds, wheat germ, leafy greens, egg yolk. Genuinely difficult to reach the target from food in a meat-based bowl.",
+    supplement: "This is the one where a supplement is usually the honest answer. Use natural d-alpha tocopherol, not synthetic dl-alpha — about double the bioavailability.",
+  },
+  {
+    nutrient: "Iodine", risk: "Drives thyroid function. Both too little and too much cause thyroid disease, and the window is narrower than most people assume.",
+    fix: "Kelp — but a TINY amount. Kelp is so concentrated that a heaped spoonful can overshoot the safe ceiling. Measure it; don't eyeball it.",
+    supplement: "A measured kelp powder is the practical route. Iodised salt is not appropriate for dogs.",
+  },
+  {
+    nutrient: "Manganese", risk: "Needed for joint cartilage and bone. Quietly missing from most meat-based homemade diets.",
+    fix: "Mussels (green lipped mussel powder covers this and joints at once), leafy greens, and blueberries.",
+    supplement: "Usually solved by adding mussels rather than a capsule.",
+  },
+];
+
+// THE FISH REFERENCE SHEET — ordered by position in the food chain, because that
+// one variable predicts almost everything else about whether a fish suits a dog.
+//
+// The trade-off nobody explains: the fish LOWEST on the chain have the least
+// mercury and the most omega-3 — and are the ones most likely to carry
+// thiaminase. The fish highest up have no thiaminase and dangerous mercury.
+// Neither end is simply "good"; they fail in opposite directions.
+//
+// Mercury tiers follow the FDA's published Best Choices / Good Choices / Avoid
+// categories. Omega-3 figures are EPA+DHA per 100 g. Companion to FISH_EPA_DHA
+// in the omega section, which covers dosing rather than selection.
+const FISH_CHAIN: {
+  fish: string;
+  level: string;
+  omega3: string;
+  mercury: "very low" | "low" | "moderate" | "high" | "very high";
+  thiaminase: "yes" | "likely" | "no" | "untested";
+  verdict: "best" | "good" | "occasional" | "avoid";
+  note: string;
+}[] = [
+  // ── BOTTOM: planktivores ────────────────────────────────────────────────
+  {
+    fish: "Anchovy", level: "1 · Plankton feeder", omega3: "1,400 mg", mercury: "very low",
+    thiaminase: "yes", verdict: "best",
+    note: "Tiny, short-lived, bottom of the chain — which is exactly why nearly every quality fish oil is built from anchovies. Thiaminase is documented: a PNAS study tied widespread thiamine deficiency in California salmon to an anchovy-dominated prey base. Cooked, canned or as oil, that's irrelevant.",
+  },
+  {
+    fish: "Sardine", level: "1 · Plankton feeder", omega3: "1,480 mg", mercury: "very low",
+    thiaminase: "likely", verdict: "best",
+    note: "The most practical fish for most owners — cheap, shelf-stable, portioned, and eaten whole so canned ones deliver bone calcium too. A clupeid feeding at the base of the chain and rich in omega-3, which is the exact profile that predicts thiaminase. Canned removes the question entirely.",
+  },
+  {
+    fish: "Herring", level: "1 · Plankton feeder", omega3: "1,730 mg", mercury: "very low",
+    thiaminase: "yes", verdict: "best",
+    note: "Underrated and cheap. The single best-documented thiaminase fish in the sea — Atlantic and Pacific both, and the established cause of thiamine deficiency in Baltic salmon. Excellent cooked or canned; never feed it raw as a staple.",
+  },
+  {
+    fish: "Sprat · Menhaden", level: "1 · Plankton feeder", omega3: "high", mercury: "very low",
+    thiaminase: "yes", verdict: "good",
+    note: "Both tested positive for thiaminase. Rarely sold for direct feeding but common in fish meal, where the heat of rendering has already destroyed the enzyme.",
+  },
+  {
+    fish: "Mussels · Clams", level: "1 · Filter feeder", omega3: "moderate", mercury: "very low",
+    thiaminase: "yes", verdict: "good",
+    note: "Thiaminase documented in both. Green lipped mussel is the exception worth seeking out — its ETA content is the reason it beats fish oil for joints — and it's sold freeze-dried or as an extract, not raw.",
+  },
+  // ── LOW-MID ─────────────────────────────────────────────────────────────
+  {
+    fish: "Mackerel (Atlantic)", level: "2 · Small predator", omega3: "2,670 mg", mercury: "low",
+    thiaminase: "untested", verdict: "best",
+    note: "The richest common fish there is. ⚠️ ATLANTIC only — KING mackerel is a different fish near the top of the chain and one of the highest-mercury species in the sea. The names are close enough that this mix-up is genuinely common.",
+  },
+  {
+    fish: "Smelt", level: "2 · Small predator", omega3: "moderate", mercury: "very low",
+    thiaminase: "yes", verdict: "good",
+    note: "Classic thiaminase fish, well documented since the 1940s. Fine cooked, poor choice raw.",
+  },
+  {
+    fish: "Rainbow trout", level: "3 · Mid predator", omega3: "~1,100 mg", mercury: "very low",
+    thiaminase: "no", verdict: "best",
+    note: "Solid all-rounder and mild enough for picky dogs. Tested free of thiaminase in the older surveys.",
+  },
+  {
+    fish: "Salmon (wild)", level: "3 · Mid predator", omega3: "2,150 mg", mercury: "low",
+    thiaminase: "no", verdict: "best",
+    note: "Excellent, and the astaxanthin that makes it red is a strong antioxidant. Tested negative for thiaminase. ⚠️ But raw Pacific salmon carries SALMON POISONING DISEASE — a fluke-borne rickettsia that is frequently fatal in dogs. Freeze or cook Pacific salmonids, always. Wild beats farmed: farmed fish eat grain-based feed and carry more omega-6.",
+  },
+  // ── MID: whitefish ──────────────────────────────────────────────────────
+  {
+    fish: "Cod · Haddock · Pollock", level: "3 · Mid predator", omega3: "~175 mg", mercury: "low",
+    thiaminase: "no", verdict: "good",
+    note: "Lean whitefish — good clean protein, negligible omega-3. Fine as a novel protein or a bland-diet base; don't expect it to do anything for inflammation. Note this is the FLESH: cod LIVER oil is a different product, rich in omega-3 but also in vitamin A and D, which accumulate.",
+  },
+  {
+    fish: "Flounder · Sole · Tilapia", level: "3 · Mid predator", omega3: "~150–200 mg", mercury: "low",
+    thiaminase: "no", verdict: "good",
+    note: "Safe and lean. Farmed tilapia is often criticised for a poor omega-6:3 ratio, which is fair — just don't mistake it for an omega-3 source.",
+  },
+  // ── HIGH ────────────────────────────────────────────────────────────────
+  {
+    fish: "Tuna (canned light / skipjack)", level: "4 · Large predator", omega3: "~150–300 mg", mercury: "moderate",
+    thiaminase: "no", verdict: "occasional",
+    note: "The worst of both worlds — a fifth of sardine's omega-3 with several times the mercury. Popular because it's familiar, not because it's good. There is no reason to choose it over sardines.",
+  },
+  {
+    fish: "Tuna (albacore / yellowfin)", level: "4 · Large predator", omega3: "~700–1,000 mg", mercury: "high",
+    thiaminase: "no", verdict: "occasional",
+    note: "Decent omega-3, but a large predatory fish accumulating mercury over years. Occasional is fine; daily is not, and small dogs reach a problematic dose far faster than large ones.",
+  },
+  {
+    fish: "Halibut · Grouper · Sea bass", level: "4 · Large predator", omega3: "moderate", mercury: "high",
+    thiaminase: "no", verdict: "occasional",
+    note: "FDA lists these as once-a-week fish for people. No reason to make them a routine part of a dog's diet when cheaper, safer, richer options exist.",
+  },
+  // ── TOP: avoid ──────────────────────────────────────────────────────────
+  {
+    fish: "King mackerel", level: "5 · Apex", omega3: "moderate", mercury: "very high",
+    thiaminase: "no", verdict: "avoid",
+    note: "On the FDA's avoid list. Long-lived and high on the chain — nothing like the Atlantic mackerel it shares a name with.",
+  },
+  {
+    fish: "Swordfish · Shark · Marlin", level: "5 · Apex", omega3: "moderate", mercury: "very high",
+    thiaminase: "no", verdict: "avoid",
+    note: "FDA avoid list. Decades of accumulated methylmercury. Never worth it for a dog.",
+  },
+  {
+    fish: "Tilefish (Gulf) · Bigeye tuna · Orange roughy", level: "5 · Apex", omega3: "low–moderate", mercury: "very high",
+    thiaminase: "no", verdict: "avoid",
+    note: "Gulf tilefish carries the highest mercury the FDA measures. Orange roughy can live over 100 years, which is exactly as much accumulation as it sounds like.",
+  },
+];
+
+// Fresh vs canned sardines. This one runs against instinct — fresh is normally
+// better than canned, and for a dog it is not. Two hazards are destroyed by the
+// heat of canning, and a third nutrient is created by it.
+const SARDINE_FORM: {
+  h: string;
+  b: string;
+  verdict: "canned" | "fresh" | "either";
+}[] = [
+  {
+    h: "Sardines are clupeids — and clupeids are the classic thiaminase family",
+    verdict: "canned",
+    b: "FIRST, THE PART THAT SETTLES IT FOR MOST PEOPLE: canned and cooked fish contain NO active thiaminase. Heat denatures the enzyme completely. If you feed canned sardines, this section is not about you — at any amount, for any length of time.\n\nSECOND, IF YOU FEED FISH RAW, THE RISK SCALES WITH PROPORTION. Thiaminase is an enzyme in raw fish flesh that cleaves thiamine (vitamin B1) and inactivates it — including thiamine from the rest of the meal, not just the fish. Deficiency is documented in dogs, foxes and cats, and it isn't mild: appetite loss, then loss of reflexes and coordination, then seizures, and death in severe cases.\n\nBut every documented case involves fish as a PREDOMINANT or EXCLUSIVE diet. The 2023 review's own wording is that clupeids cause deficiency 'if they are a large portion of predator diets.' Cats fed only raw fish. Salmon whose entire prey base is anchovies. A raw fish topper on a thiamine-fortified complete diet is a different exposure by an order of magnitude — and an AAFCO-complete base food supplies at least 2.25 mg/kg of thiamine, formulated to survive processing.\n\nBE PRECISE ABOUT WHAT THAT MEANS: no study has established a safe percentage. 'No documented cases at topper amounts' is an absence of evidence, not proof of safety. What can be said honestly is that the risk is dose-dependent, that it has never been reported outside fish-dominant diets, and that a fortified base diet provides real buffer.\n\nA 2023 review compiled thiaminase data across 300 fish species and found that ecology, not evolution, predicts it. Four factors explained most of the variation: feeding LOW on the food web (the strongest predictor), living in FRESHWATER (59.5% of freshwater species positive vs 21.8% marine), being HIGH IN OMEGA-3, and tropical climate.\n\nSardines hit three of the four hard. They are planktivores — about as low on the food web as a fish gets — they are among the richest fish in omega-3, and they are clupeids. The review names that family directly: clupeids 'are well known to cause thiamine deficiency if they are a large portion of predator diets.' Sprat tested positive, Atlantic herring and sprat are the documented cause of thiamine deficiency in Baltic salmon, and a PNAS study tied widespread thiamine deficiency in California salmon to an ANCHOVY-dominated prey base.\n\nSo treating raw sardines as a thiaminase risk is well founded, even though a specific assay on Sardina pilchardus is hard to find. The family, the trophic level and the fat profile all point the same way.\n\nAnd heat denatures the enzyme completely — canned carries no thiaminase risk at all. This only matters if you feed fish raw.",
+  },
+  {
+    h: "1 in 5 sardine fillets carried Anisakis larvae",
+    verdict: "canned",
+    b: "Researchers examined 90 semipreserved products from EU retailers — 45 anchovy and 45 sardine fillets. Anisakis larvae were found in 20% of the sardine samples and 28.9% of the anchovy. Every larva recovered was DEAD, killed by the processing.\n\nRead that carefully, because the reassuring half and the alarming half are both in it. Processing worked. But if one in five PROCESSED fillets still contains a larval carcass, raw sardines carry at least that prevalence of LIVE ones. Anisakis is common enough in this family that the herring worm is named after it.",
+  },
+  {
+    h: "⚠️ Freezing kills parasites. It does NOT touch thiaminase.",
+    verdict: "fresh",
+    b: "This is the distinction people miss, and it decides whether frozen is actually an upgrade. Thiaminase is an ENZYME — only heat denatures it. Freezing, thawing and refreezing leave it fully active. Freezing addresses parasites and nothing else.\n\nSo the three forms line up like this. FRESH: thiaminase active, parasites possible. FROZEN: thiaminase STILL active, parasites killed only if it was frozen cold enough for long enough. CANNED: both hazards gone.\n\nAnd the freezing bar is higher than a kitchen freezer clears. The FDA parasite-destruction standard is −4°F (−20°C) for 7 DAYS, or −31°F (−35°C) for 15 hours. A typical home freezer runs about 0°F (−18°C) — close, not compliant. 'Frozen' at the supermarket doesn't mean parasite-destroyed either; fish is frozen for preservation, not to that specification, unless it is explicitly sold for raw consumption.\n\nBottom line: frozen beats fresh on one hazard, ties it on the other, and neither reaches canned.",
+  },
+  {
+    h: "Canning ADDS a nutrient fresh can't give you",
+    verdict: "canned",
+    b: "The pressure and heat of canning soften the bones until they're edible, which turns a can of sardines into one of the best non-dairy calcium sources there is — roughly 300–350 mg per can, plus vitamin D. A fresh sardine's bones don't do that.\n\nHome cooking doesn't reproduce it either. Baking or pan-frying dries bones out rather than softening them, so you don't get the calcium and you do get a texture worth being careful about. Canning is a genuinely different process, not just cooking in a tin.",
+  },
+  {
+    h: "And canned is more consistent",
+    verdict: "canned",
+    b: "Fresh sardine fat content swings with season and fishing ground, so omega-3 varies. Canned fish is packed at peak fat content and sealed, and omega-3 is heat-stable, so the numbers hold. A can runs roughly 700–1,800 mg of omega-3 depending on size and pack — around 1,400 mg for a standard 92 g tin.",
+  },
+  {
+    h: "What to actually buy",
+    verdict: "canned",
+    b: "Packed in WATER, with NO SALT ADDED. Oil-packed adds omega-6 you're trying to reduce and some of the fish's own oil leaches into it and gets drained away. Salted versions push sodium higher than a dog needs.\n\nBrisling or 'wild caught' on the label is a good sign — small, short-lived fish, which is why sardines are low in mercury to begin with. BPA-free lining if the brand offers it.",
+  },
+];
+
+// Whole fish versus extracted oil. Both have a job; they're not competing.
+const SARDINE_VS_OIL = [
+  {
+    h: "What the whole fish brings that oil doesn't",
+    b: "A can of sardines delivers ~1,400 mg omega-3 alongside 22 g of protein, 300–350 mg of calcium from the softened bones, vitamin D, selenium, CoQ10 and several days' worth of B12. Fish oil delivers the fatty acids and nothing else. Per milligram of omega-3, the fish is the better nutritional buy.",
+  },
+  {
+    h: "What the oil does that fish can't",
+    b: "Concentration. Reaching a therapeutic anti-inflammatory dose from sardines alone would take roughly two cans a day — around 370 kcal and 45 g of protein, which is a large share of a medium dog's diet and starts displacing his actual food. A concentrated oil delivers the same fatty acids in a teaspoon or two without rearranging the whole bowl.",
+  },
+  {
+    h: "So the answer is both, with different jobs",
+    b: "Use sardines as FOOD — a whole-food topper several times a week, bringing minerals and protein with their omega-3. Use fish oil as a DOSE — the tool for hitting a specific therapeutic number when a condition calls for it. Choosing between them is the wrong question; they're not substitutes for each other.",
+  },
+];
+
+// Green lipped mussel gets its own evidence block because it's the one joint
+// supplement with real randomised canine trials behind it — and because the
+// single most important fact about it (extract vs powder) is exactly what the
+// marketing leaves out.
+const GLM_EVIDENCE: { h: string; b: string; s: string }[] = [
+  {
+    h: "Beat fish oil head-to-head",
+    b: "66 dogs with osteoarthritis, comparing a green lipped mussel lipid extract against fish oil. The mussel group improved on lameness, weight-bearing and force-plate peak vertical force within two weeks. The fish oil group showed no statistically significant improvement even at 12 weeks, and from week four the mussel group was significantly ahead.",
+    s: "PCSO-524 vs fish oil comparative trial",
+  },
+  {
+    h: "Worked as plain powder too",
+    b: "A double-blind randomised trial fed green lipped mussel POWDER for 6 weeks in three different formats — loose powder, baked into treats, and mixed into the main diet. All three produced statistically significant improvement in arthritis signs, which matters because it means the benefit doesn't depend on a patented extraction.",
+    s: "Bierer & Bui · Journal of Nutrition, 2002",
+  },
+  {
+    h: "Why it works differently from fish oil",
+    b: "Green lipped mussel is the only meaningful source of ETA (eicosatetraenoic acid), which inhibits BOTH the COX and LOX inflammatory pathways. Fish oil's EPA works mainly on COX alone. That's a genuine second mechanism, not a marketing angle — and it's why the two stack rather than duplicate.",
+    s: "Mechanism is well established; the potency multipliers in marketing are not",
+  },
+  {
+    h: "⚠️ Extract and powder are not the same product",
+    b: "The trial that beat fish oil used PCSO-524, a specific patented lipid extract. The powder trials used whole mussel powder and showed smaller effects. Both work; they are not interchangeable, and a tub of powder should not be expected to reproduce the extract's results. Most trials are also small and several are industry-funded — good evidence for a supplement, not the standard of a drug approval.",
+    s: "Stated because the distinction is usually omitted",
+  },
+  {
+    h: "Powder vs oil — they deliver different things",
+    b: "This isn't a quality ladder, it's a trade-off. WHOLE POWDER is the entire mussel freeze-dried: less concentrated ETA, but it also carries the naturally occurring glucosamine, chondroitin and trace minerals — the joint-building materials. LIPID EXTRACT (oil, capsules) concentrates the fatty acid fraction hard, which is why it produced the fastest trial results, but the extraction leaves the glucosamine and chondroitin behind. Powder is a whole food; oil is a targeted anti-inflammatory. Neither is the better product in the abstract.",
+    s: "Powder: Bierer & Bui 2002 · Oil: PCSO-524 trials",
+  },
+  {
+    h: "Processing decides whether it works at all",
+    b: "The active lipids oxidise easily, so how the mussel was dried matters more than the brand name. Cold-processed or freeze-dried retains activity; heat-dried largely destroys it — and a heat-dried powder can look and cost the same. If a label won't say how it was processed, assume the cheap way.",
+    s: "Why the original extract was developed as a stabilised lipid in the first place",
+  },
+];
+
+// GDV / bloat. Included because it's the one feeding decision that can kill a dog
+// in an afternoon, and because two of the most repeated pieces of advice about it
+// are either backwards or unsupported. Everything here is from the Purdue
+// prospective work unless stated.
+//
+// tier: "act" = change this today · "know" = real but not modifiable ·
+//       "mixed" = the evidence genuinely conflicts, stated as such
+const GDV_EVIDENCE: {
+  h: string;
+  b: string;
+  tier: "act" | "know" | "mixed";
+}[] = [
+  {
+    h: "Raised bowls INCREASE the risk — by about 110%",
+    tier: "act",
+    b: "This is the finding that reverses decades of pet-store advice. In a 5-year prospective study of 1,637 large and giant breed dogs, a raised feeder roughly doubled GDV risk. Around 20% of cases in large breeds and 52% in giant breeds were attributed to it. Elevated bowls were sold for years as bloat prevention; the data says they were causing it. If you have one, floor level is safer.",
+  },
+  {
+    h: "Eating speed is a real, fixable risk",
+    tier: "act",
+    b: "Fast eaters carry roughly 15% higher risk, and it's one of the few factors entirely under your control. A slow-feeder bowl, a snuffle mat, or simply spreading the food across a wide flat dish all work. For a dog who inhales meals this is the highest-value change available.",
+  },
+  {
+    h: "Two or three smaller meals beat one large one",
+    tier: "act",
+    b: "One large daily meal raises risk compared with splitting the same food across two or three. Large volume per meal is itself a risk factor, independent of how often you feed. Splitting costs nothing.",
+  },
+  {
+    h: "It's swallowed AIR, not food expanding",
+    tier: "know",
+    b: "The most common explanation is wrong. When vets analyse the gas from a bloated stomach, it turns out to be essentially ROOM AIR — the dog swallowed it. Aerophagia is the cause; kibble swelling is not. Bacterial fermentation of carbohydrate adds a little, but the bulk is air that went down the throat.\n\nThis matters because it changes what prevention means. You aren't trying to stop food from expanding. You're trying to stop a dog gulping air — which is why eating speed is such a big factor, and why the 'let the kibble soak first' logic doesn't hold.",
+  },
+  {
+    h: "🚨 Moistening dry food can be dangerous — 4.2× risk",
+    tier: "act",
+    b: "The single most counterintuitive finding in the research. Dogs fed DRY FOOD CONTAINING CITRIC ACID that owners MOISTENED before serving had 4.2 times the GDV risk — a 320% increase. Around 32% of all GDV cases in that study were attributed to this one practice.\n\nCitric acid is a common preservative in dry food. The widely shared advice to 'add water so the kibble doesn't swell in the stomach' can therefore be actively harmful, because it was built on the wrong mechanism in the first place. If you moisten dry food, check the ingredient list for citric acid first.\n\nThis does not apply to foods that are already moist by design — fresh, raw, canned, gently cooked, or freeze-dried rehydrated per the maker's instructions.",
+  },
+  {
+    h: "Do NOT restrict water around meals",
+    tier: "act",
+    b: "Another reversal. Restricting a dog's water intake before and after eating was found to INCREASE GDV risk. The common advice to withhold water around mealtimes has it backwards. Keep water freely available.",
+  },
+  {
+    h: "Bigger particles beat smaller · dry beats out fresh on risk",
+    tier: "know",
+    b: "Food made of only SMALL particles increases risk, so a larger kibble is lower risk than a fine or small-piece one. Dry food with fat among the first four ingredients is also implicated — roughly 30% of cases in one study were attributed to it. Feeding only dry food is itself a risk factor.\n\nSo the rough ranking is: moisture-rich fresh, raw, gently cooked and canned diets sit outside the highest-risk pattern; large-piece dry food sits in the middle; small-particle, high-fat dry food sits at the top. If you already feed fresh, you reduced this risk without meaning to.",
+  },
+  {
+    h: "Heat and hard panting plausibly raise the risk",
+    tier: "know",
+    b: "Heat isn't listed as a direct risk factor, so treat this as mechanism rather than proof. But the documented causes of air swallowing are rapid eating, HYPERVENTILATION, and oesophageal motility problems — and a dog panting hard in the heat is hyperventilating by definition.\n\nThe practical version: don't feed a dog who's still panting hard from exercise or heat. Let him settle and his breathing return to normal first. That's free, it costs you ten minutes, and it lines up with the one mechanism everybody agrees on.",
+  },
+  {
+    h: "⚠️ \"Wait an hour after eating\" — nobody has proven this",
+    tier: "mixed",
+    b: "WHAT EVERYONE SAYS: don't exercise for an hour after a meal.\n\nWHAT THE RESEARCH SAYS: it's genuinely unclear. Some evidence supports waiting about 2 hours before hard exercise. But the largest study found the reverse — dogs whose exercise was restricted around mealtimes had MORE bloat, not less.\n\nDon't over-read that either. It doesn't prove playing after meals is protective; owners tend to restrict nervous dogs, and nervous dogs bloat more to begin with. So the reversal may just be measuring which dogs already worried their owners.\n\nTHE FAIR SUMMARY: waiting probably doesn't hurt, and nobody has shown it helps.\n\nTHE MISTAKE TO AVOID: letting the waiting rule push your walk into the hottest part of the day. Heat is a proven danger with a body count. The waiting rule is a maybe. Never trade a certainty for a maybe — feed earlier and walk earlier instead of feeding at noon and walking at two.",
+  },
+  {
+    h: "What you can't change",
+    tier: "know",
+    b: "Risk rises with age. A first-degree relative who bloated raises it substantially — this is strongly heritable. A deep, narrow chest raises it, which is why Great Danes, Weimaraners and Setters dominate the high-risk lists while broader-chested breeds like Labradors sit lower. Anxious or fearful temperament raises it; relaxed dogs are at lower risk.",
+  },
+  {
+    h: "🚨 Know the signs — this kills in hours",
+    tier: "act",
+    b: "UNPRODUCTIVE RETCHING is the hallmark: trying hard to vomit and bringing nothing up. Add a distended, hard, drum-like belly · pacing and inability to settle · heavy drooling · pale gums · collapse. This is not a wait-and-see condition. Go to an emergency vet immediately — survival depends on hours, not days.",
+  },
+];
+
+// How much carbohydrate is actually reasonable. Owners get told "grain free good"
+// or "dogs don't need carbs" and neither is a number. This is the number — with
+// the honest caveat that no body sets a carbohydrate requirement, so every figure
+// here is a judgement about displacement and activity, not a published minimum.
+const CARB_LEVELS: {
+  range: string;
+  label: string;
+  tier: "ideal" | "fine" | "watch" | "poor";
+  b: string;
+}[] = [
+  {
+    range: "0–10%", label: "Raw · freeze-dried · most fresh", tier: "ideal",
+    b: "Where ancestral-style diets sit. There is no deficiency at this level — dogs have no carbohydrate requirement and make the glucose they need from protein and fat. Excellent for sedentary dogs, seniors, endurance work, and any dog whose weight or insulin you're managing. The only cost is a smaller muscle glycogen store, which matters solely for repeated hard sprints.",
+  },
+  {
+    range: "10–20%", label: "Gently cooked · premium fresh", tier: "ideal",
+    b: "The comfortable middle for most pet dogs. Enough glycogen for ordinary bursts of play, still low enough that carbohydrate isn't displacing meat or driving a meaningful insulin load. If you want one number to aim at for a normally active dog, aim here.",
+  },
+  {
+    range: "20–35%", label: "Better kibble · some fresh", tier: "fine",
+    b: "Reasonable for genuinely active dogs, and defensible for any dog if the rest of the formulation is good. Carbohydrate is doing real work here — fuelling burst activity and sparing protein. Judge the food on what the carbohydrate IS (whole vegetables and intact grains, versus refined starch and fractionated legume) rather than on the percentage alone.",
+  },
+  {
+    range: "35–50%", label: "Typical kibble", tier: "watch",
+    b: "The mainstream range, and the problem usually isn't toxicity — it's DISPLACEMENT. Every percentage point of starch is a point that isn't meat. A food at 45% carbohydrate has roughly half the bowl doing something other than supplying animal protein and fat. The second concern is metabolic: a dog with no anaerobic demand has nowhere to put that glucose except storage, which means a chronic insulin signal in an animal that evolved without one.",
+  },
+  {
+    range: "50%+", label: "Grain- or legume-heavy budget kibble", tier: "poor",
+    b: "Most of the bowl is not food the dog evolved to run on. Extrusion physically requires starch to form a kibble, so this level is a manufacturing constraint being sold as nutrition. Particularly poor for an inactive or overweight dog, who has no glycogen demand to absorb it.",
+  },
+];
+
+// Match the number to the dog, not to a philosophy.
+const CARB_MATCHING = [
+  { dog: "Sedentary · senior · overweight · diabetic", target: "under 15%", why: "No anaerobic demand to absorb glucose. Every gram is a storage signal." },
+  { dog: "Normal pet dog, walks and plays", target: "10–25%", why: "Enough glycogen for ordinary bursts without a chronic insulin load." },
+  { dog: "Endurance — hiking, running, sledding", target: "0–20%", why: "Aerobic work runs on fat, and dogs are exceptional at it. The sled dog trials found LOWER carbohydrate performed better." },
+  { dog: "Repeated hard sprints — field trials, agility, lure coursing", target: "higher, or target it", why: "Anaerobic work burns glycogen. Either raise the diet, or use post-exercise repletion instead." },
+];
+
+// Lifespan. The single largest effect size in all of dog nutrition — bigger than
+// any ingredient, brand, or supplement decision an owner will ever make — and it
+// costs nothing. Kept honest about which finding is causal and which isn't.
+const LIFESPAN_EVIDENCE: {
+  h: string;
+  b: string;
+  strength: "proven" | "observational" | "conflict";
+}[] = [
+  {
+    h: "Lean Labradors lived 1.8 years longer",
+    strength: "proven",
+    b: "Kealy et al., Journal of the American Veterinary Medical Association 220(9):1315, 2002 — the Purina Life Span Study. 48 Labrador Retrievers, paired as littermates, one of each pair fed 25% less food than the other from 8 weeks of age until death. The restricted dogs reached a median 13.0 years against 11.2 — 1.8 years, or about 16% longer. (These are the figures printed in the paper. A widely repeated 12.9-vs-11.1 version is a transcription error: 12.9 is the control group's MAXIMUM lifespan from the same paragraph, not its median.)\n\nRun at the Nestlé Purina Research Facility, Gray Summit, Missouri, and funded by Purina. Weigh it on the design rather than the sponsor: paired littermates, randomised, fourteen years to death, and nobody has found a flaw in it. It also agrees with caloric-restriction work in rodents and primates funded by nobody with a stake. That convergence is why it stands.\n\nThey also developed arthritis about 1.5 years later. This wasn't just more life; it was more healthy life.\n\nThis is the first study in a large mammal to prove diet restriction extends lifespan, and it remains the largest single effect anyone has demonstrated in canine nutrition. No food, brand or supplement comes close.",
+  },
+  {
+    h: "It's about body condition, not hunger",
+    strength: "proven",
+    b: "The mechanism in that study was keeping dogs at a lower body condition score for life — lean, with ribs easily felt. It was NOT about fasting windows, meal timing or any particular diet.\n\nWhich means the intervention is simply: keep your dog lean. If you can feel his ribs easily and he has a visible waist from above, you are already doing the thing with the strongest longevity evidence in the field. Most owners are not — an estimated majority of dogs are overweight.",
+  },
+  {
+    h: "Once-daily feeding tracked with better health — but it's observational",
+    strength: "observational",
+    b: "The Dog Aging Project examined feeding frequency across more than 24,000 dogs. Controlling for age, sex, breed and other factors, dogs fed once daily had lower cognitive dysfunction scores and lower odds of gastrointestinal, dental, orthopedic, kidney/urinary and liver/pancreas disorders.\n\nRead it carefully: this is a survey, not a trial. It cannot show cause. Owners who feed once daily may differ in a dozen other ways. The authors say so plainly. It's consistent with rodent time-restricted feeding work, and it is not proof.",
+  },
+  {
+    h: "⚠️ And once-daily conflicts with the bloat evidence",
+    strength: "conflict",
+    b: "Here's the tension nobody mentions: the GDV research found feeding ONE meal a day is a RISK FACTOR for bloat, along with large volume per meal. The longevity survey points the other way.\n\nFor a large or deep-chested breed those two findings pull in opposite directions, and one of them kills dogs in an afternoon while the other is an uncontrolled association.\n\nA reasonable middle path: keep two meals, but compress them into a shorter overnight window. That preserves a long fasting interval without the single-large-meal risk. Nobody has trialled that specific compromise, so it's reasoning rather than evidence — but it doesn't require betting on the weaker study.",
+  },
+  {
+    h: "🚩 The autophagy numbers you've read are not from dogs",
+    strength: "observational",
+    b: "You'll see confident claims that autophagy starts at 12 hours, or peaks at 16–18, or begins at 17–24. Trace them and they lead to blogs and pet-food companies, not to canine studies. Those figures are imported from rodent and human research and repeated until they sound established.\n\nThe tell is that they disagree with each other by a factor of two. When secondary sources vary that widely and none cite a primary canine measurement, the number was borrowed rather than measured.\n\nWhat IS known in dogs: once-daily feeding tracked with better health in a large survey, and lifelong calorie restriction extended lifespan in a randomised trial. Neither study measured autophagy at all.\n\nSo if you fast your dog overnight, do it because the feeding-frequency data is suggestive and it costs nothing — not because you're hitting a threshold somebody put a number on. On whether a small protein snack 'breaks' it: dietary protein activates mTOR, which does suppress autophagy, so mechanistically a piece of chicken would blunt it more than fat would. How much, and for how long, in a dog — nobody has measured that either.",
+  },
+];
+
+// What the food sits in. Included because the National Sanitation Foundation
+// ranks pet bowls the 4th most germ-laden object in a home, and because the one
+// material most people own is the one with a named skin condition attached.
+//
+// Note the honesty problem here: studies DISAGREE about ceramic. Rather than
+// pick the flattering one, both are stated — because the actual lesson is that
+// cleaning frequency beats material choice regardless of who's right.
+const BOWL_MATERIALS: {
+  material: string;
+  verdict: "best" | "good" | "avoid";
+  b: string;
+}[] = [
+  {
+    material: "Glass",
+    verdict: "best",
+    b: "Non-porous, nothing leaches, and — unlike ceramic — there's no glaze to contain anything. Won't scratch, so there are no crevices for bacteria to settle into, and you can see when it's actually clean. The only downside is that it breaks. For a calm feeder it's arguably the safest option there is.",
+  },
+  {
+    material: "Stainless steel (304 / 18-8 food grade)",
+    verdict: "best",
+    b: "The industry default for good reason: non-porous, dishwasher-safe, effectively unbreakable, and nothing to leach. Specify food-grade — cheap unmarked stainless has had contamination issues. One study did find higher total bacterial counts on metal than plastic, which is a reminder that no material substitutes for washing it.",
+  },
+  {
+    material: "Ceramic / stoneware",
+    verdict: "good",
+    b: "Fine when it's well made, with two real caveats. First, LEAD IN THE GLAZE: pet bowls are not regulated the way human tableware is, and cheap imported ceramics have been found with unsafe lead levels. Buy from a maker who states it's lead-free and food-safe. Second, CHIPS AND CRAZING: once the glaze cracks, the porous clay underneath is exposed and it becomes a bacterial reservoir. Retire a chipped bowl.\n\nThe research is genuinely split — one study found ceramic hosted the most harmful pathogens including E. coli and MRSA, possibly via biofilm; another found ceramic suppressed bacterial growth better than steel or plastic. Intact and washed daily, it's a good bowl.",
+  },
+  {
+    material: "Plastic",
+    verdict: "avoid",
+    b: "The one clear avoid, for three separate reasons. It carried the highest total bacterial load in testing. It scratches, and those micro-scratches shelter bacteria from any amount of scrubbing. And it causes a named condition — PLASTIC DISH NASAL DERMATITIS, where p-benzylhydroquinone in the plastic blocks melanin production and a black nose develops pink patches. Chewers can also break off and swallow pieces.\n\nThis is the cheapest thing on the list to fix and one of the few genuinely free upgrades in dog care.",
+  },
+];
+
+// Feeding practice around the bowl itself — temperature and hygiene.
+const BOWL_PRACTICE = [
+  {
+    h: "Wash it every day — more so for wet food",
+    b: "Bowls are among the most contaminated objects in a house; one survey put dog water bowls third. Bacterial counts run HIGHER on bowls used for wet or fresh food than dry, so a fresh-fed dog needs the stricter routine. Hot soapy water daily, dishwasher when you can, and a separate sponge from the human dishes.",
+  },
+  {
+    h: "Warm it, don't cook it",
+    b: "Cold food straight from the fridge is harder on digestion and much less aromatic, and TCVM has advised against it for a long time. The right way to fix that is a WARM WATER BATH — stand the bowl in hot water for a few minutes. NEVER microwave: it heats unevenly, creates hot spots that can burn a mouth, and degrades some of the fragile nutrients the food was chosen for. Body temperature is the target, not hot.",
+  },
+  {
+    h: "Mind the clock while it thaws or soaks",
+    b: "Thawed fresh food and rehydrated raw sit in the bacterial danger zone between about 40°F and 140°F. Two hours at room temperature is the usual limit, and one hour if the room is above 90°F. Soaking for twenty minutes on the counter is fine; leaving a bowl out overnight to thaw is not — do that in the fridge instead.",
+  },
+];
+
+// Why you cannot compute an omega ratio from a guaranteed analysis. This is the
+// single most useful thing an owner can know when comparing two bags, and
+// almost nobody knows it — including, until recently, this app.
+const GA_MINIMUM_TRAP = [
+  {
+    h: "\"Min\" is a promise, not a measurement",
+    b: "A guaranteed analysis states legal floors and ceilings, not what's actually in the bag. \"Omega-6 (min) 2.5%\" means the company guarantees at least 2.5%. The real figure can be double that, or more, and the label stays perfectly honest.",
+  },
+  {
+    h: "Which makes advertised ratios unreliable",
+    b: "If omega-3 is a minimum and omega-6 is also a minimum, dividing one by the other gives you a ratio of two floors — a number that exists nowhere in the food. A company can declare a conservative omega-6 minimum and advertise a beautiful ratio without measuring anything.",
+  },
+  {
+    h: "What to ask for instead",
+    b: "A TYPICAL or FULL nutritional analysis reports measured averages, usually as grams per 1,000 kcal or per 100 g. That's arithmetic-grade data. Brands that publish it are showing you something they didn't have to, which is itself a signal. Email and ask for EPA and DHA in milligrams — the good ones answer.",
+  },
+  {
+    h: "The one exception worth trusting",
+    b: "Where a brand publishes measured values per 1,000 kcal, that basis cancels out both moisture and calorie density — so a 70%-moisture cooked food and a dry food compare directly, with no conversion. When you can get numbers on that basis, they beat everything else on the label.",
+  },
+];
+
+// Arachidonic acid, properly. The short version already sits in the omega-6
+// panel; this is the evidence layer behind it — including the fact that answers
+// the question every owner actually has, which is "is cutting it risky?"
+//
+// Tier is stated on each item because the honest answer differs a lot by claim:
+// the mechanism is textbook, the joint and heart outcomes are trialled, and the
+// lipoma link — the reason most people care — is neither.
+const AA_EVIDENCE: {
+  h: string;
+  b: string;
+  tier: "established" | "trialled" | "mechanism";
+}[] = [
+  {
+    h: "What it actually does",
+    tier: "established",
+    b: "Arachidonic acid is the omega-6 the body converts into the signalling molecules that DRIVE inflammation — the series-2 prostaglandins and series-4 leukotrienes. That system is necessary: it's how infection gets fought and wounds heal.\n\nThe problem is surplus. With plenty of AA on hand, those signals fire constantly even with nothing to fight — which is what chronic low-grade inflammation means.\n\nEPA competes for the SAME enzymes and produces a far weaker signal from them. So the ratio between them decides how loudly the inflammatory machinery runs.",
+  },
+  {
+    h: "AAFCO sets NO minimum for it in dogs — and that's the reassurance",
+    tier: "established",
+    b: "Look at the AAFCO table in this app: linoleic acid is there at 1.1% for adults. Arachidonic acid is not listed at all, for adults OR for growth.\n\nThat omission is deliberate. Dogs carry Δ6-desaturase and readily convert linoleic acid into arachidonic acid themselves — so there's no need to require it in the diet.\n\nCATS ARE DIFFERENT. They lack that enzyme, so AA is genuinely essential for them at 0.02% DM. It's one of the clearest places where cat and dog nutrition part company, and where advice written for one gets wrongly applied to the other.\n\nThe practical consequence: choosing a lower-AA protein cannot create a deficiency in a dog, as long as linoleic acid is adequate.",
+  },
+  {
+    h: "⚠️ But conversion declines with age",
+    tier: "established",
+    b: "Δ6-desaturase activity falls markedly in older dogs. That's the same enzyme used to make EPA and DHA from plant ALA — which is why a senior dog gets even less out of flaxseed than a young one.\n\nTwo consequences. A senior converts less LA into AA, so the self-supply argument is slightly weaker in an old dog than a young one. And more importantly, a senior converts less ALA into EPA — so PREFORMED marine omega-3 matters more with age, not less.",
+  },
+  {
+    h: "Where lowering AA has actual trial evidence",
+    tier: "trialled",
+    b: "JOINTS: dogs on a food with 3.5% fish oil omega-3 improved force-plate weight bearing — 82% improved versus 38% on the control food (Roush et al., JAVMA 2010).\n\nHEART: omega-3 reduced arrhythmia risk 2.96-fold and slowed disease progression in dogs with mitral valve disease over 12 months (Nasciutti et al., PLOS ONE 2021), and reduced ventricular arrhythmias in Boxers with ARVC where FLAX OIL did nothing (Smith, Freeman & Rush 2007).\n\nSKIN AND COAT: dull, dry coat and increased shedding is the classic presentation of omega-3 insufficiency, and coat improvement is one of the better-established effects of supplementation.",
+  },
+  {
+    h: "🚩 And where it doesn't — including the reason most people care",
+    tier: "mechanism",
+    b: "LIPOMAS. The chain runs: high AA → more inflammatory signalling → an environment that favours fatty tumours. Every link is plausible. None of it has been demonstrated in dogs.\n\nNo published canine study links dietary fatty acids to lipoma formation. What IS documented is that obesity is a risk factor, and that age and genetics are the largest drivers.\n\nSo lowering AA is a reasonable thing to do for a lipoma-prone dog — and it should be described as reasonable, not as treatment. Nothing dietary has been shown to shrink a lipoma that already exists.",
+  },
+];
+
+// Measured arachidonic acid by protein, per 1,000 kcal, from a manufacturer that
+// publishes a full nutritional analysis rather than a guaranteed minimum. Real
+// numbers from one range beat generalisations about "poultry" and "red meat".
+const AA_BY_PROTEIN: { protein: string; aa: string; ratio: string; note: string }[] = [
+  { protein: "Rabbit", aa: "0.0", ratio: "4.9:1", note: "The lowest measurable AA in the range — and the highest vitamin E of any recipe at 226 IU." },
+  { protein: "Beef (grassfed)", aa: "0.5", ratio: "1.12:1", note: "Lowest AA of the common proteins AND the best ratio. The reason it's the default recommendation for an inflammation-prone dog." },
+  { protein: "Turkey", aa: "0.7–0.8", ratio: "5.0–6.0:1", note: "Ratio is slightly WORSE than chicken — but AA is about a third of it, and AA is the metric that matters more. Cooling in TCVM terms where chicken is warming." },
+  { protein: "Pork", aa: "0.85", ratio: "4.3:1", note: "Middling on everything. Fine, but not doing anything the others don't do better." },
+  { protein: "Chicken", aa: "2.3", ratio: "4.8:1", note: "Roughly 4–5x the AA of beef. Poultry generally runs higher, and chicken is the highest here by a wide margin." },
 ];
 
 const OMEGA3_MARINE = [
@@ -1523,6 +2654,12 @@ const TREAT_HARMFUL: {
     severity: "toxic",
     reason:
       "Banned in cat food by the FDA. Linked to Heinz body anemia. Often used to keep soft treats moist — unnecessary and risky.",
+  },
+  {
+    term: "rawhide",
+    severity: "severe",
+    reason:
+      "The risk here is mechanical, not chemical, and it's the one most owners underestimate. Rawhide softens as a dog chews, and pieces get swallowed whole — which is how it causes choking and intestinal blockage. Blockages are surgical emergencies, and this is one of the more common reasons dogs end up in one. Processing is the second issue: hides are typically treated with lime or sodium sulfide to strip hair, then bleached, and residues vary by origin with little oversight on imported product. There are better ways to satisfy a chewing dog — a raw meaty bone under supervision, a bully stick, or a rubber toy — that carry the same benefit without the swallow-whole failure mode.",
   },
   {
     term: "menadione",
@@ -1867,6 +3004,140 @@ function getTreatIngredientInfo(
     return { bg: t.goodTint, textColor: t.good, tag: "organ" };
   return { bg: t.surface, textColor: t.textMuted, tag: "" };
 }
+
+// ── EGG QUALITY ──────────────────────────────────────────────────────────────
+// Pastured vs conventional eggs. Held as data rather than prose so the
+// comparison reads at a glance, and so every row carries its own citation —
+// the same "cite it or don't claim it" rule the ingredient list follows.
+//
+// Ordered by how much each difference actually matters TO A DOG, which is not
+// the same order it matters to a human. Vitamin D leads because dogs make
+// almost none of their own.
+const EGG_QUALITY: {
+  nutrient: string;
+  diff: string;
+  detail: string;
+  source: string;
+}[] = [
+  {
+    nutrient: "Vitamin D",
+    diff: "3–4× more",
+    detail:
+      "Yolks from hens with real outdoor access measured 14.3 µg/100g vs 3.8 µg/100g from indoor hens. This is the one that matters most for a dog: dogs synthesise almost no vitamin D in their skin — they have roughly ten times less of the precursor than we do, and an enzyme that diverts most of what's left into cholesterol. A dog's entire vitamin D supply comes from food, so a food-source difference lands harder for him than it does for you.",
+    source: "Kühn et al., Nutrition (2014) · How & Hazewinkel on canine synthesis",
+  },
+  {
+    nutrient: "Omega-6 : omega-3 ratio",
+    diff: "Less than half",
+    detail:
+      "Pastured eggs came in at under half the ratio of caged eggs in the Penn State work. A smaller 2022 analysis found a far wider gap — around 5.7:1 and 10.8:1 for pastured vs 50.6:1 for cage-free — though with only six eggs per group, treat that spread as directional rather than exact.",
+    source: "Karsten et al., Renewable Agriculture & Food Systems (2010)",
+  },
+  {
+    nutrient: "Total omega-3",
+    diff: "2.5–3× more",
+    detail:
+      "2.5× in the Penn State comparison; roughly 3× in the 2022 analysis (1.5–1.7% of total fatty acids vs 0.47%). Long-chain omega-3 specifically — the EPA and DHA form, not just plant ALA — was about double.",
+    source: "Karsten et al. (2010); Anderson et al., Foods (2022)",
+  },
+  {
+    nutrient: "Carotenoids",
+    diff: "About 2× more",
+    detail:
+      "Around 41–49 µg/g of fresh yolk vs 18 µg/g in cage-free. These are the pigments that make a pastured yolk deep orange instead of pale yellow — lutein and zeaxanthin, which concentrate in the retina. The colour difference you can see in the pan is the nutrient difference.",
+    source: "Anderson et al., Foods (2022)",
+  },
+  {
+    nutrient: "Vitamin E",
+    diff: "About 2× more",
+    detail:
+      "Doubled in the Penn State study, with grass-forage hens producing 23% more than clover-forage hens. Worth flagging that the 2022 analysis found no vitamin E difference — but it measured only free alpha-tocopherol rather than the total, which its own authors list as a limitation. The evidence leans toward a real advantage, not proves it.",
+    source: "Karsten et al. (2010)",
+  },
+  {
+    nutrient: "Vitamin A",
+    diff: "38% higher concentration",
+    detail:
+      "Higher per gram of yolk — but total vitamin A per egg did not differ significantly, because pastured hens lay slightly smaller eggs. An honest read: the yolk is richer, the whole egg is about the same.",
+    source: "Karsten et al. (2010)",
+  },
+];
+
+// What the carton actually claims, ranked by how much the claim is worth.
+// `tier` drives the colour: "good" = a defined standard someone audits,
+// "mixed" = real but weak, "empty" = marketing with no standard behind it.
+//
+// The single most useful fact here: the USDA does NOT define "pasture-raised."
+// Without a certifier's seal it's a word the marketing team chose.
+const EGG_LABELS: {
+  label: string;
+  tier: "good" | "mixed" | "empty";
+  means: string;
+}[] = [
+  {
+    label: "Pasture-Raised + a certifier's seal",
+    tier: "good",
+    means:
+      "The real thing, and the only claim worth paying up for. Certified Humane requires 108 sq ft per hen of living vegetative cover — actual growing plants, not bare dirt or a concrete slab. Animal Welfare Approved (A Greener World) is comparable. This is the standard the research above was measuring.",
+  },
+  {
+    label: "Pasture-Raised, no seal",
+    tier: "mixed",
+    means:
+      "The USDA does not define this term at all. Uncertified, it means whatever the company wants it to mean. It might be genuine — plenty of small farms are honest and simply haven't paid for certification — but the carton alone isn't evidence. Look at the yolk before you trust it.",
+  },
+  {
+    label: "Free-Range",
+    tier: "mixed",
+    means:
+      "USDA-regulated but hollow: it requires outdoor access without specifying how much space or for how long. A single small door to a porch can qualify a whole barn. Certified Humane tightens it to 2 sq ft per hen and 6 hours a day, which is real but still a long way from 108. This is the tier where tested supermarket eggs came back low on vitamin D.",
+  },
+  {
+    label: "Organic",
+    tier: "mixed",
+    means:
+      "Genuinely meaningful for feed — organic grain, no antibiotics, no hormones — and that's worth something on its own. But its outdoor-access requirement is as loose as free-range, so an organic egg is not automatically a pasture egg. Best used alongside a pasture claim, not instead of one.",
+  },
+  {
+    label: "Cage-Free",
+    tier: "mixed",
+    means:
+      "Means only that the hens aren't in individual cages. It carries no outdoor requirement whatsoever — a cage-free hen can spend her entire life indoors. Better than battery cages for the bird; close to irrelevant for the nutrients in the yolk.",
+  },
+  {
+    label: "Omega-3 Enriched",
+    tier: "mixed",
+    means:
+      "Real, but check the source on the back. Flaxseed-fed hens raise ALA, the plant omega-3 that dogs convert to EPA and DHA very poorly. Algae- or fish-fed hens raise actual DHA, which is the one you want. If the carton won't say which, assume flax.",
+  },
+  {
+    label: "Vegetarian-Fed",
+    tier: "empty",
+    means:
+      "Marketed as a plus, but it's the opposite — this is the clearest tell on the whole carton. Hens are omnivores; one on real pasture eats insects and worms all day. A hen can only be certified vegetarian if she was kept away from anything living, which means she was never on grass. Vegetarian-fed and pasture-raised are close to mutually exclusive.",
+  },
+  {
+    label: "Farm Fresh · All Natural · Nature's ___",
+    tier: "empty",
+    means:
+      "No standard, no definition, no one checking. Every egg sold is from a farm and every egg is natural. Ignore these entirely — they're carton decoration.",
+  },
+];
+
+// The two caveats that keep the table above from being oversold. Both matter
+// more than any single row in it.
+const EGG_QUALITY_CAVEATS = [
+  {
+    title: "The carton label is not the thing",
+    body:
+      "\"Cage-free\" means only that the hens aren't in cages — it says nothing about daylight or grass. \"Free-range\" requires some outdoor access, but not that the birds use it. When Australian researchers tested supermarket free-range eggs, vitamin D came back low. What produces the difference is hens actually outside on pasture, which is why eggs from a farm stand or a neighbour usually beat a premium carton.",
+  },
+  {
+    title: "Keep it in proportion",
+    body:
+      "One egg a day is a small slice of a dog's diet. The omega-3 upgrade works out to roughly a tenth of a gram — real, but a rounding error next to sardines or fish oil. The vitamin D, the carotenoids and the vitamin E are where a better egg genuinely earns its price. A conventional egg is still a good food, and feeding one daily beats skipping it because the good ones weren't available.",
+  },
+];
 
 const GROCERY_FINDS: {
   category: string;
@@ -2542,6 +3813,24 @@ function getScoreColor(score: number): string {
   return t.criticalDeep;
 }
 
+// Tint behind the score hero. Thresholds MIRROR getScoreColor above — if you
+// change one, change the other, or the number stops matching its own ground.
+// (Presentation only. The scoring math is untouched.)
+function getScoreTint(score: number): string {
+  if (score >= 70) return t.goodTint;
+  if (score >= 50) return t.highTint;
+  if (score >= 30) return t.highTint;
+  return t.criticalTint;
+}
+
+// The one line under the label. Short, and never shaming — "here's what's in
+// it", not "this food is bad". See docs/THE_LADDER.md on tone.
+function getScoreSubline(score: number): string {
+  if (score >= 70) return "A solid bag — details below";
+  if (score >= 30) return "Mostly fixable — see below";
+  return "Worth upgrading — see below";
+}
+
 function getScoreLabel(score: number): string {
   if (score >= 70) return "Good 👍";
   if (score >= 50) return "Fair ⚠️";
@@ -2558,41 +3847,635 @@ function getTreatScoreLabel(score: number): string {
   return "Avoid 🚫";
 }
 
+// ── LIPOMAS ────────────────────────────────────────────────────────────────
+// Rebuilt 2026-08-20 from Kyle's own holistic research, which REPLACES the
+// previous section entirely (his instruction). Two things the old section said
+// are now reversed and that's deliberate: it recommended green-lipped mussel and
+// duck for lipoma-prone dogs; the TCVM framing lists both as damp-building.
+//
+// Evidence tiers are attached per PINECONE_PROTOCOL.md and Kyle's standing rule
+// (2026-08-13): holistic claims are welcome, they just get labelled. The doses
+// below are as given by the practitioners who recommend them — none of the
+// dissolving protocols has been tested against a lipoma in a controlled canine
+// trial, and the section says so once, plainly, rather than hedging every line.
+const LIPOMA_WORRY = [
+  { t: "Feel the whole dog, every day", b: "Legs, belly, mammary glands, armpits — not just the obvious spots. You are looking for something NEW, or something old that has changed." },
+  { t: "Never diagnose a lump by look or feel", b: "Mast cell tumours are the great imitators — they can look and feel identical to a skin tag, a nipple, or a harmless fatty lump. Only cells under a microscope tell you which it is." },
+  { t: "Surface lumps → impression smear", b: "Your vet presses a slide to the surface to collect cells. Quick, no needle." },
+  { t: "Deep lumps → fine needle aspirate", b: "A needle draws cells from the CENTRE of the mass. This is what confirms a true lipoma rather than something wearing its costume." },
+];
+
+const LIPOMA_RED_FLAGS = [
+  "A brand-new lump you have not felt before",
+  "An old lump that suddenly changes size, shape or texture",
+  "Irregular borders, or fast growth",
+  "Your dog licking or obsessing over one spot",
+];
+
+const LIPOMA_PREVENT = [
+  { icon: "🍲", t: "Get off dry kibble", b: "Move to fresh, raw or gently cooked. High-carbohydrate, highly processed food is the first thing to change." },
+  { icon: "🚫", t: "Cut the damp-building foods", b: "Pork, fatty meats (lamb and duck), green-lipped mussel, eggs, honey, spirulina, slippery elm, marshmallow root." },
+  { icon: "🌿", t: "Add the drying foods", b: "Celery, alfalfa, chamomile, turmeric, parsley, pumpkin, ginger, kelp, seaweed — and baked sweet potato. Bake or roast it; boiling does the opposite." },
+  { icon: "🌡️", t: "Never serve food cold", b: "Straight from the fridge damages digestive energy and builds dampness. Warm it slightly or leave it out to reach room temperature." },
+  { icon: "🏃", t: "Move the lymph", b: "The lymphatic system carries fat. Regular exercise and lower-back stimulation keep it moving and stop fatty congestion." },
+  { icon: "💉", t: "Reduce the chemical load", b: "Avoid over-vaccinating and unnecessary medication. Levothyroxine, gabapentin and NSAIDs are hard on the liver and are repeatedly linked to multiple lipomas by practitioners." },
+  { icon: "🕷️", t: "Rule out tick-borne disease", b: "Chronic infection like Lyme congests the liver and immune system. If your dog has MULTIPLE bumps, ask your vet for a C6 antibody test." },
+];
+
+const LIPOMA_REMEDIES = [
+  { t: "L-Carnitine", d: "50 mg per kg body weight, twice daily", b: "Amino acid that targets fat metabolism to break down fat cells." },
+  { t: "Green tea extract", d: "50 mg per 10 lb daily, sprinkled on food", b: "Concentrated extract raises metabolic rate and fat oxidation. Extract, not brewed tea." },
+  { t: "Colostrum", d: "100 mg per 10 lb daily", b: "Promotes muscle mass and raises metabolic rate, reducing fat storage." },
+  { t: "MCT oil (from coconut)", d: "Start ½ tsp per 20 lb daily → 1 tsp per 20 lb after 4 weeks", b: "Converts to ketones and lifts metabolic rate. Start low or you get diarrhoea." },
+  { t: "Turkey tail + maitake mushroom", d: "20 lb dog: 0.5–1 g twice daily, hot-water extracted", b: "Turkey tail supports Phase II liver detoxification. Hot-water extracted matters — the raw powder is not the same product." },
+  { t: "Topical DMSO + aloe vera", d: "70% DMSO with aloe, applied to the lipoma twice daily", b: "DMSO penetrates deeply and triggers a local immune response. ⚠️ Always wear gloves — DMSO carries whatever is on the skin straight into the bloodstream, yours included." },
+  { t: "Digestive enzymes", d: "With meals, 3–6 months after leaving kibble", b: "Supports fat digestion while the gut rebuilds. Integrative vets also prescribe custom phlegm-draining herbs." },
+];
+
+const LIPOMA_HERBS = [
+  { k: "cool", label: "❄️ For COOL dogs", tell: "Seeks warmth, wants blankets, curls up", herbs: "Calendula tincture (lymphatics) · Ashwagandha (especially if hypothyroid) · Turmeric · Self-heal (Prunella vulgaris)" },
+  { k: "warm", label: "🔥 For WARM dogs", tell: "Pants, seeks cold floors, sprawls out", herbs: "Cleavers tincture (lymphatics) · Burdock root (helps process fats) · Chickweed · Violet" },
+];
+
+const LIPOMA_TINCTURE_DOSE = [
+  ["Chihuahua-sized", "1 drop"],
+  ["20 lb (King Charles)", "2 drops"],
+  ["Corgi-sized", "3–4 drops"],
+  ["Golden Retriever", "4–5 drops"],
+  ["Giant breed", "5–6 drops"],
+];
+
 function LipomaSection() {
   return (
     <View style={{ backgroundColor: t.surfaceAlt, borderRadius: 16, padding: 16, marginHorizontal: 16, marginBottom: 12 }}>
-      <Text style={{ fontSize: 13, fontWeight: "700", marginBottom: 6, color: t.textMuted, textTransform: "uppercase", letterSpacing: 1 }}>🧬 Lipoma Prevention & Management</Text>
+      <Text style={{ fontSize: 13, fontWeight: "700", marginBottom: 6, color: t.textMuted, textTransform: "uppercase", letterSpacing: 1 }}>🧬 Lumps, Bumps &amp; Lipomas</Text>
       <Text style={{ color: t.textDim, fontSize: 12, marginBottom: 14, lineHeight: 18 }}>
-        Lipomas (fatty tumors) are common in dogs but diet and inflammation play a major role in how quickly they develop and grow. These are the most evidence-backed dietary levers.
+        When to worry, how to prevent them, and what holistic vets use to shrink them.
       </Text>
 
+      {/* ── 1. WHEN TO WORRY ── */}
+      <View style={{ backgroundColor: t.criticalTint, borderRadius: 10, padding: 12, marginBottom: 10, borderWidth: 1, borderColor: t.critical }}>
+        <Text style={{ color: t.critical, fontWeight: "700", fontSize: 13, marginBottom: 6 }}>1 · When to worry about a lump</Text>
+        {LIPOMA_WORRY.map((item, i) => (
+          <View key={i} style={{ marginBottom: 7 }}>
+            <Text style={{ color: t.textStrong, fontSize: 12, fontWeight: "700" }}>{item.t}</Text>
+            <Text style={{ color: t.text, fontSize: 12, lineHeight: 17 }}>{item.b}</Text>
+          </View>
+        ))}
+        <Text style={{ color: t.critical, fontSize: 12, fontWeight: "700", marginTop: 4, marginBottom: 3 }}>See a vet promptly if:</Text>
+        {LIPOMA_RED_FLAGS.map((f, i) => (
+          <Text key={i} style={{ color: t.text, fontSize: 12, lineHeight: 17 }}>• {f}</Text>
+        ))}
+        <Text style={{ color: t.textDim, fontSize: 11.5, marginTop: 7, lineHeight: 16, fontStyle: "italic" }}>
+          A lump that has not changed at all in five years is very likely nothing.
+        </Text>
+      </View>
+
+      {/* ── SURGERY ── */}
+      <View style={{ backgroundColor: t.surfaceSunken, borderRadius: 10, padding: 12, marginBottom: 10, borderLeftWidth: 3, borderLeftColor: t.moderate }}>
+        <Text style={{ color: t.textStrong, fontWeight: "700", fontSize: 12.5, marginBottom: 5 }}>When a confirmed lipoma still needs removing</Text>
+        <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>
+          True lipomas are benign and usually do not need surgery. Two exceptions: when one grows
+          large enough to <Text style={{ fontWeight: "700" }}>interfere with movement</Text> — especially
+          in the armpit or groin — and when it gets big enough to outgrow its own blood supply, so the
+          core dies, liquefies and drains a thick pus-like fluid. That fluid is dead tissue, not infection.
+        </Text>
+        <Text style={{ color: t.text, fontSize: 12, marginTop: 6, lineHeight: 17.5 }}>
+          If it is coming out, take it while it is still a manageable size. A grapefruit-sized removal
+          leaves a large empty pocket under the skin that has to heal.
+        </Text>
+      </View>
+
+      {/* ── 2. PREVENTION ── */}
       <View style={{ backgroundColor: t.accents.liver.bg, borderRadius: 10, padding: 12, marginBottom: 10, borderWidth: 1, borderColor: t.accents.liver.fg }}>
-        <Text style={{ color: t.accents.liver.fg, fontWeight: "700", fontSize: 13, marginBottom: 6 }}>🍞 Low Carb Diet — Most Important Factor</Text>
-        <Text style={{ color: t.text, fontSize: 12, lineHeight: 18, marginBottom: 4 }}>High carbohydrates spike insulin and promote fat cell proliferation and inflammation — the #1 dietary driver of lipoma growth.</Text>
-        <Text style={{ color: t.moderate, fontSize: 12, fontWeight: "600" }}>Target: carbs below 20% — ideally below 15%</Text>
-        <Text style={{ color: t.textDim, fontSize: 11, marginTop: 4 }}>Kibble is typically 35–50% carbs. Raw, gently cooked, and freeze-dried are naturally low carb.</Text>
+        <Text style={{ color: t.accents.liver.fg, fontWeight: "700", fontSize: 13, marginBottom: 5 }}>2 · Preventing them — the TCVM view</Text>
+        <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5, marginBottom: 9 }}>
+          In Traditional Chinese Veterinary Medicine a lipoma is a pocket of{" "}
+          <Text style={{ fontWeight: "700" }}>abnormal phlegm</Text> the body uses to wall off toxins.
+          They cluster along the <Text style={{ fontWeight: "700" }}>gallbladder meridian</Text> —
+          armpits, flanks and inner hind legs — and are driven by liver congestion. Prevention means
+          lowering the toxin load and clearing internal dampness.
+        </Text>
+        {LIPOMA_PREVENT.map((item, i) => (
+          <View key={i} style={{ flexDirection: "row", gap: 8, marginBottom: 7 }}>
+            <Text style={{ fontSize: 14 }}>{item.icon}</Text>
+            <View style={{ flex: 1 }}>
+              <Text style={{ color: t.textStrong, fontSize: 12, fontWeight: "700" }}>{item.t}</Text>
+              <Text style={{ color: t.text, fontSize: 12, lineHeight: 17 }}>{item.b}</Text>
+            </View>
+          </View>
+        ))}
       </View>
 
+      {/* ── 3. REMEDIES ── */}
+      <View style={{ backgroundColor: t.accents.detox.bg, borderRadius: 10, padding: 12, marginBottom: 10, borderWidth: 1, borderColor: t.accents.detox.fg }}>
+        <Text style={{ color: t.accents.detox.fg, fontWeight: "700", fontSize: 13, marginBottom: 5 }}>3 · What holistic vets use to shrink them</Text>
+        <Text style={{ color: t.textDim, fontSize: 11.5, lineHeight: 16.5, marginBottom: 9, fontStyle: "italic" }}>
+          Clinical experience, not trial evidence. These are the protocols integrative vets report
+          using and the doses they give — none has been tested against a lipoma in a controlled
+          canine trial. Run any of them past your own vet, especially alongside medication.
+        </Text>
+        {LIPOMA_REMEDIES.map((item, i) => (
+          <View key={i} style={{ marginBottom: 9 }}>
+            <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{item.t}</Text>
+            <Text style={{ color: t.accents.detox.fg, fontSize: 12, fontWeight: "600" }}>{item.d}</Text>
+            <Text style={{ color: t.text, fontSize: 12, lineHeight: 17 }}>{item.b}</Text>
+          </View>
+        ))}
+      </View>
+
+      {/* ── HERBS BY CONSTITUTION ── */}
       <View style={{ backgroundColor: t.accents.mussel.bg, borderRadius: 10, padding: 12, marginBottom: 10, borderWidth: 1, borderColor: t.accents.mussel.fg }}>
-        <Text style={{ color: t.accents.mussel.fg, fontWeight: "700", fontSize: 13, marginBottom: 6 }}>🐟 Omega-6:3 Ratio of 5:1 or Less</Text>
-        <Text style={{ color: t.text, fontSize: 12, lineHeight: 18, marginBottom: 4 }}>A high omega-6:omega-3 ratio drives chronic inflammation — the environment where lipomas thrive. Most kibble runs 15:1–30:1. Cooling that ratio is one of the most powerful anti-lipoma moves you can make.</Text>
-        <Text style={{ color: t.accents.mussel.fg, fontSize: 12, fontWeight: "600" }}>Target: 5:1 or less omega-6:omega-3</Text>
-        <Text style={{ color: t.textDim, fontSize: 11, marginTop: 4 }}>Best sources: sardines, salmon, mackerel. Add fish oil or green lipped mussel to reduce ratio further.</Text>
+        <Text style={{ color: t.accents.mussel.fg, fontWeight: "700", fontSize: 13, marginBottom: 5 }}>Herbs — pick by your dog&apos;s energetics</Text>
+        {LIPOMA_HERBS.map((h) => (
+          <View key={h.k} style={{ marginBottom: 8 }}>
+            <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{h.label}</Text>
+            <Text style={{ color: t.textDim, fontSize: 11.5, fontStyle: "italic" }}>{h.tell}</Text>
+            <Text style={{ color: t.text, fontSize: 12, lineHeight: 17, marginTop: 2 }}>{h.herbs}</Text>
+          </View>
+        ))}
+        <Text style={{ color: t.textStrong, fontSize: 12, fontWeight: "700", marginTop: 4, marginBottom: 3 }}>
+          Calendula / cleavers tincture — drops twice daily, in the mouth
+        </Text>
+        {LIPOMA_TINCTURE_DOSE.map(([size, dose], i) => (
+          <View key={i} style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 2 }}>
+            <Text style={{ color: t.text, fontSize: 12 }}>{size}</Text>
+            <Text style={{ color: t.accents.mussel.fg, fontSize: 12, fontWeight: "600" }}>{dose}</Text>
+          </View>
+        ))}
+        <Text style={{ color: t.textDim, fontSize: 11.5, marginTop: 7, lineHeight: 16, fontStyle: "italic" }}>
+          Introduce one herb at a time, three days apart, so you know what caused a reaction.
+        </Text>
       </View>
 
-      {[
-        { color: t.accents.detox.fg, bg: t.accents.detox.bg, title: "✅ Best Foods for Lipoma-Prone Dogs", body: "Raw, freeze-dried, or gently cooked with no grains, legumes, or inflammatory oils. Look for whole-food omega-3 sources. Rotate cooling proteins: duck, fish, rabbit, salmon." },
-        { color: t.critical, bg: t.criticalTint, title: "❌ Avoid", body: "Grains (corn, wheat, soy), legumes (peas, lentils, chickpeas), inflammatory oils (sunflower, safflower, soybean, canola), BHA/BHT, artificial colors, added sugars." },
-        { color: t.accents.probiotic.fg, bg: t.accents.probiotic.bg, title: "💊 Supplements That Help", body: "Fish oil (omega-3) · Green lipped mussel (anti-inflammatory, joint support) · Milk thistle (liver support — processes all dietary fat) · Turkey tail mushroom · Turmeric/curcumin" },
-      ].map((item, i) => (
-        <View key={i} style={{ backgroundColor: item.bg, borderRadius: 10, padding: 12, marginBottom: 10, borderWidth: 1, borderColor: item.color }}>
-          <Text style={{ color: item.color, fontWeight: "700", fontSize: 13, marginBottom: 4 }}>{item.title}</Text>
-          <Text style={{ color: t.text, fontSize: 12, lineHeight: 18 }}>{item.body}</Text>
+      {/* Kyle's lipoma reference card. Added 2026-08-22. */}
+      <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 12 }}>
+        Save this
+      </Text>
+      <Image
+        source={require("../assets/images/lipoma-guide.jpg")}
+        style={{ width: "100%", aspectRatio: 1800 / 1004, borderRadius: 9, marginTop: 6 }}
+        resizeMode="contain"
+        accessibilityLabel="Holistic guide to pet lipomas — what causes them, red flags that mean it isn't a lipoma, prevention, and herbal remedies"
+      />
+
+      <Text style={{ color: t.textDim, fontSize: 11, lineHeight: 17, marginTop: 10 }}>
+        ⚠️ Educational only, not veterinary advice. Any new lump — or any old lump that changes —
+        gets cells looked at before you treat it as a lipoma.
+      </Text>
+    </View>
+  );
+}
+
+// ── HEART ──────────────────────────────────────────────────────────────────
+// Added 2026-08-20 from Kyle's holistic heart research. Same handling as the
+// lipoma section: the protocols and doses are given as the practitioners give
+// them, labelled once as clinical rather than trial evidence.
+//
+// One thing is deliberately pinned to the top rather than buried: this is
+// ALONGSIDE Vetmedin and Lasix, never instead. The source says so itself, but
+// the dandelion-diuretic paragraph reads like a substitute on a skim, and in
+// congestive failure furosemide is what keeps fluid out of the lungs. The
+// resting-respiratory-rate number leads for the same reason — it is the one
+// item here that is also standard cardiology practice, and it is what tells an
+// owner they need a vet tonight.
+const HEART_FEED = [
+  { t: "Muscle meat and organs", b: "Beef heart, pork heart, beef liver, beef tongue, chicken gizzards. Heart muscle feeds heart muscle — the 'like feeds like' principle." },
+  { t: "Dark meat, not breast", b: "Thighs, wings and legs carry markedly more of the heart-relevant amino acids than white breast meat. Cheap and easy to switch." },
+  { t: "Fresh omega-3", b: "Canned sardines packed in water, fresh salmon, cod skin rolls, minnows. The goal is lowering inflammation in the heart muscle itself." },
+  { t: "Raw goat's milk", b: "Highly digestible and naturally carries carnitine, taurine, vitamin D and GABA." },
+];
+
+const HEART_TCVM_FOODS = [
+  { k: "Qi tonics (pumping energy)", v: "Beef · dark meat poultry · rabbit · pumpkin · butternut and acorn squash · shiitake" },
+  { k: "Blood tonics", v: "Red meats · egg yolks · carrots · spinach · kale · dates · figs" },
+  { k: "Fluid-draining foods", v: "Asparagus (drains fluid from the heart via the kidneys) · celery · watermelon · parsley · dandelion greens · radish · turnip" },
+  { k: "Lung protection", v: "Shiitake — dissolves phlegm and drains damp, which matters when fluid is the risk" },
+];
+
+const HEART_SUPPS = [
+  { t: "CoQ10", d: "100 mg per 20 lb (~5 mg/lb), twice daily", b: "Supports failing heart muscle cells. The label dose on most bottles — around 1 mg/lb — is considered too low to affect heart enlargement. Cats under 10 lb: 50–100 mg twice daily." },
+  { t: "Taurine", d: "Large DCM-prone breeds: up to 8,000 mg daily", b: "Concentrated in heart muscle. Grain-free kibbles that swap meat for pea protein are the ones linked to deficiency. There is no known toxic dose of taurine." },
+  { t: "L-carnitine", d: "Alongside taurine", b: "The other amino acid concentrated in heart muscle. Both are depleted by low-meat diets." },
+  { t: "Dandelion leaf + root tincture", d: "0.5 mL per 20 lb, twice daily", b: "A studied herbal diuretic that helps clear airway fluid and cardiac cough. ⚠️ An ADDITION to prescribed diuretics, never a replacement — talk to your vet before changing any Lasix dose." },
+  { t: "CBD", d: "1 mg per 10 lb, twice daily", b: "Acts as a vasodilator, lowering the pressure the heart pumps against, and improves cerebral blood flow. Tell your vet — CBD affects the liver enzymes that also process cardiac drugs." },
+  { t: "Omega-3 oil", d: "Sardine, anchovy or salmon", b: "Must come in brushed aluminium or a glass pump bottle — clear plastic lets it oxidise and go rancid. Algae oil or phytoplankton work for dogs that react to fish protein." },
+  { t: "D-ribose", d: "—", b: "A readily-used sugar that feeds the heart muscle directly as an energy source." },
+  { t: "Vitamin D3 and E", d: "Test D3 before supplementing", b: "Seniors and heart patients are often low in D3. Vitamin E is needed for heart muscle function and should always accompany fish oil." },
+  { t: "PEA (palmitoylethanolamide)", d: "—", b: "Plant-based, works through the endocannabinoid system to lower the systemic inflammation that accompanies mitral valve disease." },
+  { t: "Hawthorn", d: "—", b: "The classic Western heart herb, used to improve heart function directly." },
+];
+
+const HEART_FORMULAS = [
+  ["Four Substances", "Underlying anaemia and the heart murmurs that follow it"],
+  ["Emperor's Tea Pills", "Night anxiety, pacing, vocalising"],
+  ["Stasis in the Mansion of the Blood", "Tonifies Heart Qi and moves pooling blood"],
+];
+
+function HeartSection() {
+  return (
+    <View style={{ backgroundColor: t.surfaceAlt, borderRadius: 16, padding: 16, marginHorizontal: 16, marginBottom: 12 }}>
+      <Text style={{ fontSize: 13, fontWeight: "700", marginBottom: 6, color: t.textMuted, textTransform: "uppercase", letterSpacing: 1 }}>❤️ Heart Support</Text>
+      <Text style={{ color: t.textDim, fontSize: 12, marginBottom: 14, lineHeight: 18 }}>
+        The holistic and TCVM approach to DCM and mitral valve disease — used alongside cardiology,
+        not instead of it.
+      </Text>
+
+      {/* ── THE SAFETY FRAME, FIRST ── */}
+      <View style={{ backgroundColor: t.criticalTint, borderRadius: 10, padding: 12, marginBottom: 10, borderWidth: 1, borderColor: t.critical }}>
+        <Text style={{ color: t.critical, fontWeight: "700", fontSize: 13, marginBottom: 6 }}>Read this before anything below</Text>
+        <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>
+          Everything here is designed to run <Text style={{ fontWeight: "700" }}>alongside</Text> Vetmedin
+          and prescribed diuretics like Lasix (furosemide). In congestive failure, furosemide is what
+          keeps fluid out of the lungs. <Text style={{ fontWeight: "700" }}>Do not reduce or replace a
+          prescribed diuretic with an herbal one</Text> — add, discuss, then let your vet adjust.
+        </Text>
+        <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700", marginTop: 9, marginBottom: 3 }}>
+          🫁 The number to count at home: resting respiratory rate
+        </Text>
+        <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>
+          Count breaths for a minute while your dog is asleep or fully at rest. It should stay{" "}
+          <Text style={{ fontWeight: "700" }}>under 30–35 breaths per minute.</Text> A climbing count is
+          the earliest sign fluid is building, often before a cough. This is the one item on this page
+          that is also standard cardiology practice — track it daily and bring the numbers to your vet.
+        </Text>
+        <Text style={{ color: t.critical, fontSize: 12, fontWeight: "700", marginTop: 7, lineHeight: 17 }}>
+          Sudden laboured breathing is an emergency. Go to a vet — do not manage it at home.
+        </Text>
+      </View>
+
+      {/* ── WARNING SIGNS + BREED RISK ── */}
+      <View style={{ backgroundColor: t.surfaceSunken, borderRadius: 10, padding: 12, marginBottom: 10, borderLeftWidth: 3, borderLeftColor: t.accents.heart.fg }}>
+        <Text style={{ color: t.textStrong, fontWeight: "700", fontSize: 13, marginBottom: 5 }}>Spotting it early</Text>
+        <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5, marginBottom: 9 }}>
+          Cardiac disease is one of the leading identified causes of sudden death in dogs. Worth knowing
+          how uncertain that picture is: in a 150-dog necropsy series it ranked behind occult cancer
+          (mostly hemangiosarcoma), while a larger multicentre study found cardiovascular disease the
+          most common identified cause — and <Text style={{ fontWeight: "700" }}>37% of sudden deaths had
+          no cause found even after necropsy.</Text> Which is the real argument for watching for signs
+          rather than waiting for certainty.
+        </Text>
+
+        <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700", marginBottom: 3 }}>
+          🌙 The night cough and restlessness
+        </Text>
+        <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5, marginBottom: 9 }}>
+          Coughing at night, or being unable to settle and get comfortable lying down, is often fluid
+          building in the lungs. It shows up at night because lying flat makes it harder to breathe
+          around the fluid. <Text style={{ fontWeight: "700" }}>A dog that suddenly wants to sleep sitting
+          up, or keeps repositioning, is telling you something.</Text>
+        </Text>
+
+        <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700", marginBottom: 3 }}>
+          🐕 Your breed changes what to watch for
+        </Text>
+        <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>
+          <Text style={{ fontWeight: "700" }}>Small breeds</Text> — Poodles, Cavalier King Charles
+          Spaniels — typically face <Text style={{ fontWeight: "700" }}>mitral valve disease</Text>, which
+          usually announces itself as a murmur first and progresses slowly.
+        </Text>
+        <Text style={{ color: t.text, fontSize: 12, marginTop: 5, lineHeight: 17.5 }}>
+          <Text style={{ fontWeight: "700" }}>Large breeds</Text> — Dobermans, Great Danes — are prone
+          to <Text style={{ fontWeight: "700" }}>DCM</Text>, which is the more dangerous pattern because
+          it can stay silent and then present suddenly. If you have one of these breeds, screening before
+          symptoms is the whole game.
+        </Text>
+      </View>
+
+      {/* ── TCVM FRAMING ── */}
+      <View style={{ backgroundColor: t.accents.liver.bg, borderRadius: 10, padding: 12, marginBottom: 10, borderWidth: 1, borderColor: t.accents.liver.fg }}>
+        <Text style={{ color: t.accents.liver.fg, fontWeight: "700", fontSize: 13, marginBottom: 5 }}>How TCVM reads a failing heart</Text>
+        <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>
+          Heart disease is an imbalance of the <Text style={{ fontWeight: "700" }}>Fire element</Text>.
+          Failure and enlargement are read as <Text style={{ fontWeight: "700" }}>Heart Qi deficiency</Text> —
+          not enough pumping energy — together with <Text style={{ fontWeight: "700" }}>blood stagnation</Text>,
+          where blood pools and slows. Treatment therefore uses Qi tonics, blood-building tonics, and
+          ingredients that move blood.
+        </Text>
+        <Text style={{ color: t.text, fontSize: 12, marginTop: 7, lineHeight: 17.5 }}>
+          <Text style={{ fontWeight: "700" }}>Like feeds like.</Text> Feeding heart muscle nourishes the
+          heart; feeding lung supports the lungs when fluid is the risk.
+        </Text>
+        <Text style={{ color: t.text, fontSize: 12, marginTop: 7, lineHeight: 17.5 }}>
+          <Text style={{ fontWeight: "700" }}>🦷 The mouth-heart connection.</Text> Bacteria from dental
+          disease travel the bloodstream and filter through the heart valves and kidneys, accelerating
+          organ damage. Dental cleanings should still happen for heart patients — with close anaesthetic
+          and cardiac monitoring, not skipped out of fear.
+        </Text>
+      </View>
+
+      {/* ── WHAT TO FEED ── */}
+      <View style={{ backgroundColor: t.accents.detox.bg, borderRadius: 10, padding: 12, marginBottom: 10, borderWidth: 1, borderColor: t.accents.detox.fg }}>
+        <Text style={{ color: t.accents.detox.fg, fontWeight: "700", fontSize: 13, marginBottom: 5 }}>What to feed</Text>
+        <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5, marginBottom: 9 }}>
+          Fresh and meat-based over dry kibble — the argument being that kibble is short on meat protein,
+          high in carbohydrate dogs have no requirement for, and carries synthetic mineral forms.
+        </Text>
+        {HEART_FEED.map((item, i) => (
+          <View key={i} style={{ marginBottom: 7 }}>
+            <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{item.t}</Text>
+            <Text style={{ color: t.text, fontSize: 12, lineHeight: 17 }}>{item.b}</Text>
+          </View>
+        ))}
+        <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700", marginTop: 6, marginBottom: 4 }}>TCVM food categories</Text>
+        {HEART_TCVM_FOODS.map((f, i) => (
+          <View key={i} style={{ marginBottom: 5 }}>
+            <Text style={{ color: t.accents.detox.fg, fontSize: 12, fontWeight: "600" }}>{f.k}</Text>
+            <Text style={{ color: t.text, fontSize: 12, lineHeight: 17 }}>{f.v}</Text>
+          </View>
+        ))}
+      </View>
+
+      {/* ── THE RECIPE ── */}
+      <View style={{ backgroundColor: t.accents.mussel.bg, borderRadius: 10, padding: 12, marginBottom: 10, borderWidth: 1, borderColor: t.accents.mussel.fg }}>
+        <Text style={{ color: t.accents.mussel.fg, fontWeight: "700", fontSize: 13, marginBottom: 5 }}>Dr. Judy Morgan&apos;s heart recipe</Text>
+        <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>
+          90% lean ground beef · beef heart · beef liver · fresh salmon · butternut squash · asparagus ·
+          kale · whole eggs with ground shells for calcium · cranberries · shiitake · seaweed powder for
+          iodine · virgin wheat germ oil for vitamin E · ground sunflower seeds · green-lipped mussel.
+        </Text>
+        <Text style={{ color: t.text, fontSize: 12, marginTop: 7, lineHeight: 17.5 }}>
+          Serve raw, baked at <Text style={{ fontWeight: "700" }}>325°F for 30 minutes</Text>, or slow-cooked
+          for 4 hours. <Text style={{ fontWeight: "700" }}>Feed all the natural juices</Text> — the minerals
+          leach into them.
+        </Text>
+      </View>
+
+      {/* ── SUPPLEMENTS ── */}
+      <View style={{ backgroundColor: t.surfaceSunken, borderRadius: 10, padding: 12, marginBottom: 10, borderLeftWidth: 3, borderLeftColor: t.accents.heart.fg }}>
+        <Text style={{ color: t.textStrong, fontWeight: "700", fontSize: 13, marginBottom: 4 }}>Supplements and doses</Text>
+        <Text style={{ color: t.textDim, fontSize: 11.5, lineHeight: 16.5, marginBottom: 9, fontStyle: "italic" }}>
+          Holistic practitioners favour single-ingredient products over blends, because blends rarely
+          reach a therapeutic dose of anything. These are the doses they use — clinical practice, not
+          controlled trial evidence. Clear them with your vet, especially alongside cardiac medication.
+        </Text>
+        {HEART_SUPPS.map((s, i) => (
+          <View key={i} style={{ marginBottom: 9 }}>
+            <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{s.t}</Text>
+            {s.d !== "—" && (
+              <Text style={{ color: t.accents.heart.fg, fontSize: 12, fontWeight: "600" }}>{s.d}</Text>
+            )}
+            <Text style={{ color: t.text, fontSize: 12, lineHeight: 17 }}>{s.b}</Text>
+          </View>
+        ))}
+      </View>
+
+      {/* ── CHINESE FORMULAS ── */}
+      <View style={{ backgroundColor: t.accents.probiotic.bg, borderRadius: 10, padding: 12, marginBottom: 10, borderWidth: 1, borderColor: t.accents.probiotic.fg }}>
+        <Text style={{ color: t.accents.probiotic.fg, fontWeight: "700", fontSize: 13, marginBottom: 5 }}>Chinese herbal formulas</Text>
+        {HEART_FORMULAS.map(([name, use], i) => (
+          <View key={i} style={{ marginBottom: 5 }}>
+            <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{name}</Text>
+            <Text style={{ color: t.text, fontSize: 12, lineHeight: 17 }}>{use}</Text>
+          </View>
+        ))}
+        <Text style={{ color: t.textDim, fontSize: 11.5, marginTop: 6, lineHeight: 16, fontStyle: "italic" }}>
+          These are prescribed by a TCVM-trained vet after a pattern diagnosis — they are matched to the
+          individual dog, not bought off a shelf.
+        </Text>
+      </View>
+
+      {/* Kyle's heart reference card. Added 2026-08-22. */}
+      <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 12 }}>
+        Save this
+      </Text>
+      <Image
+        source={require("../assets/images/heart-guide.jpg")}
+        style={{ width: "100%", aspectRatio: 1800 / 1004, borderRadius: 9, marginTop: 6 }}
+        resizeMode="contain"
+        accessibilityLabel="Holistic canine heart health guide — warning signs, breed risk, foods that feed the heart, TCVM energetics and supportive supplements"
+      />
+
+      <Text style={{ color: t.textDim, fontSize: 11, lineHeight: 17, marginTop: 10 }}>
+        ⚠️ Educational only, not veterinary advice. Heart disease is managed with a vet — this is what to
+        bring to that conversation, not a replacement for it.
+      </Text>
+    </View>
+  );
+}
+
+// ── MORE FACTS ABOUT PET FOOD ──────────────────────────────────────────────
+// Added 2026-08-20. Documented events and regulatory facts — the things that
+// happened, with names and numbers attached. Every entry here is verifiable;
+// this is deliberately the section with no opinion in it.
+const PET_FOOD_FACTS = [
+  {
+    icon: "💉",
+    title: "107 million cans recalled for a euthanasia drug",
+    body:
+      "February 2018. The FDA and J.M. Smucker recalled over 107 million cans of Gravy Train, Kibbles 'n Bits, Skippy and Ol' Roy after pentobarbital — the drug used to euthanise animals — was found in the food.\n\nSmucker confirmed the source was the TALLOW: rendered animal fat. That is the company admitting it, not an advocate alleging it.\n\nIndependent lab testing found 60% of the Gravy Train cans sampled came back positive. The FDA's position is that pentobarbital should never be present in pet food, and that any amount makes a product adulterated.",
+  },
+  {
+    icon: "🥩",
+    title: "By-products come from animals that have died",
+    body:
+      "The source stream includes 4D animals — dead, dying, diseased and disabled. Dr. Andrew Jones, DVM, states this includes roadkill and animals that have been euthanised.\n\nAAFCO's written definition says by-products come from SLAUGHTERED animals. The 2018 recall is what that definition is worth in practice.\n\nThe species is never named on the label, so you have no way to know what went into the batch you bought.",
+  },
+  {
+    icon: "🥉",
+    title: "There is no legal maximum for copper in dog food",
+    body:
+      "AAFCO deleted the copper maximum in 2007 and has never restored it, despite veterinary hepatologists formally asking. There is a minimum (7.3 mg/kg) and no ceiling at all.\n\nCopper accumulates in the liver and dogs cannot clear the excess. Labradors, Dobermans, Bedlington Terriers, West Highland Whites and Dalmatians are documented as predisposed.\n\nLiver enzymes are not sensitive in the early stages — normal bloodwork does not rule it out.",
+  },
+  {
+    icon: "☠️",
+    title: "Melamine killed thousands of pets in 2007",
+    body:
+      "Melamine — an industrial chemical with no approved use in any food — was added to wheat gluten and rice protein concentrate to inflate apparent protein readings. Standard protein tests measure nitrogen, and melamine is nitrogen-rich, so it made cheap filler test like meat.\n\nCombined with cyanuric acid it forms crystals that cause acute kidney failure. Thousands of pets died, and it produced one of the largest recalls in pet food history.",
+  },
+  {
+    icon: "🌡️",
+    title: "Vitamin D overdoses have hit multiple brands",
+    body:
+      "FDA recalls in 2018–19 found dog foods containing up to 70 times the intended vitamin D, causing hypercalcemia, kidney failure and deaths. Affected brands included Hill's, Nutrisca, Sunshine Mills, Kroger and ELM.\n\nVitamin D has one of the narrowest safe ranges of any nutrient — AAFCO sets 500 IU/kg minimum and 3,000 maximum. An ingredient label tells you D3 is present. It cannot tell you how much.",
+  },
+  {
+    icon: "📋",
+    title: "\"Meets AAFCO standards\" is a floor, not a grade",
+    body:
+      "AAFCO is not a regulator. It is a voluntary membership association of state feed officials with no enforcement power — people hear the name and assume FDA.\n\nThe nutrient profiles are MINIMUMS designed to prevent deficiency disease, not targets for health. The feeding trial standard is 26 weeks with 8 dogs, of which 6 must finish.\n\nUse it to rule a food OUT. Never to rule one IN.",
+  },
+  {
+    icon: "🐟",
+    title: "Ingredients are weighed before cooking",
+    body:
+      "The ingredient list is ordered by weight as the ingredients go in — not as they come out. Fresh meat is roughly 70% water, and most of that water leaves during extrusion.\n\nThis is why a bag can read \"Chicken, corn, wheat, corn gluten meal\" and still be mostly grain by the time it reaches the bowl. The chicken was heaviest at the start of the process, not the end.",
+  },
+];
+
+function PetFoodFactsSection() {
+  return (
+    <View style={{ backgroundColor: t.surfaceAlt, borderRadius: 16, padding: 16, marginHorizontal: 16, marginBottom: 12 }}>
+      <Text style={{ fontSize: 13, fontWeight: "700", marginBottom: 6, color: t.textMuted, textTransform: "uppercase", letterSpacing: 1 }}>📚 More Facts About Pet Food</Text>
+      <Text style={{ color: t.textDim, fontSize: 12, marginBottom: 14, lineHeight: 18 }}>
+        Things that actually happened, with names and numbers attached. No opinions in this section —
+        every item here is a documented event or a regulatory fact.
+      </Text>
+
+      {PET_FOOD_FACTS.map((f, i) => (
+        <View
+          key={i}
+          style={{
+            backgroundColor: t.surfaceSunken,
+            borderRadius: 10,
+            padding: 12,
+            marginBottom: 10,
+            borderLeftWidth: 3,
+            borderLeftColor: t.critical,
+          }}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 8, marginBottom: 5 }}>
+            <Text style={{ fontSize: 15 }}>{f.icon}</Text>
+            <Text style={{ color: t.textStrong, fontWeight: "700", fontSize: 13, flex: 1 }}>{f.title}</Text>
+          </View>
+          <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>{f.body}</Text>
         </View>
       ))}
 
       <Text style={{ color: t.textDim, fontSize: 11, lineHeight: 17, marginTop: 4 }}>
-        ⚠️ Not veterinary advice. Always consult your vet, especially for lipomas that grow rapidly, feel firm, or are in sensitive locations.
+        Sources: FDA recall notices and advisories · AAFCO Dog Food Nutrient Profiles · J.M. Smucker
+        public statements · Dr. Andrew Jones, DVM.
+      </Text>
+    </View>
+  );
+}
+
+// ── THE KIBBLE PROBLEM + SYNTHETIC PREMIXES ────────────────────────────────
+// Added 2026-08-20 from Kyle's holistic sources. Replaces the older, thinner
+// vitamin/mineral copy (archived, not deleted — see docs/ARCHIVE_NOTES.md).
+//
+// Three corrections were made to the source material, all factual rather than
+// positional, and all flagged to Kyle:
+//   • "sodium bisulfite" is not a separate preservative — it is part of the
+//     compound name "menadione sodium bisulfite complex". Listed separately it
+//     reads as not knowing the material.
+//   • glyphosate is a HERBICIDE, not an insecticide.
+//   • the dehydration→lipoma line was dropped. Today's four-lens research found
+//     no established diet-lipoma link in dogs; keeping it here would contradict
+//     the app's own lipoma section.
+const KIBBLE_PROBLEMS = [
+  { icon: "💧", t: "Moisture — 6–8% vs 75% in prey",
+    b: "Pets evolved eating high-moisture food; natural prey runs about 75% water. Dry kibble is 6–8%. Holistic vets argue this keeps an animal in mild chronic dehydration, drawing moisture from its own cells to digest — straining kidneys and bladder, and encouraging urinary crystals and bladder infections. ⚪ Mechanism and clinical observation; the moisture figures themselves are simply label facts." },
+  { icon: "🍞", t: "Carbohydrate load",
+    b: "Dogs have NO biological requirement for carbohydrate. Kibble still runs heavy on corn, wheat, soy, potato, peas and lentils because starch is what holds the shape — you cannot extrude a kibble without it. Holistic practitioners link the resulting insulin load to obesity, diabetes, arthritis, IBD, leaky gut and SIBO, and note that high-carb diets push urine pH alkaline (~7.5), which favours bacterial colonisation. ⚪ The zero-requirement fact is established (NRC); the disease links are mechanistic and clinical." },
+  { icon: "🏭", t: "Cooked four to five times",
+    b: "Rendering, drying and extrusion mean the ingredients see extreme heat repeatedly. That destroys heat-labile vitamins — which is exactly why a synthetic premix has to be sprayed back on afterwards — and forms Advanced Glycation End products (AGEs), inflammatory compounds associated with organ disease and pancreatitis. ⚪ AGE formation in extruded food is measurable and documented; the disease links in dogs are association, not proof." },
+  { icon: "🧪", t: "Heavy metals and environmental toxins",
+    b: "Independent screening by the Clean Label Project reported lead, cadmium, arsenic and mercury across popular brands, with arsenic concentrated in rice-based formulas and mercury in fish-based ones. ⚪ Worth knowing the criticism too: Clean Label Project's methodology has been contested, and its comparisons to cigarettes compare different exposure routes. The presence of these metals in plant and fish ingredients is real; the multipliers are the disputed part." },
+  { icon: "🌾", t: "Glyphosate on the crops",
+    b: "Soy and corn used in pet food are frequently 'Roundup Ready' — bred to be sprayed with glyphosate, a HERBICIDE. Residue testing has found pets consuming substantially more glyphosate by body weight than the average human. ⚪ Residues are documented; the health significance at those levels is contested." },
+  { icon: "📦", t: "The bag itself",
+    b: "The shiny inner coating of many pet food bags contains PFAS — the same chemical family as non-stick coatings — which can migrate into the food. PFAS in food packaging is a documented and actively regulated concern in human food. ⚪ Migration into pet food specifically is less studied than in human packaging." },
+  { icon: "🦠", t: "What happens after you open it",
+    b: "Once the bag is open, kibble is exposed to air, warmth and humidity — the conditions for rancidity, mould, storage mites and bacterial contamination including Salmonella. Fat oxidises fastest, which is why the preservative choice on the label matters." },
+];
+
+const PREMIX_PROBLEMS = [
+  { t: "No co-factors", b: "In whole food, nutrients arrive alongside the compounds that help the body use them. An isolated synthetic arrives alone. Holistic practitioners argue the body may have to draw on its own stores to process it. ⚪ The co-factor principle is real in nutrition science; the specific claim of depletion in dogs is mechanistic." },
+  { t: "Recall risk is systemic, not per-brand", b: "Premixes are frequently imported with limited quality control, and calculation errors have caused deadly recalls — excessive vitamin D causing kidney failure and death. Because many major brands buy premix from the SAME suppliers, one bad batch contaminates dozens of brands at once. ⚫ Documented: the 2018–19 vitamin D recalls hit Hill's, Nutrisca, Sunshine Mills, Kroger and ELM." },
+  { t: "Copper has no ceiling", b: "Premixes add synthetic copper, and because AAFCO deleted the copper maximum in 2007 and never restored it, there is no legal upper limit at all. Copper accumulates in the liver and dogs cannot clear the excess — which is why copper storage disease is rising in Labradors and Dobermans. ⚫ Documented: AAFCO's own profiles list a copper minimum and no maximum." },
+];
+
+const PREMIX_AVOID = [
+  ["Zinc oxide", "Poorly absorbed. The cheapest form on the market."],
+  ["Zinc sulfate", "Better than oxide, well behind proteinate."],
+  ["Copper sulfate", "Highly absorbable — which is the problem in a species with no copper ceiling. Linked to copper storage disease in predisposed breeds."],
+  ["Sodium selenite / selenate", "Inorganic selenium. Selenium has the narrowest safety margin on the entire panel — AAFCO's maximum is only about 6× its minimum."],
+  ["Menadione (vitamin K3)", "Synthetic K with no natural equivalent. Appears on labels as 'menadione sodium bisulfite complex'. FDA banned it from human over-the-counter supplements; it remains permitted in animal feed."],
+  ["dl-alpha-tocopherol", "Synthetic vitamin E. The 'dl-' is a 50/50 mix of mirror-image molecules and the dog can only use one of them."],
+];
+
+const PREMIX_PREFER = [
+  ["Amino acid chelates / proteinates", "Zinc proteinate, copper proteinate — bound to amino acids and absorbed like food. AAFCO won't even let copper OXIDE count toward a food's copper minimum, citing 'very poor apparent digestibility'."],
+  ["Selenium yeast", "Organic selenium. Better absorbed and better tolerated than sodium selenite."],
+  ["d-alpha-tocopherol", "Natural vitamin E. One letter's difference from the synthetic, roughly double the usable vitamin."],
+  ["Mixed tocopherols as the preservative", "Vitamin E doing the job BHA and BHT would otherwise do."],
+  ["Named whole-food sources", "Wild-caught salmon oil for EPA and DHA, dried sea kelp, sea salt — nutrients arriving with their co-factors attached."],
+  ["Whole foods on top", "Green-lipped mussel, sardines, eggs. A dense natural package of vitamins and minerals, complete with everything needed to absorb them."],
+];
+
+function KibbleProblemSection() {
+  return (
+    <View style={{ backgroundColor: t.surfaceAlt, borderRadius: 16, padding: 16, marginHorizontal: 16, marginBottom: 12 }}>
+      <Text style={{ fontSize: 13, fontWeight: "700", marginBottom: 6, color: t.textMuted, textTransform: "uppercase", letterSpacing: 1 }}>🏭 The Kibble Problem</Text>
+      <Text style={{ color: t.textDim, fontSize: 12, marginBottom: 14, lineHeight: 18 }}>
+        Why an all-kibble diet is worth moving away from — and why the vitamin premix exists at all.
+        ⚫ = documented · ⚪ = mechanism or clinical observation.
+      </Text>
+
+      {/* Infographic. Wrapped in a fixed-ratio container so it scales to the
+          device width without distorting — the source is 1600x893 (16:9-ish). */}
+      <View style={{ width: "100%", aspectRatio: 1600 / 893, borderRadius: 12, overflow: "hidden", marginBottom: 14, backgroundColor: t.surfaceSunken }}>
+        <Image
+          source={require("../assets/images/kibble-vs-wholefood.jpg")}
+          style={{ width: "100%", height: "100%" }}
+          resizeMode="contain"
+          accessibilityLabel="Infographic comparing the industrial reality of kibble with whole food nutrition: high-heat depletion, chronic dehydration and carb loading, hidden toxins in unnamed meals, versus the co-factor connection in whole foods."
+        />
+      </View>
+
+      {KIBBLE_PROBLEMS.map((k, i) => (
+        <View key={i} style={{ backgroundColor: t.surfaceSunken, borderRadius: 10, padding: 12, marginBottom: 9, borderLeftWidth: 3, borderLeftColor: t.moderate }}>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 8, marginBottom: 4 }}>
+            <Text style={{ fontSize: 14 }}>{k.icon}</Text>
+            <Text style={{ color: t.textStrong, fontWeight: "700", fontSize: 12.5, flex: 1 }}>{k.t}</Text>
+          </View>
+          <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>{k.b}</Text>
+        </View>
+      ))}
+
+      {/* ── PREMIX ── */}
+      <Text style={{ fontSize: 13, fontWeight: "700", marginTop: 8, marginBottom: 6, color: t.textMuted, textTransform: "uppercase", letterSpacing: 1 }}>💊 The Synthetic Premix</Text>
+      <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5, marginBottom: 10 }}>
+        Because extrusion destroys most of the natural nutrition, manufacturers spray a synthetic vitamin
+        and mineral premix back on afterwards to meet minimum standards.{" "}
+        <Text style={{ fontWeight: "700" }}>The long list on the label is a symptom of the processing —
+        it&apos;s there because the ingredients no longer deliver.</Text>
+      </Text>
+
+      {PREMIX_PROBLEMS.map((p, i) => (
+        <View key={i} style={{ marginBottom: 8 }}>
+          <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{p.t}</Text>
+          <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>{p.b}</Text>
+        </View>
+      ))}
+
+      {/* ── AVOID ── */}
+      <View style={{ backgroundColor: t.criticalTint, borderRadius: 10, padding: 12, marginTop: 4, marginBottom: 10, borderWidth: 1, borderColor: t.critical }}>
+        <Text style={{ color: t.critical, fontWeight: "700", fontSize: 13, marginBottom: 6 }}>❌ Forms to avoid</Text>
+        <Text style={{ color: t.textDim, fontSize: 11.5, marginBottom: 8, fontStyle: "italic" }}>
+          Look for chemical-sounding names, oxides and sulfates.
+        </Text>
+        {PREMIX_AVOID.map(([name, why], i) => (
+          <View key={i} style={{ marginBottom: 7 }}>
+            <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{name}</Text>
+            <Text style={{ color: t.text, fontSize: 12, lineHeight: 17 }}>{why}</Text>
+          </View>
+        ))}
+      </View>
+
+      {/* ── PREFER ── */}
+      <View style={{ backgroundColor: t.accents.detox.bg, borderRadius: 10, padding: 12, marginBottom: 10, borderWidth: 1, borderColor: t.accents.detox.fg }}>
+        <Text style={{ color: t.accents.detox.fg, fontWeight: "700", fontSize: 13, marginBottom: 6 }}>✅ Forms to look for</Text>
+        {PREMIX_PREFER.map(([name, why], i) => (
+          <View key={i} style={{ marginBottom: 7 }}>
+            <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{name}</Text>
+            <Text style={{ color: t.text, fontSize: 12, lineHeight: 17 }}>{why}</Text>
+          </View>
+        ))}
+      </View>
+
+      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700", marginBottom: 3 }}>
+        The four-word check
+      </Text>
+      <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5, marginBottom: 8 }}>
+        Search any label for <Text style={{ fontWeight: "700" }}>menadione · selenite · oxide · dl-</Text>.
+        If none are there, the vitamin block is fine. Thiamine, niacin, B12, riboflavin and ascorbic acid
+        are the same molecules found in food — there is nothing to flag.
+      </Text>
+
+      <Text style={{ color: t.textDim, fontSize: 11, lineHeight: 17 }}>
+        ⚠️ Educational only. Prefer whole-food nutrients where you can — then run the four-word check.
       </Text>
     </View>
   );
@@ -2621,10 +4504,23 @@ function HersheyProtocolSection() {
         </View>
       ))}
 
+      {/* Feeding practice */}
+      <Text style={{ color: t.dcm, fontWeight: "700", fontSize: 13, marginTop: 12, marginBottom: 8 }}>🍽️ How I Slow His Eating</Text>
+      {[
+        { title: "Split every meal: slow feeder + Kong Wobbler", body: "Hershey's a Lab — he doesn't chew, he inhales. I put half his food in a slow feeder bowl and the other half in a Kong Wobbler. It took him from finishing in under a minute to about 15 minutes, and it helped tremendously." },
+        { title: "Why it's worth the two minutes of setup", body: "Eating speed is one of the few bloat risk factors entirely under your control — the prospective research on large and giant breeds found faster eaters carried higher risk. Bloat kills in hours, and a slow feeder costs about ten dollars. Splitting across two containers also means two smaller portions per sitting rather than one large one." },
+        { title: "Feed before play, not after", body: "Don't feed a dog who's still panting hard from heat or exercise. Swallowed air is the mechanism behind bloat, and a hyperventilating dog is swallowing more of it. I let him settle and get his breathing back to normal first — costs ten minutes and nothing else." },
+      ].map((item, i) => (
+        <View key={i} style={{ marginBottom: 8, paddingLeft: 10, borderLeftWidth: 2, borderLeftColor: t.dcm }}>
+          <Text style={{ color: t.text, fontWeight: "600", fontSize: 12 }}>{item.title}</Text>
+          <Text style={{ color: t.textMuted, fontSize: 12, lineHeight: 17, marginTop: 2 }}>{item.body}</Text>
+        </View>
+      ))}
+
       {/* Omega & Joints */}
       <Text style={{ color: t.accents.mussel.fg, fontWeight: "700", fontSize: 13, marginTop: 12, marginBottom: 8 }}>🐟 Omega-3 & Joint Support</Text>
       {[
-        { title: "Green Lipped Mussel", body: "Very good for joint health, natural anti-inflammatory, supports heart and brain. One of the best whole-food joint supplements available — works synergistically with fish oil." },
+        { title: "Green Lipped Mussel", body: "A systematic review of the canine trials found 'a moderate amount of evidence' for real clinical benefit in dogs with osteoarthritis — genuinely good for a supplement. Contains ETA plus natural glucosamine and chondroitin, which fish oil doesn't. I give it alongside fish oil because they cover different ground, not because the combination has been tested — it hasn't. Buy the plain powder, not a chew." },
         { title: "Fish oil (half dose)", body: "Great for joints, inflammation, heart and brain health. Hershey's food (Simple Food Project) already has an excellent omega ratio, so I use half the recommended dose to avoid oversupplementation." },
       ].map((item, i) => (
         <View key={i} style={{ marginBottom: 8, paddingLeft: 10, borderLeftWidth: 2, borderLeftColor: t.accents.mussel.fg }}>
@@ -2722,6 +4618,550 @@ function AskAIChip({ label = "Ask AI", onPress }: { label?: string; onPress: () 
   );
 }
 
+/**
+ * ── PROGRESSIVE DISCLOSURE ───────────────────────────────────────────────────
+ * Twenty-two accordion headers on one screen is a menu of twenty-two things to
+ * worry about, which is the opposite of what a frightened owner needs. Sections
+ * are therefore grouped behind four "doors" and only the open door renders.
+ *
+ * Deliberately done with context rather than by moving JSX: nothing is deleted,
+ * nothing is reordered, and every section is still exactly where it was in the
+ * file. A section simply declares which door it belongs to.
+ *
+ * A section with NO door renders always — that's how the Layer 1 answer, the
+ * score, and the compassionate note stay unconditional.
+ */
+// Three doors, not four (2026-08-18). "Health topics" was dropped because every
+// section behind it was a general article — bloat, lifespan, lipomas, TCVM, life
+// stages, deficiency signs — none of which change based on what was scanned.
+// They now sit behind "Learn" with the rest of the reference material.
+//
+// The test for which door a section belongs to: DOES IT CHANGE BASED ON THE SCAN?
+//   yes, it describes this bag        -> whats-in-it
+//   yes, it's an action for this bag  -> what-to-do
+//   no, it's the same for every dog   -> learn  (and it belongs on the website too)
+// Numbered on purpose (2026-08-18). A row of three unnumbered tabs reads as a
+// menu — the user has to decide where to start, which is the thing that
+// overwhelms a beginner. Numbering turns it into a path: read what's in it,
+// then what to do about it, then learn more if you want. Most people will
+// never open 3, and that's fine — it's the optional one by design.
+export const DOORS = [
+  { key: "whats-in-it", icon: "📋", label: "1 · What's in it", step: "Start here" },
+  { key: "what-to-do", icon: "✅", label: "2 · What to do", step: "Then this" },
+  { key: "learn", icon: "📚", label: "3 · Learn more", step: "Optional" },
+] as const;
+
+const DoorContext = React.createContext<string | null>(null);
+
+// A–Z topic index (2026-08-20). The "Learn" door held 16 sections stacked in no
+// order, which is a wall. Reference material works as an index, not a narrative:
+// one short chip per topic, alphabetical, tap to expand. A section declares its
+// topic and renders only when that chip is selected.
+const TopicContext = React.createContext<string | null>(null);
+
+export const LEARN_TOPICS = [
+  "AAFCO", "Bloat", "Carbs", "Collagen", "Deficiency signs", "Heart",
+  "Kibble", "Life stages", "Lifespan", "Lipomas", "Missing nutrients",
+  "Mushrooms", "Omega-3", "Recalls & facts", "TCVM",
+] as const;
+
+// ── THE KIBBLE GUIDE (added 2026-08-21) ──────────────────────────────────────
+// The Learn tab's landing content: read a bag WITHOUT scanning it. Same shape as
+// the results screen — watch-outs, good signs, next steps — minus the score.
+//
+// Every entry here is drawn from content already in this repo and already
+// checked: HARMFUL_INGREDIENTS' own reason text, docs/MINERAL_FORMS_CHEATSHEET.md,
+// docs/SYNTHETIC_VS_NATURAL.md and docs/THE_LADDER.md. Nothing new is claimed.
+//
+// Two rules from THE_LADDER govern the wording and must survive edits:
+//   1. `tier` is never optional. If we can't say what kind of evidence it is,
+//      it doesn't go in the guide.
+//   2. Every entry ends in `instead` — something to DO. "Avoid X" with no
+//      alternative is how you lose the person buying a $22 bag.
+const KIBBLE_GUIDE: {
+  key: string;
+  icon: string;
+  title: string;
+  headline: string;
+  watch: string[];
+  why: string;
+  tier: string;
+  instead: string;
+}[] = [
+  {
+    key: "preservatives",
+    icon: "🧪",
+    title: "Preservatives",
+    headline: "What's keeping the fat from going rancid",
+    watch: ["BHA", "BHT", "Ethoxyquin", "TBHQ"],
+    why:
+      "Fat goes rancid, so every kibble has to be preserved somehow — the question is which one they picked, and that's a pure cost decision. BHA produced tumours in long-term rodent feeding studies and is a Group 2B possible carcinogen; BHT promoted tumours in animals already exposed to a carcinogen. Ethoxyquin started life as a pesticide and rubber stabiliser, and the FDA asked manufacturers to cut its use in 1997.",
+    tier: "Rodent feeding studies · not demonstrated in dogs at pet-food levels",
+    instead:
+      "\"Preserved with mixed tocopherols\" — that's vitamin E. It costs more and it works, which is exactly why it tells you what they did on the lines you can't see.",
+  },
+  {
+    key: "colors",
+    icon: "🎨",
+    title: "Colours & dyes",
+    headline: "The one that's purely for you",
+    watch: ["Red 40", "Yellow 5", "Yellow 6", "Blue 2", "Caramel colour", "\"Artificial colour\""],
+    why:
+      "Your dog is a dichromat — he cannot tell the red kibble from the green one, and he chose his food by smell before he ever saw the bowl. The dye exists so the bag looks appetising to the person holding the scoop. It is money spent on the wrong species.",
+    tier: "No canine harm shown at food levels — this is a formulation signal, not a poison",
+    instead:
+      "Brown food. A company that doesn't spend on making kibble look like breakfast cereal usually had somewhere better to put it.",
+  },
+  {
+    key: "legumes",
+    icon: "🫘",
+    title: "Legumes (DCM)",
+    headline: "Peas and lentils high on a grain-free bag",
+    watch: ["Peas", "Pea protein", "Pea starch", "Pea fibre", "Lentils", "Chickpeas", "Potato"],
+    why:
+      "In 2018 the FDA opened an investigation into reports of dilated cardiomyopathy in dogs eating grain-free diets, and the shared pattern was legumes or potatoes sitting high on the ingredient list. It is an association drawn from case reports — the cause has not been established, and the FDA has not concluded these foods cause DCM. What makes it hard to read is ingredient splitting: pea protein, pea starch and pea fibre are listed separately, so peas can be the largest thing in the bag while never appearing near the top.",
+    tier: "FDA case reports · association only — cause NOT established",
+    instead:
+      "If the bag is grain-free, look for how many times peas or lentils appear and add them together in your head. \"Fewer fillers\" beats \"swapped fillers\" — grain-free is not automatically better.",
+  },
+  {
+    key: "generic",
+    icon: "🥩",
+    title: "Unnamed meat",
+    headline: "When the label won't say which animal",
+    watch: ["Meat by-product", "Poultry by-product", "Meat and bone meal", "Animal digest", "Animal fat", "Meat meal"],
+    why:
+      "The precise problem is that the species isn't disclosed, which means it can change from batch to batch depending on what was cheap that month. You cannot get consistency from an ingredient that isn't named. By-product also covers material from animals that didn't go to slaughter — Dr. Andrew Jones's point about 4D sources, which is why he tells owners to skip it entirely.",
+    tier: "Regulatory definition + clinical experience · not a demonstrated toxicity",
+    instead:
+      "A named animal, every time: \"Chicken meal\", \"Lamb meal\", \"Chicken fat\" — never \"poultry\", \"meat\", or \"animal\". This is the single easiest upgrade to teach and anyone can check it in one second.",
+  },
+  {
+    key: "minerals",
+    icon: "⚗️",
+    title: "Cheap minerals",
+    headline: "Count the word \"oxide\"",
+    watch: ["Zinc oxide", "Iron oxide", "Manganese oxide", "Copper oxide"],
+    why:
+      "Same mineral, three grades of form, and the word after the metal is the whole tell. Chelated forms — proteinate, amino acid chelate, methionine — absorb like food. Sulfates are the adequate middle. Oxides are barely absorbed: AAFCO will not let copper oxide count toward a food's copper minimum at all, citing \"very poor apparent digestibility.\" A regulator saying an ingredient can't count as the nutrient it's named after is as clear as this gets.",
+    tier: "Regulatory — AAFCO's own position",
+    instead:
+      "This is the highest-signal move on the whole label, because mineral forms are invisible to marketing — no bag advertises proteinates on the front. Two or more oxides means they bought the cheapest forms available, and that's what they did everywhere you can't see.",
+  },
+  {
+    key: "forms",
+    icon: "💊",
+    title: "Selenium & E",
+    headline: "Two places where one letter halves the vitamin",
+    watch: ["Sodium selenite", "Sodium selenate", "dl-alpha tocopherol"],
+    why:
+      "Most synthetic vitamins are the identical molecule to the food version and are not worth worrying about. These two are the real exceptions. \"dl-\" alpha tocopherol is a 50/50 mix of mirror-image molecules and the dog can only use one of them — one letter, roughly half the vitamin E. Selenium has the narrowest safety margin on the whole panel: AAFCO's maximum is only about six times its minimum.",
+    tier: "Established nutritional chemistry",
+    instead:
+      "\"Selenium yeast\" or selenomethionine, and \"d-alpha tocopherol\" without the l. And put down the worry about the other forty vitamins — niacin is niacin, B12 is B12.",
+  },
+  {
+    key: "menadione",
+    icon: "🩸",
+    title: "Menadione",
+    headline: "The genuinely contested one",
+    watch: ["Menadione", "Menadione sodium bisulfite complex", "Vitamin K3"],
+    why:
+      "Synthetic vitamin K3. It generates reactive oxygen species and depletes glutathione, which is the mechanistic route to haemolytic anaemia, and the FDA banned it from over-the-counter human supplements. In fairness: the FDA still permits it in animal feed, and across 50+ years there are no published reports of nutritional toxicity in dogs at pet-food levels. The studies showing harm used far higher doses, often injected rather than fed.",
+    tier: "Mechanism only · no published canine toxicity at label doses",
+    instead:
+      "Prefer a food without it — there's no reason to accept it when alternatives exist. But it is not a reason to panic about a bag you already bought, and we don't claim it's been shown to harm dogs, because it hasn't.",
+  },
+  {
+    key: "fillers",
+    icon: "🌽",
+    title: "Fillers up top",
+    headline: "How much of the first five isn't meat",
+    watch: ["Ground corn", "Corn gluten meal", "Ground wheat", "Wheat gluten", "Brewers rice", "Soybean meal", "Soy protein"],
+    why:
+      "Carbs aren't poison and dogs digest cooked starch fine — the issue is displacement. Dogs have no dietary carbohydrate requirement, so every filler slot in the top five is a slot not holding meat. Watch for splitting too: \"corn, corn gluten meal, ground corn\" is one ingredient wearing three hats so none of them has to be listed first.",
+    tier: "Established — no dietary carbohydrate requirement in dogs",
+    instead:
+      "Count how many of the first five ingredients are animals. Three of five being corn, wheat and pea protein means the bag is mostly not meat, whatever the front of it says.",
+  },
+  {
+    key: "sugar",
+    icon: "🍬",
+    title: "Sweeteners",
+    headline: "Food that needs help being eaten",
+    watch: ["Corn syrup", "Sugar", "Sucrose", "Fructose", "Molasses", "Sorbitol"],
+    why:
+      "These are palatants — they exist to make the food get eaten. A recipe that needs sugar added to be attractive to a carnivore is telling you something about everything else in the bag. Added sugar also feeds yeast, which matters if your dog already has itchy paws or recurring ear trouble.",
+    tier: "Formulation signal · yeast link is clinical observation, not trial evidence",
+    instead:
+      "Nothing sweet in the list at all. Good food smells like meat and doesn't need convincing.",
+  },
+  {
+    key: "flavor",
+    icon: "👃",
+    title: "\"Natural flavour\"",
+    headline: "A legal category, not an ingredient",
+    watch: ["Natural flavor", "Animal digest", "Hydrolyzed protein", "Yeast culture"],
+    why:
+      "\"Natural flavour\" doesn't name a substance — it names a permission. In pet food it's usually animal digest: material broken down with enzymes or acid and sprayed onto the outside of the kibble after extrusion. That spray is what makes the food palatable, which means the pieces underneath it aren't.",
+    tier: "Regulatory definition — this is what the term legally permits",
+    instead:
+      "Ask why the food needs a coating. A recipe built on real meat doesn't have to be painted at the end.",
+  },
+];
+
+// The green list — what a good bag actually looks like. Deliberately the same
+// length as the watch list, because a guide that's only warnings teaches
+// avoidance and never teaches choosing.
+const KIBBLE_GOOD_SIGNS: { icon: string; label: string; detail: string }[] = [
+  { icon: "🍗", label: "A named animal at #1", detail: "Chicken, Lamb, Salmon, Beef — not a grain, legume or starch." },
+  { icon: "🏷️", label: "Every animal word named", detail: "\"Chicken meal\" is fine. \"Poultry meal\" and \"animal fat\" are not." },
+  { icon: "🌿", label: "Preserved with mixed tocopherols", detail: "Natural vitamin E, chosen over the cheaper synthetics." },
+  { icon: "⚗️", label: "Proteinates or chelates", detail: "\"Zinc proteinate\" beats sulfate beats oxide. Zero oxides is the goal." },
+  { icon: "🧬", label: "Selenium yeast, d-alpha tocopherol", detail: "The two forms that are genuinely better absorbed." },
+  { icon: "🐟", label: "A marine omega-3 source", detail: "Fish oil, salmon oil, herring. Flax is not a substitute — see below." },
+  { icon: "🫀", label: "Organ meat listed by name", detail: "Liver, heart, kidney — real nutrient density, not just muscle meat." },
+  { icon: "📋", label: "An AAFCO feeding-trial statement", detail: "\"Animal feeding tests\" beats \"formulated to meet\" — the food was actually fed." },
+];
+
+// What to DO about it. Ordered cheapest-and-easiest first on purpose: the person
+// reading this is standing in a pet-food aisle with a budget, not planning a
+// home-cooked diet. See docs/THE_LADDER.md — never shame the bowl.
+const KIBBLE_UPGRADES: { step: string; detail: string; tier: string }[] = [
+  {
+    step: "Keep him lean. This one is free.",
+    detail:
+      "The single best-evidenced thing on this page, and it costs nothing. In Purina's 14-year lifetime study, Labradors kept at a lean body condition lived a median 13.0 years versus 11.2 for littermates fed 25% more — the same food, just less of it. If you can't feel his ribs under light pressure, start here and skip the rest.",
+    tier: "Randomised, controlled, lifelong · Kealy et al., funded by Purina",
+  },
+  {
+    step: "Add a whole egg, two or three times a week.",
+    detail:
+      "The cheapest complete-protein topper there is. Cooked or raw both work — cooking costs a little biotin availability and removes any salmonella question, so cook it if that worries you. Roughly one egg for a 50lb dog.",
+    tier: "Established nutrition · whole-food topper",
+  },
+  {
+    step: "Get real EPA and DHA into the bowl.",
+    detail:
+      "Sardines packed in water, or a fish oil. This matters more than it sounds: dogs convert ALA — the omega-3 in flax and chia — into EPA and DHA very poorly, single digits to low double digits. A food listing flaxseed as its omega-3 source has not given your dog meaningful EPA or DHA. Most kibble runs 15:1 to 30:1 omega-6:3; the target is 5:1 or lower.",
+    tier: "Established — species-specific conversion limit in dogs",
+  },
+  {
+    step: "Add fresh food as about 10% of the bowl.",
+    detail:
+      "Blueberries, pumpkin, leafy greens, a little cooked liver. Under ~10% you're adding nutrients without threatening the completeness of a balanced base. Liver is the one to actually measure — the 10% organ rule exists because of its vitamin A load.",
+    tier: "Established · the 10% ceiling is the accumulation guard",
+  },
+  {
+    step: "A spoon of kefir, plain yogurt or goat's milk.",
+    detail:
+      "Live cultures the extrusion process destroyed. Start with a teaspoon for a small dog, a tablespoon for a large one, and back off if stools loosen.",
+    tier: "Mechanism + clinical experience · probiotic trials in dogs are mixed",
+  },
+  {
+    step: "Rotate proteins instead of feeding one bag forever.",
+    detail:
+      "Different proteins bring different amino-acid and micronutrient profiles, and a dog who has only ever eaten chicken has no tolerance for change when that formula is recalled or reformulated. Transition over about a week.",
+    tier: "Clinical experience · not trial-established",
+  },
+  {
+    step: "Swap one meal a week to fresh or gently cooked.",
+    detail:
+      "The cheapest rung up the ladder. You don't have to leave kibble to stop feeding only kibble — a single fresh meal a week is a real change and it's a budget most people can actually hold.",
+    tier: "Processing rationale · see the Kibble topic",
+  },
+];
+
+// The counterweight. Without this the guide reads as "add everything", which is
+// the exact failure mode docs/BLUEPRINT_THE_BOWL.md exists to prevent.
+const KIBBLE_DONT_OVERDO = {
+  headline: "Before you add five things at once",
+  body:
+    "Almost nothing you spoon on top accumulates. Water-soluble vitamins pass straight through — a dog cannot get in trouble from the extra B12 in a sardine, and saying so plainly is more honest than flagging everything.\n\nOnly four things are worth tracking as they stack up: the fat-soluble vitamins A, D, E and K; copper; iodine; and selenium. Liver drives vitamin A and copper, kelp drives iodine, and fish oil drives the fat-solubles. Whole foods at topper amounts stack safely — concentrated capsules are the ones that add up.\n\nAnd the biggest one: if a supplement is right for one problem and wrong for another, that conflict is real and it's yours to weigh. Green-lipped mussel is in the heart protocol and avoided for damp, lipoma-prone dogs. Both of those are true at once.",
+};
+
+// The Learn tab's landing screen. Deliberately the same shape as a scan result —
+// a segmented row, then tappable rows that expand — so someone who has used the
+// scanner already knows how to read this, and someone who starts here already
+// knows how to read a scan. The only thing missing is the score, because there's
+// no bag yet.
+function KibbleGuideSection() {
+  const [tab, setTab] = useState<"watch" | "list" | "good" | "better">("watch");
+  const [openKey, setOpenKey] = useState<string | null>(null);
+  const [dontOverdoOpen, setDontOverdoOpen] = useState(false);
+  const [query, setQuery] = useState("");
+
+  const TABS = [
+    { key: "watch" as const, label: "Watch for" },
+    { key: "list" as const, label: "Every one" },
+    { key: "good" as const, label: "Good signs" },
+    { key: "better" as const, label: "Improve it" },
+  ];
+
+  // The full flagged-ingredient reference, straight off the same
+  // HARMFUL_INGREDIENTS array the scorer uses — so this list can never drift
+  // out of sync with what a scan actually flags. Ordered worst first.
+  const SEVERITY_ORDER = ["toxic", "severe", "moderate", "mild"];
+  const q = query.trim().toLowerCase();
+  // Dedupe by term, keeping the FIRST entry. HARMFUL_INGREDIENTS currently holds
+  // two "vegetable oil" rows, and every scoring path resolves a term with
+  // `.find()` — which stops at the first match. So keeping the first is not just
+  // tidier, it makes this reference show exactly the entry the scorer uses.
+  // (Scoring is unaffected either way; `.find()` never saw the second one.)
+  const seenTerms = new Set<string>();
+  const matches = HARMFUL_INGREDIENTS.filter((h) => {
+    if (seenTerms.has(h.term)) return false;
+    seenTerms.add(h.term);
+    return q === "" || h.term.includes(q) || h.reason.toLowerCase().includes(q);
+  });
+  const bySeverity = SEVERITY_ORDER.map((sev) => ({
+    sev,
+    items: matches.filter((h) => h.severity === sev),
+  })).filter((g) => g.items.length > 0);
+
+  return (
+    <View style={{ marginHorizontal: 16, marginBottom: 18 }}>
+      <Text style={styles.guideTitle}>Reading a kibble bag</Text>
+      <Text style={styles.guideLede}>
+        You don&apos;t need to scan anything to use this. Turn the bag over, find
+        the ingredient list, and work down. Nothing here is about one brand —
+        it&apos;s what the words themselves mean.
+      </Text>
+
+      {/* Segmented row — same control as the scan screen's mode picker. */}
+      <View style={styles.guideTabs}>
+        {TABS.map((tb) => {
+          const on = tab === tb.key;
+          return (
+            <TouchableOpacity
+              key={tb.key}
+              onPress={() => {
+                LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+                setTab(tb.key);
+                setOpenKey(null);
+              }}
+              activeOpacity={0.75}
+              accessibilityRole="tab"
+              accessibilityState={{ selected: on }}
+              style={[styles.guideTab, on && styles.guideTabOn]}
+            >
+              <Text style={[styles.guideTabText, on && styles.guideTabTextOn]} numberOfLines={1}>
+                {tb.label}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+
+      {/* ── WATCH FOR ── one chip per category, tap to expand the detail. */}
+      {tab === "watch" && (
+        <>
+          <Text style={styles.guideHint}>
+            {openKey
+              ? "Tap the same one again to close it."
+              : "Ten things worth knowing. Tap any of them — you don't need to read them in order."}
+          </Text>
+          {KIBBLE_GUIDE.map((g) => {
+            const on = openKey === g.key;
+            return (
+              <View key={g.key} style={styles.guideCard}>
+                <TouchableOpacity
+                  onPress={() => {
+                    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+                    setOpenKey(on ? null : g.key);
+                  }}
+                  activeOpacity={0.75}
+                  accessibilityRole="button"
+                  accessibilityState={{ expanded: on }}
+                  style={styles.guideCardHead}
+                >
+                  <Text style={{ fontSize: 18 }}>{g.icon}</Text>
+                  <View style={{ flex: 1 }}>
+                    <Text style={styles.guideCardTitle}>{g.title}</Text>
+                    <Text style={styles.guideCardHeadline} numberOfLines={on ? undefined : 1}>
+                      {g.headline}
+                    </Text>
+                  </View>
+                  <Text style={styles.guideChevron}>{on ? "▾" : "›"}</Text>
+                </TouchableOpacity>
+
+                {on && (
+                  <View style={styles.guideCardBody}>
+                    {/* The actual words on the label — the reason someone opened this. */}
+                    <Text style={styles.guideLabelCue}>On the label it says</Text>
+                    <View style={styles.guideTermRow}>
+                      {g.watch.map((w) => (
+                        <View key={w} style={styles.guideTerm}>
+                          <Text style={styles.guideTermText}>{w}</Text>
+                        </View>
+                      ))}
+                    </View>
+
+                    <Text style={styles.guideWhy}>{g.why}</Text>
+
+                    <View style={styles.guideTierPill}>
+                      <Text style={styles.guideTierText}>{g.tier}</Text>
+                    </View>
+
+                    <View style={styles.guideInstead}>
+                      <Text style={styles.guideInsteadLabel}>What to do instead</Text>
+                      <Text style={styles.guideInsteadText}>{g.instead}</Text>
+                    </View>
+                  </View>
+                )}
+              </View>
+            );
+          })}
+        </>
+      )}
+
+      {/* ── EVERY ONE ── the complete flagged-ingredient reference. Reads the
+          same HARMFUL_INGREDIENTS array the scorer uses, so what you see here
+          is exactly what a scan would flag, with the same reason text and the
+          same severity. Nothing is summarised or re-written for this view. */}
+      {tab === "list" && (
+        <>
+          <Text style={styles.guideHint}>
+            Every ingredient PawGrade flags, and why — {HARMFUL_INGREDIENTS.length} of
+            them. This is the same list the scanner scores against, so nothing
+            here is different from what a scan would tell you.
+          </Text>
+          <TextInput
+            style={styles.guideSearch}
+            placeholder="Search an ingredient…"
+            placeholderTextColor={t.textFaint}
+            value={query}
+            onChangeText={setQuery}
+            autoCorrect={false}
+            autoCapitalize="none"
+          />
+          {bySeverity.length === 0 && (
+            <Text style={styles.guideEmpty}>
+              Nothing matches “{query}”. That doesn&apos;t mean it&apos;s safe —
+              it means we don&apos;t flag it. Try the Ask tab.
+            </Text>
+          )}
+          {bySeverity.map((group) => (
+            <View key={group.sev} style={{ marginBottom: 6 }}>
+              <View style={styles.guideSevHead}>
+                <View
+                  style={[
+                    styles.guideSevDot,
+                    { backgroundColor: SEVERITY_COLORS[group.sev] },
+                  ]}
+                />
+                <Text style={styles.guideSevLabel}>
+                  {group.sev} · {group.items.length}
+                </Text>
+                <Text style={styles.guideSevPenalty}>
+                  −{SEVERITY_PENALTIES[group.sev]} points each
+                </Text>
+              </View>
+              {group.items.map((h) => {
+                const on = openKey === `ing-${h.term}`;
+                return (
+                  <View key={`${group.sev}-${h.term}`} style={styles.guideCard}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+                        setOpenKey(on ? null : `ing-${h.term}`);
+                      }}
+                      activeOpacity={0.75}
+                      accessibilityRole="button"
+                      accessibilityState={{ expanded: on }}
+                      style={styles.guideIngHead}
+                    >
+                      <View
+                        style={[
+                          styles.guideSevDot,
+                          { backgroundColor: SEVERITY_COLORS[h.severity] },
+                        ]}
+                      />
+                      <Text style={styles.guideIngName}>{h.term}</Text>
+                      <Text style={styles.guideChevron}>{on ? "▾" : "›"}</Text>
+                    </TouchableOpacity>
+                    {on && <Text style={styles.guideIngReason}>{h.reason}</Text>}
+                  </View>
+                );
+              })}
+            </View>
+          ))}
+          <Text style={styles.guideFootnote}>
+            Severity is capped by evidence: an ingredient flagged on mechanism
+            alone can&apos;t be rated worse than mild, and only documented canine
+            harm reaches severe or toxic. That&apos;s why some things you may
+            have read are “terrible” sit low here.
+          </Text>
+        </>
+      )}
+
+      {/* ── GOOD SIGNS ── the green list, so the guide teaches choosing too. */}
+      {tab === "good" && (
+        <>
+          <Text style={styles.guideHint}>
+            A bag doesn&apos;t need all eight. Three or four of these puts it well
+            above most of the shelf.
+          </Text>
+          {KIBBLE_GOOD_SIGNS.map((s) => (
+            <View key={s.label} style={styles.guideGoodRow}>
+              <Text style={{ fontSize: 16 }}>{s.icon}</Text>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.guideGoodLabel}>{s.label}</Text>
+                <Text style={styles.guideGoodDetail}>{s.detail}</Text>
+              </View>
+            </View>
+          ))}
+        </>
+      )}
+
+      {/* ── MAKE IT BETTER ── numbered, cheapest first, with the stacking guard. */}
+      {tab === "better" && (
+        <>
+          <Text style={styles.guideHint}>
+            Cheapest and easiest first. Doing one of these is a real change —
+            you don&apos;t have to do all seven, and you don&apos;t have to leave
+            kibble to make the bowl better.
+          </Text>
+          {KIBBLE_UPGRADES.map((u, i) => (
+            <View key={u.step} style={styles.guideStep}>
+              <View style={styles.guideStepNum}>
+                <Text style={styles.guideStepNumText}>{i + 1}</Text>
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.guideStepTitle}>{u.step}</Text>
+                <Text style={styles.guideStepDetail}>{u.detail}</Text>
+                <Text style={styles.guideStepTier}>{u.tier}</Text>
+              </View>
+            </View>
+          ))}
+
+          <TouchableOpacity
+            onPress={() => {
+              LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+              setDontOverdoOpen((v) => !v);
+            }}
+            activeOpacity={0.75}
+            accessibilityRole="button"
+            accessibilityState={{ expanded: dontOverdoOpen }}
+            style={styles.guideWarnCard}
+          >
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 9 }}>
+              <Text style={{ fontSize: 16 }}>⚖️</Text>
+              <Text style={[styles.guideWarnTitle, { flex: 1 }]}>
+                {KIBBLE_DONT_OVERDO.headline}
+              </Text>
+              <Text style={styles.guideChevron}>{dontOverdoOpen ? "▾" : "›"}</Text>
+            </View>
+            {dontOverdoOpen && (
+              <Text style={styles.guideWarnBody}>{KIBBLE_DONT_OVERDO.body}</Text>
+            )}
+          </TouchableOpacity>
+        </>
+      )}
+    </View>
+  );
+}
+
 function AccordionSection({
   title,
   children,
@@ -2730,6 +5170,8 @@ function AccordionSection({
   titleColor,
   onAskAI,
   askLabel,
+  door,
+  topic,
 }: {
   title: string;
   children: React.ReactNode;
@@ -2740,8 +5182,17 @@ function AccordionSection({
    *  already framed for this section — instead of dumping evidence into the UI. */
   onAskAI?: () => void;
   askLabel?: string;
+  /** Which door this section lives behind. Omit to always render. */
+  door?: string;
+  /** A–Z topic chip this section sits under. Omit to render whenever its door is open. */
+  topic?: string;
 }) {
+  const activeDoor = React.useContext(DoorContext);
+  const activeTopic = React.useContext(TopicContext);
   const [open, setOpen] = useState(defaultOpen);
+  // Hooks above, early return below — hook order stays stable either way.
+  if (door && activeDoor !== door) return null;
+  if (topic && activeTopic !== topic) return null;
   const toggle = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setOpen((o) => !o);
@@ -2887,6 +5338,8 @@ function getDCMPattern(ingredientList: string[]): {
 
 export default function App() {
   const [permission, requestPermission] = useCameraPermissions();
+  // Kept as the opening screen: it carries the camera-permission request and
+  // the "educational, not veterinary advice" framing (restored 2026-08-18).
   const [showDisclaimer, setShowDisclaimer] = useState(true);
   const [scanned, setScanned] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -2899,6 +5352,29 @@ export default function App() {
   >([]);
   // Which red-flag chips are expanded to show their one-sentence "why" inline.
   const [expandedRedFlags, setExpandedRedFlags] = useState<Record<string, boolean>>({});
+  // Egg-quality detail under "Make it better" — collapsed by default so the
+  // section keeps its three-line calm and the evidence stays opt-in.
+  const [eggInfoOpen, setEggInfoOpen] = useState(false);
+  // Which of the four doors is open. null = none, so the results screen
+  // shows only the Layer 1 answer until the owner chooses to go deeper.
+  // Opens on "learn" because the app now LANDS on Learn (see below).
+  const [openDoor, setOpenDoor] = useState<string | null>("learn");
+  const [openTopic, setOpenTopic] = useState<string | null>(null);
+  // Learn without scanning (2026-08-21). The A–Z reference doesn't depend on a
+  // scan — gating it behind one meant a new owner had to photograph a bag before
+  // they could read anything. This opens the same index standalone.
+  //
+  // Defaults to TRUE (2026-08-21): after the permission + disclaimer screens the
+  // app lands on Learn, not the camera. Someone who just installed a dog-food
+  // scanner usually doesn't have a bag in their hand — they have a question. The
+  // camera is one tap away and the permission prompt still comes first.
+  const [learnMode, setLearnMode] = useState(true);
+  // Home-cooked builder: dog weight in lb, and activity multiplier on RER.
+  const [hmWeight, setHmWeight] = useState("");
+  const [hmActivity, setHmActivity] = useState(1.6);
+  // The formulator: chosen ingredients as { dbIndex: grams }.
+  const [recipe, setRecipe] = useState<Record<number, string>>({});
+  const [pickerOpen, setPickerOpen] = useState(false);
   const [meals, setMeals] = useState<string[]>([]);
   const [vitamins, setVitamins] = useState<string[]>([]);
   const [toxicAdditives, setToxicAdditives] = useState<string[]>([]);
@@ -3170,6 +5646,21 @@ export default function App() {
         <Text style={styles.disclaimerFooter}>
           By continuing, you agree this app provides information only and is not
           a substitute for professional veterinary advice.
+        </Text>
+        {/* Build stamp. Added 2026-08-18 because it became impossible to tell
+            whether a screen was running current code or a cached bundle —
+            several rounds of UI changes were made and reported as "nothing
+            changed". If this line is missing, you are NOT on the current build. */}
+        <Text
+          style={{
+            color: t.textFaint,
+            fontSize: 10,
+            textAlign: "center",
+            marginTop: 10,
+            letterSpacing: 0.4,
+          }}
+        >
+          BUILD CHECK · omega guide + image · 22 Aug
         </Text>
       </View>
     );
@@ -5363,7 +7854,12 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      {!scanned ? (
+      {/* `learnMode` has to be in this condition, not just in the section gates.
+          Every Learn section lives inside the branch below, so without this the
+          📚 tab set its state and rendered nothing — it looked like a dead
+          button. Learn now shows the same scroll view a scan does, minus the
+          score. (Found and fixed 2026-08-21.) */}
+      {!scanned && !learnMode ? (
         <View style={styles.scanScreen}>
           <View style={{ width: '100%', paddingHorizontal: 20, marginBottom: 6 }}>
             <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -5449,6 +7945,20 @@ export default function App() {
               </TouchableOpacity>
             </View>
           </View>
+          {/* SCAN SCREEN — rebuilt 2026-08-21 from the approved v1.9 mockup
+              (artifact 42693321). Four elements, in this order: a plain title,
+              the segmented mode row, a COMPACT framed viewfinder, and one round
+              shutter beneath it. The camera used to be flex:1 full-bleed with the
+              shutter floating on top of it; Kyle's note was "the camera isn't so
+              big". Nothing was removed — the sample scans, the ingredient lookup
+              and every mode below are untouched. */}
+          <Text style={styles.scanTitle}>
+            {scanMode === "manual"
+              ? "Type in a label"
+              : scanMode === "treats"
+                ? "Scan a treat"
+                : "Scan a bag"}
+          </Text>
           <View style={styles.modeToggle}>
             <TouchableOpacity
               style={[
@@ -5463,7 +7973,7 @@ export default function App() {
                   scanMode === "smart" && styles.modeBtnTextActive,
                 ]}
               >
-                Scan
+                Camera
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -5479,24 +7989,37 @@ export default function App() {
                   scanMode === "manual" && styles.modeBtnTextActive,
                 ]}
               >
-                Type In
+                Type in
               </Text>
             </TouchableOpacity>
-            {/* Treats mode disabled — tab hidden until the custom treats database is built.
-                Treats scoring/results code is left intact but unreachable from the UI. */}
+            {/* Treats mode re-enabled 2026-08-11. The scoring path (scoreTreats),
+                TREAT_HARMFUL, TREAT_OK_INGREDIENTS and the results rendering were
+                all intact the whole time — only this button was missing. */}
+            <TouchableOpacity
+              style={[
+                styles.modeBtn,
+                scanMode === "treats" && styles.modeBtnActive,
+              ]}
+              onPress={() => { setScanMode("treats"); setScanned(false); setIsTreatScan(false); setTreatScore(null); setProductName(""); scanningRef.current = false; }}
+            >
+              <Text
+                style={[
+                  styles.modeBtnText,
+                  scanMode === "treats" && styles.modeBtnTextActive,
+                ]}
+              >
+                Treats
+              </Text>
+            </TouchableOpacity>
           </View>
-          <View style={styles.heroCard}>
-            <Text style={styles.heroCardIcon}>
-              {scanMode === "manual" ? "⌨️" : scanMode === "treats" ? "🦴" : "📷"}
+          {/* In camera modes the instruction now lives INSIDE the viewfinder
+              frame (below), where the mockup puts it. Type-in mode has no
+              viewfinder, so it keeps a one-line instruction of its own. */}
+          {scanMode === "manual" && (
+            <Text style={styles.scanHint}>
+              Paste the ingredient list from the bag
             </Text>
-            <Text style={styles.heroCardText}>
-              {scanMode === "treats"
-                ? "Point at the ingredient list on a treat bag"
-                : scanMode === "manual"
-                  ? "Type or paste an ingredient list to analyze"
-                  : "Tap the button to scan the ingredient label — barcode recognition also works for previously-scanned products"}
-            </Text>
-          </View>
+          )}
           {scanMode === "manual" ? (
             <View style={{ flex: 1, width: "100%", paddingHorizontal: 16, paddingTop: 8 }}>
               <TextInput
@@ -5515,23 +8038,12 @@ export default function App() {
                 value={manualProductName}
                 onChangeText={setManualProductName}
               />
-              <TextInput
-                style={{
-                  backgroundColor: t.surface,
-                  color: t.textStrong,
-                  borderRadius: 12,
-                  borderWidth: 1,
-                  borderColor: t.border,
-                  padding: 14,
-                  fontSize: 14,
-                  marginBottom: 10,
-                }}
-                placeholder="Barcode number (optional — for future scans)"
-                placeholderTextColor={t.textFaint}
-                value={manualBarcode}
-                onChangeText={setManualBarcode}
-                keyboardType="numeric"
-              />
+              {/* The barcode field was removed from this form on 2026-08-18.
+                  It was optional, it was labelled "for future scans", and it
+                  asked a first-time user to type a barcode number for no
+                  benefit to them — it only helped our database. `manualBarcode`
+                  state is intentionally kept: Scan mode still captures barcodes
+                  automatically, and putting the input back is one block. */}
               <TextInput
                 style={{
                   backgroundColor: t.surface,
@@ -5577,7 +8089,10 @@ export default function App() {
               </TouchableOpacity>
             </View>
           ) : (
-            <View style={{ width: "100%", flex: 1 }}>
+            /* No flex:1 here any more — the viewfinder is a fixed height now, so
+               this block sizes to its content and everything below it (sample
+               scans, ingredient lookup) stays on the same screen. */
+            <View style={{ width: "100%" }}>
               <TextInput
                 style={{
                   backgroundColor: t.surface,
@@ -5595,6 +8110,10 @@ export default function App() {
                 value={cameraProductName}
                 onChangeText={setCameraProductName}
               />
+            {/* The compact framed viewfinder. Fixed 250px tall with a dashed
+                border, rather than flex:1 filling the screen — so the sample
+                scans and the ingredient lookup underneath are reachable without
+                scrolling past a wall of live video. */}
             <View style={styles.cameraWrapper}>
               <CameraView
                 ref={cameraRef}
@@ -5605,15 +8124,19 @@ export default function App() {
                 }}
                 onBarcodeScanned={scanMode !== "treats" ? handleBarCodeScanned : undefined}
               />
-              <View style={styles.scanOverlay}>
-                <TouchableOpacity
-                  style={styles.captureBtn}
-                  onPress={handleSmartScan}
-                >
-                  <View style={styles.captureBtnInner} />
-                </TouchableOpacity>
+              <View style={styles.scanOverlay} pointerEvents="none">
+                <Text style={styles.scanOverlayText}>
+                  {scanMode === "treats"
+                    ? "Point at the ingredient list on a treat bag"
+                    : "Point at the ingredient list on the bag"}
+                </Text>
               </View>
             </View>
+            {/* One round shutter, below the frame — not floating over the video.
+                Same handleSmartScan it always called. */}
+            <TouchableOpacity style={styles.shutterBtn} onPress={handleSmartScan}>
+              <Text style={styles.shutterIcon}>📸</Text>
+            </TouchableOpacity>
             </View>
           )}
           {scanMode !== "manual" && (
@@ -5767,6 +8290,8 @@ export default function App() {
           </View>
         </View>
       ) : (
+        <TopicContext.Provider value={openTopic}>
+        <DoorContext.Provider value={openDoor}>
         <ScrollView
           contentContainerStyle={styles.results}
           showsVerticalScrollIndicator={false}
@@ -5814,6 +8339,128 @@ export default function App() {
           )}
 
           {/* ── TREAT RESULTS ── */}
+          {/* ── NAVIGATION + LEARN INDEX ──────────────────────────────────
+              These were nested INSIDE the treat-scan results block, so they
+              only rendered during a treat scan — which is why the Learn tab
+              came up blank. Hoisted to be a sibling of the result blocks on
+              2026-08-21. Nothing was rewritten; the same JSX moved up one
+              level so it renders for a food scan, a treat scan, or Learn. */}
+            {score !== null && (
+              <View style={{ marginHorizontal: 16, marginBottom: 14 }}>
+                {/* Segmented tab row. Was a wrapping grid of large cards, which
+                    cost a lot of vertical space before the user reached anything.
+                    One compact row instead — tap to open, tap again to close. */}
+                <Text
+                  style={{
+                    color: t.textDim,
+                    fontSize: 12.5,
+                    lineHeight: 18,
+                    marginBottom: 8,
+                  }}
+                >
+                  {openDoor === null
+                    ? "New to this? Tap 1 first — it explains the score. You don't need the others."
+                    : "Tap the same tab again to close it."}
+                </Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    gap: 6,
+                    backgroundColor: t.surfaceAlt,
+                    borderRadius: 12,
+                    padding: 4,
+                  }}
+                >
+                  {DOORS.map((d) => {
+                    const on = openDoor === d.key;
+                    return (
+                      <TouchableOpacity
+                        key={d.key}
+                        onPress={() => {
+                          LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+                          setOpenDoor(on ? null : d.key);
+                        }}
+                        activeOpacity={0.75}
+                        accessibilityRole="tab"
+                        accessibilityState={{ selected: on }}
+                        accessibilityLabel={`${on ? "Close" : "Open"} ${d.label}`}
+                        style={{
+                          flex: 1,
+                          backgroundColor: on ? t.good : "transparent",
+                          borderRadius: 9,
+                          paddingVertical: 9,
+                          paddingHorizontal: 4,
+                          alignItems: "center",
+                          gap: 3,
+                        }}
+                      >
+                        <Text style={{ fontSize: 15 }}>{d.icon}</Text>
+                        <Text
+                          style={{
+                            color: on ? t.onAccent : t.textDim,
+                            fontSize: 11,
+                            fontWeight: "700",
+                            textAlign: "center",
+                          }}
+                          numberOfLines={1}
+                        >
+                          {d.label}
+                        </Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
+              </View>
+            )}
+
+            {/* The kibble guide sits ABOVE the A–Z index, because it's the
+                thing a brand-new owner needs and the A–Z assumes you already
+                know which of 15 topics you want. */}
+            {(score !== null || learnMode) && openDoor === "learn" && !openTopic && (
+              <KibbleGuideSection />
+            )}
+
+            {/* A–Z topic index — only under the Learn door. Alphabetical chips,
+                one short phrase each, tap to expand that section below. */}
+            {(score !== null || learnMode) && openDoor === "learn" && (
+              <View style={{ marginHorizontal: 16, marginBottom: 14 }}>
+                <Text style={{ color: t.textDim, fontSize: 12.5, lineHeight: 18, marginBottom: 8 }}>
+                  {openTopic
+                    ? "Tap the same topic again to close it."
+                    : "Pick a topic. You don't need to read them in order."}
+                </Text>
+                <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 7 }}>
+                  {LEARN_TOPICS.map((topic) => {
+                    const on = openTopic === topic;
+                    return (
+                      <TouchableOpacity
+                        key={topic}
+                        onPress={() => {
+                          LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+                          setOpenTopic(on ? null : topic);
+                        }}
+                        activeOpacity={0.75}
+                        accessibilityRole="tab"
+                        accessibilityState={{ selected: on }}
+                        style={{
+                          backgroundColor: on ? t.good : t.surface,
+                          borderWidth: 1,
+                          borderColor: on ? t.good : t.border,
+                          borderRadius: 999,
+                          paddingVertical: 7,
+                          paddingHorizontal: 13,
+                        }}
+                      >
+                        <Text style={{ color: on ? t.onAccent : t.text, fontSize: 12.5, fontWeight: "600" }}>
+                          {topic}
+                        </Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
+              </View>
+            )}
+
           {!loading &&
             isTreatScan &&
             productName !== "" &&
@@ -5845,9 +8492,11 @@ export default function App() {
                       : " ⚠️"}
                 </Text>
 
+
                 {scoreBreakdown.length > 0 && (
                   <AccordionSection
                     title="Why This Score"
+                  door="whats-in-it"
                     askLabel="Explain"
                     onAskAI={() =>
                       askAboutSection(
@@ -5885,7 +8534,9 @@ export default function App() {
                 )}
 
                 {scoreBreakdown.length > 0 && (
-                  <AccordionSection title="🌿 Protein Energetics (TCVM)">
+                  <AccordionSection title="🌿 Protein Energetics (TCVM)"
+                  topic="TCVM"
+                  door="learn">
                     <Text style={[styles.sectionBody, { marginBottom: 10 }]}>
                       Traditional Chinese Veterinary Medicine classifies proteins by their energetic properties. Matching protein to your dog's constitution and season reduces inflammation, hot spots, and digestive upset.
                     </Text>
@@ -5917,6 +8568,7 @@ export default function App() {
                 {scoreBreakdown.length > 0 && (
                   <AccordionSection
                     title="💊 Recommended Supplements"
+                  door="what-to-do"
                     askLabel="For my dog"
                     onAskAI={() =>
                       askAboutSection(
@@ -6016,6 +8668,72 @@ export default function App() {
                       <Text style={{ color: t.textMuted, fontSize: 12, lineHeight: 18 }}>{tip.body}</Text>
                     </View>
                   ))}
+
+                  {/* The evidence layer this section was missing. VOHC is a measured
+                      threshold rather than an opinion, which makes it usable by
+                      someone who doesn't want to take anyone's word for anything. */}
+                  <View style={{ backgroundColor: t.surfaceSunken, borderRadius: 8, padding: 11, marginTop: 4 }}>
+                    <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 12.5, marginBottom: 5 }}>
+                      🔬 What actually has evidence behind it
+                    </Text>
+                    <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>
+                      <Text style={{ fontWeight: "700" }}>MECHANICAL CLEANING IS THE PROVEN ONE.</Text>{" "}
+                      Physically disrupting the plaque film — gauze, brush, or an appropriate chew
+                      — is the single most effective thing you can do at home. In the coconut-oil
+                      method above, the GAUZE is the active ingredient. The oil is a lubricant with
+                      mild antimicrobial activity, and there is no controlled canine trial showing
+                      coconut oil reduces plaque or periodontal disease on its own. Human oil-pulling
+                      studies show modest benefit; that hasn&apos;t been reproduced in dogs. It&apos;s
+                      safe, it won&apos;t harm enamel, and it isn&apos;t doing the work.
+                    </Text>
+                    <Text style={{ color: t.text, fontSize: 12, marginTop: 7, lineHeight: 17.5 }}>
+                      <Text style={{ fontWeight: "700" }}>THE VOHC SEAL IS A MEASURED THRESHOLD,
+                      NOT AN OPINION.</Text> The Veterinary Oral Health Council doesn&apos;t test
+                      products itself — it reviews trial data against a fixed bar: a minimum of TWO
+                      controlled trials, at least a 15% reduction in plaque or tartar versus control
+                      in EACH, an average of 20% across both, and statistical significance (p&lt;0.05)
+                      in each. A product either cleared that or it didn&apos;t. You can use the seal
+                      without trusting anyone&apos;s judgement, because it&apos;s a number.
+                    </Text>
+                    <Text style={{ color: t.text, fontSize: 12, marginTop: 7, lineHeight: 17.5 }}>
+                      <Text style={{ fontWeight: "700" }}>PROBIOTICS ON THE TEETH — better evidence
+                      than you&apos;d expect.</Text> The idea is bacteriotherapy: crowd out the
+                      pathogens that drive periodontal disease rather than killing everything. In
+                      dogs, a single <Text style={{ fontStyle: "italic" }}>Lactobacillus
+                      acidophilus</Text> strain significantly reduced{" "}
+                      <Text style={{ fontStyle: "italic" }}>Porphyromonas gingivalis</Text>, the key
+                      periodontal pathogen. Another trial found L. acidophilus with{" "}
+                      <Text style={{ fontStyle: "italic" }}>Enterococcus faecium</Text> shifted the
+                      salivary microbiome and SIGNIFICANTLY REDUCED GINGIVAL INFLAMMATION. A dual
+                      strain study cut plaque accumulation. Human L. reuteri trials point the same
+                      way.
+                    </Text>
+                    <Text style={{ color: t.text, fontSize: 12, marginTop: 6, lineHeight: 17.5 }}>
+                      Two honest limits. It is{" "}
+                      <Text style={{ fontWeight: "700" }}>STRAIN-SPECIFIC</Text> — the evidence is
+                      for named strains, and most probiotics on the shelf are gut strains chosen for
+                      digestion, which is a different job. And it{" "}
+                      <Text style={{ fontWeight: "700" }}>DOESN&apos;T STICK</Text>: a 2025 review
+                      states plainly that no study has shown durable colonisation of the canine
+                      subgingival biofilm. The benefit lasts while you keep giving it.
+                    </Text>
+                    <Text style={{ color: t.text, fontSize: 12, marginTop: 6, lineHeight: 17.5 }}>
+                      <Text style={{ fontWeight: "700" }}>Fed or brushed on?</Text> The trials FED it
+                      and measured salivary changes, so swallowing it with food is the studied route.
+                      But a swallowed probiotic touches the teeth for seconds — brushing it on holds
+                      it against the gum margin far longer. The two have never been compared head to
+                      head in dogs. Mixing a pinch into coconut oil and brushing is a reasonable way
+                      to get more contact time, and it costs nothing if you already buy probiotics.
+                    </Text>
+
+                    <Text style={{ color: t.text, fontSize: 12, marginTop: 7, lineHeight: 17.5 }}>
+                      <Text style={{ fontWeight: "700" }}>⚠️ NEVER USE HUMAN TOOTHPASTE.</Text> Many
+                      contain XYLITOL, which is genuinely toxic to dogs, and fluoride, which
+                      isn&apos;t meant to be swallowed. Dog toothpaste is formulated to be
+                      swallowed, and its abrasives are low-abrasion — there is no good evidence it
+                      damages enamel. The hazard is the human tube, not the pet one.
+                    </Text>
+                  </View>
                 </View>
 
                 {treatVitaminFlags.length > 0 && (
@@ -6136,61 +8854,118 @@ export default function App() {
             )}
 
           {/* ── FOOD RESULTS ── */}
-          {!loading && !isTreatScan && productName !== "" && (
+          {/* `|| learnMode` added 2026-08-21. Every Learn section lives inside
+              this block, and every one of them is already individually gated on
+              `(score !== null || learnMode)`. Requiring a product name here meant
+              Learn rendered nothing at all. The score-dependent children below
+              stay gated on `score !== null`, so Learn gets the writing without
+              the score — which is exactly the ask. */}
+          {!loading && !isTreatScan && (productName !== "" || learnMode) && (
             <>
               {score !== null && (
-                <View style={styles.scoreHero}>
-                  {/* Circular score ring on the dark ground — a measured instrument,
-                      not a flat colour slab. The ring colour carries the verdict. */}
-                  <View
+                /* SCORE HERO — rebuilt 2026-08-21 from the approved v1.9 mockup
+                   (artifact 42693321). Was a 168px circular ring stacked over a
+                   pill and a caption, ~250px of vertical space before any content.
+                   Now one horizontal block: big number on the left, label and
+                   one-line verdict on the right, sitting on the score colour's own
+                   tint. Same three facts, a third of the height, so the "Watch out"
+                   and "Good in here" lists sit above the fold. */
+                <View
+                  style={[
+                    styles.scoreHero,
+                    { backgroundColor: getScoreTint(score) },
+                  ]}
+                >
+                  <Text
                     style={[
-                      styles.scoreRing,
-                      { borderColor: getScoreColor(score) },
+                      styles.scoreHeroNumber,
+                      { color: getScoreColor(score) },
                     ]}
                   >
+                    {score}
+                  </Text>
+                  <View style={styles.scoreHeroMeta}>
                     <Text
                       style={[
-                        styles.scoreRingNumber,
-                        { color: getScoreColor(score) },
-                      ]}
-                    >
-                      {score}
-                    </Text>
-                    <Text style={styles.scoreRingOutOf}>/ 100</Text>
-                  </View>
-                  <View
-                    style={[
-                      styles.scoreRatingPill,
-                      {
-                        backgroundColor: getScoreColor(score) + "22",
-                        borderColor: getScoreColor(score) + "55",
-                      },
-                    ]}
-                  >
-                    <Text
-                      style={[
-                        styles.scoreRatingText,
+                        styles.scoreHeroLabel,
                         { color: getScoreColor(score) },
                       ]}
                     >
                       {getScoreLabel(score)}
                     </Text>
+                    <Text
+                      style={[
+                        styles.scoreHeroSub,
+                        { color: getScoreColor(score) },
+                      ]}
+                    >
+                      {getScoreSubline(score)}
+                    </Text>
+                    <Text style={styles.scoreHeroNote}>
+                      Processing · Ingredients · Nutrition Research
+                    </Text>
                   </View>
-                  <Text style={styles.scoreHeroNote}>
-                    Processing · Ingredients · Nutrition Research
-                  </Text>
                 </View>
               )}
-              <TouchableOpacity
-                style={styles.backBtnTop}
-                onPress={() => {
-                  setScanned(false);
-                  scanningRef.current = false;
-                }}
-              >
-                <Text style={styles.backBtnTopText}>← Scan Again</Text>
-              </TouchableOpacity>
-              {(!productName || productName === "Scanned Product" || productName === "Analyzed Product") ? (
+
+              {/* ── AT-A-GLANCE SUMMARY (v1.9 remodel, step 3) ────────────────
+                  The scanner-app move: under the score, two short lists that
+                  answer "what's wrong" and "what's good" before any scrolling.
+                  Both are built from data already computed — `flagged` and the
+                  positive half of `scoreBreakdown` — so nothing new is claimed
+                  and nothing below is removed. The full detail still lives in
+                  the tabs; this is the summary that was missing above them. */}
+              {scanned && (flagged.length > 0 || scoreBreakdown.some((b) => b.value > 0)) && (
+                <View style={{ marginHorizontal: 16, marginBottom: 14, gap: 10 }}>
+                  {flagged.length > 0 && (
+                    <View style={{ backgroundColor: t.surface, borderRadius: 14, padding: 14, borderWidth: 1, borderColor: t.border }}>
+                      <Text style={{ color: t.critical, fontSize: 11, fontWeight: "800", letterSpacing: 0.8, textTransform: "uppercase", marginBottom: 8 }}>
+                        Watch out · {flagged.length}
+                      </Text>
+                      {flagged.slice(0, 3).map((f, i) => (
+                        <View key={i} style={{ flexDirection: "row", alignItems: "center", gap: 9, marginBottom: 6 }}>
+                          <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: SEVERITY_COLORS[f.severity] || t.critical }} />
+                          <Text numberOfLines={1} style={{ flex: 1, color: t.textStrong, fontSize: 13, fontWeight: "600" }}>{f.name}</Text>
+                          <Text style={{ color: t.textFaint, fontSize: 10.5, fontWeight: "700", textTransform: "uppercase" }}>{f.severity}</Text>
+                        </View>
+                      ))}
+                      {flagged.length > 3 && (
+                        <Text style={{ color: t.textDim, fontSize: 11.5, marginTop: 2 }}>
+                          +{flagged.length - 3} more — open “What&apos;s in it” below
+                        </Text>
+                      )}
+                    </View>
+                  )}
+                  {scoreBreakdown.some((b) => b.value > 0) && (
+                    <View style={{ backgroundColor: t.surface, borderRadius: 14, padding: 14, borderWidth: 1, borderColor: t.border }}>
+                      <Text style={{ color: t.good, fontSize: 11, fontWeight: "800", letterSpacing: 0.8, textTransform: "uppercase", marginBottom: 8 }}>
+                        Good in here · {scoreBreakdown.filter((b) => b.value > 0).length}
+                      </Text>
+                      {scoreBreakdown.filter((b) => b.value > 0).slice(0, 3).map((b, i) => (
+                        <View key={i} style={{ flexDirection: "row", alignItems: "center", gap: 9, marginBottom: 6 }}>
+                          <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: t.good }} />
+                          <Text numberOfLines={1} style={{ flex: 1, color: t.textStrong, fontSize: 13, fontWeight: "600" }}>{b.label}</Text>
+                          <Text style={{ color: t.good, fontSize: 11, fontWeight: "700" }}>+{b.value}</Text>
+                        </View>
+                      ))}
+                    </View>
+                  )}
+                </View>
+              )}
+              {/* Scan-only chrome. Hidden in Learn mode — there's nothing to go
+                  back to and no product to name. */}
+              {!learnMode && (
+                <TouchableOpacity
+                  style={styles.backBtnTop}
+                  onPress={() => {
+                    setScanned(false);
+                    scanningRef.current = false;
+                  }}
+                >
+                  <Text style={styles.backBtnTopText}>← Scan Again</Text>
+                </TouchableOpacity>
+              )}
+              {learnMode ? null : (!productName || productName === "Scanned Product" || productName === "Analyzed Product") ? (
                 <TextInput
                   style={{
                     fontSize: 18,
@@ -6308,6 +9083,121 @@ export default function App() {
                 </View>
               )}
 
+              {/* ── LAYER 1: THE ANSWER ────────────────────────────────────────
+                  An owner should be able to read this card and STOP. Everything
+                  below is optional depth, and the last line says so out loud —
+                  giving permission to stop is what dissolves overwhelm, more than
+                  having fewer sections does.
+
+                  It invents nothing. Every item is already computed by the
+                  scorer; this only decides what surfaces first. */}
+              {score !== null && (() => {
+                const items: { text: string; tone: string }[] = [];
+
+                // Ordered by how much each should change a decision.
+                if (toxicAdditives.length > 0)
+                  items.push({
+                    text: `${toxicAdditives.join(", ")} — avoid outright, this isn't a "less is better" ingredient`,
+                    tone: t.critical,
+                  });
+
+                const severe = flagged.filter((f) => f.severity === "severe" || f.severity === "toxic");
+                if (severe.length > 0)
+                  items.push({
+                    text: `${severe.slice(0, 3).map((f) => f.name).join(", ")}${severe.length > 3 ? ` +${severe.length - 3} more` : ""} — the synthetic additives actually worth caring about`,
+                    tone: t.critical,
+                  });
+
+                // Legumes high on the list, named as the DCM pattern.
+                const legumesTop5 = legumes.filter((l) => ingredients.slice(0, 5).includes(l));
+                if (legumesTop5.length > 0)
+                  items.push({
+                    text: `${legumesTop5.join(", ")} in the top 5 ingredients — the pattern the FDA investigated for heart disease (DCM)`,
+                    tone: t.dcm,
+                  });
+
+                if (omegaRating && /poor|high|imbalan|15|20|25|30/i.test(omegaRating.label || ""))
+                  items.push({
+                    text: `Omega-6:3 ratio looks high — that's the ratio that drives inflammation. Aim for 5:1 or lower`,
+                    tone: t.moderateDeep,
+                  });
+
+                const milder = flagged.filter((f) => f.severity === "moderate" || f.severity === "mild");
+                if (items.length < 3 && milder.length > 0)
+                  items.push({
+                    text: `${milder.length} lower-concern ingredient${milder.length > 1 ? "s" : ""} — worth knowing, not worth panicking about`,
+                    tone: t.moderateDeep,
+                  });
+
+                const top = items.slice(0, 3);
+                const clean = top.length === 0;
+
+                // The three additions with the best evidence behind them. Deliberately
+                // the same three regardless of score — they help every bowl, and a
+                // scared owner needs one consistent answer, not a branching tree.
+                const ADDITIONS = [
+                  { icon: "🥚", what: "An egg a day", why: "The highest biological-value protein there is, plus choline for the liver" },
+                  { icon: "🐟", what: "Fish oil or sardines", why: "82% of arthritic dogs improved weight-bearing on a force-plate trial. Also coat, skin and heart" },
+                  { icon: "🦠", what: "A probiotic", why: "Canine trials show reduced gut and gum inflammation. Most valuable on dry food or after antibiotics" },
+                ];
+
+                return (
+                  <View
+                    style={{
+                      backgroundColor: t.surface, borderRadius: 18, padding: 18,
+                      marginHorizontal: 16, marginBottom: 14,
+                      borderWidth: 2, borderColor: clean ? t.good : t.borderBright,
+                    }}
+                  >
+                    <Text style={{ color: t.textDim, fontSize: 11, fontWeight: "800", textTransform: "uppercase", letterSpacing: 1.1, marginBottom: 8 }}>
+                      The short version
+                    </Text>
+                    <Text style={{ color: getScoreColor(score), fontSize: 20, fontWeight: "800", marginBottom: 10 }}>
+                      {getScoreLabel(score)} — {score}/100
+                    </Text>
+
+                    {clean ? (
+                      <Text style={{ color: t.text, fontSize: 14, lineHeight: 21 }}>
+                        ✅ Nothing on this label raised a flag. That&apos;s genuinely uncommon —
+                        most foods trip at least one.
+                      </Text>
+                    ) : (
+                      <>
+                        <Text style={{ color: t.textStrong, fontSize: 13.5, fontWeight: "700", marginBottom: 6 }}>
+                          {top.length === 1 ? "One thing worth knowing:" : `${top.length} things worth knowing:`}
+                        </Text>
+                        {top.map((it, i) => (
+                          <View key={i} style={{ flexDirection: "row", marginBottom: 6 }}>
+                            <Text style={{ color: it.tone, fontSize: 14, fontWeight: "800", marginRight: 8 }}>•</Text>
+                            <Text style={{ color: t.text, fontSize: 13.5, lineHeight: 20, flex: 1 }}>{it.text}</Text>
+                          </View>
+                        ))}
+                      </>
+                    )}
+
+                    <View style={{ backgroundColor: t.goodTint, borderRadius: 12, padding: 13, marginTop: 12 }}>
+                      <Text style={{ color: t.goodDeep, fontSize: 11, fontWeight: "800", textTransform: "uppercase", letterSpacing: 1, marginBottom: 7 }}>
+                        👉 Three things that upgrade any bowl
+                      </Text>
+                      {ADDITIONS.map((a, i) => (
+                        <View key={i} style={{ flexDirection: "row", marginTop: i === 0 ? 0 : 9 }}>
+                          <Text style={{ fontSize: 16, marginRight: 9 }}>{a.icon}</Text>
+                          <View style={{ flex: 1 }}>
+                            <Text style={{ color: t.textStrong, fontSize: 13.5, fontWeight: "700" }}>{a.what}</Text>
+                            <Text style={{ color: t.textMuted, fontSize: 12, lineHeight: 16.5, marginTop: 1 }}>{a.why}</Text>
+                          </View>
+                        </View>
+                      ))}
+                    </View>
+
+                    <Text style={{ color: t.textMuted, fontSize: 12.5, marginTop: 13, lineHeight: 18, fontStyle: "italic" }}>
+                      That&apos;s the important part — you can stop here. Everything below is
+                      optional detail for when you want to go deeper.
+                    </Text>
+                  </View>
+                );
+              })()}
+
               {score !== null && (
                 <View style={{ backgroundColor: t.dcmTint, borderRadius: 18, padding: 18, marginHorizontal: 16, marginBottom: 14, borderWidth: 1, borderColor: t.dcmDeep }}>
                   <Text style={{ color: t.infoSoft, fontSize: 11, fontWeight: "800", marginBottom: 8, textTransform: "uppercase", letterSpacing: 1.1 }}>
@@ -6318,6 +9208,12 @@ export default function App() {
                   </Text>
                 </View>
               )}
+
+              {/* ── LAYER 2: THE FOUR DOORS ────────────────────────────────────
+                  Everything below this point is gated. Nothing was deleted or
+                  moved — each section declares a door and only the open one
+                  renders. Closed by default, so a scared owner sees the answer
+                  and four calm choices instead of twenty-two headers. */}
 
               {/* Entry point to the AI coach. Placed straight after the score and the
                   "how to improve" card, because that's the moment the owner has a
@@ -6443,8 +9339,8 @@ export default function App() {
                     📷 Point your camera at the Guaranteed Analysis panel on the bag to see exact protein, fat, fiber, moisture, and carb percentages. These numbers come directly from the manufacturer and are the most accurate source.
                   </Text>
                   <View style={{ marginTop: 10, backgroundColor: t.accents.liver.bg, borderRadius: 10, padding: 12, borderWidth: 1, borderColor: t.accents.liver.fg }}>
-                    <Text style={{ color: t.accents.liver.fg, fontWeight: '700', fontSize: 13, marginBottom: 4 }}>⚠️ High Carbs & Lipomas</Text>
-                    <Text style={{ color: t.text, fontSize: 12, lineHeight: 18 }}>High carbohydrate diets spike insulin, promote fat cell proliferation, and drive inflammation — all directly linked to lipoma development and growth. Target carbs below 20%, ideally below 15%. Omega-6:3 ratio of 5:1 or less is strongly anti-inflammatory and helps manage existing lipomas.</Text>
+                    <Text style={{ color: t.accents.liver.fg, fontWeight: '700', fontSize: 13, marginBottom: 4 }}>🍞 Carbs &amp; Lipoma-Prone Dogs</Text>
+                    <Text style={{ color: t.text, fontSize: 12, lineHeight: 18 }}>High-carbohydrate processed food is the first thing holistic vets change for a lipoma-prone dog — the goal is lowering the inflammatory and toxin load the liver has to clear. Target carbs below 20%, ideally below 15%, and an omega-6:3 ratio of 5:1 or less.</Text>
                   </View>
                 </View>
               )}
@@ -6474,8 +9370,8 @@ export default function App() {
                         </View>
                       )}
                       <View style={{ marginTop: 10, backgroundColor: t.accents.liver.bg, borderRadius: 10, padding: 12, borderWidth: 1, borderColor: t.accents.liver.fg }}>
-                        <Text style={{ color: t.accents.liver.fg, fontWeight: '700', fontSize: 13, marginBottom: 4 }}>⚠️ High Carbs & Lipomas</Text>
-                        <Text style={{ color: t.text, fontSize: 12, lineHeight: 18 }}>High carbohydrate diets spike insulin, promote fat cell proliferation, and drive inflammation — all directly linked to lipoma development and growth. Target carbs below 20%, ideally below 15%. Omega-6:3 ratio of 5:1 or less is strongly anti-inflammatory and helps manage existing lipomas.</Text>
+                        <Text style={{ color: t.accents.liver.fg, fontWeight: '700', fontSize: 13, marginBottom: 4 }}>🍞 Carbs &amp; Lipoma-Prone Dogs</Text>
+                        <Text style={{ color: t.text, fontSize: 12, lineHeight: 18 }}>High-carbohydrate processed food is the first thing holistic vets change for a lipoma-prone dog — the goal is lowering the inflammatory and toxin load the liver has to clear. Target carbs below 20%, ideally below 15%, and an omega-6:3 ratio of 5:1 or less.</Text>
                       </View>
                       <Text style={[styles.omegaNote, { marginTop: 8 }]}>
                         Carbs estimated as: 100 − protein − fat − fiber − moisture − ~7% ash.
@@ -6490,7 +9386,9 @@ export default function App() {
                   someone selling the bag. */}
               {highCarbs.length >= 2 && (
                 <AccordionSection
-                  title="🌾 Do dogs actually need carbs?"
+                  title="🌾 Do dogs need carbs?"
+                  topic="Carbs"
+                  door="learn"
                   askLabel="Evidence"
                   onAskAI={() =>
                     askAboutSection(
@@ -6530,6 +9428,127 @@ export default function App() {
                     </Text>
                   </View>
 
+                  {/* The counterpoint. Both studies above are ENDURANCE studies, and
+                      quoting them alone overstates the case — sprinting runs on a
+                      different fuel and the data goes the other way. */}
+                  <View style={{ backgroundColor: t.moderateTint, borderRadius: 9, padding: 11, marginBottom: 7, borderLeftWidth: 3, borderLeftColor: t.moderate }}>
+                    <Text style={{ color: t.moderateDeep, fontWeight: "700", fontSize: 12.5 }}>
+                      But sprinting is the exception · Hill et al., racing Greyhounds
+                    </Text>
+                    <Text style={{ color: t.text, fontSize: 12, marginTop: 3, lineHeight: 17 }}>
+                      A crossover trial fed racing Greyhounds 11 weeks each on a high-protein diet
+                      (37% of energy from protein, 30% carbohydrate) and a moderate-protein one
+                      (24% protein, 43% carbohydrate). On the{" "}
+                      <Text style={{ fontWeight: "700" }}>lower-carbohydrate diet the dogs were 0.18
+                      seconds SLOWER over 500 m</Text> — around two lengths. The best-performing
+                      split was roughly 24% protein, 34% fat, 42% carbohydrate.
+                    </Text>
+                    <Text style={{ color: t.text, fontSize: 12, marginTop: 6, lineHeight: 17 }}>
+                      <Text style={{ fontWeight: "700" }}>This doesn&apos;t contradict the sled dog
+                      work — it measures a different engine.</Text> Endurance is aerobic and burns
+                      fat, which dogs carry in abundance. Sprinting is anaerobic and burns muscle
+                      glycogen, which comes from carbohydrate and runs out fast. A dog on a very
+                      low-carb diet can have excellent stamina and still lack a top gear.
+                    </Text>
+                  </View>
+
+                  {/* Protein and heat. Belongs here because it's the same trade-off from
+                      the other direction — and it's invisible to owners. */}
+                  <View style={{ backgroundColor: t.highTint, borderRadius: 9, padding: 11, marginBottom: 7, borderLeftWidth: 3, borderLeftColor: t.high }}>
+                    <Text style={{ color: t.highDeep, fontWeight: "700", fontSize: 12.5 }}>
+                      🌡️ And protein is what makes a dog run hot
+                    </Text>
+                    <Text style={{ color: t.text, fontSize: 12, marginTop: 3, lineHeight: 17 }}>
+                      Digesting food produces heat — the{" "}
+                      <Text style={{ fontWeight: "700" }}>heat increment of feeding</Text>, which can
+                      reach 30% of the energy eaten. That heat is{" "}
+                      <Text style={{ fontWeight: "700" }}>much larger for protein than for
+                      carbohydrate or fat</Text>, and larger still when it&apos;s already hot out.
+                      A dog&apos;s thermoneutral zone is only 68–86°F; above that he&apos;s
+                      spending energy to cool, and a very high-protein meal adds to the load he&apos;s
+                      trying to shed.
+                    </Text>
+                    <Text style={{ color: t.text, fontSize: 12, marginTop: 6, lineHeight: 17 }}>
+                      Worth knowing if you have a heat-sensitive dog on a protein-dense fresh diet.
+                      TCVM has called protein-heavy food &quot;warming&quot; for centuries; this is
+                      the same observation with a thermometer on it.
+                    </Text>
+                  </View>
+
+                  {/* Post-exercise repletion. The one place carbohydrate has a clear,
+                      measured job — and it's about timing, not diet percentage. */}
+                  <View style={{ backgroundColor: t.surfaceSunken, borderRadius: 9, padding: 11, marginBottom: 7 }}>
+                    <Text style={{ color: t.textStrong, fontWeight: "700", fontSize: 12.5 }}>
+                      Where carbs have a clear job · Wakshlag, Veterinary Therapeutics 2002
+                    </Text>
+                    <Text style={{ color: t.text, fontSize: 12, marginTop: 3, lineHeight: 17 }}>
+                      Dogs given a maltodextrin supplement at{" "}
+                      <Text style={{ fontWeight: "700" }}>1.5 g/kg body weight within 30 minutes of
+                      exercise</Text> restored muscle glycogen to baseline within 4–24 hours.
+                      Without it, glycogen sat at only{" "}
+                      <Text style={{ fontWeight: "700" }}>50% of baseline</Text> the next day. Adding
+                      protein to the supplement gave no extra glycogen benefit — the carbohydrate
+                      did the work.
+                    </Text>
+                    <Text style={{ color: t.text, fontSize: 12, marginTop: 6, lineHeight: 17 }}>
+                      The recommendation covers dogs working{" "}
+                      <Text style={{ fontWeight: "700" }}>between five minutes and three hours a
+                      day</Text> at intensity. Note what this means: it&apos;s about TIMING, not
+                      diet percentage. A dog doing repeated hard sprints can be topped up after
+                      sessions instead of carrying a higher-carbohydrate diet all week — which
+                      keeps the glycogen without the chronic insulin load.
+                    </Text>
+                  </View>
+
+                  <Text style={{ color: t.textStrong, fontSize: 13.5, fontWeight: "700", marginTop: 4, marginBottom: 4 }}>
+                    So what number is actually good?
+                  </Text>
+                  <Text style={{ color: t.textMuted, fontSize: 11.5, marginBottom: 8, lineHeight: 16 }}>
+                    Nobody publishes a carbohydrate requirement, so these are judgements about
+                    displacement and activity rather than official minimums. Percentages are dry
+                    matter.
+                  </Text>
+
+                  {CARB_LEVELS.map((c, i) => {
+                    const tone =
+                      c.tier === "ideal" ? t.good
+                      : c.tier === "fine" ? t.info
+                      : c.tier === "watch" ? t.moderateDeep
+                      : t.critical;
+                    return (
+                      <View key={i} style={{ backgroundColor: t.surfaceSunken, borderRadius: 9, padding: 11, marginBottom: 7 }}>
+                        <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 4 }}>
+                          <Text style={{ color: tone, fontSize: 13, fontWeight: "800", marginRight: 8 }}>
+                            {c.range}
+                          </Text>
+                          <Text style={{ color: t.textStrong, fontSize: 12, fontWeight: "600", flex: 1 }}>
+                            {c.label}
+                          </Text>
+                        </View>
+                        <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>{c.b}</Text>
+                      </View>
+                    );
+                  })}
+
+                  <View style={{ backgroundColor: t.goodTint, borderRadius: 9, padding: 11, marginBottom: 7, borderLeftWidth: 3, borderLeftColor: t.good }}>
+                    <Text style={{ color: t.goodDeep, fontWeight: "800", fontSize: 12.5, marginBottom: 5 }}>
+                      Match it to the dog, not to a philosophy
+                    </Text>
+                    {CARB_MATCHING.map((m, i) => (
+                      <View key={i} style={{ marginTop: 6 }}>
+                        <View style={{ flexDirection: "row" }}>
+                          <Text style={{ color: t.textStrong, fontSize: 12, fontWeight: "700", flex: 1 }}>
+                            {m.dog}
+                          </Text>
+                          <Text style={{ color: t.goodDeep, fontSize: 12, fontWeight: "800" }}>{m.target}</Text>
+                        </View>
+                        <Text style={{ color: t.textMuted, fontSize: 11.5, lineHeight: 16, marginTop: 1 }}>
+                          {m.why}
+                        </Text>
+                      </View>
+                    ))}
+                  </View>
+
                   <View style={{ backgroundColor: t.surface, borderRadius: 9, padding: 11, borderLeftWidth: 3, borderLeftColor: t.moderate }}>
                     <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>
                       The honest limits
@@ -6550,11 +9569,861 @@ export default function App() {
                 </AccordionSection>
               )}
 
+              {/* Bloat / GDV. Sits next to the carb section because both are about
+                  HOW a dog is fed rather than what's in the bag — and because this
+                  is the one feeding decision that can kill a dog in an afternoon. */}
+              {(score !== null || learnMode) && (
+                <AccordionSection
+                  title="🚨 Bloat (GDV)"
+                  topic="Bloat"
+                  door="learn"
+                  askLabel="For my dog"
+                  onAskAI={() =>
+                    askAboutSection(
+                      `What's my dog's actual bloat risk given his breed, age, how fast he eats, and what I feed him — and which of the prevention steps would matter most for him specifically?`,
+                    )
+                  }
+                >
+                  <Text style={{ color: t.text, fontSize: 12.5, lineHeight: 18, marginBottom: 10 }}>
+                    Bloat is about <Text style={{ fontWeight: "700" }}>how</Text> a dog is fed, not
+                    what&apos;s in the bowl — which is why it sits outside the score. Two of the
+                    most repeated pieces of advice about it turn out to be backwards or
+                    unsupported, so it&apos;s worth reading even if you think you know this one.
+                  </Text>
+
+                  {GDV_EVIDENCE.map((g, i) => {
+                    const tone =
+                      g.tier === "act"
+                        ? { fg: t.critical, bg: t.criticalTint, tag: "DO THIS" }
+                        : g.tier === "mixed"
+                        ? { fg: t.moderateDeep, bg: t.moderateTint, tag: "EVIDENCE CONFLICTS" }
+                        : { fg: t.textDim, bg: t.surfaceSunken, tag: "GOOD TO KNOW" };
+                    return (
+                      <View
+                        key={i}
+                        style={{
+                          backgroundColor: tone.bg,
+                          borderRadius: 10,
+                          padding: 12,
+                          marginBottom: 8,
+                        }}
+                      >
+                        <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 5 }}>
+                          <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700", flex: 1 }}>
+                            {g.h}
+                          </Text>
+                          <Text style={{ color: tone.fg, fontSize: 9.5, fontWeight: "800", letterSpacing: 0.3 }}>
+                            {tone.tag}
+                          </Text>
+                        </View>
+                        <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>{g.b}</Text>
+                      </View>
+                    );
+                  })}
+
+                  {/* What it sits in. Lives here rather than in its own section because
+                      bowl height is already a GDV factor — material and hygiene are the
+                      same decision made once. */}
+                  <Text style={{ color: t.textStrong, fontSize: 13.5, fontWeight: "700", marginTop: 6, marginBottom: 4 }}>
+                    🥣 And what it sits in
+                  </Text>
+                  <Text style={{ color: t.textMuted, fontSize: 11.5, marginBottom: 8, lineHeight: 16 }}>
+                    Height is a bloat factor, so you&apos;re already choosing a bowl. These are the
+                    other two things worth getting right while you do.
+                  </Text>
+
+                  {BOWL_MATERIALS.map((m, i) => {
+                    const tone =
+                      m.verdict === "best"
+                        ? { fg: t.good, bg: t.goodTint, mark: "✓" }
+                        : m.verdict === "good"
+                        ? { fg: t.moderateDeep, bg: t.moderateTint, mark: "~" }
+                        : { fg: t.critical, bg: t.criticalTint, mark: "✕" };
+                    return (
+                      <View
+                        key={i}
+                        style={{ backgroundColor: t.surfaceSunken, borderRadius: 10, padding: 12, marginBottom: 8 }}
+                      >
+                        <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 5 }}>
+                          <View
+                            style={{
+                              width: 18, height: 18, borderRadius: 999, backgroundColor: tone.bg,
+                              alignItems: "center", justifyContent: "center", marginRight: 8,
+                            }}
+                          >
+                            <Text style={{ color: tone.fg, fontSize: 11, fontWeight: "800" }}>{tone.mark}</Text>
+                          </View>
+                          <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700", flex: 1 }}>
+                            {m.material}
+                          </Text>
+                        </View>
+                        <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>{m.b}</Text>
+                      </View>
+                    );
+                  })}
+
+                  {BOWL_PRACTICE.map((p, i) => (
+                    <View
+                      key={i}
+                      style={{ backgroundColor: t.surface, borderRadius: 10, padding: 12, marginBottom: 8, borderLeftWidth: 3, borderLeftColor: t.info }}
+                    >
+                      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700", marginBottom: 3 }}>
+                        {p.h}
+                      </Text>
+                      <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>{p.b}</Text>
+                    </View>
+                  ))}
+
+                  {/* The whole section in four lines. Most owners will read only this. */}
+                  <View style={{ backgroundColor: t.goodTint, borderRadius: 10, padding: 12, marginBottom: 8, borderLeftWidth: 3, borderLeftColor: t.good }}>
+                    <Text style={{ color: t.goodDeep, fontWeight: "800", fontSize: 13, marginBottom: 6 }}>
+                      If you only do four things
+                    </Text>
+                    {[
+                      "Bowl on the FLOOR, never raised.",
+                      "Slow the eating down — flat wide dish, lick mat, or slow-feeder.",
+                      "Split the day's food into two or three meals instead of one.",
+                      "Walk in the cool hours. That matters more than any waiting rule.",
+                    ].map((line, i) => (
+                      <View key={i} style={{ flexDirection: "row", marginTop: 5 }}>
+                        <Text style={{ color: t.good, fontSize: 12.5, fontWeight: "800", marginRight: 7 }}>
+                          {i + 1}.
+                        </Text>
+                        <Text style={{ color: t.text, fontSize: 12.5, lineHeight: 18, flex: 1 }}>{line}</Text>
+                      </View>
+                    ))}
+                  </View>
+
+                  <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 4, lineHeight: 16, fontStyle: "italic" }}>
+                    Primary source: Glickman et al., Purdue University — a 5-year prospective study
+                    of 1,637 large and giant breed dogs, plus the associated dietary risk-factor
+                    work. Still the largest body of evidence on this.
+                  </Text>
+                </AccordionSection>
+              )}
+
+              {/* Lifespan. Deliberately its own section rather than folded into bloat —
+                  this is the single biggest lever an owner has and it shouldn't arrive
+                  as a footnote to a safety warning. */}
+              {(score !== null || learnMode) && (
+                <AccordionSection
+                  title="⏳ How long he lives"
+                  topic="Lifespan"
+                  door="learn"
+                  askLabel="For my dog"
+                  onAskAI={() =>
+                    askAboutSection(
+                      `Given my dog's age, weight and body condition, am I already doing the thing that extends lifespan — and if not, what would I change? Be specific about how much food, not just "keep him lean".`,
+                    )
+                  }
+                >
+                  <Text style={{ color: t.text, fontSize: 12.5, lineHeight: 18, marginBottom: 10 }}>
+                    The largest proven effect in dog nutrition isn&apos;t a brand, an ingredient or
+                    a supplement. It&apos;s how much food goes in the bowl — and it was measured in
+                    Labradors.
+                  </Text>
+
+                  {LIFESPAN_EVIDENCE.map((l, i) => {
+                    const tone =
+                      l.strength === "proven"
+                        ? { fg: t.good, bg: t.goodTint, tag: "RANDOMISED · CAUSAL" }
+                        : l.strength === "conflict"
+                        ? { fg: t.moderateDeep, bg: t.moderateTint, tag: "EVIDENCE CONFLICTS" }
+                        : { fg: t.info, bg: t.surfaceSunken, tag: "OBSERVATIONAL ONLY" };
+                    return (
+                      <View
+                        key={i}
+                        style={{ backgroundColor: tone.bg, borderRadius: 10, padding: 12, marginBottom: 8 }}
+                      >
+                        <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 5 }}>
+                          <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700", flex: 1 }}>
+                            {l.h}
+                          </Text>
+                          <Text style={{ color: tone.fg, fontSize: 9, fontWeight: "800", letterSpacing: 0.3 }}>
+                            {tone.tag}
+                          </Text>
+                        </View>
+                        <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>{l.b}</Text>
+                      </View>
+                    );
+                  })}
+
+                  <View style={{ backgroundColor: t.goodTint, borderRadius: 10, padding: 12, borderLeftWidth: 3, borderLeftColor: t.good }}>
+                    <Text style={{ color: t.goodDeep, fontWeight: "800", fontSize: 13, marginBottom: 5 }}>
+                      The two-second check
+                    </Text>
+                    <Text style={{ color: t.text, fontSize: 12.5, lineHeight: 18 }}>
+                      Run your hands along his sides. You should feel ribs easily under a thin
+                      layer, the way the back of your hand feels knuckles — not have to press.
+                      Looking down from above, there should be a visible waist behind the ribs.
+                      {"\n\n"}
+                      If both are true, you are already running the intervention that bought those
+                      Labradors nearly two extra years. If not, that&apos;s worth more than every
+                      other decision in this app combined.
+                    </Text>
+                  </View>
+
+                  <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 9, lineHeight: 16, fontStyle: "italic" }}>
+                    Kealy et al., Journal of the American Veterinary Medical Association, 2002 ·
+                    Bray et al., GeroScience, 2022 (Dog Aging Project)
+                  </Text>
+                </AccordionSection>
+              )}
+
+              {/* Deficiency checklist. Sign-first, because an owner starts from what
+                  they can see. The context block goes ABOVE the list on purpose —
+                  handing someone deficiency signs without base rates causes harm. */}
+              {(score !== null || learnMode) && (
+                <AccordionSection
+                  title="🔎 Is my dog missing something?"
+                  topic="Missing nutrients"
+                  door="learn"
+                  askLabel="About my dog"
+                  onAskAI={() =>
+                    askAboutSection(
+                      `Here's what I'm actually seeing in my dog. Help me work out whether it's likely to be a nutrient problem or something far more common — and be honest if there isn't enough to go on.`,
+                    )
+                  }
+                >
+                  <Text style={{ color: t.text, fontSize: 12.5, lineHeight: 18, marginBottom: 10 }}>
+                    Built backwards from what you can actually SEE, rather than from nutrient
+                    names — because nobody notices &quot;zinc deficiency&quot;, they notice crusty
+                    skin. Read the four notes first; they matter more than the list.
+                  </Text>
+
+                  {DEFICIENCY_CONTEXT.map((c, i) => (
+                    <View key={i} style={{ backgroundColor: t.surfaceSunken, borderRadius: 10, padding: 11, marginBottom: 7 }}>
+                      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700", marginBottom: 3 }}>
+                        {c.h}
+                      </Text>
+                      <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>{c.b}</Text>
+                    </View>
+                  ))}
+
+                  {DEFICIENCY_CHECKLIST.map((grp, i) => (
+                    <View key={i} style={{ marginTop: 10 }}>
+                      <Text style={{ color: t.textStrong, fontSize: 13.5, fontWeight: "800", marginBottom: 5 }}>
+                        {grp.emoji} {grp.area}
+                      </Text>
+                      {grp.signs.map((s, j) => {
+                        const tone =
+                          s.urgency === "urgent"
+                            ? { fg: t.critical, bg: t.criticalTint, tag: "VET NOW" }
+                            : s.urgency === "soon"
+                            ? { fg: t.moderateDeep, bg: t.moderateTint, tag: "BOOK A VISIT" }
+                            : { fg: t.textDim, bg: t.surfaceSunken, tag: "WATCH" };
+                        return (
+                          <View key={j} style={{ backgroundColor: tone.bg, borderRadius: 10, padding: 11, marginBottom: 7 }}>
+                            <View style={{ flexDirection: "row", alignItems: "flex-start", marginBottom: 4 }}>
+                              <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700", flex: 1 }}>
+                                {s.see}
+                              </Text>
+                              <Text style={{ color: tone.fg, fontSize: 9, fontWeight: "800", letterSpacing: 0.3, marginLeft: 6, marginTop: 2 }}>
+                                {tone.tag}
+                              </Text>
+                            </View>
+                            <Text style={{ color: tone.fg, fontSize: 11.5, fontWeight: "700", marginBottom: 3 }}>
+                              Could be: {s.likely}
+                            </Text>
+                            <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>{s.note}</Text>
+                          </View>
+                        );
+                      })}
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 8, lineHeight: 16, fontStyle: "italic" }}>
+                    This is a prompt for a conversation with your vet, not a diagnosis. Nothing here
+                    replaces an exam — and most of these signs have far commoner causes than diet.
+                  </Text>
+                </AccordionSection>
+              )}
+
+              {/* Home-cooked builder. A GAP DETECTOR, not a recipe generator —
+                  because the literature says recipe generators are exactly where
+                  this goes wrong, including ones written by vets. */}
+              {(score !== null || learnMode) && (
+                <AccordionSection
+                  title="🍳 Build a home-cooked bowl"
+                  door="what-to-do"
+                  askLabel="Check my recipe"
+                  onAskAI={() =>
+                    askAboutSection(
+                      `I want to home-cook for my dog. Walk me through what my recipe would be missing and how to fix it with real food — and be honest about what you can't verify without running it against a nutrient database.`,
+                    )
+                  }
+                >
+                  {/* Evidence first. Anyone who reads only the top of this section
+                      should still come away knowing the base rate. */}
+                  <View style={{ backgroundColor: t.criticalTint, borderRadius: 10, padding: 12, marginBottom: 10, borderLeftWidth: 3, borderLeftColor: t.critical }}>
+                    <Text style={{ color: t.criticalDeep, fontWeight: "800", fontSize: 13, marginBottom: 5 }}>
+                      Read this before you cook
+                    </Text>
+                    <Text style={{ color: t.text, fontSize: 12.5, lineHeight: 18 }}>
+                      Home cooking is a genuinely good thing to do — and it fails far more often
+                      than owners realise. <Text style={{ fontWeight: "700" }}>Of 200 recipes
+                      evaluated, 129 of them written by veterinarians, only 9 met AAFCO
+                      standards.</Text> This tool exists to close that gap, not to pretend it
+                      isn&apos;t there.
+                    </Text>
+                  </View>
+
+                  {HOMEMADE_EVIDENCE.map((e, i) => (
+                    <View key={i} style={{ backgroundColor: t.surfaceSunken, borderRadius: 10, padding: 12, marginBottom: 8 }}>
+                      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700", marginBottom: 3 }}>
+                        {e.h}
+                      </Text>
+                      <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>{e.b}</Text>
+                    </View>
+                  ))}
+
+                  {/* The calculator */}
+                  <View style={{ backgroundColor: t.surface, borderRadius: 10, padding: 12, marginBottom: 10, borderWidth: 1, borderColor: t.borderBright }}>
+                    <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginBottom: 8 }}>
+                      Your dog&apos;s daily amounts
+                    </Text>
+
+                    <Text style={{ color: t.textMuted, fontSize: 11.5, marginBottom: 4 }}>Weight (lb)</Text>
+                    <TextInput
+                      value={hmWeight}
+                      onChangeText={setHmWeight}
+                      keyboardType="numeric"
+                      placeholder="e.g. 75"
+                      placeholderTextColor={t.textFaint}
+                      style={{
+                        backgroundColor: t.surfaceSunken, borderRadius: 8, paddingHorizontal: 12,
+                        paddingVertical: 10, color: t.textStrong, fontSize: 15, marginBottom: 10,
+                      }}
+                    />
+
+                    <Text style={{ color: t.textMuted, fontSize: 11.5, marginBottom: 6 }}>Activity level</Text>
+                    <View style={{ flexDirection: "row", flexWrap: "wrap", marginBottom: 4 }}>
+                      {[
+                        { label: "Senior / low", v: 1.4 },
+                        { label: "Typical", v: 1.6 },
+                        { label: "Active", v: 1.8 },
+                        { label: "Very active", v: 2.2 },
+                      ].map((a) => (
+                        <TouchableOpacity
+                          key={a.label}
+                          onPress={() => setHmActivity(a.v)}
+                          style={{
+                            backgroundColor: hmActivity === a.v ? t.good : t.surfaceSunken,
+                            borderRadius: 999, paddingHorizontal: 12, paddingVertical: 7,
+                            marginRight: 6, marginBottom: 6,
+                          }}
+                        >
+                          <Text style={{
+                            color: hmActivity === a.v ? t.onAccent : t.textMuted,
+                            fontSize: 12, fontWeight: "700",
+                          }}>{a.label}</Text>
+                        </TouchableOpacity>
+                      ))}
+                    </View>
+
+                    {(() => {
+                      const lb = parseFloat(hmWeight);
+                      if (!lb || lb <= 0) return null;
+                      const kg = lb / 2.2046;
+                      const rer = 70 * Math.pow(kg, 0.75);
+                      const kcal = Math.round(rer * hmActivity);
+                      // Raw/moist bowls run ~1.45 kcal/g as fed. Cooking drives off
+                      // water and concentrates it, so a cooked bowl weighs less for
+                      // the same calories — hence the note below rather than one number.
+                      const grams = Math.round(kcal / 1.45);
+                      // Percentages sum to 100 and each sits inside the stated range
+                      // in HOMEMADE_FRAMEWORK. Keep them in sync if either changes.
+                      const rows: [string, string][] = [
+                        ["Muscle meat (incl. heart)", `${Math.round(grams * 0.6)} g`],
+                        ["RAW: bone · COOKED: eggshell", `${Math.round(grams * 0.12)} g`],
+                        ["Liver", `${Math.round(grams * 0.05)} g`],
+                        ["Other secreting organ", `${Math.round(grams * 0.05)} g`],
+                        ["Vegetables / fruit", `${Math.round(grams * 0.18)} g`],
+                      ];
+                      return (
+                        <View style={{ marginTop: 6 }}>
+                          <View style={{ backgroundColor: t.goodTint, borderRadius: 8, padding: 10, marginBottom: 8 }}>
+                            <Text style={{ color: t.goodDeep, fontSize: 12.5, fontWeight: "700" }}>
+                              ≈ {kcal} kcal/day · about {grams} g of food
+                            </Text>
+                            <Text style={{ color: t.textMuted, fontSize: 11, marginTop: 3, lineHeight: 15 }}>
+                              From resting energy (70 × kg^0.75) × your activity factor. A starting
+                              point — adjust by body condition, not by the number. Ribs easily felt,
+                              visible waist from above.
+                            </Text>
+                          </View>
+                          {rows.map(([k, v], i) => (
+                            <View key={i} style={{ flexDirection: "row", justifyContent: "space-between", paddingVertical: 6, borderBottomWidth: i === rows.length - 1 ? 0 : 1, borderBottomColor: t.border }}>
+                              <Text style={{ color: t.text, fontSize: 12.5, flex: 1 }}>{k}</Text>
+                              <Text style={{ color: t.good, fontSize: 12.5, fontWeight: "800" }}>{v}</Text>
+                            </View>
+                          ))}
+                          <Text style={{ color: t.textMuted, fontSize: 11, marginTop: 8, lineHeight: 15, fontStyle: "italic" }}>
+                            If you can&apos;t feed bone, swap that line for ground eggshell — roughly
+                            ½ tsp per pound of finished food — and make up the weight in muscle meat.
+                          </Text>
+                        </View>
+                      );
+                    })()}
+                  </View>
+
+                  {/* ── THE FORMULATOR ─────────────────────────────────────────
+                      Add ingredients with weights, get nutrients per 1,000 kcal
+                      against AAFCO. A gap detector with real arithmetic behind it. */}
+                  <View style={{ backgroundColor: t.surface, borderRadius: 10, padding: 12, marginBottom: 10, borderWidth: 1, borderColor: t.borderBright }}>
+                    <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 8 }}>
+                      <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, flex: 1 }}>
+                        🧪 Recipe analyser
+                      </Text>
+                      <TouchableOpacity
+                        onPress={() => {
+                          LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+                          setPickerOpen((v) => !v);
+                        }}
+                        style={{ backgroundColor: t.good, borderRadius: 999, paddingHorizontal: 12, paddingVertical: 6 }}
+                      >
+                        <Text style={{ color: t.onAccent, fontSize: 12, fontWeight: "800" }}>
+                          {pickerOpen ? "Done" : "+ Add food"}
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+
+                    {pickerOpen && (
+                      <View style={{ backgroundColor: t.surfaceSunken, borderRadius: 8, padding: 8, marginBottom: 10 }}>
+                        {(["meat", "organ", "fish", "egg", "calcium", "veg", "extra"] as const).map((cat) => (
+                          <View key={cat} style={{ marginBottom: 6 }}>
+                            <Text style={{ color: t.textDim, fontSize: 10, fontWeight: "800", letterSpacing: 0.5, marginBottom: 3 }}>
+                              {cat.toUpperCase()}
+                            </Text>
+                            <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+                              {INGREDIENT_DB.map((ing, idx) =>
+                                ing.cat !== cat ? null : (
+                                  <TouchableOpacity
+                                    key={idx}
+                                    onPress={() =>
+                                      setRecipe((r) =>
+                                        r[idx] !== undefined
+                                          ? Object.fromEntries(Object.entries(r).filter(([k]) => +k !== idx))
+                                          : { ...r, [idx]: "100" },
+                                      )
+                                    }
+                                    style={{
+                                      backgroundColor: recipe[idx] !== undefined ? t.good : t.surface,
+                                      borderRadius: 999, paddingHorizontal: 9, paddingVertical: 5,
+                                      marginRight: 5, marginBottom: 5,
+                                    }}
+                                  >
+                                    <Text style={{
+                                      color: recipe[idx] !== undefined ? t.onAccent : t.textMuted,
+                                      fontSize: 11, fontWeight: "600",
+                                    }}>
+                                      {ing.name}
+                                    </Text>
+                                  </TouchableOpacity>
+                                ),
+                              )}
+                            </View>
+                          </View>
+                        ))}
+                      </View>
+                    )}
+
+                    {Object.keys(recipe).length === 0 ? (
+                      <Text style={{ color: t.textMuted, fontSize: 12, lineHeight: 17, fontStyle: "italic" }}>
+                        Tap &quot;Add food&quot;, pick your ingredients, then set grams for each.
+                        Nutrients are calculated per 1,000 kcal and compared against AAFCO adult
+                        minimums.
+                      </Text>
+                    ) : (
+                      <>
+                        {Object.entries(recipe).map(([k, g]) => {
+                          const ing = INGREDIENT_DB[+k];
+                          return (
+                            <View key={k} style={{ flexDirection: "row", alignItems: "center", marginBottom: 6 }}>
+                              <Text style={{ color: t.text, fontSize: 12.5, flex: 1 }} numberOfLines={1}>
+                                {ing.name}
+                              </Text>
+                              <TextInput
+                                value={g}
+                                onChangeText={(v) => setRecipe((r) => ({ ...r, [+k]: v }))}
+                                keyboardType="numeric"
+                                style={{
+                                  backgroundColor: t.surfaceSunken, borderRadius: 6, paddingHorizontal: 10,
+                                  paddingVertical: 6, color: t.textStrong, fontSize: 13, width: 68,
+                                  textAlign: "right", marginRight: 4,
+                                }}
+                              />
+                              <Text style={{ color: t.textDim, fontSize: 12, width: 16 }}>g</Text>
+                            </View>
+                          );
+                        })}
+
+                        {(() => {
+                          const tot: Record<string, number> = {
+                            kcal: 0, protein: 0, fat: 0, ca: 0, p: 0, vitD: 0, vitE: 0, zinc: 0, choline: 0,
+                          };
+                          let grams = 0;
+                          for (const [k, g] of Object.entries(recipe)) {
+                            const q = parseFloat(g);
+                            if (!q || q <= 0) continue;
+                            const ing = INGREDIENT_DB[+k];
+                            grams += q;
+                            for (const key of Object.keys(tot)) {
+                              tot[key] += ((ing as any)[key] as number) * (q / 100);
+                            }
+                          }
+                          if (tot.kcal < 1) return null;
+                          const per1000 = (v: number) => (v / tot.kcal) * 1000;
+                          const caP = tot.p > 0 ? tot.ca / tot.p : 0;
+                          return (
+                            <View style={{ marginTop: 8 }}>
+                              <View style={{ backgroundColor: t.surfaceSunken, borderRadius: 8, padding: 10, marginBottom: 8 }}>
+                                <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>
+                                  {Math.round(grams)} g · {Math.round(tot.kcal)} kcal
+                                </Text>
+                              </View>
+
+                              {AAFCO_PER_1000.map((n) => {
+                                const val = per1000(tot[n.key]);
+                                const pct = Math.round((val / n.min) * 100);
+                                const over = n.max ? val > n.max : false;
+                                const tone = over ? t.critical : pct >= 100 ? t.good : pct >= 75 ? t.moderateDeep : t.critical;
+                                return (
+                                  <View key={n.key} style={{ marginBottom: 7 }}>
+                                    <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 3 }}>
+                                      <Text style={{ color: t.text, fontSize: 12, flex: 1 }}>{n.label}</Text>
+                                      <Text style={{ color: t.textDim, fontSize: 11, marginRight: 8 }}>
+                                        {val < 10 ? val.toFixed(1) : Math.round(val)} / {n.min} {n.unit}
+                                      </Text>
+                                      <Text style={{ color: tone, fontSize: 12, fontWeight: "800", width: 52, textAlign: "right" }}>
+                                        {over ? "OVER MAX" : pct + "%"}
+                                      </Text>
+                                    </View>
+                                    <View style={{ height: 4, backgroundColor: t.surfaceSunken, borderRadius: 999, overflow: "hidden" }}>
+                                      <View style={{ height: 4, width: `${Math.min(100, pct)}%`, backgroundColor: tone }} />
+                                    </View>
+                                  </View>
+                                );
+                              })}
+
+                              <View style={{
+                                backgroundColor: caP >= 1 && caP <= 2 ? t.goodTint : t.criticalTint,
+                                borderRadius: 8, padding: 10, marginTop: 4,
+                              }}>
+                                <Text style={{
+                                  color: caP >= 1 && caP <= 2 ? t.goodDeep : t.criticalDeep,
+                                  fontSize: 12.5, fontWeight: "700",
+                                }}>
+                                  Calcium : Phosphorus = {caP.toFixed(2)} : 1
+                                </Text>
+                                <Text style={{ color: t.text, fontSize: 11.5, marginTop: 3, lineHeight: 16 }}>
+                                  {caP >= 1 && caP <= 2
+                                    ? "Inside AAFCO's 1:1 – 2:1 range."
+                                    : caP < 1
+                                    ? "TOO LOW. Muscle meat is phosphorus-heavy — add a calcium source (eggshell, bone, sardines with bones)."
+                                    : "TOO HIGH. Reduce the calcium source or add more muscle meat."}
+                                </Text>
+                              </View>
+
+                              {/* ── THE FIX ENGINE ──────────────────────────────
+                                  A gap you can't close is just a report card. For each
+                                  short nutrient, find the food in the database with the
+                                  best density per calorie and say how much to add. */}
+                              {(() => {
+                                const short = AAFCO_PER_1000.filter(
+                                  (n) => per1000(tot[n.key]) < n.min,
+                                );
+                                if (short.length === 0)
+                                  return (
+                                    <View style={{ backgroundColor: t.goodTint, borderRadius: 8, padding: 10, marginTop: 8, borderLeftWidth: 3, borderLeftColor: t.good }}>
+                                      <Text style={{ color: t.goodDeep, fontSize: 12.5, fontWeight: "800" }}>
+                                        ✓ All eight clear their minimums
+                                      </Text>
+                                      <Text style={{ color: t.text, fontSize: 11.5, marginTop: 3, lineHeight: 16 }}>
+                                        You&apos;ve cleared the nutrients that actually fail in home
+                                        diets. Next step for a diet you intend to feed long term:
+                                        lab-analyse the finished food.
+                                      </Text>
+                                    </View>
+                                  );
+                                return (
+                                  <View style={{ backgroundColor: t.moderateTint, borderRadius: 8, padding: 10, marginTop: 8, borderLeftWidth: 3, borderLeftColor: t.moderate }}>
+                                    <Text style={{ color: t.moderateDeep, fontSize: 12.5, fontWeight: "800", marginBottom: 5 }}>
+                                      How to close the gaps
+                                    </Text>
+                                    {short.map((n) => {
+                                      // Best source = highest nutrient per kcal, so the fix
+                                      // adds the least energy. Zero-calorie sources (eggshell)
+                                      // rank first automatically.
+                                      let best = -1, bestScore = 0;
+                                      INGREDIENT_DB.forEach((ing, i) => {
+                                        const amt = (ing as any)[n.key] as number;
+                                        if (!amt) return;
+                                        const score = amt / Math.max(ing.kcal, 8);
+                                        if (score > bestScore) { bestScore = score; best = i; }
+                                      });
+                                      if (best < 0) return null;
+                                      const src = INGREDIENT_DB[best];
+                                      const deficitPer1000 = n.min - per1000(tot[n.key]);
+                                      const deficitAbs = (deficitPer1000 * tot.kcal) / 1000;
+                                      const gramsNeeded = deficitAbs / (((src as any)[n.key] as number) / 100);
+                                      return (
+                                        <View key={n.key} style={{ marginTop: 6 }}>
+                                          <Text style={{ color: t.textStrong, fontSize: 12, fontWeight: "700" }}>
+                                            {n.label} — short by {deficitAbs < 10 ? deficitAbs.toFixed(1) : Math.round(deficitAbs)} {n.unit}
+                                          </Text>
+                                          <Text style={{ color: t.text, fontSize: 11.5, lineHeight: 16 }}>
+                                            Add ≈{" "}
+                                            <Text style={{ fontWeight: "700" }}>
+                                              {gramsNeeded < 1 ? gramsNeeded.toFixed(2) : Math.round(gramsNeeded)} g {src.name}
+                                            </Text>
+                                            {src.kcal > 0
+                                              ? ` (+${Math.round((gramsNeeded * src.kcal) / 100)} kcal)`
+                                              : " (no calories)"}
+                                          </Text>
+                                        </View>
+                                      );
+                                    })}
+                                    <Text style={{ color: t.textMuted, fontSize: 11, marginTop: 8, lineHeight: 15.5 }}>
+                                      Fixes are calculated one at a time — adding a food changes
+                                      everything else, so re-check after each change rather than
+                                      adding them all at once.
+                                    </Text>
+                                  </View>
+                                );
+                              })()}
+
+                              <Text style={{ color: t.textMuted, fontSize: 11, marginTop: 9, lineHeight: 15.5, fontStyle: "italic" }}>
+                                Eight nutrients shown — the ones the research says actually fail.
+                                AAFCO sets 40+. Passing all eight means you&apos;ve cleared the
+                                common failures, NOT that the diet is complete and balanced. The
+                                step that closes that gap is a lab analysis of the finished food —
+                                which is exactly what fresh brands do, and why they can publish
+                                real numbers.
+                              </Text>
+                            </View>
+                          );
+                        })()}
+                      </>
+                    )}
+                  </View>
+
+                  {/* The branch. This framework came out of raw feeding, and the bone
+                      line is genuinely dangerous if applied to a cooked bowl. */}
+                  <View style={{ backgroundColor: t.criticalTint, borderRadius: 10, padding: 12, marginBottom: 10, borderLeftWidth: 3, borderLeftColor: t.critical }}>
+                    <Text style={{ color: t.criticalDeep, fontWeight: "800", fontSize: 13, marginBottom: 5 }}>
+                      🦴 Raw or cooked? One line changes, and it matters
+                    </Text>
+                    <Text style={{ color: t.text, fontSize: 12.5, lineHeight: 18, marginBottom: 6 }}>
+                      This framework comes from raw feeding, where bone is the calcium source.
+                      <Text style={{ fontWeight: "700" }}> Cooking makes bone brittle and it
+                      splinters — never cook bone, and never feed bone that has been cooked.</Text>
+                    </Text>
+                    {[
+                      ["RAW / FROZEN", "Use raw meaty bones for the calcium line — chicken necks, wings, turkey necks. Freeze fish first (−4°F for 7 days) and check the fish sheet for thiaminase before feeding fish raw."],
+                      ["COOKED", "Swap the bone line for ground eggshell (≈½ tsp per pound of finished food) or bone meal, and make up the weight in muscle meat. Add back thiamine, folate and vitamin C — heat degrades all three. Lightly cook rather than hard-roast."],
+                      ["EITHER WAY", "Weights below assume a moist bowl at roughly 1.45 kcal/g. Cooking drives off water and concentrates the calories, so a cooked bowl weighs LESS for the same energy — weigh ingredients raw, then cook."],
+                    ].map(([h, b], i) => (
+                      <View key={i} style={{ marginTop: 7 }}>
+                        <Text style={{ color: t.criticalDeep, fontSize: 11.5, fontWeight: "800", letterSpacing: 0.3 }}>
+                          {h}
+                        </Text>
+                        <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5, marginTop: 2 }}>{b}</Text>
+                      </View>
+                    ))}
+                  </View>
+
+                  <Text style={{ color: t.textStrong, fontSize: 13.5, fontWeight: "700", marginBottom: 4 }}>
+                    The framework
+                  </Text>
+                  {HOMEMADE_FRAMEWORK.map((f, i) => (
+                    <View key={i} style={{ backgroundColor: t.surfaceSunken, borderRadius: 10, padding: 12, marginBottom: 8 }}>
+                      <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 4 }}>
+                        <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700", flex: 1 }}>
+                          {f.part}
+                        </Text>
+                        <Text style={{ color: t.good, fontSize: 12.5, fontWeight: "800" }}>{f.pct}</Text>
+                      </View>
+                      <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>{f.why}</Text>
+                      <Text style={{ color: t.textMuted, fontSize: 11.5, lineHeight: 16, marginTop: 4 }}>
+                        {f.examples}
+                      </Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontSize: 13.5, fontWeight: "700", marginTop: 4, marginBottom: 4 }}>
+                    The gaps that framework leaves — and the food that fills them
+                  </Text>
+                  {HOMEMADE_GAPS.map((g, i) => (
+                    <View key={i} style={{ backgroundColor: t.moderateTint, borderRadius: 10, padding: 12, marginBottom: 8 }}>
+                      <Text style={{ color: t.moderateDeep, fontSize: 12.5, fontWeight: "800", marginBottom: 4 }}>
+                        {g.nutrient}
+                      </Text>
+                      <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5, marginBottom: 5 }}>
+                        {g.risk}
+                      </Text>
+                      <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>
+                        <Text style={{ fontWeight: "700" }}>Food fix: </Text>{g.fix}
+                      </Text>
+                      <Text style={{ color: t.textMuted, fontSize: 11.5, lineHeight: 16, marginTop: 4 }}>
+                        <Text style={{ fontWeight: "700" }}>If food can&apos;t: </Text>{g.supplement}
+                      </Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 4, lineHeight: 16, fontStyle: "italic" }}>
+                    Stockman, Fascetti, Kass & Larsen · Journal of the American Veterinary Medical
+                    Association, 2013 · plus Dog Aging Project survey data on 1,726 home-prepared diets.
+                  </Text>
+                </AccordionSection>
+              )}
+
+              {/* ── THE OMEGA GUIDE ── Added 2026-08-22 from Kyle's omega
+                  research. Sits above the calculator because you need to know
+                  WHICH source you're buying before the arithmetic is worth
+                  doing. The calculator below is untouched. */}
+              <AccordionSection
+                title="🐟 The omega guide"
+                  topic="Omega-3"
+                  door="learn"
+                askLabel="Ask AI"
+                onAskAI={() =>
+                  askAboutSection(
+                    `Which omega-3 supplement should I use for my dog, and how much? Cover krill vs fish oil vs algal oil.`,
+                  )
+                }
+              >
+                <View style={{ backgroundColor: t.goodTint, borderRadius: 9, padding: 11, marginBottom: 10, borderLeftWidth: 3, borderLeftColor: t.good }}>
+                  <Text style={{ color: t.good, fontWeight: "800", fontSize: 13 }}>
+                    Why this is foundational, not optional
+                  </Text>
+                  <Text style={{ color: t.text, fontSize: 12.5, marginTop: 4, lineHeight: 18 }}>
+                    Dogs need both omega-6 and omega-3 daily and cannot produce either
+                    themselves — a deficiency leads to dry skin, coat abnormalities,
+                    reproductive issues and a general failure to thrive. The problem is
+                    that most commercial and highly processed foods are very high in
+                    omega-6 and extremely low in omega-3. The ratio that supports a healthy
+                    inflammatory response is
+                    <Text style={{ fontWeight: "800" }}> 5:1 or less</Text>. Many kibbles on
+                    the shelf run as high as
+                    <Text style={{ fontWeight: "800" }}> 30:1</Text>. That imbalance is what
+                    makes daily omega-3 supplementation foundational.
+                  </Text>
+                </View>
+
+                <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 4, marginBottom: 2 }}>
+                  What omega-3 actually does
+                </Text>
+                {OMEGA_BENEFITS.map((b, i) => (
+                  <View key={i} style={{ flexDirection: "row", gap: 9, marginTop: 8, alignItems: "flex-start" }}>
+                    <Text style={{ fontSize: 15 }}>{b.icon}</Text>
+                    <View style={{ flex: 1 }}>
+                      <Text style={{ color: t.good, fontSize: 12, fontWeight: "800" }}>{b.area}</Text>
+                      <Text style={{ color: t.text, fontSize: 11.5, marginTop: 2, lineHeight: 17 }}>{b.detail}</Text>
+                    </View>
+                  </View>
+                ))}
+
+                <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 14, marginBottom: 2 }}>
+                  Source showdown — this decides what you buy
+                </Text>
+                {OMEGA_SOURCES.map((s, i) => (
+                  <View
+                    key={i}
+                    style={{
+                      backgroundColor: t.surface,
+                      borderRadius: 9,
+                      padding: 11,
+                      marginTop: 7,
+                      borderLeftWidth: 3,
+                      borderLeftColor:
+                        s.verdict === "best" ? t.good
+                          : s.verdict === "good" ? t.moderate
+                            : t.critical,
+                    }}
+                  >
+                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                      <Text style={{ color: t.textStrong, fontSize: 13.5, fontWeight: "800" }}>{s.name}</Text>
+                      <Text
+                        style={{
+                          color:
+                            s.verdict === "best" ? t.good
+                              : s.verdict === "good" ? t.moderateDeep
+                                : t.critical,
+                          fontSize: 10,
+                          fontWeight: "800",
+                          textTransform: "uppercase",
+                          letterSpacing: 0.4,
+                        }}
+                      >
+                        {s.verdict === "best" ? "Best" : s.verdict === "good" ? "Good" : "Caution"}
+                      </Text>
+                    </View>
+                    <Text style={{ color: t.good, fontSize: 12, fontWeight: "700", marginTop: 3 }}>{s.headline}</Text>
+                    <Text style={{ color: t.text, fontSize: 11.5, marginTop: 4, lineHeight: 17 }}>{s.detail}</Text>
+                  </View>
+                ))}
+
+                <View style={{ backgroundColor: t.surfaceSunken, borderRadius: 9, padding: 11, marginTop: 14 }}>
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13 }}>
+                    Therapeutic dosing guidelines
+                  </Text>
+                  {OMEGA_DOSING.map((d, i) => (
+                    <View
+                      key={i}
+                      style={{
+                        marginTop: 8,
+                        paddingTop: 8,
+                        borderTopWidth: i === 0 ? 0 : 1,
+                        borderTopColor: t.border,
+                      }}
+                    >
+                      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{d.level}</Text>
+                      <Text style={{ color: t.good, fontSize: 12.5, fontWeight: "800", marginTop: 2 }}>{d.amount}</Text>
+                    </View>
+                  ))}
+                  <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 9, lineHeight: 17 }}>
+                    Krill needs half the milligrams of fish oil for the same effect — that&apos;s
+                    the bioavailability difference, not a weaker product.
+                  </Text>
+                </View>
+
+                <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 14, marginBottom: 2 }}>
+                  The &quot;safety first&quot; protocol
+                </Text>
+                {OMEGA_SAFETY.map((s, i) => (
+                  <View key={i} style={{ flexDirection: "row", gap: 9, marginTop: 8, alignItems: "flex-start" }}>
+                    <Text style={{ fontSize: 15 }}>{s.icon}</Text>
+                    <View style={{ flex: 1 }}>
+                      <Text style={{ color: t.textStrong, fontSize: 12, fontWeight: "800" }}>{s.rule}</Text>
+                      <Text style={{ color: t.text, fontSize: 11.5, marginTop: 2, lineHeight: 17 }}>{s.detail}</Text>
+                    </View>
+                  </View>
+                ))}
+
+                <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16 }}>
+                  Save this
+                </Text>
+                <Image
+                  source={require("../assets/images/omega-guide.jpg")}
+                  style={{
+                    width: "100%",
+                    aspectRatio: 1800 / 1004,
+                    borderRadius: 9,
+                    marginTop: 6,
+                  }}
+                  resizeMode="contain"
+                  accessibilityLabel="The Canine Omega Guide — why omegas matter, the bioavailability spectrum of plant versus marine sources, fish oil versus krill and algal alternatives, therapeutic dosing guidelines, and the safety first protocol"
+                />
+              </AccordionSection>
+
               {/* Omega calculator — the arithmetic this app kept doing by hand.
                   Labels rarely give EPA/DHA, so the marine-share slider makes the
                   guess explicit instead of hiding it. */}
               <AccordionSection
                 title="🧮 Omega-3 calculator"
+                  topic="Omega-3"
+                  door="learn"
                 askLabel="Ask AI"
                 onAskAI={() =>
                   askAboutSection(
@@ -6724,7 +10593,9 @@ export default function App() {
 
               {/* AAFCO reference table. Transcribed from the source document. */}
               <AccordionSection
-                title="📋 AAFCO minimums & maximums (full table)"
+                title="📋 AAFCO minimums & maximums"
+                  topic="AAFCO"
+                  door="learn"
                 askLabel="Ask AI"
                 onAskAI={() =>
                   askAboutSection(
@@ -6790,7 +10661,9 @@ export default function App() {
               {/* Deficiency signs. Framed as "how to recognise", not "what to fear" —
                   on complete food these are rare, and the section says so first. */}
               <AccordionSection
-                title="🔍 Deficiency signs worth recognising"
+                title="🔍 Deficiency signs"
+                  topic="Deficiency signs"
+                  door="learn"
                 askLabel="Ask AI"
                 onAskAI={() =>
                   askAboutSection(
@@ -6851,7 +10724,9 @@ export default function App() {
               {/* Medicinal mushrooms. Heavily marketed, thinly evidenced in dogs —
                   so the section leads with how much is actually known. */}
               <AccordionSection
-                title="🍄 Medicinal mushrooms — what the evidence says"
+                title="🍄 Medicinal mushrooms"
+                  topic="Mushrooms"
+                  door="learn"
                 askLabel="Ask AI"
                 onAskAI={() =>
                   askAboutSection(
@@ -6859,15 +10734,21 @@ export default function App() {
                   )
                 }
               >
-                <View style={{ backgroundColor: t.moderateTint, borderRadius: 9, padding: 11, marginBottom: 10, borderLeftWidth: 3, borderLeftColor: t.moderate }}>
-                  <Text style={{ color: t.moderateDeep, fontWeight: "800", fontSize: 13 }}>
-                    Start here: only ONE has a trial in dogs
+                {/* The framing Kyle asked for: mushrooms as a Swiss Army knife,
+                    and the two compound families that decide how a product has to
+                    be extracted. Replaced the old evidence-tier preamble 2026-08-22. */}
+                <View style={{ backgroundColor: t.goodTint, borderRadius: 9, padding: 11, marginBottom: 10, borderLeftWidth: 3, borderLeftColor: t.good }}>
+                  <Text style={{ color: t.good, fontWeight: "800", fontSize: 13 }}>
+                    The Swiss Army knife of supplements
                   </Text>
                   <Text style={{ color: t.text, fontSize: 12.5, marginTop: 4, lineHeight: 18 }}>
-                    Turkey tail, and it was a 15-dog pilot. Everything else below is human data,
-                    lab work, or mechanism — applied to dogs by inference. That doesn&apos;t make
-                    them useless; beta-glucan immune activity is well established across species.
-                    It means the confidence level should be stated plainly instead of implied.
+                    Functional mushrooms give targeted support to the immune system, the
+                    organs, and the ageing brain. Two compound families do the work —
+                    <Text style={{ fontWeight: "700" }}> beta-glucans</Text>, the polysaccharides
+                    that activate and balance immunity, and
+                    <Text style={{ fontWeight: "700" }}> terpenes</Text>, which cross the
+                    blood-brain barrier and act on the nervous system. That split is why
+                    extraction method matters as much as species.
                   </Text>
                 </View>
 
@@ -6880,28 +10761,85 @@ export default function App() {
                       padding: 11,
                       marginBottom: 6,
                       borderLeftWidth: 3,
-                      borderLeftColor: m.tier === "moderate" ? t.good : t.moderate,
+                      borderLeftColor: t.good,
                     }}
                   >
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                      <Text style={{ color: t.textStrong, fontSize: 13.5, fontWeight: "800" }}>{m.name}</Text>
-                      <Text style={{ color: m.tier === "moderate" ? t.good : t.moderateDeep, fontSize: 10, fontWeight: "800", textTransform: "uppercase", letterSpacing: 0.4 }}>
-                        {m.tier === "moderate" ? "🟡 Moderate" : "🟠 Emerging"}
-                      </Text>
-                    </View>
+                    <Text style={{ color: t.textStrong, fontSize: 13.5, fontWeight: "800" }}>{m.name}</Text>
                     <Text style={{ color: t.textDim, fontSize: 11, fontStyle: "italic" }}>{m.latin}</Text>
                     <Text style={{ color: t.good, fontSize: 12, fontWeight: "700", marginTop: 3 }}>{m.headline}</Text>
                     <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 4, lineHeight: 16 }}>
                       <Text style={{ fontWeight: "700" }}>Actives: </Text>{m.actives}
                     </Text>
-                    <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 3, lineHeight: 16 }}>
-                      <Text style={{ fontWeight: "700" }}>Evidence: </Text>{m.evidence}
-                    </Text>
-                    <Text style={{ color: t.text, fontSize: 11.5, marginTop: 3, lineHeight: 16 }}>
+                    <Text style={{ color: t.text, fontSize: 11.5, marginTop: 4, lineHeight: 17 }}>{m.body}</Text>
+                    <Text style={{ color: t.text, fontSize: 11.5, marginTop: 4, lineHeight: 16 }}>
                       <Text style={{ fontWeight: "700" }}>Use for: </Text>{m.useFor}
                     </Text>
                   </View>
                 ))}
+
+                {/* ── HOW THEY FIGHT DISEASE ── */}
+                <View style={{ backgroundColor: t.surface, borderRadius: 9, padding: 11, marginTop: 10, borderWidth: 1, borderColor: t.border }}>
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginBottom: 2 }}>
+                    How they help fight disease
+                  </Text>
+                  {MUSHROOM_DISEASE.map((d, i) => (
+                    <View key={i} style={{ marginTop: 7 }}>
+                      <Text style={{ color: t.good, fontSize: 12, fontWeight: "800" }}>{d.area}</Text>
+                      <Text style={{ color: t.text, fontSize: 11.5, marginTop: 2, lineHeight: 17 }}>{d.detail}</Text>
+                    </View>
+                  ))}
+                </View>
+
+                {/* ── WHEN A DOG NEEDS THEM ── */}
+                <View style={{ backgroundColor: t.surface, borderRadius: 9, padding: 11, marginTop: 8, borderWidth: 1, borderColor: t.border }}>
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginBottom: 2 }}>
+                    When dogs need them most
+                  </Text>
+                  {MUSHROOM_WHEN.map((w, i) => (
+                    <View key={i} style={{ marginTop: 7 }}>
+                      <Text style={{ color: t.good, fontSize: 12, fontWeight: "800" }}>{w.stage}</Text>
+                      <Text style={{ color: t.text, fontSize: 11.5, marginTop: 2, lineHeight: 17 }}>{w.why}</Text>
+                    </View>
+                  ))}
+                </View>
+
+                {/* ── HOW MUCH ── */}
+                <View style={{ backgroundColor: t.surfaceSunken, borderRadius: 9, padding: 11, marginTop: 10, marginBottom: 6 }}>
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13 }}>
+                    How much to give
+                  </Text>
+                  <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 4, lineHeight: 17 }}>
+                    Unlike drugs that work immediately, mushrooms give the best results used
+                    in small amounts regularly — for weeks, months, or a lifetime.
+                    Consistency is the whole game.
+                  </Text>
+                  {MUSHROOM_DOSING.map((d, i) => (
+                    <View
+                      key={i}
+                      style={{
+                        marginTop: 8,
+                        paddingTop: 8,
+                        borderTopWidth: i === 0 ? 0 : 1,
+                        borderTopColor: t.border,
+                      }}
+                    >
+                      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>
+                        {d.level}
+                      </Text>
+                      <Text style={{ color: t.good, fontSize: 12.5, fontWeight: "800", marginTop: 2 }}>
+                        {d.amount}
+                      </Text>
+                      <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 3, lineHeight: 16 }}>
+                        {d.note}
+                      </Text>
+                    </View>
+                  ))}
+                  <Text style={{ color: t.text, fontSize: 12, marginTop: 9, lineHeight: 17, fontWeight: "600" }}>
+                    Start low and go slow. Mushrooms are fibrous, and the usual first sign
+                    you moved too fast is soft stool — not a reaction to the mushroom, just
+                    too much fibre too quickly.
+                  </Text>
+                </View>
 
                 <View style={{ backgroundColor: t.goodTint, borderRadius: 9, padding: 11, marginTop: 4 }}>
                   <Text style={{ color: t.good, fontWeight: "800", fontSize: 13 }}>
@@ -6932,12 +10870,48 @@ export default function App() {
                     with kidney disease or oxalate stones.
                   </Text>
                 </View>
+
+                {/* ── THE TWO REFERENCE CARDS ── Kyle's mushroom infographics.
+                    Placed at the END on purpose: they're a summary to save or
+                    screenshot, and the graded detail above is what should be read
+                    first. `resizeMode="contain"` with an aspect ratio keeps them
+                    readable on any width without cropping the text inside. */}
+                <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 14 }}>
+                  Save these
+                </Text>
+                <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 3, marginBottom: 8, lineHeight: 16 }}>
+                  Two quick-reference cards covering the same ground. The graded
+                  detail above is the honest version — these are the summary.
+                </Text>
+                <Image
+                  source={require("../assets/images/mushrooms-pharmacy.jpg")}
+                  style={{
+                    width: "100%",
+                    aspectRatio: 893 / 1600,
+                    borderRadius: 9,
+                    marginBottom: 8,
+                  }}
+                  resizeMode="contain"
+                  accessibilityLabel="The Mushroom Pharmacy for Dogs — turkey tail, lion's mane, reishi, cordyceps, and why to use fruiting bodies rather than raw mushrooms"
+                />
+                <Image
+                  source={require("../assets/images/mushrooms-guide.jpg")}
+                  style={{
+                    width: "100%",
+                    aspectRatio: 893 / 1600,
+                    borderRadius: 9,
+                  }}
+                  resizeMode="contain"
+                  accessibilityLabel="Guide to Medicinal Mushrooms — turkey tail for cancer support, lion's mane for brain and nerve, reishi for allergies, cordyceps for kidney and lung, chaga as antioxidant"
+                />
               </AccordionSection>
 
               {/* Collagen. Its own section because the type II distinction is genuinely
                   counterintuitive and owners routinely buy the wrong thing. */}
               <AccordionSection
                 title="🦴 Collagen — the three types"
+                  topic="Collagen"
+                  door="learn"
                 askLabel="Ask AI"
                 onAskAI={() =>
                   askAboutSection(
@@ -7022,7 +10996,9 @@ export default function App() {
               {/* Life stages. Exists because "adult maintenance" confuses everyone, and
                   the reason it's confusing is that the category system is incomplete. */}
               <AccordionSection
-                title="🎂 Puppy, adult, senior — what actually differs"
+                title="🎂 Puppy, adult, senior"
+                  topic="Life stages"
+                  door="learn"
                 askLabel="Ask AI"
                 onAskAI={() =>
                   askAboutSection(
@@ -7165,7 +11141,8 @@ export default function App() {
                 return (
                   <AccordionSection
                     title="🏷️ Named vs unnamed meals"
-                    defaultOpen={generic.length > 0}
+                  door="whats-in-it"
+                    
                     askLabel="Ask AI"
                     onAskAI={() =>
                       askAboutSection(
@@ -7225,6 +11202,7 @@ export default function App() {
                 return (
                   <AccordionSection
                     title="🥩 Protein profile"
+                  door="whats-in-it"
                     askLabel="Ask AI"
                     onAskAI={() =>
                       askAboutSection(
@@ -7448,7 +11426,12 @@ export default function App() {
                 const sensitive = COPPER_SENSITIVE_BREEDS.some((b) => breedLower.includes(b.trim()));
                 if (!sensitive) return null;
                 const copper = ingredients.filter((i) => i.toLowerCase().includes("copper"));
-                if (copper.length === 0) return null;
+                // Liver is the densest natural copper source, so a liver-containing
+                // food is relevant to a copper-sensitive breed even when no copper
+                // ingredient is listed. Without this, whole-food formulas — exactly
+                // the ones built on liver — never triggered the warning.
+                const liver = ingredients.filter((i) => /\bliver\b/i.test(i));
+                if (copper.length === 0 && liver.length === 0) return null;
                 const inorganic = copper.some((c) => /sulfate|sulphate|oxide|carbonate/i.test(c));
                 return (
                   <View
@@ -7467,13 +11450,44 @@ export default function App() {
                     </Text>
                     <Text style={{ color: t.text, fontSize: 12.5, marginTop: 5, lineHeight: 18 }}>
                       {dogProfileName ?? "Your dog"} is a {dogProfileBreed}, one of the breeds
-                      that can&apos;t clear copper normally. This food contains{" "}
-                      <Text style={{ fontWeight: "700" }}>{copper.join(", ")}</Text>.
-                      {inorganic
-                        ? " That's the inorganic form, which bypasses the liver's regulation and accumulates over years of daily feeding until damage is already advanced. Copper proteinate is the safer form to look for."
-                        : " That looks like a chelated form, which the body regulates far better than copper sulfate — the preferable choice for this breed."}
+                      that can&apos;t clear copper normally.
+                      {copper.length > 0 ? (
+                        <>
+                          {" "}This food contains{" "}
+                          <Text style={{ fontWeight: "700" }}>{copper.join(", ")}</Text>.
+                          {inorganic
+                            ? " That's the inorganic form, which bypasses the liver's regulation and accumulates over years of daily feeding until damage is already advanced. Copper proteinate is the safer form to look for."
+                            : " That looks like a chelated form, which the body regulates far better than copper sulfate — the preferable choice for this breed."}
+                        </>
+                      ) : (
+                        <>
+                          {" "}No copper supplement is listed, but this food contains{" "}
+                          <Text style={{ fontWeight: "700" }}>{liver.join(", ")}</Text> — and liver
+                          is the densest natural source of copper there is. That isn&apos;t a
+                          criticism: liver is how whole-food formulas meet the requirement without
+                          a synthetic premix. It just means copper is present, and for this breed
+                          that&apos;s worth knowing.
+                        </>
+                      )}
                     </Text>
-                    <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 6, fontStyle: "italic" }}>
+
+                    {/* The regulatory gap. Copper is the one nutrient where "complete
+                        and balanced" bounds the bottom and says nothing about the top. */}
+                    <View style={{ backgroundColor: t.surface, borderRadius: 10, padding: 11, marginTop: 9 }}>
+                      <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 12.5, marginBottom: 2 }}>
+                        Why copper gets its own warning
+                      </Text>
+                      {COPPER_CEILING_GAP.map((c, i) => (
+                        <View key={i} style={{ marginTop: 7 }}>
+                          <Text style={{ color: t.textStrong, fontSize: 12, fontWeight: "700", marginBottom: 2 }}>
+                            {c.h}
+                          </Text>
+                          <Text style={{ color: t.text, fontSize: 11.5, lineHeight: 16.5 }}>{c.b}</Text>
+                        </View>
+                      ))}
+                    </View>
+
+                    <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 8, fontStyle: "italic" }}>
                       This warning is personal to {dogProfileName ?? "your dog"} — the food&apos;s
                       score is unchanged, because the risk depends on who&apos;s eating it.
                     </Text>
@@ -7496,7 +11510,8 @@ export default function App() {
                 return (
                   <AccordionSection
                     title="🐟 Where the omega-3 comes from"
-                    defaultOpen={plantOnly}
+                  door="whats-in-it"
+                    
                     askLabel="Ask AI"
                     onAskAI={() =>
                       askAboutSection(
@@ -7658,11 +11673,16 @@ export default function App() {
                         Before you add fish oil — three things
                       </Text>
                       <Text style={{ color: t.text, fontSize: 12, marginTop: 5, lineHeight: 17 }}>
-                        <Text style={{ fontWeight: "700" }}>1. Vitamin E goes up with it.</Text>{" "}
+                        <Text style={{ fontWeight: "700" }}>1. Vitamin E protects it.</Text>{" "}
                         Polyunsaturated fats oxidise easily, and vitamin E is what protects them.
-                        AAFCO recommends 10 IU of vitamin E per gram of fish oil. Long-term
-                        supplementation can deplete stores — buy an oil preserved with mixed
-                        tocopherols (natural E), which covers both the bottle and the dog.
+                        The rule gets quoted as &quot;10 IU per gram of fish oil&quot;, which is
+                        wrong. AAFCO&apos;s actual footnote is{" "}
+                        <Text style={{ fontWeight: "700" }}>0.6 IU of vitamin E per gram of
+                        PUFA, and only above 83 g of PUFA per 1,000 kcal</Text> — a threshold a
+                        supplemented dog almost never reaches. So the added requirement is far
+                        smaller than commonly claimed. Buy an oil preserved with mixed tocopherols
+                        anyway: that protects the oil from going rancid in the bottle, which is the
+                        real risk.
                       </Text>
                       <Text style={{ color: t.text, fontSize: 12, marginTop: 6, lineHeight: 17 }}>
                         <Text style={{ fontWeight: "700" }}>2. It lengthens bleeding time.</Text>{" "}
@@ -7676,6 +11696,303 @@ export default function App() {
                         dose and build over 2–4 weeks. Loose stools are the practical limit and show
                         up long before anything concerning. Omega-3 takes 6–8 weeks to fully
                         incorporate into cell membranes, so judge nothing before then.
+                      </Text>
+                    </View>
+
+                    {/* The trial evidence. Fish oil gets recommended on vibes constantly;
+                        these are the two randomised canine trials that actually tested it,
+                        including the one that tested flax head-to-head and found it failed. */}
+                    <View style={{ backgroundColor: t.surfaceSunken, borderRadius: 9, padding: 11, marginBottom: 8 }}>
+                      <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13 }}>
+                        🔬 What the trials actually show
+                      </Text>
+                      <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 4, lineHeight: 16 }}>
+                        Fish oil gets recommended on reputation. These are randomised trials in real
+                        dogs — including the heart evidence, which most owners never hear about.
+                      </Text>
+
+                      {[
+                        {
+                          h: "Reduced arrhythmias in Boxers with heart disease",
+                          b: "24 Boxers with arrhythmogenic right ventricular cardiomyopathy, each having more than 95 abnormal beats a day, were randomised to fish oil, flax oil, or sunflower oil for 6 weeks. Fish oil reduced the arrhythmias. Flax oil did not — which is the cleanest demonstration anywhere that plant ALA cannot stand in for marine EPA and DHA.",
+                          s: "Smith, Freeman & Rush · J Vet Intern Med 2007;21:265–273",
+                        },
+                        {
+                          h: "Slowed mitral valve disease over a full year",
+                          b: "29 dogs with mitral valve disease, double-blinded and randomised, given roughly 54 mg/kg EPA and 41 mg/kg DHA daily for 12 months. The supplemented dogs were 2.96x less likely to develop arrhythmias, showed smaller heart-size measurements, and had falling IL-6 and TNF-alpha while the control group's rose. 40% of controls progressed to the next disease stage; 40% of the supplemented group didn't progress at all.",
+                          s: "Nasciutti et al. · PLOS ONE 2021",
+                        },
+                        {
+                          h: "The honest limit",
+                          b: "Both trials studied dogs who ALREADY had heart disease. No one has shown fish oil prevents heart disease in a healthy dog. It's plausible and low-risk, but it isn't proven — and a supplement that helps a sick heart is not automatically a shield for a well one.",
+                          s: "Stated because the gap is real, not because the evidence is weak",
+                        },
+                      ].map((e, i) => (
+                        <View
+                          key={i}
+                          style={{
+                            marginTop: 9,
+                            paddingTop: 9,
+                            borderTopWidth: 1,
+                            borderTopColor: t.border,
+                          }}
+                        >
+                          <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700", marginBottom: 3 }}>
+                            {e.h}
+                          </Text>
+                          <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>{e.b}</Text>
+                          <Text style={{ color: t.textDim, fontSize: 10.5, marginTop: 5, fontStyle: "italic" }}>
+                            {e.s}
+                          </Text>
+                        </View>
+                      ))}
+                    </View>
+
+                    {/* The label trap. Sits ABOVE the fish table deliberately — an owner
+                        should learn that advertised ratios are floors before they start
+                        comparing any numbers at all, including the ones in this app. */}
+                    <View style={{ backgroundColor: t.moderateTint, borderRadius: 9, padding: 11, marginBottom: 8, borderLeftWidth: 3, borderLeftColor: t.moderate }}>
+                      <Text style={{ color: t.moderateDeep, fontWeight: "800", fontSize: 13 }}>
+                        ⚠️ Why the ratio on the bag may not be real
+                      </Text>
+                      <Text style={{ color: t.text, fontSize: 12, marginTop: 4, lineHeight: 17.5 }}>
+                        Read this before you compare two foods on omega ratio — including with
+                        this app. The number is usually built from figures that aren&apos;t
+                        measurements.
+                      </Text>
+
+                      {GA_MINIMUM_TRAP.map((g, i) => (
+                        <View
+                          key={i}
+                          style={{
+                            marginTop: 9,
+                            paddingTop: 9,
+                            borderTopWidth: 1,
+                            borderTopColor: t.border,
+                          }}
+                        >
+                          <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700", marginBottom: 3 }}>
+                            {g.h}
+                          </Text>
+                          <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>{g.b}</Text>
+                        </View>
+                      ))}
+                    </View>
+
+                    {/* Which fish, by the numbers. "Feed fish" is useless advice when the
+                        spread between best and worst is fifteen-fold. */}
+                    <View style={{ backgroundColor: t.surfaceSunken, borderRadius: 9, padding: 11, marginBottom: 8 }}>
+                      <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13 }}>
+                        🐟 How much omega-3 is actually in each fish
+                      </Text>
+                      <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 4, lineHeight: 16 }}>
+                        EPA+DHA per 100 g. The best choice carries roughly{" "}
+                        <Text style={{ fontWeight: "700" }}>fifteen times</Text> what the worst does —
+                        and the richest fish are also the lowest in mercury, so there&apos;s no
+                        trade-off to manage.
+                      </Text>
+
+                      {FISH_EPA_DHA.map((f, i) => {
+                        const vTone =
+                          f.verdict === "best" ? t.good : f.verdict === "good" ? t.moderateDeep : t.textDim;
+                        const mTone =
+                          f.mercury === "low" ? t.good : f.mercury === "moderate" ? t.moderateDeep : t.critical;
+                        return (
+                          <View
+                            key={i}
+                            style={{
+                              marginTop: 9,
+                              paddingTop: 9,
+                              borderTopWidth: 1,
+                              borderTopColor: t.border,
+                            }}
+                          >
+                            <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 4 }}>
+                              <Text style={{ color: vTone, fontSize: 12.5, fontWeight: "700", flex: 1 }}>
+                                {f.fish}
+                              </Text>
+                              <Text style={{ color: vTone, fontSize: 12.5, fontWeight: "800", marginRight: 8 }}>
+                                {f.mg} mg
+                              </Text>
+                              <View style={{ backgroundColor: t.surface, borderRadius: 999, paddingHorizontal: 7, paddingVertical: 2 }}>
+                                <Text style={{ color: mTone, fontSize: 10, fontWeight: "700" }}>
+                                  Hg {f.mercury}
+                                </Text>
+                              </View>
+                            </View>
+                            <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>{f.note}</Text>
+                          </View>
+                        );
+                      })}
+                    </View>
+
+                    {/* The reference sheet. Ordered by food chain because that single
+                        variable predicts mercury, omega-3 AND thiaminase — in opposite
+                        directions, which is why neither end of the chain is simply "good". */}
+                    <View style={{ backgroundColor: t.surfaceSunken, borderRadius: 9, padding: 11, marginBottom: 8 }}>
+                      <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13 }}>
+                        🐠 Every fish, bottom of the food chain to top
+                      </Text>
+                      <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 4, lineHeight: 16 }}>
+                        Where a fish sits predicts almost everything about it — and the trade-off
+                        runs both ways. <Text style={{ fontWeight: "700" }}>Bottom of the chain:
+                        least mercury, most omega-3, most likely to carry thiaminase.</Text>{" "}
+                        <Text style={{ fontWeight: "700" }}>Top: no thiaminase, dangerous
+                        mercury.</Text> Neither end is simply safe — they fail in opposite
+                        directions, and cooking solves only one of the two.
+                      </Text>
+
+                      {FISH_CHAIN.map((f, i) => {
+                        const vTone =
+                          f.verdict === "best" ? t.good
+                          : f.verdict === "good" ? t.info
+                          : f.verdict === "occasional" ? t.moderateDeep
+                          : t.critical;
+                        const mTone =
+                          f.mercury === "very low" || f.mercury === "low" ? t.good
+                          : f.mercury === "moderate" ? t.moderateDeep
+                          : t.critical;
+                        const tTone =
+                          f.thiaminase === "yes" ? t.critical
+                          : f.thiaminase === "likely" ? t.moderateDeep
+                          : t.textDim;
+                        return (
+                          <View
+                            key={i}
+                            style={{ marginTop: 9, paddingTop: 9, borderTopWidth: 1, borderTopColor: t.border }}
+                          >
+                            <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 3 }}>
+                              <Text style={{ color: vTone, fontSize: 12.5, fontWeight: "800", flex: 1 }}>
+                                {f.fish}
+                              </Text>
+                              <Text style={{ color: t.textDim, fontSize: 10, fontWeight: "600" }}>
+                                {f.level}
+                              </Text>
+                            </View>
+                            <View style={{ flexDirection: "row", flexWrap: "wrap", marginBottom: 5 }}>
+                              <View style={{ backgroundColor: t.surface, borderRadius: 999, paddingHorizontal: 8, paddingVertical: 2, marginRight: 5, marginTop: 3 }}>
+                                <Text style={{ color: t.good, fontSize: 10, fontWeight: "700" }}>
+                                  ω3 {f.omega3}
+                                </Text>
+                              </View>
+                              <View style={{ backgroundColor: t.surface, borderRadius: 999, paddingHorizontal: 8, paddingVertical: 2, marginRight: 5, marginTop: 3 }}>
+                                <Text style={{ color: mTone, fontSize: 10, fontWeight: "700" }}>
+                                  Hg {f.mercury}
+                                </Text>
+                              </View>
+                              <View style={{ backgroundColor: t.surface, borderRadius: 999, paddingHorizontal: 8, paddingVertical: 2, marginTop: 3 }}>
+                                <Text style={{ color: tTone, fontSize: 10, fontWeight: "700" }}>
+                                  thiaminase {f.thiaminase}
+                                </Text>
+                              </View>
+                            </View>
+                            <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>{f.note}</Text>
+                          </View>
+                        );
+                      })}
+
+                      <View style={{ backgroundColor: t.goodTint, borderRadius: 9, padding: 11, marginTop: 10, borderLeftWidth: 3, borderLeftColor: t.good }}>
+                        <Text style={{ color: t.goodDeep, fontWeight: "800", fontSize: 12.5, marginBottom: 4 }}>
+                          The one-line version
+                        </Text>
+                        <Text style={{ color: t.text, fontSize: 12.5, lineHeight: 18 }}>
+                          <Text style={{ fontWeight: "700" }}>Feed small fish, and cook or can
+                          them.</Text> That gets you the highest omega-3, the lowest mercury, and
+                          removes the thiaminase question in one move. Sardines, anchovies, herring
+                          and Atlantic mackerel are all the same answer. Everything above them on
+                          this list is a compromise in one direction or another.
+                        </Text>
+                      </View>
+                    </View>
+
+                    {/* Sardines: fresh vs canned. Counterintuitive result, so it gets its
+                        own block rather than a footnote — canned genuinely wins for a dog. */}
+                    <View style={{ backgroundColor: t.surfaceSunken, borderRadius: 9, padding: 11, marginBottom: 8 }}>
+                      <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13 }}>
+                        🥫 Fresh or frozen sardines vs canned
+                      </Text>
+                      <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 4, lineHeight: 16 }}>
+                        Fresh usually beats canned. For a dog it doesn&apos;t — and this is one of
+                        the few places where the processed version is genuinely the better food.
+                      </Text>
+
+                      {SARDINE_FORM.map((s, i) => {
+                        const tone =
+                          s.verdict === "canned"
+                            ? { fg: t.good, tag: "CANNED WINS" }
+                            : s.verdict === "fresh"
+                            ? { fg: t.moderateDeep, tag: "IF FEEDING RAW" }
+                            : { fg: t.textDim, tag: "EITHER" };
+                        return (
+                          <View
+                            key={i}
+                            style={{ marginTop: 9, paddingTop: 9, borderTopWidth: 1, borderTopColor: t.border }}
+                          >
+                            <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 3 }}>
+                              <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700", flex: 1 }}>
+                                {s.h}
+                              </Text>
+                              <Text style={{ color: tone.fg, fontSize: 9, fontWeight: "800", letterSpacing: 0.3 }}>
+                                {tone.tag}
+                              </Text>
+                            </View>
+                            <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>{s.b}</Text>
+                          </View>
+                        );
+                      })}
+                    </View>
+
+                    {/* Whole food vs extracted oil — the question owners actually ask. */}
+                    <View style={{ backgroundColor: t.goodTint, borderRadius: 9, padding: 11, marginBottom: 8, borderLeftWidth: 3, borderLeftColor: t.good }}>
+                      <Text style={{ color: t.goodDeep, fontWeight: "800", fontSize: 13 }}>
+                        Sardines or fish oil — which one?
+                      </Text>
+                      {SARDINE_VS_OIL.map((s, i) => (
+                        <View key={i} style={{ marginTop: 8 }}>
+                          <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700", marginBottom: 2 }}>
+                            {s.h}
+                          </Text>
+                          <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>{s.b}</Text>
+                        </View>
+                      ))}
+                    </View>
+
+                    {/* Green lipped mussel — the one joint supplement with real randomised
+                        canine trials, and the one whose extract/powder distinction is
+                        almost always left out of the marketing. */}
+                    <View style={{ backgroundColor: t.accents.mussel.bg, borderRadius: 9, padding: 11, marginBottom: 8, borderLeftWidth: 3, borderLeftColor: t.accents.mussel.fg }}>
+                      <Text style={{ color: t.accents.mussel.fg, fontWeight: "800", fontSize: 13 }}>
+                        🌊 Green lipped mussel — for joints specifically
+                      </Text>
+                      <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 4, lineHeight: 16 }}>
+                        If the goal is joints rather than general inflammation, this is the one
+                        supplement with randomised canine trials behind it — and it does something
+                        fish oil doesn&apos;t.
+                      </Text>
+
+                      {GLM_EVIDENCE.map((e, i) => (
+                        <View
+                          key={i}
+                          style={{
+                            marginTop: 9,
+                            paddingTop: 9,
+                            borderTopWidth: 1,
+                            borderTopColor: t.border,
+                          }}
+                        >
+                          <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700", marginBottom: 3 }}>
+                            {e.h}
+                          </Text>
+                          <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>{e.b}</Text>
+                          <Text style={{ color: t.textDim, fontSize: 10.5, marginTop: 5, fontStyle: "italic" }}>
+                            {e.s}
+                          </Text>
+                        </View>
+                      ))}
+
+                      <Text style={{ color: t.text, fontSize: 12, marginTop: 10, lineHeight: 17.5, fontWeight: "600" }}>
+                        Stack it with fish oil rather than choosing between them — different
+                        pathways, additive effect.
                       </Text>
                     </View>
 
@@ -7778,6 +12095,55 @@ export default function App() {
                         </Text>
                       </View>
 
+                      {/* The evidence layer. Tiers are stated per claim because the
+                          honest answer differs enormously between them — and the
+                          lipoma one, which is why most people read this, is the
+                          weakest. */}
+                      {AA_EVIDENCE.map((a, i) => {
+                        const tone =
+                          a.tier === "trialled"
+                            ? { fg: t.good, bg: t.goodTint, tag: "TRIALLED IN DOGS" }
+                            : a.tier === "mechanism"
+                            ? { fg: t.moderateDeep, bg: t.moderateTint, tag: "MECHANISM ONLY" }
+                            : { fg: t.textDim, bg: t.surfaceSunken, tag: "ESTABLISHED" };
+                        return (
+                          <View key={i} style={{ backgroundColor: tone.bg, borderRadius: 9, padding: 11, marginTop: 8 }}>
+                            <View style={{ flexDirection: "row", alignItems: "flex-start", marginBottom: 4 }}>
+                              <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700", flex: 1 }}>
+                                {a.h}
+                              </Text>
+                              <Text style={{ color: tone.fg, fontSize: 9, fontWeight: "800", letterSpacing: 0.3, marginLeft: 6, marginTop: 2 }}>
+                                {tone.tag}
+                              </Text>
+                            </View>
+                            <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>{a.b}</Text>
+                          </View>
+                        );
+                      })}
+
+                      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700", marginTop: 12, marginBottom: 4 }}>
+                        Measured AA by protein (per 1,000 kcal)
+                      </Text>
+                      {AA_BY_PROTEIN.map((p, i) => (
+                        <View key={i} style={{ backgroundColor: t.surfaceSunken, borderRadius: 9, padding: 10, marginBottom: 6 }}>
+                          <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 3 }}>
+                            <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700", flex: 1 }}>
+                              {p.protein}
+                            </Text>
+                            <Text style={{ color: t.textDim, fontSize: 11, marginRight: 8 }}>{p.ratio}</Text>
+                            <Text style={{ color: parseFloat(p.aa) < 1 ? t.good : t.critical, fontSize: 12.5, fontWeight: "800" }}>
+                              AA {p.aa}
+                            </Text>
+                          </View>
+                          <Text style={{ color: t.text, fontSize: 11.5, lineHeight: 16.5 }}>{p.note}</Text>
+                        </View>
+                      ))}
+                      <Text style={{ color: t.textMuted, fontSize: 11, marginTop: 2, lineHeight: 15.5, fontStyle: "italic" }}>
+                        From a manufacturer publishing a full nutritional analysis rather than a
+                        guaranteed minimum. Most brands never disclose arachidonic acid at all — if
+                        you can&apos;t find it, assume poultry-based food runs high.
+                      </Text>
+
                       <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 8, lineHeight: 16, fontStyle: "italic" }}>
                         Practical upshot: if your dog eats meat, he has enough omega-6. The lever
                         worth pulling is adding marine omega-3, not cutting omega-6.
@@ -7815,6 +12181,7 @@ export default function App() {
               {ingredients.length > 0 && (
                 <AccordionSection
                   title="🔥 What heat does to nutrients"
+                  door="whats-in-it"
                   askLabel="Ask AI"
                   onAskAI={() =>
                     askAboutSection(
@@ -7858,7 +12225,7 @@ export default function App() {
               {ingredients.length > 0 && (
                 <AccordionSection
                   title="Ingredient Breakdown"
-                  defaultOpen
+                  door="whats-in-it"
                   askLabel="Ask AI"
                   onAskAI={() =>
                     askAboutSection(
@@ -8061,7 +12428,7 @@ export default function App() {
                           )}
                         </View>
                         <Text style={{ fontSize: 11.5, color: t.textDim, lineHeight: 17, marginBottom: 12 }}>
-                          This is a correlational pattern still under investigation — not a confirmed cause. Plenty of dogs eat these foods without ever developing DCM. It's a reason to talk to your vet, not a reason to panic.
+                          Why position matters: legume protein is low in the sulfur amino acids — methionine and cysteine — that dogs use to make taurine. So peas high in the list usually mean less of the protein is coming from meat. The concern is that displacement, not peas being harmful. Foods with added taurine on the label are less of a question mark, and we can't read taurine off an ingredient panel — so where the legumes sit is our best available proxy for it, not a measurement.{"\n\n"}This is a correlational pattern still under investigation — not a confirmed cause. Plenty of dogs eat these foods without ever developing DCM. Worth knowing who funded the main studies, because it cuts both ways: an 18-month trial finding no heart problems was paid for by Hill's, and a study finding no harm at very high pea levels was paid for by the pulse growers. Nobody neutral has settled it. It's a reason to talk to your vet, not a reason to panic.
                         </Text>
                       </>
                     ) : (
@@ -8093,24 +12460,160 @@ export default function App() {
                   {/* Icon-row cards, matching the approved prototype — each addition
                       reads as a distinct, doable action rather than a run-on list. */}
                   {[
-                    { icon: "🥚", label: "An egg in the morning" },
-                    { icon: "🐟", label: "Sardines or fish oil" },
-                    { icon: "🥛", label: "Plain yogurt, kefir, or goat's milk for probiotics" },
+                    { icon: "🥚", label: "An egg in the morning", expandable: true },
+                    { icon: "🐟", label: "Sardines or fish oil", expandable: false },
+                    { icon: "🥛", label: "Plain yogurt, kefir, or goat's milk for probiotics", expandable: false },
                   ].map((item, i, arr) => (
-                    <View
-                      key={i}
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        paddingVertical: 11,
-                        borderBottomWidth: i === arr.length - 1 ? 0 : 1,
-                        borderBottomColor: t.border,
-                      }}
-                    >
-                      <View style={{ width: 30, height: 30, borderRadius: 9, backgroundColor: t.goodTint, alignItems: "center", justifyContent: "center", marginRight: 12 }}>
-                        <Text style={{ fontSize: 15 }}>{item.icon}</Text>
-                      </View>
-                      <Text style={{ color: t.textStrong, fontSize: 15, fontWeight: "500", flex: 1, letterSpacing: -0.1 }}>{item.label}</Text>
+                    <View key={i}>
+                      <TouchableOpacity
+                        activeOpacity={item.expandable ? 0.6 : 1}
+                        disabled={!item.expandable}
+                        onPress={() => {
+                          LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+                          setEggInfoOpen((v) => !v);
+                        }}
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          paddingVertical: 11,
+                          borderBottomWidth: i === arr.length - 1 ? 0 : 1,
+                          borderBottomColor: t.border,
+                        }}
+                      >
+                        <View style={{ width: 30, height: 30, borderRadius: 9, backgroundColor: t.goodTint, alignItems: "center", justifyContent: "center", marginRight: 12 }}>
+                          <Text style={{ fontSize: 15 }}>{item.icon}</Text>
+                        </View>
+                        <Text style={{ color: t.textStrong, fontSize: 15, fontWeight: "500", flex: 1, letterSpacing: -0.1 }}>{item.label}</Text>
+                        {item.expandable && (
+                          <Text style={{ color: t.info, fontSize: 12, fontWeight: "700" }}>
+                            {eggInfoOpen ? "Which eggs? ▾" : "Which eggs? ▸"}
+                          </Text>
+                        )}
+                      </TouchableOpacity>
+
+                      {item.expandable && eggInfoOpen && (
+                        <View style={{ paddingBottom: 14, paddingTop: 2 }}>
+                          <Text style={{ color: t.textMuted, fontSize: 12.5, lineHeight: 19, marginBottom: 12 }}>
+                            Pasture-raised eggs are measurably richer than conventional ones. Here's what the research actually found — and how much of it matters for a dog.
+                          </Text>
+
+                          {EGG_QUALITY.map((row, k) => (
+                            <View
+                              key={k}
+                              style={{
+                                backgroundColor: t.surfaceSunken,
+                                borderRadius: 10,
+                                padding: 12,
+                                marginBottom: 8,
+                              }}
+                            >
+                              <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 5 }}>
+                                <Text style={{ color: t.textStrong, fontSize: 13, fontWeight: "700", flex: 1 }}>
+                                  {row.nutrient}
+                                </Text>
+                                <View style={{ backgroundColor: t.goodTint, borderRadius: 999, paddingHorizontal: 9, paddingVertical: 3 }}>
+                                  <Text style={{ color: t.good, fontSize: 11, fontWeight: "700" }}>{row.diff}</Text>
+                                </View>
+                              </View>
+                              <Text style={{ color: t.text, fontSize: 12.5, lineHeight: 19 }}>{row.detail}</Text>
+                              <Text style={{ color: t.textDim, fontSize: 10.5, marginTop: 6, fontStyle: "italic" }}>
+                                {row.source}
+                              </Text>
+                            </View>
+                          ))}
+
+                          {/* The yolk tell — pulled out of the carotenoid row and
+                              given its own card, because it's the one check that
+                              works without trusting any label. */}
+                          <View
+                            style={{
+                              backgroundColor: t.goodTint,
+                              borderRadius: 10,
+                              padding: 12,
+                              marginBottom: 8,
+                              borderLeftWidth: 3,
+                              borderLeftColor: t.good,
+                            }}
+                          >
+                            <Text style={{ color: t.goodDeep, fontSize: 12.5, fontWeight: "700", marginBottom: 4 }}>
+                              🍳 The check that beats every label
+                            </Text>
+                            <Text style={{ color: t.text, fontSize: 12.5, lineHeight: 19 }}>
+                              Crack one. <Text style={{ fontWeight: "700" }}>Deep orange yolk</Text> means high carotenoids, which a hen only gets from eating real plants and insects — she was outside. <Text style={{ fontWeight: "700" }}>Pale yellow</Text> means she wasn't. You can see the nutrient difference in the pan, and unlike the carton, it can't be marketed at you.
+                            </Text>
+                          </View>
+
+                          <Text style={{ color: t.textStrong, fontSize: 13.5, fontWeight: "700", marginTop: 6, marginBottom: 8 }}>
+                            What the carton is actually telling you
+                          </Text>
+
+                          {EGG_LABELS.map((l, k) => {
+                            const tone =
+                              l.tier === "good"
+                                ? { fg: t.good, bg: t.goodTint, mark: "✓" }
+                                : l.tier === "empty"
+                                ? { fg: t.critical, bg: t.criticalTint, mark: "✕" }
+                                : { fg: t.moderateDeep, bg: t.moderateTint, mark: "~" };
+                            return (
+                              <View
+                                key={k}
+                                style={{
+                                  backgroundColor: t.surfaceSunken,
+                                  borderRadius: 10,
+                                  padding: 12,
+                                  marginBottom: 8,
+                                }}
+                              >
+                                <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 5 }}>
+                                  <View
+                                    style={{
+                                      width: 18,
+                                      height: 18,
+                                      borderRadius: 999,
+                                      backgroundColor: tone.bg,
+                                      alignItems: "center",
+                                      justifyContent: "center",
+                                      marginRight: 8,
+                                    }}
+                                  >
+                                    <Text style={{ color: tone.fg, fontSize: 11, fontWeight: "800" }}>{tone.mark}</Text>
+                                  </View>
+                                  <Text style={{ color: t.textStrong, fontSize: 13, fontWeight: "700", flex: 1 }}>
+                                    {l.label}
+                                  </Text>
+                                </View>
+                                <Text style={{ color: t.text, fontSize: 12.5, lineHeight: 19 }}>{l.means}</Text>
+                              </View>
+                            );
+                          })}
+
+                          {EGG_QUALITY_CAVEATS.map((c, k) => (
+                            <View
+                              key={k}
+                              style={{
+                                backgroundColor: t.moderateTint,
+                                borderRadius: 10,
+                                padding: 12,
+                                marginBottom: 8,
+                              }}
+                            >
+                              <Text style={{ color: t.moderateDeep, fontSize: 12.5, fontWeight: "700", marginBottom: 4 }}>
+                                {c.title}
+                              </Text>
+                              <Text style={{ color: t.text, fontSize: 12.5, lineHeight: 19 }}>{c.body}</Text>
+                            </View>
+                          ))}
+
+                          <AskAIChip
+                            label="Ask about eggs"
+                            onPress={() =>
+                              askAboutSection(
+                                `Are pasture-raised eggs worth the extra cost for my dog compared to regular store-bought eggs, given what he already eats? Be practical about whether the difference is big enough to matter for him.`,
+                              )
+                            }
+                          />
+                        </View>
+                      )}
                     </View>
                   ))}
                   <Text style={[styles.sectionNote, { marginTop: 12 }]}>
@@ -8119,8 +12622,9 @@ export default function App() {
                 </View>
               )}
 
-              {score !== null && (
-                <AccordionSection title="🐾 Hershey's Protocol" bare>
+              {(score !== null || learnMode) && (
+                <AccordionSection title="🐾 Hershey's Protocol"
+                  door="what-to-do" bare>
                   <HersheyProtocolSection />
                 </AccordionSection>
               )}
@@ -8128,6 +12632,7 @@ export default function App() {
               {scoreBreakdown.length > 0 && (
                 <AccordionSection
                     title="💊 Recommended Supplements"
+                  door="what-to-do"
                     askLabel="For my dog"
                     onAskAI={() =>
                       askAboutSection(
@@ -8151,8 +12656,9 @@ export default function App() {
                 </AccordionSection>
               )}
 
-              {score !== null && (
-                <AccordionSection title="🛒 Grocery Store Finds">
+              {(score !== null || learnMode) && (
+                <AccordionSection title="🛒 Grocery Store Finds"
+                  door="what-to-do">
                   <Text style={[styles.omegaNote, { marginBottom: 12 }]}>
                     Whole foods you can grab at any grocery store — no specialty
                     pet stores needed.
@@ -8229,14 +12735,46 @@ export default function App() {
                 </AccordionSection>
               )}
 
-              {score !== null && (
-                <AccordionSection title="🧬 Lipoma Prevention" bare>
+              {(score !== null || learnMode) && (
+                <AccordionSection title="🏭 The Kibble Problem"
+                  topic="Kibble"
+                  door="learn" bare>
+                  <KibbleProblemSection />
+                </AccordionSection>
+              )}
+
+              {(score !== null || learnMode) && (
+                <AccordionSection title="📚 More Facts About Pet Food"
+                  topic="Recalls & facts"
+                  door="learn" bare>
+                  <PetFoodFactsSection />
+                </AccordionSection>
+              )}
+
+              {(score !== null || learnMode) && (
+                <AccordionSection title="❤️ Heart Support"
+                  topic="Heart"
+                  door="learn"
+                  bare
+                  askLabel="Ask"
+                  onAskAI={() => askAboutSection("Explain the holistic approach to canine heart disease for my dog — the TCVM view, what to feed, and which supplements have doses. Be clear about what is clinical experience versus trial evidence, and remind me what must stay alongside prescribed cardiac medication.")}
+                >
+                  <HeartSection />
+                </AccordionSection>
+              )}
+
+              {(score !== null || learnMode) && (
+                <AccordionSection title="🧬 Lumps, Bumps & Lipomas"
+                  topic="Lipomas"
+                  door="learn" bare>
                   <LipomaSection />
                 </AccordionSection>
               )}
 
               {scoreBreakdown.length > 0 && (
-                <AccordionSection title="🌿 Protein Energetics (TCVM)">
+                <AccordionSection title="🌿 Protein Energetics (TCVM)"
+                  topic="TCVM"
+                  door="learn">
                   <Text style={[styles.sectionBody, { marginBottom: 10 }]}>
                     Traditional Chinese Veterinary Medicine classifies proteins by their energetic properties. Matching protein to your dog's constitution and season reduces inflammation, hot spots, and digestive upset.
                   </Text>
@@ -8299,6 +12837,8 @@ export default function App() {
             <Text style={styles.buttonText}>Scan Again</Text>
           </TouchableOpacity>
         </ScrollView>
+        </DoorContext.Provider>
+        </TopicContext.Provider>
       )}
 
       <Modal
@@ -8762,6 +13302,93 @@ export default function App() {
         </View>
       </Modal>
 
+      {/* ── BOTTOM TAB BAR (v1.9 remodel, step 2) ──────────────────────────
+          Replaces the in-scroll "doors" as the app's navigation. Three tabs,
+          all wired to things that already exist — no dead buttons:
+            Scan    = this screen (always active while you're here)
+            Hershey = the dog profile, which was previously buried
+            Ask     = the AI coach modal
+          A History tab is in the design but deliberately NOT shipped here,
+          because the screen doesn't exist yet and a tab that does nothing is
+          worse than one that's missing. */}
+      <View
+        style={{
+          flexDirection: "row",
+          borderTopWidth: 1,
+          borderTopColor: t.border,
+          backgroundColor: t.surface,
+          paddingBottom: 22,
+          paddingTop: 8,
+        }}
+      >
+        {[
+          /* Learn is FIRST and is where the app opens. Scan is second — still one
+             tap, but you no longer have to be holding a bag to get any value. */
+          {
+            key: "learn",
+            icon: "📚",
+            label: "Learn",
+            active: learnMode,
+            onPress: () => {
+              LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+              setLearnMode(true);
+              setOpenDoor("learn");
+              setOpenTopic(null);
+            },
+          },
+          {
+            key: "scan",
+            icon: "📷",
+            label: "Scan",
+            active: !learnMode,
+            onPress: () => { setLearnMode(false); setOpenDoor(null); setOpenTopic(null); },
+          },
+          {
+            key: "dog",
+            icon: "🐕",
+            label: dogProfileName || "Your dog",
+            active: false,
+            onPress: async () => {
+              const s = await getSession();
+              router.push((s ? "/dog-profile" : "/login") as Href);
+            },
+          },
+          {
+            key: "ask",
+            icon: "💬",
+            label: "Ask",
+            active: false,
+            onPress: () => setCoachVisible(true),
+          },
+        ].map((tab) => (
+          <TouchableOpacity
+            key={tab.key}
+            onPress={tab.onPress}
+            activeOpacity={0.7}
+            accessibilityRole="tab"
+            accessibilityState={{ selected: tab.active }}
+            accessibilityLabel={tab.label}
+            style={{
+              flex: 1,
+              alignItems: "center",
+              gap: 3,
+              paddingVertical: 4,
+            }}
+          >
+            <Text style={{ fontSize: 20, opacity: tab.active ? 1 : 0.55 }}>{tab.icon}</Text>
+            <Text
+              numberOfLines={1}
+              style={{
+                fontSize: 10.5,
+                fontWeight: "700",
+                color: tab.active ? t.good : t.textFaint,
+              }}
+            >
+              {tab.label}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
     </View>
   );
 }
@@ -8806,36 +13433,277 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
     marginBottom: 14,
   },
-  // Instructional hero card — the blue accent card from the prototype,
-  // adapted to sit above the live camera (this app shows the scanner
-  // immediately rather than a separate "open scanner" home state).
-  heroCard: {
-    alignSelf: "stretch",
-    marginHorizontal: 16,
+  // (The blue instructional heroCard was removed 2026-08-21 — its sentence now
+  // sits inside the viewfinder frame, per the v1.9 mockup. Nothing it said was
+  // lost; scanTitle + scanOverlayText + scanHint carry it.)
+  // ── THE KIBBLE GUIDE (Learn tab landing) ───────────────────────────────────
+  guideTitle: {
+    color: t.textStrong,
+    fontSize: 20,
+    fontWeight: "800",
+    letterSpacing: -0.4,
+    marginBottom: 5,
+  },
+  guideLede: {
+    color: t.textMuted,
+    fontSize: 13,
+    lineHeight: 19,
     marginBottom: 14,
-    backgroundColor: t.info,
-    borderRadius: 18,
-    padding: 16,
+  },
+  guideTabs: {
     flexDirection: "row",
+    backgroundColor: t.surfaceSunken,
+    borderRadius: 11,
+    padding: 3,
+    gap: 3,
+    marginBottom: 12,
+  },
+  guideTab: {
+    flex: 1,
+    paddingVertical: 8,
+    paddingHorizontal: 4,
+    borderRadius: 8,
     alignItems: "center",
   },
-  heroCardIcon: { fontSize: 26, marginRight: 12 },
-  heroCardText: {
-    flex: 1,
-    color: t.onAccent,
-    fontSize: 13,
+  guideTabOn: { backgroundColor: t.good },
+  guideTabText: { color: t.textMuted, fontSize: 12, fontWeight: "700" },
+  guideTabTextOn: { color: t.onAccent },
+  guideHint: {
+    color: t.textDim,
+    fontSize: 12.5,
     lineHeight: 18,
-    fontWeight: "500",
+    marginBottom: 10,
   },
-  cameraWrapper: {
-    alignSelf: "stretch",
-    flex: 1,
-    position: "relative",
-    marginHorizontal: 16,
-    borderRadius: 22,
-    overflow: "hidden",
+  guideCard: {
+    backgroundColor: t.surface,
+    borderRadius: 14,
     borderWidth: 1,
     borderColor: t.border,
+    marginBottom: 8,
+    overflow: "hidden",
+  },
+  guideCardHead: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 11,
+    padding: 13,
+  },
+  guideCardTitle: {
+    color: t.textStrong,
+    fontSize: 14.5,
+    fontWeight: "700",
+  },
+  guideCardHeadline: {
+    color: t.textDim,
+    fontSize: 12,
+    marginTop: 1,
+  },
+  guideChevron: { color: t.textFaint, fontSize: 15, fontWeight: "700" },
+  guideCardBody: {
+    paddingHorizontal: 13,
+    paddingBottom: 14,
+    gap: 10,
+  },
+  guideLabelCue: {
+    color: t.textFaint,
+    fontSize: 10.5,
+    fontWeight: "800",
+    letterSpacing: 0.8,
+    textTransform: "uppercase",
+  },
+  guideTermRow: { flexDirection: "row", flexWrap: "wrap", gap: 6 },
+  guideTerm: {
+    backgroundColor: t.criticalTint,
+    borderRadius: 7,
+    paddingVertical: 4,
+    paddingHorizontal: 9,
+  },
+  guideTermText: { color: t.critical, fontSize: 12, fontWeight: "700" },
+  guideWhy: { color: t.text, fontSize: 13, lineHeight: 20 },
+  // Evidence tier is never decoration — it's the thing that keeps this guide
+  // honest, so it gets its own visible chip rather than a parenthetical.
+  guideTierPill: {
+    alignSelf: "flex-start",
+    backgroundColor: t.surfaceSunken,
+    borderRadius: 6,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+  },
+  guideTierText: {
+    color: t.textDim,
+    fontSize: 10.5,
+    fontWeight: "700",
+    letterSpacing: 0.2,
+  },
+  guideInstead: {
+    backgroundColor: t.goodTint,
+    borderRadius: 11,
+    padding: 11,
+    gap: 3,
+  },
+  guideInsteadLabel: {
+    color: t.good,
+    fontSize: 10.5,
+    fontWeight: "800",
+    letterSpacing: 0.7,
+    textTransform: "uppercase",
+  },
+  guideInsteadText: { color: t.text, fontSize: 12.5, lineHeight: 18.5 },
+  guideGoodRow: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 11,
+    backgroundColor: t.surface,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: t.border,
+    padding: 12,
+    marginBottom: 7,
+  },
+  guideGoodLabel: { color: t.textStrong, fontSize: 13.5, fontWeight: "700" },
+  guideGoodDetail: { color: t.textDim, fontSize: 12, lineHeight: 17, marginTop: 2 },
+  guideStep: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 11,
+    backgroundColor: t.surface,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: t.border,
+    padding: 13,
+    marginBottom: 8,
+  },
+  guideStepNum: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: t.good,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  guideStepNumText: { color: t.onAccent, fontSize: 12, fontWeight: "800" },
+  guideStepTitle: { color: t.textStrong, fontSize: 13.5, fontWeight: "700", lineHeight: 19 },
+  guideStepDetail: { color: t.text, fontSize: 12.5, lineHeight: 19, marginTop: 4 },
+  guideStepTier: {
+    color: t.textFaint,
+    fontSize: 10.5,
+    fontWeight: "700",
+    marginTop: 6,
+  },
+  guideWarnCard: {
+    backgroundColor: t.moderateTint,
+    borderRadius: 13,
+    borderWidth: 1,
+    borderColor: t.moderate,
+    padding: 13,
+    marginTop: 4,
+  },
+  guideWarnTitle: { color: t.moderateDeep, fontSize: 13.5, fontWeight: "700" },
+  guideWarnBody: {
+    color: t.text,
+    fontSize: 12.5,
+    lineHeight: 19.5,
+    marginTop: 10,
+  },
+  // ── "Every one": the full flagged-ingredient reference ──
+  guideSearch: {
+    backgroundColor: t.surface,
+    borderWidth: 1,
+    borderColor: t.border,
+    borderRadius: 11,
+    paddingHorizontal: 13,
+    paddingVertical: 10,
+    fontSize: 13.5,
+    color: t.textStrong,
+    marginBottom: 12,
+  },
+  guideEmpty: {
+    color: t.textDim,
+    fontSize: 12.5,
+    lineHeight: 19,
+    paddingVertical: 10,
+  },
+  guideSevHead: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 7,
+    marginTop: 10,
+    marginBottom: 7,
+  },
+  guideSevDot: { width: 8, height: 8, borderRadius: 4 },
+  guideSevLabel: {
+    color: t.textStrong,
+    fontSize: 11,
+    fontWeight: "800",
+    letterSpacing: 0.7,
+    textTransform: "uppercase",
+  },
+  guideSevPenalty: {
+    color: t.textFaint,
+    fontSize: 10.5,
+    fontWeight: "700",
+    marginLeft: "auto",
+  },
+  guideIngHead: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 9,
+    paddingHorizontal: 13,
+    paddingVertical: 11,
+  },
+  guideIngName: {
+    flex: 1,
+    color: t.textStrong,
+    fontSize: 13.5,
+    fontWeight: "600",
+    textTransform: "capitalize",
+  },
+  guideIngReason: {
+    color: t.text,
+    fontSize: 12.5,
+    lineHeight: 19.5,
+    paddingHorizontal: 13,
+    paddingBottom: 13,
+  },
+  guideFootnote: {
+    color: t.textDim,
+    fontSize: 11.5,
+    lineHeight: 17.5,
+    marginTop: 12,
+    fontStyle: "italic",
+  },
+
+  // Screen title above the segmented row — plain, quiet, and the only thing
+  // that names what you're about to do. Replaced the blue instructional
+  // heroCard, whose sentence now sits inside the viewfinder frame.
+  scanTitle: {
+    alignSelf: "stretch",
+    marginHorizontal: 20,
+    marginBottom: 10,
+    color: t.textStrong,
+    fontSize: 16,
+    fontWeight: "700",
+    letterSpacing: -0.2,
+  },
+  scanHint: {
+    alignSelf: "stretch",
+    marginHorizontal: 20,
+    marginBottom: 10,
+    color: t.textMuted,
+    fontSize: 13,
+  },
+  // The framed viewfinder: fixed 250px, dashed border, rounded. Deliberately
+  // NOT flex:1 — a full-bleed camera pushed everything else off the screen.
+  cameraWrapper: {
+    alignSelf: "stretch",
+    height: 250,
+    position: "relative",
+    marginHorizontal: 16,
+    borderRadius: 14,
+    overflow: "hidden",
+    borderWidth: 2,
+    borderStyle: "dashed",
+    borderColor: t.borderBright,
     backgroundColor: t.surfaceSunken,
   },
   camera: { flex: 1 },
@@ -8847,8 +13715,35 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: "flex-end",
     alignItems: "center",
-    paddingBottom: 22,
+    paddingBottom: 14,
+    paddingHorizontal: 24,
   },
+  // A scrim pill rather than a text shadow — RN deprecated the textShadow*
+  // props, and a solid ground is more legible over a bright bag anyway.
+  scanOverlayText: {
+    color: t.overlayControl,
+    fontSize: 13,
+    fontWeight: "600",
+    textAlign: "center",
+    backgroundColor: t.scrimOnCamera,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 999,
+    overflow: "hidden",
+  },
+  // One round shutter, under the frame. 66px, filled with the app's own
+  // "good" green so the primary action reads as the primary action.
+  shutterBtn: {
+    width: 66,
+    height: 66,
+    borderRadius: 33,
+    backgroundColor: t.good,
+    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 14,
+  },
+  shutterIcon: { fontSize: 26 },
   scanFrame: { width: 280, height: 160, position: "relative" },
   scanLine: {
     position: "absolute",
@@ -8871,51 +13766,32 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   torchIcon: { fontSize: 18 },
-  // Apple segmented control: a light-grey track with a white active pill —
-  // not a colour-filled toggle. Colour lives in the content below, not the
-  // navigation chrome, matching the approved prototype's iOS system look.
+  // Segmented mode row. Changed 2026-08-21 to the mockup's version: sunken
+  // track, and the ACTIVE segment filled with the app's green rather than a
+  // white iOS pill. On this screen the segment is the only choice being made,
+  // so it earns the colour.
   modeToggle: {
     flexDirection: "row",
     alignSelf: "stretch",
     backgroundColor: t.surfaceSunken,
     borderRadius: 11,
     padding: 3,
+    gap: 3,
     marginHorizontal: 20,
     marginBottom: 14,
   },
   modeBtn: {
     flex: 1,
     paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 9,
+    paddingHorizontal: 4,
+    borderRadius: 8,
     alignItems: "center",
   },
   modeBtnActive: {
-    backgroundColor: t.surface,
-    shadowColor: t.textStrong,
-    shadowOpacity: 0.12,
-    shadowRadius: 3,
-    shadowOffset: { width: 0, height: 1 },
-    elevation: 2,
+    backgroundColor: t.good,
   },
-  modeBtnText: { color: t.textMuted, fontWeight: "600", fontSize: 14 },
-  modeBtnTextActive: { color: t.textStrong, fontWeight: "700" },
-  captureBtn: {
-    width: 72,
-    height: 72,
-    borderRadius: 36,
-    backgroundColor: "rgba(255,255,255,0.2)",
-    borderWidth: 3,
-    borderColor: t.overlayControl,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  captureBtnInner: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: t.overlayControl,
-  },
+  modeBtnText: { color: t.textMuted, fontWeight: "700", fontSize: 12 },
+  modeBtnTextActive: { color: t.onAccent, fontWeight: "700" },
   corner: {
     position: "absolute",
     width: 28,
@@ -8955,52 +13831,42 @@ const styles = StyleSheet.create({
   // Results
   results: { paddingBottom: 48, backgroundColor: t.bg },
 
-  // Score hero — circular ring on the dark ground (food results).
-  // Reads as a measured instrument rather than a flat colour block.
+  // Score hero — horizontal block on the score colour's own tint (food results).
+  // Replaced the 168px circular ring + pill + caption stack on 2026-08-21, per the
+  // approved v1.9 mockup. The ring was a nice object that cost ~250px of screen
+  // before a single ingredient appeared; this holds the same three facts in ~90px.
   scoreHero: {
+    marginHorizontal: 16,
+    marginTop: 20,
+    marginBottom: 14,
+    borderRadius: 16,
+    padding: 20,
+    flexDirection: "row",
     alignItems: "center",
-    paddingTop: 48,
-    paddingBottom: 24,
+    gap: 16,
   },
-  scoreRing: {
-    width: 168,
-    height: 168,
-    borderRadius: 84,
-    borderWidth: 9,
-    backgroundColor: t.surfaceAlt,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  scoreRingNumber: {
-    fontSize: 62,
+  scoreHeroNumber: {
+    fontSize: 52,
     fontWeight: "800",
-    lineHeight: 66,
+    lineHeight: 54,
     letterSpacing: -2,
     fontVariant: ["tabular-nums"],
   },
-  scoreRingOutOf: {
-    fontSize: 13,
-    color: t.textDim,
-    fontWeight: "600",
-    marginTop: 2,
-    letterSpacing: 0.5,
-  },
-  scoreRatingPill: {
-    marginTop: 18,
-    paddingHorizontal: 16,
-    paddingVertical: 7,
-    borderRadius: 999,
-    borderWidth: 1,
-  },
-  scoreRatingText: {
+  scoreHeroMeta: { flex: 1, gap: 2 },
+  scoreHeroLabel: {
     fontSize: 15,
     fontWeight: "800",
-    letterSpacing: 0.2,
+    letterSpacing: 0.1,
+  },
+  scoreHeroSub: {
+    fontSize: 12,
+    fontWeight: "600",
+    opacity: 0.85,
   },
   scoreHeroNote: {
-    fontSize: 11,
+    fontSize: 10.5,
     color: t.textDim,
-    marginTop: 12,
+    marginTop: 5,
     letterSpacing: 0.3,
   },
 

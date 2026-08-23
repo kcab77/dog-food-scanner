@@ -47,6 +47,44 @@ drift in the first place.
 
 ---
 
+## 🔬 Evidence rule — ON FOR *YOUR OWN* RESEARCH, OFF FOR KYLE'S
+
+**⚠️ CHANGED 2026-08-22 — read this before applying anything below.**
+
+**Content Kyle provides is trusted. It goes in as given.** When Kyle pastes a document,
+an infographic, a video summary, or tells you something directly, that comes from sources
+he has already vetted — **do not re-verify it, do not rank it, do not attach confidence
+tiers, and do not append caveats that undercut it.** Write it in his framing.
+
+> *"you don't have to rank anything I tell you, only if I tell you to verify it for me."*
+> — Kyle, 2026-08-22
+
+**Verify only when Kyle explicitly asks you to.** Then the full checklist below applies.
+
+**The rule below still governs research YOU initiate** — anything you go and look up
+yourself, on your own initiative, to fill a gap. Your own web searching is not trusted
+the way Kyle's sources are.
+
+---
+
+**A search-result summary is a pointer to a source, not the source.** Before stating any
+study, number, dose, or finding **that you found yourself** — in chat, in the app, in
+Pinecone, or in a note — **fetch the primary source and read the METHODS.**
+
+The methods are where findings fall apart: route of administration (injected vs fed),
+whether the groups ate different amounts, dose vs real-world exposure, in vitro vs in vivo,
+species, randomised vs observational, pre-selected populations. Every reversal in this
+project traces to skipping that step.
+
+**Label confidence in the text itself** — *randomised · observational · mechanism only ·
+not verified · no data in this species.* Say "uncertain" and stay there rather than
+manufacturing a clean answer. Don't reverse a position without naming what new evidence
+changed it.
+
+Full checklist: the **`primary-sources`** skill (`~/.claude/skills/primary-sources/`).
+
+---
+
 ## Project Structure
 
 **Every top-level directory is listed here.** An unlisted folder is invisible to a fresh
@@ -101,6 +139,16 @@ dog-food-scanner/
 │
 │  ── 5. Docs & records ──
 ├── docs/                       # TODO.md · APP_SPEC.md · NUTRITION_NOTES.md · BLOG_POSTS.md
+│                               # EVIDENCE_AUDIT.md 🔬 every app claim vs its primary source,
+│                               #   + THE CHANGE LIST — read before editing any claim text
+│                               # BREED_DIET_RULES.md 🐕 breed→food rules, ⚠️ UNVERIFIED —
+│                               #   a list to check, not a reference to ship
+│                               # SOURCES.md 📚 primary sources actually FETCHED AND READ,
+│                               #   with funder + institution. Check here before researching twice
+├── storm-reports/              # 🌩️ storm-research briefings (multi-lens, citation-verified)
+│                               # APP_STORE_LISTING.md 🍎 canonical store copy — read before writing any
+│                               # GROWTH_PLAN.md 📈 distribution + product roadmap (Yuka model,
+│                               #   v1.8→v2.1 treats/supplements) + expert-partnership plan
 ├── audits/                     # /os-audit reports (dated)
 ├── drafts/                     # Work-in-progress writing
 ├── PROJECTS.md                 # The four products, mapped
@@ -202,7 +250,13 @@ Scoring algorithm (**do not change scoring without asking Kyle** — full detail
   +25, Gently Cooked +22, Air-Dried +18, Baked +8, Kibble/Unknown +0. `scoreCap` is now a
   uniform 100 everywhere (just the general ceiling).
 - Harmful ingredient penalties: capped at -10 per ingredient, scaled by position (ingredients 20+ get 20% penalty)
-- Menadione severity: "severe" (-18 before cap)
+- **Severity is capped by evidence tier (changed 2026-08-14, Kyle approved).** Mechanism-only or
+  "formulation signal" → `mild` max. Observational/association → `moderate` max. Only documented
+  canine harm → `severe`/`toxic`. Applied to seven entries: menadione severe→moderate, and
+  potassium sorbate / corn syrup / dl-methionine / wheat gluten / soy protein isolate / zinc oxide
+  → `mild`. **Rationale: those entries' own reason text said no canine harm had been shown while
+  the score punished as if it had.** Penalties: mild 2 · moderate 10 · severe 18 · toxic 28.
+  Full record: `docs/EVIDENCE_AUDIT.md` § C6.
 - Score floor: 5
 - Labels (softened 2026-07-12): 90–100 Excellent, 75–89 Great, 60–74 Good, 45–59 Fair,
   30–44 Below Average, <30 Low Quality

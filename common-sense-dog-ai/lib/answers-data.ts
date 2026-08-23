@@ -1210,6 +1210,140 @@ export const answerPages: AnswerPage[] = [
       },
     ],
   },
+  {
+    slug: 'natural-remedies-for-dog-lipomas',
+    emoji: '🧬',
+    tag: 'Lumps & Lipomas',
+    title: 'Natural Remedies for Dog Lipomas',
+    metaDescription:
+      "What holistic vets actually use to shrink fatty lumps in dogs \u2014 L-carnitine, MCT oil, mushrooms and TCVM herbs, with the real doses and an honest note on the evidence.",
+    lead:
+      "There are real protocols holistic vets use to shrink lipomas, and this page gives you the actual doses rather than vague advice. One thing up front so you can weigh it yourself: these come from clinical practice, not controlled trials \u2014 no dietary or supplement protocol has been tested against a canine lipoma in a controlled study. And nothing here applies until a vet has confirmed the lump IS a lipoma by looking at cells.",
+    faqs: [
+      {
+        q: 'What is the L-carnitine dose for dog lipomas?',
+        a: '50 mg per kilogram of body weight, twice daily. L-carnitine targets fat metabolism to break down fat cells and also supports muscle mass. It is well tolerated in dogs and is commonly used for heart conditions, so the safety profile is established \u2014 though the lipoma use itself comes from holistic practice rather than a controlled trial.',
+      },
+      {
+        q: 'Does MCT oil shrink lipomas in dogs, and how much do you give?',
+        a: 'Start at half a teaspoon per 20 lbs of body weight daily and work up to 1 teaspoon per 20 lbs. Start slowly or you will cause diarrhoea \u2014 that is the most common mistake. Give it at least 4 weeks before judging whether it is working. The mechanism given is conversion to ketones, which raises metabolic rate and supports fat loss while sparing muscle.',
+      },
+      {
+        q: 'Which mushrooms are used for dog lipomas?',
+        a: 'Turkey tail and maitake. For a 20 lb dog the dose is 0.5 to 1 gram of HOT-WATER-EXTRACTED turkey tail powder, twice daily. The extraction method is not optional \u2014 raw mushroom powder is a different product and does not perform the same way. The stated mechanism is increasing Phase II liver detoxification plus anti-tumour activity.',
+      },
+      {
+        q: 'How do you use DMSO on a dog lipoma?',
+        a: 'A 70/30 mix of liquid DMSO and aloe vera, applied directly to the lipoma twice daily. DMSO penetrates skin rapidly and carries the aloe into the mass, triggering a local immune response. Always wear gloves \u2014 DMSO carries whatever is on the skin straight into the bloodstream, including whatever is on yours. A mild inflammatory reaction at the site is expected. Clear this with your vet before starting.',
+      },
+      {
+        q: 'Which herbs shrink lipomas, and how do I pick the right one?',
+        a: 'It depends on your dog\u2019s energetic constitution. A WARM dog (pants, seeks cold floors, sprawls) gets cleavers tincture for lymphatics, plus burdock root, chickweed and violet. A COOL dog (seeks warmth, wants blankets, curls up) gets calendula tincture, plus ashwagandha \u2014 especially if hypothyroid \u2014 turmeric and self-heal. Giving the wrong side works against you.',
+      },
+      {
+        q: 'How many drops of cleavers or calendula tincture does my dog need?',
+        a: 'Twice daily, straight in the mouth, dosed by size: Chihuahua 1 drop, 20 lb dog 2 drops, Corgi 3\u20134 drops, Golden Retriever 4\u20135 drops, giant breed 5\u20136 drops. Add new herbs one at a time, three days apart, so you know what caused a reaction. Cleavers is a diuretic and may loosen stool for the first 24 hours.',
+      },
+      {
+        q: 'What is the colostrum and green tea extract dose for lipomas?',
+        a: 'Colostrum: 100 mg per 10 lbs daily \u2014 it raises metabolic rate, promotes muscle mass, and coats the intestinal tract. Green tea extract: 50 mg per 10 lbs daily sprinkled on food, roughly a quarter of a 400 mg capsule for a 20 lb dog. It must be concentrated extract; brewed tea does not deliver the same dose.',
+      },
+      {
+        q: 'When should I NOT try natural remedies on a lump?',
+        a: 'Before a vet has looked at the cells. Every protocol here assumes the mass has been CONFIRMED as a benign lipoma by impression smear or fine needle aspirate. Treating an unconfirmed lump at home means that if it is a mast cell tumour, you have given it months to grow. Also skip straight to your vet if the lump is growing fast, has irregular borders, interferes with movement, or is draining fluid.',
+      },
+    ],
+  },
+  {
+    slug: 'when-to-worry-about-a-lump-on-your-dog',
+    emoji: '\u26a0\ufe0f',
+    tag: 'Lumps & Lipomas',
+    title: 'When to Worry About a Lump on Your Dog',
+    metaDescription:
+      "How to tell a harmless fatty lump from something dangerous \u2014 the warning signs, why you cannot diagnose by feel, and which test your vet should run.",
+    lead:
+      "You cannot tell a lipoma from a mast cell tumour by looking at it or feeling it \u2014 mast cell tumours are called the great imitators for exactly that reason. Here is what actually distinguishes a lump worth watching from one worth acting on, and the specific test to ask your vet for.",
+    faqs: [
+      {
+        q: 'Can you tell if a lump is cancerous by feeling it?',
+        a: 'No. Mast cell tumours can look and feel identical to a harmless fatty lump, a skin tag, or even a nipple \u2014 which is why they are called the great imitators. Soft and mobile does not mean benign. The only thing that answers the question is cells under a microscope, and any assessment that skips that step is a guess.',
+      },
+      {
+        q: 'What test confirms whether a lump is a lipoma?',
+        a: 'For a lump on the surface, an impression smear \u2014 your vet presses a slide against it to collect cells, no needle needed. For a lump buried under the skin, a fine needle aspirate, which draws cells from the CENTRE of the mass. The centre matters: sampling the edge can miss what the lump actually is.',
+      },
+      {
+        q: 'What are the warning signs of a dangerous lump on a dog?',
+        a: 'Book a vet visit if the lump is brand new; if an old lump suddenly changes size, shape or texture; if it has irregular borders; if it is growing rapidly; or if your dog keeps licking and obsessing over one spot. That last one is easy to dismiss and shouldn\u2019t be \u2014 dogs often find these before we do.',
+      },
+      {
+        q: 'My dog has had the same lump for years \u2014 should I worry?',
+        a: 'A lump that has not changed at all in five years is very likely nothing. Change is the signal, not presence. That said, the reason to keep checking is that a NEW lump can appear right beside an old one, and it is easy to assume it is the same one you already had checked.',
+      },
+      {
+        q: 'How often should I check my dog for lumps?',
+        a: 'Every day, and over the whole dog \u2014 legs, belly, mammary glands, armpits, not just the easy spots. Make it part of normal petting so it is not a production. You are feeling for two things: something new, and something old that has changed.',
+      },
+      {
+        q: 'Does a benign lipoma ever need surgery?',
+        a: 'Usually not, but there are two cases. When it grows large enough to interfere with movement, especially in the armpit or groin. And when it outgrows its own blood supply so the core dies, liquefies, and drains a thick pus-like fluid \u2014 that fluid is dead tissue, not infection. If it is coming out, take it while it is still manageable; removing a very large mass leaves a big empty pocket that has to heal.',
+      },
+      {
+        q: 'Why does my dog keep getting new lipomas?',
+        a: 'Multiple lumps point at a systemic driver rather than a local one. Holistic practitioners look at liver load first \u2014 including long-term medications like levothyroxine, gabapentin and NSAIDs \u2014 and at chronic tick-borne infection. If your dog has several bumps, it is worth asking your vet for a C6 antibody test to rule out Lyme disease.',
+      },
+    ],
+  }
+,
+  {
+    slug: 'holistic-heart-support-for-dogs',
+    emoji: '\u2764\ufe0f',
+    tag: 'Holistic Organ Support',
+    title: 'Holistic Heart Support for Dogs',
+    metaDescription:
+      "The TCVM and holistic approach to canine heart disease \u2014 what to feed, CoQ10 and taurine doses, herbal diuretics, and the one number to count at home.",
+    lead:
+      "Holistic heart care runs alongside Vetmedin and Lasix, never instead of them \u2014 in congestive failure, furosemide is what keeps fluid out of the lungs. Within that, there is a real diet and supplement protocol integrative vets use, with specific doses. And there is one number you should be counting at home every day.",
+    faqs: [
+      {
+        q: 'What resting respiratory rate is normal for a dog with heart disease?',
+        a: 'Under 30 to 35 breaths per minute, counted for a full minute while your dog is asleep or fully at rest. A rate climbing over several days is the earliest sign fluid is building \u2014 often before any cough appears. This is the most useful thing you can do at home, and unlike most of the holistic protocol it is also standard cardiology practice. Write the numbers down and bring the trend to your vet. Sudden laboured breathing is an emergency, not a home-management situation.',
+      },
+      {
+        q: 'Can I use holistic remedies alongside Vetmedin and Lasix?',
+        a: 'Yes \u2014 alongside is exactly how integrative vets frame it. The prescriptions stay. This matters most with herbal diuretics like dandelion: in congestive heart failure furosemide is doing life-sustaining work, so an herbal diuretic is an addition you tell your vet about, never a swap you make yourself. Any change to a prescribed diuretic dose is your vet\u2019s call, ideally using your at-home respiratory rate numbers.',
+      },
+      {
+        q: 'What is the CoQ10 dose for a dog with heart disease?',
+        a: '100 mg per 20 lbs of body weight \u2014 roughly 5 mg per lb \u2014 twice daily. The key point is that this is far above what most bottles suggest; the usual label dose of about 1 mg per lb is considered too low to affect heart enlargement. For cats under 10 lbs, 50 to 100 mg twice daily. This dose comes from clinical practice rather than a controlled canine trial.',
+      },
+      {
+        q: 'How much taurine does a dog with DCM need?',
+        a: 'Large DCM-prone breeds like Golden Retrievers may need up to 8,000 mg daily. There is no known toxic dose of taurine, which is why practitioners dose it generously. Worth understanding the mechanism: grain-free kibbles linked to taurine deficiency are the ones substituting pea protein for meat protein \u2014 the problem is the missing meat, not the missing grain.',
+      },
+      {
+        q: 'What should I feed a dog with heart disease?',
+        a: 'Fresh and meat-based over kibble. Muscle meat and organs \u2014 beef heart, pork heart, beef liver, beef tongue, chicken gizzards \u2014 on the "like feeds like" principle. Dark meat poultry rather than white breast meat, because thighs and legs carry substantially more of the heart-relevant amino acids and usually cost less. Fresh omega-3 from sardines packed in water, salmon, cod skin or minnows. And raw goat\u2019s milk, which naturally carries carnitine, taurine, vitamin D and GABA.',
+      },
+      {
+        q: 'Which foods help drain fluid in a dog with heart failure?',
+        a: 'The TCVM damp-draining foods: asparagus \u2014 said to drain fluid from the heart via the kidneys \u2014 plus celery, watermelon, parsley, dandelion greens, radishes and turnips. Shiitake mushrooms are added for lung protection, dissolving phlegm and draining damp. These support prescribed treatment; they do not replace a diuretic.',
+      },
+      {
+        q: 'Does dental disease affect a dog\u2019s heart?',
+        a: 'Yes, and holistic and conventional vets agree here. Bacteria from dental disease enter the bloodstream and filter through the heart valves and kidneys, accelerating damage to both. The practical consequence catches people out: dental cleanings should still be done on heart patients rather than avoided from anaesthetic fear \u2014 with close anaesthetic and cardiac monitoring. Skipping dental care in a heart patient is not the safe choice it feels like.',
+      },
+      {
+        q: 'What is the CBD dose for a dog with heart disease?',
+        a: '1 mg per 10 lbs of body weight twice daily. CBD is described as a vasodilator \u2014 widening vessels lowers the pressure the heart pumps against \u2014 and it improves cerebral blood flow, lowering secondary stroke risk. Tell your vet before starting: CBD shares liver enzyme pathways with many cardiac drugs, so it belongs in the conversation rather than added quietly.',
+      },
+      {
+        q: 'When should I NOT try holistic heart remedies?',
+        a: 'Never in place of prescribed cardiac medication. Never during acute respiratory distress \u2014 sudden laboured breathing means an emergency vet now, because the delay is what causes the harm. And never without telling your vet what you have added, since they cannot adjust doses safely around something they do not know about. This protocol is for a diagnosed, medically managed, stable dog.',
+      },
+    ],
+  }
+
 ]
 
 export const getAnswer = (slug: string) => answerPages.find((a) => a.slug === slug)

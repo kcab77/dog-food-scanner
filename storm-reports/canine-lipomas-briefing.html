@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Canine lipomas — Storm Research Briefing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FFFFFF; --shell:#F5F6F8; --line:#E2E5EA; --soft:#F0F2F5;
+    --ink:#14181D; --dim:#525A63; --faint:#89929C;
+    --blue:#1B5FA8; --blue-t:#E8F0F9;
+    --green:#1F7A3D; --green-t:#E7F4EC;
+    --amber:#8A6100; --amber-t:#FDF4DE;
+    --red:#A8261C; --red-t:#FBEAE8;
+    --track:#E9ECF0;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--shell);color:var(--ink);
+    font-family:Montserrat,system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  }
+  .page{max-width:860px;margin:0 auto;padding:44px 22px 90px;
+        display:flex;flex-direction:column;gap:26px}
+  header{display:flex;flex-direction:column;gap:10px}
+  .kicker{font-family:"Roboto Mono",ui-monospace,monospace;font-size:11px;
+          font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue)}
+  h1{margin:0;font-size:clamp(28px,4.4vw,38px);line-height:1.12;
+     letter-spacing:-.022em;font-weight:800;text-wrap:balance}
+  .meta{font-family:"Roboto Mono",ui-monospace,monospace;font-size:12px;color:var(--faint)}
+  .verify{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--blue);
+          border-radius:8px;padding:16px 20px;display:flex;flex-direction:column;gap:8px}
+  .verify .h{font-family:"Roboto Mono",ui-monospace,monospace;font-size:11px;font-weight:700;
+             letter-spacing:.1em;text-transform:uppercase;color:var(--blue)}
+  .tally{display:flex;gap:10px;flex-wrap:wrap;font-family:"Roboto Mono",ui-monospace,monospace;
+         font-size:12.5px}
+  .tally span{background:var(--soft);border-radius:5px;padding:4px 10px;font-weight:500}
+  .tally span b{font-weight:700}
+  section{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:26px}
+  section > h2{margin:0 0 4px;font-size:12px;font-weight:700;letter-spacing:.12em;
+               text-transform:uppercase;color:var(--faint);
+               font-family:"Roboto Mono",ui-monospace,monospace}
+  section > .lead{margin:0 0 16px;font-size:21px;font-weight:700;letter-spacing:-.015em;
+                  line-height:1.35;text-wrap:balance}
+  section p{margin:0 0 12px;color:var(--dim)}
+  section p:last-child{margin-bottom:0}
+  section p b,section li b{color:var(--ink)}
+  .finding{border-top:1px solid var(--soft);padding:18px 0;display:flex;flex-direction:column;gap:9px}
+  .finding:first-of-type{border-top:none;padding-top:4px}
+  .finding:last-of-type{padding-bottom:0}
+  .frow{display:flex;align-items:flex-start;gap:14px}
+  .rank{font-family:"Roboto Mono",ui-monospace,monospace;font-size:12px;font-weight:700;
+        color:var(--faint);padding-top:3px;min-width:22px}
+  .ftext{flex:1;min-width:0}
+  .ftitle{font-size:17px;font-weight:700;letter-spacing:-.01em;line-height:1.35;margin:0 0 5px}
+  .fbody{margin:0;color:var(--dim);font-size:15px}
+  .score{font-family:"Roboto Mono",ui-monospace,monospace;font-size:12px;font-weight:700;
+         border-radius:6px;padding:5px 9px;white-space:nowrap}
+  .s-hi{background:var(--green-t);color:var(--green)}
+  .s-mid{background:var(--amber-t);color:var(--amber)}
+  .s-lo{background:var(--red-t);color:var(--red)}
+  .chips{display:flex;gap:7px;flex-wrap:wrap;margin-left:36px}
+  .chip{font-family:"Roboto Mono",ui-monospace,monospace;font-size:10.5px;font-weight:600;
+        border-radius:5px;padding:3px 8px;background:var(--soft);color:var(--dim)}
+  .chip.sup{background:var(--green-t);color:var(--green)}
+  .chip.chal{background:var(--red-t);color:var(--red)}
+  .callout{border-radius:9px;padding:20px;display:flex;flex-direction:column;gap:9px}
+  .callout .h{font-family:"Roboto Mono",ui-monospace,monospace;font-size:11px;font-weight:700;
+              letter-spacing:.1em;text-transform:uppercase}
+  .callout .t{font-size:18px;font-weight:700;line-height:1.4;letter-spacing:-.012em}
+  .callout p{margin:0}
+  .c-blue{background:var(--blue-t)} .c-blue .h{color:var(--blue)}
+  .c-amber{background:var(--amber-t)} .c-amber .h{color:var(--amber)}
+  ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px;color:var(--dim)}
+  .safety{display:grid;gap:12px}
+  .band{border-radius:8px;padding:15px 18px}
+  .band .h{font-family:"Roboto Mono",ui-monospace,monospace;font-size:11px;font-weight:700;
+           letter-spacing:.09em;text-transform:uppercase;margin-bottom:7px}
+  .band ul{gap:6px;font-size:14.5px}
+  .b-assert{background:var(--green-t)} .b-assert .h{color:var(--green)}
+  .b-caveat{background:var(--amber-t)} .b-caveat .h{color:var(--amber)}
+  .b-avoid{background:var(--red-t)} .b-avoid .h{color:var(--red)}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th{text-align:left;font-family:"Roboto Mono",ui-monospace,monospace;font-size:10.5px;
+     font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);
+     padding:0 10px 9px;border-bottom:1px solid var(--line)}
+  td{padding:11px 10px;border-bottom:1px solid var(--soft);color:var(--dim);vertical-align:top}
+  td a{color:var(--blue);text-decoration:none;font-weight:500}
+  td a:hover{text-decoration:underline}
+  .tag{font-family:"Roboto Mono",ui-monospace,monospace;font-size:10px;font-weight:700;
+       border-radius:4px;padding:3px 7px;white-space:nowrap}
+  .t-ok{background:var(--green-t);color:var(--green)}
+  .t-part{background:var(--amber-t);color:var(--amber)}
+  .t-bad{background:var(--red-t);color:var(--red)}
+  .wrapper{overflow-x:auto}
+  footer{border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:var(--faint)}
+  footer p{margin:0 0 8px}
+  footer b{color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="kicker">Storm Research · four-lens briefing</div>
+    <h1>Canine lipomas: what causes them, what shrinks them, and what diet actually does</h1>
+    <div class="meta">20 August 2026 · prepared for a dog owner deciding what to feed, and a builder deciding what goes in the app</div>
+  </header>
+
+  <div class="verify">
+    <div class="h">Verification</div>
+    <div class="tally">
+      <span><b>21</b> citations checked</span>
+      <span><b>0</b> fabricated</span>
+      <span><b>9</b> corrected</span>
+      <span><b>4</b> demoted</span>
+    </div>
+    <p style="margin:0;font-size:13.5px;color:var(--dim)">
+      Every citation was traced to its primary source and its methods read. Nothing was invented.
+      Nine figures were wrong as first reported and are corrected below — including four of the five
+      diagnostic-accuracy statistics, the sample size of the budgerigar study, and the denominator on
+      the HMGA2 genetics claim. Four claims were demoted: the collagenase result is a company press
+      release rather than a publication, the triamcinolone series is uncontrolled rather than a
+      trial, the familial-lipomatosis insulin finding rests on four brothers, and the Israeli
+      metabolic study has no internal controls. <b>One correction was to this project's own app:</b>
+      the Kealy lifespan figures had been changed to 12.9/11.1 on 14 August from a search summary —
+      the published values are 13.0 and 11.2, and 12.9 is the control group's <i>maximum</i>, not its
+      median. That has been reverted.
+    </p>
+  </div>
+
+  <section>
+    <h2>60-second summary</h2>
+    <p class="lead">Lipomas are overwhelmingly a function of age and breed. No controlled trial has ever tested whether diet affects them — in either direction — and the confident claims on both sides are filling that vacuum.</p>
+    <p><b>What is settled:</b> in 384,284 UK dogs, being 9–12 years old carried <b>17.5× the odds</b> of a lipoma versus being 3–6. Being at or above your breed's mean bodyweight carried <b>1.96×</b>. Age is not a bigger factor than weight; it is an order of magnitude bigger. Labradors sit at 5.15% prevalence against 1.94% overall.</p>
+    <p><b>What is contested — and shouldn't be:</b> that diet shrinks lipomas. Every intervention with published shrinkage data in dogs is an <b>injection</b> — triamcinolone, calcium chloride, collagenase. Not one oral or dietary intervention has ever been tested against a lipoma in a dog. The popular "keto shrinks lipomas" claim originates in human literature; a 2025 randomised, blinded trial of injected ice slurry — funded by the company selling the coolant — was <b>negative</b>.</p>
+    <p><b>What nobody can tell you:</b> whether diet changes how many <i>new</i> lipomas a dog forms. That question has never been asked, and it is the only version of the diet claim that was ever plausible.</p>
+  </section>
+
+  <section>
+    <h2>Key findings · ranked by evidence quality</h2>
+
+    <div class="finding">
+      <div class="frow">
+        <span class="rank">01</span>
+        <div class="ftext">
+          <p class="ftitle">Age dominates every other risk factor by roughly nine-fold</p>
+          <p class="fbody">Dogs aged 9–&lt;12 years: <b>OR 17.52</b> (95% CI 14.71–20.85) versus 3–&lt;6 years. Bodyweight at or above breed-sex mean: <b>OR 1.96</b> (1.81–2.14). Neutered males: OR 1.99. Median case age 10.0 years versus 4.2 in non-cases. This is the largest lipoma dataset that exists — 384,284 dogs, 2,765 cases.</p>
+        </div>
+        <span class="score s-hi">8/10</span>
+      </div>
+      <div class="chips">
+        <span class="chip sup">All four lenses</span>
+        <span class="chip">Observational · cross-sectional</span>
+        <span class="chip">Clinical diagnosis, not cytology</span>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="frow">
+        <span class="rank">02</span>
+        <div class="ftext">
+          <p class="ftitle">No controlled trial has ever tested diet against canine lipomas — in either direction</p>
+          <p class="fbody">Not for low-carbohydrate feeding, not for weight loss, not for any supplement, not for shrinkage and not for prevention. <b>This was confirmed independently by all four lenses, including the holistic one.</b> The absence is symmetrical: conventional veterinary medicine has not produced evidence that diet is irrelevant either. Both camps are asserting into the same void.</p>
+        </div>
+        <span class="score s-hi">10/10</span>
+      </div>
+      <div class="chips">
+        <span class="chip sup">Traditional vet</span>
+        <span class="chip sup">Academic</span>
+        <span class="chip sup">Skeptic</span>
+        <span class="chip sup">Holistic vet</span>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="frow">
+        <span class="rank">03</span>
+        <div class="ftext">
+          <p class="ftitle">The human genetics of lipoma do not appear to transfer to dogs</p>
+          <p class="fbody">Human lipomas are clonal neoplasms driven by 12q13-15 rearrangements deregulating <i>HMGA2</i>. The only canine cytogenetic series (Reimann 1999, n=10) found <b>trisomy 27, trisomy 13 and a recurrent der(4)(q31) — and no HMGA2-region involvement.</b> The single canine HMGA2 immunohistochemistry study was negative. <b>Dog lipomas may be a genuinely different lesion</b>, which undercuts arguments that import human mechanism in either direction.</p>
+        </div>
+        <span class="score s-mid">6/10</span>
+      </div>
+      <div class="chips">
+        <span class="chip sup">Skeptic (raised it)</span>
+        <span class="chip chal">Skeptic (his own case)</span>
+        <span class="chip">n=10 canine · 1999</span>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="frow">
+        <span class="rank">04</span>
+        <div class="ftext">
+          <p class="ftitle">A widely-shared L-carnitine dose for dogs traces to a study in budgerigars</p>
+          <p class="fbody">Dr Andrew Jones recommends L-carnitine at 50 mg/kg twice daily for canine lipomas (22 Jan 2025). The underlying evidence is De Voe et al. 2004 — <b>32 budgerigars</b>, 17 with cervical lipomas, ~1000 mg/kg <b>of feed</b> (a dietary concentration, not a bodyweight dose), 102 days, authors' own word "preliminary." A PubMed search for <code>"lipoma" AND "carnitine"</code> returns <b>zero canine results</b>. Different species, different route, dose basis not translated.</p>
+        </div>
+        <span class="score s-hi">9/10</span>
+      </div>
+      <div class="chips">
+        <span class="chip sup">Holistic vet (found it)</span>
+        <span class="chip sup">Verified: 0 canine studies</span>
+        <span class="chip">Corrected: n=32, not 17</span>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="frow">
+        <span class="rank">05</span>
+        <div class="ftext">
+          <p class="ftitle">A negative fine-needle aspirate is wrong about 31% of the time</p>
+          <p class="fbody">Ghisleni 2006: cytology–histology agreement <b>90.9%</b>, sensitivity <b>89.3%</b>, positive predictive value <b>99.4%</b> — but negative predictive value only <b>68.7%</b>. Of 67 aspirates called non-neoplastic, 21 were neoplasms. A "not a tumour" result is far weaker than a "yes it is" result. Subcutaneous mast cell tumours specifically present as soft mobile masses clinically consistent with lipoma, and the Patnaik/Kiupel grading systems were validated on <b>cutaneous</b> MCTs only.</p>
+        </div>
+        <span class="score s-hi">8/10</span>
+      </div>
+      <div class="chips">
+        <span class="chip sup">Traditional vet</span>
+        <span class="chip">Corrected: 4 of 5 figures</span>
+        <span class="chip">Mixed dogs + cats, referral population</span>
+      </div>
+    </div>
+
+  </section>
+
+  <section>
+    <div class="callout c-blue">
+      <div class="h">The hidden connection</div>
+      <div class="t">The one experiment that could have answered this was run for fourteen years, in Labradors, and nobody counted the lumps.</div>
+      <p>The Purina Life Span Study followed 48 littermate-paired Labradors — the highest-prevalence breed for lipoma — under 25% lifelong caloric restriction until death. It is the best-designed canine nutrition study in existence and it produced the field's strongest finding: 13.0 versus 11.2 median years.</p>
+      <p><b>It recorded benign mammary neoplasia. It recorded "other benign neoplasia." The word "lipoma" appears nowhere in either publication.</b> The perfect natural experiment for "does leanness prevent fatty tumours" was conducted, funded, completed, and the relevant outcome was never tabulated. That is why this question remains open — not because it is hard, but because the one dataset that could have closed it was analysed for something else.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="callout c-amber">
+      <div class="h">The missing 5th lens · the veterinary pathologist</div>
+      <div class="t">Nobody asked what a canine lipoma actually is at tissue level — and the little canine data that exists suggests it isn't the human lesion.</div>
+      <p>All four lenses argued about what makes lipomas appear or disappear while treating "lipoma" as a settled category imported from human medicine. The one canine cytogenetic series found a completely different chromosomal signature. If canine lipomas are clonal neoplasms with a different driver, the metabolic framing is wrong; if they are genuinely diet-responsive fat depots, the human genetic literature is irrelevant. <b>A pathologist would have insisted on answering that before anyone argued about carbohydrate.</b></p>
+    </div>
+  </section>
+
+  <section>
+    <h2>What to actually do</h2>
+    <p class="lead">For an owner feeding a Labrador with existing lipomas — and for the app</p>
+    <ul>
+      <li><b>Keep him lean, but be honest about why.</b> Leanness has randomised, causal evidence for lifespan (+1.8 years) and for delaying arthritis by ~3 years. Its effect on lipomas is observational, weight-proxy-based, and possibly inflated by detection bias. <b>Do it for the reasons that are proven.</b></li>
+      <li><b>Make the diet decision on grounds that hold.</b> Switching to a food with a 1.1:1 omega ratio and a quarter of the arachidonic acid is defensible on inflammation and on the omega-3 joint trials. <b>It is not defensible as lipoma treatment</b>, and framing it that way sets up a disappointment that discredits the rest.</li>
+      <li><b>Body-map, don't spot-check.</b> Photograph and measure every mass with a date. The clinically dangerous error is not missing a lipoma — it is assuming a <i>new</i> lump is the <i>old</i> lump. Aspirate every new mass; one benign result is not a lifetime pass.</li>
+      <li><b>Don't buy L-carnitine for this.</b> The dose in circulation was derived from a budgerigar feeding study and has never been tested in a dog.</li>
+      <li><b>For the app:</b> the "carbohydrate drives lipoma growth" claim stays <b>NOT PROVEN</b> — and can now say precisely why: no trial, in either direction, plus a canine-versus-human mechanism mismatch. That is a stronger and more defensible sentence than the hedge currently in place.</li>
+      <li><b>For the app, second:</b> the honest positive claim is about <i>formation rate</i>, not shrinkage, and it should be labelled as untested rather than as either proven or disproven.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Claim safety guide</h2>
+    <p class="lead">What can be said out loud, and what cannot</p>
+    <div class="safety">
+      <div class="band b-assert">
+        <div class="h">✓ Safe to assert</div>
+        <ul>
+          <li>Age is by far the dominant risk factor — 17.5× at 9–12 years versus 3–6 (VetCompass, 384,284 dogs).</li>
+          <li>Labradors are predisposed: 5.15% prevalence against 1.94% overall, OR 2.19.</li>
+          <li>No controlled trial has ever tested diet against canine lipomas, in either direction.</li>
+          <li>Lifelong caloric restriction extended median Labrador lifespan from 11.2 to 13.0 years and delayed arthritis treatment by about 3 years (randomised, littermate-paired).</li>
+          <li>A negative fine-needle aspirate is considerably less reliable than a positive one.</li>
+        </ul>
+      </div>
+      <div class="band b-caveat">
+        <div class="h">⚖ Only with the caveat attached</div>
+        <ul>
+          <li>"Heavier dogs get more lipomas" — <b>true as an association</b>, but body condition score was unavailable, bodyweight-versus-breed-mean is a proxy, and insured dogs showed OR 1.78, which suggests some of the signal is dogs being <i>examined</i> more, not developing more.</li>
+          <li>"Lipomas can shrink" — <b>true, but only from injected drugs</b> in uncontrolled or tiny studies, and the one randomised blinded trial was negative.</li>
+          <li>"Holistic practitioners report improvement on dietary change" — <b>true as clinical observation</b>, and owner-assessed improvement ran 39.7% in the placebo arm of a canine trial where force-plate measurement showed no change.</li>
+        </ul>
+      </div>
+      <div class="band b-avoid">
+        <div class="h">✕ Do not claim</div>
+        <ul>
+          <li>That diet, keto, or low-carbohydrate feeding shrinks existing lipomas. Never tested in a dog.</li>
+          <li>That carbohydrate, kibble or "toxin load" causes lipomas. Untested, not disproven — say that instead.</li>
+          <li>That L-carnitine, turmeric, apple cider vinegar, iodine or chickweed shrink canine lipomas. Zero controlled canine evidence; the one canine curcumin trial (IV, 10 mg/kg) produced no objective responses.</li>
+          <li>That lipomas are insulin-driven. The strongest human mechanistic data (HMGA2 clonal rearrangement) points the other way, and familial-lipomatosis patients tested insulin-<i>sensitive</i> — in a study of four brothers.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The frontier question</h2>
+    <p class="lead">Does dietary change alter the rate at which a dog forms <i>new</i> lipomas over 12–24 months?</p>
+    <p>Every study ever done measures the volume of an existing mass. That is the wrong endpoint for a diet hypothesis — a mature encapsulated lipoma is the least likely thing to respond. <b>The Skeptic and the Holistic Vet arrived at this criticism independently, from opposite directions</b>, which is the strongest signal in this briefing.</p>
+    <p>The trial is cheap: ultrasound census at baseline, two diet arms, count new masses at 12 months. It has never been run. <b>Neither the pet food industry nor the supplement market has a product that wins if the answer is null</b> — which may be the whole explanation for a thirty-year gap in a question this simple.</p>
+  </section>
+
+  <section>
+    <h2>References</h2>
+    <div class="wrapper">
+      <table>
+        <thead>
+          <tr><th>Source</th><th>What it actually found</th><th>Run by / funded by</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6161450/">O'Neill et al. 2018, <i>Canine Genet Epidemiol</i> 5:9</a></td>
+            <td>384,284 dogs; prevalence 1.94%; age 9–12 OR 17.52; bodyweight OR 1.96; Labrador 5.15%. Diagnosis was <b>clinical, not cytological</b>; BCS unavailable; authors state no causal inference on obesity is possible.</td>
+            <td>VetCompass, Royal Veterinary College, UK. Part-funded by the Kennel Club Charitable Trust.</td>
+            <td><span class="tag t-ok">CONFIRMED</span></td>
+          </tr>
+          <tr>
+            <td><a href="https://pubmed.ncbi.nlm.nih.gov/11991408/">Kealy et al. 2002, <i>JAVMA</i> 220(9):1315</a></td>
+            <td>48 littermate-paired Labradors, 25% restriction to death. Median lifespan <b>13.0 vs 11.2 years</b>; BCS 4.6 vs 6.7; osteoarthritis treatment delayed 13.3 vs 10.3 years. <b>The word "lipoma" appears nowhere.</b></td>
+            <td>Nestlé Purina Research Facility, Gray Summit, Missouri. Funded by Purina.</td>
+            <td><span class="tag t-ok">CONFIRMED</span></td>
+          </tr>
+          <tr>
+            <td><a href="https://doi.org/10.1017/S0007114507871686">Lawler et al. 2008, <i>Br J Nutr</i> 99(4):793</a></td>
+            <td>Same cohort. Neoplasia involved 23% of deaths; restriction <b>delayed</b> death from malignancy (11.6 vs 9.7 years, not significant) rather than preventing it. Benign mammary tumours were tabulated; lipomas were not.</td>
+            <td>Purina, with Pennsylvania, Illinois, Michigan State.</td>
+            <td><span class="tag t-ok">CONFIRMED</span></td>
+          </tr>
+          <tr>
+            <td><a href="https://pubmed.ncbi.nlm.nih.gov/16511787/">Ghisleni et al. 2006, <i>Vet Clin Pathol</i> 35(1):24</a></td>
+            <td>Agreement <b>90.9%</b>, sensitivity <b>89.3%</b>, PPV <b>99.4%</b>, NPV <b>68.7%</b>. 292 masses from 242 dogs <b>and 50 cats</b>. Four of five originally-cited figures were wrong.</td>
+            <td>University of Milan, Italy. Funding not stated.</td>
+            <td><span class="tag t-part">CORRECTED</span></td>
+          </tr>
+          <tr>
+            <td><a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0050234">Lamagna et al. 2012, <i>PLOS ONE</i> 7(11):e50234</a></td>
+            <td>15 dogs, intralesional triamcinolone; 9 complete regressions at 6 months; 6/15 polyuria/polydipsia. <b>Single-arm case series — not controlled, not randomised, no placebo.</b> Three later recurrences that "9/15" conceals.</td>
+            <td>University of Naples Federico II, Italy. No funding declared.</td>
+            <td><span class="tag t-part">DEMOTED</span></td>
+          </tr>
+          <tr>
+            <td><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12312678/">Arango et al. 2025, <i>Front Vet Sci</i></a></td>
+            <td>10 dogs, 20 lipomas, randomised, blinded, within-dog saline control, ultrasound to 12 weeks. <b>Negative</b> — stable size, no quality-of-life benefit, one cellulitis/necrosis requiring early excision.</td>
+            <td>Funded by Brixton Biosciences, maker of the BXT-786 coolant tested.</td>
+            <td><span class="tag t-ok">CONFIRMED</span></td>
+          </tr>
+          <tr>
+            <td><a href="https://www.prnewswire.com/news-releases/biospecifics-announces-positive-results-from-clinical-trial-in-canine-lipomas-113036459.html">BioSpecifics collagenase (Chien-802), 2011</a></td>
+            <td>4 dogs enrolled, <b>3 evaluable</b>, each with a second untreated lipoma as its own control. Day 90 CT: treated 0%, 0%, 7% of original volume; controls 129%, 113%, 128%. <b>Company press release — never published, never peer-reviewed.</b></td>
+            <td>BioSpecifics Technologies Corp (sponsor-reported).</td>
+            <td><span class="tag t-bad">DEMOTED</span></td>
+          </tr>
+          <tr>
+            <td><a href="https://pubmed.ncbi.nlm.nih.gov/3972710/">Albers &amp; Theilen 1985, <i>JAVMA</i> 186(5):492</a></td>
+            <td>10 dogs, <b>18 lipomas</b>, intratumoral 10% calcium chloride. At 6 months: 4 resolved, 14 under 50% of original size. <b>Skin necrosis in 3 dogs.</b></td>
+            <td>Paywalled; institution and funding unverified.</td>
+            <td><span class="tag t-part">PARTIAL</span></td>
+          </tr>
+          <tr>
+            <td><a href="https://pubmed.ncbi.nlm.nih.gov/7928612/">Bergman et al. 1994, <i>JAVMA</i> 205(2):322</a></td>
+            <td>Infiltrative lipoma, <b>16 cases in 15 dogs</b>. Of 14 evaluable tumours, 5 (36%) recurred, median 239 days. 67% disease-free at 1 year. <b>8 of 15 were Labradors.</b></td>
+            <td>Colorado State University. Funding not stated.</td>
+            <td><span class="tag t-part">CORRECTED</span></td>
+          </tr>
+          <tr>
+            <td><a href="https://doi.org/10.1647/2002-031">De Voe et al. 2004, <i>J Avian Med Surg</i> 18(1):12</a></td>
+            <td><b>32 budgerigars</b> (17 with cervical lipomas), 3 diets, 102 days, ~1000 mg/kg L-carnitine <b>of feed</b>. Lipoma size decreased on pellets + carnitine. Authors call it "preliminary."</td>
+            <td>North Carolina State University College of Veterinary Medicine. Funding not stated.</td>
+            <td><span class="tag t-part">CORRECTED</span></td>
+          </tr>
+          <tr>
+            <td><a href="https://veterinarysecrets.com/dog-lipomas-natural-remedies/">Jones, veterinarysecrets.com, 22 Jan 2025</a></td>
+            <td>Recommends L-carnitine 50 mg/kg twice daily for canine lipomas, plus DMSO/aloe topically, MCT oil, green tea extract and colostrum. <b>No dose citation given.</b> PubMed returns <b>zero</b> canine lipoma + carnitine studies.</td>
+            <td>Dr Andrew Jones (commercial: sells supplements).</td>
+            <td><span class="tag t-bad">NO CANINE BASIS</span></td>
+          </tr>
+          <tr>
+            <td><a href="https://www.drjudyu.com/podcasts/naturally-healthy-pets-podcast/episodes/2147925004">Morgan &amp; Hogan, podcast EP08, 16 May 2023</a></td>
+            <td>TCVM framing: lipomas as "damp." Drying protocol — avoid pork, lamb, duck, eggs, honey; feed celery, alfalfa, parsley, pumpkin, ginger, kelp, turmeric, baked sweet potato. <b>Presented as clinical observation ("I've seen"), not as trial evidence.</b></td>
+            <td>Dr Judy Morgan / Rita Hogan (commercial: sells supplements and courses).</td>
+            <td><span class="tag t-part">CLINICAL OBSERVATION</span></td>
+          </tr>
+          <tr>
+            <td><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6234083/">Withers et al. 2018, <i>Vet Comp Oncol</i> 16(4)</a></td>
+            <td>11 dogs, liposomal curcumin <b>10 mg/kg IV</b> over 8 hours, 4 weekly doses. <b>Zero objective tumour responses</b>; 4 of 6 completers had stable disease. IV route — says nothing about dietary turmeric.</td>
+            <td>UC Davis; funded by the UCD Center for Companion Animal Health. Lipocurc gifted by SignPath Pharma.</td>
+            <td><span class="tag t-ok">CONFIRMED</span></td>
+          </tr>
+          <tr>
+            <td><a href="https://pubmed.ncbi.nlm.nih.gov/10347559/">Reimann et al. 1999 — canine lipoma cytogenetics</a></td>
+            <td>n=10 canine lipomas; clonal aberrations in 7 — trisomy 27, trisomy 13, recurrent der(4)(q31). <b>No HMGA2-region involvement.</b> The human 12q13-15 signature has never been demonstrated in dogs.</td>
+            <td>Bremen, Germany. Funding not stated.</td>
+            <td><span class="tag t-ok">CONFIRMED</span></td>
+          </tr>
+          <tr>
+            <td><a href="https://pubmed.ncbi.nlm.nih.gov/17370328/">Bartuma et al. 2007 — human lipoma karyotypes</a></td>
+            <td>Of 272 lipomas <b>pre-selected for abnormal karyotype</b>, 83% carried one of four hallmarks, 12q13-15/HMGA2 largest. Sreekantaiah 1991 found clonal abnormality in only ~50% of 109 lipomas — so "75% of all lipomas" overstates the denominator.</td>
+            <td>Lund University, Sweden.</td>
+            <td><span class="tag t-part">CORRECTED</span></td>
+          </tr>
+          <tr>
+            <td><a href="https://pubmed.ncbi.nlm.nih.gov/23113523/">Conzemius &amp; Evans 2012, <i>JAVMA</i> 241:1314</a></td>
+            <td>Placebo arm, 58 dogs with osteoarthritis. <b>39.7% of owners reported their dog improving</b> when force-plate gait analysis showed no change. Veterinarians: 43–45%.</td>
+            <td>University of Minnesota. Sponsor not named in abstract.</td>
+            <td><span class="tag t-ok">CONFIRMED</span></td>
+          </tr>
+          <tr>
+            <td><a href="https://www.europeanreview.org/article/4955">D'Ettorre et al. 2013, <i>Eur Rev Med Pharmacol Sci</i> 17:2254</a></td>
+            <td>Familial multiple lipomatosis patients were insulin-<b>sensitive</b>, not resistant, on OGTT/OGIS. <b>n = 4 brothers</b> versus 8 BMI-matched controls.</td>
+            <td>Catholic University, Rome. No funding statement.</td>
+            <td><span class="tag t-bad">DEMOTED</span></td>
+          </tr>
+          <tr>
+            <td><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12705395/">Berger et al. 2025, <i>Front Endocrinol</i></a></td>
+            <td>7,868 ICD-coded lipoma patients, 3 Israeli hospitals; excess dyslipidaemia and type 2 diabetes. <b>No internal controls, no multivariable adjustment, coding-based, no pathology confirmation</b> — compared against national survey benchmarks.</td>
+            <td>Three Israeli hospitals. Authors declare no funding.</td>
+            <td><span class="tag t-bad">DEMOTED</span></td>
+          </tr>
+          <tr>
+            <td><a href="https://pubmed.ncbi.nlm.nih.gov/21078881/">Thompson et al. 2011, <i>Vet Pathol</i> 48:156</a></td>
+            <td>306 dogs with subcutaneous mast cell tumours — present as soft mobile masses clinically consistent with lipoma. Cutaneous grading schemes were not developed for subcutaneous tumours. Reassuring half: 9% MCT-related death, 4% metastasis.</td>
+            <td>University of Guelph, Canada.</td>
+            <td><span class="tag t-ok">CONFIRMED</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <p><b>The panel is author-built.</b> The four lenses in this briefing — traditional vet, academic, skeptic, holistic vet — were constructed for this report, not sampled from the field. Their agreement that no diet trial exists is a strong hypothesis and was independently verified; it is <b>not independent confirmation of the field's consensus</b> and must not be presented as such.</p>
+    <p><b>Clinical experience is labelled as such throughout.</b> Where this report says a practitioner reports something, no trial has tested it. Practice and observation can indicate what is worth trying; only trials establish cause.</p>
+    <p><b>Commercial interests are stated for every source on every side</b> — Purina funded the lifespan study, Brixton Biosciences funded the ice-slurry trial that failed, and the holistic practitioners cited sell supplements and courses. These are attributions, not accusations. The reader weighs them.</p>
+    <p><b>Educational only.</b> Not veterinary advice, and no substitute for a vet who has examined the animal.</p>
+  </footer>
+
+</div>
+</body>
+</html>

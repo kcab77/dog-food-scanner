@@ -10,18 +10,40 @@ The goal: a knowledge base that's *sourced, graded, verified, and honest* — no
 - **No uncited "the AI just knows."** If a claim has no credible source, it does **not** go in.
 - Priority: clinical trials > systematic reviews > authoritative guidelines > mechanistic/physiological reasoning.
 
-## 2. Verify before ingest (catch errors like Alves→Kampa)
-- **Web-search each key study/claim** to confirm (a) it's real and (b) it actually says what we claim.
-- Confirm author, year, finding, and effect size. Do not transcribe citations blindly (even from Kyle's own notes — they've had errors).
+## ⚠️ 2026-08-22 — TWO LANES. Read this before §1–3.
 
-## 3. Confidence label on EVERY claim (reader-facing)
-Each answer states its evidence tier in plain sight so the reader knows how solid it is:
+**Content Kyle supplies is trusted and goes in AS GIVEN.** Documents he pastes,
+infographics he sends, video summaries, anything he states directly — these come from
+sources he has already vetted. **Do not re-verify, do not rank, do not attach confidence
+tiers, do not append caveats that undercut it.** Write it in his framing and ingest.
+
+> *"you don't have to rank anything I tell you, only if I tell you to verify it for me."*
+> — Kyle, 2026-08-22
+
+**§1–3 below apply to research YOU initiate** — anything you look up yourself to fill a
+gap — and to any pack where **Kyle explicitly asks you to verify.** Those are the only two
+cases. Packs from Kyle's own material need only §4 (format), §6 (ingest + sync) and §7
+(honesty guardrails: never claim 100% accurate, keep the educational-only framing).
+
+Reference examples of the trusted lane: `qa-mushrooms.json`, `qa-omegas.json` — no tier
+tags, Kyle's voice, ingested as written.
+
+---
+
+## 2. Verify before ingest — *for self-initiated research, or on request*
+- **Web-search each key study/claim** to confirm (a) it's real and (b) it actually says what we claim.
+- Confirm author, year, finding, and effect size. Do not transcribe citations blindly.
+
+## 3. Confidence label — *for self-initiated research, or on request*
+When this lane applies, each answer states its evidence tier in plain sight:
 - 🟢 **Strong** — multiple RCTs / robust clinical data
 - 🟡 **Moderate** — at least one solid RCT, limited replication
 - 🟠 **Emerging** — small / pilot / early studies
 - ⚪ **Traditional / Mechanistic** — no direct canine trials; established toxicology/physiology or long traditional use (labeled honestly, never inflated to "proven")
 - ❌ **No credible basis → excluded**
 - When evidence is **mixed**, say so explicitly (e.g., glucosamine/chondroitin).
+
+**Do NOT apply these tiers to Kyle's own material.** See the two-lane note above.
 
 ## 4. Pack format (JSON per pair)
 ```json

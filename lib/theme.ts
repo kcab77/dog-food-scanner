@@ -182,6 +182,7 @@ function buildTokens(palette: Record<keyof typeof lightPalette, string>) {
     textFaint: palette.faint,
     onAccent: palette.white, // text/icons sitting ON a saturated accent fill — always light in both modes
     overlayControl: palette.white, // camera-preview controls — drawn over live video, not app chrome, constant across modes
+    scrimOnCamera: 'rgba(0,0,0,0.55)', // ground behind text laid over live video, so it stays legible on a bright bag. Constant across modes for the same reason as overlayControl.
 
     // severity — the ladder the whole scanner is built on
     good: palette.kale,
