@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { searchKnowledgeScored } from '@/lib/pinecone'
+import { searchKnowledgeCited } from '@/lib/pinecone'
 import { isAllowed } from '@/lib/ratelimit'
 import { DISCLAIMER } from '@/lib/disclaimer'
 
@@ -82,7 +82,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const { messages, dogProfile } = await req.json()
+    const { messages, dogProfile, topics, strict } = await req.json()
 
     // Get the latest user message to search Pinecone
     const lastUserMessage = [...messages].reverse().find((m: { role: string }) => m.role === 'user')
@@ -93,10 +93,18 @@ export async function POST(req: NextRequest) {
     //   - STRONG (>= 0.65): the KB clearly answers this. Answer from it, period.
     //   - WEAK  (0.5–0.65): partial coverage. Use it, but the model may fill gaps.
     //   - NONE: nothing relevant. Fall back to general holistic knowledge.
+    //
+    // `topics` scopes retrieval to specific packs (NotebookLM-style "only these
+    // sources"). `strict` refuses instead of falling back to general knowledge.
     const STRONG_THRESHOLD = 0.65
-    const scored = query ? await searchKnowledgeScored(query, 8) : []
-    const strongChunks = scored.filter(c => c.score >= STRONG_THRESHOLD).map(c => c.text)
-    const weakChunks = scored.filter(c => c.score < STRONG_THRESHOLD).map(c => c.text)
+    const cited = query
+      ? await searchKnowledgeCited(query, {
+          topK: 8,
+          topics: Array.isArray(topics) && topics.length ? topics : undefined,
+        })
+      : []
+    const strongChunks = cited.filter(c => c.score >= STRONG_THRESHOLD).map(c => c.text)
+    const weakChunks = cited.filter(c => c.score < STRONG_THRESHOLD).map(c => c.text)
 
     let systemText = SYSTEM_PROMPT
 
@@ -104,6 +112,11 @@ export async function POST(req: NextRequest) {
       systemText += `\n\n---\nKNOWLEDGE BASE (PRIMARY SOURCE — USE THIS FIRST):\n\nThe following is curated Common Sense Dog knowledge that directly addresses the user's question. This is your PRIMARY and authoritative source. Build your answer on these chunks first and foremost. Do NOT contradict them. Only add general knowledge to fill small gaps, and only when it aligns with the holistic philosophy above.\n\n${strongChunks.join('\n\n---\n\n')}`
     } else if (weakChunks.length > 0) {
       systemText += `\n\n---\nKNOWLEDGE BASE (PARTIAL MATCH):\n\nThe following Common Sense Dog knowledge is partially relevant. Prefer it where it applies, then supplement with your general holistic knowledge to give a complete answer. Stay true to the philosophy above.\n\n${weakChunks.join('\n\n---\n\n')}`
+    } else if (strict) {
+      // Source-grounded mode: no corpus match means no answer. This is the single
+      // biggest trust feature — an assistant that says "not in my sources" is
+      // worth more than one that quietly improvises.
+      systemText += `\n\n---\nSTRICT SOURCE MODE: our curated knowledge base returned NO match for this question, and you are in source-grounded mode. Do NOT answer from general knowledge. Tell the owner plainly that this isn't covered in the sources you've been given, say what IS covered nearby if anything, and suggest they ask a holistic vet. Do not guess, and do not pad the reply.`
     } else {
       systemText += `\n\n---\nACCURACY GUARDRAIL: Our curated knowledge base did not return a match for this question. You may answer from general holistic knowledge, but: (1) NEVER invent studies, statistics, brand claims, or specific numbers — if you don't actually know, say so plainly; (2) keep it conservative and general; (3) for anything health- or dosage-specific, tell the owner to confirm with a holistic/integrative vet. Be honest about uncertainty rather than guessing.`
     }
@@ -139,7 +152,21 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'No response from AI' }, { status: 500 })
     }
 
-    return NextResponse.json({ message: text + DISCLAIMER })
+    // Ship the citations alongside the answer so the UI can show what the reply
+    // was actually built on — grounded, not "trust me".
+    const sources = cited
+      .filter(c => c.score >= 0.5)
+      .slice(0, 5)
+      .map(c => ({
+        id: c.id,
+        score: Number(c.score.toFixed(3)),
+        question: c.question ?? c.title ?? null,
+        topic: c.topic ?? null,
+        source: c.source ?? null,
+        url: c.url ?? null,
+      }))
+
+    return NextResponse.json({ message: text + DISCLAIMER, sources })
   } catch (e) {
     return NextResponse.json({ error: 'Server error' }, { status: 500 })
   }

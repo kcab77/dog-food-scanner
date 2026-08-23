@@ -55,6 +55,33 @@ export async function upsertKnowledge(
   await (index as any).upsert([{ id, values, metadata: { text, ...metadata } }])
 }
 
+/**
+ * ⚠️ THE BUG THIS FIXES (found 2026-08-23) — read before changing.
+ *
+ * The index holds vectors written by TWO different scripts with DIFFERENT
+ * metadata shapes:
+ *   seed-pinecone / seed-blog-content →  { text, title, slug, url, ... }
+ *   ingest_pack / process_content     →  { question, answer, topic, source }
+ *
+ * Every read path here used `metadata.text` and then filtered out empties — so
+ * EVERY `qa-*` pack was silently dropped before it reached the assistant. Not
+ * ranked low. Discarded. Hundreds of evidence-graded pairs, invisible, while the
+ * chat answered from older blog vectors that happened to carry `text`.
+ *
+ * Nothing errored, which is why it survived so long: a filtered-out match and a
+ * match that never existed look identical downstream.
+ *
+ * Read through this helper, never `metadata.text` directly.
+ */
+function chunkText(md: Record<string, unknown> | undefined): string {
+  if (!md) return ''
+  if (typeof md.text === 'string' && md.text.trim()) return md.text
+  const q = typeof md.question === 'string' ? md.question : ''
+  const a = typeof md.answer === 'string' ? md.answer : ''
+  if (q || a) return `Q: ${q}\nA: ${a}`.trim()
+  return ''
+}
+
 export async function searchKnowledge(query: string, topK = 5): Promise<string[]> {
   if (!process.env.VOYAGE_API_KEY) return []
   try {
@@ -62,13 +89,71 @@ export async function searchKnowledge(query: string, topK = 5): Promise<string[]
     const results = await index.query({ vector: values, topK, includeMetadata: true })
     return results.matches
       .filter(m => (m.score ?? 0) > 0.5)
-      .map(m => (m.metadata as { text: string }).text)
+      .map(m => chunkText(m.metadata as Record<string, unknown>))
+      .filter(Boolean)
   } catch {
     return []
   }
 }
 
 export type ScoredChunk = { text: string; score: number }
+
+/** A retrieved chunk plus what it came from — the data a citation needs. */
+export type CitedChunk = {
+  id: string
+  text: string
+  score: number
+  topic?: string
+  source?: string
+  question?: string
+  url?: string
+  title?: string
+}
+
+/**
+ * Source-grounded retrieval, NotebookLM-style. Two things the plain scored
+ * search can't do:
+ *   - `topics` scopes retrieval to specific packs, so "just gut health" really
+ *     means only gut-health vectors are eligible.
+ *   - the return carries WHERE each chunk came from, so the caller can show
+ *     citations instead of asking the user to trust an unsourced answer.
+ */
+export async function searchKnowledgeCited(
+  query: string,
+  opts: { topK?: number; minScore?: number; topics?: string[] } = {},
+): Promise<CitedChunk[]> {
+  if (!process.env.VOYAGE_API_KEY) return []
+  const { topK = 8, minScore = 0.5, topics } = opts
+  try {
+    const values = await embedText(query)
+    const results = await index.query({
+      vector: values,
+      topK,
+      includeMetadata: true,
+      ...(topics && topics.length
+        ? { filter: { topic: { $in: topics } } }
+        : {}),
+    })
+    return results.matches
+      .map(m => {
+        const md = (m.metadata ?? {}) as Record<string, unknown>
+        return {
+          id: m.id,
+          text: chunkText(md),
+          score: m.score ?? 0,
+          topic: typeof md.topic === 'string' ? md.topic : undefined,
+          source: typeof md.source === 'string' ? md.source : undefined,
+          question: typeof md.question === 'string' ? md.question : undefined,
+          url: typeof md.url === 'string' ? md.url : undefined,
+          title: typeof md.title === 'string' ? md.title : undefined,
+        }
+      })
+      .filter(c => c.text && c.score > minScore)
+      .sort((a, b) => b.score - a.score)
+  } catch {
+    return []
+  }
+}
 
 // Pinecone-first retrieval: returns matches WITH their confidence scores so the
 // caller can decide whether the knowledge base answers the question (priority)
@@ -90,7 +175,7 @@ export async function searchKnowledgeScored(
     const values = await embedText(query)
     const results = await index.query({ vector: values, topK, includeMetadata: true })
     return results.matches
-      .map(m => ({ text: (m.metadata as { text: string })?.text ?? '', score: m.score ?? 0 }))
+      .map(m => ({ text: chunkText(m.metadata as Record<string, unknown>), score: m.score ?? 0 }))
       .filter(c => c.text && c.score > minScore)
       .sort((a, b) => b.score - a.score)
   } catch {
