@@ -3701,20 +3701,205 @@ const PROCESSING_METHODS = {
 // normally on top of this — a genuinely bad kibble can still score low, just
 // not because it's kibble. scoreCap is now a uniform 100 everywhere (the
 // general ceiling), not a format-specific cap.
+// Words that describe an INGREDIENT or a topper, not the whole product.
+// "Freeze Dried Turkey" in a bag of kibble is a garnish, not a freeze-dried diet.
+// Phrases that specifically name the raw-coated-kibble category. These must be
+// tested BEFORE the whole-product formats, because bare "raw" would otherwise
+// swallow "Instinct Raw Boost" and hand a bag of kibble the full +25.
+const RAW_COATED_KIBBLE = [
+  "raw coated",
+  "raw-coated",
+  "raw boost",
+  "raw blend",
+  "raw infused",
+  "raw pieces",
+  "rawrev",
+  "raw rev",
+];
+
+// Only an inclusion signal when found in the INGREDIENTS. "Freeze-Dried" in a
+// product NAME means the whole product is freeze-dried and gets the full bonus.
+const RAW_INCLUSION_HINTS = ["freeze dried", "freeze-dried", "raw coated"];
+
+/**
+ * Whole-word match. `combined.includes("raw")` was matching "RawRev" and would
+ * match "rawhide" too — handing a bag of kibble the full +25 raw-diet bonus on
+ * the strength of a brand name.
+ */
+function mentionsTerm(text: string, term: string): boolean {
+  const esc = term
+    .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+    .replace(/[-\s]+/g, "[-\\s]+");
+  return new RegExp(`\\b${esc}\\b`, "i").test(text);
+}
+
+/**
+ * The mineral block sorted by form. Kyle's ladder, from
+ * docs/MINERAL_FORMS_CHEATSHEET.md: chelate > sulfate > oxide.
+ *
+ * The COUNT of added nutrients is deliberately not scored. A long premix mostly
+ * means the food is complete, and penalising it would reward incomplete food —
+ * the one direction a food scanner must never point. The FORM is the real
+ * signal, and that's already scored through vitaminLoadPenalty().
+ */
+function analyseMineralForms(ingredients: string[]) {
+  const low = ingredients.map((i) => i.toLowerCase());
+  const pick = (re: RegExp) => ingredients.filter((_, i) => re.test(low[i]));
+  return {
+    oxides: pick(/\boxide\b/),
+    sulfates: pick(/\bsulfate\b/),
+    chelates: pick(
+      /proteinate|amino acid chelate|amino acid complex|selenium yeast|selenomethionine/,
+    ),
+    addedCount: pick(
+      /vitamin|supplement|oxide|sulfate|proteinate|chelate|selenite|selenate|iodate|niacin|thiamine|riboflavin|biotin|folic|pyridoxine|cobalamin|menadione|choline chloride|tocopherol/,
+    ).length,
+  };
+}
+
+/**
+ * The chelate/sulfate/oxide ladder. Renders as reference on its own (Learn), or
+ * with "in this food" lines filled in when given a scanned ingredient list.
+ */
+function MineralFormsGuide({ ingredients }: { ingredients?: string[] }) {
+  const forms = analyseMineralForms(ingredients ?? []);
+  const scanned = (ingredients?.length ?? 0) > 0;
+  const rungs: [string, string, string, string, string[]][] = [
+    [
+      "✅",
+      "Chelated — BEST",
+      t.good,
+      "proteinate · amino acid chelate · amino acid complex · selenium yeast — bound to protein, absorbed like food",
+      forms.chelates,
+    ],
+    [
+      "⚠️",
+      "Sulfate — MIDDLE",
+      t.high,
+      "zinc sulfate · ferrous sulfate · manganese sulfate — inorganic, absorbed adequately, pro-oxidant",
+      forms.sulfates,
+    ],
+    [
+      "❌",
+      "Oxide — WORST",
+      t.critical,
+      "zinc oxide · manganese oxide · iron oxide · copper oxide — barely absorbed. Cheapest to buy, closest to useless",
+      forms.oxides,
+    ],
+  ];
+  return (
+    <View>
+      <Text style={{ color: t.text, fontSize: 12.5, lineHeight: 18 }}>
+        Same mineral, three grades of form.{" "}
+        <Text style={{ fontWeight: "700", color: t.textStrong }}>
+          The word after the metal is what you&apos;re reading.
+        </Text>{" "}
+        Zinc Proteinate beats Zinc Sulfate beats Zinc Oxide — every time. Same money
+        to the dog, very different money to the manufacturer.
+      </Text>
+
+      {rungs.map(([icon, label, color, why, found]) => (
+        <View
+          key={label}
+          style={{
+            backgroundColor: t.surface,
+            borderRadius: 9,
+            padding: 10,
+            marginTop: 8,
+            borderLeftWidth: 3,
+            borderLeftColor: color,
+          }}
+        >
+          <Text style={{ color, fontSize: 12.5, fontWeight: "800" }}>
+            {icon} {label}
+          </Text>
+          <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 3, lineHeight: 16.5 }}>
+            {why}
+          </Text>
+          {scanned && (
+            <Text
+              style={{
+                color: found.length > 0 ? t.textStrong : t.textDim,
+                fontSize: 11.5,
+                marginTop: 4,
+                fontWeight: found.length > 0 ? "600" : "400",
+              }}
+            >
+              {found.length > 0
+                ? `In this food: ${found.join(" · ")}`
+                : "None in this food"}
+            </Text>
+          )}
+        </View>
+      ))}
+
+      {scanned && forms.oxides.length >= 2 && (
+        <Text style={{ color: t.high, fontSize: 12, marginTop: 9, lineHeight: 17, fontWeight: "600" }}>
+          Two or more oxides means the manufacturer bought the cheapest forms
+          available — which tells you what they did everywhere else you can&apos;t see.
+        </Text>
+      )}
+
+      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700", marginTop: 12 }}>
+        {scanned ? `Added vitamins & minerals (${forms.addedCount})` : "About long vitamin lists"}
+      </Text>
+      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 4, lineHeight: 17 }}>
+        A long list usually means the food itself wasn&apos;t delivering enough
+        nutrition on its own, so it has to be added back to balance the recipe.
+        High-heat processing destroys nutrients and they get sprayed back on
+        afterwards — the list is a symptom of the processing, not a poison in itself.
+      </Text>
+      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 6, lineHeight: 17 }}>
+        That said — a food with none isn&apos;t automatically better. It might simply
+        be incomplete. Ask why a food needed forty additions, not whether the forty
+        additions are toxic.
+      </Text>
+
+      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700", marginTop: 12 }}>
+        ⚠️ Copper runs backwards
+      </Text>
+      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 4, lineHeight: 17 }}>
+        For every other mineral, better absorbed is better. Copper accumulates in the
+        liver and dogs have no good way to clear the excess — and AAFCO deleted the
+        copper maximum in 2007 without replacing it. Labradors, Bedlingtons, Westies,
+        Dobermans and Dalmatians are predisposed. For those dogs total copper load
+        matters more than form, and liver enzymes are not sensitive early on.
+      </Text>
+    </View>
+  );
+}
+
 function detectProcessingMethod(
   name: string,
   ingredients: string[],
   sheetMethod?: string,
 ) {
-  const combined = (
-    (sheetMethod || "") +
-    " " +
-    name +
-    " " +
-    ingredients.join(" ")
-  ).toLowerCase();
+  // ⚠️ Format describes the PRODUCT, so it is read from the product name and the
+  // label's own processing statement — NEVER from the ingredient list.
+  //
+  // Fixed 2026-08-25. `combined` used to include ingredients.join(" "), so any
+  // kibble listing "Freeze Dried Turkey" scored as a freeze-dried diet and took
+  // the full +25 format bonus. That single line was most of the "the scanner
+  // doesn't separate kibble" problem — and it's why Nulo dropped 41 → 25 when
+  // the format was set to kibble by hand. That drop was never the omega rule.
+  const productText = ((sheetMethod || "") + " " + name).toLowerCase();
+  const ingredientText = ingredients.join(" ").toLowerCase();
+
+  // Most specific first: a name that says "Raw Boost" or "RawRev" is naming the
+  // raw-coated-kibble category, not claiming to be a raw diet.
+  const coated = RAW_COATED_KIBBLE.find((h) => mentionsTerm(productText, h));
+  if (coated)
+    return {
+      method: coated,
+      rating: "Kibble with raw pieces",
+      scoreCap: 100,
+      penalty: 0,
+      bonus: 5,
+      emoji: "🔵",
+    };
+
   for (const k of PROCESSING_METHODS.raw)
-    if (combined.includes(k))
+    if (mentionsTerm(productText, k))
       return {
         method: k,
         rating: "Raw",
@@ -3724,7 +3909,7 @@ function detectProcessingMethod(
         emoji: "🌟",
       };
   for (const k of PROCESSING_METHODS.great)
-    if (combined.includes(k))
+    if (mentionsTerm(productText, k))
       return {
         method: k,
         rating: "Freeze-Dried",
@@ -3734,7 +3919,7 @@ function detectProcessingMethod(
         emoji: "❄️",
       };
   for (const k of PROCESSING_METHODS.gently)
-    if (combined.includes(k))
+    if (mentionsTerm(productText, k))
       return {
         method: k,
         rating: "Gently Cooked",
@@ -3744,7 +3929,7 @@ function detectProcessingMethod(
         emoji: "🍳",
       };
   for (const k of PROCESSING_METHODS.airDried)
-    if (combined.includes(k))
+    if (mentionsTerm(productText, k))
       return {
         method: k,
         rating: "Air-Dried",
@@ -3754,7 +3939,7 @@ function detectProcessingMethod(
         emoji: "🌬️",
       };
   for (const k of PROCESSING_METHODS.ok)
-    if (combined.includes(k))
+    if (mentionsTerm(productText, k))
       return {
         method: k,
         rating: "Baked",
@@ -3763,8 +3948,31 @@ function detectProcessingMethod(
         bonus: 8,
         emoji: "🟡",
       };
+
+  // Nothing above matched, so the base format is kibble or unknown. Before
+  // settling there, check for raw or freeze-dried INCLUSIONS — raw-coated
+  // kibble and kibble-with-raw-pieces are a real category (Wellness CORE
+  // RawRev, Instinct Raw Boost, Stella & Chewy's raw coated).
+  //
+  // Kyle's call, 2026-08-25: better than plain kibble, but still kibble. The
+  // base is still extruded and the raw portion is a small fraction by weight,
+  // so it earns +5 — above Kibble (0), below Baked (8) — not the +25 a real
+  // raw or freeze-dried diet gets.
+  const inclusion =
+    RAW_INCLUSION_HINTS.find((h) => mentionsTerm(ingredientText, h)) ??
+    RAW_INCLUSION_HINTS.find((h) => mentionsTerm(productText, h));
+  if (inclusion)
+    return {
+      method: inclusion,
+      rating: "Kibble with raw pieces",
+      scoreCap: 100,
+      penalty: 0,
+      bonus: 5,
+      emoji: "🔵",
+    };
+
   for (const k of PROCESSING_METHODS.bad)
-    if (combined.includes(k))
+    if (mentionsTerm(productText, k))
       return {
         method: k,
         rating: "Kibble",
@@ -3973,18 +4181,37 @@ function carbPenaltyFor(estCarbPct: number): number {
  * So concerning forms are weighted 3x, poor-absorption forms 1x, and the total tapers
  * to a cap instead of stepping.
  */
+// Aligned to docs/MINERAL_FORMS_CHEATSHEET.md on 2026-08-25. The grading is
+// CHELATE > SULFATE > OXIDE, and these two lists must match the cheat sheet's
+// ❌ Avoid and ⚠️ Acceptable columns or the two systems drift apart.
+//
+// What was wrong before: copper sulfate sat in HIGH at 3x weight even though the
+// 23 Aug retiering demoted it to mild (sulfate is the acceptable middle grade),
+// while zinc oxide sat in LOW even though oxide is the worst grade. Four oxides
+// were missing entirely — copper oxide most importantly, which AAFCO forbids
+// from counting toward a food's copper minimum at all. "ferric oxide" was listed
+// but no label spells it that way.
 const VITAMIN_CONCERN_HIGH = [
   "menadione",
   "sodium selenite",
   "sodium selenate",
-  "copper sulfate",
+  // Oxides — the worst grade. Barely absorbed, cheapest to buy.
+  "zinc oxide",
+  "iron oxide",
   "ferric oxide",
+  "manganese oxide",
+  "copper oxide",
+  "magnesium oxide",
+  // "One letter, half the vitamin" — dl- is a 50/50 mix and the dog uses half.
+  "dl-alpha tocopherol",
 ];
 const VITAMIN_CONCERN_LOW = [
-  "zinc oxide",
+  // Sulfates — inorganic, absorbed adequately, pro-oxidant. The middle grade.
   "zinc sulfate",
-  "magnesium oxide",
-  "dl-alpha tocopherol",
+  "ferrous sulfate",
+  "manganese sulfate",
+  "copper sulfate",
+  "magnesium sulfate",
   "retinyl palmitate",
   "retinyl acetate",
   "pyridoxine hydrochloride",
@@ -5113,8 +5340,8 @@ const TopicContext = React.createContext<string | null>(null);
 
 export const LEARN_TOPICS = [
   "AAFCO", "Bloat", "Carbs", "Collagen", "Deficiency signs", "Gut health", "Heart",
-  "Kibble", "Life stages", "Lifespan", "Lipomas", "Missing nutrients",
-  "Mushrooms", "Omega-3", "Recalls & facts", "TCVM",
+  "Kibble", "Life stages", "Lifespan", "Lipomas", "Mineral forms",
+  "Missing nutrients", "Mushrooms", "Omega-3", "Recalls & facts", "TCVM",
 ] as const;
 
 // ── THE KIBBLE GUIDE (added 2026-08-21) ──────────────────────────────────────
@@ -12727,7 +12954,13 @@ export default function App() {
               {ingredients.length > 0 && (
                 <AccordionSection
                   title="Ingredient Breakdown"
-                  door="whats-in-it"
+                  // No `door` — this one always renders. It was behind
+                  // door="whats-in-it", and openDoor is null after a scan, so the
+                  // full colour-coded ingredient list silently disappeared from
+                  // every result. Seeing what's actually in the bag is the point
+                  // of the app; it doesn't belong behind a tap. Open by default,
+                  // per CLAUDE.md's results-screen spec.
+                  defaultOpen
                   askLabel="Ask AI"
                   onAskAI={() =>
                     askAboutSection(
@@ -12856,6 +13089,21 @@ export default function App() {
                       no longer earn points.
                     </Text>
                   )}
+
+                </AccordionSection>
+              )}
+
+              {ingredients.length > 0 && (
+                <AccordionSection
+                  title="🔬 Mineral forms — chelate vs sulfate vs oxide"
+                  askLabel="Ask AI"
+                  onAskAI={() =>
+                    askAboutSection(
+                      `Explain the mineral forms in ${productName} — which are chelated, which are sulfates, which are oxides, and what that means for how much my dog actually absorbs.`,
+                    )
+                  }
+                >
+                  <MineralFormsGuide ingredients={ingredients} />
                 </AccordionSection>
               )}
 
@@ -13344,6 +13592,26 @@ export default function App() {
 
               {/* ── GUT HEALTH ───────────────────────────────────────────────
                   Added 2026-08-22. New "Gut health" chip in LEARN_TOPICS. */}
+              {/* The chelate > sulfate > oxide ladder, as reference rather than
+                  as a verdict on one bag. Added 2026-08-25 at Kyle's request —
+                  same component the results screen uses, minus the "in this
+                  food" lines. New "Mineral forms" chip in LEARN_TOPICS. */}
+              {(score !== null || learnMode) && (
+                <AccordionSection
+                  title="🔬 Mineral forms"
+                  topic="Mineral forms"
+                  door="learn"
+                  askLabel="Ask AI"
+                  onAskAI={() =>
+                    askAboutSection(
+                      `Explain chelated vs sulfate vs oxide minerals in dog food — why the form matters more than the amount, and what I should look for on a label.`,
+                    )
+                  }
+                >
+                  <MineralFormsGuide />
+                </AccordionSection>
+              )}
+
               {(score !== null || learnMode) && (
                 <AccordionSection
                   title="🦠 Gut health"
