@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import * as ImageManipulator from "expo-image-manipulator";
 import { router, type Href } from "expo-router";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   Image,
     ActivityIndicator,
@@ -4049,6 +4049,45 @@ function analyseSaltDivider(ingredientList: string[]): {
   return { saltIndex: idx, marketing, legitimate };
 }
 
+/**
+ * Ingredients below the salt line sit at under ~1% of the formula — a sprinkle,
+ * not nutrition. Bonuses must not be paid on them.
+ *
+ * Added 2026-08-25 at Kyle's request. analyseSaltDivider() already did this
+ * detection, but it was DISPLAY-ONLY: a grain-free kibble with peas at #6 was
+ * still collecting full superfood / produce / anti-inflammatory bonuses for
+ * spinach, broccoli, kale, parsley and blueberries at positions 13–17, and
+ * scored 100/100. Harmful-ingredient penalties were already position-scaled
+ * (20%+ weighting past #20) while bonuses were not scaled at all. That
+ * asymmetry is what let a nice-looking label outrank a better food.
+ */
+function bonusEligible(ingredientList: string[]): string[] {
+  const salt = analyseSaltDivider(ingredientList);
+  if (!salt || salt.marketing.length === 0) return ingredientList;
+  const dust = new Set(salt.marketing);
+  return ingredientList.filter((ing) => !dust.has(ing));
+}
+
+/**
+ * A high salt line means the food has very few substantive ingredients —
+ * everything under it is sub-1% dust. Salt at #4 is a materially different
+ * food from salt at #12, and the label reads the same to a shopper.
+ *
+ * Bands set by Kyle 2026-08-25. For reference on real labels:
+ * Natural Balance LID salt is #11, Nulo MedalSeries #10 — both unpenalised.
+ */
+function saltLinePenalty(ingredientList: string[]): {
+  penalty: number;
+  position: number;
+} {
+  const salt = analyseSaltDivider(ingredientList);
+  if (!salt) return { penalty: 0, position: -1 };
+  const position = salt.saltIndex + 1; // 1-based, as an owner reads the bag
+  if (position <= 5) return { penalty: 8, position };
+  if (position <= 8) return { penalty: 4, position };
+  return { penalty: 0, position };
+}
+
 function computeOmegaRating(
   omega3: string[],
   omega6: string[],
@@ -5792,6 +5831,13 @@ export default function App() {
   const [vitamins, setVitamins] = useState<string[]>([]);
   const [toxicAdditives, setToxicAdditives] = useState<string[]>([]);
   const [legumes, setLegumes] = useState<string[]>([]);
+  // Which ingredients sit below the salt line (under ~1%). Used by the
+  // Ingredient Breakdown pills to fade what's really only a sprinkle — the
+  // same set that bonusEligible() now refuses to pay points for.
+  const saltDust = useMemo(() => {
+    const salt = analyseSaltDivider(ingredients);
+    return new Set(salt ? salt.marketing : []);
+  }, [ingredients]);
   const [highCarbs, setHighCarbs] = useState<string[]>([]);
   const [omega3Found, setOmega3Found] = useState<string[]>([]);
   const [omega6Found, setOmega6Found] = useState<string[]>([]);
@@ -7273,16 +7319,16 @@ export default function App() {
           (g) => ing === g || ing.startsWith(g + " "),
         ) && !SPECIFIC_PROTEIN_TERMS.some((s) => ing.includes(s)),
     );
-    const foundOrgans = ingredientList.filter((ing) =>
+    const foundOrgans = bonusEligible(ingredientList).filter((ing) =>
       ORGAN_MEATS.some(
         (o) =>
           ing.toLowerCase().includes(o) && !ing.toLowerCase().includes("meal"),
       ),
     );
-    const foundProduce = ingredientList.filter((ing) =>
+    const foundProduce = bonusEligible(ingredientList).filter((ing) =>
       WHOLE_FOOD_PRODUCE.some((p) => ing.toLowerCase().includes(p)),
     );
-    const foundAntiInflammatory = ingredientList.filter((ing) =>
+    const foundAntiInflammatory = bonusEligible(ingredientList).filter((ing) =>
       ANTI_INFLAMMATORY_FOODS.some((a) => ing.toLowerCase().includes(a)),
     );
     const foundLegumesTop3 = ingredientList.slice(0, 3).filter((ing) =>
@@ -7425,6 +7471,13 @@ export default function App() {
       const p6 = foundLegumes6to10.length * 3;
       total -= p6;
       breakdown.push({ label: `Legumes further down the label (${foundLegumes6to10.length}) — DCM link`, value: -p6 });
+    }
+    // Salt sits at roughly 1% of the formula, so its position bounds how much
+    // real food is in the bag. Salt at #4 means almost everything listed is dust.
+    const saltLine = saltLinePenalty(ingredientList);
+    if (saltLine.penalty > 0) {
+      total -= saltLine.penalty;
+      breakdown.push({ label: `Salt is ingredient #${saltLine.position} — little real food below it`, value: -saltLine.penalty });
     }
     // Carb scoring: estimate % from ingredient position and count
     // Penalties kick in above ~25% carbs — dogs are carnivores, high carbs are problematic
@@ -7919,17 +7972,17 @@ export default function App() {
             (g) => ing === g || ing.startsWith(g + " "),
           ) && !SPECIFIC_PROTEIN_TERMS.some((s) => ing.includes(s)),
       );
-      const foundOrgans = ingredientList.filter((ing) =>
+      const foundOrgans = bonusEligible(ingredientList).filter((ing) =>
         ORGAN_MEATS.some(
           (o) =>
             ing.toLowerCase().includes(o) &&
             !ing.toLowerCase().includes("meal"),
         ),
       );
-      const foundProduce = ingredientList.filter((ing) =>
+      const foundProduce = bonusEligible(ingredientList).filter((ing) =>
         WHOLE_FOOD_PRODUCE.some((p) => ing.toLowerCase().includes(p)),
       );
-      const foundAntiInflammatory = ingredientList.filter((ing) =>
+      const foundAntiInflammatory = bonusEligible(ingredientList).filter((ing) =>
         ANTI_INFLAMMATORY_FOODS.some((a) => ing.toLowerCase().includes(a)),
       );
       const foundLegumesTop3 = ingredientList.slice(0, 3).filter((ing) =>
@@ -8070,6 +8123,13 @@ export default function App() {
         const p6 = foundLegumes6to10.length * 3;
         total -= p6;
         breakdown.push({ label: `Legumes further down the label (${foundLegumes6to10.length}) — DCM link`, value: -p6 });
+      }
+      // Salt sits at roughly 1% of the formula, so its position bounds how much
+      // real food is in the bag. Salt at #4 means almost everything listed is dust.
+      const saltLine = saltLinePenalty(ingredientList);
+      if (saltLine.penalty > 0) {
+        total -= saltLine.penalty;
+        breakdown.push({ label: `Salt is ingredient #${saltLine.position} — little real food below it`, value: -saltLine.penalty });
       }
       // Carb scoring: estimate % from ingredient position and count
       // Penalties kick in above ~25% carbs — dogs are carnivores, high carbs are problematic
@@ -12701,24 +12761,79 @@ export default function App() {
                   <Text style={styles.pillHint}>
                     Tap any ingredient to learn more
                   </Text>
+                  {/* Legend. Colour without a key is decoration — an owner shouldn't
+                      have to infer what orange means. */}
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      flexWrap: "wrap",
+                      gap: 12,
+                      marginBottom: 10,
+                    }}
+                  >
+                    {(
+                      [
+                        [t.goodDeep, "Good"],
+                        [t.textMuted, "Neutral"],
+                        [t.high, "Watch"],
+                        [t.dcm, "Legume — DCM"],
+                        [t.critical, "Concerning"],
+                      ] as [string, string][]
+                    ).map(([c, label]) => (
+                      <View
+                        key={label}
+                        style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
+                      >
+                        <View
+                          style={{
+                            width: 9,
+                            height: 9,
+                            borderRadius: 5,
+                            backgroundColor: c,
+                          }}
+                        />
+                        <Text style={{ color: t.textMuted, fontSize: 11 }}>{label}</Text>
+                      </View>
+                    ))}
+                  </View>
                   <View style={styles.pillContainer}>
                     {ingredients.map((item, i) => {
                       const harm = flagged.find((f) => f.name === item);
+                      const l = item.toLowerCase();
+                      // Widened 2026-08-25: previously ONLY omega-3 and fibre sources
+                      // read as good, so organ meats, superfoods, produce, anti-
+                      // inflammatories and probiotics all rendered the same grey as
+                      // filler. Half the good news on a label was invisible.
                       const isGood =
-                        omega3Found.includes(item) || fiberFound.includes(item);
+                        omega3Found.includes(item) ||
+                        fiberFound.includes(item) ||
+                        ORGAN_MEATS.some((o) => l.includes(o) && !l.includes("meal")) ||
+                        SUPERFOODS.some((s) => l.includes(s)) ||
+                        WHOLE_FOOD_PRODUCE.some((p) => l.includes(p)) ||
+                        ANTI_INFLAMMATORY_FOODS.some((a) => l.includes(a)) ||
+                        PROBIOTIC_SOURCES.some((pb) => l.includes(pb));
                       const isMeal = meals.includes(item);
                       const isLegume = legumes.includes(item);
+                      // Below the salt line it's under ~1% — real, but a sprinkle.
+                      // Shown faded rather than hidden, matching how it's now scored.
+                      const isTrace = saltDust.has(item);
                       const bg = harm
                         ? SEVERITY_COLORS[harm.severity]
-                        : isGood
-                          ? t.goodDeep
-                          : isMeal || isLegume
-                            ? t.high
-                            : t.textMuted; // neutral pill fill — dark enough for onAccent (white) text to read (5.5:1)
+                        : isLegume
+                          ? t.dcm // its actual category, not "generic warning"
+                          : isGood
+                            ? t.goodDeep
+                            : isMeal
+                              ? t.high
+                              : t.textMuted; // neutral pill fill — dark enough for onAccent (white) text to read (5.5:1)
                       return (
                         <TouchableOpacity
                           key={i}
-                          style={[styles.pill, { backgroundColor: bg }]}
+                          style={[
+                            styles.pill,
+                            { backgroundColor: bg },
+                            isTrace && { opacity: 0.45 },
+                          ]}
                           onPress={() => handleIngredientTap(item)}
                           activeOpacity={0.7}
                         >
@@ -12727,6 +12842,20 @@ export default function App() {
                       );
                     })}
                   </View>
+                  {saltDust.size > 0 && (
+                    <Text
+                      style={{
+                        color: t.textMuted,
+                        fontSize: 11.5,
+                        marginTop: 9,
+                        lineHeight: 16,
+                      }}
+                    >
+                      Faded pills sit below the salt line — under about 1% of the food.
+                      Real ingredients, but a sprinkle rather than a serving, so they
+                      no longer earn points.
+                    </Text>
+                  )}
                 </AccordionSection>
               )}
 
