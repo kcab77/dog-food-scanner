@@ -587,6 +587,40 @@ const SEVERITY_PENALTIES: Record<string, number> = {
 };
 
 /**
+ * A poison is a poison wherever it sits on the label.
+ *
+ * The old rule — Math.min(10, base * positionMultiplier), copy-pasted into four
+ * places — flattened the whole severity system. severe (18) and toxic (28) both
+ * collapsed to 10, identical to moderate. The 2026-08-14 evidence tiering, which
+ * set severities by how strong the evidence actually is, was being erased at
+ * scoring time. Worse, the UI printed "−28 points each" while the scorer quietly
+ * took 10, so the app contradicted its own arithmetic on screen.
+ *
+ * Found 2026-08-27 by finally TESTING it: a treat of peanut butter + XYLITOL
+ * scored 90/100, because the +15 "simple ingredients" bonus outweighed a capped
+ * −10 for a substance that causes hypoglycaemia and liver failure in dogs.
+ *
+ * The rule now: toxic is never position-scaled and never capped — where a poison
+ * appears on the label is irrelevant. Everything else keeps position scaling, but
+ * the ceiling is that severity's own value instead of a flat 10, so severe
+ * genuinely outweighs moderate.
+ */
+function harmfulPenalty(severity: string, position: number): number {
+  const base = SEVERITY_PENALTIES[severity] ?? 8;
+  if (severity === "toxic") return base;
+  const mult = position < 5 ? 1.0 : position < 10 ? 0.65 : position < 20 ? 0.4 : 0.2;
+  return Math.min(base, Math.max(1, Math.round(base * mult)));
+}
+
+/**
+ * A bonus must never be able to outvote a poison. Anything flagged `toxic` pins
+ * the final score into the bottom band no matter how good the rest of the label
+ * looks — a single-ingredient freeze-dried treat containing xylitol is not a
+ * 90/100 product.
+ */
+const TOXIC_SCORE_CEILING = 15;
+
+/**
  * Per-ingredient impact, for DISPLAY only — it does not compute or alter the
  * score. It reads the same inputs the scorer already produced.
  *
@@ -612,10 +646,7 @@ function ingredientImpact(
   const harm = flagged.find((f) => f.name === item);
   if (harm) {
     // Identical to the scorer: base penalty, scaled by position, clamped 1–10.
-    const base = SEVERITY_PENALTIES[harm.severity] || 8;
-    const pos = harm.position ?? index;
-    const mult = pos < 5 ? 1.0 : pos < 10 ? 0.65 : pos < 20 ? 0.4 : 0.2;
-    const p = Math.min(10, Math.max(1, Math.round(base * mult)));
+    const p = harmfulPenalty(harm.severity, harm.position ?? index);
     return { points: -p, tier: "harm", label: harm.severity };
   }
   if (good.omega3.includes(item)) return { points: null, tier: "good", label: "omega-3 source" };
@@ -3323,7 +3354,7 @@ function scoreTreats(ingredientList: string[], processingMethod?: string, produc
 
   // Score the flags
   for (const f of flags) {
-    const p = Math.min(10, SEVERITY_PENALTIES[f.severity] || 8);
+    const p = harmfulPenalty(f.severity, 0);
     total -= p;
     breakdown.push({ label: `${f.name} (${f.severity})`, value: -p, severity: f.severity });
   }
@@ -3396,6 +3427,8 @@ function scoreTreats(ingredientList: string[], processingMethod?: string, produc
     total += Math.min(dentalIngredients.length * 3, 9);
     breakdown.push({ label: `${dentalIngredients.length} dental-benefit ingredient(s)`, value: Math.min(dentalIngredients.length * 3, 9) });
   }
+
+  if (flags.some((f) => f.severity === "toxic")) total = Math.min(total, TOXIC_SCORE_CEILING);
 
   total = Math.max(5, Math.min(100, Math.round(total)));
   return {
@@ -7669,10 +7702,8 @@ export default function App() {
         value: processingResult.bonus,
       });
     for (const h of foundHarmful) {
-      const base = SEVERITY_PENALTIES[h.severity] || 8;
       const pos = h.position ?? 0;
-      const mult = pos < 5 ? 1.0 : pos < 10 ? 0.65 : pos < 20 ? 0.40 : 0.20;
-      const p = Math.min(10, Math.max(1, Math.round(base * mult)));
+      const p = harmfulPenalty(h.severity, pos);
       total -= p;
       const posNote = pos >= 10 ? ` — ingredient #${pos + 1} (trace amount)` : pos >= 5 ? ` — ingredient #${pos + 1}` : "";
       breakdown.push({ label: `${h.name} (${h.severity})${posNote}`, value: -p, severity: h.severity });
@@ -7828,6 +7859,7 @@ export default function App() {
     }
     // Database audit — informational display only, not scored (ingredients already penalized above)
     total = Math.min(total, processingResult.scoreCap);
+    if (foundHarmful.some((h) => h.severity === "toxic")) total = Math.min(total, TOXIC_SCORE_CEILING);
     total = Math.max(5, Math.round(total));
     setScore(total);
     setScoreBreakdown(breakdown);
@@ -8320,10 +8352,8 @@ export default function App() {
       total -= processingResult.penalty;
       total += processingResult.bonus;
       for (const h of foundHarmful) {
-        const base = SEVERITY_PENALTIES[h.severity] || 8;
         const pos = h.position ?? 0;
-        const mult = pos < 5 ? 1.0 : pos < 10 ? 0.65 : pos < 20 ? 0.40 : 0.20;
-        const p = Math.min(10, Math.max(1, Math.round(base * mult)));
+        const p = harmfulPenalty(h.severity, pos);
         total -= p;
         const posNote = pos >= 10 ? ` — ingredient #${pos + 1} (trace amount)` : pos >= 5 ? ` — ingredient #${pos + 1}` : "";
         breakdown.push({ label: `${h.name} (${h.severity})${posNote}`, value: -p, severity: h.severity });
@@ -8481,6 +8511,7 @@ export default function App() {
         });
       }
       total = Math.min(total, processingResult.scoreCap);
+      if (foundHarmful.some((h) => h.severity === "toxic")) total = Math.min(total, TOXIC_SCORE_CEILING);
       total = Math.max(5, Math.round(total));
       setScore(total);
       setScoreBreakdown(breakdown);
