@@ -105,7 +105,16 @@
 </div>
 
 <script>
-const ANTHROPIC_KEY = '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';
+// ⚠️ NEVER hardcode a key here again. This file runs in a browser, so anything
+// in it is readable by anyone who opens or hosts it. A live Anthropic key sat
+// on this line from 2026-06-17 until 2026-08-27 and was only caught when
+// GitHub's push protection refused the push. That key has been rotated.
+// The key is now supplied at runtime and kept in this browser only.
+const ANTHROPIC_KEY = (() => {
+  let k = localStorage.getItem('pawgrade.anthropicKey');
+  if (!k) { k = prompt('Anthropic API key (stored in this browser only):') || ''; if (k) localStorage.setItem('pawgrade.anthropicKey', k); }
+  return k;
+})();
 const SUPABASE_URL = 'https://dyzupdctgejwyuocqbtw.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5enVwZGN0Z2Vqd3l1b2NxYnR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2ODgxMTksImV4cCI6MjA4ODI2NDExOX0.-wjlNLrlIAgFVtWKTKO9ZknXhT_8bxcWBvfjj1BWB2U';
 
