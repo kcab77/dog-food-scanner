@@ -4,7 +4,7 @@
 "the app store stuff", it's this file. Update it here first, then paste into App Store Connect —
 never the other way round, or the two drift.
 
-Last revised: **2026-08-12** · Written against a baseline of **143 impressions / 0 product page
+Last revised: **2026-08-27** (was 2026-08-12) · Written against a baseline of **143 impressions / 0 product page
 views / 0 downloads over 90 days** — an invisibility problem, not a conversion problem.
 
 ---
@@ -79,7 +79,8 @@ WHAT YOU GET
   artificial dyes — each with the study behind it
 • Processing detected — raw and freeze-dried score higher
   because the nutrition genuinely differs
-• Separate treats scanner with its own rules
+• Mineral forms decoded — chelate beats sulfate beats oxide,
+  the part of the label almost nobody can read
 • Tap any ingredient for a plain-English explanation
 • Supplement suggestions based on what the food is missing
 
@@ -95,6 +96,14 @@ are affiliate; they don't affect any score.
 
 For educational purposes only. Not veterinary advice.
 ```
+
+---
+
+**4. A feature that isn't shipping.** The description promised *"separate treats scanner with
+its own rules"* while the Treats tab was hidden in the build. That's an Apple 2.3.1 rejection
+(accurate metadata) and it misleads anyone who downloads for it. Replaced 2026-08-27 with the
+mineral-forms line, which is real and shipping. **Put it back the day the tab is un-hidden — not
+before.**
 
 ---
 
