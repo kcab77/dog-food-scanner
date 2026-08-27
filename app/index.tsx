@@ -156,6 +156,18 @@ const HARMFUL_INGREDIENTS: {
       "⚠️ Read this one carefully, because it is flagged for the OPPOSITE reason to every other mineral here. As a form, sulfate is the acceptable middle — chelates absorb best, sulfates adequately, oxides barely at all. Copper sulfate is not a poor form. The concern is TOTAL COPPER LOAD: copper accumulates in the liver, dogs have no good way to dump the excess, and AAFCO deleted the copper maximum in 2007 and still has none. So 'meets AAFCO' tells you nothing about the ceiling. Matters most in copper-predisposed breeds — Bedlington Terrier, West Highland White, Doberman, Labrador, Dalmatian — where the target is under ~1.2mg per 1,000 kcal. Liver enzymes are NOT sensitive early, so normal bloodwork does not rule it out. Demoted from severe to mild on 2026-08-23: the form itself is fine, and scoring it as severe punished a mid-tier food for using an adequate mineral.",
   },
   {
+    term: "sodium selenate",
+    severity: "severe",
+    reason:
+      "❌ Inorganic selenium, same grade as sodium selenite. Selenium has the narrowest margin of any nutrient in the AAFCO profile — 0.35 mg/kg minimum against a 2 mg/kg maximum, a ceiling only about 6x the floor. Selenium yeast (selenomethionine) is both better absorbed and better tolerated.",
+  },
+  {
+    term: "magnesium oxide",
+    severity: "moderate",
+    reason:
+      "❌ Oxide is the worst grade of mineral form — barely absorbed, cheapest to buy. Look for magnesium proteinate; magnesium sulfate is the acceptable middle.",
+  },
+  {
     term: "sodium selenite",
     severity: "severe",
     reason:
@@ -753,15 +765,28 @@ const NUTRIENT_HEAT_LOSS: {
     note: "Fully destroyed by cooking. Their importance in dog diets is debated — dogs make their own digestive enzymes — so treat this as a reason to favour raw, not proof that cooked food is deficient." },
 ];
 
-const VITAMIN_MINERAL_PENALTIES: { term: string; penalty: number; label: string }[] = [
-  // Not in HARMFUL_INGREDIENTS — inorganic selenium poor form
-  { term: "sodium selenate", penalty: 7, label: "Sodium selenate — inorganic selenium, oxidative kidney damage" },
-  // Not in HARMFUL_INGREDIENTS — poor mineral forms
-  { term: "zinc sulfate", penalty: 3, label: "Zinc sulfate — poor bioavailability vs proteinate forms" },
-  { term: "magnesium oxide", penalty: 3, label: "Magnesium oxide — poorly absorbed, causes GI upset" },
-  // Generic vitamin d supplement (not the specific cholecalciferol already caught above)
-  { term: "vitamin d supplement", penalty: 4, label: "Synthetic Vitamin D — narrow safe range" },
-];
+/**
+ * ⚠️ DELIBERATELY EMPTY — do not repopulate without checking for duplicates.
+ *
+ * This list carried a flat extra penalty for four forms, under a comment saying
+ * "Not in HARMFUL_INGREDIENTS". That was true when written and stopped being
+ * true on 2026-08-23, when the mineral work added them there. The result was
+ * zinc sulfate being charged THREE times for one appearance on a label —
+ * HARMFUL_INGREDIENTS (mild, -2), here (-3), and vitaminLoadPenalty() — while
+ * the two user-facing texts contradicted each other: "the acceptable middle
+ * grade, not a reason to reject a food on its own" against "poor
+ * bioavailability". Kyle spotted it in the app.
+ *
+ * All four are covered: sodium selenate and magnesium oxide are now in
+ * HARMFUL_INGREDIENTS and VITAMIN_CONCERN_HIGH; zinc sulfate is mild in
+ * HARMFUL_INGREDIENTS; vitamin D supplement is normal fortification and is no
+ * longer penalised at all.
+ *
+ * The loop over this array is intentionally left in place — an empty list is a
+ * no-op, and the structure documents the decision better than its absence would.
+ */
+const VITAMIN_MINERAL_PENALTIES: { term: string; penalty: number; label: string }[] = [];
+
 const LENTIL_LEGUME = [
   "lentils",
   "peas",
@@ -4213,14 +4238,13 @@ const VITAMIN_CONCERN_LOW = [
   "manganese sulfate",
   "copper sulfate",
   "magnesium sulfate",
-  "retinyl palmitate",
-  "retinyl acetate",
-  "pyridoxine hydrochloride",
-  "cholecalciferol",
-  "vitamin d3 supplement",
-  "vitamin d supplement",
-  "vitamin a supplement",
   "dl-methionine",
+  // Removed 2026-08-25: retinyl palmitate/acetate, pyridoxine hydrochloride,
+  // cholecalciferol, and the vitamin A/D supplements. docs/MINERAL_FORMS_CHEATSHEET.md
+  // is explicit that these are fine — "Dogs tolerate vitamin A far better than most
+  // species", D3 is "the right form", thiamine and B6 forms are "both fine" — and that
+  // "the panic about 40 added vitamins is mostly misplaced, and overstating it is how
+  // you lose credibility". They were costing points for ordinary fortification.
 ];
 
 function vitaminLoadPenalty(ingredientList: string[]): { penalty: number; level: string; high: string[] } {
