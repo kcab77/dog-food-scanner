@@ -3,6 +3,7 @@ import { CameraView, useCameraPermissions } from "expo-camera";
 import * as ImageManipulator from "expo-image-manipulator";
 import { router, type Href } from "expo-router";
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import Constants from "expo-constants";
 import {
   Image,
     ActivityIndicator,
@@ -6333,10 +6334,16 @@ export default function App() {
           By continuing, you agree this app provides information only and is not
           a substitute for professional veterinary advice.
         </Text>
-        {/* Build stamp. Added 2026-08-18 because it became impossible to tell
-            whether a screen was running current code or a cached bundle —
-            several rounds of UI changes were made and reported as "nothing
-            changed". If this line is missing, you are NOT on the current build. */}
+        {/* Version stamp. Started life on 2026-08-18 as a hand-edited "BUILD
+            CHECK · <what changed> · <date>" line, because it had become
+            impossible to tell whether a screen was running current code or a
+            cached bundle. It did its job — and then very nearly shipped to the
+            App Store saying "23 Aug".
+
+            Now it reads the real version and build number off the native
+            binary, so it still answers "am I on current code?" without ever
+            needing to be edited, and it's something a user can legitimately
+            see. Report this line when filing a bug. */}
         <Text
           style={{
             color: t.textFaint,
@@ -6346,7 +6353,8 @@ export default function App() {
             letterSpacing: 0.4,
           }}
         >
-          BUILD CHECK · scoring fixes · minerals + legumes · 23 Aug
+          v{Constants.nativeAppVersion ?? Constants.expoConfig?.version ?? "—"}
+          {Constants.nativeBuildVersion ? ` · build ${Constants.nativeBuildVersion}` : ""}
         </Text>
       </View>
     );
