@@ -41,61 +41,46 @@ The description is **conversion copy, not keyword copy**. Its one job is the fir
 because most people never tap "more".
 
 ```
-Point your camera at any dog food or treat. Get a 0–100 score,
-every flagged ingredient, and the research behind each one.
+I was completely overwhelmed when I first got Hershey.
 
-No barcode needed. Works on any bag.
-
-━━━━━━━━━━━━━━━━━━━━━
-
-WHY I BUILT THIS
-
-I was completely overwhelmed when I first got Hershey. Every
-decision felt high-stakes — food, vaccines, preventatives. So I
-did what everyone does: I trusted my vet, bought what they
-recommended, and assumed the system was looking out for my dog.
+Every decision felt high-stakes — food, vaccines, preventatives, supplements. I didn't know anything. So I did what everyone does: I trusted my vet, I bought what they recommended, and I assumed the system was looking out for my dog.
 
 That was 7 years ago. I've been learning ever since.
 
-Then I came across a number I couldn't shake: almost half of
-dogs over ten develop cancer. I started asking why — and
-realized how little I knew about what went into Hershey's bowl
-every single day. Ingredients linked to liver damage. Synthetic
-preservatives flagged by cancer researchers. Things that have
-been in "premium" pet food for decades.
+At some point I came across a statistic I couldn't shake: almost half of dogs over ten develop cancer. I started asking why, and the more I researched, the more I realized how little I actually knew about what was going into Hershey's bowl every single day. Ingredients linked to liver damage. Synthetic preservatives flagged by cancer researchers. Things that have been in "premium" pet food for decades.
 
-I'm not saying don't trust your vet. I'm saying be thoughtful
-about who you trust, and with what.
+I'm not saying don't trust your vet. I'm saying be thoughtful about who you trust — and with what. PawGrade doesn't tell you what to do. It just shows you what's in the food and what the research says. That's it. You decide.
 
-PawGrade doesn't tell you what to do. It shows you what's in the
-food and what the research says. You decide.
+Point your camera at any dog food or treat and get an instant breakdown:
 
-━━━━━━━━━━━━━━━━━━━━━
+Safety score 0–100 based on peer-reviewed research, not brand partnerships
+Flags 60+ harmful ingredients — BHA, BHT, menadione, artificial dyes, and more — with the science behind each one
+Detects how the food was made — freeze-dried and raw score higher than kibble because the nutrition genuinely is different
+Decodes the mineral block — chelate beats sulfate beats oxide, the part of the label almost nobody can read
+Smart Scan — no barcode needed, just point at any part of the bag
+Supplement recommendations based on what the food is missing
+Tap any ingredient for a plain-English explanation of what it is, why it's in the food, and what long-term exposure looks like.
 
-WHAT YOU GET
-
-• Score 0–100 — built on peer-reviewed research
-• 60+ harmful ingredients flagged — BHA, BHT, menadione,
-  artificial dyes — each with the study behind it
-• Processing detected — raw and freeze-dried score higher
-  because the nutrition genuinely differs
-• Mineral forms decoded — chelate beats sulfate beats oxide,
-  the part of the label almost nobody can read
-• Tap any ingredient for a plain-English explanation
-• Supplement suggestions based on what the food is missing
-
-━━━━━━━━━━━━━━━━━━━━━
-
-Built out of love — for Hershey, and for every owner who felt as
-lost as I did.
+I built this out of love — for Hershey, and for every dog owner who felt as lost as I did and just wants to do right by their dog.
 
 Free to download.
 
-Scoring is never influenced by partnerships. Some product links
-are affiliate; they don't affect any score.
+Scoring is never influenced by partnerships. Some product links are affiliate; they don't affect any score.
 
-For educational purposes only. Not veterinary advice.
+For informational and educational purposes only. Not veterinary advice.
 ```
+
+**Kyle's rewrite, saved 2026-08-27.** It opens on the personal story rather than the feature
+list, which is the stronger choice — the first three lines are the only ones most people read, and
+"I was completely overwhelmed when I first got Hershey" earns more attention than a spec. Four
+edits were made to his draft, all of them things the warnings below already covered:
+
+| His draft | Changed to | Why |
+|---|---|---|
+| "1 in 2 dogs **now** develops cancer" | "almost half of dogs over ten develop cancer" | The 1-in-2 figure is wrong. See warning 1 — this is the one that matters. |
+| "Separate Treats Scanner with its own scoring system" | "Decodes the mineral block…" | The Treats tab is hidden in the build. See warning 4. |
+| "Free to download. **No subscription.**" | "Free to download." | A paid AI tier is planned. See warning 2. |
+| *(nothing)* | "Some product links are affiliate; they don't affect any score." | See warning 3. |
 
 ---
 
