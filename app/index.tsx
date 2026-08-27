@@ -3359,17 +3359,37 @@ function scoreTreats(ingredientList: string[], processingMethod?: string, produc
     breakdown.push({ label: `${f.name} (${f.severity})`, value: -p, severity: f.severity });
   }
 
-  // Ingredient count — 10+ ingredients is bad for treats
+  // Ingredient count — 10+ ingredients is bad for treats.
+  //
+  // ⚠️ A SHORT LIST IS ONLY A VIRTUE IF THE THINGS ON IT ARE ANY GOOD.
+  // Added 2026-08-27 (Kyle). The simplicity bonus used to be paid on count
+  // alone, so "Sugar, Propylene Glycol" collected the same +15 as "Sweet
+  // Potato, Peanut Butter". A two-ingredient treat where one of the two is a
+  // problem is not a simple treat — it's a treat that is half problem.
+  //
+  // So the bonus is earned, not given: clean list gets it in full, mild flags
+  // halve it, and anything moderate or worse forfeits it entirely. Penalties
+  // for the flagged ingredients still apply on top; this only stops a bonus
+  // from cancelling them out.
   const count = ingredientList.length;
+  const worst = flags.reduce(
+    (w, f) => Math.max(w, f.severity === "mild" ? 1 : f.severity === "moderate" ? 2 : 3),
+    0,
+  );
+  const cleanMult = worst === 0 ? 1 : worst === 1 ? 0.5 : 0;
+  const simplicityNote =
+    cleanMult === 1 ? "" : cleanMult === 0.5 ? " — but one is a concern" : " — but the list isn't clean";
+  const award = (base: number, label: string) => {
+    const v = Math.round(base * cleanMult);
+    total += v;
+    breakdown.push({ label: `${label}${simplicityNote}`, value: v });
+  };
   if (count === 1) {
-    total += 25;
-    breakdown.push({ label: "Single ingredient treat — best possible", value: 25 });
+    award(25, "Single ingredient treat — best possible");
   } else if (count <= 3) {
-    total += 15;
-    breakdown.push({ label: "2-3 ingredients — excellent simplicity", value: 15 });
+    award(15, "2-3 ingredients — excellent simplicity");
   } else if (count <= 5) {
-    total += 8;
-    breakdown.push({ label: "4-5 ingredients — good simplicity", value: 8 });
+    award(8, "4-5 ingredients — good simplicity");
   } else if (count <= 8) {
     breakdown.push({ label: "6-8 ingredients — acceptable", value: 0 });
   } else if (count <= 10) {
