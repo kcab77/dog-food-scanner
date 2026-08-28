@@ -33,7 +33,20 @@ export default function Library() {
    * wall this site is meant not to have.
    */
   const index = useMemo(() => {
-    const strip = (h: string) => h.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ')
+    // Tags out, then entities — otherwise snippets read "&quot;Frito&quot;".
+    const strip = (h: string) =>
+      h
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/&(quot|#34);/g, '"')
+        .replace(/&(apos|#39);/g, "'")
+        .replace(/&(amp|#38);/g, '&')
+        .replace(/&(lt|#60);/g, '<')
+        .replace(/&(gt|#62);/g, '>')
+        .replace(/&(nbsp|#160);/g, ' ')
+        .replace(/&#8217;/g, "'")
+        .replace(/&#822[01];/g, '"')
+        .replace(/&#8212;/g, '—')
+        .replace(/\s+/g, ' ')
     return [
       ...libraryTopics.map((t) => ({
         href: `/library/${t.slug}`, title: t.title, emoji: t.emoji, tag: t.tag,
