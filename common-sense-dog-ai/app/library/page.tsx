@@ -3,6 +3,9 @@
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import { getAllEntries, getEntriesByLetter, getActiveLetters } from '@/lib/library'
+import { libraryTopics } from '@/lib/library-data'
+import { blogPosts } from '@/lib/blog-data'
+import { answerPages } from '@/lib/answers-data'
 
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
 
@@ -13,21 +16,75 @@ export default function Library() {
   const grouped = useMemo(() => getEntriesByLetter(), [])
 
   const query = q.trim().toLowerCase()
-  const filtered = useMemo(() => {
-    if (!query) return grouped
-    const match = all.filter(
-      (e) =>
-        e.title.toLowerCase().includes(query) ||
-        e.summary.toLowerCase().includes(query) ||
-        e.tag.toLowerCase().includes(query),
-    )
-    const map = new Map<string, typeof all>()
-    for (const e of match) {
-      if (!map.has(e.letter)) map.set(e.letter, [])
-      map.get(e.letter)!.push(e)
-    }
-    return Array.from(map.entries()).sort((a, b) => a[0].localeCompare(b[0])).map(([letter, entries]) => ({ letter, entries }))
-  }, [query, grouped, all])
+
+  /**
+   * The search index — built once, covers every page on the site.
+   *
+   * The old search only looked at title, summary and tag, so searching
+   * "xylitol" or "corn chip" or "menadione" returned nothing at all: those
+   * words live in the article bodies, not the headlines. Every real question
+   * an owner types is a body-text question.
+   *
+   * Now it searches the full text of all 40 library topics, 11 blog posts and
+   * 55 answer pages including their FAQs — 106 pages. The A-Z browse below
+   * still shows only the 51 curated topics, so browsing stays simple while
+   * search reaches everything. That's deliberate: the answer pages exist for
+   * people arriving from Google, and putting them all in the nav would be the
+   * wall this site is meant not to have.
+   */
+  const index = useMemo(() => {
+    const strip = (h: string) => h.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ')
+    return [
+      ...libraryTopics.map((t) => ({
+        href: `/library/${t.slug}`, title: t.title, emoji: t.emoji, tag: t.tag,
+        summary: t.summary, kind: 'Topic', body: strip(t.contentHtml).toLowerCase(),
+      })),
+      ...blogPosts.map((p) => ({
+        href: `/blog/${p.slug}`, title: p.title, emoji: p.emoji, tag: p.tag,
+        summary: p.description, kind: 'Article', body: strip(p.content).toLowerCase(),
+      })),
+      ...answerPages.map((a) => ({
+        href: `/answers/${a.slug}`, title: a.title, emoji: a.emoji, tag: a.tag,
+        summary: a.lead, kind: 'Answer',
+        body: (a.lead + ' ' + a.faqs.map((f) => f.q + ' ' + f.a).join(' ')).toLowerCase(),
+      })),
+    ]
+  }, [])
+
+  /**
+   * Every term must appear somewhere, so "corn chip smell" narrows rather than
+   * widens. Ranked by WHERE it matched — a title hit beats a body mention —
+   * and each result carries the sentence it matched on, so you can see why it
+   * came back without opening it.
+   */
+  const results = useMemo(() => {
+    if (!query) return []
+    const terms = query.split(/\s+/).filter(Boolean)
+    return index
+      .map((e) => {
+        const title = e.title.toLowerCase()
+        const summary = e.summary.toLowerCase()
+        const tag = e.tag.toLowerCase()
+        let score = 0
+        for (const t of terms) {
+          if (title.includes(t)) score += 10
+          else if (tag.includes(t)) score += 5
+          else if (summary.includes(t)) score += 4
+          else if (e.body.includes(t)) score += 1
+          else return null
+        }
+        let snippet = e.summary
+        const first = terms.find((t) => !title.includes(t) && e.body.includes(t))
+        if (first) {
+          const i = e.body.indexOf(first)
+          snippet = '…' + e.body.slice(Math.max(0, i - 90), i + 130).trim() + '…'
+        }
+        return { ...e, score, snippet }
+      })
+      .filter((x): x is NonNullable<typeof x> => x !== null)
+      .sort((a, b) => b.score - a.score || a.title.length - b.title.length)
+      .slice(0, 30)
+  }, [query, index])
 
   return (
     <>
@@ -58,6 +115,16 @@ export default function Library() {
         .azbar a:hover { background: var(--green); color: #fff; }
         .azbar span { color: #CFC8BB; }
         .content { max-width: 1000px; margin: 0 auto; padding: 16px 24px 80px; }
+        .result-count { text-align: center; color: var(--muted, #6b7280); font-size: 14px; margin: 26px 0 4px; }
+        .results { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+        .result { display: flex; gap: 13px; align-items: flex-start; background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: inherit; transition: all 0.15s; }
+        .result:hover { border-color: var(--green); transform: translateY(-1px); }
+        .result-emoji { font-size: 22px; line-height: 1.2; flex-shrink: 0; }
+        .result-body { min-width: 0; flex: 1; }
+        .result-head { display: flex; align-items: baseline; gap: 9px; flex-wrap: wrap; }
+        .result-title { font-size: 15.5px; font-weight: 700; color: var(--text); }
+        .result-kind { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--green); background: var(--green-pale); padding: 2px 7px; border-radius: 20px; }
+        .result-snippet { font-size: 13px; line-height: 1.55; color: var(--muted, #6b7280); margin: 5px 0 0; }
         .letter-group { margin-top: 34px; scroll-margin-top: 80px; }
         .letter-head { font-size: 26px; font-weight: 800; color: var(--green); border-bottom: 2px solid var(--green-pale); padding-bottom: 6px; margin-bottom: 16px; }
         .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
@@ -88,11 +155,11 @@ export default function Library() {
 
       <div className="hero">
         <h1>Dog Health A–Z</h1>
-        <p>Everything we know about keeping your dog healthy, in plain English. Search a topic, or browse the alphabet below.</p>
+        <p>Everything we know about keeping your dog healthy, in plain English. Search across every page, or browse the alphabet below.</p>
         <div className="search">
           <input
             type="text"
-            placeholder="Search — e.g. fleas, omega-3, lipomas, kibble…"
+            placeholder="Search everything — xylitol, corn chip smell, zinc oxide…"
             value={q}
             onChange={(e) => setQ(e.target.value)}
             aria-label="Search topics"
@@ -114,29 +181,58 @@ export default function Library() {
       )}
 
       <div className="content">
-        {filtered.length === 0 && (
-          <div className="empty">
-            <p>No topics match “{q}”.</p>
-            <Link className="ask-cta" href={`/chat?q=${encodeURIComponent(q)}`}>Ask the assistant about it →</Link>
-          </div>
-        )}
-        {filtered.map((group) => (
-          <section key={group.letter} id={`letter-${group.letter}`} className="letter-group">
-            <div className="letter-head">{group.letter}</div>
-            <div className="cards">
-              {group.entries.map((e) => (
-                <Link key={e.href} href={e.href} className="card">
-                  <div className="card-top">
-                    <span className="card-emoji">{e.emoji}</span>
-                    <span className="card-title">{e.title}</span>
-                  </div>
-                  <span className="card-tag">{e.tag}</span>
-                  <p className="card-summary">{e.summary}</p>
-                </Link>
-              ))}
+        {/* Searching: one ranked list across everything, with the matched line.
+            Browsing: the A-Z, untouched. Two modes, no extra furniture. */}
+        {query ? (
+          results.length === 0 ? (
+            <div className="empty">
+              <p>Nothing here matches “{q}”.</p>
+              <Link className="ask-cta" href={`/chat?q=${encodeURIComponent(q)}`}>Ask the assistant about it →</Link>
             </div>
-          </section>
-        ))}
+          ) : (
+            <>
+              <p className="result-count">
+                {results.length} {results.length === 1 ? 'result' : 'results'} for “{q}”
+              </p>
+              <div className="results">
+                {results.map((r) => (
+                  <Link key={r.href} href={r.href} className="result">
+                    <span className="result-emoji">{r.emoji}</span>
+                    <div className="result-body">
+                      <div className="result-head">
+                        <span className="result-title">{r.title}</span>
+                        <span className="result-kind">{r.kind}</span>
+                      </div>
+                      <p className="result-snippet">{r.snippet}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+              <div className="empty" style={{ marginTop: 26 }}>
+                <p>Not what you meant?</p>
+                <Link className="ask-cta" href={`/chat?q=${encodeURIComponent(q)}`}>Ask the assistant instead →</Link>
+              </div>
+            </>
+          )
+        ) : (
+          grouped.map((group) => (
+            <section key={group.letter} id={`letter-${group.letter}`} className="letter-group">
+              <div className="letter-head">{group.letter}</div>
+              <div className="cards">
+                {group.entries.map((e) => (
+                  <Link key={e.href} href={e.href} className="card">
+                    <div className="card-top">
+                      <span className="card-emoji">{e.emoji}</span>
+                      <span className="card-title">{e.title}</span>
+                    </div>
+                    <span className="card-tag">{e.tag}</span>
+                    <p className="card-summary">{e.summary}</p>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          ))
+        )}
       </div>
     </>
   )
