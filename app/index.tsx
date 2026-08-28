@@ -1560,6 +1560,141 @@ const GUT_WARNINGS: { title: string; icon: string; detail: string }[] = [
 ];
 
 
+// ── YEAST ────────────────────────────────────────────────────────────────────
+// Added 2026-08-28 from Kyle's yeast research. Companion image:
+// assets/images/yeast-guide.jpg
+//
+// The framework: yeast is fed by sugar and by a damaged gut wall, so you starve
+// it from the inside while managing the surface from the outside. It is a
+// multi-week protocol, not a fast fix — which is the single most useful thing to
+// tell an owner up front, because most people quit at week two and conclude it
+// didn't work.
+//
+// Sits next to the GUT_* block deliberately: recurring yeast is a gut story.
+
+// The distinction that decides the whole protocol.
+const YEAST_VS_ALLERGY: { sign: string; icon: string; detail: string }[] = [
+  {
+    sign: "The “Frito” smell", icon: "🌽",
+    detail:
+      "The single most reliable sign. Yeast produces a distinct corn-chip or Doritos odour, strongest around the paws, skin folds and ears. Itching WITHOUT that smell points at allergy or a leaky gut rather than yeast.",
+  },
+  {
+    sign: "Orange or rusty staining", icon: "🟠",
+    detail:
+      "A reddish-brown or orange tinge on the nails, between the toes, and on the bottom of the paws. It comes from constant licking of yeasty areas, so it maps exactly onto where the dog has been working.",
+  },
+  {
+    sign: "Broken skin", icon: "🩹",
+    detail:
+      "Yeast is internal inflammation showing through the skin. Once the surface breaks, it opens the door to opportunistic bacteria on top of the fungal problem — which is why a yeast dog often ends up with two infections.",
+  },
+  {
+    sign: "What points at allergy instead", icon: "🌾",
+    detail:
+      "Fleas, ticks, mites, dust, and synthetic additives in food. If the itch is there but the corn-chip smell isn’t, run diagnostics — food sensitivity testing, environmental allergy testing, or a gut microbiome analysis to check for leaky gut.",
+  },
+];
+
+// Step one, and the one people skip.
+const YEAST_ELIMINATE = {
+  headline: "Starve it. Sugar is what feeds yeast.",
+  cut: "Rice · corn · peas · potatoes · sweet potatoes · kibble fillers · all sugary treats",
+  fruit:
+    "Avoid ALL fruit during the detox — mango, melon, pineapple, watermelon. Even carrots carry enough sugar to feed a bloom.",
+  steroids:
+    "Avoid steroids if you can. They raise blood sugar and hide the symptom without touching the cause — and when the course ends the yeast often comes back worse than before.",
+};
+
+// What goes in the bowl instead.
+const YEAST_PLATE: { part: string; detail: string }[] = [
+  {
+    part: "60–70% protein",
+    detail:
+      "Beef, chicken, turkey, lamb or fish. For a dog with severe allergies, use cooling novel proteins instead — rabbit, pork or duck.",
+  },
+  {
+    part: "Low-glycemic vegetables",
+    detail:
+      "Cruciferous and high-fibre: broccoli, zucchini, kale, cabbage, okra, spinach. Fibre without sugar, which supports the detox pathways. Use spinach sparingly in a dog with a history of kidney stones.",
+  },
+];
+
+// The additions, with the instructions that actually matter.
+const YEAST_ADDITIONS: { name: string; icon: string; dose: string; detail: string }[] = [
+  {
+    name: "Garlic — the 15-minute rule", icon: "🧄",
+    dose: "One crushed clove per 100 lb of dog",
+    detail:
+      "Crush or slice it and LET IT SIT FOR 15 MINUTES before feeding. That rest is what lets the enzyme alliinase convert the precursor into allicin, which is the actual antifungal and antibacterial compound. Feed it immediately and you get the taste without the effect.",
+  },
+  {
+    name: "Coconut oil", icon: "🥥",
+    dose: "Up to 2 tbsp, organic cold-pressed virgin",
+    detail: "The fatty acids disrupt yeast cell walls. Cold-pressed virgin specifically — refined oil has been processed past the point of usefulness.",
+  },
+  {
+    name: "Sardines in water", icon: "🐟",
+    dose: "",
+    detail: "Omega-3s to bring the underlying inflammation down. In water, never in oil.",
+  },
+  {
+    name: "Oregano", icon: "🌿",
+    dose: "",
+    detail: "Contains thymol, a natural antifungal — the same compound used in some medicated shampoos.",
+  },
+  {
+    name: "Ginger", icon: "🫘",
+    dose: "About ½ tbsp, finely chopped",
+    detail: "Disrupts fungal cell membranes. Chop it fine to hide the pungent taste.",
+  },
+  {
+    name: "Turmeric + black pepper", icon: "🟡",
+    dose: "1–2 pinches, always with pepper",
+    detail:
+      "Antifungal and anti-inflammatory. The black pepper is not optional — piperine raises turmeric absorption dramatically. ⚠️ Check with a vet first if your dog is on anti-clotting medication or has surgery coming up.",
+  },
+  {
+    name: "Probiotics — mind the temperature", icon: "🦪",
+    dose: "S. boulardii, or non-dairy coconut yogurt / kefir with Lactobacillus",
+    detail:
+      "S. boulardii is a beneficial YEAST that kills bad bacteria and fungi in the gut without harming the good flora. ⚠️ Food must be BELOW 120°F when you add any probiotic, or the heat kills the live cultures before they arrive.",
+  },
+];
+
+// Surface management, while the diet does the real work.
+const YEAST_TOPICAL: { name: string; icon: string; detail: string }[] = [
+  {
+    name: "The vinegar rinse — the fast fix", icon: "🧴",
+    detail:
+      "One part vinegar to one part water, white or apple cider. Bathe the dog in it and let them AIR DRY — don’t towel it off. It changes the skin’s pH into something yeast doesn’t want to live on.",
+  },
+  {
+    name: "Medicated shampoo", icon: "🧼",
+    detail:
+      "Veterinary Formula Clinical Care Antiseptic & Antifungal (1% ketoconazole), or E3 Elite Pharmaceuticals antibacterial & antifungal (0.25% ketoconazole plus thymol).",
+  },
+  {
+    name: "Sprays and tinctures", icon: "💧",
+    detail:
+      "Yeasty Beast 3 spray, applied to itchy areas 2–3 times a day. Solutions Pet Products Yeast & Fungal Tincture works internally or straight onto skin folds and feet. Animalio makes a ready-to-use Yeasty Beast essential oil.",
+  },
+  {
+    name: "Ear and skin care", icon: "👂",
+    detail: "Propeium topicals — ear cleaners, moisturising oils and effervescent tablets — for ongoing yeast management.",
+  },
+];
+
+// The thing to say first, because it decides whether anyone finishes.
+const YEAST_TIMELINE = {
+  weeks: "3 to 8 weeks",
+  detail:
+    "This is not an overnight fix. It takes up to eight weeks of consistent diet and treatment to regulate the system and see it in the skin and coat. Most people stop at week two, decide it didn’t work, and reach for steroids.",
+  maintenance:
+    "For ongoing support once it clears: New Vet for immune support, New Joint DS as a natural anti-inflammatory.",
+};
+
+
 // ── TCVM FOOD THERAPY ────────────────────────────────────────────────────────
 // Added 2026-08-22 from Kyle's TCVM food-therapy research. Companion image:
 // assets/images/tcvm-energetic-bowl.jpg
@@ -5419,7 +5554,7 @@ const TopicContext = React.createContext<string | null>(null);
 export const LEARN_TOPICS = [
   "AAFCO", "Bloat", "Carbs", "Collagen", "Deficiency signs", "Gut health", "Heart",
   "Kibble", "Life stages", "Lifespan", "Lipomas", "Mineral forms",
-  "Missing nutrients", "Mushrooms", "Omega-3", "Recalls & facts", "TCVM",
+  "Missing nutrients", "Mushrooms", "Omega-3", "Recalls & facts", "TCVM", "Yeast",
 ] as const;
 
 // ── THE KIBBLE GUIDE (added 2026-08-21) ──────────────────────────────────────
@@ -13692,6 +13827,92 @@ export default function App() {
                   }
                 >
                   <MineralFormsGuide />
+                </AccordionSection>
+              )}
+
+              {/* Yeast. Added 2026-08-28 from Kyle's research. Sits beside Gut
+                  health on purpose — recurring yeast is a gut story, and the
+                  two sections are read together. New "Yeast" chip in
+                  LEARN_TOPICS. */}
+              {(score !== null || learnMode) && (
+                <AccordionSection
+                  title="🍄‍🟫 Yeast — the “Frito” problem"
+                  topic="Yeast"
+                  door="learn"
+                  askLabel="Ask AI"
+                  onAskAI={() =>
+                    askAboutSection(
+                      `My dog has itchy paws and a corn-chip smell. Walk me through the yeast detox — what to cut, what to feed, and how long before I should expect to see a difference.`,
+                    )
+                  }
+                >
+                  <Text style={{ color: t.text, fontSize: 12.5, lineHeight: 18 }}>
+                    Yeast lives on sugar and a damaged gut wall. You starve it from the
+                    inside while managing the surface from the outside — and it takes{" "}
+                    <Text style={{ fontWeight: "800", color: t.textStrong }}>
+                      {YEAST_TIMELINE.weeks}
+                    </Text>
+                    , not days.
+                  </Text>
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>Is it yeast, or is it allergies?</Text>
+                  {YEAST_VS_ALLERGY.map((y, i) => (
+                    <View key={i} style={{ backgroundColor: t.surface, borderRadius: 9, padding: 10, marginTop: 7 }}>
+                      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>
+                        {y.icon} {y.sign}
+                      </Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>{y.detail}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>Starve it</Text>
+                  <View style={{ backgroundColor: t.surface, borderRadius: 9, padding: 11, borderLeftWidth: 3, borderLeftColor: t.critical }}>
+                    <Text style={{ color: t.textStrong, fontSize: 13, fontWeight: "800" }}>{YEAST_ELIMINATE.headline}</Text>
+                    <Text style={{ color: t.critical, fontSize: 12, marginTop: 6, lineHeight: 17, fontWeight: "600" }}>
+                      Cut: {YEAST_ELIMINATE.cut}
+                    </Text>
+                    <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 6, lineHeight: 17 }}>{YEAST_ELIMINATE.fruit}</Text>
+                    <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 6, lineHeight: 17 }}>{YEAST_ELIMINATE.steroids}</Text>
+                  </View>
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>What goes in the bowl</Text>
+                  {YEAST_PLATE.map((y, i) => (
+                    <View key={i} style={{ flexDirection: "row", gap: 9, marginTop: 7 }}>
+                      <Text style={{ color: t.good, fontSize: 12, fontWeight: "800", width: 118 }}>{y.part}</Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, flex: 1, lineHeight: 17 }}>{y.detail}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>The additions</Text>
+                  {YEAST_ADDITIONS.map((y, i) => (
+                    <View key={i} style={{ backgroundColor: t.surface, borderRadius: 9, padding: 10, marginTop: 7 }}>
+                      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>
+                        {y.icon} {y.name}
+                      </Text>
+                      {y.dose !== "" && (
+                        <Text style={{ color: t.good, fontSize: 11.5, marginTop: 2, fontWeight: "700" }}>{y.dose}</Text>
+                      )}
+                      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>{y.detail}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>On the skin</Text>
+                  {YEAST_TOPICAL.map((y, i) => (
+                    <View key={i} style={{ backgroundColor: t.surface, borderRadius: 9, padding: 10, marginTop: 7 }}>
+                      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>
+                        {y.icon} {y.name}
+                      </Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>{y.detail}</Text>
+                    </View>
+                  ))}
+
+                  <View style={{ backgroundColor: t.surface, borderRadius: 9, padding: 11, marginTop: 12, borderLeftWidth: 3, borderLeftColor: t.high }}>
+                    <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "800" }}>
+                      ⏳ Give it {YEAST_TIMELINE.weeks}
+                    </Text>
+                    <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 4, lineHeight: 17 }}>{YEAST_TIMELINE.detail}</Text>
+                    <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 6, lineHeight: 17 }}>{YEAST_TIMELINE.maintenance}</Text>
+                  </View>
                 </AccordionSection>
               )}
 
