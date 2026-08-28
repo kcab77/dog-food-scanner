@@ -17,6 +17,43 @@ const VAULT = process.env.OBSIDIAN_BRAIN_VAULT || join(homedir(), 'Documents', '
 // shown on the index card. letter controls the A-Z bucket.
 const TOPICS = [
   {
+    slug: 'yeast-in-dogs', title: 'Yeast in Dogs (the "Frito" problem)', letter: 'Y',
+    emoji: '🍄‍🟫', tag: 'Skin & Coat',
+    summary: 'Corn-chip smell, orange paw staining, and the 3-8 week at-home detox: what to cut, what to feed, and why it keeps coming back.',
+    file: 'commonsensedog knowledge/Yeast in Dogs — The Frito Problem.md',
+  },
+  {
+    slug: 'medicinal-mushrooms', title: 'Medicinal Mushrooms', letter: 'M',
+    emoji: '🍄', tag: 'Supplements',
+    summary: 'Ten species and what each one actually does — turkey tail for cancer, reishi for allergies, lion\'s mane for the ageing brain.',
+    file: 'commonsensedog knowledge/Medicinal Mushrooms for Dogs.md',
+  },
+  {
+    slug: 'mineral-forms', title: 'Mineral Forms (chelate vs sulfate vs oxide)', letter: 'M',
+    emoji: '🔬', tag: 'Reading Labels',
+    summary: 'The part of the label almost nobody can read, and where cheap foods and good ones actually separate. Plus why copper runs backwards.',
+    file: 'commonsensedog knowledge/Mineral Forms — Chelate vs Sulfate vs Oxide.md',
+  },
+  {
+    slug: 'omega-3-for-dogs', title: 'Omega-3 (ratios, sources, dosing)', letter: 'O',
+    emoji: '🐟', tag: 'Nutrition',
+    summary: 'Why the ratio on the bag is usually flattered by flaxseed, what EPA and DHA actually do, and how much your dog needs by weight.',
+    file: 'commonsensedog knowledge/Omega-3 for Dogs — Ratios, Sources and Dosing.md',
+  },
+  {
+    slug: 'gut-health', title: 'Gut Health & Leaky Gut', letter: 'G',
+    emoji: '🌱', tag: 'Gut Health',
+    summary: 'The gut-skin and gut-brain axes, how leaky gut actually works, and the probiotic activation step almost everyone skips.',
+    file: 'commonsensedog knowledge/Gut Health — The Garden Within.md',
+  },
+  {
+    slug: 'tcvm-food-therapy', title: 'TCVM Food Therapy', letter: 'T',
+    emoji: '☯️', tag: 'Holistic',
+    summary: 'Hot dogs and cold dogs, cooling and warming proteins, and how preparation changes a food\'s energy — plus where it disagrees with the numbers.',
+    file: 'commonsensedog knowledge/TCVM Food Therapy — The Energetic Bowl.md',
+  },
+
+  {
     slug: 'flea-tick-and-isoxazolines', title: 'Fleas, Ticks & Isoxazolines', letter: 'F',
     emoji: '🚩', tag: 'Parasite Prevention',
     summary: 'How Bravecto/NexGard/Simparica actually work, their risks, and natural flea & tick prevention that repels before the bite.',
