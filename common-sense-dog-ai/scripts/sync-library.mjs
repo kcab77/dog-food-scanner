@@ -18,7 +18,7 @@ const VAULT = process.env.OBSIDIAN_BRAIN_VAULT || join(homedir(), 'Documents', '
 const TOPICS = [
   {
     slug: 'yeast-in-dogs', title: 'Yeast in Dogs (the "Frito" problem)', letter: 'Y',
-    emoji: '🍄‍🟫', tag: 'Skin & Coat',
+    emoji: '🍄‍🟫', tag: 'Conditions',
     summary: 'Corn-chip smell, orange paw staining, and the 3-8 week at-home detox: what to cut, what to feed, and why it keeps coming back.',
     file: 'commonsensedog knowledge/Yeast in Dogs — The Frito Problem.md',
   },
@@ -30,7 +30,7 @@ const TOPICS = [
   },
   {
     slug: 'mineral-forms', title: 'Mineral Forms (chelate vs sulfate vs oxide)', letter: 'M',
-    emoji: '🔬', tag: 'Reading Labels',
+    emoji: '🔬', tag: 'Nutrition',
     summary: 'The part of the label almost nobody can read, and where cheap foods and good ones actually separate. Plus why copper runs backwards.',
     file: 'commonsensedog knowledge/Mineral Forms — Chelate vs Sulfate vs Oxide.md',
   },
@@ -42,13 +42,13 @@ const TOPICS = [
   },
   {
     slug: 'gut-health', title: 'Gut Health & Leaky Gut', letter: 'G',
-    emoji: '🌱', tag: 'Gut Health',
+    emoji: '🌱', tag: 'Conditions',
     summary: 'The gut-skin and gut-brain axes, how leaky gut actually works, and the probiotic activation step almost everyone skips.',
     file: 'commonsensedog knowledge/Gut Health — The Garden Within.md',
   },
   {
     slug: 'tcvm-food-therapy', title: 'TCVM Food Therapy', letter: 'T',
-    emoji: '☯️', tag: 'Holistic',
+    emoji: '☯️', tag: 'Nutrition',
     summary: 'Hot dogs and cold dogs, cooling and warming proteins, and how preparation changes a food\'s energy — plus where it disagrees with the numbers.',
     file: 'commonsensedog knowledge/TCVM Food Therapy — The Energetic Bowl.md',
   },

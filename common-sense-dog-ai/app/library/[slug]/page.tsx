@@ -19,7 +19,27 @@ export default function TopicPage({ params }: { params: { slug: string } }) {
   const topic = getTopic(params.slug)
   if (!topic) notFound()
 
-  const others = libraryTopics.filter((t) => t.slug !== topic.slug).slice(0, 3)
+  /**
+   * Related topics, matched by shared tag.
+   *
+   * This used to be `libraryTopics.filter(not-me).slice(0, 3)` — which returned
+   * the same first three topics on every single page in the library, regardless
+   * of subject. A yeast article recommended AAFCO profiles. That's not a related
+   * link, it's a dead end with a thumbnail.
+   *
+   * Now: same tag first, then fill from the rest so the block is never short.
+   * Interlinking is what turns 40 separate pages into something a reader browses
+   * instead of bouncing from, and it's how search engines understand that the
+   * pages belong to one another.
+   */
+  const sameTag = libraryTopics.filter(
+    (t) => t.slug !== topic.slug && t.tag === topic.tag,
+  )
+  const filler = libraryTopics.filter(
+    (t) => t.slug !== topic.slug && t.tag !== topic.tag,
+  )
+  const others = [...sameTag, ...filler].slice(0, 3)
+  const hasSameTag = sameTag.length > 0
 
   const articleLd = {
     '@context': 'https://schema.org',
@@ -75,6 +95,7 @@ export default function TopicPage({ params }: { params: { slug: string } }) {
         .related-card:hover { border-color: #C8DFC9; transform: translateY(-2px); }
         .related-card .emoji { font-size: 26px; margin-bottom: 8px; display: block; }
         .related-card h3 { font-size: 14px; font-weight: 700; line-height: 1.4; color: var(--text); }
+        .related-card .related-summary { font-size: 12.5px; line-height: 1.5; color: var(--muted, #6b7280); margin-top: 6px; }
         footer { background: var(--text); color: rgba(255,255,255,0.5); padding: 36px 24px; text-align: center; font-size: 13px; line-height: 1.8; }
         footer a { color: rgba(255,255,255,0.7); text-decoration: none; }
         @media (max-width: 600px) { .nav-links { display: none; } }
@@ -115,12 +136,13 @@ export default function TopicPage({ params }: { params: { slug: string } }) {
 
         {others.length > 0 && (
           <div className="related">
-            <h2>More topics</h2>
+            <h2>{hasSameTag ? `More on ${topic.tag.toLowerCase()}` : 'More topics'}</h2>
             <div className="related-grid">
               {others.map((t) => (
                 <Link key={t.slug} href={`/library/${t.slug}`} className="related-card">
                   <span className="emoji">{t.emoji}</span>
                   <h3>{t.title}</h3>
+                  <p className="related-summary">{t.summary}</p>
                 </Link>
               ))}
             </div>
