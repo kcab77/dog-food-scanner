@@ -105,7 +105,9 @@ and getting caught faking it ends the conversation permanently.
 
 **Per-person hooks — do not reuse one for another.** Judy: AllProvide, TCVM, natural flea
 and tick prevention. Becker: The Forever Dog, longevity and epigenetics, the Dog Aging
-Project. Andrew: his at-home remedy approach and the home-study courses. Using Judy's
+Project. Andrew: his at-home remedy approach and the home-study courses. Berg: ⚠️ human
+health — none of the pet hooks apply, and neither does the PawGrade credential in the same
+way. Needs a real hook from his own material and a demo in a relevant vertical. Using Judy's
 opener on Becker reads as a template instantly, and that ends it.
 
 **Never write:** *"I love your content"* · *"I'm a huge fan"* · *"your work is amazing."*
@@ -146,8 +148,10 @@ In order of what actually works:
    `support@drjonesnaturalpet.com`, 1-800-396-1534, 7 days, 8:30–5 Pacific), call and ask
    who handles partnerships. Three minutes gets you a name. Then email *that* person and
    open with "[Name] suggested I send this to you" — a referred email gets read.
-3. **YouTube About page.** Creators often list a business email behind the "view email
-   address" button specifically for this.
+3. **YouTube About page.** Creators list a business email behind the "view email address"
+   button specifically for this — it's often the ONLY published business contact, and it
+   beats anything on their website. Dr. Berg's `genbusiness@drberg.com` came from here after
+   his site turned up nothing. **Check this first, not last.**
 4. **Instagram DM**, as a nudge about a week later. Short, referencing the email, not
    repeating it. Standing note from PetChat outreach: *find the owner, DM beats info@.*
 
@@ -164,7 +168,7 @@ In order of what actually works:
 | **Dr. Judy Morgan** | `krista@drjudymorgan.com` | ✅ Named business contact | Founder-run. Demo already seeded. **Best first target.** |
 | **Dr. Karen Becker** | `media@barkandwhiskers.com` | ✅ Published for media *and partnership* | Co-author of The Forever Dog. Biggest of the three — most-followed vet on social, NYT bestseller. Open by saying it's a partnership, not a press request. |
 | **Dr. Andrew Jones** | `support@drjonesnaturalpet.com` · **1-800-396-1534** | ⚠️ Support desk only | No partnership contact published. **Call first**, get a name, then email that person. Demo already seeded. |
-| **Dr. Eric Berg** | drberg.com/contact · 703-354-7336 | ❌ No business contact published | **Not yet.** 13M+ subs with a supplement company and a marketing team behind it — cold email never reaches him. Also human health, so a pet-vet demo doesn't show relevance. Month-three email, after a reference. |
+| **Dr. Eric Berg** | `genbusiness@drberg.com` (YouTube About page) | ✅ Published business contact | 13M+ subs, supplement company, marketing team. ⚠️ **Human health, not pet** — the pet-vet demos show the wrong vertical, and the AllProvide/TCVM opener is useless here. Needs a genuinely different email. Better after a reference. |
 
 **The reachability filter, in order of predictive power:** does their site publish a *named*
 business or partnership contact · is the founder still visibly running things · do they sell
