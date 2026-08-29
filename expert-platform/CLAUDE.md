@@ -16,6 +16,15 @@ fee. Cost scales with audience → per-expert usage metering is built in.
 
 ---
 
+## 📧 Outreach — the pitch email
+
+**`OUTREACH.md`** holds the template used to ask an expert for permission, why it's shaped
+the way it is, how to find a real business contact rather than an `info@`, the pre-send
+checklist, and a log of who's been contacted. First sent to Dr. Judy Morgan on 2026-08-29.
+**Read it before writing to anyone** — the mistakes it documents are ones already made.
+
+---
+
 ## Live demos (public, no login)
 - Dr. Judy Morgan: **https://expert-platform-dun.vercel.app/dr-judy-morgan**
 - Dr. Andrew Jones: **https://expert-platform-dun.vercel.app/dr-andrew-jones**
