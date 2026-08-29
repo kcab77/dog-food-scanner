@@ -1560,6 +1560,152 @@ const GUT_WARNINGS: { title: string; icon: string; detail: string }[] = [
 ];
 
 
+// ── LEAKY GUT ────────────────────────────────────────────────────────────────
+// Added 2026-08-29 from Kyle's leaky-gut research. Companion image:
+// assets/images/leaky-gut-guide.jpg
+//
+// Sits next to GUT_* and YEAST_* on purpose — they're one story told at three
+// zoom levels. GUT_* is the ecosystem, YEAST_* is what overgrows when it fails,
+// and this is the barrier itself: how it's built, what breaks it, and what
+// rebuilds it. The repair toolkit at the end is the part nobody gets told.
+
+// The barrier, before anything goes wrong.
+const LEAKY_GATEKEEPER: { title: string; icon: string; detail: string }[] = [
+  {
+    title: "A healthy gut is a fine cheesecloth", icon: "🧫",
+    detail:
+      "The intestinal lining is only ONE CELL THICK. That single layer has to absorb everything your dog needs while acting as customs — blocking toxins, bacteria and undigested food from getting into the bloodstream. It's the thinnest, busiest border in the body.",
+  },
+  {
+    title: "Tight junctions are the glue", icon: "🔗",
+    detail:
+      "Those cells are held together by tight junctions, regulated by a protein called ZONULIN. When zonulin behaves, the seal is impermeable. Zonulin is the whole mechanism — remember that word, because it's also how the problem gets measured.",
+  },
+];
+
+// What breaks the seal.
+const LEAKY_ASSAULT: { name: string; icon: string; detail: string }[] = [
+  {
+    name: "Highly processed kibble", icon: "🍖",
+    detail: "High starch feeds the wrong organisms and gives the lining nothing to rebuild with. It's the constant, low-grade version of the assault rather than a dramatic one.",
+  },
+  {
+    name: "Glyphosate", icon: "☠️",
+    detail: "Roundup. It behaves like an antibiotic in the body and directly disrupts tight junctions. Non-GMO crops sprayed at harvest to dry them — oats, peas, chickpeas, lentils — are the common route in.",
+  },
+  {
+    name: "Omega-6 and inflammatory fats", icon: "🔥",
+    detail: "Surplus omega-6 keeps the inflammatory machinery running with nothing to fight. Inflammation is what makes the cells swell and the junctions pull apart.",
+  },
+  {
+    name: "Chronic stress", icon: "😰",
+    detail: "Fight-or-flight halts digestion and promotes gut inflammation and permeability. This includes YOUR stress — dogs read it, and it lands in their gut.",
+  },
+  {
+    name: "Medications — the carpet-bombing effect", icon: "💊",
+    detail: "Antibiotics, NSAIDs, steroids and acid reducers all damage the lining or the flora that maintain it. Sometimes necessary — but each course has a cost that's worth planning to repair afterwards rather than discovering later.",
+  },
+];
+
+// The mechanism, in the order it actually happens.
+const LEAKY_BREACH = {
+  leak:
+    "Inflammation creates the leak. Inflamed cells swell, the tight junctions break, and holes open in a barrier that's meant to be sealed.",
+  entry:
+    "Unauthorised entry. Large undigested proteins and environmental chemicals bypass the barrier and enter the bloodstream — sounding an alarm for the entire immune system.",
+  consequence:
+    "The immune system remembers those leaked proteins as invaders and mounts a histamine attack the next time it meets them. That's the mechanism behind a dog who seems allergic to everything — it isn't the food, it's that the food is arriving somewhere it was never meant to be.",
+};
+
+// Why it doesn't look like a gut problem.
+const LEAKY_SYMPTOMS: { group: string; icon: string; detail: string }[] = [
+  {
+    group: "The obvious ones", icon: "🤢",
+    detail: "Gas, bloating, reflux, chronic loose stool. These are the symptoms people expect, and they're the minority of what a leaky barrier actually causes.",
+  },
+  {
+    group: "Skin and ears", icon: "🔥",
+    detail: "Itching, hot spots, recurring ear infections, that corn-chip smell, sticky ears, thickened skin. Yeast is a GUT problem wearing a skin costume.",
+  },
+  {
+    group: "Joints", icon: "🦴",
+    detail: "Aching joints and stiffness. Systemic inflammation doesn't stay where it started.",
+  },
+  {
+    group: "Thyroid and hormones", icon: "🦋",
+    detail: "Thyroid issues show up on this list because chronic immune activation doesn't respect organ boundaries.",
+  },
+  {
+    group: "Behaviour", icon: "🧠",
+    detail: "Anxiety, reactivity, aggression. The gut–brain axis is a real signalling pathway, and a dog in low-grade systemic discomfort is not the same dog.",
+  },
+  {
+    group: "“ADR”", icon: "😔",
+    detail: "Ain't Doing Right — the actual term vets use for a dog who's off but won't localise to anything. Vague lethargy with no clean diagnosis is one of the most common presentations.",
+  },
+];
+
+// What an owner can do without a lab.
+const LEAKY_IDENTIFY: { step: string; icon: string; detail: string }[] = [
+  {
+    step: "Start a health journal", icon: "📓",
+    detail: "Date, food, stool, itching, energy, ear smell. Subtle changes are the whole game — you cannot hold six weeks of gradual improvement in your head, and without a written baseline every check-in becomes a fresh worry instead of a comparison.",
+  },
+  {
+    step: "Track what changed, not just what's wrong", icon: "🔍",
+    detail: "One variable at a time. A protein change and a supplement change in the same week means neither result tells you anything.",
+  },
+  {
+    step: "Lab markers, if you want them", icon: "🧪",
+    detail: "Zonulin is the signature — it's the protein that regulates the junctions, and levels can be measured as a marker of permeability. Anti-gliadin antibodies are the other one. Neither is required to start; the diet work is the same either way.",
+  },
+];
+
+// The path, in order.
+const LEAKY_HEALING: { phase: string; icon: string; detail: string }[] = [
+  {
+    phase: "1 · Species-appropriate diet", icon: "🥩",
+    detail: "Starve the yeast, seal the gut. Move to a low-starch, fresh, whole-food diet and get the glyphosate-sprayed legumes and grains out. This is the step that does most of the work, and skipping to supplements without it is why protocols stall.",
+  },
+  {
+    phase: "2 · Bone broth and colostrum", icon: "🍲",
+    detail: "Bone broth is rich in collagen and amino acids and helps seal the junctions directly. Colostrum supports tissue repair and immune balance. These are foods, not supplements, which is why they're early and cheap.",
+  },
+  {
+    phase: "3 · Targeted repair", icon: "🧬",
+    detail: "L-glutamine is the preferred fuel of the cells that line the gut — it's what they rebuild with. Zinc carnosine helps restore the lining. Together they're the repair toolkit, and they matter most AFTER the assault has stopped, not during it.",
+  },
+  {
+    phase: "4 · Soothing botanicals", icon: "🌿",
+    detail: "Mucilaginous herbs form a protective jelly-like layer over irritated tissue, lowering inflammation so healing can happen underneath. Short-term cover while the repair happens — not a permanent resident.",
+  },
+];
+
+// The shopping list, by job.
+const LEAKY_TOOLKIT: { category: string; icon: string; options: string; purpose: string }[] = [
+  {
+    category: "Lining & sealants", icon: "🧱",
+    options: "Bone broth · L-glutamine · NAG (N-acetyl glucosamine)",
+    purpose: "Rebuild the physical cell wall. This is structural repair, not symptom relief.",
+  },
+  {
+    category: "Inflammation", icon: "🔥",
+    options: "Turmeric · ginger · quercetin",
+    purpose: "Quell the systemic immune fire so the barrier gets a chance to close.",
+  },
+  {
+    category: "Microbiome", icon: "🦠",
+    options: "S. boulardii · soil-based probiotics",
+    purpose: "Displace pathogens without over-colonising. S. boulardii is a yeast, so it also survives a course of antibiotics.",
+  },
+  {
+    category: "Detox support", icon: "🌱",
+    options: "Humic & fulvic acid · milk thistle",
+    purpose: "Protect against glyphosate and support the liver, which processes everything the gut lets through.",
+  },
+];
+
+
 // ── YEAST ────────────────────────────────────────────────────────────────────
 // Added 2026-08-28 from Kyle's yeast research. Companion image:
 // assets/images/yeast-guide.jpg
@@ -5554,7 +5700,7 @@ const TopicContext = React.createContext<string | null>(null);
 export const LEARN_TOPICS = [
   "AAFCO", "Bloat", "Carbs", "Collagen", "Deficiency signs", "Gut health", "Heart",
   "Kibble", "Life stages", "Lifespan", "Lipomas", "Mineral forms",
-  "Missing nutrients", "Mushrooms", "Omega-3", "Recalls & facts", "TCVM", "Yeast",
+  "Missing nutrients", "Leaky gut", "Mushrooms", "Omega-3", "Recalls & facts", "TCVM", "Yeast",
 ] as const;
 
 // ── THE KIBBLE GUIDE (added 2026-08-21) ──────────────────────────────────────
@@ -13827,6 +13973,92 @@ export default function App() {
                   }
                 >
                   <MineralFormsGuide />
+                </AccordionSection>
+              )}
+
+              {/* Leaky gut. Added 2026-08-29. Sits with Gut health and Yeast —
+                  one story at three zoom levels: the ecosystem, the barrier,
+                  and what overgrows when the barrier fails. New "Leaky gut"
+                  chip in LEARN_TOPICS. */}
+              {(score !== null || learnMode) && (
+                <AccordionSection
+                  title="🧱 Leaky gut"
+                  topic="Leaky gut"
+                  door="learn"
+                  askLabel="Ask AI"
+                  onAskAI={() =>
+                    askAboutSection(
+                      `My dog seems allergic to everything and has recurring skin and ear problems. Walk me through leaky gut — what breaks the barrier, and how do I actually rebuild it?`,
+                    )
+                  }
+                >
+                  <Text style={{ color: t.text, fontSize: 12.5, lineHeight: 18 }}>
+                    The lining of the gut is{" "}
+                    <Text style={{ fontWeight: "800", color: t.textStrong }}>one cell thick</Text>.
+                    It has to absorb everything your dog needs while blocking everything he
+                    doesn&apos;t. When that seal breaks, the problem stops looking like a gut
+                    problem — and starts looking like skin, joints, mood and &ldquo;he&apos;s
+                    just not right&rdquo;.
+                  </Text>
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>The gatekeeper</Text>
+                  {LEAKY_GATEKEEPER.map((g, i) => (
+                    <View key={i} style={{ backgroundColor: t.surface, borderRadius: 9, padding: 10, marginTop: 7 }}>
+                      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{g.icon} {g.title}</Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>{g.detail}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>What breaks the seal</Text>
+                  {LEAKY_ASSAULT.map((a, i) => (
+                    <View key={i} style={{ backgroundColor: t.surface, borderRadius: 9, padding: 10, marginTop: 7, borderLeftWidth: 3, borderLeftColor: t.high }}>
+                      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{a.icon} {a.name}</Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>{a.detail}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>The breach</Text>
+                  <View style={{ backgroundColor: t.surface, borderRadius: 9, padding: 11, marginTop: 7, borderLeftWidth: 3, borderLeftColor: t.critical }}>
+                    <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5 }}>{LEAKY_BREACH.leak}</Text>
+                    <Text style={{ color: t.text, fontSize: 12, lineHeight: 17.5, marginTop: 7 }}>{LEAKY_BREACH.entry}</Text>
+                    <Text style={{ color: t.textMuted, fontSize: 12, lineHeight: 17.5, marginTop: 7 }}>{LEAKY_BREACH.consequence}</Text>
+                  </View>
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>Why it doesn&apos;t look like a gut problem</Text>
+                  {LEAKY_SYMPTOMS.map((y, i) => (
+                    <View key={i} style={{ flexDirection: "row", gap: 9, marginTop: 8 }}>
+                      <Text style={{ fontSize: 14 }}>{y.icon}</Text>
+                      <View style={{ flex: 1 }}>
+                        <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{y.group}</Text>
+                        <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 2, lineHeight: 17 }}>{y.detail}</Text>
+                      </View>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>Working it out at home</Text>
+                  {LEAKY_IDENTIFY.map((y, i) => (
+                    <View key={i} style={{ backgroundColor: t.surface, borderRadius: 9, padding: 10, marginTop: 7 }}>
+                      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{y.icon} {y.step}</Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>{y.detail}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>The healing path, in order</Text>
+                  {LEAKY_HEALING.map((y, i) => (
+                    <View key={i} style={{ backgroundColor: t.surface, borderRadius: 9, padding: 10, marginTop: 7, borderLeftWidth: 3, borderLeftColor: t.good }}>
+                      <Text style={{ color: t.good, fontSize: 12.5, fontWeight: "800" }}>{y.icon} {y.phase}</Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>{y.detail}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>The repair toolkit, by job</Text>
+                  {LEAKY_TOOLKIT.map((y, i) => (
+                    <View key={i} style={{ backgroundColor: t.surface, borderRadius: 9, padding: 10, marginTop: 7 }}>
+                      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{y.icon} {y.category}</Text>
+                      <Text style={{ color: t.good, fontSize: 11.5, marginTop: 2, fontWeight: "700" }}>{y.options}</Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>{y.purpose}</Text>
+                    </View>
+                  ))}
                 </AccordionSection>
               )}
 

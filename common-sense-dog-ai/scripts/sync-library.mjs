@@ -17,6 +17,13 @@ const VAULT = process.env.OBSIDIAN_BRAIN_VAULT || join(homedir(), 'Documents', '
 // shown on the index card. letter controls the A-Z bucket.
 const TOPICS = [
   {
+    slug: 'leaky-gut-rebuild', title: 'Leaky Gut (and how to rebuild the barrier)', letter: 'L',
+    emoji: '🧱', tag: 'Conditions',
+    summary: 'The gut lining is one cell thick. What breaks the seal, why the symptoms show up as skin and joints and mood instead, and the repair order that actually works.',
+    file: 'commonsensedog knowledge/Leaky Gut — The Barrier and How to Rebuild It.md',
+  },
+
+  {
     slug: 'yeast-in-dogs', title: 'Yeast in Dogs (the "Frito" problem)', letter: 'Y',
     emoji: '🍄‍🟫', tag: 'Conditions',
     summary: 'Corn-chip smell, orange paw staining, and the 3-8 week at-home detox: what to cut, what to feed, and why it keeps coming back.',
