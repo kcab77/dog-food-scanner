@@ -103,6 +103,11 @@ honest that you came to them through the idea rather than the other way round. A
 sentence about one video beats a fake sentence about being a longtime fan — they can tell,
 and getting caught faking it ends the conversation permanently.
 
+**Per-person hooks — do not reuse one for another.** Judy: AllProvide, TCVM, natural flea
+and tick prevention. Becker: The Forever Dog, longevity and epigenetics, the Dog Aging
+Project. Andrew: his at-home remedy approach and the home-study courses. Using Judy's
+opener on Becker reads as a template instantly, and that ends it.
+
 **Never write:** *"I love your content"* · *"I'm a huge fan"* · *"your work is amazing."*
 Those are what everyone selling them something writes.
 
@@ -152,10 +157,32 @@ In order of what actually works:
 
 ## Who's been contacted
 
+### Contacts found (all publicly published by them)
+
+| Person | Contact | Type | Notes |
+|---|---|---|---|
+| **Dr. Judy Morgan** | `krista@drjudymorgan.com` | ✅ Named business contact | Founder-run. Demo already seeded. **Best first target.** |
+| **Dr. Karen Becker** | `media@barkandwhiskers.com` | ✅ Published for media *and partnership* | Co-author of The Forever Dog. Biggest of the three — most-followed vet on social, NYT bestseller. Open by saying it's a partnership, not a press request. |
+| **Dr. Andrew Jones** | `support@drjonesnaturalpet.com` · **1-800-396-1534** | ⚠️ Support desk only | No partnership contact published. **Call first**, get a name, then email that person. Demo already seeded. |
+| **Dr. Eric Berg** | drberg.com/contact · 703-354-7336 | ❌ No business contact published | **Not yet.** 13M+ subs with a supplement company and a marketing team behind it — cold email never reaches him. Also human health, so a pet-vet demo doesn't show relevance. Month-three email, after a reference. |
+
+**The reachability filter, in order of predictive power:** does their site publish a *named*
+business or partnership contact · is the founder still visibly running things · do they sell
+their own products (that's the revenue argument that makes them say yes) · under ~1M
+subscribers is the sweet spot — big enough for the numbers to matter, small enough that a
+real person reads email.
+
+**Sequencing beats targeting.** Land one, then everyone else becomes a warm email.
+*"I built this for Dr. Judy Morgan"* gets past a triage queue that a cold pitch never will.
+That's the whole reason to start with the reachable one rather than the biggest one.
+
+### Log
+
 | Date | Person | Sent to | Channel | Result |
 |---|---|---|---|---|
-| 2026-08-29 | Dr. Judy Morgan | krista@ (TO), info@ (CC) | Email | — |
+| 2026-08-29 | Dr. Judy Morgan | krista@ | Email | — |
 | | Dr. Andrew Jones | *call 1-800-396-1534 first* | — | — |
+| | Dr. Karen Becker | *after a reply from #1 or #2* | — | — |
 
 Keep this filled in. It's how you learn which opener works, and it stops you emailing
 someone twice.
