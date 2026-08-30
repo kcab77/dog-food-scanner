@@ -79,3 +79,9 @@ docs/research/transcripts/
 
 # Full-res infographic sources (compressed versions live in assets/images/)
 /*.png
+
+# iCloud mid-edit duplicates — they DIFFER from the originals, never assume identical
+*[[:space:]]2.jpg
+*[[:space:]]2.png
+*[[:space:]]2.tsx
+*[[:space:]]2.ts
