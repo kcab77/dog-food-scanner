@@ -6296,11 +6296,20 @@ function AccordionSection({
 }
 
 // One-line plain-language verdict for the score band (shown above the fold).
+/**
+ * The sentence that sits under the label. Thresholds MUST match
+ * lib/theme.ts scoreLabel() — 85 / 70 / 50 / 30 — or the screen contradicts
+ * itself: a food labelled "Excellent" reading "just okay" underneath.
+ *
+ * Realigned 2026-09-01 when the bands moved to 85+/70-84. Previously ran on
+ * its own 90/75/60/45/30 and had drifted from both the labels and the docs.
+ * The old 75-89 line ("A great food with only minor trade-offs") is folded
+ * into the 85+ verdict below rather than dropped.
+ */
 function getVerdict(score: number): string {
-  if (score >= 90) return "Excellent choice — a top-tier food you can feel great about.";
-  if (score >= 75) return "A great food with only minor trade-offs.";
-  if (score >= 60) return "A solid food — a few things worth improving.";
-  if (score >= 45) return "Just okay — consider upgrading or adding whole-food toppers.";
+  if (score >= 85) return "Excellent choice — a top-tier food you can feel great about.";
+  if (score >= 70) return "A solid food with only minor trade-offs — a few things worth improving.";
+  if (score >= 50) return "Just okay — consider upgrading or adding whole-food toppers.";
   if (score >= 30) return "Below average — feed sparingly and look for better options.";
   return "Poor quality — we'd avoid this one.";
 }
