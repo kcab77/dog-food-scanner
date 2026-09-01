@@ -1,8 +1,22 @@
 name: Build iOS
 
+# ⚠️ MANUAL ONLY — do not put `push:` back without fixing the job first.
+#
+# This ran on every push to main from May 2026 and failed every single time,
+# dying in 1-2 minutes before it reached the build. Over one week in August it
+# generated 15 failure emails. It has never produced an artifact.
+#
+# It also duplicates what actually ships PawGrade, which is run by hand:
+#   EAS_NO_VCS=1 eas build -p ios --profile production
+#
+# To make it work again you'd need four repo secrets present and current:
+# EXPO_TOKEN, DISTRIBUTION_CERTIFICATE_P12, DISTRIBUTION_CERTIFICATE_PASSWORD,
+# PROVISIONING_PROFILE. iOS distribution certificates expire annually, so the
+# May ones may simply be dead.
+#
+# Left in place rather than deleted so the setup isn't lost if CI is ever
+# wanted. Trigger it from the Actions tab when you want to try.
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 jobs:
