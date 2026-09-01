@@ -272,8 +272,16 @@ Scoring algorithm (**do not change scoring without asking Kyle** — full detail
   positions 6–10 at −3 each. `docs/THE_LADDER.md` § Level 4 says count every occurrence rather
   than stop at an arbitrary line.
 - Score floor: 5
-- Labels (softened 2026-07-12): 90–100 Excellent, 75–89 Great, 60–74 Good, 45–59 Fair,
-  30–44 Below Average, <30 Low Quality
+- **Labels live in `lib/theme.ts` → `scoreLabel()` / `scoreLabelEmoji()` and NOWHERE ELSE**
+  (bands set by Kyle 2026-09-01): **85+ Excellent · 70–84 Good · 50–69 Fair · 30–49 Below
+  Average · <30 Low Quality.** `app/index.tsx`'s `getScoreLabel()` is a thin wrapper.
+  **Why this is stated so firmly:** the app used to keep its own private copy with different
+  thresholds (70/50/30, four bands, no "Excellent" at all), and *that* was what rendered
+  beside the score — so a food scoring 95 displayed as "Good", and so did one scoring 70.
+  Three quality tiers collapsed into one word at the moment the user read them. Found
+  2026-09-01 by `scripts/score-check.mjs` on its first run.
+  ⚠️ `getVerdict()` still uses its own 90/75/60/45/30 sentence bands. Not contradictory, but
+  not aligned either — worth reconciling when someone touches it.
 
 ---
 

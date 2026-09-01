@@ -34,7 +34,10 @@ import { execFileSync } from 'child_process'
 import { tmpdir } from 'os'
 import { join } from 'path'
 
-const SRC = readFileSync('app/index.tsx', 'utf8')
+// Both files, because the score bands live in lib/theme.ts while everything
+// else lives in the app. Extracting from only one is how the two drifted apart
+// in the first place.
+const SRC = readFileSync('app/index.tsx', 'utf8') + '\n' + readFileSync('lib/theme.ts', 'utf8')
 
 /**
  * Grab a top-level `const NAME = ...` or `function NAME(...)` declaration.
@@ -78,7 +81,7 @@ const NEEDED = [
   'PROCESSING_METHODS', 'RAW_COATED_KIBBLE', 'RAW_INCLUSION_HINTS', 'TOXIC_SCORE_CEILING',
   'harmfulPenalty', 'mentionsTerm', 'detectProcessingMethod', 'analyseMineralForms',
   'vitaminLoadPenalty', 'analyseSaltDivider', 'bonusEligible', 'saltLinePenalty',
-  'scoreTreats', 'getScoreLabel',
+  'scoreTreats', 'scoreLabel', 'scoreLabelEmoji', 'getScoreLabel',
 ]
 
 // `t` is the theme object; SEVERITY_COLORS and friends touch it. Stub it deeply.
@@ -161,7 +164,7 @@ check('oxides weigh more than sulfates',
   S.vitaminLoadPenalty(['Copper Oxide']).penalty > S.vitaminLoadPenalty(['Copper Sulfate']).penalty, eq(true), 'true')
 
 console.log('\nLABELS  — band boundaries')
-for (const [s, want] of [[95,'Excellent'],[80,'Great'],[65,'Good'],[50,'Fair'],[35,'Below'],[10,'Low']])
+for (const [s, want] of [[95,'Excellent'],[85,'Excellent'],[84,'Good'],[70,'Good'],[69,'Fair'],[50,'Fair'],[35,'Below'],[10,'Low']])
   check(`score ${s}`, S.getScoreLabel(s), a => a.includes(want), want)
 
 console.log(`\n${pass} passed, ${fail} failed\n`)

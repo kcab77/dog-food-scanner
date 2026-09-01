@@ -262,11 +262,31 @@ export function scoreColor(score: number): string {
   return t.critical;
 }
 
+/**
+ * The score bands. Kyle set these on 2026-09-01: 85+ Excellent, 70-84 Good.
+ *
+ * ⚠️ THIS IS THE ONLY PLACE THE BANDS LIVE. app/index.tsx used to keep its own
+ * private copy with different thresholds (70/50/30, four bands, no "Excellent"
+ * at all) and THAT was what rendered next to the score — so a food scoring 95
+ * displayed as "Good", and so did one scoring 70. Three quality tiers collapsed
+ * into one word at the moment the user read it.
+ *
+ * Found 2026-09-01 by scripts/score-check.mjs on its first run. If you need a
+ * band changed, change it here and nowhere else.
+ */
 export function scoreLabel(score: number): string {
-  if (score >= 90) return 'Excellent';
-  if (score >= 75) return 'Great';
-  if (score >= 60) return 'Good';
-  if (score >= 45) return 'Fair';
+  if (score >= 85) return 'Excellent';
+  if (score >= 70) return 'Good';
+  if (score >= 50) return 'Fair';
+  if (score >= 30) return 'Below Average';
+  return 'Low Quality';
+}
+
+/** Same bands, with the emoji the results screen shows. */
+export function scoreLabelEmoji(score: number): string {
+  if (score >= 85) return 'Excellent ⭐';
+  if (score >= 70) return 'Good 👍';
+  if (score >= 50) return 'Fair ⚠️';
   if (score >= 30) return 'Below Average';
   return 'Low Quality';
 }

@@ -25,7 +25,7 @@ import {
 import { auditIngredientList } from "../lib/ingredientDatabase";
 import { analyzeIngredients } from "../lib/ingredientLookup";
 import { getDogProfile, getSession, logScan, submitFeedback } from "../lib/supabase";
-import { t } from "../lib/theme";
+import { t, scoreLabelEmoji } from "../lib/theme";
 import {
     askNutritionCoach,
     lookupIngredientDetail,
@@ -4869,11 +4869,16 @@ function getScoreSubline(score: number): string {
   return "Worth upgrading — see below";
 }
 
+/**
+ * Delegates to lib/theme.ts — the bands live there and nowhere else.
+ *
+ * This function used to carry its own thresholds (70/50/30, four bands) which
+ * had drifted from the theme's. Since THIS is what renders beside the score, a
+ * 95 read "Good" and so did a 70 — the app had no way to say "Excellent" at
+ * all. Kept as a thin wrapper rather than replacing every call site.
+ */
 function getScoreLabel(score: number): string {
-  if (score >= 70) return "Good 👍";
-  if (score >= 50) return "Fair ⚠️";
-  if (score >= 30) return "Below Average";
-  return "Low Quality";
+  return scoreLabelEmoji(score);
 }
 
 function getTreatScoreLabel(score: number): string {
