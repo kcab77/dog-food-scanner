@@ -415,7 +415,16 @@ now "Below Average"/"Low Quality" (colors/thresholds/scoring math unchanged, pre
 | Anthropic | `ANTHROPIC_KEY` | Claude API for chat + Q&A generation |
 | Pinecone | `PINECONE_API_KEY` | Vector database |
 | Voyage AI | `VOYAGE_API_KEY` | Embeddings (1024-dim) |
-| Supabase | in `lib/supabase.js` | Scan logging, feedback |
+| Supabase | in `lib/supabase.js` | Scan logging, feedback, ingredient detail |
+
+**⚠️ Ingredient data precedence (set by Kyle 2026-09-04).** `HARMFUL_INGREDIENTS` in
+`app/index.tsx` and `docs/MINERAL_FORMS_CHEATSHEET.md` are **canonical**. The Supabase
+`ingredients` table is **enrichment only** — it carries fields the app doesn't have
+(`long_term_risk`, organs affected, safe daily range) and feeds the ingredient-detail modal,
+never the score. Where they disagree, **the in-app data wins and the Supabase row is the bug**.
+The 32 mineral/vitamin-form rows filled on 2026-09-04 were derived from those two files, so
+they agree today; this note exists so they still agree later.
+Scoring never touches Supabase — it runs entirely on `HARMFUL_INGREDIENTS`.
 | UPC Item DB | in app | Barcode → product name (paid plan) |
 
 ---

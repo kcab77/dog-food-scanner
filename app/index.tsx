@@ -1560,6 +1560,194 @@ const GUT_WARNINGS: { title: string; icon: string; detail: string }[] = [
 ];
 
 
+// ── LYMPHOMA ─────────────────────────────────────────────────────────────────
+// Added 2026-09-04 from Kyle's lymphoma research.
+//
+// The reason this section exists: most owners find a lump while petting their
+// dog and then spend a fortnight terrified. The single most useful thing this
+// app can do is hand them the DISCRIMINATOR — the specific differences between
+// a reactive node and lymphoma — so the fear has somewhere to land. Facts as
+// given; the survivor stories are included because they are part of the record,
+// with what each dog actually received stated plainly.
+
+// The two substages. Which one a dog is in matters more than most owners know.
+const LYMPHOMA_SUBSTAGE: [string, string][] = [
+  ["Substage A", "The dog feels completely fine. Enlarged nodes, but normal energy, normal appetite, still playing. Roughly 85% of dogs with multicentric lymphoma are in this group at first — and it carries a considerably better outlook."],
+  ["Substage B", "The dog is clinically ill: lethargy, weight loss, vomiting, diarrhoea, appetite loss. This is the sub-stage that changes the prognosis."],
+];
+
+// The five pairs an owner can actually check at home.
+const LYMPHOMA_NODES: [string, string][] = [
+  ["Mandibular", "Under the jaw. The pair owners most often find first."],
+  ["Prescapular", "In front of the shoulder blades."],
+  ["Axillary", "In the armpit."],
+  ["Inguinal", "Inner thigh and groin."],
+  ["Popliteal", "Behind the knees. Drains the lower leg and foot."],
+];
+
+// ⚠️ THE PART THAT ACTUALLY ANSWERS THE 2AM QUESTION.
+const LYMPHOMA_VS_REACTIVE: { feature: string; reactive: string; lymphoma: string }[] = [
+  {
+    feature: "How many nodes",
+    reactive: "Usually ONE node, or one region — filtering a specific local problem like a paw injury, hot spot or infection.",
+    lymphoma: "Multicentric: all or most of the five pairs enlarged at once, and usually symmetrical on both sides. Most dogs are already at Stage 3 when found.",
+  },
+  {
+    feature: "Speed",
+    reactive: "Swells with the local problem and settles as it resolves. Can stay up for weeks or months while the cause is still active.",
+    lymphoma: "Fast. Owners routinely report nodes that were normal one day and obvious 48 hours later. Aggressive forms can DOUBLE IN 4–5 DAYS.",
+  },
+  {
+    feature: "Direction of travel",
+    reactive: "Stable, or slowly shrinking as the underlying irritation clears.",
+    lymphoma: "Keeps growing until treatment starts. The exception is rare indolent (low-grade) lymphoma, which can sit unchanged for months or years.",
+  },
+  {
+    feature: "How it feels",
+    reactive: "Often softer, varies with the drainage, and typically stays mobile under the skin.",
+    lymphoma: "Classically described as firm, painless, distinct “circular balls”.",
+  },
+  {
+    feature: "The dog",
+    reactive: "Normal. Eating, playing, himself.",
+    lymphoma: "May also be totally normal (Substage A) — so a well dog does NOT rule it out. The node pattern is what tells you, not the mood.",
+  },
+];
+
+// Diagnosis, so nobody is surprised by what a vet suggests.
+const LYMPHOMA_DIAGNOSIS: { test: string; icon: string; detail: string }[] = [
+  {
+    test: "Fine needle aspirate (FNA)", icon: "💉",
+    detail: "A needle about the size of a vaccination needle, done awake, outpatient, in minutes. Accurate in roughly 70–80% of cases. A pathologist looks at ALL the cells, not just the one thing the vet suspected — a reactive node shows a mixture of cell types doing their job, while lymphoma shows a uniform population of identical clone cells. It can be inconclusive if too few cells come back or the cells break during collection.",
+  },
+  {
+    test: "Biopsy", icon: "🔬",
+    detail: "Surgically removing a piece of tissue or a whole node. The only 100% definitive answer, and the only way to get grade and architecture.",
+  },
+  {
+    test: "Phenotyping — B-cell vs T-cell", icon: "🧬",
+    detail: "Flow cytometry or PARR. B-cell is generally more responsive to treatment; T-cell is often more aggressive. This changes the plan and the prognosis.",
+  },
+  {
+    test: "Staging", icon: "📊",
+    detail: "Bloodwork, urinalysis, chest X-rays and abdominal ultrasound to find where it has spread (Stages I–V) and check organ health.",
+  },
+];
+
+// The numbers, stated plainly rather than softened.
+const LYMPHOMA_SURVIVAL: { path: string; outcome: string }[] = [
+  { path: "Untreated", outcome: "Median survival about one month." },
+  { path: "Prednisone (steroids) alone", outcome: "Roughly two to three months. Shrinks nodes and restores appetite, but resistance develops quickly." },
+  { path: "CHOP chemotherapy", outcome: "Remission in 80–95% of dogs. Median survival 12–14 months, with about 25% reaching two years. Typical cost $8,000–$16,000." },
+];
+
+// ⚠️ The stories. Kept factual — including what each dog ACTUALLY received.
+const LYMPHOMA_SURVIVORS: { dog: string; dx: string; treatment: string; outcome: string; holisticOnly: boolean }[] = [
+  {
+    dog: "The Cocker Spaniel", dx: "Mast cell tumours (vaccine-associated, over the shoulders and hind end)",
+    treatment: "Multiple surgeries and radiation at UPenn — after which he was told there was nothing more they could do. Then homemade whole-food diet, no further vaccines, IP-6, artemisinin, omega-3 and CBD.",
+    outcome: "The tumours never grew and never shrank — they simply stayed quiet for ELEVEN YEARS. Diagnosed at five or six with no options left; died at 16 of old age.",
+    holisticOnly: true,
+  },
+  {
+    dog: "Sadie", dx: "T-zone lymphoma (a rare indolent, slow-growing form)",
+    treatment: "No chemotherapy. Her owners chose to care for her at home.",
+    outcome: "Lived six years past diagnosis to age 12 — a normal lifespan. Worth knowing this form is genuinely slow by nature, which is part of why the approach worked.",
+    holisticOnly: true,
+  },
+  {
+    dog: "The Standard Poodle", dx: "High-grade mammary cancer, already spread to the lymph nodes",
+    treatment: "A lumpectomy that left dirty (cancerous) margins, then a strict herbal and diet protocol only.",
+    outcome: "No mass ever returned. Lived five more years and died at 16.5 of unrelated causes.",
+    holisticOnly: true,
+  },
+  {
+    dog: "Jabba the Mutt", dx: "Lymphoma",
+    treatment: "Chemotherapy protocols.",
+    outcome: "Lived 7.5 years post-diagnosis — a genuine statistics-buster against a 12–14 month median.",
+    holisticOnly: false,
+  },
+  {
+    dog: "Blue", dx: "Epithelotropic (cutaneous) T-cell lymphoma — ulcerated paw pads, pigment loss on the nose",
+    treatment: "Oral chemotherapy: lomustine and prednisone.",
+    outcome: "Still in complete remission five years after diagnosis.",
+    holisticOnly: false,
+  },
+  {
+    dog: "Roger", dx: "Aggressive GI T-cell lymphoma that had perforated his gut",
+    treatment: "Emergency surgery, then an aggressive LOP chemotherapy protocol.",
+    outcome: "In remission for over three years — from a presentation about as bad as they come.",
+    holisticOnly: false,
+  },
+  {
+    dog: "The Westminster Border Collie", dx: "Osteosarcoma of the rib — a prognosis described as horrendous",
+    treatment: "Surgery and chemotherapy, then a strict holistic diet and supplement regimen.",
+    outcome: "The cancer never returned. Kept competing in agility at the highest level for years into old age.",
+    holisticOnly: false,
+  },
+  {
+    dog: "Honey", dx: "Lymphoma",
+    treatment: "A full-spectrum approach including Apocaps.",
+    outcome: "Lived five years past diagnosis.",
+    holisticOnly: false,
+  },
+];
+
+// Holistic support, with the evidence level attached to each.
+const LYMPHOMA_HOLISTIC: { name: string; icon: string; detail: string; evidence: string }[] = [
+  {
+    name: "Starve it — low-carb, high-protein, high-fat", icon: "🥩",
+    detail: "The foundation of every holistic protocol here. Cancer cells preferentially use glucose, so starchy carbohydrates come out — kibble, grains, potatoes — replaced by fresh protein, healthy fat and low-starch greens like broccoli and kale.",
+    evidence: "Mechanistic and widely used clinically. Not proven to extend survival in dogs by trial.",
+  },
+  {
+    name: "Safflower oil", icon: "🫗",
+    detail: "1 tsp per 10 lb of body weight, twice daily. High in linoleic acid.",
+    evidence: "A study reported some dogs with CUTANEOUS lymphoma achieving remission on it. Specific to that form — not general to lymphoma.",
+  },
+  {
+    name: "Turkey tail", icon: "🍄",
+    detail: "The highest beta-glucan content of the medicinal mushrooms, used to help the immune system recognise cancer cells. Around 100 mg per 10 lb daily.",
+    evidence: "A University of Pennsylvania study showed extended survival in HAEMANGIOSARCOMA. Direct lymphoma data is more limited.",
+  },
+  {
+    name: "Reishi", icon: "🍄",
+    detail: "Often the first choice specifically for blood-borne cancers. Same rough dosing, and commonly paired with turkey tail.",
+    evidence: "A human review reported a marked result against lymphoma, leukaemia and myeloma cells; trials have shown improved immune and tumour response in lymphoma patients. Human data.",
+  },
+  {
+    name: "Dandelion root", icon: "🌼",
+    detail: "1 tsp of dried ground root per 20 lb, simmered in a cup of water for 20 minutes, strained and given across the day. A little honey helps palatability.",
+    evidence: "Studied at the University of Windsor against chemo-resistant blood-borne cancers.",
+  },
+  {
+    name: "Curcumin (turmeric)", icon: "🟡",
+    detail: "A 95% curcuminoid extract, to lower systemic inflammation. Always with black pepper for absorption.",
+    evidence: "Strong anti-inflammatory rationale; anti-cancer effect in dogs unproven.",
+  },
+  {
+    name: "Melatonin", icon: "🌙",
+    detail: "1 mg per 10 lb, an hour before bed. May inhibit cancer cell growth and support conventional treatment.",
+    evidence: "Mechanistic. Safe and cheap.",
+  },
+  {
+    name: "⚠️ Fenbendazole, ivermectin, metformin", icon: "⚠️",
+    detail: "Repurposed drugs with real anecdotal followings. Fenbendazole (Panacur) is a dewormer some use off-label on the theory it destabilises cancer cell walls. ⚠️ IVERMECTIN IS THE ACTIVE DRUG IN HEARTWORM PREVENTIVES — the doses in laboratory cancer work are vastly higher than a monthly preventive, and ivermectin overdose causes neurological damage in dogs. Never scale one up from the other.",
+    evidence: "No proven data in dogs with lymphoma. High doses can be toxic. Talk to a vet before any of these.",
+  },
+];
+
+// What the stories actually show, read honestly.
+const LYMPHOMA_HONEST = {
+  remission:
+    "Oncologists avoid the word CURE because microscopic cells usually remain even in complete remission, and most dogs eventually relapse. Remission means the cancer is undetectable, the nodes are normal, and the dog feels well. Plenty of holistic practitioners define beating it as the cancer staying quiet for the rest of a natural life — dying of old age rather than of the disease. For an owner, that distinction stops mattering fairly quickly.",
+  integrative:
+    "Read the outcomes above and notice what most of the long survivors actually received: Jabba, Blue, Roger and the Border Collie all had chemotherapy or surgery alongside the holistic work. Three did it on holistic care alone — and one of those, Sadie, had an indolent form that is slow by nature. That is not an argument against holistic support. It is an argument that ALONGSIDE and INSTEAD OF are different bets, and the record is honest about which was which.",
+  limits:
+    "The same sources are candid about the losses. Dr. Judy Morgan's own dog Myra had aggressive bowel lymphoma and died within eight weeks despite chemotherapy, herbs and diet together. Aggressive lymphoma is a fast disease, and no protocol wins every time.",
+};
+
+
 // ── LEAKY GUT ────────────────────────────────────────────────────────────────
 // Added 2026-08-29 from Kyle's leaky-gut research. Companion image:
 // assets/images/leaky-gut-guide.jpg
@@ -5704,7 +5892,7 @@ const TopicContext = React.createContext<string | null>(null);
 
 export const LEARN_TOPICS = [
   "AAFCO", "Bloat", "Carbs", "Collagen", "Deficiency signs", "Gut health", "Heart",
-  "Kibble", "Life stages", "Lifespan", "Lipomas", "Mineral forms",
+  "Kibble", "Life stages", "Lifespan", "Lipomas", "Lymphoma", "Mineral forms",
   "Missing nutrients", "Leaky gut", "Mushrooms", "Omega-3", "Recalls & facts", "TCVM", "Yeast",
 ] as const;
 
@@ -13987,6 +14175,135 @@ export default function App() {
                   }
                 >
                   <MineralFormsGuide />
+                </AccordionSection>
+              )}
+
+              {/* Lymphoma. Added 2026-09-04. The reason this exists: an owner finds
+                  a lump while petting their dog and then spends a fortnight
+                  terrified. The most useful thing this app can do is hand them
+                  the DISCRIMINATOR so the fear has somewhere to land — and the
+                  survivor stories, because hope is load-bearing here. */}
+              {(score !== null || learnMode) && (
+                <AccordionSection
+                  title="🎗️ Lymphoma & lymph nodes"
+                  topic="Lymphoma"
+                  door="learn"
+                  askLabel="Ask AI"
+                  onAskAI={() =>
+                    askAboutSection(
+                      `I found a swollen lymph node on my dog. How do I tell whether it's reactive to a local infection or something more serious, and what should I be watching for?`,
+                    )
+                  }
+                >
+                  <Text style={{ color: t.text, fontSize: 12.5, lineHeight: 18 }}>
+                    Most owners find a lump while petting their dog. Before anything
+                    else:{" "}
+                    <Text style={{ fontWeight: "800", color: t.textStrong }}>
+                      one swollen node next to a local problem — a hot spot, a sore paw,
+                      an infection — is usually that node doing its job.
+                    </Text>{" "}
+                    Here is how to tell the difference.
+                  </Text>
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>Reactive node vs lymphoma</Text>
+                  {LYMPHOMA_VS_REACTIVE.map((r, i) => (
+                    <View key={i} style={{ backgroundColor: t.surface, borderRadius: 9, padding: 10, marginTop: 8 }}>
+                      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "800" }}>{r.feature}</Text>
+                      <Text style={{ color: t.good, fontSize: 11.5, marginTop: 4, lineHeight: 16.5 }}>
+                        <Text style={{ fontWeight: "800" }}>Reactive: </Text>{r.reactive}
+                      </Text>
+                      <Text style={{ color: t.high, fontSize: 11.5, marginTop: 4, lineHeight: 16.5 }}>
+                        <Text style={{ fontWeight: "800" }}>Lymphoma: </Text>{r.lymphoma}
+                      </Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>The five pairs to check at home</Text>
+                  {LYMPHOMA_NODES.map(([n, w], i) => (
+                    <View key={i} style={{ flexDirection: "row", gap: 9, marginTop: 6 }}>
+                      <Text style={{ color: t.good, fontSize: 12, fontWeight: "800", width: 92 }}>{n}</Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, flex: 1, lineHeight: 17 }}>{w}</Text>
+                    </View>
+                  ))}
+                  <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 8, lineHeight: 16.5, fontStyle: "italic" }}>
+                    Compare each node to its partner on the other side — that is the single
+                    most useful thing an owner can do, and it is the first thing a vet does.
+                  </Text>
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>How the dog is feeling</Text>
+                  {LYMPHOMA_SUBSTAGE.map(([n, d], i) => (
+                    <View key={i} style={{ backgroundColor: t.surface, borderRadius: 9, padding: 10, marginTop: 7 }}>
+                      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{n}</Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>{d}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>Getting an answer</Text>
+                  {LYMPHOMA_DIAGNOSIS.map((d, i) => (
+                    <View key={i} style={{ backgroundColor: t.surface, borderRadius: 9, padding: 10, marginTop: 7 }}>
+                      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{d.icon} {d.test}</Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>{d.detail}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>The numbers, plainly</Text>
+                  {LYMPHOMA_SURVIVAL.map((s2, i) => (
+                    <View key={i} style={{ flexDirection: "row", gap: 9, marginTop: 7 }}>
+                      <Text style={{ color: t.textStrong, fontSize: 12, fontWeight: "800", width: 108 }}>{s2.path}</Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, flex: 1, lineHeight: 17 }}>{s2.outcome}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>Dogs who beat the odds</Text>
+                  <Text style={{ color: t.textMuted, fontSize: 12, lineHeight: 17, marginBottom: 2 }}>
+                    Real cases from the record. What each dog actually received is stated,
+                    because it matters.
+                  </Text>
+                  {LYMPHOMA_SURVIVORS.map((d, i) => (
+                    <View
+                      key={i}
+                      style={{
+                        backgroundColor: t.surface, borderRadius: 9, padding: 11, marginTop: 8,
+                        borderLeftWidth: 3, borderLeftColor: d.holisticOnly ? t.good : t.info,
+                      }}
+                    >
+                      <View style={{ flexDirection: "row", alignItems: "center", gap: 7, flexWrap: "wrap" }}>
+                        <Text style={{ color: t.textStrong, fontSize: 13, fontWeight: "800" }}>{d.dog}</Text>
+                        <Text style={{ color: d.holisticOnly ? t.good : t.info, fontSize: 10, fontWeight: "800" }}>
+                          {d.holisticOnly ? "HOLISTIC ONLY" : "INTEGRATIVE"}
+                        </Text>
+                      </View>
+                      <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 4, lineHeight: 16.5 }}>{d.dx}</Text>
+                      <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 5, lineHeight: 16.5 }}>
+                        <Text style={{ fontWeight: "700" }}>Treatment: </Text>{d.treatment}
+                      </Text>
+                      <Text style={{ color: t.text, fontSize: 12, marginTop: 5, lineHeight: 17, fontWeight: "600" }}>{d.outcome}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>Remission, and what the stories actually show</Text>
+                  <View style={{ backgroundColor: t.surface, borderRadius: 9, padding: 11, marginTop: 7 }}>
+                    <Text style={{ color: t.textMuted, fontSize: 12, lineHeight: 17 }}>{LYMPHOMA_HONEST.remission}</Text>
+                    <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 8, lineHeight: 17 }}>{LYMPHOMA_HONEST.integrative}</Text>
+                    <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 8, lineHeight: 17 }}>{LYMPHOMA_HONEST.limits}</Text>
+                  </View>
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>Metabolic support</Text>
+                  {LYMPHOMA_HOLISTIC.map((h, i) => (
+                    <View key={i} style={{ backgroundColor: t.surface, borderRadius: 9, padding: 10, marginTop: 7 }}>
+                      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{h.icon} {h.name}</Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>{h.detail}</Text>
+                      <Text style={{ color: t.textDim, fontSize: 11, marginTop: 4, lineHeight: 15.5, fontStyle: "italic" }}>
+                        Evidence: {h.evidence}
+                      </Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 14, lineHeight: 16.5, fontStyle: "italic" }}>
+                    Educational only — not veterinary advice. If a node is growing fast,
+                    if several pairs are up at once, or if your dog goes off food or
+                    becomes lethargic, see a vet.
+                  </Text>
                 </AccordionSection>
               )}
 
