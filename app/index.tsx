@@ -1576,6 +1576,33 @@ const LYMPHOMA_SUBSTAGE: [string, string][] = [
   ["Substage B", "The dog is clinically ill: lethargy, weight loss, vomiting, diarrhoea, appetite loss. This is the sub-stage that changes the prognosis."],
 ];
 
+// ⚠️ Signs that aren't lumps. Owners watch the nodes and miss these.
+// Added 2026-09-04 from the guide card — the hypercalcaemia one matters most,
+// because increased drinking and urinating is a thing an owner CAN spot and
+// almost nobody connects to lymphoma.
+const LYMPHOMA_OTHER_SIGNS: { sign: string; icon: string; detail: string }[] = [
+  {
+    sign: "The “not quite right” phase", icon: "😔",
+    detail: "Subtle lethargy, appetite dropping off, a general loss of vitality — before anything obvious. It's the phase owners describe afterwards as “he just wasn't himself”, and it's often the earliest thing there is.",
+  },
+  {
+    sign: "Drinking and peeing more", icon: "💧",
+    detail: "A metabolic red flag worth knowing about: increased thirst and urination can signal HYPERCALCAEMIA — raised blood calcium — which is a common paraneoplastic syndrome in lymphoma, particularly the T-cell forms. Most owners would never connect a full water bowl to a lymph node, which is exactly why it's worth writing down.",
+  },
+  {
+    sign: "Gut signs", icon: "🤢",
+    detail: "Foul-smelling diarrhoea and weight loss, especially with gastrointestinal lymphoma.",
+  },
+  {
+    sign: "Noisy breathing or trouble swallowing", icon: "🫁",
+    detail: "Enlarged nodes can press on the throat and airway. Coughing or difficulty breathing can also point to mediastinal lymphoma in the chest.",
+  },
+  {
+    sign: "Skin changes", icon: "🩹",
+    detail: "Cutaneous lymphoma is rare, and looks less like a lump than like flaky skin, non-healing ulcers, or loss of pigment on the nose and paw pads.",
+  },
+];
+
 // The five pairs an owner can actually check at home.
 const LYMPHOMA_NODES: [string, string][] = [
   ["Mandibular", "Under the jaw. The pair owners most often find first."],
@@ -1590,7 +1617,7 @@ const LYMPHOMA_VS_REACTIVE: { feature: string; reactive: string; lymphoma: strin
   {
     feature: "How many nodes",
     reactive: "Usually ONE node, or one region — filtering a specific local problem like a paw injury, hot spot or infection.",
-    lymphoma: "Multicentric: all or most of the five pairs enlarged at once, and usually symmetrical on both sides. Most dogs are already at Stage 3 when found.",
+    lymphoma: "Multicentric — 80–87% of cases — meaning all or most of the five pairs enlarged at once, usually symmetrical on both sides. Most dogs are already at Stage 3 when found.",
   },
   {
     feature: "Speed",
@@ -1686,9 +1713,15 @@ const LYMPHOMA_SURVIVORS: { dog: string; dx: string; treatment: string; outcome:
     holisticOnly: false,
   },
   {
-    dog: "Honey", dx: "Lymphoma",
+    dog: "Honey", dx: "T-cell lymphoma — the more aggressive phenotype",
     treatment: "A full-spectrum approach including Apocaps.",
-    outcome: "Lived five years past diagnosis.",
+    outcome: "Lived five years past diagnosis and eventually died peacefully of old age — with the phenotype that usually carries the worse prognosis.",
+    holisticOnly: false,
+  },
+  {
+    dog: "Pokey", dx: "Lymphoma",
+    treatment: "CHOP chemotherapy, then maintenance protocols and consistent supplementation.",
+    outcome: "Two-plus years of remission against a 12–14 month median — the pattern being that the supplementation carried on long after the chemo finished.",
     holisticOnly: false,
   },
 ];
@@ -1721,6 +1754,11 @@ const LYMPHOMA_HOLISTIC: { name: string; icon: string; detail: string; evidence:
     evidence: "Studied at the University of Windsor against chemo-resistant blood-borne cancers.",
   },
   {
+    name: "Licorice root", icon: "🌿",
+    detail: "Used as a short-term immune modulator alongside dandelion root. Short-term is the operative word — licorice affects cortisol and potassium and isn't a permanent resident.",
+    evidence: "Traditional and mechanistic. Not a lymphoma trial.",
+  },
+  {
     name: "Curcumin (turmeric)", icon: "🟡",
     detail: "A 95% curcuminoid extract, to lower systemic inflammation. Always with black pepper for absorption.",
     evidence: "Strong anti-inflammatory rationale; anti-cancer effect in dogs unproven.",
@@ -1732,7 +1770,7 @@ const LYMPHOMA_HOLISTIC: { name: string; icon: string; detail: string; evidence:
   },
   {
     name: "⚠️ Fenbendazole, ivermectin, metformin", icon: "⚠️",
-    detail: "Repurposed drugs with real anecdotal followings. Fenbendazole (Panacur) is a dewormer some use off-label on the theory it destabilises cancer cell walls. ⚠️ IVERMECTIN IS THE ACTIVE DRUG IN HEARTWORM PREVENTIVES — the doses in laboratory cancer work are vastly higher than a monthly preventive, and ivermectin overdose causes neurological damage in dogs. Never scale one up from the other.",
+    detail: "Repurposed drugs with real anecdotal followings. Fenbendazole (Panacur) is a dewormer some use off-label on the theory it destabilises cancer cell walls. Metformin is studied for its effect on the mTOR pathway. ⚠️ ON IVERMECTIN: it is the active drug in monthly heartworm preventives like Heartgard, but the dose there is deliberately tiny — nowhere near the amounts used in laboratory cancer work, so a dog on a preventive is getting no anti-cancer effect from it. That cuts both ways: don't count on it, and don't scale it up either. Ivermectin overdose causes neurological damage in dogs, and the gap between the two doses is enormous.",
     evidence: "No proven data in dogs with lymphoma. High doses can be toxic. Talk to a vet before any of these.",
   },
 ];
@@ -14205,6 +14243,13 @@ export default function App() {
                     Here is how to tell the difference.
                   </Text>
 
+                  <Image
+                    source={require("../assets/images/lymphoma-guide.jpg")}
+                    style={{ width: "100%", aspectRatio: 1800 / 1004, borderRadius: 9, marginTop: 10 }}
+                    resizeMode="contain"
+                    accessibilityLabel="Navigating canine lymphoma — a guardian's guide: the five lymph node touchpoints to palpate, reactive node versus lymphoma, major signs, the integrative toolkit, and success stories"
+                  />
+
                   <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>Reactive node vs lymphoma</Text>
                   {LYMPHOMA_VS_REACTIVE.map((r, i) => (
                     <View key={i} style={{ backgroundColor: t.surface, borderRadius: 9, padding: 10, marginTop: 8 }}>
@@ -14235,6 +14280,20 @@ export default function App() {
                     <View key={i} style={{ backgroundColor: t.surface, borderRadius: 9, padding: 10, marginTop: 7 }}>
                       <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{n}</Text>
                       <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>{d}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>Signs that aren&apos;t lumps</Text>
+                  <Text style={{ color: t.textMuted, fontSize: 12, lineHeight: 17, marginBottom: 2 }}>
+                    Everyone watches the nodes. These are the ones people miss.
+                  </Text>
+                  {LYMPHOMA_OTHER_SIGNS.map((y, i) => (
+                    <View key={i} style={{ flexDirection: "row", gap: 9, marginTop: 8 }}>
+                      <Text style={{ fontSize: 14 }}>{y.icon}</Text>
+                      <View style={{ flex: 1 }}>
+                        <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{y.sign}</Text>
+                        <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 2, lineHeight: 17 }}>{y.detail}</Text>
+                      </View>
                     </View>
                   ))}
 
