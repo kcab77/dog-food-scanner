@@ -9,6 +9,18 @@ knowledge as possible so the assistant becomes THE go-to instead of normal blog 
 
 ---
 
+> ### ⚠️ Keep this file current — it drifted a month once
+>
+> On 2026-09-04 an audit found this list claiming mushrooms, omegas, gut-probiotics
+> and leaky-gut were NOT ingested. All four were, and had been for weeks. A session
+> trusting this file would have spent an afternoon rewriting 70+ Q&A pairs that
+> already existed — an index lying about coverage is worse than no index.
+>
+> **Updating this list is part of ingesting, not a thing to remember afterwards.**
+> The step is: draft → Kyle reviews → `ingest_pack.js` → **add the line here with the
+> date** → write the Obsidian summary note. Add the retrieval-check score too when
+> you run one; it's the only proof the pack is actually reachable.
+
 ## ✅ Already in Pinecone
 - [x] Blog topic summaries (30) + full blog articles (9)
 - [x] Supplement evidence pack (43 pairs)
@@ -60,6 +72,12 @@ knowledge as possible so the assistant becomes THE go-to instead of normal blog 
 - [x] **Tooth Enamel Remineralization (human research + dog-safety cross-reference)** — Kyle-supplied research brief, reframed dog-first: enamel biology (doesn't regrow; early demineralization can be reversed), human toothpaste is dangerous for dogs (fluoride + xylitol + SLS), hydroxyapatite as the promising fluoride alternative, kelp/diet/raw-bone dental support, and an honest "not available yet" on the Nov 2025 lab-stage regeneration gel. Web-verified the one new safety-critical figure (canine fluoride toxicity dose) directly against Merck Veterinary Manual — matched exactly (9 pairs) — ingested 2026-07-24. Obsidian summary: `commonsensedog knowledge/Tooth Enamel Remineralization — Human Research + Dog Safety Cross-Reference (2026-07-24).md`
 - [x] **Lipomas — evidence-based (what they are, prevention, what actually shrinks them)** — Kyle-supplied evidence-graded reference; core to the brand (Hershey). Leads with the safety crux (FNA first — MCTs mimic lipomas by feel; the harm is diagnostic delay), VetCompass risk factors (obesity ~5×, age ~17.5×, breeds), honest "no herb/detox has any evidence of dissolving a lipoma — mechanism doesn't fit," and the rarely-offered intralesional triamcinolone option. Web-verified the two load-bearing studies (O'Neill VetCompass 2018 + Lamagna triamcinolone 2012) directly (13 pairs) — ingested 2026-07-28. Obsidian summary: `commonsensedog knowledge/Lipomas in Dogs — Evidence-Based (2026-07-28).md`. Also published as website answer pages (see below).
 - [x] **Liver, Kidney & Environmental Detox — Batch 4** — Kyle-supplied evidence-graded brief, new ground (excluded already-covered SAMe/milk-thistle/dandelion/cranberry/DE/turmeric etc.): NAC (acute antidote not daily supplement), copper hepatopathy (organ meat is the WORST advice for Lab/Doberman/Bedlington/Dalmatian/Westie — a real differentiator), phosphorus restriction (strongest CKD evidence; separates phosphorus from protein), omega-3 renal (+ omega-6 harm), Azodyl myth-check (independent trial null), TCVM Rehmannia (traditional/no trials), lawn herbicides & bladder cancer (Purdue ORs 3.62/7.19), glyphosate (exposure real, harm unproven, detection≠diagnosis), sulforaphane (mechanism strong/no dog data), chlorella-cilantro (gut-binding ≠ stored-metal removal). Web-verified the two load-bearing figures (Finco CKD phosphorus + Purdue Scottie ORs) directly; skipped isoxazolines (already covered). Dropped the doc's flagged 33%/75% CKD survival figures (didn't match primary Finco data) (10 pairs) — ingested 2026-07-28. Obsidian summary: `commonsensedog knowledge/Liver Kidney and Environmental Detox — Batch 4 (2026-07-28).md`
+- [x] **Medicinal Mushrooms** (24 pairs) — ingested 2026-08-22. Ten species rewritten from Kyle's document.
+- [x] **Omega-3** (24 pairs) — ingested 2026-08-22. Rebuilt from the Canine Omega Guide; old omega vectors deleted first (53 removed).
+- [x] **Gut Health & Probiotics** (26 pairs) — ingested 2026-08-23, from the NotebookLM gut sessions.
+- [x] **Yeast — the "Frito" problem** (26 pairs) — ingested 2026-08-28. Retrieval verified: "why does my dog smell like corn chips and lick his paws at night" returns qa-yeast-19 at 0.608.
+- [x] **Leaky Gut** (20 pairs) — ingested 2026-08-29. Retrieval verified: "why does my dog seem allergic to every protein" returns qa-leaky-gut-1 at 0.656.
+- [x] **Lymphoma & swollen lymph nodes** (20 pairs) — ingested 2026-09-05. Reactive-vs-lymphoma discriminator, the five node pairs, hypercalcaemia, survivor stories labelled holistic-only vs integrative.
 
 ## 🔍 In review (drafted, awaiting Kyle's approval before ingest)
 - [ ] **`qa-thickeners-aflatoxin-2026-08-03.json`** — 12 pairs, all web-verified per `PINECONE_PROTOCOL.md`.

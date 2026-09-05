@@ -17,6 +17,13 @@ const VAULT = process.env.OBSIDIAN_BRAIN_VAULT || join(homedir(), 'Documents', '
 // shown on the index card. letter controls the A-Z bucket.
 const TOPICS = [
   {
+    slug: 'lymphoma-and-lymph-nodes', title: 'Lymphoma & Swollen Lymph Nodes', letter: 'L',
+    emoji: '🎗️', tag: 'Conditions',
+    summary: 'One swollen node beside a hot spot is usually that node doing its job. How to tell a reactive node from lymphoma, the five pairs to check, and the dogs who beat the odds.',
+    file: 'commonsensedog knowledge/Lymphoma and Swollen Lymph Nodes in Dogs.md',
+  },
+
+  {
     slug: 'leaky-gut-rebuild', title: 'Leaky Gut (and how to rebuild the barrier)', letter: 'L',
     emoji: '🧱', tag: 'Conditions',
     summary: 'The gut lining is one cell thick. What breaks the seal, why the symptoms show up as skin and joints and mood instead, and the repair order that actually works.',
