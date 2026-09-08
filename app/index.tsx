@@ -3818,8 +3818,49 @@ function scoreTreats(ingredientList: string[], processingMethod?: string, produc
   const top3 = lower.slice(0, 3);
   const flags: { name: string; reason: string; severity: string }[] = [];
   const breakdown: { label: string; value: number; severity?: string }[] = [];
-  let total = 70;
-  breakdown.push({ label: "Base score", value: 70 });
+  // ⚠️ INGREDIENT-FIRST SCORING. Rebuilt 2026-09-08 to Kyle's spec: "rate by
+  // actual ingredients first, then get a boost for fewer added vitamins."
+  //
+  // The old base was 70, which meant a bag of wheat flour and BHA STARTED in
+  // the Good band and worked downwards — it scored 67. Nothing had to be good;
+  // things only had to not be bad. That is why a treat could look decent while
+  // containing nothing a dog benefits from.
+  //
+  // Now it starts at 40 and has to earn its way up from what is actually in it.
+  // A single-ingredient freeze-dried liver still reaches 100, but because it is
+  // LIVER — not because the list is short.
+  let total = 40;
+  breakdown.push({ label: "Starting point", value: 40 });
+
+  // ── EARN IT: what's actually in the treat ────────────────────────────────
+  const leadIng = lower[0] || "";
+
+  const treatOrgans = ingredientList.filter((ing) =>
+    ORGAN_MEATS.some((o) => ing.toLowerCase().includes(o) && !ing.toLowerCase().includes("meal")),
+  );
+  if (treatOrgans.length > 0) {
+    const organPts = Math.min(treatOrgans.length * 10, 20);
+    total += organPts;
+    breakdown.push({ label: `Organ meat (${treatOrgans.join(", ")}) — the most nutrient-dense thing in a treat`, value: organPts });
+  }
+
+  const treatProduce = ingredientList.filter((ing) =>
+    WHOLE_FOOD_PRODUCE.some((w) => ing.toLowerCase().includes(w)),
+  );
+  if (treatProduce.length > 0) {
+    const producePts = Math.min(treatProduce.length * 4, 12);
+    total += producePts;
+    breakdown.push({ label: `Whole fruits & vegetables (${treatProduce.length})`, value: producePts });
+  }
+
+  // ⚠️ Filler isn't "harmful" so it never got flagged — it's just NOTHING. A
+  // treat built on flour or starch was scored as though it were neutral.
+  const TREAT_FILLERS = ["flour", "starch", "corn syrup", "glycerin", "sugar", "molasses", "gluten", "cellulose", "maltodextrin"];
+  const fillerFirst = TREAT_FILLERS.find((f) => leadIng.includes(f));
+  if (fillerFirst) {
+    total -= 15;
+    breakdown.push({ label: `Filler is the main ingredient (${ingredientList[0]}) — bulk, not nutrition`, value: -15 });
+  }
 
   // Processing method scoring
   const method = (processingMethod || 'unknown').toLowerCase();
@@ -3923,15 +3964,19 @@ function scoreTreats(ingredientList: string[], processingMethod?: string, produc
     breakdown.push({ label: "No synthetic vitamins — no over-supplementation risk", value: 10 });
   }
 
-  // First ingredient is a whole meat/animal protein = bonus
+  // First ingredient is a whole meat/animal protein.
+  // Raised 10 -> 20 on 2026-09-08 with the move to an ingredient-first base:
+  // when a treat starts at 40 instead of 70, what it is actually MADE OF has to
+  // carry the weight that the free starting points used to.
   const firstIng = lower[0] || "";
   const isWholeMeatFirst =
     SPECIFIC_PROTEIN_TERMS.some((p) => firstIng.includes(p)) &&
     !firstIng.includes("meal") &&
-    !firstIng.includes("by-product");
+    !firstIng.includes("by-product") &&
+    !firstIng.includes("flour");
   if (isWholeMeatFirst) {
-    total += 10;
-    breakdown.push({ label: `Whole ${ingredientList[0]} as #1 ingredient`, value: 10 });
+    total += 20;
+    breakdown.push({ label: `Whole ${ingredientList[0]} as #1 ingredient`, value: 20 });
   }
 
   // Sugar / sweetener in top 3 = major red flag

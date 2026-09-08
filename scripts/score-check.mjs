@@ -143,7 +143,16 @@ check('XYLITOL buried at #12',
   between(1, 15), '<=15')
 check('sugar + propylene glycol (2 ingredients)', tr(['Sugar', 'Propylene Glycol'], 'soft').score, between(1, 20), '<=20')
 check('single-ingredient freeze-dried liver', tr(['Beef Liver'], 'freeze dried').score, between(90, 100), '90-100')
-check('clean 3-ingredient biscuit', tr(['Sweet Potato','Peanut Butter','Oat Flour'], 'baked').score, between(80, 100), '80-100')
+check('bully stick (whole protein, 1 ing)', tr(['Beef Pizzle'], 'baked').score, between(90, 100), '90-100')
+check('chicken + sweet potato', tr(['Chicken','Sweet Potato'], 'baked').score, between(85, 100), '85-100')
+// Clean but carbohydrate-based with no protein. 70s is correct — "Good", not
+// "Excellent". Under the old base-70 scorer this returned 100, which was the
+// whole problem: nothing had to be good, things only had to not be bad.
+check('clean biscuit, no protein', tr(['Sweet Potato','Peanut Butter','Oat Flour'], 'baked').score, between(65, 84), '65-84')
+// ⚠️ THE CASE THIS REBUILD EXISTS FOR. Flour and a possible carcinogen, with no
+// nutrition whatsoever, scored 67 under the old base-70 model.
+check('wheat flour + BHA (was 67)', tr(['Wheat Flour','BHA'], 'baked').score, between(1, 35), '<=35')
+check('Milk-Bone style (was 55)', tr(['Wheat Flour','Wheat Bran','Meat And Bone Meal','Milk','Beef Fat','Salt','BHA','Caramel Color','Iron Oxide'], 'baked').score, between(1, 30), '<=30')
 
 console.log('\nSALT LINE  — sprinkles below it must not earn points')
 const NB = ['Chicken','Chicken Meal','Brown Rice','Salt','Blueberries','Kale','Zinc Oxide']
