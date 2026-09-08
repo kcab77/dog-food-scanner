@@ -42,6 +42,8 @@ export default function Home() {
         footer { background: var(--text); color: rgba(255,255,255,0.55); padding: 36px 24px; text-align: center; font-size: 13px; line-height: 1.9; }
         footer a { color: rgba(255,255,255,0.75); text-decoration: none; }
         footer .links { margin-bottom: 10px; }
+        footer .disclaimer { max-width: 760px; margin: 0 auto 16px; font-size: 12px; line-height: 1.8; color: rgba(255,255,255,0.5); text-align: left; }
+        footer .disclaimer strong { color: rgba(255,255,255,0.78); }
 
         @media (max-width: 640px) { .nav-links a:not(.nav-cta) { display: none; } .trust-inner { grid-template-columns: 1fr; gap: 14px; } }
       `}</style>
@@ -78,8 +80,21 @@ export default function Home() {
         <p className="links">
           <Link href="/answers">Safety directory</Link> · <Link href="/recommended">Trusted picks</Link> · <Link href="/blog">Browse articles</Link> · <Link href="/library">Health A–Z</Link> · <Link href="/scan">Ingredient checker</Link> · <a href={APP_URL} target="_blank" rel="noopener noreferrer">PawGrade app</a>
         </p>
+        {/* ⚠️ LEGAL. Expanded 2026-09-08 at Kyle's request. The two clauses doing
+            the real work are "does not diagnose, treat, cure or prevent" and
+            "does not create a veterinarian-client-patient relationship" — the
+            previous one-liner had neither. Don't trim those back out. */}
+        <p className="disclaimer">
+          <strong>For informational and educational purposes only.</strong> Common Sense Dog does not
+          diagnose, treat, cure or prevent any disease or condition, and nothing here is veterinary
+          advice or creates a veterinarian-client-patient relationship. Content reflects general and
+          holistic pet-nutrition research and is provided as information, not as a treatment plan for
+          your individual animal. Always consult a licensed veterinarian before changing your pet&apos;s
+          diet or starting any supplement or protocol, and seek immediate veterinary care in an
+          emergency.
+        </p>
         <p>
-          © Common Sense Dog · Educational only — not veterinary advice. Always consult your vet for medical decisions.
+          © Common Sense Dog · Educational only — not veterinary advice.
         </p>
       </footer>
     </>

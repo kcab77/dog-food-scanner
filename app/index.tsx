@@ -43,7 +43,16 @@ import {
     CustomIngredient,
     loadCustomIngredients,
 } from "../storage/ingredients";
-const DISCLAIMER = `This app is for informational and educational purposes only. Scores and ingredient assessments reflect general pet nutrition research and are not veterinary advice. We are not affiliated with any pet food brand. Ingredient concerns cited in this app are based on published research from organizations including the ASPCA, WHO, NIH, FDA, and peer-reviewed veterinary nutrition literature. All opinions are clearly labeled as assessments. Consult your veterinarian before changing your pet's diet.`;
+// ⚠️ LEGAL. Strengthened 2026-09-08 at Kyle's request, and — more importantly —
+// actually RENDERED for the first time. This constant existed since early on and
+// was never displayed anywhere in the app, so the protection it was written for
+// didn't exist in practice. It now shows on the home screen above the version
+// stamp, and again under every scan result.
+//
+// The two clauses doing the real work are "does not diagnose, treat, cure or
+// prevent" and "does not create a veterinarian-client-patient relationship".
+// Don't trim those.
+const DISCLAIMER = `PawGrade is for informational and educational purposes only. It does not diagnose, treat, cure or prevent any disease or condition, and it is not veterinary advice. Nothing here creates a veterinarian-client-patient relationship. Scores and ingredient assessments reflect general pet nutrition research; all opinions are clearly labelled as assessments. Ingredient concerns cited are based on published research from organisations including the ASPCA, WHO, NIH and FDA, and peer-reviewed veterinary nutrition literature. We are not affiliated with any pet food brand. Always consult a licensed veterinarian before changing your pet's diet or starting any supplement, and seek immediate veterinary care in an emergency.`;
 
 const SHEET_ID = "1rllpgcetN7MeeOizW91f1VyvJYDLH4IlHmfPI27yRKY";
 
@@ -7201,6 +7210,22 @@ export default function App() {
             binary, so it still answers "am I on current code?" without ever
             needing to be edited, and it's something a user can legitimately
             see. Report this line when filing a bug. */}
+        {/* ⚠️ The legal disclaimer. It lived as an unused constant for months —
+            written, but never on screen, which is the same as not having one.
+            Home screen and results screen both show it now. */}
+        <Text
+          style={{
+            color: t.textFaint,
+            fontSize: 10,
+            lineHeight: 14.5,
+            textAlign: "center",
+            marginTop: 22,
+            paddingHorizontal: 4,
+          }}
+        >
+          {DISCLAIMER}
+        </Text>
+
         <Text
           style={{
             color: t.textFaint,
@@ -10633,6 +10658,20 @@ export default function App() {
               {dataSource !== "" && (
                 <Text style={styles.dataSource}>{dataSource}</Text>
               )}
+
+              {/* Same disclaimer as the home screen. A user who lands straight on a
+                  score should see it without having to go looking. */}
+              <Text
+                style={{
+                  color: t.textFaint,
+                  fontSize: 10,
+                  lineHeight: 14.5,
+                  marginTop: 16,
+                  marginHorizontal: 2,
+                }}
+              >
+                {DISCLAIMER}
+              </Text>
 
               {recallAlert?.found && (
                 <TouchableOpacity
