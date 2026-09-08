@@ -77,7 +77,8 @@ knowledge as possible so the assistant becomes THE go-to instead of normal blog 
 - [x] **Gut Health & Probiotics** (26 pairs) — ingested 2026-08-23, from the NotebookLM gut sessions.
 - [x] **Yeast — the "Frito" problem** (26 pairs) — ingested 2026-08-28. Retrieval verified: "why does my dog smell like corn chips and lick his paws at night" returns qa-yeast-19 at 0.608.
 - [x] **Leaky Gut** (20 pairs) — ingested 2026-08-29. Retrieval verified: "why does my dog seem allergic to every protein" returns qa-leaky-gut-1 at 0.656.
-- [x] **Lymphoma & swollen lymph nodes** (20 pairs) — ingested 2026-09-05. Reactive-vs-lymphoma discriminator, the five node pairs, hypercalcaemia, survivor stories labelled holistic-only vs integrative.
+- [x] **Lymphoma & swollen lymph nodes** (20 pairs) — ingested 2026-09-05.
+- [x] **Laryngeal paralysis & GOLPP** (25 pairs) — ingested 2026-09-08. Retrieval verified: "my lab clears his throat sometimes and cant handle heat anymore" returns qa-golpp-0 at 0.575, and the top four are all GOLPP. Includes the Stanley collar study, the counterintuitive large-bolus feeding finding, and full at-home doses. Reactive-vs-lymphoma discriminator, the five node pairs, hypercalcaemia, survivor stories labelled holistic-only vs integrative.
 
 ## 🔍 In review (drafted, awaiting Kyle's approval before ingest)
 - [ ] **`qa-thickeners-aflatoxin-2026-08-03.json`** — 12 pairs, all web-verified per `PINECONE_PROTOCOL.md`.

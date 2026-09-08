@@ -17,6 +17,13 @@ const VAULT = process.env.OBSIDIAN_BRAIN_VAULT || join(homedir(), 'Documents', '
 // shown on the index card. letter controls the A-Z bucket.
 const TOPICS = [
   {
+    slug: 'laryngeal-paralysis-golpp', title: 'Laryngeal Paralysis & GOLPP', letter: 'L',
+    emoji: '🫁', tag: 'Conditions',
+    summary: "Labs are ~70% of cases and the first sign is a hack everyone mistakes for allergies. The early signs, why heat is the real danger, and the collar study that clears you of blame.",
+    file: 'commonsensedog knowledge/Laryngeal Paralysis and GOLPP in Dogs.md',
+  },
+
+  {
     slug: 'lymphoma-and-lymph-nodes', title: 'Lymphoma & Swollen Lymph Nodes', letter: 'L',
     emoji: '🎗️', tag: 'Conditions',
     summary: 'One swollen node beside a hot spot is usually that node doing its job. How to tell a reactive node from lymphoma, the five pairs to check, and the dogs who beat the odds.',

@@ -1560,6 +1560,220 @@ const GUT_WARNINGS: { title: string; icon: string; detail: string }[] = [
 ];
 
 
+// ── LARYNGEAL PARALYSIS / GOLPP ──────────────────────────────────────────────
+// Added 2026-09-08 from Kyle's LarPar/GOLPP research.
+//
+// Why this section matters more than most: Labradors are ~70% of cases, and the
+// FIRST sign is an occasional throat-clear that almost everyone files under
+// allergies, a hairball, or early heart disease. By the time it's obvious it's
+// been progressing for a year. An owner who knows what the hack means gets a
+// head start that changes the whole trajectory.
+//
+// It also carries the single most guilt-relieving fact in the whole app — the
+// collar study — and that is deliberately near the top.
+
+const GOLPP_WHAT: { title: string; icon: string; detail: string }[] = [
+  {
+    title: "What the larynx actually does", icon: "🫁",
+    detail:
+      "Two cartilage flaps sit at the top of the airway. They pull WIDE OPEN on every breath in, and snap SHUT every time your dog swallows so food and water can't get into the windpipe. Two jobs, opposite directions, all day long.",
+  },
+  {
+    title: "What goes wrong", icon: "⚠️",
+    detail:
+      "The nerve that opens those flaps stops working. They go floppy and sit in the airway — and when the dog breathes IN hard, the suction can pull them together instead of apart. That's why the noise happens on the inhale, and why heat and panic are dangerous: the harder he breathes, the more they close.",
+  },
+  {
+    title: "It isn't a throat disease — that's the 2014 rename", icon: "🧬",
+    detail:
+      "It used to be called idiopathic laryngeal paralysis and treated as a local throat problem. Research renamed the acquired form GOLPP — Geriatric Onset Laryngeal Paralysis Polyneuropathy — because it's a slow, generalised nerve disease. The longest nerves fail first, and the nerve to the larynx is one of the longest in the body. The throat is just where a whole-body condition shows up first.",
+  },
+  {
+    title: "Who gets it", icon: "🐕",
+    detail:
+      "Senior large breeds. LABRADORS ARE ABOUT 70% OF CASES, then Goldens, Dobermans, Newfoundlands, Rottweilers, Great Pyrenees. Average age at diagnosis 11.3 years, three to four times more common in males. It can show up at 8, and the youngest documented cases are around 6.",
+  },
+];
+
+// ⚠️ THE GUILT ONE. Deliberately early.
+const GOLPP_NOT_YOUR_FAULT = {
+  headline: "Pulling on a collar did not cause this",
+  study:
+    "Dr. Bryden Stanley, one of the leading GOLPP researchers, ran a study specifically on this question. Her team compared senior dogs WITH laryngeal paralysis against healthy dogs of the same age and breed, and asked both groups about choke chains, spiked collars, and how hard the dog pulled. They found NO DIFFERENCE between the two groups. She has stated she has never seen laryngeal paralysis caused by a dog pulling on a collar.",
+  trauma:
+    "The only neck trauma that does cause it is severe physical injury — a dog mauled or badly bitten in the throat, or a car accident. Not leash pulling. Not grabbing a collar to break up a scuffle.",
+  swimming:
+    "And if you've been swimming him: that was the right call. Swimming and wading are among the BEST things for a GOLPP dog — low-impact exercise that maintains hind-end muscle, and water cools him through the skin so he doesn't have to pant. The one rule is no diving under, because the flaps can't close to keep water out.",
+  going_forward:
+    "Switch to a harness now — not because the collar caused anything, but because a compromised airway shouldn't have pressure on it. Both conventional and holistic vets agree on that one.",
+};
+
+// The signs, in the order they usually appear.
+const GOLPP_SIGNS: { sign: string; icon: string; detail: string; stage: string }[] = [
+  {
+    sign: "An occasional throat-clearing hack", icon: "😮‍💨", stage: "EARLIEST",
+    detail:
+      "A dry, random hack — like clearing a tickle. It happens because the flaps close a split second late when he swallows, so tiny droplets of saliva or water slip past and tickle the windpipe. This is the classic first sign and it's almost always mistaken for allergies, a hairball, or early heart disease. Most noticeable when eating, drinking, or resting in a dry room.",
+  },
+  {
+    sign: "A changed bark", icon: "🗣️", stage: "EARLY",
+    detail:
+      "Raspy, croaky, higher-pitched, or losing his voice. The vocal cords live inside the larynx. About 50% of dogs get this — which cuts both ways: it's a strong signal if present, but a NORMAL BARK DOES NOT RULE ANYTHING OUT, because the other half never change.",
+  },
+  {
+    sign: "Noise on the inhale (stridor)", icon: "🌬️", stage: "PROGRESSING",
+    detail:
+      "A raspy, whistling, floppy sound when he breathes IN — not out. Often only when excited or exercising at first.",
+  },
+  {
+    sign: "Belly breathing", icon: "🫄", stage: "PROGRESSING",
+    detail:
+      "Watch him asleep. If he's using stomach muscles to force air in, or panting heavily while resting, the airway is restricted. Resting respiratory rate while asleep is a free number you can track — normal is under 30 a minute.",
+  },
+  {
+    sign: "Trouble in heat that wasn't there last summer", icon: "🥵", stage: "PROGRESSING",
+    detail:
+      "Dogs cool by panting, and panting needs those flaps wide open. When they can't dilate properly, panting is inefficient — so he overheats fast on land while being completely fine in water, because water cools him through the skin instead. That specific split is a meaningful clue.",
+  },
+  {
+    sign: "Toe drag and hind-end weakness", icon: "🦵", stage: "LATER",
+    detail:
+      "The polyneuropathy half. Middle back claws wearing down, a light scritch on pavement, back legs looking wavy, thighs and glutes losing bulk. Only about 29% of dogs show any of this when the airway signs are diagnosed — it usually lags a year or two behind. ⚠️ IT IS NOT PAINFUL. It's nerve signal loss, not arthritis.",
+  },
+];
+
+// The differential — because not everything that hacks is this.
+const GOLPP_NOT_ALWAYS: { cause: string; detail: string }[] = [
+  { cause: "GOLPP", detail: "The acquired, age-related form in senior large breeds. This is what 'lar par in an older Lab' almost always means." },
+  { cause: "Congenital laryngeal paralysis", detail: "A hereditary defect that shows up in puppies under a year old. Completely different disease." },
+  { cause: "A tumour pressing on the nerve", detail: "A thyroid mass in the neck or a chest tumour can physically compress the recurrent laryngeal nerve. This is why a CT is sometimes done." },
+  { cause: "Direct trauma", detail: "A severe bite wound to the neck or a car accident severing the nerve." },
+  { cause: "Something else entirely", detail: "An occasional hack in an 8-year-old can also be seasonal allergies, dry indoor air, bronchitis, a collapsing trachea, or early heart disease. Even cardiologists mistake early lar par for heart disease, because the sound is so similar." },
+];
+
+// What actually changes the trajectory. Free or nearly free.
+const GOLPP_MANAGEMENT: { move: string; icon: string; detail: string }[] = [
+  {
+    move: "Heat is the emergency, not exercise", icon: "❄️",
+    detail:
+      "Hot, humid weather is genuinely dangerous — he can't pant efficiently, so he overheats, panics, breathes harder, and the throat tissue swells in a cascade that can close the airway. Air conditioning, a fan by his bed, and never exercise him in the heat. If he has water to cool in, that changes everything: he can be fine at 90°F in a pool and struggling at 80°F on a field.",
+  },
+  {
+    move: "Retire the collar", icon: "🦮",
+    detail:
+      "Harness only, from now on. Not out of blame — out of physics. A compromised airway shouldn't have anything pressing on it. A double-handled support harness also lets you help him up and down stairs later without straining his neck or hind end.",
+  },
+  {
+    move: "Keep him lean", icon: "⚖️",
+    detail:
+      "One of the highest-value things on this list. Extra weight is extra work for a respiratory system that's already restricted, and extra load on hind legs that will slowly weaken. A lean dog buys years of comfort.",
+  },
+  {
+    move: "Manage excitement, not just exercise", icon: "😌",
+    detail:
+      "Anxiety and excitement cause heavy panting, which makes the laryngeal tissues slam together and swell. The doorbell, the mailman, visitors — the triggers worth pre-empting are the emotional ones, not the physical ones.",
+  },
+  {
+    move: "Slow the water down", icon: "💧",
+    detail:
+      "Gulping a whole bowl is a major trigger for inhaling water and regurgitating. Small, frequent amounts through the day, or a floating bowl that limits the flow.",
+  },
+  {
+    move: "⚠️ The counterintuitive one — bigger mouthfuls of FOOD", icon: "🍽️",
+    detail:
+      "Swallowing studies found that a LARGER bolus works better: a big mouthful physically stretches the oesophagus, which triggers a stronger, more coordinated swallowing wave. Tiny slow bites can make swallowing more sluggish. So the slow feeder that's right for water is arguably wrong for food. If dry food dust makes him cough, moisten it — but don't assume small bites are safer. Watch him and see.",
+  },
+  {
+    move: "Try an incline, skip the raised bowl", icon: "📐",
+    detail:
+      "Standard shoulder-height elevated bowls show no clinical benefit. But feeding on an incline — on stairs, or holding the bowl so his head sits well above his stomach — helps roughly 50% of GOLPP dogs swallow more easily. Worth testing both.",
+  },
+  {
+    move: "Moist, clean air", icon: "💨",
+    detail:
+      "The larynx is very sensitive to dry air, which is why night-time hacking is often worst in an air-conditioned or force-heated bedroom. A cool-mist humidifier there is one of the cheapest fixes available. Also out: plug-ins, incense, potpourri, scented dryer sheets, smoke.",
+  },
+  {
+    move: "Ask your vet for rescue medication", icon: "💊",
+    detail:
+      "Even if you never pursue surgery, having a sedative on hand (acepromazine, trazodone or gabapentin are the usual ones) is genuinely life-saving. Given at the first sign of a panic-breathing episode it slows the breathing, stops the tissues slamming, and prevents the swelling crisis — turning an emergency-room night into a manageable one at home.",
+  },
+];
+
+// The neuropathy is the part you can actively fight.
+const GOLPP_PHYSIO: { exercise: string; icon: string; detail: string }[] = [
+  {
+    exercise: "Cavaletti poles", icon: "🪵",
+    detail:
+      "Low poles or broomsticks an inch or two off the ground, walked over slowly. GOLPP dogs lose proprioception — the brain's automatic sense of where the paws are. Stepping over poles forces him to look at his feet and consciously place them, which exercises exactly the neural pathway that's fading.",
+  },
+  {
+    exercise: "Sit-to-stands and side-steps", icon: "🏋️",
+    detail:
+      "Squats for dogs. Repeated sit-and-stand for a treat, plus stepping sideways, keeps the glutes and thighs from wasting. Little and often beats a long session.",
+  },
+  {
+    exercise: "Swimming and wading", icon: "🏊",
+    detail:
+      "The best exercise available to him: low-impact, builds hind-end strength, and cools him without panting. ⚠️ NO DIVING — not off docks, not to retrieve a sinking toy. Use floating toys he can grab from the surface, and a harness or life jacket.",
+  },
+  {
+    exercise: "Traction at home", icon: "🧘",
+    detail:
+      "Yoga mats or runners over hardwood and tile. Slippery floors are what turn mild weakness into a dog who won't get up.",
+  },
+  {
+    exercise: "Electroacupuncture", icon: "⚡",
+    detail:
+      "The most-recommended holistic modality here. Tiny electrical currents on acupuncture needles stimulate the damaged nerves to fire and exercise the muscles they serve — used for both the larynx and the hind end.",
+  },
+];
+
+// Doses as given. Kyle's material, his framing.
+const GOLPP_REMEDIES: { name: string; icon: string; dose: string; detail: string }[] = [
+  {
+    name: "Honey", icon: "🍯", dose: "½–1 tsp per 10 lb, twice daily",
+    detail: "The simplest thing on the list and one of the most effective for the hack itself. Coats an irritated throat and naturally suppresses coughing. Most retrievers take it off a spoon. Local raw honey may help with seasonal allergies as a bonus.",
+  },
+  {
+    name: "CBD oil", icon: "🌿", dose: "3 mg per 10 lb, once or twice daily",
+    detail: "Aimed at the panic loop — slight restriction, anxiety, faster breathing, more swelling, more restriction. CBD breaks that cycle and is an anti-inflammatory for the larynx at the same time. Mix into a small amount of food or give directly.",
+  },
+  {
+    name: "Curcumin (95%) + boswellia", icon: "🟡", dose: "100 mg curcumin per 10 lb · 50 mg boswellia per 10 lb",
+    detail: "Two herbal anti-inflammatories used together to reduce laryngeal swelling. Curcumin needs black pepper or fat to absorb.",
+  },
+  {
+    name: "Licorice root tincture", icon: "🌱", dose: "1 mL per 40 lb (0.5 mL per 20 lb) twice daily",
+    detail: "Called a natural corticosteroid — anti-inflammatory and an active cough suppressant, with immune-modulating properties. ⚠️ MAXIMUM 14 DAYS, then a 7-day break. It affects cortisol and potassium; this is not a permanent daily supplement.",
+  },
+  {
+    name: "Green tea extract (EGCG)", icon: "🍵", dose: "200–400 mg/day for a Lab-sized dog",
+    detail: "A strong antioxidant used to modulate the immune system, on the theory that some of the nerve degeneration is autoimmune-driven. Capsules can be opened and sprinkled on food.",
+  },
+  {
+    name: "Cartilage support", icon: "🦴", dose: "Bone broth to taste · GLM and antler velvet per label",
+    detail: "The larynx and trachea are cartilage rings that stiffen and weaken with age. Bone broth, green-lipped mussel (hyaluronic acid plus omega-3) and deer antler velvet support that structure. Bone broth does double duty — pour it over food to keep the meal moist, since dry food dust triggers coughing.",
+  },
+  {
+    name: "Phlegm-draining foods (TCVM)", icon: "🍐", dose: "Small amounts daily",
+    detail: "In Chinese medicine, throat congestion is a phlegm and chi-deficiency picture. Pears, apples, steamed clams and a pinch of ground ginger are used to reduce mucus. Easy to add as treats or a food topper.",
+  },
+];
+
+// Honest about what the evidence is and isn't.
+const GOLPP_HONEST = {
+  evidence:
+    "There are no large controlled trials of curcumin, licorice root or EGCG in dogs with GOLPP specifically. GOLPP was only identified as a systemic disease around 2014, and most research funding since has gone to genetics, surgical tie-back outcomes and physical rehab. These doses come from clinical experience and the established pharmacology of each compound, used by integrative vets. Electroacupuncture has the most active clinical interest of the group.",
+  progression:
+    "This is slow. It moves over months and years, not days — the word the literature uses is insidious. A dog can live a long time with only noisy breathing when excited. The hind-end weakness typically becomes noticeable a year or two after the respiratory signs, and even then it's gradual, not sudden paralysis. Most GOLPP dogs stay mobile and happy for the rest of their lives with traction, a support harness, and physio.",
+  prognosis:
+    "Dr. Mary Gardner's Doberman Duncan started clearing his throat at 10 and was diagnosed then. He lived nearly three more years and died at 13 of an unrelated heart condition — not of GOLPP. And that's a breed with a shorter lifespan than a Labrador.",
+  surgery:
+    "The tie-back procedure exists and works, but it isn't the only path and it isn't urgent for a mildly affected dog. Vets routinely manage stable dogs medically and environmentally for years first. If surgery isn't affordable right now, that is not a failure — the management on this page is the same thing they'd tell you to do anyway.",
+};
+
+
 // ── LYMPHOMA ─────────────────────────────────────────────────────────────────
 // Added 2026-09-04 from Kyle's lymphoma research.
 //
@@ -5975,7 +6189,7 @@ const TopicContext = React.createContext<string | null>(null);
 
 export const LEARN_TOPICS = [
   "AAFCO", "Bloat", "Carbs", "Collagen", "Deficiency signs", "Gut health", "Heart",
-  "Kibble", "Life stages", "Lifespan", "Lipomas", "Lymphoma", "Mineral forms",
+  "Kibble", "Larynx & GOLPP", "Life stages", "Lifespan", "Lipomas", "Lymphoma", "Mineral forms",
   "Missing nutrients", "Leaky gut", "Mushrooms", "Omega-3", "Recalls & facts", "TCVM", "Yeast",
 ] as const;
 
@@ -14258,6 +14472,111 @@ export default function App() {
                   }
                 >
                   <MineralFormsGuide />
+                </AccordionSection>
+              )}
+
+              {/* Laryngeal paralysis / GOLPP. Added 2026-09-08.
+                  Labradors are ~70% of cases and the first sign is an occasional
+                  throat-clear that everyone files under allergies — so the value
+                  here is entirely in catching it early. The collar study is placed
+                  near the top on purpose: it's the guilt every owner arrives with. */}
+              {(score !== null || learnMode) && (
+                <AccordionSection
+                  title="🫁 Larynx & GOLPP"
+                  topic="Larynx & GOLPP"
+                  door="learn"
+                  askLabel="Ask AI"
+                  onAskAI={() =>
+                    askAboutSection(
+                      `My senior Lab has an occasional throat-clearing hack and struggles more in heat than he used to. Walk me through laryngeal paralysis and GOLPP — the early signs, and what I can do at home.`,
+                    )
+                  }
+                >
+                  <Text style={{ color: t.text, fontSize: 12.5, lineHeight: 18 }}>
+                    If you have a{" "}
+                    <Text style={{ fontWeight: "800", color: t.textStrong }}>senior Labrador</Text>{" "}
+                    who has started clearing his throat now and then, and who suddenly
+                    can&apos;t handle heat the way he could last summer — read this one.
+                    Labs are about 70% of cases, and the first sign is quiet enough that
+                    almost everyone files it under allergies.
+                  </Text>
+
+                  {/* ⚠️ The guilt paragraph, deliberately early. */}
+                  <View style={{ backgroundColor: t.surface, borderRadius: 9, padding: 11, marginTop: 12, borderLeftWidth: 3, borderLeftColor: t.good }}>
+                    <Text style={{ color: t.good, fontSize: 13, fontWeight: "800" }}>
+                      ✋ {GOLPP_NOT_YOUR_FAULT.headline}
+                    </Text>
+                    <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 5, lineHeight: 17 }}>{GOLPP_NOT_YOUR_FAULT.study}</Text>
+                    <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 7, lineHeight: 17 }}>{GOLPP_NOT_YOUR_FAULT.trauma}</Text>
+                    <Text style={{ color: t.text, fontSize: 12, marginTop: 7, lineHeight: 17 }}>{GOLPP_NOT_YOUR_FAULT.swimming}</Text>
+                    <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 7, lineHeight: 17 }}>{GOLPP_NOT_YOUR_FAULT.going_forward}</Text>
+                  </View>
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>What it actually is</Text>
+                  {GOLPP_WHAT.map((g, i) => (
+                    <View key={i} style={{ backgroundColor: t.surface, borderRadius: 9, padding: 10, marginTop: 7 }}>
+                      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{g.icon} {g.title}</Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>{g.detail}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>The signs, in the order they show up</Text>
+                  {GOLPP_SIGNS.map((g, i) => (
+                    <View key={i} style={{ backgroundColor: t.surface, borderRadius: 9, padding: 10, marginTop: 7 }}>
+                      <View style={{ flexDirection: "row", alignItems: "center", gap: 7, flexWrap: "wrap" }}>
+                        <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{g.icon} {g.sign}</Text>
+                        <Text style={{ color: t.textDim, fontSize: 10, fontWeight: "800" }}>{g.stage}</Text>
+                      </View>
+                      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>{g.detail}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>Not every hack is this</Text>
+                  {GOLPP_NOT_ALWAYS.map((g, i) => (
+                    <View key={i} style={{ flexDirection: "row", gap: 9, marginTop: 7 }}>
+                      <Text style={{ color: t.textStrong, fontSize: 12, fontWeight: "800", width: 104 }}>{g.cause}</Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, flex: 1, lineHeight: 17 }}>{g.detail}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>What actually changes the trajectory</Text>
+                  {GOLPP_MANAGEMENT.map((g, i) => (
+                    <View key={i} style={{ backgroundColor: t.surface, borderRadius: 9, padding: 10, marginTop: 7, borderLeftWidth: 3, borderLeftColor: t.good }}>
+                      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{g.icon} {g.move}</Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>{g.detail}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>Fighting the hind-end side</Text>
+                  {GOLPP_PHYSIO.map((g, i) => (
+                    <View key={i} style={{ backgroundColor: t.surface, borderRadius: 9, padding: 10, marginTop: 7 }}>
+                      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{g.icon} {g.exercise}</Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>{g.detail}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>At-home remedies &amp; doses</Text>
+                  {GOLPP_REMEDIES.map((g, i) => (
+                    <View key={i} style={{ backgroundColor: t.surface, borderRadius: 9, padding: 10, marginTop: 7 }}>
+                      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{g.icon} {g.name}</Text>
+                      <Text style={{ color: t.good, fontSize: 11.5, marginTop: 2, fontWeight: "700" }}>{g.dose}</Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>{g.detail}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>The honest picture</Text>
+                  <View style={{ backgroundColor: t.surface, borderRadius: 9, padding: 11, marginTop: 7 }}>
+                    <Text style={{ color: t.textMuted, fontSize: 12, lineHeight: 17 }}>{GOLPP_HONEST.progression}</Text>
+                    <Text style={{ color: t.text, fontSize: 12, marginTop: 8, lineHeight: 17 }}>{GOLPP_HONEST.prognosis}</Text>
+                    <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 8, lineHeight: 17 }}>{GOLPP_HONEST.surgery}</Text>
+                    <Text style={{ color: t.textDim, fontSize: 11.5, marginTop: 8, lineHeight: 16, fontStyle: "italic" }}>{GOLPP_HONEST.evidence}</Text>
+                  </View>
+
+                  <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 14, lineHeight: 16.5, fontStyle: "italic" }}>
+                    Educational only — not veterinary advice. A definitive answer needs a
+                    laryngoscopy under light sedation. Even without one, a vet visit is worth
+                    it just to get rescue sedatives on hand for a breathing crisis.
+                  </Text>
                 </AccordionSection>
               )}
 
