@@ -8526,12 +8526,41 @@ export default function App() {
         label: `Format bonus (${processingResult.rating})`,
         value: processingResult.bonus,
       });
+    // ⚠️ MINERALS ARE CHARGED ONCE, NOT TWICE (changed 2026-09-11, Kyle approved).
+    //
+    // Every mineral form in a premix appears on BOTH lists: it's an entry in
+    // HARMFUL_INGREDIENTS *and* it's counted again by vitaminLoadPenalty. Six
+    // ordinary premix terms — zinc sulfate, ferrous sulfate, copper sulfate,
+    // manganese sulfate, zinc oxide, sodium selenite — cost 24 points of a
+    // 60-point base that way: -10 here, then -14 again below. EVERY kibble has
+    // a premix, so every kibble started 24 points down before a single real
+    // food ingredient was looked at. That is why Blue Buffalo Life Protection
+    // and a corn-and-BHA grocery kibble both scored exactly 5, and why 24% of
+    // the whole product database sat pinned at the floor.
+    //
+    // vitaminLoadPenalty is the right home for it: it already grades
+    // chelate > sulfate > oxide and scales with how many concerning forms are
+    // present, which is the actual signal. The per-ingredient charge was a
+    // blunt duplicate.
+    //
+    // They are still FLAGGED and still shown with their reason — the user loses
+    // no information. They're just not billed twice.
+    const mineralTerms = [...VITAMIN_CONCERN_HIGH, ...VITAMIN_CONCERN_LOW].map((m) =>
+      m.toLowerCase(),
+    );
     for (const h of foundHarmful) {
       const pos = h.position ?? 0;
-      const p = harmfulPenalty(h.severity, pos);
+      const countedInVitaminLoad = mineralTerms.some((m) => h.name.toLowerCase().includes(m));
+      const p = countedInVitaminLoad ? 0 : harmfulPenalty(h.severity, pos);
       total -= p;
       const posNote = pos >= 10 ? ` — ingredient #${pos + 1} (trace amount)` : pos >= 5 ? ` — ingredient #${pos + 1}` : "";
-      breakdown.push({ label: `${h.name} (${h.severity})${posNote}`, value: -p, severity: h.severity });
+      breakdown.push({
+        label: countedInVitaminLoad
+          ? `${h.name} (${h.severity}) — counted in the vitamin & mineral load below`
+          : `${h.name} (${h.severity})${posNote}`,
+        value: -p,
+        severity: h.severity,
+      });
     }
     total -= processingResult.penalty;
     total += processingResult.bonus;
