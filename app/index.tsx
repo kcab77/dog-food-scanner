@@ -8578,11 +8578,31 @@ export default function App() {
         breakdown.push({ label: vmp.label, value: -vmp.penalty });
       }
     }
-    if (foundToxicAdditives.length > 0) {
-      const p = foundToxicAdditives.length * 10;
+    // ⚠️ THE THIRD CHARGE ON THE SAME MINERALS (changed 2026-09-11, Kyle approved).
+    //
+    // TOXIC_ADDITIVES holds exactly four terms — copper sulfate, sodium
+    // selenite, zinc oxide, dl-methionine — and EVERY ONE of them is already
+    // counted by vitaminLoadPenalty. At -10 each this was the single largest
+    // line on a typical kibble's breakdown: Blue Buffalo Life Protection lost
+    // -20 here on top of -13 for the same two ingredients, on a 60-point base.
+    //
+    // Charging the same zinc oxide three times is how a food with deboned
+    // chicken first, no corn, no wheat and blueberries on the label ended up
+    // scoring the same as a corn-and-BHA grocery kibble.
+    //
+    // "Toxic" was also the wrong word. Zinc oxide is a poorly absorbed mineral
+    // form, not a poison — and calling it toxic misinformed the user as well as
+    // wrecking the score. The list is kept and still FLAGS these ingredients;
+    // the charge now lives once, in the mineral system that grades forms
+    // properly.
+    const toxicNotAlreadyCounted = foundToxicAdditives.filter(
+      (a: string) => !mineralTerms.some((m) => a.toLowerCase().includes(m)),
+    );
+    if (toxicNotAlreadyCounted.length > 0) {
+      const p = toxicNotAlreadyCounted.length * 10;
       total -= p;
       breakdown.push({
-        label: `Toxic additives (${foundToxicAdditives.length})`,
+        label: `Toxic additives (${toxicNotAlreadyCounted.length})`,
         value: -p,
       });
     }
