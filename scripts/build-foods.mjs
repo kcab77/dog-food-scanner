@@ -43,6 +43,43 @@ const MARKETING = /(we meticulously|helps support|our suppl|guaranteed analysis|
 const ARTIFACT = /(caricamento|loading|undefined|^null$)/i
 const STARTS_LIKE_FOOD = /^\s*(deboned |fresh |whole |chicken|beef|turkey|lamb|salmon|duck|pork|venison|bison|buffalo|fish|rabbit|water|brown rice|oatmeal|barley|sweet potato)/i
 
+// ⚠️ US MARKET ONLY, for now (Kyle, 2026-09-11) — and the reason is stronger
+// than nationality. The scorer matches ENGLISH ingredient terms. A French label
+// saying "oxyde de zinc" and "sélénite de sodium" matches nothing, so the
+// identical food scores 53 in French and 23 in English: it catches ZERO flagged
+// ingredients. A foreign label doesn't score differently, it scores FALSELY
+// HIGH, which is the dangerous direction. Exclude until the term lists are
+// translated.
+const NON_US_BRANDS = [
+  'bozita', 'carnilove', 'dagsmark', 'leader price', 'smølke', 'smolke', 'yarrah',
+  'wolf of wilderness', 'fish4dogs', 'trovet', 'vitapet', 'applaws', 'vitakraft',
+  'lakes ice cream',
+]
+
+// Cat food and non-food that the name-based filter misses because the word
+// "cat" never appears. 9Lives and Temptations are both cat brands.
+const NOT_DOG_FOOD = [
+  '9lives', 'temptations', 'unidentifiable', 'nutrients', 'petcare', 'blink',
+  'jack', 'ahealth shreds', 'lakes ice cream',
+]
+
+// The same brand arrives spelled several ways — "Blue", "Blue Buffalo",
+// "blue wilderness" — which splits one brand across four directory entries and
+// breaks the "more from this brand" section. Longest match wins.
+const BRAND_ALIASES = [
+  [/^blue( buffalo| wilderness)?$/i, 'Blue Buffalo'],
+  [/^hill'?s( pet nutrition| science diet)?$/i, "Hill's"],
+  [/^(purina|nestlé|nestle|one)$/i, 'Purina'],
+  [/^wellness( core| natural pet food)?$/i, 'Wellness'],
+  [/^fromm family( pet food)?$/i, 'Fromm Family'],
+  [/^instinct( the raw brand)?$/i, 'Instinct'],
+  [/^pure balance( small breed)?$/i, 'Pure Balance'],
+]
+const normaliseBrand = (b) => {
+  for (const [re, name] of BRAND_ALIASES) if (re.test(b.trim())) return name
+  return b
+}
+
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 70)
 const titled = (s) => s.replace(/\s+/g, ' ').trim()
 
@@ -55,11 +92,14 @@ for (const p of raw) {
   if (!STARTS_LIKE_FOOD.test(ing)) continue
   const hay = `${p.product_name} ${p.brand}`
   if (CAT.test(hay) || ARTIFACT.test(p.product_name || '')) continue
+  const blow = p.brand.toLowerCase().trim()
+  if (NON_US_BRANDS.some((n) => blow.includes(n))) continue
+  if (NOT_DOG_FOOD.some((n) => blow === n || blow.includes(n))) continue
   if (FOREIGN.test(ing) || MARKETING.test(ing)) continue
 
   // A product name that already repeats the brand reads badly as a headline.
   let name = titled(p.product_name || '')
-  const brand = titled(p.brand)
+  const brand = normaliseBrand(titled(p.brand))
   if (name.toLowerCase().startsWith(brand.toLowerCase())) name = name.slice(brand.length).trim()
   if (!name) name = p.product_name
   const s = slug(`${brand}-${name}`)

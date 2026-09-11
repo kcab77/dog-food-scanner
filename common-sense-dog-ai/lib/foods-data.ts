@@ -3,7 +3,7 @@
  *   node scripts/build-scoring.mjs && node scripts/build-foods.mjs
  *
  * Every food scored by PawGrade's real scorer, not a second implementation.
- * 122 publishable products of 122 rows in Supabase — the rest are cat
+ * 96 publishable products of 122 rows in Supabase — the rest are cat
  * food, non-English labels, marketing copy, or scraper artifacts.
  *
  * Generated 2026-09-11.
@@ -245,8 +245,8 @@ export const foods: Food[] = [
   "produce": []
  },
  {
-  "slug": "instinct-the-raw-brand-raw-meals-puppy",
-  "brand": "Instinct the raw brand",
+  "slug": "instinct-raw-meals-puppy",
+  "brand": "Instinct",
   "name": "raw meals:puppy",
   "score": 100,
   "format": "Raw",
@@ -455,140 +455,6 @@ export const foods: Food[] = [
    "Chicken Kidney"
   ],
   "produce": []
- },
- {
-  "slug": "nutrients-infusion-adult-weight-control-freeze-dried",
-  "brand": "Nutrients",
-  "name": "Infusion Adult Weight Control Freeze Dried",
-  "score": 89,
-  "format": "Freeze-Dried",
-  "ingredients": [
-   "Deboned chicken",
-   "chicken meal",
-   "red lentils",
-   "pearled barley",
-   "steel cut oats",
-   "green peas",
-   "chicken fat (preserved with mixed tocopherols)",
-   "sun-cured alfalfa meal",
-   "natural chicken flavour",
-   "freeze-dried chicken liver",
-   "salmon oil",
-   "coconut oil",
-   "pumpkin",
-   "butternut squash",
-   "carrots",
-   "broccoli",
-   "spinach",
-   "pomegranate",
-   "apples",
-   "cranberries",
-   "blueberries",
-   "juniper berry extract",
-   "ginger",
-   "fennel",
-   "chamomile",
-   "peppermint leaf",
-   "licorice root",
-   "turmeric",
-   "vitamins (vitamin E supplement, vitamin A supplement, niacin, calcium pantothenate, riboflavin, pyridoxine hydrochloride, thiamine mononitrate, biotin, vitamin B12 supplement, vitamin D3 supplement, folic acid)",
-   "minerals (zinc sulfate, zinc proteinate, iron proteinate, ferrous sulfate, copper proteinate, copper sulfate, manganese proteinate, manganous oxide, calcium iodate, sodium selenite)",
-   "lecithin",
-   "salt",
-   "choline chloride",
-   "potassium chloride",
-   "chicory root extract",
-   "yeast extract",
-   "calcium carbonate",
-   "DL-methionine",
-   "L-lysine",
-   "taurine",
-   "glucosamine hydrochloride",
-   "chondroitin sulfate",
-   "rosemary extract",
-   "L-carnitine",
-   "dried Lactobacillus acidophilus fermentation product",
-   "dried Lactobacillus casei fermentation product",
-   "dried Bifidobacterium bifidum fermentation product",
-   "dried Enterococcus faecium fermentation product."
-  ],
-  "breakdown": [
-   {
-    "label": "Base score",
-    "value": 60
-   },
-   {
-    "label": "Format bonus (Freeze-Dried)",
-    "value": 25
-   },
-   {
-    "label": "vitamins (vitamin E supplement, vitamin A supplement, niacin, calcium pantothenate, riboflavin, pyridoxine hydrochloride, thiamine mononitrate, biotin, vitamin B12 supplement, vitamin D3 supplement, folic acid) (mild) — ingredient #29 (trace amount)",
-    "value": -1,
-    "severity": "mild"
-   },
-   {
-    "label": "High synthetic vitamin/mineral load (3 added) — over-fortified formula",
-    "value": -8
-   },
-   {
-    "label": "Legumes in top 3 ingredients (1) — DCM link",
-    "value": -15
-   },
-   {
-    "label": "Legumes further down the label (1) — DCM link",
-    "value": -3
-   },
-   {
-    "label": "Est. ~27% carbohydrate — multiple carb sources",
-    "value": -6
-   },
-   {
-    "label": "🐟 Excellent omega ratio (est. ≤5:1 — raw/freeze-dried with fish oil) — anti-inflammatory",
-    "value": 10
-   },
-   {
-    "label": "Organ meats (1) — nutrient-dense whole food proteins",
-    "value": 5
-   },
-   {
-    "label": "Whole food fruits & vegetables (8)",
-    "value": 10
-   },
-   {
-    "label": "Anti-inflammatory ingredients (4) — turmeric, fish oil, kelp, etc.",
-    "value": 12
-   }
-  ],
-  "flagged": [
-   {
-    "name": "vitamins (vitamin E supplement, vitamin A supplement, niacin, calcium pantothenate, riboflavin, pyridoxine hydrochloride, thiamine mononitrate, biotin, vitamin B12 supplement, vitamin D3 supplement, folic acid)",
-    "severity": "mild",
-    "reason": "Cholecalciferol is vitamin D3 — the standard, AAFCO-required form of vitamin D in complete dog food, and its presence on a label is expected rather than alarming. Dogs cannot make meaningful vitamin D in their skin from sunlight the way people do, so it has to come from the diet. Two things are worth knowing. D3 is more potent than D2 (ergocalciferol) and has a narrower safety margin — it is the form used in rodenticides. And the real-world risk is manufacturing error, not the ingredient: FDA recalls in 2018–19 found dog foods containing up to 70x the intended vitamin D, causing hypercalcemia, kidney failure and deaths across brands including Hill's, Nutrisca, Sunshine Mills, Kroger and ELM. An ingredient label cannot tell you the amount, only that it is present — so this is flagged for awareness, not as a mark against the food."
-   },
-   {
-    "name": "minerals (zinc sulfate, zinc proteinate, iron proteinate, ferrous sulfate, copper proteinate, copper sulfate, manganese proteinate, manganous oxide, calcium iodate, sodium selenite)",
-    "severity": "mild",
-    "reason": "⚠️ Read this one carefully, because it is flagged for the OPPOSITE reason to every other mineral here. As a form, sulfate is the acceptable middle — chelates absorb best, sulfates adequately, oxides barely at all. Copper sulfate is not a poor form. The concern is TOTAL COPPER LOAD: copper accumulates in the liver, dogs have no good way to dump the excess, and AAFCO deleted the copper maximum in 2007 and still has none. So 'meets AAFCO' tells you nothing about the ceiling. Matters most in copper-predisposed breeds — Bedlington Terrier, West Highland White, Doberman, Labrador, Dalmatian — where the target is under ~1.2mg per 1,000 kcal. Liver enzymes are NOT sensitive early, so normal bloodwork does not rule it out. Demoted from severe to mild on 2026-08-23: the form itself is fine, and scoring it as severe punished a mid-tier food for using an adequate mineral."
-   },
-   {
-    "name": "DL-methionine",
-    "severity": "mild",
-    "reason": "⚪ Synthetic form, generally safe: DL-methionine is a synthetic amino acid added to meet methionine requirements and, in some foods, to acidify urine. It's a legitimate and widely used feed additive with no evidence of harm at label levels. The 'DL-' indicates a racemic mixture — dogs use the L-form directly and convert the D-form, which they do adequately. Flagged as a formulation signal rather than a hazard: its presence usually indicates plant-heavy protein that needed topping up, since meat-based diets generally supply enough methionine on their own."
-   }
-  ],
-  "organs": [
-   "freeze-dried chicken liver"
-  ],
-  "produce": [
-   "pumpkin",
-   "butternut squash",
-   "carrots",
-   "broccoli",
-   "spinach",
-   "apples",
-   "cranberries",
-   "blueberries"
-  ]
  },
  {
   "slug": "acana-wholesome-grains-small-breed-recipe-dry-dog-food",
@@ -1541,9 +1407,9 @@ export const foods: Food[] = [
   "produce": []
  },
  {
-  "slug": "wellness-natural-pet-food-wellness-core-rawrev-grain-free-natural-pupp",
-  "brand": "Wellness Natural Pet Food",
-  "name": "Wellness CORE RawRev Grain Free Natural Puppy Dry Dog Food Puppy Recipe with Freeze Dried Turkey 4lb Bag",
+  "slug": "wellness-core-rawrev-grain-free-natural-puppy-dry-dog-food-puppy-recip",
+  "brand": "Wellness",
+  "name": "CORE RawRev Grain Free Natural Puppy Dry Dog Food Puppy Recipe with Freeze Dried Turkey 4lb Bag",
   "score": 72,
   "format": "Kibble with raw pieces",
   "ingredients": [
@@ -2614,105 +2480,6 @@ export const foods: Food[] = [
   ]
  },
  {
-  "slug": "bozita-nordic-waters-salmon",
-  "brand": "Bozita",
-  "name": "Nordic Waters Salmon",
-  "score": 58,
-  "format": "Kibble",
-  "ingredients": [
-   "Chicken",
-   "Salmon 7.5%",
-   "Nuts",
-   "Pork",
-   "Minerals",
-   "Yeast",
-   "Natural ingredients"
-  ],
-  "breakdown": [
-   {
-    "label": "Base score",
-    "value": 60
-   },
-   {
-    "label": "🔴 Poor omega ratio (est. ~12:1 — typical for kibble)",
-    "value": -10
-   },
-   {
-    "label": "Whole food nutrition — no synthetic vitamins",
-    "value": 8
-   }
-  ],
-  "flagged": [],
-  "organs": [],
-  "produce": []
- },
- {
-  "slug": "carnilove-rich-in-pheasant-enriched-with-raspberry-leaves",
-  "brand": "Carnilove",
-  "name": "Rich in Pheasant enriched with Raspberry leaves",
-  "score": 58,
-  "format": "Kibble",
-  "ingredients": [
-   "Chicken 71%",
-   "Pheasant 14%",
-   "Broth 12%",
-   "Raspberry leaves 1%",
-   "Linseed oil 1%",
-   "Minerals 0.5%",
-   "Vegetable starch 0.5%"
-  ],
-  "breakdown": [
-   {
-    "label": "Base score",
-    "value": 60
-   },
-   {
-    "label": "🔴 Poor omega ratio (est. ~12:1 — typical for kibble)",
-    "value": -10
-   },
-   {
-    "label": "Whole food nutrition — no synthetic vitamins",
-    "value": 8
-   }
-  ],
-  "flagged": [],
-  "organs": [],
-  "produce": []
- },
- {
-  "slug": "carnilove-rich-in-turkey-enriched-with-valerian-root",
-  "brand": "Carnilove",
-  "name": "Rich in Turkey enriched with Valerian root",
-  "score": 58,
-  "format": "Kibble",
-  "ingredients": [
-   "Chicken 71%",
-   "Turkey 14%",
-   "Broth 12%",
-   "Valerian root 1%",
-   "Linseed oil 1%",
-   "Minerals 0.5%",
-   "Vegetable starch 0.5%"
-  ],
-  "breakdown": [
-   {
-    "label": "Base score",
-    "value": 60
-   },
-   {
-    "label": "🔴 Poor omega ratio (est. ~12:1 — typical for kibble)",
-    "value": -10
-   },
-   {
-    "label": "Whole food nutrition — no synthetic vitamins",
-    "value": 8
-   }
-  ],
-  "flagged": [],
-  "organs": [],
-  "produce": []
- },
- {
   "slug": "dr-marty-nature-s-blend",
   "brand": "Dr. Marty",
   "name": "Nature's Blend",
@@ -3200,145 +2967,6 @@ export const foods: Food[] = [
   ]
  },
  {
-  "slug": "vitapet-pocket-trainers-chicken",
-  "brand": "vitapet",
-  "name": "Pocket Trainers Chicken",
-  "score": 54,
-  "format": "Kibble",
-  "ingredients": [
-   "chicken meat",
-   "vegetable glycerine",
-   "blueberries",
-   "sunflower oil",
-   "pea protein",
-   "sweet potatoes",
-   "spinach",
-   "carrots",
-   "Natural antioxidants."
-  ],
-  "breakdown": [
-   {
-    "label": "Base score",
-    "value": 60
-   },
-   {
-    "label": "Legumes in top 5 ingredients (1) — DCM link",
-    "value": -7
-   },
-   {
-    "label": "🔴 Very poor omega ratio (est. 15:1–30:1 — kibble without omega-3)",
-    "value": -15
-   },
-   {
-    "label": "Whole food nutrition — no synthetic vitamins",
-    "value": 8
-   },
-   {
-    "label": "Whole food fruits & vegetables (4)",
-    "value": 8
-   }
-  ],
-  "flagged": [],
-  "organs": [],
-  "produce": [
-   "blueberries",
-   "sweet potatoes",
-   "spinach",
-   "carrots"
-  ]
- },
- {
-  "slug": "applaws-chicken-breast-with-cheese",
-  "brand": "Applaws",
-  "name": "Chicken Breast with Cheese",
-  "score": 53,
-  "format": "Kibble",
-  "ingredients": [
-   "Chicken breast 70%",
-   "Chicken broth",
-   "Cheese 5%",
-   "Rice",
-   "Natural ingredients"
-  ],
-  "breakdown": [
-   {
-    "label": "Base score",
-    "value": 60
-   },
-   {
-    "label": "🔴 Very poor omega ratio (est. 15:1–30:1 — kibble without omega-3)",
-    "value": -15
-   },
-   {
-    "label": "Whole food nutrition — no synthetic vitamins",
-    "value": 8
-   }
-  ],
-  "flagged": [],
-  "organs": [],
-  "produce": []
- },
- {
-  "slug": "applaws-chicken-breast-with-ham-in-broth",
-  "brand": "Applaws",
-  "name": "Chicken breast with ham in broth",
-  "score": 53,
-  "format": "Kibble",
-  "ingredients": [
-   "Chicken breast 70%",
-   "Chicken broth",
-   "Ham 5%",
-   "Rice",
-   "Natural ingredients"
-  ],
-  "breakdown": [
-   {
-    "label": "Base score",
-    "value": 60
-   },
-   {
-    "label": "🔴 Very poor omega ratio (est. 15:1–30:1 — kibble without omega-3)",
-    "value": -15
-   },
-   {
-    "label": "Whole food nutrition — no synthetic vitamins",
-    "value": 8
-   }
-  ],
-  "flagged": [],
-  "organs": [],
-  "produce": []
- },
- {
-  "slug": "blink-chicken-fillets-in-jelly",
-  "brand": "Blink",
-  "name": "Chicken Fillets in Jelly",
-  "score": 53,
-  "format": "Kibble",
-  "ingredients": [
-   "Chicken fillets (65%)",
-   "Chicken broth (34%)",
-   "vitamins & minerals (1%)"
-  ],
-  "breakdown": [
-   {
-    "label": "Base score",
-    "value": 60
-   },
-   {
-    "label": "🔴 Very poor omega ratio (est. 15:1–30:1 — kibble without omega-3)",
-    "value": -15
-   },
-   {
-    "label": "Whole food nutrition — no synthetic vitamins",
-    "value": 8
-   }
-  ],
-  "flagged": [],
-  "organs": [],
-  "produce": []
- },
- {
   "slug": "nutrisource-grain-free-seafood-select-wet-dog-food",
   "brand": "NutriSource",
   "name": "Grain Free Seafood Select Wet Dog Food",
@@ -3445,40 +3073,9 @@ export const foods: Food[] = [
   "produce": []
  },
  {
-  "slug": "vitakraft-pure-chicken-bones",
-  "brand": "Vitakraft",
-  "name": "Pure Chicken Bones",
-  "score": 53,
-  "format": "Kibble",
-  "ingredients": [
-   "Chicken meat 65%",
-   "Beef skin 30%",
-   "Vegetable by-products",
-   "Vegetable protein extracts",
-   "Minerals"
-  ],
-  "breakdown": [
-   {
-    "label": "Base score",
-    "value": 60
-   },
-   {
-    "label": "🔴 Very poor omega ratio (est. 15:1–30:1 — kibble without omega-3)",
-    "value": -15
-   },
-   {
-    "label": "Whole food nutrition — no synthetic vitamins",
-    "value": 8
-   }
-  ],
-  "flagged": [],
-  "organs": [],
-  "produce": []
- },
- {
   "slug": "blue-buffalo-family-favorites-adult-wet-dog-food-sunday-chicken-dinner",
-  "brand": "Blue",
-  "name": "Buffalo Family Favorites Adult Wet Dog Food Sunday Chicken Dinner",
+  "brand": "Blue Buffalo",
+  "name": "Family Favorites Adult Wet Dog Food Sunday Chicken Dinner",
   "score": 52,
   "format": "Unknown – set manually below",
   "ingredients": [
@@ -3644,8 +3241,8 @@ export const foods: Food[] = [
  },
  {
   "slug": "hill-s-science-diet-adult-perfect-digestion-salmon-dry-dog-food",
-  "brand": "Hill's Science Diet",
-  "name": "Adult Perfect Digestion Salmon Dry Dog Food",
+  "brand": "Hill's",
+  "name": "Science Diet Adult Perfect Digestion Salmon Dry Dog Food",
   "score": 52,
   "format": "Kibble",
   "ingredients": [
@@ -3752,8 +3349,8 @@ export const foods: Food[] = [
   ]
  },
  {
-  "slug": "wellness-core-purely-pat-chicken-with-turkey",
-  "brand": "Wellness Core",
+  "slug": "wellness-purely-pat-chicken-with-turkey",
+  "brand": "Wellness",
   "name": "Purely Paté Chicken with Turkey",
   "score": 52,
   "format": "Kibble",
@@ -3805,8 +3402,8 @@ export const foods: Food[] = [
  },
  {
   "slug": "hill-s-science-diet-perfect-digestion-adult-salmon-dry-dog-food",
-  "brand": "Hill's Science Diet",
-  "name": "Perfect Digestion Adult, Salmon Dry Dog Food",
+  "brand": "Hill's",
+  "name": "Science Diet Perfect Digestion Adult, Salmon Dry Dog Food",
   "score": 51,
   "format": "Kibble",
   "ingredients": [
@@ -4023,8 +3620,8 @@ export const foods: Food[] = [
   ]
  },
  {
-  "slug": "wellness-core-purely-pat-chicken",
-  "brand": "Wellness Core",
+  "slug": "wellness-purely-pat-chicken",
+  "brand": "Wellness",
   "name": "Purely Paté Chicken",
   "score": 51,
   "format": "Kibble",
@@ -4737,65 +4334,6 @@ export const foods: Food[] = [
   ]
  },
  {
-  "slug": "petcare-mini-bits-with-duck",
-  "brand": "Petcare",
-  "name": "Mini bits with duck",
-  "score": 46,
-  "format": "Kibble",
-  "ingredients": [
-   "Duck breast meat",
-   "Vegetable Glycerin",
-   "So-bitol",
-   "Starch",
-   "Soy Protein",
-   "Salt",
-   "VC",
-   "Potassium Sorbate"
-  ],
-  "breakdown": [
-   {
-    "label": "Base score",
-    "value": 60
-   },
-   {
-    "label": "Soy Protein (mild)",
-    "value": -2,
-    "severity": "mild"
-   },
-   {
-    "label": "Potassium Sorbate (mild) — ingredient #8",
-    "value": -1,
-    "severity": "mild"
-   },
-   {
-    "label": "Salt is ingredient #6 — little real food below it",
-    "value": -4
-   },
-   {
-    "label": "🔴 Very poor omega ratio (est. 15:1–30:1 — kibble without omega-3)",
-    "value": -15
-   },
-   {
-    "label": "Whole food nutrition — no synthetic vitamins",
-    "value": 8
-   }
-  ],
-  "flagged": [
-   {
-    "name": "Soy Protein",
-    "severity": "mild",
-    "reason": "⚪ Formulation signal: isolated plant protein used to inflate the crude protein figure without meat. Lower in the amino acids dogs need most, and a common allergen. Matters most in the top five ingredients."
-   },
-   {
-    "name": "Potassium Sorbate",
-    "severity": "mild",
-    "reason": "The in vitro evidence is real and specific. Mamur et al. (Toxicology in Vitro, 2010) exposed human lymphocytes to potassium sorbate and found significant chromosomal aberrations at 500-1000 µg/ml, elevated sister-chromatid exchanges from 125 µg/ml, and DNA strand breaks at every concentration tested. ⚖️ But the in vivo picture does not follow it. EFSA's 2015 re-evaluation reviewed exactly these findings, concluded that live-animal studies did NOT confirm genotoxicity at realistic exposure, and maintained an acceptable daily intake of 3 mg/kg body weight. The concentrations used in those cell studies are in the 0.5-2 mM range, which dietary intake doesn't reach — potassium sorbate is metabolised much like a fatty acid. There is one more specific concern worth knowing: potassium sorbate reacting with ASCORBIC ACID in the presence of an IRON salt produces mutagenic decomposition products. Pet foods routinely contain all three. That interaction is a better reason for caution than the raw cell data. Our position: a preference against, not a demonstrated harm — and stronger where vitamin C and an iron source appear on the same label."
-   }
-  ],
-  "organs": [],
-  "produce": []
- },
- {
   "slug": "purina-frosty-paws-vanilla",
   "brand": "Purina",
   "name": "Frosty Paws Vanilla",
@@ -4857,73 +4395,8 @@ export const foods: Food[] = [
   "produce": []
  },
  {
-  "slug": "applaws-poulet-pour-chat",
-  "brand": "Applaws",
-  "name": "poulet pour chat",
-  "score": 45,
-  "format": "Kibble",
-  "ingredients": [
-   "Chicken 49.5% (Chicken Meal 46%, Freshly Prepared Chicken* 3.5%)",
-   "Potato*",
-   "Poultry Fat 8%",
-   "Beet Pulp*",
-   "Dried Brewer’s Yeast*",
-   "Vitamins & Minerals",
-   "Poultry Gravy 1.5%",
-   "Salmon Oil",
-   "Egg Powder*",
-   "Chicory Extract* 0.2% (a source of prebiotic FOS)",
-   "Seaweed*",
-   "Yucca Schidigera Extract*",
-   "Cranberry Powder. *Natural Ingredients.\r\nVitamins: Vitamin A 29000IU",
-   "Vitamin D3 1000IU",
-   "Vitamin E 640mg",
-   "Taurine 1000mg.\r\n\r\nAmino Acids: DL Methionine 250mg.\r\n\r\nTrace Elements: Iodine (Calcium Iodate, anhydrous) 1mg",
-   "Iron (Iron (II) Sulphate Monohydrate) 50mg",
-   "Zinc (Zinc Sulphate Monohydrate) 100mg",
-   "Manganese (Manganese (II) Oxide) 50mg",
-   "Copper (Copper (II) Sulphate Pentahydrate) 5mg.\r\nAntioxidants: Tocopherol Extracts. Anti-Caking Agents: Sepiolite 300mg.\r\n\r\nSensory Additives: Rosemary Extract."
-  ],
-  "breakdown": [
-   {
-    "label": "Base score",
-    "value": 60
-   },
-   {
-    "label": "Est. ~30% carbohydrate — a carb is a primary ingredient",
-    "value": -8
-   },
-   {
-    "label": "Vague protein sourcing in top 5",
-    "value": -12
-   },
-   {
-    "label": "🔴 Poor omega ratio (est. ~10:1 — kibble fats offset fish oil)",
-    "value": -10
-   },
-   {
-    "label": "Whole food nutrition — no synthetic vitamins",
-    "value": 8
-   },
-   {
-    "label": "Whole food fruits & vegetables (2)",
-    "value": 4
-   },
-   {
-    "label": "Anti-inflammatory ingredients (1) — turmeric, fish oil, kelp, etc.",
-    "value": 3
-   }
-  ],
-  "flagged": [],
-  "organs": [],
-  "produce": [
-   "Beet Pulp*",
-   "Cranberry Powder. *Natural Ingredients.\r\nVitamins: Vitamin A 29000IU"
-  ]
- },
- {
-  "slug": "blue-wilderness-tasty-chicken-flavor",
-  "brand": "Blue wilderness",
+  "slug": "blue-buffalo-tasty-chicken-flavor",
+  "brand": "Blue Buffalo",
   "name": "Tasty Chicken Flavor",
   "score": 45,
   "format": "Kibble",
@@ -4976,60 +4449,6 @@ export const foods: Food[] = [
   ],
   "organs": [],
   "produce": []
- },
- {
-  "slug": "dagsmark-lappi",
-  "brand": "Dagsmark",
-  "name": "Lappi",
-  "score": 45,
-  "format": "Kibble",
-  "ingredients": [
-   "chicken meal",
-   "potato",
-   "linseed",
-   "beet pulp",
-   "potato flake",
-   "canola oil",
-   "vegetable fiber"
-  ],
-  "breakdown": [
-   {
-    "label": "Base score",
-    "value": 60
-   },
-   {
-    "label": "canola oil (mild) — ingredient #6",
-    "value": -1,
-    "severity": "mild"
-   },
-   {
-    "label": "Est. ~37% carbohydrate — a carb is a primary ingredient",
-    "value": -14
-   },
-   {
-    "label": "🔴 Poor omega ratio (est. ~12:1 — typical for kibble)",
-    "value": -10
-   },
-   {
-    "label": "Whole food nutrition — no synthetic vitamins",
-    "value": 8
-   },
-   {
-    "label": "Whole food fruits & vegetables (1)",
-    "value": 2
-   }
-  ],
-  "flagged": [
-   {
-    "name": "canola oil",
-    "severity": "mild",
-    "reason": "⚪ Formulation signal: canola is a cheap plant oil used to hit the fat percentage. It carries far more omega-6 than omega-3, so it pushes the ratio in the wrong direction in a food that is usually already omega-6 heavy. It is typically solvent-extracted and usually from GMO crops. Not toxic — but it is fat that does nothing useful, where fish oil or named animal fat would."
-   }
-  ],
-  "organs": [],
-  "produce": [
-   "beet pulp"
-  ]
  },
  {
   "slug": "blue-buffalo-duck-recipe",
@@ -5126,8 +4545,8 @@ export const foods: Food[] = [
   "produce": []
  },
  {
-  "slug": "hill-s-science-diet-large-breed-puppy",
-  "brand": "Hill's Science Diet",
+  "slug": "hill-s-large-breed-puppy",
+  "brand": "Hill's",
   "name": "Large breed puppy",
   "score": 44,
   "format": "Kibble",
@@ -5602,126 +5021,8 @@ export const foods: Food[] = [
   "produce": []
  },
  {
-  "slug": "fish4dogs-salmon-morsels",
-  "brand": "fish4dogs",
-  "name": "salmon morsels",
-  "score": 42,
-  "format": "Kibble",
-  "ingredients": [
-   "Salmon Meal (32%)",
-   "Potato",
-   "Sweet Potato",
-   "Pea Starch",
-   "Salmon Oil (9%)",
-   "Salmon (4%)",
-   "White Fish",
-   "Mackerel",
-   "Salmon Digest",
-   "Brewers Yeast",
-   "Plant Fibre",
-   "Glucosamine Sulphate (0.05%)",
-   "Chondroitin Sulphate (0.03%)."
-  ],
-  "breakdown": [
-   {
-    "label": "Base score",
-    "value": 60
-   },
-   {
-    "label": "Legumes in top 5 ingredients (1) — DCM link",
-    "value": -7
-   },
-   {
-    "label": "Est. ~37% carbohydrate — a carb is a primary ingredient",
-    "value": -14
-   },
-   {
-    "label": "🔴 Poor omega ratio (est. ~10:1 — kibble fats offset fish oil)",
-    "value": -10
-   },
-   {
-    "label": "Whole food nutrition — no synthetic vitamins",
-    "value": 8
-   },
-   {
-    "label": "Whole food fruits & vegetables (1)",
-    "value": 2
-   },
-   {
-    "label": "Anti-inflammatory ingredients (1) — turmeric, fish oil, kelp, etc.",
-    "value": 3
-   }
-  ],
-  "flagged": [],
-  "organs": [],
-  "produce": [
-   "Sweet Potato"
-  ]
- },
- {
-  "slug": "fish4dogs-white-fish-morsels",
-  "brand": "fish4dogs",
-  "name": "white fish morsels",
-  "score": 42,
-  "format": "Kibble",
-  "ingredients": [
-   "Salmon Meal (32%)",
-   "Potato",
-   "Sweet Potato",
-   "Pea Starch",
-   "Salmon Oil (9%)",
-   "White Fish (4%). Salmon",
-   "Mackerel",
-   "Salmon Digest",
-   "Brewers Yeast",
-   "Prebiotic-MOS (0.18%)",
-   "Prebiotic-FOS (0.18%)",
-   "Shrimp Extract",
-   "Fish Cartilage. Analytical Constituents: Crude Protein 30%",
-   "Crude Fibre 1.5%",
-   "Fat Content 16%",
-   "Crude Ash 9.5%",
-   "Omega 3 Fats 1.8%. Z Tilleggsfår til bund"
-  ],
-  "breakdown": [
-   {
-    "label": "Base score",
-    "value": 60
-   },
-   {
-    "label": "Legumes in top 5 ingredients (1) — DCM link",
-    "value": -7
-   },
-   {
-    "label": "Est. ~37% carbohydrate — a carb is a primary ingredient",
-    "value": -14
-   },
-   {
-    "label": "🔴 Poor omega ratio (est. ~10:1 — kibble fats offset fish oil)",
-    "value": -10
-   },
-   {
-    "label": "Whole food nutrition — no synthetic vitamins",
-    "value": 8
-   },
-   {
-    "label": "Whole food fruits & vegetables (1)",
-    "value": 2
-   },
-   {
-    "label": "Anti-inflammatory ingredients (1) — turmeric, fish oil, kelp, etc.",
-    "value": 3
-   }
-  ],
-  "flagged": [],
-  "organs": [],
-  "produce": [
-   "Sweet Potato"
-  ]
- },
- {
-  "slug": "fromm-family-pet-food-adult-gold",
-  "brand": "Fromm Family Pet Food",
+  "slug": "fromm-family-adult-gold",
+  "brand": "Fromm Family",
   "name": "Adult Gold",
   "score": 42,
   "format": "Kibble",
@@ -5986,8 +5287,8 @@ export const foods: Food[] = [
   ]
  },
  {
-  "slug": "pure-balance-small-breed-pure-balance",
-  "brand": "Pure Balance Small Breed",
+  "slug": "pure-balance-pure-balance",
+  "brand": "Pure Balance",
   "name": "Pure Balance",
   "score": 42,
   "format": "Kibble",
@@ -6064,67 +5365,9 @@ export const foods: Food[] = [
   ]
  },
  {
-  "slug": "trovet-unique-protein-treat-duck",
-  "brand": "trovet",
-  "name": "unique protein treat (duck)",
-  "score": 42,
-  "format": "Kibble",
-  "ingredients": [
-   "Duck",
-   "sorbitol",
-   "glycerol",
-   "rice starch",
-   "sodium chloride",
-   "potassium sorbate. Contains no artificial flavours",
-   "colourants or odourants."
-  ],
-  "breakdown": [
-   {
-    "label": "Base score",
-    "value": 60
-   },
-   {
-    "label": "sorbitol (mild)",
-    "value": -2,
-    "severity": "mild"
-   },
-   {
-    "label": "potassium sorbate. Contains no artificial flavours (mild) — ingredient #6",
-    "value": -1,
-    "severity": "mild"
-   },
-   {
-    "label": "Salt is ingredient #5 — little real food below it",
-    "value": -8
-   },
-   {
-    "label": "🔴 Very poor omega ratio (est. 15:1–30:1 — kibble without omega-3)",
-    "value": -15
-   },
-   {
-    "label": "Whole food nutrition — no synthetic vitamins",
-    "value": 8
-   }
-  ],
-  "flagged": [
-   {
-    "name": "sorbitol",
-    "severity": "mild",
-    "reason": "⚪ Mechanistic: sorbitol is a sugar alcohol used as a sweetener and humectant. Unlike xylitol — which is genuinely dangerous to dogs — sorbitol is not toxic, and conflating the two is a common error. The practical issue is that sugar alcohols are poorly absorbed and draw water into the gut, so meaningful amounts cause loose stools and gas. Present in small amounts in soft treats, it's a minor concern rather than a hazard."
-   },
-   {
-    "name": "potassium sorbate. Contains no artificial flavours",
-    "severity": "mild",
-    "reason": "The in vitro evidence is real and specific. Mamur et al. (Toxicology in Vitro, 2010) exposed human lymphocytes to potassium sorbate and found significant chromosomal aberrations at 500-1000 µg/ml, elevated sister-chromatid exchanges from 125 µg/ml, and DNA strand breaks at every concentration tested. ⚖️ But the in vivo picture does not follow it. EFSA's 2015 re-evaluation reviewed exactly these findings, concluded that live-animal studies did NOT confirm genotoxicity at realistic exposure, and maintained an acceptable daily intake of 3 mg/kg body weight. The concentrations used in those cell studies are in the 0.5-2 mM range, which dietary intake doesn't reach — potassium sorbate is metabolised much like a fatty acid. There is one more specific concern worth knowing: potassium sorbate reacting with ASCORBIC ACID in the presence of an IRON salt produces mutagenic decomposition products. Pet foods routinely contain all three. That interaction is a better reason for caution than the raw cell data. Our position: a preference against, not a demonstrated harm — and stronger where vitamin C and an iron source appear on the same label."
-   }
-  ],
-  "organs": [],
-  "produce": []
- },
- {
   "slug": "hill-s-science-diet-adult-7-senior-vitality-chicken-rice-recipe-dry-do",
-  "brand": "Hill's Science Diet",
-  "name": "Adult 7+ Senior Vitality Chicken & Rice Recipe - Dry Dog Food",
+  "brand": "Hill's",
+  "name": "Science Diet Adult 7+ Senior Vitality Chicken & Rice Recipe - Dry Dog Food",
   "score": 41,
   "format": "Kibble",
   "ingredients": [
@@ -6371,77 +5614,6 @@ export const foods: Food[] = [
   "produce": [
    "Sweet Potatoes",
    "Dried Plain Beet Pulp"
-  ]
- },
- {
-  "slug": "sm-lke-adult-mini-complete-all-in-one",
-  "brand": "SMøLKe",
-  "name": "Adult Mini Complete All-in-One",
-  "score": 41,
-  "format": "Kibble",
-  "ingredients": [
-   "chicken meal 19%",
-   "corn",
-   "barley",
-   "rice",
-   "sorghum",
-   "chicken fat",
-   "lamb meal 4%",
-   "beet pulp",
-   "hydrolysed protein",
-   "MSC fish meal 2%",
-   "blend of vitamins and minerals",
-   "yeast",
-   "cellulose 1%",
-   "MSC fish oil 0.8%",
-   "chicory 0.7%",
-   "sodium hexametaphosphate 0.1%"
-  ],
-  "breakdown": [
-   {
-    "label": "Base score",
-    "value": 60
-   },
-   {
-    "label": "cellulose 1% (mild) — ingredient #13 (trace amount)",
-    "value": -1,
-    "severity": "mild"
-   },
-   {
-    "label": "Unidentified generic meal (1) — sourcing unknown",
-    "value": -7
-   },
-   {
-    "label": "Est. ~37% carbohydrate — a carb is a primary ingredient",
-    "value": -14
-   },
-   {
-    "label": "🔴 Poor omega ratio (est. ~10:1 — kibble fats offset fish oil)",
-    "value": -10
-   },
-   {
-    "label": "Whole food nutrition — no synthetic vitamins",
-    "value": 8
-   },
-   {
-    "label": "Whole food fruits & vegetables (1)",
-    "value": 2
-   },
-   {
-    "label": "Anti-inflammatory ingredients (1) — turmeric, fish oil, kelp, etc.",
-    "value": 3
-   }
-  ],
-  "flagged": [
-   {
-    "name": "cellulose 1%",
-    "severity": "mild",
-    "reason": "Powdered cellulose is wood pulp used as a cheap bulking fibre, and the comparative research is unflattering. In Beagle feeding trials (Journal of Animal Science), apparent total tract digestibility was 11% for cellulose against 29% for beet pulp — less than half. Cellulose is insoluble and poorly fermentable, so it passes through largely untouched: it reduces overall dry matter and organic matter digestibility, increases stool volume, and produces lower concentrations of beneficial short-chain fatty acids with a less acidic fecal pH than fermentable fibres. It adds bulk and satiety without feeding the gut. Fermentable fibres — beet pulp, pumpkin, chicory — do the job better."
-   }
-  ],
-  "organs": [],
-  "produce": [
-   "beet pulp"
   ]
  },
  {
@@ -7427,69 +6599,6 @@ export const foods: Food[] = [
   "produce": []
  },
  {
-  "slug": "leader-price-terrines",
-  "brand": "Leader Price",
-  "name": "Terrines",
-  "score": 33,
-  "format": "Kibble",
-  "ingredients": [
-   "rabbit - liver and vegetable terrine (meat and animal by-products (of which rabbit 4% and liver 4%)",
-   "vegetables (carrot, peas), mineral substances)",
-   "salmon and trout terrine (meat and animal by-products",
-   "fish and fish by-products (salmon 4%, trout 4%), mineral substances, sugar)",
-   "poultry and kidney terrine (meat and animal by-products (of which poultry 4% and kidneys 4%), mineral substances)"
-  ],
-  "breakdown": [
-   {
-    "label": "Base score",
-    "value": 60
-   },
-   {
-    "label": "fish and fish by-products (salmon 4%, trout 4%), mineral substances, sugar) (moderate)",
-    "value": -10,
-    "severity": "moderate"
-   },
-   {
-    "label": "Legumes in top 3 ingredients (1) — DCM link",
-    "value": -15
-   },
-   {
-    "label": "Vague protein sourcing in top 5",
-    "value": -12
-   },
-   {
-    "label": "🔴 Poor omega ratio (est. ~12:1 — typical for kibble)",
-    "value": -10
-   },
-   {
-    "label": "Whole food nutrition — no synthetic vitamins",
-    "value": 8
-   },
-   {
-    "label": "Organ meats (2) — nutrient-dense whole food proteins",
-    "value": 10
-   },
-   {
-    "label": "Whole food fruits & vegetables (1)",
-    "value": 2
-   }
-  ],
-  "flagged": [
-   {
-    "name": "fish and fish by-products (salmon 4%, trout 4%), mineral substances, sugar)",
-    "severity": "moderate",
-    "reason": "⚪ Mechanistic, not trial-based: dogs have no dietary requirement for added sugar. It's included for palatability, and the concerns are the general ones — calories without nutrition, contribution to obesity and dental disease, and feeding oral and gut yeast populations. There are no controlled canine trials on added sugar in commercial food specifically; this is reasoning from established physiology. The clearer signal is what it says about the formulation: sweetening is how you make a food palatable when the ingredients alone won't do it."
-   }
-  ],
-  "organs": [
-   "rabbit - liver and vegetable terrine (meat and animal by-products (of which rabbit 4% and liver 4%)",
-   "poultry and kidney terrine (meat and animal by-products (of which poultry 4% and kidneys 4%), mineral substances)"
-  ],
-  "produce": [
-   "vegetables (carrot, peas), mineral substances)"
-  ]
- },
- {
   "slug": "canidae-pure-goodness-w-wholesome-grains-dry-puppy-food-salmon-oatmeal",
   "brand": "Canidae",
   "name": "PURE Goodness w/Wholesome Grains Dry Puppy Food Salmon & Oatmeal 4lb",
@@ -7745,83 +6854,9 @@ export const foods: Food[] = [
   ]
  },
  {
-  "slug": "lakes-ice-cream-vanilla-dog-ice-cream",
-  "brand": "Lakes Ice Cream",
-  "name": "Vanilla Dog Ice Cream",
-  "score": 32,
-  "format": "Kibble",
-  "ingredients": [
-   "Water",
-   "Sugar",
-   "Coconut Oil",
-   "Glucose",
-   "Dextrose",
-   "Inulin",
-   "Potato Starch",
-   "Mono - And Diglycerides of Fatty Acids",
-   "Guar Gum",
-   "Tara Gum",
-   "Sodium Alginate",
-   "Carrageenan",
-   "Natural flavour."
-  ],
-  "breakdown": [
-   {
-    "label": "Base score",
-    "value": 60
-   },
-   {
-    "label": "Sugar (moderate)",
-    "value": -10,
-    "severity": "moderate"
-   },
-   {
-    "label": "Glucose (moderate)",
-    "value": -10,
-    "severity": "moderate"
-   },
-   {
-    "label": "Carrageenan (moderate) — ingredient #12 (trace amount)",
-    "value": -4,
-    "severity": "moderate"
-   },
-   {
-    "label": "🔴 Very poor omega ratio (est. 15:1–30:1 — kibble without omega-3)",
-    "value": -15
-   },
-   {
-    "label": "Whole food nutrition — no synthetic vitamins",
-    "value": 8
-   },
-   {
-    "label": "Anti-inflammatory ingredients (1) — turmeric, fish oil, kelp, etc.",
-    "value": 3
-   }
-  ],
-  "flagged": [
-   {
-    "name": "Sugar",
-    "severity": "moderate",
-    "reason": "⚪ Mechanistic, not trial-based: dogs have no dietary requirement for added sugar. It's included for palatability, and the concerns are the general ones — calories without nutrition, contribution to obesity and dental disease, and feeding oral and gut yeast populations. There are no controlled canine trials on added sugar in commercial food specifically; this is reasoning from established physiology. The clearer signal is what it says about the formulation: sweetening is how you make a food palatable when the ingredients alone won't do it."
-   },
-   {
-    "name": "Glucose",
-    "severity": "moderate",
-    "reason": "⚪ Mechanistic, not trial-based: added glucose is a simple sugar used for palatability and, in some products, texture. Dogs generate the glucose they need from protein and fat and have no dietary requirement for it. Concerns are the general sugar ones rather than glucose-specific findings in dogs."
-   },
-   {
-    "name": "Carrageenan",
-    "severity": "moderate",
-    "reason": "Some research has associated degraded carrageenan with intestinal inflammation. While food-grade carrageenan is considered different, some veterinary nutritionists recommend avoiding it, particularly for pets with sensitive digestive systems"
-   }
-  ],
-  "organs": [],
-  "produce": []
- },
- {
-  "slug": "one-purina-dog-food-adult-with-real-salmon-tuna-60-8-oz",
-  "brand": "ONE",
-  "name": "Purina Dog Food, Adult, With Real Salmon & Tuna 60.8 Oz",
+  "slug": "purina-one-purina-dog-food-adult-with-real-salmon-tuna-60-8-oz",
+  "brand": "Purina",
+  "name": "ONE Purina Dog Food, Adult, With Real Salmon & Tuna 60.8 Oz",
   "score": 32,
   "format": "Unknown – set manually below",
   "ingredients": [
@@ -8027,172 +7062,6 @@ export const foods: Food[] = [
   ]
  },
  {
-  "slug": "unidentifiable-cage-free-chicken-brown-rice-sweet-potato-recipe",
-  "brand": "Unidentifiable",
-  "name": "Cage-Free Chicken Brown Rice & Sweet Potato Recipe",
-  "score": 31,
-  "format": "Kibble",
-  "ingredients": [
-   "Chicken",
-   "Chicken Meal",
-   "Brown Rice",
-   "Barley",
-   "Peas",
-   "Ground Sorghum",
-   "Chicken Fat (Preserved with Mixed Tocopherols)",
-   "Turkey Meal",
-   "Flaxseeds",
-   "Sweet Potato",
-   "Natural Flavor",
-   "Dried Plain Beet Pulp",
-   "Brewers Dried Yeast",
-   "Fish Oil",
-   "Monosodium Phosphate",
-   "Salt",
-   "Potassium Chloride",
-   "L-Threonine",
-   "Dried Chicory Root",
-   "DL-Methionine",
-   "Pumpkin",
-   "Cranberries",
-   "Dried Kelp",
-   "Suncured Alfalfa Meal",
-   "Ground Miscanthus Grass",
-   "Coconut Flour",
-   "Chia Seeds",
-   "Citric Acid (Preservative)",
-   "Mixed Tocopherols (Preservative)",
-   "Taurine",
-   "Ferrous Sulfate",
-   "Zinc Sulfate",
-   "Vitamin E Supplement",
-   "L-Ascorbyl-2-Polyphosphate (Source of Vitamin C)",
-   "Yucca Schidigera Extract",
-   "Blueberries",
-   "Turmeric",
-   "Apple",
-   "Copper Sulfate",
-   "Dried Bacillus Coagulans Fermentation Product",
-   "Sodium Selenite",
-   "Manganese Sulfate",
-   "Vitamin A Supplement",
-   "Niacin Supplement",
-   "D-Calcium Pantothenate",
-   "Riboflavin Supplement",
-   "Spinach",
-   "Ginger",
-   "Chamomile",
-   "Parsley",
-   "Dandelion",
-   "Dried Spearmint",
-   "Cinnamon",
-   "Thiamine Mononitrate",
-   "Vitamin D3 Supplement",
-   "Vitamin B12 Supplement",
-   "Pyridoxine Hydrochloride",
-   "Biotin",
-   "Calcium Iodate",
-   "Folic Acid"
-  ],
-  "breakdown": [
-   {
-    "label": "Base score",
-    "value": 60
-   },
-   {
-    "label": "Natural Flavor (mild) — ingredient #11 (trace amount)",
-    "value": -1,
-    "severity": "mild"
-   },
-   {
-    "label": "Vitamin D3 Supplement (mild) — ingredient #55 (trace amount)",
-    "value": -1,
-    "severity": "mild"
-   },
-   {
-    "label": "Pyridoxine Hydrochloride (mild) — ingredient #57 (trace amount)",
-    "value": -1,
-    "severity": "mild"
-   },
-   {
-    "label": "High synthetic vitamin/mineral load (7 added) — over-fortified formula",
-    "value": -13
-   },
-   {
-    "label": "Legumes in top 5 ingredients (1) — DCM link",
-    "value": -7
-   },
-   {
-    "label": "Est. ~27% carbohydrate — multiple carb sources",
-    "value": -6
-   },
-   {
-    "label": "🔴 Poor omega ratio (est. ~10:1 — kibble fats offset fish oil)",
-    "value": -10
-   },
-   {
-    "label": "Whole food fruits & vegetables (2)",
-    "value": 4
-   },
-   {
-    "label": "Anti-inflammatory ingredients (2) — turmeric, fish oil, kelp, etc.",
-    "value": 6
-   }
-  ],
-  "flagged": [
-   {
-    "name": "Natural Flavor",
-    "severity": "mild",
-    "reason": "⚪ Transparency signal: 'natural flavor' in pet food is most often animal digest — hydrolysed animal tissue sprayed on the outside of the kibble to make it palatable. It is not required to name the species. The concern is not toxicity, it is that a bag can list an unnamed animal product and disclose nothing about what it was."
-   },
-   {
-    "name": "DL-Methionine",
-    "severity": "mild",
-    "reason": "⚪ Synthetic form, generally safe: DL-methionine is a synthetic amino acid added to meet methionine requirements and, in some foods, to acidify urine. It's a legitimate and widely used feed additive with no evidence of harm at label levels. The 'DL-' indicates a racemic mixture — dogs use the L-form directly and convert the D-form, which they do adequately. Flagged as a formulation signal rather than a hazard: its presence usually indicates plant-heavy protein that needed topping up, since meat-based diets generally supply enough methionine on their own."
-   },
-   {
-    "name": "Ferrous Sulfate",
-    "severity": "mild",
-    "reason": "⚪ Formulation signal, not a hazard. Sulfate is the adequate middle grade of mineral — better absorbed than oxide, not as well as a chelate, and mildly pro-oxidant. Iron proteinate or iron amino acid chelate is the upgrade. Seeing sulfates rather than oxides means the manufacturer did not buy the cheapest option available, which is worth knowing."
-   },
-   {
-    "name": "Zinc Sulfate",
-    "severity": "mild",
-    "reason": "⚪ Formulation signal. The acceptable middle grade — adequately absorbed, behind zinc proteinate or zinc amino acid chelate, well ahead of zinc oxide. Not a reason to reject a food on its own."
-   },
-   {
-    "name": "Copper Sulfate",
-    "severity": "mild",
-    "reason": "⚠️ Read this one carefully, because it is flagged for the OPPOSITE reason to every other mineral here. As a form, sulfate is the acceptable middle — chelates absorb best, sulfates adequately, oxides barely at all. Copper sulfate is not a poor form. The concern is TOTAL COPPER LOAD: copper accumulates in the liver, dogs have no good way to dump the excess, and AAFCO deleted the copper maximum in 2007 and still has none. So 'meets AAFCO' tells you nothing about the ceiling. Matters most in copper-predisposed breeds — Bedlington Terrier, West Highland White, Doberman, Labrador, Dalmatian — where the target is under ~1.2mg per 1,000 kcal. Liver enzymes are NOT sensitive early, so normal bloodwork does not rule it out. Demoted from severe to mild on 2026-08-23: the form itself is fine, and scoring it as severe punished a mid-tier food for using an adequate mineral."
-   },
-   {
-    "name": "Sodium Selenite",
-    "severity": "severe",
-    "reason": "Sodium selenite is inorganic selenium, and selenium has one of the narrowest safe ranges of any nutrient. AAFCO sets the adult minimum at 0.35 mg/kg dry matter and the maximum at 2.0 — a window of only about 5.7x. For comparison, most nutrients have margins in the hundreds. That narrowness is precisely why the FORM matters here and matters less elsewhere. Two measured differences separate the forms. ABSORPTION: inorganic selenite is absorbed at roughly 50-60%, against 70-85% for organic selenomethionine and selenium yeast — so more selenite must be added to deliver the same nutrition, eating into an already tight margin. TOXICITY: comparative work found sodium selenite around 2.94x more toxic than selenium yeast, and organic forms test as less toxic than inorganic selenite and selenate generally. Mechanistically, selenomethionine is incorporated into proteins and released under regulation, whereas inorganic selenite generates free radicals during metabolism and causes oxidative stress in liver and kidney tissue; work in Biological Trace Element Research links long-term inorganic accumulation to kidney tubule damage that precedes any visible signs. So the case here is stronger than for most flagged ingredients: worse absorption AND higher toxicity AND the narrowest safety window in the profile. Prefer selenium yeast or selenomethionine."
-   },
-   {
-    "name": "Manganese Sulfate",
-    "severity": "mild",
-    "reason": "⚪ Formulation signal. Adequate absorption; manganese proteinate or amino acid chelate is better, manganese oxide is worse. On its own this is unremarkable."
-   },
-   {
-    "name": "Vitamin D3 Supplement",
-    "severity": "mild",
-    "reason": "Cholecalciferol is vitamin D3 — the standard, AAFCO-required form of vitamin D in complete dog food, and its presence on a label is expected rather than alarming. Dogs cannot make meaningful vitamin D in their skin from sunlight the way people do, so it has to come from the diet. Two things are worth knowing. D3 is more potent than D2 (ergocalciferol) and has a narrower safety margin — it is the form used in rodenticides. And the real-world risk is manufacturing error, not the ingredient: FDA recalls in 2018–19 found dog foods containing up to 70x the intended vitamin D, causing hypercalcemia, kidney failure and deaths across brands including Hill's, Nutrisca, Sunshine Mills, Kroger and ELM. An ingredient label cannot tell you the amount, only that it is present — so this is flagged for awareness, not as a mark against the food."
-   },
-   {
-    "name": "Pyridoxine Hydrochloride",
-    "severity": "mild",
-    "reason": "⚪ Safe synthetic at label levels: pyridoxine HCl is synthetic vitamin B6, and it's the standard, effective form used across pet food. Dogs require B6 for protein metabolism and neurotransmitter production, and deficiency causes anaemia and seizures. The reason for noting it at all is that B6 has an unusually narrow window at the top end for a B vitamin: chronic excess causes peripheral neuropathy — nerve damage in the limbs and loss of coordination. That's a concern for over-supplementation, not for its presence in a balanced food."
-   }
-  ],
-  "organs": [],
-  "produce": [
-   "Sweet Potato",
-   "Dried Plain Beet Pulp"
-  ]
- },
- {
   "slug": "simply-nourish-lamb-brown-rice-recipe",
   "brand": "Simply Nourish",
   "name": "Lamb & Brown Rice Recipe",
@@ -8299,8 +7168,8 @@ export const foods: Food[] = [
  },
  {
   "slug": "hill-s-science-diet-hairball-control",
-  "brand": "Hill's Science Diet",
-  "name": "Hairball Control",
+  "brand": "Hill's",
+  "name": "Science Diet Hairball Control",
   "score": 29,
   "format": "Kibble",
   "ingredients": [
@@ -8440,86 +7309,6 @@ export const foods: Food[] = [
    "Chicken Liver Flavor"
   ],
   "produce": []
- },
- {
-  "slug": "wolf-of-wilderness-wolf-of-wilderness",
-  "brand": "Wolf of Wilderness",
-  "name": "Wolf of Wilderness",
-  "score": 29,
-  "format": "Kibble",
-  "ingredients": [
-   "fresh chicken meat (41%)",
-   "pieces of potato (dried)",
-   "salmon protein (10%, dried)",
-   "poultry protein (10%, partially dried and hydrolysed)",
-   "dried beet pulp (desugared)",
-   "linseed",
-   "poultry fat",
-   "brewer's yeast (dried)",
-   "monocalcium phosphate",
-   "egg (dried)",
-   "sodium chloride",
-   "lignocellulose",
-   "fruits of the forest (0.3%, dried: cranberries, blackcurrants, raspberries, elderberries)",
-   "herbs (0.2%, dried: mugwort, St. John’s wort, nettle leaves, camomile, common yarrow, coltsfoot, dandelion root)",
-   "yeast extract (dried, = 0.2% beta-glucans and mannan-oligosaccharides)",
-   "apple (dried)",
-   "chicory inulin (0.1%)",
-   "salmon oil",
-   "sunflower oil."
-  ],
-  "breakdown": [
-   {
-    "label": "Base score",
-    "value": 60
-   },
-   {
-    "label": "dried beet pulp (desugared) (moderate)",
-    "value": -10,
-    "severity": "moderate"
-   },
-   {
-    "label": "lignocellulose (mild) — ingredient #12 (trace amount)",
-    "value": -1,
-    "severity": "mild"
-   },
-   {
-    "label": "Est. ~30% carbohydrate — a carb is a primary ingredient",
-    "value": -8
-   },
-   {
-    "label": "Vague protein sourcing in top 5",
-    "value": -12
-   },
-   {
-    "label": "🔴 Poor omega ratio (est. ~12:1 — typical for kibble)",
-    "value": -10
-   },
-   {
-    "label": "Whole food nutrition — no synthetic vitamins",
-    "value": 8
-   },
-   {
-    "label": "Whole food fruits & vegetables (1)",
-    "value": 2
-   }
-  ],
-  "flagged": [
-   {
-    "name": "dried beet pulp (desugared)",
-    "severity": "moderate",
-    "reason": "⚪ Mechanistic, not trial-based: dogs have no dietary requirement for added sugar. It's included for palatability, and the concerns are the general ones — calories without nutrition, contribution to obesity and dental disease, and feeding oral and gut yeast populations. There are no controlled canine trials on added sugar in commercial food specifically; this is reasoning from established physiology. The clearer signal is what it says about the formulation: sweetening is how you make a food palatable when the ingredients alone won't do it."
-   },
-   {
-    "name": "lignocellulose",
-    "severity": "mild",
-    "reason": "Powdered cellulose is wood pulp used as a cheap bulking fibre, and the comparative research is unflattering. In Beagle feeding trials (Journal of Animal Science), apparent total tract digestibility was 11% for cellulose against 29% for beet pulp — less than half. Cellulose is insoluble and poorly fermentable, so it passes through largely untouched: it reduces overall dry matter and organic matter digestibility, increases stool volume, and produces lower concentrations of beneficial short-chain fatty acids with a less acidic fecal pH than fermentable fibres. It adds bulk and satiety without feeding the gut. Fermentable fibres — beet pulp, pumpkin, chicory — do the job better."
-   }
-  ],
-  "organs": [],
-  "produce": [
-   "dried beet pulp (desugared)"
-  ]
  },
  {
   "slug": "zignature-salmon-limited-ingredient-formula-canned-wet-dog-food-13oz",
@@ -8855,205 +7644,6 @@ export const foods: Food[] = [
   ]
  },
  {
-  "slug": "yarrah-vega-dog-food",
-  "brand": "Yarrah",
-  "name": "Vega dog food",
-  "score": 27,
-  "format": "Kibble",
-  "ingredients": [
-   "whole soy beans",
-   "whole grain wheat",
-   "wheat bran",
-   "yellow corn",
-   "sunflower seed husks",
-   "minerals",
-   "coconut oil",
-   "brewers yeast",
-   "whole white lupine",
-   "baobab",
-   "dried seaweed"
-  ],
-  "breakdown": [
-   {
-    "label": "Base score",
-    "value": 60
-   },
-   {
-    "label": "Legumes in top 3 ingredients (1) — DCM link",
-    "value": -15
-   },
-   {
-    "label": "Est. ~37% carbohydrate — a carb is a primary ingredient",
-    "value": -14
-   },
-   {
-    "label": "🔴 Very poor omega ratio (est. 15:1–30:1 — kibble without omega-3)",
-    "value": -15
-   },
-   {
-    "label": "Whole food nutrition — no synthetic vitamins",
-    "value": 8
-   },
-   {
-    "label": "Anti-inflammatory ingredients (1) — turmeric, fish oil, kelp, etc.",
-    "value": 3
-   }
-  ],
-  "flagged": [],
-  "organs": [],
-  "produce": []
- },
- {
-  "slug": "ahealth-shreds-chicken-rice-formula",
-  "brand": "Ahealth Shreds",
-  "name": "Chicken & Rice Formula",
-  "score": 26,
-  "format": "Kibble",
-  "ingredients": [
-   "Chicken",
-   "chicken meal (source of chondroitin sulfate and glucosamine)",
-   "white rice",
-   "pearled barley",
-   "chicken fat (preserved with mixed tocopherols)",
-   "oatmeal",
-   "soy flour",
-   "dried plain beet pulp",
-   "flaxseed",
-   "fish meal",
-   "natural flavor",
-   "vegetable glycerin",
-   "salt",
-   "potassium chloride",
-   "choline chloride",
-   "minerals [zinc amino acid complex",
-   "zinc sulfate",
-   "iron proteinate",
-   "ferrous sulfate",
-   "copper proteinate",
-   "copper sulfate",
-   "manganese proteinate",
-   "manganese sulfate",
-   "calcium iodate",
-   "sodium selenite]",
-   "vitamins [vitamin E supplement",
-   "vitamin B3 (niacin)",
-   "vitamin A supplement",
-   "vitamin B12 supplement",
-   "vitamin B1 (thiamine mononitrate)",
-   "vitamin B5 (calcium pantothenate)",
-   "vitamin B7 (biotin)",
-   "vitamin B6 (pyridoxine hydrochloride)",
-   "vitamin B2 (riboflavin)",
-   "vitamin D3 supplement",
-   "vitamin B9 (folic acid)]",
-   "DL-Methionine",
-   "inulin",
-   "taurine",
-   "calcium carbonate",
-   "dried cultured whey",
-   "dried Bacillus coagulans fermentation product",
-   "yucca schidigera extract",
-   "citric acid (preservative)",
-   "rosemary extract."
-  ],
-  "breakdown": [
-   {
-    "label": "Base score",
-    "value": 60
-   },
-   {
-    "label": "natural flavor (mild) — ingredient #11 (trace amount)",
-    "value": -1,
-    "severity": "mild"
-   },
-   {
-    "label": "vitamin B6 (pyridoxine hydrochloride) (mild) — ingredient #33 (trace amount)",
-    "value": -1,
-    "severity": "mild"
-   },
-   {
-    "label": "vitamin D3 supplement (mild) — ingredient #35 (trace amount)",
-    "value": -1,
-    "severity": "mild"
-   },
-   {
-    "label": "High synthetic vitamin/mineral load (7 added) — over-fortified formula",
-    "value": -13
-   },
-   {
-    "label": "Unidentified generic meal (1) — sourcing unknown",
-    "value": -7
-   },
-   {
-    "label": "Est. ~27% carbohydrate — multiple carb sources",
-    "value": -6
-   },
-   {
-    "label": "🔴 Poor omega ratio (est. ~12:1 — typical for kibble)",
-    "value": -10
-   },
-   {
-    "label": "Whole food fruits & vegetables (1)",
-    "value": 2
-   },
-   {
-    "label": "Anti-inflammatory ingredients (1) — turmeric, fish oil, kelp, etc.",
-    "value": 3
-   }
-  ],
-  "flagged": [
-   {
-    "name": "natural flavor",
-    "severity": "mild",
-    "reason": "⚪ Transparency signal: 'natural flavor' in pet food is most often animal digest — hydrolysed animal tissue sprayed on the outside of the kibble to make it palatable. It is not required to name the species. The concern is not toxicity, it is that a bag can list an unnamed animal product and disclose nothing about what it was."
-   },
-   {
-    "name": "zinc sulfate",
-    "severity": "mild",
-    "reason": "⚪ Formulation signal. The acceptable middle grade — adequately absorbed, behind zinc proteinate or zinc amino acid chelate, well ahead of zinc oxide. Not a reason to reject a food on its own."
-   },
-   {
-    "name": "ferrous sulfate",
-    "severity": "mild",
-    "reason": "⚪ Formulation signal, not a hazard. Sulfate is the adequate middle grade of mineral — better absorbed than oxide, not as well as a chelate, and mildly pro-oxidant. Iron proteinate or iron amino acid chelate is the upgrade. Seeing sulfates rather than oxides means the manufacturer did not buy the cheapest option available, which is worth knowing."
-   },
-   {
-    "name": "copper sulfate",
-    "severity": "mild",
-    "reason": "⚠️ Read this one carefully, because it is flagged for the OPPOSITE reason to every other mineral here. As a form, sulfate is the acceptable middle — chelates absorb best, sulfates adequately, oxides barely at all. Copper sulfate is not a poor form. The concern is TOTAL COPPER LOAD: copper accumulates in the liver, dogs have no good way to dump the excess, and AAFCO deleted the copper maximum in 2007 and still has none. So 'meets AAFCO' tells you nothing about the ceiling. Matters most in copper-predisposed breeds — Bedlington Terrier, West Highland White, Doberman, Labrador, Dalmatian — where the target is under ~1.2mg per 1,000 kcal. Liver enzymes are NOT sensitive early, so normal bloodwork does not rule it out. Demoted from severe to mild on 2026-08-23: the form itself is fine, and scoring it as severe punished a mid-tier food for using an adequate mineral."
-   },
-   {
-    "name": "manganese sulfate",
-    "severity": "mild",
-    "reason": "⚪ Formulation signal. Adequate absorption; manganese proteinate or amino acid chelate is better, manganese oxide is worse. On its own this is unremarkable."
-   },
-   {
-    "name": "sodium selenite]",
-    "severity": "severe",
-    "reason": "Sodium selenite is inorganic selenium, and selenium has one of the narrowest safe ranges of any nutrient. AAFCO sets the adult minimum at 0.35 mg/kg dry matter and the maximum at 2.0 — a window of only about 5.7x. For comparison, most nutrients have margins in the hundreds. That narrowness is precisely why the FORM matters here and matters less elsewhere. Two measured differences separate the forms. ABSORPTION: inorganic selenite is absorbed at roughly 50-60%, against 70-85% for organic selenomethionine and selenium yeast — so more selenite must be added to deliver the same nutrition, eating into an already tight margin. TOXICITY: comparative work found sodium selenite around 2.94x more toxic than selenium yeast, and organic forms test as less toxic than inorganic selenite and selenate generally. Mechanistically, selenomethionine is incorporated into proteins and released under regulation, whereas inorganic selenite generates free radicals during metabolism and causes oxidative stress in liver and kidney tissue; work in Biological Trace Element Research links long-term inorganic accumulation to kidney tubule damage that precedes any visible signs. So the case here is stronger than for most flagged ingredients: worse absorption AND higher toxicity AND the narrowest safety window in the profile. Prefer selenium yeast or selenomethionine."
-   },
-   {
-    "name": "vitamin B6 (pyridoxine hydrochloride)",
-    "severity": "mild",
-    "reason": "⚪ Safe synthetic at label levels: pyridoxine HCl is synthetic vitamin B6, and it's the standard, effective form used across pet food. Dogs require B6 for protein metabolism and neurotransmitter production, and deficiency causes anaemia and seizures. The reason for noting it at all is that B6 has an unusually narrow window at the top end for a B vitamin: chronic excess causes peripheral neuropathy — nerve damage in the limbs and loss of coordination. That's a concern for over-supplementation, not for its presence in a balanced food."
-   },
-   {
-    "name": "vitamin D3 supplement",
-    "severity": "mild",
-    "reason": "Cholecalciferol is vitamin D3 — the standard, AAFCO-required form of vitamin D in complete dog food, and its presence on a label is expected rather than alarming. Dogs cannot make meaningful vitamin D in their skin from sunlight the way people do, so it has to come from the diet. Two things are worth knowing. D3 is more potent than D2 (ergocalciferol) and has a narrower safety margin — it is the form used in rodenticides. And the real-world risk is manufacturing error, not the ingredient: FDA recalls in 2018–19 found dog foods containing up to 70x the intended vitamin D, causing hypercalcemia, kidney failure and deaths across brands including Hill's, Nutrisca, Sunshine Mills, Kroger and ELM. An ingredient label cannot tell you the amount, only that it is present — so this is flagged for awareness, not as a mark against the food."
-   },
-   {
-    "name": "DL-Methionine",
-    "severity": "mild",
-    "reason": "⚪ Synthetic form, generally safe: DL-methionine is a synthetic amino acid added to meet methionine requirements and, in some foods, to acidify urine. It's a legitimate and widely used feed additive with no evidence of harm at label levels. The 'DL-' indicates a racemic mixture — dogs use the L-form directly and convert the D-form, which they do adequately. Flagged as a formulation signal rather than a hazard: its presence usually indicates plant-heavy protein that needed topping up, since meat-based diets generally supply enough methionine on their own."
-   }
-  ],
-  "organs": [],
-  "produce": [
-   "dried plain beet pulp"
-  ]
- },
- {
   "slug": "pure-balance-chicken-pea-recipe-dog-food",
   "brand": "Pure Balance",
   "name": "Chicken & Pea Recipe Dog Food",
@@ -9152,57 +7742,6 @@ export const foods: Food[] = [
   "produce": [
    "DRIED BEET PULP"
   ]
- },
- {
-  "slug": "jack-hypoallergen-pat-400g-lamb-with-potato",
-  "brand": "Jack",
-  "name": "HYPOALLERGEN paté 400g lamb with potato",
-  "score": 25,
-  "format": "Kibble",
-  "ingredients": [
-   "Lamb – 73.5%",
-   "Berries – 0.5%",
-   "Sunflower oil and Mineral Substances.\r\nSugar free\tGrain free\twithout artificial colouring\tartificial flavour free\tGluten free\tSoya free\tPreservative free",
-   "Without added sugar"
-  ],
-  "breakdown": [
-   {
-    "label": "Base score",
-    "value": 60
-   },
-   {
-    "label": "Sunflower oil and Mineral Substances.\r\nSugar free\tGrain free\twithout artificial colouring\tartificial flavour free\tGluten free\tSoya free\tPreservative free (severe)",
-    "value": -18,
-    "severity": "severe"
-   },
-   {
-    "label": "Without added sugar (moderate)",
-    "value": -10,
-    "severity": "moderate"
-   },
-   {
-    "label": "🔴 Very poor omega ratio (est. 15:1–30:1 — kibble without omega-3)",
-    "value": -15
-   },
-   {
-    "label": "Whole food nutrition — no synthetic vitamins",
-    "value": 8
-   }
-  ],
-  "flagged": [
-   {
-    "name": "Sunflower oil and Mineral Substances.\r\nSugar free\tGrain free\twithout artificial colouring\tartificial flavour free\tGluten free\tSoya free\tPreservative free",
-    "severity": "severe",
-    "reason": "Artificial colours in pet food are petroleum-derived synthetic dyes with zero nutritional value. Dogs do not select food by colour — these dyes exist purely to appeal to humans. Several have been linked to tumor promotion, hypersensitivity, and carcinogenic activity in animal studies."
-   },
-   {
-    "name": "Without added sugar",
-    "severity": "moderate",
-    "reason": "⚪ Mechanistic, not trial-based: dogs have no dietary requirement for added sugar. It's included for palatability, and the concerns are the general ones — calories without nutrition, contribution to obesity and dental disease, and feeding oral and gut yeast populations. There are no controlled canine trials on added sugar in commercial food specifically; this is reasoning from established physiology. The clearer signal is what it says about the formulation: sweetening is how you make a food palatable when the ingredients alone won't do it."
-   }
-  ],
-  "organs": [],
-  "produce": []
  },
  {
   "slug": "nutro-chicken-brown-rice-recipe",
@@ -10129,8 +8668,8 @@ export const foods: Food[] = [
   ]
  },
  {
-  "slug": "nestl-pro-plan-sensitive-skin-stomach-adult-dog-food-lamb-oat-meal-for",
-  "brand": "Nestlé",
+  "slug": "purina-pro-plan-sensitive-skin-stomach-adult-dog-food-lamb-oat-meal-fo",
+  "brand": "Purina",
   "name": "Pro Plan Sensitive Skin & Stomach Adult Dog Food Lamb & Oat Meal Formula",
   "score": 21,
   "format": "Kibble",
@@ -10385,9 +8924,9 @@ export const foods: Food[] = [
   "produce": []
  },
  {
-  "slug": "blue-wilderness-salmon-with-wholesome-grains-recipe",
-  "brand": "blue wilderness",
-  "name": "™ Salmon with Wholesome Grains Recipe",
+  "slug": "blue-buffalo-blue-wilderness-salmon-with-wholesome-grains-recipe",
+  "brand": "Blue Buffalo",
+  "name": "BLUE Wilderness™ Salmon with Wholesome Grains Recipe",
   "score": 18,
   "format": "Kibble",
   "ingredients": [
@@ -10437,7 +8976,7 @@ export const foods: Food[] = [
  },
  {
   "slug": "purina-pro-plan-adult-sensitive-skin-stomach-salmon-rice-formula-dry-d",
-  "brand": "purina",
+  "brand": "Purina",
   "name": "Pro Plan Adult Sensitive Skin & Stomach Salmon & Rice Formula Dry Dog Food, 40-lb bag",
   "score": 16,
   "format": "Kibble",
@@ -11512,215 +10051,9 @@ export const foods: Food[] = [
   "produce": []
  },
  {
-  "slug": "9lives-plus-care",
-  "brand": "9Lives",
-  "name": "Plus Care",
-  "score": 5,
-  "format": "Kibble",
-  "ingredients": [
-   "WHOLE GROUND CORN",
-   "CORN GLUTEN MEAL",
-   "POULTRY BY-PRODUCT MEAL",
-   "WHOLE WHEAT",
-   "ANIMAL DIGEST",
-   "MEAT AND BONE MEAL",
-   "ANIMAL FAT (PRESERVED WITH MIXED TOCOPHEROLS)",
-   "PHOSPHORIC ACID",
-   "CALCIUM CARBONATE",
-   "SALT",
-   "POTASSIUM CHLORIDE",
-   "CHOLINE CHLORIDE",
-   "TITANIUM DIOXIDE",
-   "TETRASODIUM PYROPHOSPHATE (SOURCE OF PHOSPHORUS)",
-   "TUNA MEAL",
-   "VITAMINS (VITAMIN E SUPPLEMENT",
-   "NIACIN",
-   "VITAMIN A SUPPLEMENT",
-   "THIAMINE MONONITRATE RIBOFLAVIN SUPPLEMENT",
-   "D-CALCIUM PANTOTHENATE",
-   "PYRIDOXINE HYDROCHLORIDE",
-   "VITAMIN B12 SUPPLEMENT",
-   "MENADIONE SODIUM BISULFITE COMPLEX (SOURCE OF VITAMIN K ACTIVITY), VITAMIN D3 SUPPLEMENT, FOLIC ACID, BIOTIN)",
-   "TAURINE",
-   "L-LYSINE",
-   "MINERALS (FERROUS SULFATE, ZINC OXIDE, MANGANOUS OXIDE, COPPER SULFATE, CALCIUM IODATE, SODIUM SELENITE)",
-   "EGG PRODUCT",
-   "DL-METHIONINE",
-   "YELLOW 5",
-   "BHA (USED AS A PRESERVATIVE)",
-   "RED 40",
-   "YELLOW 6",
-   "LACTIC ACID",
-   "NATURAL AND ARTIFICIAL FLAVOR (SOURCE OF GRILLED FLAVOR)",
-   "BLUE 1",
-   "ROSEMARY EXTRACT"
-  ],
-  "breakdown": [
-   {
-    "label": "Base score",
-    "value": 60
-   },
-   {
-    "label": "WHOLE GROUND CORN (mild)",
-    "value": -2,
-    "severity": "mild"
-   },
-   {
-    "label": "CORN GLUTEN MEAL (mild)",
-    "value": -2,
-    "severity": "mild"
-   },
-   {
-    "label": "POULTRY BY-PRODUCT MEAL (moderate)",
-    "value": -10,
-    "severity": "moderate"
-   },
-   {
-    "label": "ANIMAL DIGEST (severe)",
-    "value": -18,
-    "severity": "severe"
-   },
-   {
-    "label": "MEAT AND BONE MEAL (mild) — ingredient #6",
-    "value": -1,
-    "severity": "mild"
-   },
-   {
-    "label": "ANIMAL FAT (PRESERVED WITH MIXED TOCOPHEROLS) (severe) — ingredient #7",
-    "value": -12,
-    "severity": "severe"
-   },
-   {
-    "label": "PYRIDOXINE HYDROCHLORIDE (mild) — ingredient #21 (trace amount)",
-    "value": -1,
-    "severity": "mild"
-   },
-   {
-    "label": "YELLOW 5 (severe) — ingredient #29 (trace amount)",
-    "value": -4,
-    "severity": "severe"
-   },
-   {
-    "label": "BHA (USED AS A PRESERVATIVE) (severe) — ingredient #30 (trace amount)",
-    "value": -4,
-    "severity": "severe"
-   },
-   {
-    "label": "RED 40 (severe) — ingredient #31 (trace amount)",
-    "value": -4,
-    "severity": "severe"
-   },
-   {
-    "label": "YELLOW 6 (severe) — ingredient #32 (trace amount)",
-    "value": -4,
-    "severity": "severe"
-   },
-   {
-    "label": "NATURAL AND ARTIFICIAL FLAVOR (SOURCE OF GRILLED FLAVOR) (moderate) — ingredient #34 (trace amount)",
-    "value": -2,
-    "severity": "moderate"
-   },
-   {
-    "label": "High synthetic vitamin/mineral load (5 added) — over-fortified formula",
-    "value": -13
-   },
-   {
-    "label": "Est. ~48% carbohydrate — a carb is the #1 ingredient",
-    "value": -22
-   },
-   {
-    "label": "Vague protein sourcing in top 5",
-    "value": -12
-   },
-   {
-    "label": "🔴 Very poor omega ratio (est. 15:1–30:1 — kibble without omega-3)",
-    "value": -15
-   }
-  ],
-  "flagged": [
-   {
-    "name": "WHOLE GROUND CORN",
-    "severity": "mild",
-    "reason": "⚪ Formulation signal, not a hazard: ground corn is an inexpensive source of bulk calories and starch, which extrusion physically requires to form a kibble. We're not going to repeat the common claim that it's poorly digested — cooked, ground corn is actually digested well by dogs, and saying otherwise would be wrong. The honest criticism is what it displaces: every percentage point of corn is a point not coming from meat. Judge it on that, and on where it sits in the ingredient list."
-   },
-   {
-    "name": "CORN GLUTEN MEAL",
-    "severity": "mild",
-    "reason": "⚪ Formulation signal: corn gluten meal is a concentrated plant protein. It counts toward the crude protein figure on the guaranteed analysis without contributing meat — and since that figure doesn't distinguish sources, a food can advertise strong protein while much of it is plant-derived and lower in the amino acids dogs use most. That's a labelling limitation, not a toxicity claim. No canine harm has been shown at label levels."
-   },
-   {
-    "name": "POULTRY BY-PRODUCT MEAL",
-    "severity": "moderate",
-    "reason": "AAFCO defines poultry by-products as non-rendered clean parts such as heads, feet, and viscera. The absence of a named species and variable content makes quality and sourcing difficult for consumers to assess"
-   },
-   {
-    "name": "ANIMAL DIGEST",
-    "severity": "severe",
-    "reason": "Animal digest is produced by chemical or enzymatic hydrolysis of animal tissue. AAFCO does not require species identification, making the source and quality of this ingredient impossible for consumers to verify"
-   },
-   {
-    "name": "MEAT AND BONE MEAL",
-    "severity": "mild",
-    "reason": "⚪ Mechanistic / sourcing signal: bone meal supplies calcium and phosphorus, and in that sense it works. The concerns are about origin: it's rendered from unnamed animal sources, so species and quality are undisclosed, and bone is where heavy metals such as lead concentrate in an animal's body. Raw meaty bone or whole ground bone in a fresh food is preferable and traceable. Not a hazard at label levels — a transparency and quality question."
-   },
-   {
-    "name": "ANIMAL FAT (PRESERVED WITH MIXED TOCOPHEROLS)",
-    "severity": "severe",
-    "reason": "The problem here is transparency, not toxicity. AAFCO defines 'animal fat' as rendered fat from ANY mammalian species — the source is not named, need not be consistent, and can vary batch to batch. That's the lowest level of ingredient disclosure available on a label. Two practical consequences: a dog with a protein allergy cannot avoid the trigger if the species is unknown, and you have no way to judge quality. Rendering itself is a legitimate process, and named fats (chicken fat, beef fat) are perfectly good ingredients. The concern is specifically the anonymity — a manufacturer confident in the source usually names it."
-   },
-   {
-    "name": "PYRIDOXINE HYDROCHLORIDE",
-    "severity": "mild",
-    "reason": "⚪ Safe synthetic at label levels: pyridoxine HCl is synthetic vitamin B6, and it's the standard, effective form used across pet food. Dogs require B6 for protein metabolism and neurotransmitter production, and deficiency causes anaemia and seizures. The reason for noting it at all is that B6 has an unusually narrow window at the top end for a B vitamin: chronic excess causes peripheral neuropathy — nerve damage in the limbs and loss of coordination. That's a concern for over-supplementation, not for its presence in a balanced food."
-   },
-   {
-    "name": "MENADIONE SODIUM BISULFITE COMPLEX (SOURCE OF VITAMIN K ACTIVITY), VITAMIN D3 SUPPLEMENT, FOLIC ACID, BIOTIN)",
-    "severity": "moderate",
-    "reason": "Menadione is synthetic vitamin K3. The mechanism of concern is well established: it generates reactive oxygen species and depletes glutathione, causing oxidative stress that can damage red blood cells and liver cells — the route to hemolytic anemia. The FDA has banned it from over-the-counter human supplements, and doses as low as 10 mg have been linked to hemolytic anemia in susceptible people. ⚖️ In fairness: the FDA does permit it in animal feed, and over 50+ years of use there are no published reports of nutritional toxicity in dogs at pet-food inclusion levels — the studies showing harm used doses orders of magnitude higher, often injected or force-fed. Worth knowing too that neither K1 nor K2 is approved for pet food, so a manufacturer wanting to supplement vitamin K has no alternative. AAFCO does recognise menadione sodium bisulfite complex as a vitamin K source while noting that natural forms are preferred where available — which is roughly where the evidence sits. It's also worth knowing dogs synthesise vitamin K in the gut, so supplementation is rarely necessary in the first place; its presence often says more about the formulation being cheap than about the dog needing K. Our position: the mechanism and the human ban justify preferring foods without it, especially since dogs on a whole-food diet get K1 from plants and K2 from animal sources. We don't claim it has been shown to harm dogs at label doses, because it hasn't."
-   },
-   {
-    "name": "MINERALS (FERROUS SULFATE, ZINC OXIDE, MANGANOUS OXIDE, COPPER SULFATE, CALCIUM IODATE, SODIUM SELENITE)",
-    "severity": "mild",
-    "reason": "⚠️ Read this one carefully, because it is flagged for the OPPOSITE reason to every other mineral here. As a form, sulfate is the acceptable middle — chelates absorb best, sulfates adequately, oxides barely at all. Copper sulfate is not a poor form. The concern is TOTAL COPPER LOAD: copper accumulates in the liver, dogs have no good way to dump the excess, and AAFCO deleted the copper maximum in 2007 and still has none. So 'meets AAFCO' tells you nothing about the ceiling. Matters most in copper-predisposed breeds — Bedlington Terrier, West Highland White, Doberman, Labrador, Dalmatian — where the target is under ~1.2mg per 1,000 kcal. Liver enzymes are NOT sensitive early, so normal bloodwork does not rule it out. Demoted from severe to mild on 2026-08-23: the form itself is fine, and scoring it as severe punished a mid-tier food for using an adequate mineral."
-   },
-   {
-    "name": "DL-METHIONINE",
-    "severity": "mild",
-    "reason": "⚪ Synthetic form, generally safe: DL-methionine is a synthetic amino acid added to meet methionine requirements and, in some foods, to acidify urine. It's a legitimate and widely used feed additive with no evidence of harm at label levels. The 'DL-' indicates a racemic mixture — dogs use the L-form directly and convert the D-form, which they do adequately. Flagged as a formulation signal rather than a hazard: its presence usually indicates plant-heavy protein that needed topping up, since meat-based diets generally supply enough methionine on their own."
-   },
-   {
-    "name": "YELLOW 5",
-    "severity": "severe",
-    "reason": "Yellow 5 (tartrazine) is a synthetic azo dye linked to hypersensitivity reactions, behavioral changes, and potential carcinogenic activity in animal research. The CSPI has flagged it as a dye of concern. It is banned or restricted in several countries and serves no nutritional purpose in pet food whatsoever."
-   },
-   {
-    "name": "BHA (USED AS A PRESERVATIVE)",
-    "severity": "severe",
-    "reason": "The National Toxicology Program conducted long-term feeding studies showing BHA caused squamous cell tumors in rats, mice, and hamsters at doses relevant to daily food consumption. The IARC classifies BHA as a Group 2B possible carcinogen, and California lists it under Prop 65. The concern is cumulative — daily pet food exposure is exactly the type of chronic, low-level intake these studies identified as most problematic long-term."
-   },
-   {
-    "name": "RED 40",
-    "severity": "severe",
-    "reason": "Red 40 is a petroleum-derived synthetic dye classified as a possible carcinogen. The Center for Science in the Public Interest has petitioned the FDA to ban it. It has been linked to hypersensitivity, behavioral changes, and tumor promotion in animal studies. There is zero nutritional justification for its use in dog food — it exists purely for human visual appeal."
-   },
-   {
-    "name": "YELLOW 6",
-    "severity": "severe",
-    "reason": "Yellow 6 is a synthetic petroleum-derived dye linked to adrenal gland and kidney tumors in animal studies. The CSPI considers it unsafe. Like all artificial dyes in pet food, it serves zero nutritional purpose — dogs are colorblind to red/orange and cannot distinguish it. Its only function is to make kibble look more appealing to humans."
-   },
-   {
-    "name": "NATURAL AND ARTIFICIAL FLAVOR (SOURCE OF GRILLED FLAVOR)",
-    "severity": "moderate",
-    "reason": "⚪ By definition undisclosed: 'artificial flavor' is a category, not an ingredient, and manufacturers aren't required to say what's in it. There's no evidence that flavourings at label levels harm dogs, and this is not flagged as toxic. It is flagged because it's unknowable — you cannot assess or avoid what isn't named — and because a food needing engineered flavour is telling you the ingredients alone weren't palatable."
-   }
-  ],
-  "organs": [],
-  "produce": []
- },
- {
-  "slug": "hill-s-pet-nutrition-hill-s-science-diet-dry-dog-food-adult-sensitive-",
-  "brand": "Hill's Pet Nutrition",
-  "name": "Hill's Science Diet Dry Dog Food, Adult, Sensitive Stomach & Skin Recipes, 4 LB (B015EE4D0Y)",
+  "slug": "hill-s-science-diet-dry-dog-food-adult-sensitive-stomach-skin-recipes-",
+  "brand": "Hill's",
+  "name": "Science Diet Dry Dog Food, Adult, Sensitive Stomach & Skin Recipes, 4 LB (B015EE4D0Y)",
   "score": 5,
   "format": "Kibble",
   "ingredients": [
@@ -12007,335 +10340,6 @@ export const foods: Food[] = [
   "produce": [
    "dried plain beet pulp"
   ]
- },
- {
-  "slug": "temptations-creamy-dairy-flavor",
-  "brand": "Temptations",
-  "name": "Creamy dairy flavor",
-  "score": 5,
-  "format": "Kibble",
-  "ingredients": [
-   "Chicken By-Product Meal",
-   "Ground Corn",
-   "Animal Fat (Preserved With Mixed Tocopherols)",
-   "Wheat Flour",
-   "Brewers Rice",
-   "Dried Meat By-Products",
-   "Natural Flavors",
-   "Brewers Dried Yeast",
-   "Potassium Chloride",
-   "Choline Chloride",
-   "Salt",
-   "Dried Skim Milk",
-   "Dl-Methionine",
-   "Taurine",
-   "Calcium Carbonate",
-   "Vitamin E Supplement",
-   "Zinc Sulfate",
-   "Ferrous Sulfate",
-   "Dried Cheese",
-   "Mixed Tocopherols (Preservative)",
-   "Copper Sulfate",
-   "Vitamin A Supplement",
-   "Citric Acid (Preservative)",
-   "Niacin Supplement",
-   "Vitamin B12 Supplement",
-   "Riboflavin Supplement",
-   "Manganese Sulfate",
-   "Thiamine Mononitrate",
-   "D-Calcium Pantothenate",
-   "Pyridoxine Hydrochloride (Vitamin B6)",
-   "Vitamin D3 Supplement",
-   "Biotin",
-   "Potassium Iodide",
-   "Folic Acid",
-   "Rosemary Extract."
-  ],
-  "breakdown": [
-   {
-    "label": "Base score",
-    "value": 60
-   },
-   {
-    "label": "Chicken By-Product Meal (severe)",
-    "value": -18,
-    "severity": "severe"
-   },
-   {
-    "label": "Ground Corn (mild)",
-    "value": -2,
-    "severity": "mild"
-   },
-   {
-    "label": "Animal Fat (Preserved With Mixed Tocopherols) (severe)",
-    "value": -18,
-    "severity": "severe"
-   },
-   {
-    "label": "Dried Meat By-Products (moderate) — ingredient #6",
-    "value": -7,
-    "severity": "moderate"
-   },
-   {
-    "label": "Natural Flavors (mild) — ingredient #7",
-    "value": -1,
-    "severity": "mild"
-   },
-   {
-    "label": "Pyridoxine Hydrochloride (Vitamin B6) (mild) — ingredient #30 (trace amount)",
-    "value": -1,
-    "severity": "mild"
-   },
-   {
-    "label": "Vitamin D3 Supplement (mild) — ingredient #31 (trace amount)",
-    "value": -1,
-    "severity": "mild"
-   },
-   {
-    "label": "High synthetic vitamin/mineral load (6 added) — over-fortified formula",
-    "value": -8
-   },
-   {
-    "label": "Est. ~37% carbohydrate — a carb is a primary ingredient",
-    "value": -14
-   },
-   {
-    "label": "Vague protein sourcing in top 5",
-    "value": -12
-   },
-   {
-    "label": "🔴 Very poor omega ratio (est. 15:1–30:1 — kibble without omega-3)",
-    "value": -15
-   }
-  ],
-  "flagged": [
-   {
-    "name": "Chicken By-Product Meal",
-    "severity": "severe",
-    "reason": "AAFCO defines chicken by-products as non-rendered clean parts including necks, feet, undeveloped eggs, and intestines. While not inherently harmful, quality and content can vary significantly between manufacturers"
-   },
-   {
-    "name": "Ground Corn",
-    "severity": "mild",
-    "reason": "⚪ Formulation signal, not a hazard: ground corn is an inexpensive source of bulk calories and starch, which extrusion physically requires to form a kibble. We're not going to repeat the common claim that it's poorly digested — cooked, ground corn is actually digested well by dogs, and saying otherwise would be wrong. The honest criticism is what it displaces: every percentage point of corn is a point not coming from meat. Judge it on that, and on where it sits in the ingredient list."
-   },
-   {
-    "name": "Animal Fat (Preserved With Mixed Tocopherols)",
-    "severity": "severe",
-    "reason": "The problem here is transparency, not toxicity. AAFCO defines 'animal fat' as rendered fat from ANY mammalian species — the source is not named, need not be consistent, and can vary batch to batch. That's the lowest level of ingredient disclosure available on a label. Two practical consequences: a dog with a protein allergy cannot avoid the trigger if the species is unknown, and you have no way to judge quality. Rendering itself is a legitimate process, and named fats (chicken fat, beef fat) are perfectly good ingredients. The concern is specifically the anonymity — a manufacturer confident in the source usually names it."
-   },
-   {
-    "name": "Dried Meat By-Products",
-    "severity": "moderate",
-    "reason": "By-products come from animals that have died — and the source stream includes 4D animals: dead, dying, diseased and disabled. Dr. Andrew Jones, DVM, states this includes roadkill and animals that have been euthanised. The species is never named on the label, so you have no way to know what went into the batch you bought.\n\n⚫ THE EVIDENCE: in February 2018 the FDA and J.M. Smucker recalled over 107 million cans of Gravy Train, Kibbles 'n Bits, Skippy and Ol' Roy after pentobarbital — the drug used to euthanise animals — was found in the food. Smucker confirmed the source was the TALLOW: rendered animal fat. Independent lab testing found 60% of Gravy Train cans sampled came back positive. The FDA states pentobarbital should never be present and any amount makes a product adulterated.\n\nEuthanised animals entered the pet food supply through rendering, a company admitted it, and 107 million cans went out before anyone caught it. AAFCO's written definition says by-products come from SLAUGHTERED animals — 2018 is what that definition is worth in practice.\n\nNote on one point: FDA DNA testing has not found dog or cat material in pet food, so the specific claim that by-products contain euthanised PETS is not something the testing has confirmed."
-   },
-   {
-    "name": "Natural Flavors",
-    "severity": "mild",
-    "reason": "⚪ Transparency signal: 'natural flavor' in pet food is most often animal digest — hydrolysed animal tissue sprayed on the outside of the kibble to make it palatable. It is not required to name the species. The concern is not toxicity, it is that a bag can list an unnamed animal product and disclose nothing about what it was."
-   },
-   {
-    "name": "Dl-Methionine",
-    "severity": "mild",
-    "reason": "⚪ Synthetic form, generally safe: DL-methionine is a synthetic amino acid added to meet methionine requirements and, in some foods, to acidify urine. It's a legitimate and widely used feed additive with no evidence of harm at label levels. The 'DL-' indicates a racemic mixture — dogs use the L-form directly and convert the D-form, which they do adequately. Flagged as a formulation signal rather than a hazard: its presence usually indicates plant-heavy protein that needed topping up, since meat-based diets generally supply enough methionine on their own."
-   },
-   {
-    "name": "Zinc Sulfate",
-    "severity": "mild",
-    "reason": "⚪ Formulation signal. The acceptable middle grade — adequately absorbed, behind zinc proteinate or zinc amino acid chelate, well ahead of zinc oxide. Not a reason to reject a food on its own."
-   },
-   {
-    "name": "Ferrous Sulfate",
-    "severity": "mild",
-    "reason": "⚪ Formulation signal, not a hazard. Sulfate is the adequate middle grade of mineral — better absorbed than oxide, not as well as a chelate, and mildly pro-oxidant. Iron proteinate or iron amino acid chelate is the upgrade. Seeing sulfates rather than oxides means the manufacturer did not buy the cheapest option available, which is worth knowing."
-   },
-   {
-    "name": "Copper Sulfate",
-    "severity": "mild",
-    "reason": "⚠️ Read this one carefully, because it is flagged for the OPPOSITE reason to every other mineral here. As a form, sulfate is the acceptable middle — chelates absorb best, sulfates adequately, oxides barely at all. Copper sulfate is not a poor form. The concern is TOTAL COPPER LOAD: copper accumulates in the liver, dogs have no good way to dump the excess, and AAFCO deleted the copper maximum in 2007 and still has none. So 'meets AAFCO' tells you nothing about the ceiling. Matters most in copper-predisposed breeds — Bedlington Terrier, West Highland White, Doberman, Labrador, Dalmatian — where the target is under ~1.2mg per 1,000 kcal. Liver enzymes are NOT sensitive early, so normal bloodwork does not rule it out. Demoted from severe to mild on 2026-08-23: the form itself is fine, and scoring it as severe punished a mid-tier food for using an adequate mineral."
-   },
-   {
-    "name": "Manganese Sulfate",
-    "severity": "mild",
-    "reason": "⚪ Formulation signal. Adequate absorption; manganese proteinate or amino acid chelate is better, manganese oxide is worse. On its own this is unremarkable."
-   },
-   {
-    "name": "Pyridoxine Hydrochloride (Vitamin B6)",
-    "severity": "mild",
-    "reason": "⚪ Safe synthetic at label levels: pyridoxine HCl is synthetic vitamin B6, and it's the standard, effective form used across pet food. Dogs require B6 for protein metabolism and neurotransmitter production, and deficiency causes anaemia and seizures. The reason for noting it at all is that B6 has an unusually narrow window at the top end for a B vitamin: chronic excess causes peripheral neuropathy — nerve damage in the limbs and loss of coordination. That's a concern for over-supplementation, not for its presence in a balanced food."
-   },
-   {
-    "name": "Vitamin D3 Supplement",
-    "severity": "mild",
-    "reason": "Cholecalciferol is vitamin D3 — the standard, AAFCO-required form of vitamin D in complete dog food, and its presence on a label is expected rather than alarming. Dogs cannot make meaningful vitamin D in their skin from sunlight the way people do, so it has to come from the diet. Two things are worth knowing. D3 is more potent than D2 (ergocalciferol) and has a narrower safety margin — it is the form used in rodenticides. And the real-world risk is manufacturing error, not the ingredient: FDA recalls in 2018–19 found dog foods containing up to 70x the intended vitamin D, causing hypercalcemia, kidney failure and deaths across brands including Hill's, Nutrisca, Sunshine Mills, Kroger and ELM. An ingredient label cannot tell you the amount, only that it is present — so this is flagged for awareness, not as a mark against the food."
-   }
-  ],
-  "organs": [],
-  "produce": []
- },
- {
-  "slug": "temptations-tasty-chicken-flavor",
-  "brand": "Temptations",
-  "name": "Tasty Chicken Flavor",
-  "score": 5,
-  "format": "Kibble",
-  "ingredients": [
-   "Chicken By-Product Meal",
-   "Ground Corn",
-   "Animal Fat (preserved with Mixed Tocopherols)",
-   "Wheat Flour",
-   "Brewers Rice",
-   "Dried Meat By-Products",
-   "Natural Flavors",
-   "Brewers Dried Yeast",
-   "Potassium Chloride",
-   "Choline Chloride",
-   "Salt",
-   "DL-Methionine",
-   "Taurine",
-   "Calcium Carbonate",
-   "Vitamin E Supplement",
-   "Zinc Sulfate",
-   "Ferrous Sulfate",
-   "Dried Cheese",
-   "Mixed Tocopherols (preservative)",
-   "Copper Sulfate",
-   "Vitamin A Supplement",
-   "Citric Acid (preservative)",
-   "Niacin Supplement",
-   "Vitamin B12 Supplement",
-   "Riboflavin Supplement",
-   "Manganese Sulfate",
-   "Thiamine Mononitrate",
-   "D-Calcium Pantothenate",
-   "Pyridoxine Hydrochloride (Vitamin B6)",
-   "Vitamin D3 Supplement",
-   "Biotin",
-   "Potassium lodide",
-   "Folic Acid",
-   "Rosemary Extract"
-  ],
-  "breakdown": [
-   {
-    "label": "Base score",
-    "value": 60
-   },
-   {
-    "label": "Chicken By-Product Meal (severe)",
-    "value": -18,
-    "severity": "severe"
-   },
-   {
-    "label": "Ground Corn (mild)",
-    "value": -2,
-    "severity": "mild"
-   },
-   {
-    "label": "Animal Fat (preserved with Mixed Tocopherols) (severe)",
-    "value": -18,
-    "severity": "severe"
-   },
-   {
-    "label": "Dried Meat By-Products (moderate) — ingredient #6",
-    "value": -7,
-    "severity": "moderate"
-   },
-   {
-    "label": "Natural Flavors (mild) — ingredient #7",
-    "value": -1,
-    "severity": "mild"
-   },
-   {
-    "label": "Pyridoxine Hydrochloride (Vitamin B6) (mild) — ingredient #29 (trace amount)",
-    "value": -1,
-    "severity": "mild"
-   },
-   {
-    "label": "Vitamin D3 Supplement (mild) — ingredient #30 (trace amount)",
-    "value": -1,
-    "severity": "mild"
-   },
-   {
-    "label": "High synthetic vitamin/mineral load (6 added) — over-fortified formula",
-    "value": -8
-   },
-   {
-    "label": "Est. ~37% carbohydrate — a carb is a primary ingredient",
-    "value": -14
-   },
-   {
-    "label": "Vague protein sourcing in top 5",
-    "value": -12
-   },
-   {
-    "label": "🔴 Very poor omega ratio (est. 15:1–30:1 — kibble without omega-3)",
-    "value": -15
-   }
-  ],
-  "flagged": [
-   {
-    "name": "Chicken By-Product Meal",
-    "severity": "severe",
-    "reason": "AAFCO defines chicken by-products as non-rendered clean parts including necks, feet, undeveloped eggs, and intestines. While not inherently harmful, quality and content can vary significantly between manufacturers"
-   },
-   {
-    "name": "Ground Corn",
-    "severity": "mild",
-    "reason": "⚪ Formulation signal, not a hazard: ground corn is an inexpensive source of bulk calories and starch, which extrusion physically requires to form a kibble. We're not going to repeat the common claim that it's poorly digested — cooked, ground corn is actually digested well by dogs, and saying otherwise would be wrong. The honest criticism is what it displaces: every percentage point of corn is a point not coming from meat. Judge it on that, and on where it sits in the ingredient list."
-   },
-   {
-    "name": "Animal Fat (preserved with Mixed Tocopherols)",
-    "severity": "severe",
-    "reason": "The problem here is transparency, not toxicity. AAFCO defines 'animal fat' as rendered fat from ANY mammalian species — the source is not named, need not be consistent, and can vary batch to batch. That's the lowest level of ingredient disclosure available on a label. Two practical consequences: a dog with a protein allergy cannot avoid the trigger if the species is unknown, and you have no way to judge quality. Rendering itself is a legitimate process, and named fats (chicken fat, beef fat) are perfectly good ingredients. The concern is specifically the anonymity — a manufacturer confident in the source usually names it."
-   },
-   {
-    "name": "Dried Meat By-Products",
-    "severity": "moderate",
-    "reason": "By-products come from animals that have died — and the source stream includes 4D animals: dead, dying, diseased and disabled. Dr. Andrew Jones, DVM, states this includes roadkill and animals that have been euthanised. The species is never named on the label, so you have no way to know what went into the batch you bought.\n\n⚫ THE EVIDENCE: in February 2018 the FDA and J.M. Smucker recalled over 107 million cans of Gravy Train, Kibbles 'n Bits, Skippy and Ol' Roy after pentobarbital — the drug used to euthanise animals — was found in the food. Smucker confirmed the source was the TALLOW: rendered animal fat. Independent lab testing found 60% of Gravy Train cans sampled came back positive. The FDA states pentobarbital should never be present and any amount makes a product adulterated.\n\nEuthanised animals entered the pet food supply through rendering, a company admitted it, and 107 million cans went out before anyone caught it. AAFCO's written definition says by-products come from SLAUGHTERED animals — 2018 is what that definition is worth in practice.\n\nNote on one point: FDA DNA testing has not found dog or cat material in pet food, so the specific claim that by-products contain euthanised PETS is not something the testing has confirmed."
-   },
-   {
-    "name": "Natural Flavors",
-    "severity": "mild",
-    "reason": "⚪ Transparency signal: 'natural flavor' in pet food is most often animal digest — hydrolysed animal tissue sprayed on the outside of the kibble to make it palatable. It is not required to name the species. The concern is not toxicity, it is that a bag can list an unnamed animal product and disclose nothing about what it was."
-   },
-   {
-    "name": "DL-Methionine",
-    "severity": "mild",
-    "reason": "⚪ Synthetic form, generally safe: DL-methionine is a synthetic amino acid added to meet methionine requirements and, in some foods, to acidify urine. It's a legitimate and widely used feed additive with no evidence of harm at label levels. The 'DL-' indicates a racemic mixture — dogs use the L-form directly and convert the D-form, which they do adequately. Flagged as a formulation signal rather than a hazard: its presence usually indicates plant-heavy protein that needed topping up, since meat-based diets generally supply enough methionine on their own."
-   },
-   {
-    "name": "Zinc Sulfate",
-    "severity": "mild",
-    "reason": "⚪ Formulation signal. The acceptable middle grade — adequately absorbed, behind zinc proteinate or zinc amino acid chelate, well ahead of zinc oxide. Not a reason to reject a food on its own."
-   },
-   {
-    "name": "Ferrous Sulfate",
-    "severity": "mild",
-    "reason": "⚪ Formulation signal, not a hazard. Sulfate is the adequate middle grade of mineral — better absorbed than oxide, not as well as a chelate, and mildly pro-oxidant. Iron proteinate or iron amino acid chelate is the upgrade. Seeing sulfates rather than oxides means the manufacturer did not buy the cheapest option available, which is worth knowing."
-   },
-   {
-    "name": "Copper Sulfate",
-    "severity": "mild",
-    "reason": "⚠️ Read this one carefully, because it is flagged for the OPPOSITE reason to every other mineral here. As a form, sulfate is the acceptable middle — chelates absorb best, sulfates adequately, oxides barely at all. Copper sulfate is not a poor form. The concern is TOTAL COPPER LOAD: copper accumulates in the liver, dogs have no good way to dump the excess, and AAFCO deleted the copper maximum in 2007 and still has none. So 'meets AAFCO' tells you nothing about the ceiling. Matters most in copper-predisposed breeds — Bedlington Terrier, West Highland White, Doberman, Labrador, Dalmatian — where the target is under ~1.2mg per 1,000 kcal. Liver enzymes are NOT sensitive early, so normal bloodwork does not rule it out. Demoted from severe to mild on 2026-08-23: the form itself is fine, and scoring it as severe punished a mid-tier food for using an adequate mineral."
-   },
-   {
-    "name": "Manganese Sulfate",
-    "severity": "mild",
-    "reason": "⚪ Formulation signal. Adequate absorption; manganese proteinate or amino acid chelate is better, manganese oxide is worse. On its own this is unremarkable."
-   },
-   {
-    "name": "Pyridoxine Hydrochloride (Vitamin B6)",
-    "severity": "mild",
-    "reason": "⚪ Safe synthetic at label levels: pyridoxine HCl is synthetic vitamin B6, and it's the standard, effective form used across pet food. Dogs require B6 for protein metabolism and neurotransmitter production, and deficiency causes anaemia and seizures. The reason for noting it at all is that B6 has an unusually narrow window at the top end for a B vitamin: chronic excess causes peripheral neuropathy — nerve damage in the limbs and loss of coordination. That's a concern for over-supplementation, not for its presence in a balanced food."
-   },
-   {
-    "name": "Vitamin D3 Supplement",
-    "severity": "mild",
-    "reason": "Cholecalciferol is vitamin D3 — the standard, AAFCO-required form of vitamin D in complete dog food, and its presence on a label is expected rather than alarming. Dogs cannot make meaningful vitamin D in their skin from sunlight the way people do, so it has to come from the diet. Two things are worth knowing. D3 is more potent than D2 (ergocalciferol) and has a narrower safety margin — it is the form used in rodenticides. And the real-world risk is manufacturing error, not the ingredient: FDA recalls in 2018–19 found dog foods containing up to 70x the intended vitamin D, causing hypercalcemia, kidney failure and deaths across brands including Hill's, Nutrisca, Sunshine Mills, Kroger and ELM. An ingredient label cannot tell you the amount, only that it is present — so this is flagged for awareness, not as a mark against the food."
-   }
-  ],
-  "organs": [],
-  "produce": []
  }
 ]
 
