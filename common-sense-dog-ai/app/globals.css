@@ -17,53 +17,61 @@
    ========================================================================= */
 
 :root {
+  /* ── THE PALETTE ────────────────────────────────────────────────────────
+     Rebuilt 2026-09-11 for Kyle's "complete transformation".
+
+     What changed and why: the old scheme was warm cream (#FDFAF5) + Georgia +
+     a single green accent. That is almost exactly the look every AI-generated
+     site produces, and it read as a cosy blog rather than a reference tool that
+     scores things.
+
+     This keeps GREEN as the brand — it's on the app icon and it's his — but
+     rebuilds around contrast instead of beige. Deep forest is now a real
+     SURFACE, used for full-bleed anchor sections, so the page has rhythm
+     instead of one continuous wash. Amber is the signal colour: it appears
+     only where something is live or worth acting on, never as decoration.
+     ───────────────────────────────────────────────────────────────────────── */
+
   /* Brand */
-  --green:        #2A5C2E;
-  --green-deep:   #1E4322;
-  --green-mid:    #3D7A42;
-  --green-pale:   #EDF4EE;
-  --green-tint:   #F6FAF7;
+  --leaf:        #2F7D3C;
+  --leaf-deep:   #215C2C;
+  --leaf-bright: #43A354;
+  --forest:      #10281A;   /* dark surface, not a text colour */
+  --forest-soft: #18391F;
+  --leaf-wash:   #EDF6EF;
+  --leaf-tint:   #F5FAF6;
 
-  /* Ground — warm, never pure white */
-  --cream:        #FDFAF5;
-  --cream-dark:   #F5EFE4;
-  --surface:      #FFFFFF;
-  --border:       #E8E1D4;
-  --border-soft:  #F0EBE0;
+  /* Signal — used sparingly, only for "this is live / do this" */
+  --amber:       #D98A1F;
+  --amber-wash:  #FDF4E4;
 
-  /* Text — warm greys, biased toward the green so nothing reads as cold */
-  --text:         #2C2A26;
-  --text-muted:   #6B6862;
-  --text-faint:   #97928A;
+  /* Ground — warm near-white, not beige */
+  --paper:       #FBFAF8;
+  --paper-2:     #F4F2ED;
+  --surface:     #FFFFFF;
+  --border:      #E6E3DC;
+  --border-soft: #F0EEE8;
 
-  /* Scoring — semantic, shared by the food directory and every score badge */
-  --score-excellent: #2A7D3F;
-  --score-good:      #5A9A4A;
-  --score-fair:      #C8912B;
-  --score-below:     #C4682B;
-  --score-low:       #A83A32;
+  /* Ink — warm-neutral, biased a touch green so nothing reads cold */
+  --text:        #1A1D1A;
+  --text-muted:  #5E625C;
+  --text-faint:  #8C8F88;
 
-  /* Type scale */
-  --step--1: clamp(0.82rem, 0.8rem + 0.1vw, 0.88rem);
-  --step-0:  clamp(1rem, 0.97rem + 0.15vw, 1.06rem);
-  --step-1:  clamp(1.15rem, 1.1rem + 0.25vw, 1.3rem);
-  --step-2:  clamp(1.4rem, 1.28rem + 0.6vw, 1.75rem);
-  --step-3:  clamp(1.8rem, 1.5rem + 1.4vw, 2.6rem);
-  --step-4:  clamp(2.2rem, 1.6rem + 2.8vw, 3.4rem);
+  /* Scoring — semantic, and the site's signature element */
+  --score-excellent: #1E7A35;
+  --score-good:      #58963F;
+  --score-fair:      #C68A1E;
+  --score-below:     #C2661F;
+  --score-low:       #A93226;
 
-  /* Rhythm */
-  --gap-xs: 6px;  --gap-sm: 10px; --gap:    16px;
-  --gap-md: 24px; --gap-lg: 40px; --gap-xl: 64px;
-
-  --radius:    12px;
-  --radius-lg: 18px;
-  --radius-pill: 999px;
-
-  --shadow-sm: 0 1px 2px rgba(44, 42, 38, .04), 0 1px 3px rgba(44, 42, 38, .03);
-  --shadow:    0 2px 6px rgba(44, 42, 38, .05), 0 6px 16px rgba(44, 42, 38, .04);
-
-  --serif: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
-  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* Aliases so the pages that still use the old names keep working. */
+  --green: var(--leaf);
+  --green-deep: var(--leaf-deep);
+  --green-mid: var(--leaf-bright);
+  --green-pale: var(--leaf-wash);
+  --green-tint: var(--leaf-tint);
+  --cream: var(--paper);
+  --cream-dark: var(--paper-2);
 
   color-scheme: light;
 }
@@ -72,21 +80,25 @@
    won't exist for viewers on the default "system" setting in light mode. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --green:      #7FBF86;
-    --green-deep: #A8D8AE;
-    --green-mid:  #6BAF72;
-    --green-pale: #1C2A1E;
-    --green-tint: #162018;
-    --cream:      #14150F;
-    --cream-dark: #1C1E16;
-    --surface:    #1E2019;
-    --border:     #32352B;
-    --border-soft:#282B22;
-    --text:       #EDEAE2;
-    --text-muted: #A8A398;
-    --text-faint: #7A766C;
-    --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
-    --shadow:    0 2px 8px rgba(0,0,0,.35);
+    --leaf:        #6FCB80;
+    --leaf-deep:   #9ADFA6;
+    --leaf-bright: #5BB86C;
+    --forest:      #0C1A10;
+    --forest-soft: #122316;
+    --leaf-wash:   #16261A;
+    --leaf-tint:   #111C14;
+    --amber:       #E8AC4C;
+    --amber-wash:  #241C0E;
+    --paper:       #0F1210;
+    --paper-2:     #161A16;
+    --surface:     #191D19;
+    --border:      #2C312C;
+    --border-soft: #232723;
+    --text:        #ECEFE9;
+    --text-muted:  #A3A89F;
+    --text-faint:  #757A72;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,.4);
+    --shadow:    0 2px 10px rgba(0,0,0,.45);
     color-scheme: dark;
   }
 }
@@ -126,8 +138,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 
 /* ── Type ────────────────────────────────────────────────────────────────── */
 h1, h2, h3 { text-wrap: balance; letter-spacing: -0.02em; line-height: 1.15; margin: 0; }
-h1 { font-family: var(--serif); font-size: var(--step-3); color: var(--green); font-weight: 700; }
-h2 { font-size: var(--step-2); font-weight: 700; margin-top: var(--gap-lg); margin-bottom: var(--gap-sm); }
+h1 { font-family: var(--display); font-size: var(--step-3); font-weight: 800; letter-spacing: -.035em; }
+h2 { font-family: var(--display); }
+h3 { font-family: var(--display); }
+h2 { font-size: var(--step-2); font-weight: 700; letter-spacing: -.025em; margin-top: var(--gap-lg); margin-bottom: var(--gap-sm); }
 h3 { font-size: var(--step-1); font-weight: 700; margin-top: var(--gap-md); }
 p  { margin: 0 0 var(--gap-sm); }
 .lede      { font-size: var(--step-1); color: var(--text-muted); line-height: 1.6; max-width: 62ch; }
@@ -271,3 +285,52 @@ a.card:hover { border-color: var(--green-mid); box-shadow: var(--shadow); transf
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; border: 3px solid var(--cream); }
+
+/* ============================================================================
+   SURFACES & HERO — added 2026-09-11
+   The old site was one continuous cream wash top to bottom, which is why it
+   read flat. Dark full-bleed sections give the page rhythm: you can tell where
+   one idea ends and the next begins without reading a word.
+   ========================================================================= */
+
+.bleed-dark {
+  background: var(--forest);
+  color: rgba(255, 255, 255, .82);
+  padding: var(--gap-xl) 0;
+}
+.bleed-dark h1, .bleed-dark h2, .bleed-dark h3, .bleed-dark strong { color: #fff; }
+.bleed-dark .muted { color: rgba(255, 255, 255, .6); }
+.bleed-dark .card { background: var(--forest-soft); border-color: rgba(255,255,255,.1); box-shadow: none; }
+.bleed-dark a.card:hover { border-color: rgba(255,255,255,.3); }
+.bleed-dark .eyebrow { color: var(--leaf-bright); }
+
+.hero { padding: clamp(48px, 8vw, 96px) 0 clamp(36px, 5vw, 60px); }
+.hero h1 { font-size: var(--step-4); line-height: 1.02; max-width: 15ch; }
+.hero .lede { margin-top: var(--gap); font-size: clamp(1.05rem, 1rem + .4vw, 1.3rem); max-width: 54ch; }
+
+/* Live counts — the proof the site is deep, not a landing page. */
+.stats { display: flex; flex-wrap: wrap; gap: var(--gap-md); margin-top: var(--gap-md); }
+.stat b {
+  display: block; font-family: var(--display); font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.3rem);
+  font-weight: 800; letter-spacing: -.03em; line-height: 1; font-variant-numeric: tabular-nums;
+}
+.stat span { font-size: 13px; color: var(--text-muted); }
+.bleed-dark .stat span { color: rgba(255,255,255,.55); }
+
+.tool-grid { display: grid; gap: var(--gap-sm); grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.tool { display: block; padding: var(--gap-md) var(--gap); border-radius: var(--radius-lg); }
+.tool .ico { font-size: 26px; display: block; margin-bottom: 10px; }
+.tool b { display: block; font-family: var(--display); font-size: 17px; font-weight: 700; letter-spacing: -.02em; margin-bottom: 4px; }
+.tool span { font-size: 13.5px; color: var(--text-muted); line-height: 1.55; }
+
+.section-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--gap); flex-wrap: wrap; margin-bottom: var(--gap); }
+.section-head h2 { margin: 0; }
+.section-head a { font-size: 14px; font-weight: 700; color: var(--leaf); }
+.section-head a:hover { text-decoration: underline; }
+
+/* An amber rule under a heading — the one decorative flourish, used once or
+   twice per page so it still means something. */
+.rule-amber::after {
+  content: ''; display: block; width: 46px; height: 3px; border-radius: 2px;
+  background: var(--amber); margin-top: 12px;
+}

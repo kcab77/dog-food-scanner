@@ -1,5 +1,25 @@
 import type { Metadata } from 'next'
+import { Bricolage_Grotesque, Instrument_Sans } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/react'
+
+/**
+ * Two real typefaces, self-hosted by next/font — no external request, no
+ * layout shift, no CSP issue.
+ *
+ * Deliberately NOT Georgia (the previous display face) and deliberately not
+ * Inter or Space Grotesk. Those are the faces every generated site lands on,
+ * and the old cream-plus-Georgia combination was squarely in that territory.
+ *
+ * Bricolage Grotesque has genuine character at display sizes — slightly
+ * condensed, a bit editorial, confident rather than corporate. Instrument Sans
+ * underneath it is quiet and highly legible at body sizes.
+ */
+const display = Bricolage_Grotesque({
+  subsets: ['latin'], variable: '--font-display', display: 'swap', weight: ['600', '700', '800'],
+})
+const body = Instrument_Sans({
+  subsets: ['latin'], variable: '--font-body', display: 'swap',
+})
 import Nav from './Nav'
 import Footer from './Footer'
 import './globals.css'
@@ -64,7 +84,7 @@ const websiteLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${display.variable} ${body.variable}`}>
       <body>
         <Nav />
         <main>{children}</main>
