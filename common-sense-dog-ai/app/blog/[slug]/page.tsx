@@ -37,15 +37,6 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }} />
       <style>{`
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        :root { --green: #2A5C2E; --green-pale: #EDF4EE; --cream: #FDFAF5; --cream-dark: #F5EFE4; --text: #1A1A1A; --text-muted: #6B6B6B; --border: #E2D9CA; --white: #FFFFFF; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--cream); }
-        nav { background: var(--white); border-bottom: 1px solid var(--border); padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
-        .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-        .nav-logo-text { font-size: 17px; font-weight: 700; color: var(--green); }
-        .nav-logo-sub { font-size: 11px; color: var(--text-muted); }
-        .nav-links { display: flex; align-items: center; gap: 24px; }
-        .nav-links a { text-decoration: none; color: var(--text-muted); font-size: 14px; font-weight: 500; }
         .nav-links a:hover { color: var(--green); }
         .hero { background: linear-gradient(135deg, #2A5C2E, #1E4422); padding: 56px 24px; text-align: center; }
         .hero-tag { display: inline-block; background: rgba(255,255,255,0.15); color: #A8D5AB; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 5px 14px; border-radius: 20px; margin-bottom: 18px; }
@@ -79,27 +70,9 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
         .related-card .emoji { font-size: 28px; margin-bottom: 10px; display: block; }
         .related-card .rtag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--green); margin-bottom: 6px; }
         .related-card h3 { font-size: 14px; font-weight: 700; line-height: 1.4; color: var(--text); }
-        footer { background: var(--text); color: rgba(255,255,255,0.5); padding: 40px 24px; text-align: center; font-size: 13px; line-height: 1.8; }
         footer a { color: rgba(255,255,255,0.7); text-decoration: none; }
         @media (max-width: 600px) { .nav-links { display: none; } }
       `}</style>
-
-      <nav>
-        <Link href="/" className="nav-logo">
-          <span style={{fontSize:22}}>🐾</span>
-          <div>
-            <div className="nav-logo-text">Common Sense Dog</div>
-            <div className="nav-logo-sub">Real dog health from a real dog owner</div>
-          </div>
-        </Link>
-        <div className="nav-links">
-          <Link href="/#story">Our Story</Link>
-          <Link href="/library">📖 A–Z</Link>
-          <Link href="/blog" style={{color:'#2A5C2E', fontWeight:700}}>Articles</Link>
-          <Link href="/chat">Ask AI</Link>
-          <Link href="/scan">Scanner</Link>
-        </div>
-      </nav>
 
       <section className="hero">
         <span className="hero-emoji">{post.emoji}</span>
@@ -139,14 +112,6 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
           </div>
         )}
       </div>
-
-      <footer>
-        <p>
-          <strong style={{color:'rgba(255,255,255,0.8)'}}>Common Sense Dog</strong><br/>
-          <Link href="/">Home</Link> · <Link href="/blog">Articles</Link> · <Link href="/chat">Ask AI</Link> · <Link href="/scan">Scanner</Link><br/><br/>
-          Not veterinary advice. Always consult your vet for medical decisions.
-        </p>
-      </footer>
     </>
   )
 }

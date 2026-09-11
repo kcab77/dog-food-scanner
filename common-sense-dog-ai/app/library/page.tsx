@@ -102,18 +102,8 @@ export default function Library() {
   return (
     <>
       <style jsx global>{`
-        :root { --cream: #FDFAF5; --cream-dark: #F5EFE4; --green: #2A5C2E; --green-light: #3D7A42; --green-pale: #EAF3EB; --border: #E7E0D4; --text: #2B2A26; --text-muted: #7A746B; --white: #FFFFFF; }
-        * { box-sizing: border-box; }
-        body { margin: 0; background: var(--cream); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-        a { color: inherit; }
       `}</style>
       <style jsx>{`
-        nav { background: var(--white); border-bottom: 1px solid var(--border); padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
-        .nav-logo { display: flex; flex-direction: column; text-decoration: none; }
-        .nav-logo-text { font-size: 17px; font-weight: 700; color: var(--green); letter-spacing: -0.3px; }
-        .nav-logo-sub { font-size: 11px; color: var(--text-muted); }
-        .nav-links { display: flex; gap: 24px; align-items: center; }
-        .nav-links a { text-decoration: none; color: var(--text-muted); font-size: 14px; font-weight: 500; }
         .nav-links a:hover { color: var(--green); }
         .hero { text-align: center; padding: 56px 24px 28px; max-width: 760px; margin: 0 auto; }
         .hero h1 { font-size: 42px; margin: 0 0 10px; color: var(--green); letter-spacing: -1px; }
@@ -140,31 +130,10 @@ export default function Library() {
         .result-snippet { font-size: 13px; line-height: 1.55; color: var(--muted, #6b7280); margin: 5px 0 0; }
         .letter-group { margin-top: 34px; scroll-margin-top: 80px; }
         .letter-head { font-size: 26px; font-weight: 800; color: var(--green); border-bottom: 2px solid var(--green-pale); padding-bottom: 6px; margin-bottom: 16px; }
-        .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
-        .card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 18px; text-decoration: none; color: var(--text); transition: transform .12s, box-shadow .12s, border-color .12s; display: block; }
         .card:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(42,92,46,.10); border-color: var(--green); }
-        .card-top { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-        .card-emoji { font-size: 26px; }
-        .card-title { font-size: 16px; font-weight: 700; line-height: 1.25; }
-        .card-tag { display: inline-block; background: var(--green-pale); color: var(--green); font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 12px; margin-bottom: 8px; }
-        .card-summary { font-size: 13.5px; color: var(--text-muted); line-height: 1.5; margin: 0; }
         .empty { text-align: center; color: var(--text-muted); padding: 60px 20px; }
         @media (max-width: 640px) { .nav-links { display: none; } .hero h1 { font-size: 32px; } .search { flex-direction: column; } }
       `}</style>
-
-      <nav>
-        <Link href="/" className="nav-logo">
-          <span className="nav-logo-text">Common Sense Dog</span>
-          <span className="nav-logo-sub">Real dog health from a real dog owner</span>
-        </Link>
-        <div className="nav-links">
-          <Link href="/#story">Our Story</Link>
-          <Link href="/library" style={{ color: '#2A5C2E', fontWeight: 700 }}>A–Z</Link>
-          <Link href="/blog">Articles</Link>
-          <Link href="/chat">Ask AI</Link>
-          <Link href="/scan">Scanner</Link>
-        </div>
-      </nav>
 
       <div className="hero">
         <h1>Dog Health A–Z</h1>

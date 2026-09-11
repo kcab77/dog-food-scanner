@@ -39,19 +39,8 @@ export default function AnswersDirectory() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionLd) }}
       />
       <style>{`
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        :root { --green: #2A5C2E; --green-light: #3D7A42; --green-pale: #EDF4EE; --cream: #FDFAF5; --cream-dark: #F5EFE4; --text: #1A1A1A; --text-muted: #7A746B; --border: #E2D9CA; --white: #FFFFFF; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--cream); color: var(--text); }
-        a { color: inherit; }
 
-        nav { background: rgba(253,250,245,0.9); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 0 24px; height: 62px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
-        .nav-logo { display: flex; flex-direction: column; text-decoration: none; }
-        .nav-logo-text { font-size: 17px; font-weight: 800; color: var(--green); letter-spacing: -0.3px; }
-        .nav-logo-sub { font-size: 11px; color: var(--text-muted); }
-        .nav-links { display: flex; align-items: center; gap: 22px; }
-        .nav-links a { text-decoration: none; color: var(--text-muted); font-size: 14px; font-weight: 600; }
         .nav-links a:hover { color: var(--green); }
-        .nav-cta { background: var(--green); color: #fff !important; padding: 8px 16px; border-radius: 20px; font-size: 13px; }
 
         .hero { max-width: 760px; margin: 0 auto; padding: 46px 20px 22px; text-align: center; }
         .hero h1 { font-family: Georgia, serif; font-size: clamp(30px, 5.5vw, 46px); font-weight: 700; color: var(--green); letter-spacing: -1px; line-height: 1.12; margin-bottom: 14px; text-wrap: balance; }
@@ -71,8 +60,6 @@ export default function AnswersDirectory() {
         .cat-titles p { font-size: 13.5px; color: var(--text-muted); margin-top: 3px; }
         .cat-count { margin-left: auto; font-size: 12px; font-weight: 700; color: var(--text-muted); white-space: nowrap; }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
-        .card { display: flex; align-items: center; gap: 12px; background: var(--white); border: 1px solid var(--border); border-radius: 13px; padding: 14px 15px; text-decoration: none; transition: border-color .12s, transform .12s, box-shadow .12s; }
         .card:hover { border-color: var(--green); transform: translateY(-1px); box-shadow: 0 6px 16px rgba(42,92,46,0.08); }
         .card .c-emoji { font-size: 22px; flex: none; }
         .card .c-title { font-size: 14.5px; font-weight: 600; line-height: 1.3; color: var(--text); }
@@ -81,29 +68,12 @@ export default function AnswersDirectory() {
         .ask h2 { font-family: Georgia, serif; color: #fff; font-size: 24px; margin-bottom: 10px; }
         .ask p { color: rgba(255,255,255,0.78); font-size: 15px; line-height: 1.6; max-width: 460px; margin: 0 auto 20px; }
         .ask-row { display: flex; gap: 11px; justify-content: center; flex-wrap: wrap; }
-        .btn { display: inline-block; text-decoration: none; font-weight: 700; font-size: 15px; border-radius: 11px; padding: 13px 24px; }
-        .btn-primary { background: #fff; color: var(--green); }
-        .btn-ghost { background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.3); }
 
-        footer { background: var(--text); color: rgba(255,255,255,0.55); padding: 34px 24px; text-align: center; font-size: 13px; line-height: 1.9; margin-top: 10px; }
         footer a { color: rgba(255,255,255,0.75); text-decoration: none; }
         footer .links { margin-bottom: 10px; }
 
         @media (max-width: 640px) { .nav-links a:not(.nav-cta) { display: none; } }
       `}</style>
-
-      <nav>
-        <Link href="/" className="nav-logo">
-          <span className="nav-logo-text">Common Sense Dog</span>
-          <span className="nav-logo-sub">Holistic dog nutrition — just ask</span>
-        </Link>
-        <div className="nav-links">
-          <Link href="/answers">Directory</Link>
-          <Link href="/recommended">Picks</Link>
-          <Link href="/blog">Articles</Link>
-          <a href={APP_URL} target="_blank" rel="noopener noreferrer" className="nav-cta">📱 Get the App</a>
-        </div>
-      </nav>
 
       <section className="hero">
         <h1>Is it safe for my dog?</h1>
@@ -156,13 +126,6 @@ export default function AnswersDirectory() {
           </div>
         </section>
       </div>
-
-      <footer>
-        <p className="links">
-          <Link href="/answers">Directory</Link> · <Link href="/recommended">Trusted picks</Link> · <Link href="/library">Health A–Z</Link> · <Link href="/blog">Articles</Link> · <Link href="/scan">Ingredient checker</Link>
-        </p>
-        <p>© Common Sense Dog · Educational only — not veterinary advice. Always consult your vet for medical decisions.</p>
-      </footer>
     </>
   )
 }

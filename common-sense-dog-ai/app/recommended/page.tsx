@@ -58,38 +58,13 @@ export default function RecommendedPage() {
   return (
     <>
       <style>{`
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        :root { --green: #2A5C2E; --green-pale: #EDF4EE; --cream: #FDFAF5; --cream-dark: #F5EFE4; --text: #1A1A1A; --text-muted: #6B6B6B; --border: #E2D9CA; --white: #FFFFFF; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--cream); color: var(--text); }
-        a { color: inherit; }
-        nav { background: rgba(253,250,245,0.9); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 0 24px; height: 62px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
-        .nav-logo-text { font-size: 17px; font-weight: 800; color: var(--green); letter-spacing: -0.3px; text-decoration: none; }
-        .nav-links { display: flex; align-items: center; gap: 20px; }
-        .nav-links a { text-decoration: none; color: var(--text-muted); font-size: 14px; font-weight: 600; }
         .wrap { max-width: 1000px; margin: 0 auto; padding: 44px 20px 60px; }
-        h1 { font-family: Georgia, serif; font-size: clamp(30px, 5vw, 44px); font-weight: 700; color: var(--green); letter-spacing: -1px; margin-bottom: 12px; text-align: center; }
         .sub { font-size: 17px; color: var(--text-muted); line-height: 1.6; max-width: 620px; margin: 0 auto 22px; text-align: center; }
         .disclosure { background: var(--cream-dark); border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px; font-size: 13px; color: var(--text-muted); line-height: 1.5; max-width: 720px; margin: 0 auto 36px; text-align: center; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-        .card { background: var(--white); border: 1px solid var(--border); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; }
-        .card-emoji { font-size: 34px; margin-bottom: 10px; }
-        .card h3 { font-size: 19px; font-weight: 800; color: var(--text); margin-bottom: 10px; }
-        .card p { font-size: 14.5px; color: #444; line-height: 1.6; margin-bottom: 12px; flex: 1; }
         .card .note { font-size: 13px; color: var(--green); background: var(--green-pale); border-radius: 10px; padding: 9px 12px; margin-bottom: 16px; line-height: 1.45; }
-        .btn { display: inline-block; text-align: center; background: var(--green); color: #fff; font-weight: 700; font-size: 15px; padding: 12px 18px; border-radius: 24px; text-decoration: none; }
         .btn:hover { background: #21471f; }
-        footer { background: var(--text); color: rgba(255,255,255,0.55); padding: 34px 24px; text-align: center; font-size: 13px; line-height: 1.9; margin-top: 20px; }
         footer a { color: rgba(255,255,255,0.75); text-decoration: none; }
       `}</style>
-
-      <nav>
-        <Link href="/" className="nav-logo-text">Common Sense Dog</Link>
-        <div className="nav-links">
-          <Link href="/#ask">Ask</Link>
-          <Link href="/scan">Checker</Link>
-          <Link href="/library">Library</Link>
-        </div>
-      </nav>
 
       <div className="wrap">
         <h1>Trusted Holistic Picks</h1>
@@ -112,13 +87,6 @@ export default function RecommendedPage() {
           ))}
         </div>
       </div>
-
-      <footer>
-        <p>
-          <Link href="/">Home</Link> · <Link href="/scan">Ingredient checker</Link> · <Link href="/library">Health A–Z</Link> · <a href={APP_URL} target="_blank" rel="noopener noreferrer">PawGrade app</a>
-        </p>
-        <p>© Common Sense Dog · Educational only — not veterinary advice. As an Amazon Associate we earn from qualifying purchases.</p>
-      </footer>
     </>
   )
 }

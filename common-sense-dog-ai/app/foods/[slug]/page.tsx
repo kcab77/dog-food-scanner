@@ -36,13 +36,7 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
   return (
     <>
       <style>{`
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        :root { --green: #2A5C2E; --green-pale: #EDF4EE; --cream: #FDFAF5; --cream-dark: #F5EFE4;
-                --text: #2C2A26; --text-muted: #6B6862; --border: #E5DFD2; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--cream); color: var(--text); }
-        a { color: inherit; text-decoration: none; }
         .wrap { max-width: 760px; margin: 0 auto; padding: 40px 20px 70px; }
-        .crumb { font-size: 13px; color: var(--text-muted); margin-bottom: 18px; }
         .crumb a:hover { color: var(--green); }
         .hero { display: flex; align-items: center; gap: 20px; margin-bottom: 8px; }
         .big { flex: none; width: 92px; height: 92px; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; }
@@ -51,9 +45,7 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
         .excellent { background: #2A7D3F; } .good { background: #5A9A4A; } .fair { background: #C8912B; }
         .below { background: #C4682B; } .low { background: #A83A32; }
         .brand { font-size: 12.5px; font-weight: 700; color: var(--green); text-transform: uppercase; letter-spacing: 0.5px; }
-        h1 { font-family: Georgia, serif; font-size: clamp(24px, 4.4vw, 33px); line-height: 1.2; letter-spacing: -0.4px; margin: 3px 0 5px; }
         .fmt { font-size: 14px; color: var(--text-muted); }
-        h2 { font-size: 17px; font-weight: 700; color: var(--green); margin: 34px 0 12px; }
         .row { display: flex; justify-content: space-between; gap: 14px; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 14.5px; }
         .row:last-child { border-bottom: none; }
         .row .v { font-weight: 700; font-variant-numeric: tabular-nums; flex: none; }
@@ -62,8 +54,6 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
         .flagcard .n { font-size: 14.5px; font-weight: 700; }
         .flagcard .s { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #A83A32; letter-spacing: .4px; }
         .flagcard .r { font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-top: 5px; }
-        .pills { display: flex; flex-wrap: wrap; gap: 6px; }
-        .pill { font-size: 12.5px; padding: 5px 11px; border-radius: 14px; background: #fff; border: 1px solid var(--border); color: var(--text-muted); }
         .pill.bad { border-color: #E3B5B1; color: #A83A32; background: #FCF4F3; }
         .pill.great { border-color: #B9D6BC; color: #2A7D3F; background: var(--green-pale); }
         .also { display: grid; gap: 8px; }

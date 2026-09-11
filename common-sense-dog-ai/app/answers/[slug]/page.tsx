@@ -38,9 +38,6 @@ export default function AnswerPage({ params }: { params: { slug: string } }) {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
       <style>{`
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        :root { --green: #2A5C2E; --green-pale: #EDF4EE; --cream: #FDFAF5; --border: #E2D9CA; --text: #1A1A1A; --muted: #6B6B6B; --white: #fff; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--cream); color: var(--text); }
         .top { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 22px; max-width: 680px; margin: 0 auto; }
         .brand { display: flex; align-items: center; gap: 9px; text-decoration: none; }
         .brand-name { font-size: 15px; font-weight: 700; color: var(--green); }
@@ -49,16 +46,12 @@ export default function AnswerPage({ params }: { params: { slug: string } }) {
         .wrap { max-width: 680px; margin: 0 auto; padding: 8px 24px 64px; }
         .tag { display: inline-block; background: var(--green-pale); color: var(--green); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 5px 13px; border-radius: 20px; }
         .emoji { font-size: 46px; display: block; margin: 22px 0 12px; }
-        h1 { font-family: Georgia, serif; font-size: clamp(26px, 4vw, 38px); line-height: 1.2; margin-bottom: 18px; }
         .lead { font-size: 18px; line-height: 1.7; color: #333; margin-bottom: 14px; }
         /* The prominent funnel into the AI — the whole point of the page */
         .cta { background: linear-gradient(135deg, #2A5C2E, #1E4422); border-radius: 18px; padding: 26px; text-align: center; margin: 34px 0; }
         .cta h2 { font-family: Georgia, serif; color: #fff; font-size: 21px; margin-bottom: 8px; }
         .cta p { color: rgba(255,255,255,0.75); font-size: 15px; margin-bottom: 18px; line-height: 1.6; }
         .cta-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-        .btn { display: inline-block; text-decoration: none; font-weight: 700; font-size: 15px; border-radius: 11px; padding: 13px 22px; }
-        .btn-primary { background: #fff; color: var(--green); }
-        .btn-ghost { background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.3); }
         .faq { margin-top: 30px; }
         .faq h2 { font-family: Georgia, serif; font-size: 22px; margin-bottom: 6px; }
         .faq-sub { color: var(--muted); font-size: 14px; margin-bottom: 18px; }

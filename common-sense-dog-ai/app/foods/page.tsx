@@ -41,26 +41,14 @@ export default function Foods() {
   return (
     <>
       <style>{`
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        :root { --green: #2A5C2E; --green-pale: #EDF4EE; --cream: #FDFAF5; --cream-dark: #F5EFE4;
-                --text: #2C2A26; --text-muted: #6B6862; --border: #E5DFD2; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--cream); color: var(--text); }
-        a { color: inherit; text-decoration: none; }
         .wrap { max-width: 940px; margin: 0 auto; padding: 40px 20px 70px; }
-        .crumb { font-size: 13px; color: var(--text-muted); margin-bottom: 14px; }
         .crumb a:hover { color: var(--green); }
-        h1 { font-family: Georgia, serif; font-size: clamp(30px, 5vw, 42px); color: var(--green); letter-spacing: -0.5px; margin-bottom: 10px; }
         .sub { font-size: 16px; color: var(--text-muted); line-height: 1.6; max-width: 620px; margin-bottom: 26px; }
         .search { width: 100%; padding: 14px 18px; font-size: 16px; border: 1px solid var(--border); border-radius: 30px; background: #fff; font-family: inherit; }
         .search:focus { outline: none; border-color: var(--green); }
-        .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 8px; }
-        .chip { padding: 7px 15px; border-radius: 20px; border: 1px solid var(--border); background: #fff; font-size: 13px; font-weight: 600; color: var(--text-muted); cursor: pointer; font-family: inherit; }
         .chip.on { background: var(--green); color: #fff; border-color: var(--green); }
         .count { font-size: 13px; color: var(--text-muted); margin-bottom: 18px; }
-        .grid { display: grid; gap: 10px; }
-        .card { display: flex; align-items: center; gap: 16px; background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; transition: border-color .15s; }
         .card:hover { border-color: var(--green); }
-        .score { flex: none; width: 54px; height: 54px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; color: #fff; font-variant-numeric: tabular-nums; }
         .excellent { background: #2A7D3F; } .good { background: #5A9A4A; } .fair { background: #C8912B; }
         .below { background: #C4682B; } .low { background: #A83A32; }
         .meta { min-width: 0; }
@@ -69,7 +57,6 @@ export default function Foods() {
         .tags { font-size: 12.5px; color: var(--text-muted); }
         .flag { color: #A83A32; font-weight: 600; }
         .empty { text-align: center; padding: 50px 20px; color: var(--text-muted); }
-        .note { margin-top: 30px; padding: 16px 18px; background: var(--cream-dark); border: 1px solid var(--border); border-radius: 12px; font-size: 13px; line-height: 1.75; color: var(--text-muted); }
       `}</style>
 
       <div className="wrap">
