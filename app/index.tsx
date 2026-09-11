@@ -4123,9 +4123,25 @@ function scoreTreats(ingredientList: string[], processingMethod?: string, produc
     }
   }
 
-  // Score the flags
+  // ⚠️ TREATS ARE SCORED MORE GENTLY THAN FOOD (changed 2026-09-11, Kyle).
+  //
+  // Two things were wrong. First, this passed position 0 for every flag, which
+  // means MAXIMUM penalty regardless of where the ingredient sat — so treats
+  // were actually scored HARDER than food, which scales down by position. Now
+  // it passes the real position.
+  //
+  // Second, a treat is a few pieces a day; a food is the entire diet. The same
+  // ingredient doesn't deserve the same weight in both. Non-toxic penalties are
+  // softened to 70% here.
+  //
+  // ⚠️ TOXIC IS NOT SOFTENED. Xylitol kills dogs at treat-sized doses — that is
+  // precisely the amount a treat delivers. It keeps full weight and still hits
+  // the TOXIC_SCORE_CEILING.
+  const TREAT_LENIENCY = 0.7;
   for (const f of flags) {
-    const p = harmfulPenalty(f.severity, 0);
+    const pos = ingredientList.findIndex((i) => i.toLowerCase().includes(f.name.toLowerCase()));
+    const raw = harmfulPenalty(f.severity, pos < 0 ? 0 : pos);
+    const p = f.severity === "toxic" ? raw : Math.max(1, Math.round(raw * TREAT_LENIENCY));
     total -= p;
     breakdown.push({ label: `${f.name} (${f.severity})`, value: -p, severity: f.severity });
   }
@@ -4160,7 +4176,7 @@ function scoreTreats(ingredientList: string[], processingMethod?: string, produc
   } else if (count <= 3) {
     award(15, "2-3 ingredients — excellent simplicity");
   } else if (count <= 5) {
-    award(8, "4-5 ingredients — good simplicity");
+    award(12, "4-5 ingredients — still a short, readable list");
   } else if (count <= 8) {
     breakdown.push({ label: "6-8 ingredients — acceptable", value: 0 });
   } else if (count <= 10) {
@@ -4202,12 +4218,32 @@ function scoreTreats(ingredientList: string[], processingMethod?: string, produc
     breakdown.push({ label: `Whole ${ingredientList[0]} as #1 ingredient`, value: 20 });
   }
 
-  // Sugar / sweetener in top 3 = major red flag
+  // ⚠️ SUGAR IS SCORED BY POSITION (changed 2026-09-11, Kyle).
+  //
+  // It used to be a flat -15 if a sweetener appeared anywhere in the top 3, and
+  // nothing at all after that. Position IS the information on an ingredient
+  // list: sugar at #1 means the treat is mostly sugar, sugar at #9 means a
+  // trace. A cliff at #3 charged both the same and then charged neither.
+  //
+  // Honey is deliberately in this list — it's still sugar to a dog — but at the
+  // bottom of a list it costs almost nothing, which is where it usually sits.
   const sweetenerTerms = ["sugar", "corn syrup", "cane sugar", "honey", "molasses", "fructose", "sucrose", "dextrose"];
-  const sweetenerInTop3 = top3.some((i) => sweetenerTerms.some((s) => i.includes(s)));
-  if (sweetenerInTop3 && !flags.some((f) => sweetenerTerms.some((s) => f.name.toLowerCase().includes(s)))) {
-    total -= 15;
-    breakdown.push({ label: "Sweetener in top 3 ingredients — primarily sugar by weight", value: -15 });
+  const sweetenerPos = lower.findIndex((i) => sweetenerTerms.some((s) => i.includes(s)));
+  const sweetenerPenalty =
+    sweetenerPos < 0 ? 0 : sweetenerPos === 0 ? 18 : sweetenerPos <= 2 ? 12 : sweetenerPos <= 4 ? 6 : 2;
+  if (sweetenerPenalty > 0 && !flags.some((f) => sweetenerTerms.some((s) => f.name.toLowerCase().includes(s)))) {
+    total -= sweetenerPenalty;
+    breakdown.push({
+      label:
+        sweetenerPos === 0
+          ? `${ingredientList[sweetenerPos]} is the MAIN ingredient — this is mostly sugar`
+          : sweetenerPos <= 2
+            ? `Sweetener at #${sweetenerPos + 1} — high on the list by weight`
+            : sweetenerPos <= 4
+              ? `Sweetener at #${sweetenerPos + 1} — present but not dominant`
+              : `Sweetener at #${sweetenerPos + 1} — trace amount`,
+      value: -sweetenerPenalty,
+    });
   }
 
   // Dental ingredient detection
