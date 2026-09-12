@@ -119,6 +119,10 @@ body {
 
 a { color: inherit; text-decoration: none; }
 
+/* Tailwind's preflight sets placeholders to #9ca3af — a BLUE-biased grey, and
+   the last cold colour on the site. Overridden to the warm ramp. */
+input::placeholder, textarea::placeholder { color: var(--text-faint); opacity: 1; }
+
 /* Visible focus everywhere. Keyboard users could not see where they were. */
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
   outline: 2px solid var(--green);
