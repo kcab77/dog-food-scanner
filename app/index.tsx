@@ -676,7 +676,7 @@ const SEVERITY_COLORS: Record<string, string> = {
 const SUPPLEMENT_RECS = [
   {
     emoji: "🦠", name: "Probiotics", color: t.accents.probiotic.fg, borderColor: t.accents.probiotic.fg, bg: t.accents.probiotic.bg,
-    body: "Multi-strain probiotics support gut microbiome diversity, immune function, and stool quality. Look for at least 1 billion CFU with Lactobacillus and Bifidobacterium strains — and check whether the CFU count is guaranteed AT EXPIRY or only at manufacture, since live cultures die off in storage. Dog-specific strains are preferable to human formulas. Most beneficial for dogs on kibble, after antibiotics, or with chronic digestive issues.",
+    body: "⚠️ DIVERSITY BEATS POTENCY — the CFU number on the front is the least useful thing on the label. A healthy gut is a varied ecosystem, so multi-strain beats high-count, and ROTATING products every few months beats staying on one forever (one strain long-term overpopulates the gut). Dog-specific strains beat human formulas. If you do compare CFU, check it's guaranteed AT EXPIRY, not at manufacture. ⚠️ Never give within 4-6 hours of an antibiotic — the exception is S. boulardii, a yeast, which survives a course. And on an inflamed gut, soothe FIRST: probiotics are step four, not step one. Most beneficial for dogs on kibble, after antibiotics, or with chronic digestive issues.",
     note: "Fine to give alongside fish oil — they do different jobs (gut vs inflammation). Nobody has tested the combination, so we won't claim they multiply each other.",
     link: "https://amzn.to/4dPRAWP", linkText: "🛒 Shop Probiotics →",
   },
@@ -1472,9 +1472,9 @@ const GUT_HERBS: { group: string; icon: string; herbs: [string, string][] }[] = 
 const GUT_PILLARS: { type: string; icon: string; what: string; purpose: string; benefit: string }[] = [
   {
     type: "Probiotics", icon: "🦠",
-    what: "Live beneficial bacteria and yeasts.",
-    purpose: "Repopulate and balance the microbiome so pathogens get crowded out.",
-    benefit: "Boosts immune function — 80% of the immune system lives in the gut.",
+    what: "Live beneficial bacteria and yeasts. Four families — lactic acid, soil-based spore-formers, beneficial yeast (S. boulardii), and species-specific or ancestral strains.",
+    purpose: "Repopulate and balance the microbiome so pathogens get crowded out. ⚠️ But LAST, not first — see the Probiotics section. On an inflamed gut this is step four of four, and doing it first is why most protocols fail.",
+    benefit: "Boosts immune function — over 80% of the immune system lives in the gut. Rotate products every few months; one strain long-term overpopulates rather than diversifies.",
   },
   {
     type: "Digestive enzymes", icon: "⚗️",
@@ -1568,6 +1568,27 @@ const GUT_WARNINGS: { title: string; icon: string; detail: string }[] = [
   },
 ];
 
+
+// ── TCVM THERMAL NATURE ──────────────────────────────────────────────────────
+// Added 2026-09-12 (Kyle approved).
+//
+// ⚠️ Why this exists: almost every "calm the inflammation" stack in holistic dog
+// content lists slippery elm, marshmallow, aloe AND CURCUMIN together. The first
+// three are cooling and the fourth is warming. For a dog who already runs hot —
+// pants easily, seeks cool tile, struggles in summer — turmeric is the wrong
+// anti-inflammatory from the same category, even though it is genuinely
+// anti-inflammatory and appears in half of every protocol ever written.
+//
+// "Good for the gut" and "good for THIS dog" are not the same sentence. This
+// note appears in every section that recommends herbs so the reader picks from
+// the right column instead of the first list they see.
+const TCVM_THERMAL = {
+  cooling: "Slippery elm · marshmallow root · aloe · chamomile · dandelion root · burdock root · yarrow · plantain · cleavers",
+  warming: "Ginger · turmeric / curcumin · olive leaf · St John's wort · cinnamon",
+  neutral: "Deglycyrrhizinated licorice (harmonises a formula) · milk thistle · nettles",
+  warmSigns: "Pants easily · seeks cool tile or shade · struggles in summer · red or hot ears and belly · seeks out water to lie in",
+  coolSigns: "Seeks blankets and sun · cold to the touch · sluggish · worse in winter · low appetite",
+};
 
 // ── PROBIOTICS ───────────────────────────────────────────────────────────────
 // Added 2026-09-12 from Kyle's probiotics research. Companion image:
@@ -4936,6 +4957,55 @@ function MineralFormsGuide({ ingredients }: { ingredients?: string[] }) {
         copper maximum in 2007 without replacing it. Labradors, Bedlingtons, Westies,
         Dobermans and Dalmatians are predisposed. For those dogs total copper load
         matters more than form, and liver enzymes are not sensitive early on.
+      </Text>
+    </View>
+  );
+}
+
+/**
+ * The warm/cool herb note. Rendered inside every section that recommends herbs.
+ *
+ * Kept as one component rather than five copies so the advice can't drift —
+ * the same drift that let "slippery elm, marshmallow, aloe and curcumin" sit in
+ * one list as though all four suited the same dog.
+ */
+function ThermalNote() {
+  return (
+    <View
+      style={{
+        backgroundColor: t.surface,
+        borderRadius: 9,
+        padding: 11,
+        marginTop: 12,
+        borderLeftWidth: 3,
+        borderLeftColor: t.info,
+      }}
+    >
+      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "800" }}>
+        🌡️ Match the herb to YOUR dog, not just the symptom
+      </Text>
+      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 4, lineHeight: 17 }}>
+        In TCVM every herb has a thermal nature. Give a warming herb to a dog who already
+        runs hot and you pull against yourself — even when the herb is genuinely
+        anti-inflammatory. Most &ldquo;calm the gut&rdquo; lists mix both without saying so.
+      </Text>
+      <Text style={{ color: t.good, fontSize: 12, marginTop: 8, lineHeight: 17 }}>
+        <Text style={{ fontWeight: "800" }}>❄️ COOLING — for a hot dog: </Text>
+        {TCVM_THERMAL.cooling}
+      </Text>
+      <Text style={{ color: t.textDim, fontSize: 11.5, marginTop: 2, lineHeight: 16 }}>
+        {TCVM_THERMAL.warmSigns}
+      </Text>
+      <Text style={{ color: t.high, fontSize: 12, marginTop: 8, lineHeight: 17 }}>
+        <Text style={{ fontWeight: "800" }}>🔥 WARMING — for a cool dog: </Text>
+        {TCVM_THERMAL.warming}
+      </Text>
+      <Text style={{ color: t.textDim, fontSize: 11.5, marginTop: 2, lineHeight: 16 }}>
+        {TCVM_THERMAL.coolSigns}
+      </Text>
+      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 8, lineHeight: 17 }}>
+        <Text style={{ fontWeight: "800" }}>⚖️ Either: </Text>
+        {TCVM_THERMAL.neutral}
       </Text>
     </View>
   );
@@ -14882,6 +14952,8 @@ export default function App() {
                     </View>
                   ))}
 
+                  <ThermalNote />
+
                   <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>Match the herb to the dog (TCVM)</Text>
                   {PROBIOTIC_TCVM.map((x, i) => (
                     <View key={i} style={{ flexDirection: "row", gap: 9, marginTop: 8 }}>
@@ -14979,6 +15051,8 @@ export default function App() {
                       <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>{g.detail}</Text>
                     </View>
                   ))}
+
+                  <ThermalNote />
 
                   <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>At-home remedies &amp; doses</Text>
                   {GOLPP_REMEDIES.map((g, i) => (
@@ -15136,6 +15210,8 @@ export default function App() {
                     <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 8, lineHeight: 17 }}>{LYMPHOMA_HONEST.limits}</Text>
                   </View>
 
+                  <ThermalNote />
+
                   <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>Metabolic support</Text>
                   {LYMPHOMA_HOLISTIC.map((h, i) => (
                     <View key={i} style={{ backgroundColor: t.surface, borderRadius: 9, padding: 10, marginTop: 7 }}>
@@ -15229,6 +15305,8 @@ export default function App() {
                       <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>{y.detail}</Text>
                     </View>
                   ))}
+
+                  <ThermalNote />
 
                   <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>The repair toolkit, by job</Text>
                   {LEAKY_TOOLKIT.map((y, i) => (
