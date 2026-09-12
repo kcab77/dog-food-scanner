@@ -37,7 +37,16 @@ const { scoreFood } = await import('/tmp/_foods_scoring.mjs')
 const raw = JSON.parse(readFileSync('scripts/products-export.json', 'utf8'))
 if (!Array.isArray(raw)) throw new Error('Supabase did not return rows: ' + JSON.stringify(raw).slice(0, 200))
 
-const CAT = /(cat|kitten|whiskas|felix|sheba|friskies|meow)/i
+// ⚠️ Cat food gets in three ways, so it's filtered three ways.
+//
+// 1. The word "cat" — but \bcat\b only, because "catfish" and "Muscat" are
+//    real dog-food ingredients and a naive /cat/ match removes them.
+// 2. Brand names with no "cat" in them at all — 9Lives and Temptations both
+//    sailed through the first version of this filter.
+// 3. ⚠️ CAT VOCABULARY, which is how "Hill's Science Diet HAIRBALL Control"
+//    reached the live site. A product can be unmistakably feline without the
+//    word cat appearing anywhere in its name or brand.
+const CAT = /(\bcat\b|\bcats\b|kitten|feline|hairball|litter box|whiskas|felix|sheba|friskies|meow|fancy feast|9lives|temptations|purina one cat)/i
 const FOREIGN = /(viandes|composition|proteine|disidratate|entières|crues|granturco|céréales|sous-produits)/i
 const MARKETING = /(we meticulously|helps support|our suppl|guaranteed analysis|feeding guide)/i
 const ARTIFACT = /(caricamento|loading|undefined|^null$)/i

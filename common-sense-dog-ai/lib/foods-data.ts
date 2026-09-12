@@ -3,10 +3,10 @@
  *   node scripts/build-scoring.mjs && node scripts/build-foods.mjs
  *
  * Every food scored by PawGrade's real scorer, not a second implementation.
- * 96 publishable products of 122 rows in Supabase — the rest are cat
+ * 95 publishable products of 122 rows in Supabase — the rest are cat
  * food, non-English labels, marketing copy, or scraper artifacts.
  *
- * Generated 2026-09-11.
+ * Generated 2026-09-12.
  */
 export type Food = {
   slug: string; brand: string; name: string; score: number; format: string
@@ -7164,150 +7164,6 @@ export const foods: Food[] = [
    }
   ],
   "organs": [],
-  "produce": []
- },
- {
-  "slug": "hill-s-science-diet-hairball-control",
-  "brand": "Hill's",
-  "name": "Science Diet Hairball Control",
-  "score": 29,
-  "format": "Kibble",
-  "ingredients": [
-   "Water",
-   "Chicken",
-   "Turkey Giblets",
-   "Pork By-Products",
-   "Pork Liver",
-   "Powdered Cellulose",
-   "Corn Starch",
-   "Corn Gluten Meal",
-   "Wheat Flour",
-   "Chicken Fat",
-   "Soybean Oil",
-   "Chicken Liver Flavor",
-   "Natural Flavor",
-   "Dicalcium Phosphate",
-   "Brewers Dried Yeast",
-   "Guar Gum",
-   "Potassium Chloride",
-   "Iodized Salt",
-   "Choline Chloride",
-   "Locust Bean Gum",
-   "Carrageenan",
-   "Taurine",
-   "vitamins (Vitamin E Supplement",
-   "Thiamine Mononitrate",
-   "Ascorbic Acid (source of Vitamin C), Niacin Supplement, Pyridoxine Hydrochloride, Calcium Pantothenate, Vitamin B12 Supplement, Riboflavin Supplement, Biotin, Vitamin D3 Supplement, Folic Acid)",
-   "Calcium Carbonate",
-   "minerals (Zinc Oxide, Ferrous Sulfate, Manganese Sulfate, Copper Sulfate, Calcium Iodate)",
-   "Calcium Sulfate",
-   "DL-Methionine",
-   "Magnesium Oxide",
-   "Beta-Carotene"
-  ],
-  "breakdown": [
-   {
-    "label": "Base score",
-    "value": 60
-   },
-   {
-    "label": "Powdered Cellulose (mild) — ingredient #6",
-    "value": -1,
-    "severity": "mild"
-   },
-   {
-    "label": "Corn Gluten Meal (mild) — ingredient #8",
-    "value": -1,
-    "severity": "mild"
-   },
-   {
-    "label": "Soybean Oil (mild) — ingredient #11 (trace amount)",
-    "value": -1,
-    "severity": "mild"
-   },
-   {
-    "label": "Natural Flavor (mild) — ingredient #13 (trace amount)",
-    "value": -1,
-    "severity": "mild"
-   },
-   {
-    "label": "Carrageenan (moderate) — ingredient #21 (trace amount)",
-    "value": -2,
-    "severity": "moderate"
-   },
-   {
-    "label": "Ascorbic Acid (source of Vitamin C), Niacin Supplement, Pyridoxine Hydrochloride, Calcium Pantothenate, Vitamin B12 Supplement, Riboflavin Supplement, Biotin, Vitamin D3 Supplement, Folic Acid) (mild) — ingredient #25 (trace amount)",
-    "value": -1,
-    "severity": "mild"
-   },
-   {
-    "label": "High synthetic vitamin/mineral load (4 added) — over-fortified formula",
-    "value": -13
-   },
-   {
-    "label": "Est. ~27% carbohydrate — multiple carb sources",
-    "value": -6
-   },
-   {
-    "label": "🔴 Very poor omega ratio (est. 15:1–30:1 — kibble without omega-3)",
-    "value": -15
-   },
-   {
-    "label": "Organ meats (2) — nutrient-dense whole food proteins",
-    "value": 10
-   }
-  ],
-  "flagged": [
-   {
-    "name": "Powdered Cellulose",
-    "severity": "mild",
-    "reason": "Powdered cellulose is wood pulp used as a cheap bulking fibre, and the comparative research is unflattering. In Beagle feeding trials (Journal of Animal Science), apparent total tract digestibility was 11% for cellulose against 29% for beet pulp — less than half. Cellulose is insoluble and poorly fermentable, so it passes through largely untouched: it reduces overall dry matter and organic matter digestibility, increases stool volume, and produces lower concentrations of beneficial short-chain fatty acids with a less acidic fecal pH than fermentable fibres. It adds bulk and satiety without feeding the gut. Fermentable fibres — beet pulp, pumpkin, chicory — do the job better."
-   },
-   {
-    "name": "Corn Gluten Meal",
-    "severity": "mild",
-    "reason": "⚪ Formulation signal: corn gluten meal is a concentrated plant protein. It counts toward the crude protein figure on the guaranteed analysis without contributing meat — and since that figure doesn't distinguish sources, a food can advertise strong protein while much of it is plant-derived and lower in the amino acids dogs use most. That's a labelling limitation, not a toxicity claim. No canine harm has been shown at label levels."
-   },
-   {
-    "name": "Soybean Oil",
-    "severity": "mild",
-    "reason": "⚪ Formulation signal: soybean meal is concentrated plant protein used to raise the crude protein number on the guaranteed analysis without meat. The protein percentage on a label does not distinguish source, so a food can advertise strong protein while much of it is plant-derived and lower in the amino acids dogs actually need. Soy is also a common allergen and usually a GMO, glyphosate-treated crop. Matters most in the top five."
-   },
-   {
-    "name": "Natural Flavor",
-    "severity": "mild",
-    "reason": "⚪ Transparency signal: 'natural flavor' in pet food is most often animal digest — hydrolysed animal tissue sprayed on the outside of the kibble to make it palatable. It is not required to name the species. The concern is not toxicity, it is that a bag can list an unnamed animal product and disclose nothing about what it was."
-   },
-   {
-    "name": "Carrageenan",
-    "severity": "moderate",
-    "reason": "Some research has associated degraded carrageenan with intestinal inflammation. While food-grade carrageenan is considered different, some veterinary nutritionists recommend avoiding it, particularly for pets with sensitive digestive systems"
-   },
-   {
-    "name": "Ascorbic Acid (source of Vitamin C), Niacin Supplement, Pyridoxine Hydrochloride, Calcium Pantothenate, Vitamin B12 Supplement, Riboflavin Supplement, Biotin, Vitamin D3 Supplement, Folic Acid)",
-    "severity": "mild",
-    "reason": "Cholecalciferol is vitamin D3 — the standard, AAFCO-required form of vitamin D in complete dog food, and its presence on a label is expected rather than alarming. Dogs cannot make meaningful vitamin D in their skin from sunlight the way people do, so it has to come from the diet. Two things are worth knowing. D3 is more potent than D2 (ergocalciferol) and has a narrower safety margin — it is the form used in rodenticides. And the real-world risk is manufacturing error, not the ingredient: FDA recalls in 2018–19 found dog foods containing up to 70x the intended vitamin D, causing hypercalcemia, kidney failure and deaths across brands including Hill's, Nutrisca, Sunshine Mills, Kroger and ELM. An ingredient label cannot tell you the amount, only that it is present — so this is flagged for awareness, not as a mark against the food."
-   },
-   {
-    "name": "minerals (Zinc Oxide, Ferrous Sulfate, Manganese Sulfate, Copper Sulfate, Calcium Iodate)",
-    "severity": "mild",
-    "reason": "⚠️ Read this one carefully, because it is flagged for the OPPOSITE reason to every other mineral here. As a form, sulfate is the acceptable middle — chelates absorb best, sulfates adequately, oxides barely at all. Copper sulfate is not a poor form. The concern is TOTAL COPPER LOAD: copper accumulates in the liver, dogs have no good way to dump the excess, and AAFCO deleted the copper maximum in 2007 and still has none. So 'meets AAFCO' tells you nothing about the ceiling. Matters most in copper-predisposed breeds — Bedlington Terrier, West Highland White, Doberman, Labrador, Dalmatian — where the target is under ~1.2mg per 1,000 kcal. Liver enzymes are NOT sensitive early, so normal bloodwork does not rule it out. Demoted from severe to mild on 2026-08-23: the form itself is fine, and scoring it as severe punished a mid-tier food for using an adequate mineral."
-   },
-   {
-    "name": "DL-Methionine",
-    "severity": "mild",
-    "reason": "⚪ Synthetic form, generally safe: DL-methionine is a synthetic amino acid added to meet methionine requirements and, in some foods, to acidify urine. It's a legitimate and widely used feed additive with no evidence of harm at label levels. The 'DL-' indicates a racemic mixture — dogs use the L-form directly and convert the D-form, which they do adequately. Flagged as a formulation signal rather than a hazard: its presence usually indicates plant-heavy protein that needed topping up, since meat-based diets generally supply enough methionine on their own."
-   },
-   {
-    "name": "Magnesium Oxide",
-    "severity": "moderate",
-    "reason": "❌ Oxide is the worst grade of mineral form — barely absorbed, cheapest to buy. Look for magnesium proteinate; magnesium sulfate is the acceptable middle."
-   }
-  ],
-  "organs": [
-   "Pork Liver",
-   "Chicken Liver Flavor"
-  ],
   "produce": []
  },
  {
