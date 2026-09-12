@@ -1569,6 +1569,188 @@ const GUT_WARNINGS: { title: string; icon: string; detail: string }[] = [
 ];
 
 
+// ── PROBIOTICS ───────────────────────────────────────────────────────────────
+// Added 2026-09-12 from Kyle's probiotics research. Companion image:
+// assets/images/probiotics-guide.jpg
+//
+// Distinct from GUT_* and LEAKY_* on purpose. Those cover the ecosystem and the
+// barrier; this covers the ORGANISM you're adding and how to actually give it.
+//
+// The single most important idea here is the SEQUENCE — you cannot fix a gut by
+// throwing probiotics at one that's actively inflamed. Almost every failed
+// probiotic protocol is a sequencing failure, not a product failure.
+
+const PROBIOTIC_WHAT = {
+  definition:
+    "Live beneficial microorganisms — friendly bacteria and beneficial yeasts — that live in the digestive tract. They digest food, make B vitamins and vitamin K, produce short-chain fatty acids, crowd out pathogens, and talk directly to the brain through the gut–brain axis.",
+  immune:
+    "Over 80% of your dog's immune system lives in the gut lining. That's why a gut problem shows up as skin, allergies, mood and recurring infections — you aren't treating a digestive organ, you're treating the place the immune system is trained.",
+};
+
+// The four families. Which one you want depends entirely on the problem.
+const PROBIOTIC_TYPES: { type: string; icon: string; detail: string; bestFor: string }[] = [
+  {
+    type: "Lactic acid bacteria — Lactobacillus & Bifidobacterium", icon: "🥛",
+    detail:
+      "The familiar ones, and the most delicate — a lot of them don't survive stomach acid. L. acidophilus for digestive and urinary health, L. rhamnosus (LGG) for itching and allergies, L. casei for mood and barrier balance, B. longum and B. animalis for stress, anxiety and food allergies.",
+    bestFor: "General maintenance · itchy dogs (look specifically for L. rhamnosus / LGG)",
+  },
+  {
+    type: "Soil-based organisms — Bacillus", icon: "🌱",
+    detail:
+      "Spore-forming strains like B. subtilis and B. coagulans. They build a protective shell that survives stomach acid and heat, so they actually arrive in the colon intact rather than dying on the way. Hardy, shelf-stable, and non-fermentable — which matters below.",
+    bestFor: "SIBO · sensitive stomachs · dogs who react badly to everything else",
+  },
+  {
+    type: "Beneficial yeast — Saccharomyces boulardii", icon: "🍄",
+    detail:
+      "Not a bacterium, which is the whole point: it is ANTIBIOTIC-RESISTANT. It can be given straight through a course of antibiotics without being wiped out — the one probiotic that can. Targets diarrhoea, yeast overgrowth and pathogens like Giardia.",
+    bestFor: "During and after antibiotics · diarrhoea · yeast · Giardia",
+  },
+  {
+    type: "Species-specific & ancestral strains", icon: "🐺",
+    detail:
+      "Strains isolated from the faeces of healthy dogs — or wild wolves — rather than from cows or humans. The argument is that canine biology should be seeded with canine organisms, and ancestral strains carry evolutionary bacterial markers a modern dog has lost.",
+    bestFor: "Long-term rebuilding · dogs with a history of heavy antibiotic use",
+  },
+  {
+    type: "Fecal microbiota transplant (FMT)", icon: "💊",
+    detail:
+      "The gold standard for diversity — minimally processed material from healthy multi-generational donor animals, transferring an entire working ecosystem rather than a handful of strains.",
+    bestFor: "Severe dysbiosis where nothing else has held",
+  },
+];
+
+// ⚠️ The sequence. This is the section that saves people money.
+const PROBIOTIC_SEQUENCE: { step: string; icon: string; detail: string }[] = [
+  {
+    step: "1 · Calm the fire first", icon: "🧯",
+    detail:
+      "Do NOT throw probiotics onto a gut that's actively inflamed. Soothe it first — slippery elm, marshmallow root, aloe, curcumin. Adding organisms to an inflamed gut is why so many people report a probiotic 'made it worse' and give up on the whole idea.",
+  },
+  {
+    step: "2 · Fix digestion upstream", icon: "⚗️",
+    detail:
+      "Stomach acid, bile flow and digestive enzymes have to be working. If food isn't being broken down properly, nothing downstream can be either — and undigested protein is what feeds the overgrowth you're trying to clear.",
+  },
+  {
+    step: "3 · Clear the overgrowth", icon: "🧹",
+    detail:
+      "Address bad bacteria and yeast before repopulating. Antimicrobial herbs, or S. boulardii specifically. Seeding good organisms into a gut dominated by the wrong ones is planting into a weed bed.",
+  },
+  {
+    step: "4 · NOW add the probiotics", icon: "🌾",
+    detail:
+      "Broad-spectrum or spore-based, once the environment can actually hold them. This is step four, not step one — and getting the order wrong is the most common reason a protocol fails.",
+  },
+];
+
+// Prep work almost nobody does.
+const PROBIOTIC_PREP = {
+  glycocalyx:
+    "Probiotics and FMTs can't stick to the intestinal wall if the gut's protective coating — the glycocalyx — and its secretory IgA are depleted. You can pour in the best organisms available and they'll wash straight through. Prep a depleted gut with S. boulardii and bovine colostrum before introducing anything complex.",
+  glyphosate:
+    "Glyphosate is everywhere — food, rainwater — and it behaves like an antibiotic in the body. Humic and fulvic acid daily are used as a standing defence for the microbiome against it.",
+};
+
+// How to actually give it. The detail people get wrong.
+const PROBIOTIC_HOW: { q: string; icon: string; a: string }[] = [
+  {
+    q: "With food, or away from it?", icon: "🍽️",
+    a: "Mixing into food is the common way and it's fine. But the stronger method: stir a freeze-dried probiotic into a little room-temperature liquid — raw goat's milk, plain full-fat yoghurt, bone broth — and let it sit 30–60 minutes to wake the bacteria up and generate postbiotics. Then give it about 30 MINUTES BEFORE a meal, so it passes through quickly without triggering a flood of stomach acid.",
+  },
+  {
+    q: "Morning or night?", icon: "🕐",
+    a: "Genuinely doesn't matter. Consistency beats timing. Pick whichever one you'll actually remember every day.",
+  },
+  {
+    q: "⚠️ What about with antibiotics?", icon: "💊",
+    a: "NEVER at the same time — the antibiotic destroys the probiotic on contact. Space them AT LEAST 4 TO 6 HOURS apart. The exception is S. boulardii, which is a yeast and antibiotic-resistant, so it can run straight through a course.",
+  },
+  {
+    q: "Can I give it daily, forever?", icon: "📅",
+    a: "Yes — but ROTATE. Daily use of one product long-term overpopulates the gut with a single organism, which is the opposite of what you want. Rotate strains, brands and formulations every few months. The alternative is targeted use: during stress, diet changes, or a 90-day trial for a chronic issue, then reassess.",
+  },
+];
+
+// Diversity is the whole argument.
+const PROBIOTIC_DIVERSITY = {
+  principle:
+    "A healthy gut is a diverse ecosystem, not a big population of one thing. Diversity is the goal — not count, not CFU number, not brand.",
+  singleStrain:
+    "Giving one strain long-term — which is what most standard veterinary prescriptions are — is like tilling a wildflower meadow and planting nothing but sunflowers. You get a lot of one organism and a less resilient gut than you started with.",
+  rotate:
+    "Rotate products and strains. It's the single easiest thing to get right and almost nobody does it.",
+};
+
+// What breaks it. Antibiotics lead for a reason.
+const PROBIOTIC_DISRUPTORS: { name: string; icon: string; detail: string }[] = [
+  {
+    name: "Antibiotics", icon: "💥",
+    detail: "Wipe out good and bad indiscriminately — and not just in the gut: across the skin and mouth too. What follows is yeast overgrowth, SIBO, C. difficile, leaky gut and resistance. Sometimes necessary; always worth planning the repair for.",
+  },
+  {
+    name: "Processed kibble", icon: "🥣",
+    detail: "High carbohydrate, cooked at high temperature so nothing is alive in it, and preserved with chemicals whose literal job is to stop bacteria growing on a shelf.",
+  },
+  {
+    name: "Other drugs", icon: "💊",
+    detail: "Steroids, NSAIDs, metronidazole (Flagyl — causes genuine inflammatory shifts in the gut), acid reducers and PPIs like famotidine, antihistamines, and chemical flea and tick preventatives.",
+  },
+  {
+    name: "Chronic stress — including yours", icon: "😰",
+    detail: "The vagus nerve links emotion straight to digestion. Stress flips fight-or-flight, which shuts down enzyme production and the migrating motor complex — the gut's janitorial sweep. And dogs read their owner's state: a stressed household is a real variable in a gut protocol.",
+  },
+  {
+    name: "Environmental toxins", icon: "☠️",
+    detail: "Glyphosate in food and rainwater, heavy metals, pesticides, and harsh antibacterial household cleaners.",
+  },
+];
+
+// The signs — and most of them aren't digestive.
+const PROBIOTIC_SIGNS: [string, string][] = [
+  ["Digestive", "Diarrhoea acute or chronic, vomiting, gas, bloating, reflux, constipation, burping, lip-licking, IBD or colitis."],
+  ["Skin & allergy", "Constant itching, red belly and armpits, hives, yeast — smelly paws and ears — chronic ear infections, hair loss."],
+  ["Immune & systemic", "Food sensitivities, environmental allergies, recurring UTIs, joint inflammation, slow recovery from illness."],
+  ["Behaviour", "Unexplained anxiety, fear-reactivity, separation anxiety. The gut–brain axis is a real signalling pathway."],
+  ["Other", "Bad breath, inflamed gums, weight struggles — and any recent course of antibiotics or steroids."],
+];
+
+// Prebiotics: necessary, and genuinely dangerous in one specific case.
+const PROBIOTIC_PREBIOTICS = {
+  why:
+    "Prebiotics are what probiotics eat. Without them the organisms can't colonise or produce postbiotics — the short-chain fatty acids like butyrate that actually feed the colon wall.",
+  good:
+    "Choose functional prebiotics that do something themselves: larch bark, chlorella, turkey tail mushroom, dandelion root, burdock root. Avoid maltodextrin, high fructose and excess inulin — filler that spikes blood sugar.",
+  warning:
+    "⚠️ THE EXCEPTION THAT MATTERS: if a dog has active SIBO or severe dysbiosis, fermentable prebiotics — inulin, FOS, MOS — FEED THE WRONG ORGANISMS. Severe gas, bloating, itching, diarrhoea. In a reactive dog, calm the inflammation first, or use non-fermentable spore-based strains instead.",
+};
+
+// Food, which is cheaper and often better.
+const PROBIOTIC_FOODS: [string, string][] = [
+  ["Raw & fermented dairy", "Raw goat's milk, goat milk kefir, cultured goat milk ghee, cottage cheese, plain Greek yoghurt. ⚠️ Check the label is 100% free of xylitol."],
+  ["Fermented & fresh whole foods", "Fermented vegetables, dark leafy green sprouts, unbleached raw green tripe."],
+  ["Soothing foods & teas", "Fresh ginger tea poured over food, bone broth, slippery elm slurry, marshmallow root tea, raw pumpkin seeds."],
+  ["Clean dirt", "Digging in chemical-free topsoil, or manure from healthy herbivores — horse, sheep, cow — introduces soil microbes the way dogs got them for millennia."],
+];
+
+// TCVM — match the herb to the dog, not just the symptom.
+const PROBIOTIC_TCVM: { dog: string; icon: string; herbs: string }[] = [
+  {
+    dog: "Warm / inflamed dogs", icon: "🔥",
+    herbs: "Pants easily, seeks cool tile. Use COOLING herbs: aloe, slippery elm, marshmallow root, yarrow, plantain, cleavers.",
+  },
+  {
+    dog: "Cool / sluggish dogs", icon: "❄️",
+    herbs: "Seeks blankets, cold to the touch. Use WARMING herbs: ginger, turmeric, olive leaf, St John's wort.",
+  },
+  {
+    dog: "Either", icon: "⚖️",
+    herbs: "Universal harmonisers: deglycyrrhizinated licorice root harmonises a formula, milk thistle supports liver, gut and anal glands, nettles restore cellular minerals.",
+  },
+];
+
+
 // ── LARYNGEAL PARALYSIS / GOLPP ──────────────────────────────────────────────
 // Added 2026-09-08 from Kyle's LarPar/GOLPP research.
 //
@@ -6235,7 +6417,7 @@ const TopicContext = React.createContext<string | null>(null);
 export const LEARN_TOPICS = [
   "AAFCO", "Bloat", "Carbs", "Collagen", "Deficiency signs", "Gut health", "Heart",
   "Kibble", "Larynx & GOLPP", "Life stages", "Lifespan", "Lipomas", "Lymphoma", "Mineral forms",
-  "Missing nutrients", "Leaky gut", "Mushrooms", "Omega-3", "Recalls & facts", "TCVM", "Yeast",
+  "Missing nutrients", "Leaky gut", "Mushrooms", "Omega-3", "Probiotics", "Recalls & facts", "TCVM", "Yeast",
 ] as const;
 
 // ── THE KIBBLE GUIDE (added 2026-08-21) ──────────────────────────────────────
@@ -14596,6 +14778,125 @@ export default function App() {
                   }
                 >
                   <MineralFormsGuide />
+                </AccordionSection>
+              )}
+
+              {/* Probiotics. Added 2026-09-12. Separate from Gut health and Leaky
+                  gut on purpose — those are the ecosystem and the barrier, this
+                  is the organism you're adding and how to actually give it. The
+                  SEQUENCE block is the important one: almost every failed
+                  probiotic protocol is a sequencing failure, not a product one. */}
+              {(score !== null || learnMode) && (
+                <AccordionSection
+                  title="🦠 Probiotics"
+                  topic="Probiotics"
+                  door="learn"
+                  askLabel="Ask AI"
+                  onAskAI={() =>
+                    askAboutSection(
+                      `Which probiotic should I give my dog, when should I give it, and does it matter if he's on antibiotics?`,
+                    )
+                  }
+                >
+                  <Text style={{ color: t.text, fontSize: 12.5, lineHeight: 18 }}>{PROBIOTIC_WHAT.definition}</Text>
+                  <Text style={{ color: t.text, fontSize: 12.5, lineHeight: 18, marginTop: 8, fontWeight: "600" }}>
+                    {PROBIOTIC_WHAT.immune}
+                  </Text>
+
+                  <Image
+                    source={require("../assets/images/probiotics-guide.jpg")}
+                    style={{ width: "100%", aspectRatio: 1800 / 1004, borderRadius: 9, marginTop: 10 }}
+                    resizeMode="contain"
+                    accessibilityLabel="The pet parent's guide to the micro-wilderness — a holistic approach to gut health: the anatomy of a probiotic, gut disruptors, cultivating diversity and routine, and recommended types and brands"
+                  />
+
+                  {/* ⚠️ The section that saves people money. */}
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>⚠️ The order matters more than the product</Text>
+                  <Text style={{ color: t.textMuted, fontSize: 12, lineHeight: 17, marginBottom: 2 }}>
+                    You cannot fix a gut by throwing probiotics at one that&apos;s already inflamed.
+                    Most protocols that &ldquo;didn&apos;t work&rdquo; were done in the wrong order.
+                  </Text>
+                  {PROBIOTIC_SEQUENCE.map((x, i) => (
+                    <View key={i} style={{ backgroundColor: t.surface, borderRadius: 9, padding: 10, marginTop: 7, borderLeftWidth: 3, borderLeftColor: t.good }}>
+                      <Text style={{ color: t.good, fontSize: 12.5, fontWeight: "800" }}>{x.icon} {x.step}</Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>{x.detail}</Text>
+                    </View>
+                  ))}
+                  <View style={{ backgroundColor: t.surface, borderRadius: 9, padding: 11, marginTop: 8 }}>
+                    <Text style={{ color: t.textMuted, fontSize: 12, lineHeight: 17 }}>{PROBIOTIC_PREP.glycocalyx}</Text>
+                    <Text style={{ color: t.textMuted, fontSize: 12, lineHeight: 17, marginTop: 7 }}>{PROBIOTIC_PREP.glyphosate}</Text>
+                  </View>
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>The four kinds, and which one you want</Text>
+                  {PROBIOTIC_TYPES.map((x, i) => (
+                    <View key={i} style={{ backgroundColor: t.surface, borderRadius: 9, padding: 10, marginTop: 7 }}>
+                      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{x.icon} {x.type}</Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>{x.detail}</Text>
+                      <Text style={{ color: t.good, fontSize: 11.5, marginTop: 5, fontWeight: "700" }}>Best for: {x.bestFor}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>How to actually give it</Text>
+                  {PROBIOTIC_HOW.map((x, i) => (
+                    <View key={i} style={{ backgroundColor: t.surface, borderRadius: 9, padding: 10, marginTop: 7 }}>
+                      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{x.icon} {x.q}</Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>{x.a}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>Diversity beats potency</Text>
+                  <View style={{ backgroundColor: t.surface, borderRadius: 9, padding: 11, marginTop: 7 }}>
+                    <Text style={{ color: t.text, fontSize: 12, lineHeight: 17, fontWeight: "600" }}>{PROBIOTIC_DIVERSITY.principle}</Text>
+                    <Text style={{ color: t.textMuted, fontSize: 12, lineHeight: 17, marginTop: 7 }}>{PROBIOTIC_DIVERSITY.singleStrain}</Text>
+                    <Text style={{ color: t.textMuted, fontSize: 12, lineHeight: 17, marginTop: 7 }}>{PROBIOTIC_DIVERSITY.rotate}</Text>
+                  </View>
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>What wrecks the microbiome</Text>
+                  {PROBIOTIC_DISRUPTORS.map((x, i) => (
+                    <View key={i} style={{ backgroundColor: t.surface, borderRadius: 9, padding: 10, marginTop: 7, borderLeftWidth: 3, borderLeftColor: t.high }}>
+                      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{x.icon} {x.name}</Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>{x.detail}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>Signs your dog needs support</Text>
+                  {PROBIOTIC_SIGNS.map(([k, v], i) => (
+                    <View key={i} style={{ flexDirection: "row", gap: 9, marginTop: 7 }}>
+                      <Text style={{ color: t.textStrong, fontSize: 12, fontWeight: "800", width: 104 }}>{k}</Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, flex: 1, lineHeight: 17 }}>{v}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>Prebiotics — and the one case they backfire</Text>
+                  <View style={{ backgroundColor: t.surface, borderRadius: 9, padding: 11, marginTop: 7 }}>
+                    <Text style={{ color: t.textMuted, fontSize: 12, lineHeight: 17 }}>{PROBIOTIC_PREBIOTICS.why}</Text>
+                    <Text style={{ color: t.textMuted, fontSize: 12, lineHeight: 17, marginTop: 7 }}>{PROBIOTIC_PREBIOTICS.good}</Text>
+                    <Text style={{ color: t.high, fontSize: 12, lineHeight: 17, marginTop: 7, fontWeight: "600" }}>{PROBIOTIC_PREBIOTICS.warning}</Text>
+                  </View>
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>Food that does the same job</Text>
+                  {PROBIOTIC_FOODS.map(([k, v], i) => (
+                    <View key={i} style={{ backgroundColor: t.surface, borderRadius: 9, padding: 10, marginTop: 7 }}>
+                      <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{k}</Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>{v}</Text>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13, marginTop: 16, marginBottom: 2 }}>Match the herb to the dog (TCVM)</Text>
+                  {PROBIOTIC_TCVM.map((x, i) => (
+                    <View key={i} style={{ flexDirection: "row", gap: 9, marginTop: 8 }}>
+                      <Text style={{ fontSize: 14 }}>{x.icon}</Text>
+                      <View style={{ flex: 1 }}>
+                        <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>{x.dog}</Text>
+                        <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 2, lineHeight: 17 }}>{x.herbs}</Text>
+                      </View>
+                    </View>
+                  ))}
+
+                  <Text style={{ color: t.textMuted, fontSize: 11.5, marginTop: 14, lineHeight: 16.5, fontStyle: "italic" }}>
+                    Educational only — not veterinary advice. Blood in the stool, sustained weight
+                    loss, or a dog going genuinely off food needs a vet, not a longer supplement list.
+                  </Text>
                 </AccordionSection>
               )}
 

@@ -17,6 +17,13 @@ const VAULT = process.env.OBSIDIAN_BRAIN_VAULT || join(homedir(), 'Documents', '
 // shown on the index card. letter controls the A-Z bucket.
 const TOPICS = [
   {
+    slug: 'probiotics-for-dogs', title: 'Probiotics — which one, and when', letter: 'P',
+    emoji: '🦠', tag: 'Nutrition',
+    summary: "You can't fix a gut by throwing probiotics at one that's inflamed. The four kinds and which you actually want, the 4-step order, antibiotic timing, and the one case prebiotics backfire.",
+    file: 'commonsensedog knowledge/Probiotics for Dogs.md',
+  },
+
+  {
     slug: 'laryngeal-paralysis-golpp', title: 'Laryngeal Paralysis & GOLPP', letter: 'L',
     emoji: '🫁', tag: 'Conditions',
     summary: "Labs are ~70% of cases and the first sign is a hack everyone mistakes for allergies. The early signs, why heat is the real danger, and the collar study that clears you of blame.",
