@@ -111,14 +111,14 @@ export default function Library() {
         .search { width: 100%; max-width: 560px; margin: 0 auto; display: flex; gap: 10px; }
         .search input { flex: 1; padding: 15px 20px; border-radius: 30px; border: 1.5px solid var(--border); font-size: 16px; outline: none; background: var(--white); }
         .search input:focus { border-color: var(--green); }
-        .ask-cta { background: var(--green); color: #fff; border-radius: 30px; padding: 15px 22px; font-weight: 600; text-decoration: none; white-space: nowrap; font-size: 15px; display: flex; align-items: center; }
+        .ask-cta { background: var(--green); color: var(--surface); border-radius: 30px; padding: 15px 22px; font-weight: 600; text-decoration: none; white-space: nowrap; font-size: 15px; display: flex; align-items: center; }
         .azbar { max-width: 1000px; margin: 0 auto 8px; padding: 8px 24px; display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
         .azbar a, .azbar span { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; text-decoration: none; }
         .azbar a { background: var(--green-pale); color: var(--green); }
-        .azbar a:hover { background: var(--green); color: #fff; }
-        .azbar span { color: #CFC8BB; }
+        .azbar a:hover { background: var(--green); color: var(--surface); }
+        .azbar span { color: var(--border); }
         .content { max-width: 1000px; margin: 0 auto; padding: 16px 24px 80px; }
-        .result-count { text-align: center; color: var(--muted, #6b7280); font-size: 14px; margin: 26px 0 4px; }
+        .result-count { text-align: center; color: var(--muted, var(--text-muted)); font-size: 14px; margin: 26px 0 4px; }
         .results { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
         .result { display: flex; gap: 13px; align-items: flex-start; background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: inherit; transition: all 0.15s; }
         .result:hover { border-color: var(--green); transform: translateY(-1px); }
@@ -127,7 +127,7 @@ export default function Library() {
         .result-head { display: flex; align-items: baseline; gap: 9px; flex-wrap: wrap; }
         .result-title { font-size: 15.5px; font-weight: 700; color: var(--text); }
         .result-kind { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--green); background: var(--green-pale); padding: 2px 7px; border-radius: 20px; }
-        .result-snippet { font-size: 13px; line-height: 1.55; color: var(--muted, #6b7280); margin: 5px 0 0; }
+        .result-snippet { font-size: 13px; line-height: 1.55; color: var(--muted, var(--text-muted)); margin: 5px 0 0; }
         .letter-group { margin-top: 34px; scroll-margin-top: 80px; }
         .letter-head { font-size: 26px; font-weight: 800; color: var(--green); border-bottom: 2px solid var(--green-pale); padding-bottom: 6px; margin-bottom: 16px; }
         .card:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(42,92,46,.10); border-color: var(--green); }

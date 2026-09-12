@@ -36,22 +36,22 @@ export default function AskBox({ topic }: { topic: string }) {
   return (
     <div className="askbox">
       <style jsx>{`
-        .askbox { background: var(--green-pale, #EDF4EE); border: 1px solid #C8DFC9; border-radius: 18px; padding: 24px; margin: 44px 0 8px; }
-        h3 { font-size: 18px; font-weight: 700; color: var(--green, #2A5C2E); margin: 0 0 14px; }
+        .askbox { background: var(--green-pale, var(--leaf-wash)); border: 1px solid var(--leaf-wash); border-radius: 18px; padding: 24px; margin: 44px 0 8px; }
+        h3 { font-size: 18px; font-weight: 700; color: var(--green, var(--leaf)); margin: 0 0 14px; }
         form { display: flex; gap: 10px; }
-        input { flex: 1; padding: 13px 16px; border-radius: 12px; border: 1.5px solid #C8DFC9; font-size: 15px; outline: none; background: #fff; }
-        input:focus { border-color: var(--green, #2A5C2E); }
-        button { background: var(--green, #2A5C2E); color: #fff; border: none; border-radius: 12px; padding: 0 22px; font-weight: 700; font-size: 15px; cursor: pointer; }
+        input { flex: 1; padding: 13px 16px; border-radius: 12px; border: 1.5px solid var(--leaf-wash); font-size: 15px; outline: none; background: var(--surface); }
+        input:focus { border-color: var(--green, var(--leaf)); }
+        button { background: var(--green, var(--leaf)); color: var(--surface); border: none; border-radius: 12px; padding: 0 22px; font-weight: 700; font-size: 15px; cursor: pointer; }
         button:disabled { opacity: 0.6; cursor: default; }
-        .answer { margin-top: 16px; background: #fff; border-radius: 12px; padding: 16px 18px; font-size: 15px; line-height: 1.7; color: #333; }
-        .answer :global(h1), .answer :global(h2) { font-size: 17px; font-weight: 700; margin: 16px 0 6px; color: var(--green, #2A5C2E); }
+        .answer { margin-top: 16px; background: var(--surface); border-radius: 12px; padding: 16px 18px; font-size: 15px; line-height: 1.7; color: var(--text); }
+        .answer :global(h1), .answer :global(h2) { font-size: 17px; font-weight: 700; margin: 16px 0 6px; color: var(--green, var(--leaf)); }
         .answer :global(h3) { font-size: 15px; font-weight: 700; margin: 12px 0 4px; }
         .answer :global(p) { margin: 0 0 10px; }
         .answer :global(ul), .answer :global(ol) { margin: 0 0 10px 18px; }
         .answer :global(li) { margin-bottom: 5px; }
-        .answer :global(strong) { color: #111; font-weight: 700; }
-        .answer :global(a) { color: var(--green, #2A5C2E); text-decoration: underline; }
-        .answer :global(em) { color: #888; font-size: 13px; }
+        .answer :global(strong) { color: var(--text); font-weight: 700; }
+        .answer :global(a) { color: var(--green, var(--leaf)); text-decoration: underline; }
+        .answer :global(em) { color: var(--text-faint); font-size: 13px; }
         .answer :global(> :first-child) { margin-top: 0; }
         .answer :global(> :last-child) { margin-bottom: 0; }
         @media (max-width: 600px) { form { flex-direction: column; } button { padding: 13px; } }

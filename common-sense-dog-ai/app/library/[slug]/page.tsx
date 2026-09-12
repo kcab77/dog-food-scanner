@@ -56,15 +56,15 @@ export default function TopicPage({ params }: { params: { slug: string } }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }} />
       <style>{`
         .nav-links a:hover { color: var(--green); }
-        .hero { background: linear-gradient(135deg, #2A5C2E, #1E4422); padding: 52px 24px; text-align: center; }
+        .hero { background: linear-gradient(135deg, var(--leaf), var(--leaf-deep)); padding: 52px 24px; text-align: center; }
         .hero-emoji { font-size: 52px; margin-bottom: 16px; display: block; }
-        .hero-tag { display: inline-block; background: rgba(255,255,255,0.15); color: #A8D5AB; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 5px 14px; border-radius: 20px; margin-bottom: 16px; }
+        .hero-tag { display: inline-block; background: rgba(255,255,255,0.15); color: var(--leaf-wash); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 5px 14px; border-radius: 20px; margin-bottom: 16px; }
         .hero h1 { font-family: Georgia, serif; font-size: clamp(24px, 4vw, 42px); color: white; line-height: 1.2; max-width: 800px; margin: 0 auto 14px; }
         .hero p { font-size: 16px; color: rgba(255,255,255,0.72); max-width: 620px; margin: 0 auto; line-height: 1.6; }
         .article-wrap { max-width: 740px; margin: 0 auto; padding: 50px 24px 70px; }
         .back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--green); font-size: 14px; font-weight: 600; text-decoration: none; margin-bottom: 30px; }
         .back-link:hover { text-decoration: underline; }
-        .article-content { font-size: 16px; color: #333; line-height: 1.85; }
+        .article-content { font-size: 16px; color: var(--text); line-height: 1.85; }
         .article-content h1, .article-content h2 { font-family: Georgia, serif; font-size: 25px; font-weight: 700; color: var(--text); margin: 38px 0 14px; line-height: 1.25; }
         .article-content h3 { font-size: 19px; font-weight: 700; color: var(--text); margin: 26px 0 10px; }
         .article-content p { margin-bottom: 16px; }
@@ -73,7 +73,7 @@ export default function TopicPage({ params }: { params: { slug: string } }) {
         .article-content strong { color: var(--text); }
         .article-content a { color: var(--green); text-decoration: underline; }
         .article-content hr { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
-        .article-content blockquote { border-left: 3px solid #C8DFC9; margin: 0 0 16px; padding: 4px 0 4px 16px; color: var(--text-muted); }
+        .article-content blockquote { border-left: 3px solid var(--leaf-wash); margin: 0 0 16px; padding: 4px 0 4px 16px; color: var(--text-muted); }
         .article-content code { background: var(--cream-dark); padding: 2px 6px; border-radius: 5px; font-size: 14px; }
         .article-content table { width: 100%; border-collapse: collapse; margin: 0 0 18px; font-size: 14px; }
         .article-content th, .article-content td { border: 1px solid var(--border); padding: 8px 10px; text-align: left; }
@@ -83,10 +83,10 @@ export default function TopicPage({ params }: { params: { slug: string } }) {
         .related h2 { font-family: Georgia, serif; font-size: 22px; margin-bottom: 18px; }
         .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
         .related-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 16px; text-decoration: none; color: inherit; transition: all 0.2s; }
-        .related-card:hover { border-color: #C8DFC9; transform: translateY(-2px); }
+        .related-card:hover { border-color: var(--leaf-wash); transform: translateY(-2px); }
         .related-card .emoji { font-size: 26px; margin-bottom: 8px; display: block; }
         .related-card h3 { font-size: 14px; font-weight: 700; line-height: 1.4; color: var(--text); }
-        .related-card .related-summary { font-size: 12.5px; line-height: 1.5; color: var(--muted, #6b7280); margin-top: 6px; }
+        .related-card .related-summary { font-size: 12.5px; line-height: 1.5; color: var(--muted, var(--text-muted)); margin-top: 6px; }
         footer a { color: rgba(255,255,255,0.7); text-decoration: none; }
         @media (max-width: 600px) { .nav-links { display: none; } }
       `}</style>

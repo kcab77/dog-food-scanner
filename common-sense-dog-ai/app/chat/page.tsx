@@ -201,35 +201,35 @@ export default function Home() {
   const isNearLimit = !user && questionsLeft <= 5
 
   return (
-    <div style={{ background: '#0a0a14', minHeight: '100dvh', display: 'flex', flexDirection: 'column', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', color: '#f9fafb' }}>
+    <div style={{ background: 'var(--forest)', minHeight: '100dvh', display: 'flex', flexDirection: 'column', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', color: 'var(--paper)' }}>
 
       {/* Header */}
-      <header style={{ background: '#0f1623', borderBottom: '1px solid #1f2937', padding: '10px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, zIndex: 10 }}>
+      <header style={{ background: 'var(--forest-soft)', borderBottom: '1px solid var(--text)', padding: '10px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, zIndex: 10 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <span style={{ fontSize: 26 }}>🐾</span>
           <div>
-            <div style={{ fontWeight: 700, fontSize: 15, color: '#f9fafb', lineHeight: 1.2 }}>Common Sense Dog AI</div>
-            <div style={{ fontSize: 11, color: '#6b7280' }}>Holistic · Nutrition-First · Whole Food</div>
+            <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--paper)', lineHeight: 1.2 }}>Common Sense Dog AI</div>
+            <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Holistic · Nutrition-First · Whole Food</div>
           </div>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           {dogProfile?.dog_name && (
-            <span style={{ fontSize: 12, color: '#22c55e', background: '#052e16', padding: '3px 10px', borderRadius: 20, border: '1px solid #14532d' }}>
+            <span style={{ fontSize: 12, color: 'var(--leaf)', background: 'var(--leaf-deep)', padding: '3px 10px', borderRadius: 20, border: '1px solid var(--forest-soft)' }}>
               🐕 {dogProfile.dog_name}
             </span>
           )}
           <button
             onClick={() => setShowProfile(true)}
-            style={{ background: '#1f2937', border: '1px solid #374151', borderRadius: 8, padding: '6px 12px', color: '#d1d5db', fontSize: 13, cursor: 'pointer', whiteSpace: 'nowrap' }}
+            style={{ background: 'var(--text)', border: '1px solid var(--text-muted)', borderRadius: 8, padding: '6px 12px', color: 'var(--border)', fontSize: 13, cursor: 'pointer', whiteSpace: 'nowrap' }}
           >
             {dogProfile?.dog_name ? 'Edit Profile' : '🐾 My Dog'}
           </button>
           {user ? (
-            <button onClick={() => supabase.auth.signOut()} style={{ background: 'none', border: 'none', color: '#6b7280', fontSize: 12, cursor: 'pointer' }}>
+            <button onClick={() => supabase.auth.signOut()} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', fontSize: 12, cursor: 'pointer' }}>
               Sign out
             </button>
           ) : (
-            <button onClick={() => setShowAuth(true)} style={{ background: 'none', border: 'none', color: '#6b7280', fontSize: 12, cursor: 'pointer' }}>
+            <button onClick={() => setShowAuth(true)} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', fontSize: 12, cursor: 'pointer' }}>
               Sign in
             </button>
           )}
@@ -241,15 +241,15 @@ export default function Home() {
         <style jsx global>{`
           .chat-md > :first-child { margin-top: 0; }
           .chat-md > :last-child { margin-bottom: 0; }
-          .chat-md h1, .chat-md h2 { font-size: 17px; font-weight: 700; margin: 14px 0 6px; color: #4ade80; }
-          .chat-md h3 { font-size: 15px; font-weight: 700; margin: 12px 0 4px; color: #d1fae5; }
+          .chat-md h1, .chat-md h2 { font-size: 17px; font-weight: 700; margin: 14px 0 6px; color: var(--leaf-bright); }
+          .chat-md h3 { font-size: 15px; font-weight: 700; margin: 12px 0 4px; color: var(--leaf-wash); }
           .chat-md p { margin: 0 0 10px; }
           .chat-md ul, .chat-md ol { margin: 0 0 10px 18px; }
           .chat-md li { margin-bottom: 5px; }
-          .chat-md strong { color: #fff; font-weight: 700; }
-          .chat-md a { color: #4ade80; text-decoration: underline; }
-          .chat-md em { color: #9ca3af; font-size: 13px; }
-          .chat-md hr { border: none; border-top: 1px solid #374151; margin: 12px 0; }
+          .chat-md strong { color: var(--surface); font-weight: 700; }
+          .chat-md a { color: var(--leaf-bright); text-decoration: underline; }
+          .chat-md em { color: var(--text-faint); font-size: 13px; }
+          .chat-md hr { border: none; border-top: 1px solid var(--text-muted); margin: 12px 0; }
         `}</style>
         {messages.map(msg => (
           <div
@@ -263,19 +263,19 @@ export default function Home() {
             }}
           >
             {msg.role === 'assistant' && (
-              <div style={{ width: 34, height: 34, borderRadius: '50%', background: '#052e16', border: '1px solid #14532d', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 2 }}>
+              <div style={{ width: 34, height: 34, borderRadius: '50%', background: 'var(--leaf-deep)', border: '1px solid var(--forest-soft)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 2 }}>
                 <span style={{ fontSize: 16 }}>🐾</span>
               </div>
             )}
             {msg.role === 'assistant' ? (
               <div
                 className="chat-md"
-                style={{ maxWidth: '78%', padding: '12px 16px', borderRadius: '4px 18px 18px 18px', background: '#111827', color: '#e5e7eb', fontSize: 15, lineHeight: 1.65, border: '1px solid #1f2937' }}
+                style={{ maxWidth: '78%', padding: '12px 16px', borderRadius: '4px 18px 18px 18px', background: 'var(--text)', color: 'var(--border)', fontSize: 15, lineHeight: 1.65, border: '1px solid var(--text)' }}
                 dangerouslySetInnerHTML={{ __html: renderMarkdown(msg.content) }}
               />
             ) : (
               <div
-                style={{ maxWidth: '78%', padding: '12px 16px', borderRadius: '18px 18px 4px 18px', background: '#22c55e', color: '#000', fontSize: 15, lineHeight: 1.65, whiteSpace: 'pre-wrap', fontWeight: 500 }}
+                style={{ maxWidth: '78%', padding: '12px 16px', borderRadius: '18px 18px 4px 18px', background: 'var(--leaf)', color: 'var(--forest)', fontSize: 15, lineHeight: 1.65, whiteSpace: 'pre-wrap', fontWeight: 500 }}
               >
                 {msg.content}
               </div>
@@ -285,13 +285,13 @@ export default function Home() {
 
         {loading && (
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, marginBottom: 20 }}>
-            <div style={{ width: 34, height: 34, borderRadius: '50%', background: '#052e16', border: '1px solid #14532d', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <div style={{ width: 34, height: 34, borderRadius: '50%', background: 'var(--leaf-deep)', border: '1px solid var(--forest-soft)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
               <span style={{ fontSize: 16 }}>🐾</span>
             </div>
-            <div style={{ background: '#111827', border: '1px solid #1f2937', borderRadius: '4px 18px 18px 18px', padding: '14px 18px', display: 'flex', gap: 6, alignItems: 'center' }}>
-              <div className="dot-1" style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e' }} />
-              <div className="dot-2" style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e' }} />
-              <div className="dot-3" style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e' }} />
+            <div style={{ background: 'var(--text)', border: '1px solid var(--text)', borderRadius: '4px 18px 18px 18px', padding: '14px 18px', display: 'flex', gap: 6, alignItems: 'center' }}>
+              <div className="dot-1" style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--leaf)' }} />
+              <div className="dot-2" style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--leaf)' }} />
+              <div className="dot-3" style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--leaf)' }} />
             </div>
           </div>
         )}
@@ -299,9 +299,9 @@ export default function Home() {
       </main>
 
       {/* Input bar */}
-      <div style={{ background: '#0f1623', borderTop: '1px solid #1f2937', padding: '12px 16px 16px' }}>
+      <div style={{ background: 'var(--forest-soft)', borderTop: '1px solid var(--text)', padding: '12px 16px 16px' }}>
         {!user && (
-          <div style={{ textAlign: 'center', fontSize: 12, color: isNearLimit ? '#f59e0b' : '#4b5563', marginBottom: 10 }}>
+          <div style={{ textAlign: 'center', fontSize: 12, color: isNearLimit ? 'var(--amber)' : 'var(--text-muted)', marginBottom: 10 }}>
             {questionsLeft > 0
               ? `${questionsLeft} free question${questionsLeft === 1 ? '' : 's'} remaining · Sign in for unlimited`
               : 'Free limit reached — sign in for unlimited questions'}
@@ -327,11 +327,11 @@ export default function Home() {
             rows={1}
             style={{
               flex: 1,
-              background: '#1f2937',
-              border: '1px solid #374151',
+              background: 'var(--text)',
+              border: '1px solid var(--text-muted)',
               borderRadius: 14,
               padding: '12px 16px',
-              color: '#f9fafb',
+              color: 'var(--paper)',
               fontSize: 15,
               resize: 'none',
               outline: 'none',
@@ -341,18 +341,18 @@ export default function Home() {
               overflowY: 'auto',
               transition: 'border-color 0.2s',
             }}
-            onFocus={e => { e.target.style.borderColor = '#374151' }}
+            onFocus={e => { e.target.style.borderColor = 'var(--text-muted)' }}
           />
           <button
             onClick={sendMessage}
             disabled={loading || !input.trim()}
             style={{
-              background: loading || !input.trim() ? '#1f2937' : '#22c55e',
+              background: loading || !input.trim() ? 'var(--text)' : 'var(--leaf)',
               border: 'none',
               borderRadius: 14,
               width: 46,
               height: 46,
-              color: loading || !input.trim() ? '#6b7280' : '#000',
+              color: loading || !input.trim() ? 'var(--text-muted)' : 'var(--forest)',
               fontSize: 20,
               cursor: loading || !input.trim() ? 'default' : 'pointer',
               transition: 'background 0.2s',
@@ -366,7 +366,7 @@ export default function Home() {
             ↑
           </button>
         </div>
-        <div style={{ textAlign: 'center', fontSize: 11, color: '#374151', marginTop: 8 }}>
+        <div style={{ textAlign: 'center', fontSize: 11, color: 'var(--text-muted)', marginTop: 8 }}>
           Not a substitute for veterinary care · commonsensedog.com
         </div>
       </div>
@@ -377,17 +377,17 @@ export default function Home() {
           style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.82)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, padding: 16 }}
           onClick={e => { if (e.target === e.currentTarget) setShowProfile(false) }}
         >
-          <div style={{ background: '#111827', borderRadius: 18, padding: 28, width: '100%', maxWidth: 440, border: '1px solid #1f2937' }}>
+          <div style={{ background: 'var(--text)', borderRadius: 18, padding: 28, width: '100%', maxWidth: 440, border: '1px solid var(--text)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
               <h2 style={{ margin: 0, fontSize: 18, fontWeight: 700 }}>🐾 Your Dog's Profile</h2>
-              <button onClick={() => setShowProfile(false)} style={{ background: 'none', border: 'none', color: '#6b7280', fontSize: 22, cursor: 'pointer', lineHeight: 1 }}>✕</button>
+              <button onClick={() => setShowProfile(false)} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', fontSize: 22, cursor: 'pointer', lineHeight: 1 }}>✕</button>
             </div>
-            <p style={{ color: '#6b7280', fontSize: 13, marginBottom: 20, marginTop: 4 }}>
+            <p style={{ color: 'var(--text-muted)', fontSize: 13, marginBottom: 20, marginTop: 4 }}>
               Every answer will be tailored to your dog once you save their profile.
             </p>
             {PROFILE_FIELDS.map(field => (
               <div key={field.key} style={{ marginBottom: 14 }}>
-                <label style={{ display: 'block', fontSize: 12, color: '#9ca3af', marginBottom: 5, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                <label style={{ display: 'block', fontSize: 12, color: 'var(--text-faint)', marginBottom: 5, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                   {field.label}
                 </label>
                 <input
@@ -395,13 +395,13 @@ export default function Home() {
                   value={profileForm[field.key]}
                   onChange={e => setProfileForm(prev => ({ ...prev, [field.key]: e.target.value }))}
                   placeholder={field.placeholder}
-                  style={{ width: '100%', background: '#1f2937', border: '1px solid #374151', borderRadius: 10, padding: '10px 14px', color: '#f9fafb', fontSize: 14, outline: 'none', boxSizing: 'border-box' }}
+                  style={{ width: '100%', background: 'var(--text)', border: '1px solid var(--text-muted)', borderRadius: 10, padding: '10px 14px', color: 'var(--paper)', fontSize: 14, outline: 'none', boxSizing: 'border-box' }}
                 />
               </div>
             ))}
             <button
               onClick={saveProfile}
-              style={{ width: '100%', background: '#22c55e', border: 'none', borderRadius: 12, padding: '13px', color: '#000', fontWeight: 700, fontSize: 15, cursor: 'pointer', marginTop: 6 }}
+              style={{ width: '100%', background: 'var(--leaf)', border: 'none', borderRadius: 12, padding: '13px', color: 'var(--forest)', fontWeight: 700, fontSize: 15, cursor: 'pointer', marginTop: 6 }}
             >
               Save Profile
             </button>
@@ -415,16 +415,16 @@ export default function Home() {
           style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.88)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, padding: 16 }}
           onClick={e => { if (e.target === e.currentTarget) setShowAuth(false) }}
         >
-          <div style={{ background: '#111827', borderRadius: 18, padding: 36, width: '100%', maxWidth: 420, border: '1px solid #1f2937', textAlign: 'center' }}>
+          <div style={{ background: 'var(--text)', borderRadius: 18, padding: 36, width: '100%', maxWidth: 420, border: '1px solid var(--text)', textAlign: 'center' }}>
             {!authSent ? (
               <>
                 <div style={{ fontSize: 52, marginBottom: 14 }}>🐾</div>
                 <h2 style={{ margin: '0 0 10px', fontSize: 22, fontWeight: 700 }}>
                   {questionCount >= FREE_LIMIT ? `You've used your ${FREE_LIMIT} free questions!` : 'Create a free account'}
                 </h2>
-                <p style={{ color: '#9ca3af', marginBottom: 28, fontSize: 15, lineHeight: 1.6 }}>
+                <p style={{ color: 'var(--text-faint)', marginBottom: 28, fontSize: 15, lineHeight: 1.6 }}>
                   Sign in to get unlimited questions, save your chat history, and sync your dog's profile across devices.<br />
-                  <strong style={{ color: '#22c55e' }}>Free forever.</strong>
+                  <strong style={{ color: 'var(--leaf)' }}>Free forever.</strong>
                 </p>
                 <input
                   type="email"
@@ -433,18 +433,18 @@ export default function Home() {
                   onKeyDown={e => e.key === 'Enter' && sendMagicLink()}
                   placeholder="your@email.com"
                   autoFocus
-                  style={{ width: '100%', background: '#1f2937', border: '1px solid #374151', borderRadius: 12, padding: '13px 16px', color: '#f9fafb', fontSize: 15, outline: 'none', marginBottom: 12, boxSizing: 'border-box' }}
+                  style={{ width: '100%', background: 'var(--text)', border: '1px solid var(--text-muted)', borderRadius: 12, padding: '13px 16px', color: 'var(--paper)', fontSize: 15, outline: 'none', marginBottom: 12, boxSizing: 'border-box' }}
                 />
                 <button
                   onClick={sendMagicLink}
                   disabled={authLoading || !authEmail.trim()}
-                  style={{ width: '100%', background: authLoading || !authEmail.trim() ? '#1f2937' : '#22c55e', border: 'none', borderRadius: 12, padding: '13px', color: authLoading || !authEmail.trim() ? '#6b7280' : '#000', fontWeight: 700, fontSize: 15, cursor: authLoading ? 'default' : 'pointer', marginBottom: 10 }}
+                  style={{ width: '100%', background: authLoading || !authEmail.trim() ? 'var(--text)' : 'var(--leaf)', border: 'none', borderRadius: 12, padding: '13px', color: authLoading || !authEmail.trim() ? 'var(--text-muted)' : 'var(--forest)', fontWeight: 700, fontSize: 15, cursor: authLoading ? 'default' : 'pointer', marginBottom: 10 }}
                 >
                   {authLoading ? 'Sending...' : 'Continue with Email →'}
                 </button>
-                <p style={{ color: '#4b5563', fontSize: 12 }}>We'll send a magic link — no password needed.</p>
+                <p style={{ color: 'var(--text-muted)', fontSize: 12 }}>We'll send a magic link — no password needed.</p>
                 {questionCount < FREE_LIMIT && (
-                  <button onClick={() => setShowAuth(false)} style={{ marginTop: 8, background: 'none', border: 'none', color: '#6b7280', fontSize: 13, cursor: 'pointer', textDecoration: 'underline' }}>
+                  <button onClick={() => setShowAuth(false)} style={{ marginTop: 8, background: 'none', border: 'none', color: 'var(--text-muted)', fontSize: 13, cursor: 'pointer', textDecoration: 'underline' }}>
                     Not now ({questionsLeft} question{questionsLeft === 1 ? '' : 's'} left)
                   </button>
                 )}
@@ -453,14 +453,14 @@ export default function Home() {
               <>
                 <div style={{ fontSize: 52, marginBottom: 14 }}>📬</div>
                 <h2 style={{ margin: '0 0 10px', fontSize: 22, fontWeight: 700 }}>Check your inbox</h2>
-                <p style={{ color: '#9ca3af', fontSize: 15, lineHeight: 1.6 }}>
+                <p style={{ color: 'var(--text-faint)', fontSize: 15, lineHeight: 1.6 }}>
                   We sent a magic link to<br />
-                  <strong style={{ color: '#f9fafb' }}>{authEmail}</strong>.<br /><br />
+                  <strong style={{ color: 'var(--paper)' }}>{authEmail}</strong>.<br /><br />
                   Click it to sign in and keep chatting.
                 </p>
                 <button
                   onClick={() => { setShowAuth(false); setAuthSent(false) }}
-                  style={{ marginTop: 24, background: '#1f2937', border: '1px solid #374151', borderRadius: 12, padding: '12px 28px', color: '#f9fafb', fontSize: 14, cursor: 'pointer' }}
+                  style={{ marginTop: 24, background: 'var(--text)', border: '1px solid var(--text-muted)', borderRadius: 12, padding: '12px 28px', color: 'var(--paper)', fontSize: 14, cursor: 'pointer' }}
                 >
                   Close
                 </button>

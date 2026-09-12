@@ -45,12 +45,12 @@ export default function AnswersDirectory() {
         .hero { max-width: 760px; margin: 0 auto; padding: 46px 20px 22px; text-align: center; }
         .hero h1 { font-family: Georgia, serif; font-size: clamp(30px, 5.5vw, 46px); font-weight: 700; color: var(--green); letter-spacing: -1px; line-height: 1.12; margin-bottom: 14px; text-wrap: balance; }
         .hero p { font-size: 17px; color: var(--text-muted); line-height: 1.55; max-width: 560px; margin: 0 auto; }
-        .hero .count { display: inline-block; margin-top: 16px; font-size: 13px; font-weight: 700; color: var(--green); background: var(--green-pale); border: 1px solid #D4E6D5; padding: 5px 14px; border-radius: 20px; }
+        .hero .count { display: inline-block; margin-top: 16px; font-size: 13px; font-weight: 700; color: var(--green); background: var(--green-pale); border: 1px solid var(--leaf-wash); padding: 5px 14px; border-radius: 20px; }
 
         /* Quick jump chips to each category */
         .jump { max-width: 900px; margin: 0 auto; padding: 8px 20px 4px; display: flex; flex-wrap: wrap; gap: 9px; justify-content: center; }
         .jump a { text-decoration: none; font-size: 13.5px; font-weight: 700; color: var(--green); background: var(--white); border: 1px solid var(--border); padding: 8px 15px; border-radius: 20px; }
-        .jump a:hover { background: var(--green); color: #fff; border-color: var(--green); }
+        .jump a:hover { background: var(--green); color: var(--surface); border-color: var(--green); }
 
         .wrap { max-width: 900px; margin: 0 auto; padding: 20px 20px 70px; }
         .cat { margin-top: 40px; scroll-margin-top: 74px; }
@@ -64,8 +64,8 @@ export default function AnswersDirectory() {
         .card .c-emoji { font-size: 22px; flex: none; }
         .card .c-title { font-size: 14.5px; font-weight: 600; line-height: 1.3; color: var(--text); }
 
-        .ask { margin-top: 48px; background: linear-gradient(135deg, #2A5C2E, #1E4422); border-radius: 20px; padding: 34px 26px; text-align: center; }
-        .ask h2 { font-family: Georgia, serif; color: #fff; font-size: 24px; margin-bottom: 10px; }
+        .ask { margin-top: 48px; background: linear-gradient(135deg, var(--leaf), var(--leaf-deep)); border-radius: 20px; padding: 34px 26px; text-align: center; }
+        .ask h2 { font-family: Georgia, serif; color: var(--surface); font-size: 24px; margin-bottom: 10px; }
         .ask p { color: rgba(255,255,255,0.78); font-size: 15px; line-height: 1.6; max-width: 460px; margin: 0 auto 20px; }
         .ask-row { display: flex; gap: 11px; justify-content: center; flex-wrap: wrap; }
 

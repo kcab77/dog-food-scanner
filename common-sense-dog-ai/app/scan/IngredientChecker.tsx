@@ -36,27 +36,27 @@ export default function IngredientChecker() {
       <style jsx>{`
         .checker { max-width: 680px; margin: 0 auto; }
         form { display: flex; flex-direction: column; gap: 12px; }
-        textarea { width: 100%; min-height: 130px; padding: 16px; border-radius: 14px; border: 1.5px solid var(--border, #E2D9CA); font-size: 15px; line-height: 1.6; resize: vertical; outline: none; background: #fff; font-family: inherit; }
-        textarea:focus { border-color: var(--green, #2A5C2E); }
-        button { align-self: center; background: var(--green, #2A5C2E); color: #fff; border: none; border-radius: 30px; padding: 14px 36px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background .15s; }
-        button:hover:not(:disabled) { background: #3D7A42; }
+        textarea { width: 100%; min-height: 130px; padding: 16px; border-radius: 14px; border: 1.5px solid var(--border, var(--border)); font-size: 15px; line-height: 1.6; resize: vertical; outline: none; background: var(--surface); font-family: inherit; }
+        textarea:focus { border-color: var(--green, var(--leaf)); }
+        button { align-self: center; background: var(--green, var(--leaf)); color: var(--surface); border: none; border-radius: 30px; padding: 14px 36px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background .15s; }
+        button:hover:not(:disabled) { background: var(--leaf-bright); }
         button:disabled { opacity: 0.6; cursor: default; }
-        .hint { text-align: center; font-size: 13px; color: var(--text-muted, #7A746B); margin-top: -2px; }
-        .error { margin-top: 16px; background: #FDECEC; border: 1px solid #F3C2C2; color: #9B2C2C; border-radius: 12px; padding: 14px 16px; font-size: 14px; }
-        .result { margin-top: 22px; background: #fff; border: 1px solid var(--border, #E2D9CA); border-radius: 16px; padding: 22px 24px; font-size: 15px; line-height: 1.7; color: #333; box-shadow: 0 6px 20px rgba(42,92,46,.06); }
-        .result :global(h2) { font-size: 19px; font-weight: 800; margin: 0 0 14px; color: var(--green, #2A5C2E); }
+        .hint { text-align: center; font-size: 13px; color: var(--text-muted, var(--text-faint)); margin-top: -2px; }
+        .error { margin-top: 16px; background: color-mix(in srgb, var(--score-low) 7%, var(--surface)); border: 1px solid color-mix(in srgb, var(--score-low) 35%, var(--border)); color: var(--score-low); border-radius: 12px; padding: 14px 16px; font-size: 14px; }
+        .result { margin-top: 22px; background: var(--surface); border: 1px solid var(--border, var(--border)); border-radius: 16px; padding: 22px 24px; font-size: 15px; line-height: 1.7; color: var(--text); box-shadow: 0 6px 20px rgba(42,92,46,.06); }
+        .result :global(h2) { font-size: 19px; font-weight: 800; margin: 0 0 14px; color: var(--green, var(--leaf)); }
         .result :global(p) { margin: 0 0 10px; }
-        .result :global(strong) { color: #111; font-weight: 700; }
+        .result :global(strong) { color: var(--text); font-weight: 700; }
         .result :global(ul) { margin: 4px 0 16px 18px; }
         .result :global(li) { margin-bottom: 6px; }
-        .result :global(a) { color: var(--green, #2A5C2E); text-decoration: underline; }
-        .result :global(em) { color: #888; font-size: 13px; }
+        .result :global(a) { color: var(--green, var(--leaf)); text-decoration: underline; }
+        .result :global(em) { color: var(--text-faint); font-size: 13px; }
         .result :global(> :first-child) { margin-top: 0; }
         .result :global(> :last-child) { margin-bottom: 0; }
-        .cta { margin-top: 16px; background: var(--green-pale, #EDF4EE); border: 1px solid #D4E6D5; border-radius: 14px; padding: 16px 20px; text-align: center; }
-        .cta p { margin: 0 0 10px; font-size: 14px; color: #2B2A26; line-height: 1.55; }
-        .cta a { display: inline-block; background: var(--green, #2A5C2E); color: #fff; text-decoration: none; font-weight: 700; font-size: 14px; padding: 10px 20px; border-radius: 22px; }
-        .cta a:hover { background: #21471f; }
+        .cta { margin-top: 16px; background: var(--green-pale, var(--leaf-wash)); border: 1px solid var(--leaf-wash); border-radius: 14px; padding: 16px 20px; text-align: center; }
+        .cta p { margin: 0 0 10px; font-size: 14px; color: var(--text); line-height: 1.55; }
+        .cta a { display: inline-block; background: var(--green, var(--leaf)); color: var(--surface); text-decoration: none; font-weight: 700; font-size: 14px; padding: 10px 20px; border-radius: 22px; }
+        .cta a:hover { background: var(--leaf-deep); }
       `}</style>
 
       <form onSubmit={analyze}>

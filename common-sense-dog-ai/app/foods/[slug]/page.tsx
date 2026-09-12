@@ -39,26 +39,26 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
         .wrap { max-width: 760px; margin: 0 auto; padding: 40px 20px 70px; }
         .crumb a:hover { color: var(--green); }
         .hero { display: flex; align-items: center; gap: 20px; margin-bottom: 8px; }
-        .big { flex: none; width: 92px; height: 92px; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; }
+        .big { flex: none; width: 92px; height: 92px; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--surface); }
         .big b { font-size: 34px; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
         .big span { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; opacity: .9; margin-top: 3px; }
-        .excellent { background: #2A7D3F; } .good { background: #5A9A4A; } .fair { background: #C8912B; }
-        .below { background: #C4682B; } .low { background: #A83A32; }
+        .excellent { background: var(--score-excellent); } .good { background: var(--score-good); } .fair { background: var(--score-fair); }
+        .below { background: var(--score-below); } .low { background: var(--score-low); }
         .brand { font-size: 12.5px; font-weight: 700; color: var(--green); text-transform: uppercase; letter-spacing: 0.5px; }
         .fmt { font-size: 14px; color: var(--text-muted); }
         .row { display: flex; justify-content: space-between; gap: 14px; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 14.5px; }
         .row:last-child { border-bottom: none; }
         .row .v { font-weight: 700; font-variant-numeric: tabular-nums; flex: none; }
-        .plus { color: #2A7D3F; } .minus { color: #A83A32; }
-        .flagcard { background: #fff; border: 1px solid var(--border); border-left: 3px solid #A83A32; border-radius: 10px; padding: 12px 14px; margin-bottom: 9px; }
+        .plus { color: var(--score-excellent); } .minus { color: var(--score-low); }
+        .flagcard { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--score-low); border-radius: 10px; padding: 12px 14px; margin-bottom: 9px; }
         .flagcard .n { font-size: 14.5px; font-weight: 700; }
-        .flagcard .s { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #A83A32; letter-spacing: .4px; }
+        .flagcard .s { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--score-low); letter-spacing: .4px; }
         .flagcard .r { font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-top: 5px; }
-        .pill.bad { border-color: #E3B5B1; color: #A83A32; background: #FCF4F3; }
-        .pill.great { border-color: #B9D6BC; color: #2A7D3F; background: var(--green-pale); }
+        .pill.bad { border-color: color-mix(in srgb, var(--score-low) 35%, var(--border)); color: var(--score-low); background: color-mix(in srgb, var(--score-low) 7%, var(--surface)); }
+        .pill.great { border-color: color-mix(in srgb, var(--score-excellent) 35%, var(--border)); color: var(--score-excellent); background: var(--green-pale); }
         .also { display: grid; gap: 8px; }
-        .also a { display: flex; align-items: center; gap: 12px; background: #fff; border: 1px solid var(--border); border-radius: 11px; padding: 10px 13px; font-size: 14px; }
-        .also .sc { flex: none; width: 38px; height: 38px; border-radius: 9px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 800; font-size: 15px; }
+        .also a { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 11px; padding: 10px 13px; font-size: 14px; }
+        .also .sc { flex: none; width: 38px; height: 38px; border-radius: 9px; display: flex; align-items: center; justify-content: center; color: var(--surface); font-weight: 800; font-size: 15px; }
         .disc { margin-top: 34px; padding: 15px 17px; background: var(--cream-dark); border: 1px solid var(--border); border-radius: 12px; font-size: 12.5px; line-height: 1.75; color: var(--text-muted); }
       `}</style>
 

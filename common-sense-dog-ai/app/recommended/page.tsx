@@ -62,7 +62,7 @@ export default function RecommendedPage() {
         .sub { font-size: 17px; color: var(--text-muted); line-height: 1.6; max-width: 620px; margin: 0 auto 22px; text-align: center; }
         .disclosure { background: var(--cream-dark); border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px; font-size: 13px; color: var(--text-muted); line-height: 1.5; max-width: 720px; margin: 0 auto 36px; text-align: center; }
         .card .note { font-size: 13px; color: var(--green); background: var(--green-pale); border-radius: 10px; padding: 9px 12px; margin-bottom: 16px; line-height: 1.45; }
-        .btn:hover { background: #21471f; }
+        .btn:hover { background: var(--leaf-deep); }
         footer a { color: rgba(255,255,255,0.75); text-decoration: none; }
       `}</style>
 

@@ -12,11 +12,11 @@ export default function BlogPage() {
     <>
       <style>{`
         .nav-links a:hover { color: var(--green); }
-        .hero { background: linear-gradient(135deg, #2A5C2E, #1E4422); padding: 60px 24px; text-align: center; }
+        .hero { background: linear-gradient(135deg, var(--leaf), var(--leaf-deep)); padding: 60px 24px; text-align: center; }
         .hero h1 { font-family: Georgia, serif; font-size: clamp(28px, 5vw, 48px); color: white; margin-bottom: 14px; }
         .hero p { font-size: 17px; color: rgba(255,255,255,0.7); max-width: 560px; margin: 0 auto; }
         .content { max-width: 1100px; margin: 0 auto; padding: 60px 24px; }
-        .card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); border-color: #C8DFC9; }
+        .card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); border-color: var(--leaf-wash); }
         .tag { display: inline-block; background: var(--green-pale); color: var(--green); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 4px 10px; border-radius: 20px; margin-bottom: 12px; }
         .read-more { font-size: 13px; font-weight: 600; color: var(--green); }
         footer a { color: rgba(255,255,255,0.7); text-decoration: none; }

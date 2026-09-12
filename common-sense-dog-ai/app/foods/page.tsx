@@ -44,18 +44,18 @@ export default function Foods() {
         .wrap { max-width: 940px; margin: 0 auto; padding: 40px 20px 70px; }
         .crumb a:hover { color: var(--green); }
         .sub { font-size: 16px; color: var(--text-muted); line-height: 1.6; max-width: 620px; margin-bottom: 26px; }
-        .search { width: 100%; padding: 14px 18px; font-size: 16px; border: 1px solid var(--border); border-radius: 30px; background: #fff; font-family: inherit; }
+        .search { width: 100%; padding: 14px 18px; font-size: 16px; border: 1px solid var(--border); border-radius: 30px; background: var(--surface); font-family: inherit; }
         .search:focus { outline: none; border-color: var(--green); }
-        .chip.on { background: var(--green); color: #fff; border-color: var(--green); }
+        .chip.on { background: var(--green); color: var(--surface); border-color: var(--green); }
         .count { font-size: 13px; color: var(--text-muted); margin-bottom: 18px; }
         .card:hover { border-color: var(--green); }
-        .excellent { background: #2A7D3F; } .good { background: #5A9A4A; } .fair { background: #C8912B; }
-        .below { background: #C4682B; } .low { background: #A83A32; }
+        .excellent { background: var(--score-excellent); } .good { background: var(--score-good); } .fair { background: var(--score-fair); }
+        .below { background: var(--score-below); } .low { background: var(--score-low); }
         .meta { min-width: 0; }
         .brand { font-size: 12px; font-weight: 700; color: var(--green); text-transform: uppercase; letter-spacing: 0.4px; }
         .name { font-size: 15.5px; font-weight: 600; line-height: 1.35; margin: 2px 0 4px; }
         .tags { font-size: 12.5px; color: var(--text-muted); }
-        .flag { color: #A83A32; font-weight: 600; }
+        .flag { color: var(--score-low); font-weight: 600; }
         .empty { text-align: center; padding: 50px 20px; color: var(--text-muted); }
       `}</style>
 

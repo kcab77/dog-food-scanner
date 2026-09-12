@@ -46,10 +46,10 @@ export default function AnswerPage({ params }: { params: { slug: string } }) {
         .wrap { max-width: 680px; margin: 0 auto; padding: 8px 24px 64px; }
         .tag { display: inline-block; background: var(--green-pale); color: var(--green); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 5px 13px; border-radius: 20px; }
         .emoji { font-size: 46px; display: block; margin: 22px 0 12px; }
-        .lead { font-size: 18px; line-height: 1.7; color: #333; margin-bottom: 14px; }
+        .lead { font-size: 18px; line-height: 1.7; color: var(--text); margin-bottom: 14px; }
         /* The prominent funnel into the AI — the whole point of the page */
-        .cta { background: linear-gradient(135deg, #2A5C2E, #1E4422); border-radius: 18px; padding: 26px; text-align: center; margin: 34px 0; }
-        .cta h2 { font-family: Georgia, serif; color: #fff; font-size: 21px; margin-bottom: 8px; }
+        .cta { background: linear-gradient(135deg, var(--leaf), var(--leaf-deep)); border-radius: 18px; padding: 26px; text-align: center; margin: 34px 0; }
+        .cta h2 { font-family: Georgia, serif; color: var(--surface); font-size: 21px; margin-bottom: 8px; }
         .cta p { color: rgba(255,255,255,0.75); font-size: 15px; margin-bottom: 18px; line-height: 1.6; }
         .cta-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
         .faq { margin-top: 30px; }
@@ -57,14 +57,14 @@ export default function AnswerPage({ params }: { params: { slug: string } }) {
         .faq-sub { color: var(--muted); font-size: 14px; margin-bottom: 18px; }
         .qa { border-top: 1px solid var(--border); padding: 20px 0; }
         .qa h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
-        .qa p { font-size: 15.5px; line-height: 1.75; color: #333; }
+        .qa p { font-size: 15.5px; line-height: 1.75; color: var(--text); }
         .disclaimer { font-size: 12px; color: var(--muted); font-style: italic; margin-top: 34px; text-align: center; line-height: 1.7; }
         .disclaimer a { color: var(--green); }
         .related { margin-top: 40px; border-top: 1px solid var(--border); padding-top: 22px; }
         .related h2 { font-family: Georgia, serif; font-size: 18px; margin-bottom: 14px; }
         .related-list { display: flex; flex-direction: column; gap: 10px; }
         .related-link { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-size: 15px; font-weight: 600; padding: 12px 14px; background: var(--green-pale); border-radius: 11px; }
-        .related-link:hover { background: #E2ECE3; }
+        .related-link:hover { background: var(--leaf-wash); }
         .related-link .r-emoji { font-size: 18px; }
       `}</style>
 
