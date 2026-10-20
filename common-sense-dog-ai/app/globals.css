@@ -64,7 +64,46 @@
   --score-below:     #C2661F;
   --score-low:       #A93226;
 
+  /* ── SCALE TOKENS ──────────────────────────────────────────────────────
+     These were referenced throughout this file and across six pages but never
+     defined, so every rule using them was silently dropped by the CSS parser:
+     `body` lost its font-family AND font-size, every .related-card at the
+     bottom of a topic page lost its background (that's the "colours go weird
+     toward the bottom" — transparent cards with their borders still drawn),
+     and the whole spacing rhythm fell back to browser defaults.
+
+     Values are reverse-engineered from what the pages actually render today,
+     so adding them changes nothing that already looked right.
+     ─────────────────────────────────────────────────────────────────────── */
+
+  /* Type */
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --display: Georgia, 'Times New Roman', serif;
+  --step--1: 13.5px;
+  --step-0:  16px;
+  --step-1:  19px;
+  --step-2:  25px;
+  --step-3:  clamp(28px, 4vw, 42px);
+  --step-4:  clamp(34px, 5vw, 52px);
+
+  /* Spacing */
+  --gap-xs:  6px;
+  --gap-sm:  12px;
+  --gap:     18px;
+  --gap-md:  26px;
+  --gap-lg:  40px;
+  --gap-xl:  64px;
+
+  /* Radius */
+  --radius:      14px;
+  --radius-lg:   20px;
+  --radius-pill: 999px;
+
   /* Aliases so the pages that still use the old names keep working. */
+  /* `--white` is a LIE in dark mode if it's literally white — point it at the
+     themed surface token instead, so a card stays a card in both themes. */
+  --white: var(--surface);
+  --muted: var(--text-muted);
   --green: var(--leaf);
   --green-deep: var(--leaf-deep);
   --green-mid: var(--leaf-bright);
