@@ -376,7 +376,7 @@ Post-scan results render in `app/index.tsx` in this section order (reordered 202
 6. "🚩 Ingredients to Watch" — formerly "Red Flags"; now *collapsible, closed by default* so it's
    opt-in rather than an unavoidable red banner. Tap a name to expand its one-sentence reason
    **inline** (uses `expandedRedFlags` state). Red title text via `AccordionSection`'s `titleColor` prop.
-7. "Simple additions to upgrade the bowl" (egg / sardines or fish oil / yogurt-kefir-goat's milk)
+7. "The short version" summary card — ends in "👉 Three things that upgrade any bowl" (egg / fish oil or sardines / probiotic). ⚠️ The three are **hardcoded and identical for every score** (`ADDITIONS`, ~11105) and `getNextStep()` reads only `score` + `processing`, never the ingredient list — see `docs/BLUEPRINT_BOWL_ADDITIONS.md`
 8. Hershey's Protocol *(collapsible)*
 9. Recommended Supplements *(collapsible)* — 7 affiliate cards, order: Probiotics → Fish Oil → Green Lipped Mussel → Heart → Liver → Detox → Four Leaf Rover
 10. Grocery Store Finds *(collapsible)*
@@ -388,7 +388,7 @@ now "Below Average"/"Low Quality" (colors/thresholds/scoring math unchanged, pre
 
 - Collapsible sections use the reusable **`<AccordionSection>`** component (RN `LayoutAnimation`, ▸/▾ chevron, collapsed by default; `bare` mode wraps cards that bring their own styling like Lipoma/Hershey).
 - **Food type is auto-detected** by Claude Vision (`result.processing_method`) — the manual pre-scan food-type picker was removed.
-- **Treats scanner is disabled** (Treats tab hidden). Treats scoring code stays in place for a future rebuild — don't delete it.
+- **Treats scanner is LIVE** — re-enabled 2026-08-11. The Treats tab renders in the mode switcher (`app/index.tsx` ~9952); `scoreTreats`, `TREAT_HARMFUL` and `TREAT_OK_INGREDIENTS` were intact the whole time, only the button was missing. ⚠️ A treat bag scanned in **smart/manual** mode is still scored as *food*, which penalises it for things treats are allowed to be — tell users to pick the Treats tab.
 - These are **UI-only** concerns: do not change scoring, API calls, or Supabase without asking.
 
 ---
