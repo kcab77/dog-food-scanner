@@ -252,7 +252,7 @@ Highland White, Dalmatian, Skye, Anatolian Shepherd, Welsh Corgi, Clumber Spanie
 
 ---
 
-*Last updated: 2026-08-22*
+*Last updated: 2026-10-21*
 
 ---
 
