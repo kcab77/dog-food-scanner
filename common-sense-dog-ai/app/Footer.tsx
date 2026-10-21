@@ -28,7 +28,13 @@ export default function Footer() {
           changing your dog&apos;s diet or starting any supplement or protocol, and seek immediate
           veterinary care in an emergency.
         </p>
-        <p className="footer-copy">© {new Date().getFullYear()} Common Sense Dog</p>
+        {/* The one-word form appears here deliberately. Structured data tells
+            Google the alias exists; visible body text is what it weighs. Before
+            this, "commonsensedog" as a single token appeared nowhere on the site
+            except the domain, so a search for it had nothing to match. */}
+        <p className="footer-copy">
+          © {new Date().getFullYear()} Common Sense Dog · commonsensedog.com
+        </p>
       </div>
     </footer>
   )

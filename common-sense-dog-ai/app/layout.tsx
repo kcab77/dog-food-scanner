@@ -62,10 +62,32 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 }
 
+/**
+ * `alternateName` is the fix for a specific, reproducible problem: searching
+ * "commonsensedog" as one word did not surface the site, while
+ * "commonsensedog.com" ranked first. With the .com, Google parses a URL. Without
+ * it, there was no text anywhere on the site matching that one-word token — the
+ * name is three separate words everywhere it appears — so there was nothing to
+ * match against.
+ *
+ * This is also how the short name gets to work without renaming anything:
+ * aliases are free and reversible, where renaming the app would reset the App
+ * Store listing's metadata and discard its ranking history.
+ */
+const BRAND_ALIASES = [
+  'commonsensedog',
+  'commonsensedog.com',
+  'Common Sense Dog',
+  'CSDog',
+  'csdog',
+  'CS Dog',
+]
+
 const organizationLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'Common Sense Dog',
+  alternateName: BRAND_ALIASES,
   url: BASE,
   description: 'Holistic dog nutrition and health — an AI assistant, ingredient checker, and research library.',
 }
@@ -74,6 +96,7 @@ const websiteLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: 'Common Sense Dog',
+  alternateName: BRAND_ALIASES,
   url: BASE,
   potentialAction: {
     '@type': 'SearchAction',
