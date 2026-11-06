@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { foods, getFood } from '@/lib/foods-data'
+import { explainersFor } from '@/lib/explainers'
 
 export function generateStaticParams() {
   return foods.map((f) => ({ slug: f.slug }))
@@ -32,6 +33,13 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
 
   const b = band(f.score)
   const similar = foods.filter((x) => x.brand === f.brand && x.slug !== f.slug).slice(0, 4)
+  /**
+   * Topics that explain this food's own breakdown. Before this, a food page
+   * could say "Poor omega ratio (est. ~12:1)" with nowhere to click, and 38%
+   * of them (single-product brands) had no outbound link at all — dead ends on
+   * the exact pages search traffic lands on.
+   */
+  const explainers = explainersFor(f.breakdown)
 
   return (
     <>
@@ -59,6 +67,28 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
         .also { display: grid; gap: 8px; }
         .also a { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 11px; padding: 10px 13px; font-size: 14px; }
         .also .sc { flex: none; width: 38px; height: 38px; border-radius: 9px; display: flex; align-items: center; justify-content: center; color: var(--surface); font-weight: 800; font-size: 15px; }
+        .learn { margin-top: 30px; border-top: 2px solid var(--text); padding-top: 18px; }
+        .learn h2 { margin-top: 0; }
+        .learn p.sub { font-size: 13.5px; color: var(--text-muted); margin: 0 0 14px; line-height: 1.6; }
+        .learn ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
+        .learn a { display: flex; align-items: center; gap: 13px; background: var(--surface);
+          border: 1px solid var(--border); border-radius: 14px; padding: 13px 15px;
+          text-decoration: none; color: inherit; transition: border-color .2s, transform .2s; }
+        .learn a:hover { border-color: var(--leaf-bright); transform: translateX(3px); }
+        .learn .n { flex: none; width: 27px; height: 27px; border-radius: 50%;
+          background: linear-gradient(135deg, var(--leaf-bright), var(--leaf));
+          color: #fff; font-size: 13px; font-weight: 800; display: grid; place-items: center; }
+        .learn .t { font-size: 14.5px; font-weight: 700; flex: 1; line-height: 1.4; }
+        .learn .arr { color: var(--leaf); font-weight: 800; flex: none; }
+        .appcta { margin-top: 26px; background: var(--leaf-wash); border: 1px solid var(--leaf-bright);
+          border-radius: 16px; padding: 20px 22px; }
+        .appcta h3 { font-family: Georgia, serif; font-size: 20px; margin: 0 0 6px; line-height: 1.25; }
+        .appcta p { font-size: 14px; color: var(--text-muted); margin: 0 0 14px; line-height: 1.6; max-width: 56ch; }
+        .appcta a { display: inline-flex; align-items: center; gap: 8px; background: var(--leaf);
+          color: #fff; font-size: 15px; font-weight: 800; padding: 12px 22px; border-radius: 999px;
+          text-decoration: none; }
+        .appcta a:hover { filter: brightness(1.08); }
+        .appcta .free { display: block; font-size: 12px; color: var(--text-faint); margin-top: 9px; }
         .disc { margin-top: 34px; padding: 15px 17px; background: var(--cream-dark); border: 1px solid var(--border); border-radius: 12px; font-size: 12.5px; line-height: 1.75; color: var(--text-muted); }
       `}</style>
 
@@ -136,6 +166,38 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
             </div>
           </>
         )}
+
+        {explainers.length > 0 && (
+          <div className="learn">
+            <h2>Why this food scored the way it did</h2>
+            <p className="sub">
+              Each of these explains one line of the breakdown above — what it means, and what
+              to do about it.
+            </p>
+            <ol>
+              {explainers.map((e, i) => (
+                <li key={e.slug}>
+                  <Link href={`/library/${e.slug}`}>
+                    <span className="n">{i + 1}</span>
+                    <span className="t">{e.label}</span>
+                    <span className="arr" aria-hidden="true">→</span>
+                  </Link>
+                </li>
+              ))}
+            </ol>
+          </div>
+        )}
+
+        <div className="appcta">
+          <h3>Now check the bag you actually own</h3>
+          <p>
+            This page covers one food. PawGrade scores whatever is in your cupboard — point it at
+            the ingredient panel and it reads the label, scores it the same way, and tells you
+            what to add to the bowl.
+          </p>
+          <a href="https://apps.apple.com/app/id6760376540">Get PawGrade — free <span aria-hidden="true">→</span></a>
+          <span className="free">Free, no account needed to scan.</span>
+        </div>
 
         <p className="disc">
           <strong>For informational and educational purposes only.</strong> This score reflects
