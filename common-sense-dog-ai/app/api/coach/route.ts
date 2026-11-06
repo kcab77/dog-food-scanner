@@ -21,6 +21,19 @@ export async function POST(req: NextRequest) {
   try {
     const { productName, ingredientList, score, flaggedNames, messages } = await req.json()
 
+    /**
+     * The scan context is now OPTIONAL.
+     *
+     * This route used to require productName / ingredientList / score, which
+     * meant the coach could only ever be reached *after* scanning a bag. An
+     * owner could not open the app and ask "my dog is itchy, could it be
+     * food?" — the one question the knowledge base is best at answering.
+     *
+     * Both shapes are supported on purpose: app versions already in the wild
+     * keep sending the scan fields and must behave exactly as before.
+     */
+    const hasScanContext = Boolean(productName || ingredientList || typeof score === 'number')
+
     // Pinecone-FIRST: pull curated knowledge for the user's latest question, fall
     // back to the holistic AI only when the knowledge base doesn't cover it.
     const lastUserMessage = [...messages].reverse().find((m: { role: string }) => m.role === 'user')
@@ -36,12 +49,24 @@ export async function POST(req: NextRequest) {
     // must keep working exactly as before.
     const dogProfile = await getDogProfileFromRequest(req)
 
-    let systemText = `${COACH_PHILOSOPHY}
+    let systemText = COACH_PHILOSOPHY
+
+    if (hasScanContext) {
+      systemText += `
 
 Product being reviewed: ${productName}
 Score: ${score}/100
 Concerning ingredients: ${flaggedNames?.length > 0 ? flaggedNames.join(', ') : 'None detected'}
 Full ingredient list: ${ingredientList}`
+    } else {
+      systemText += `
+
+The owner has NOT scanned a food — this is a general question about their dog.
+Do not refer to "this food", "the scan" or "the ingredient list"; there isn't one.
+Answer the question they actually asked. If knowing what they currently feed would
+change your answer, ask for it in one short sentence rather than guessing, and
+mention they can scan the bag in the app to get it analysed properly.`
+    }
 
     if (dogProfile) systemText += profilePromptBlock(dogProfile)
 
@@ -65,7 +90,7 @@ Full ingredient list: ${ingredientList}`
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-6',
-        max_tokens: 512,
+        max_tokens: hasScanContext ? 512 : 1024,
         system: systemText,
         messages: claudeMessages,
       }),
