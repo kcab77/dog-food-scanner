@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { isValidAppRequest } from '@/lib/auth'
 import { getDogProfileFromRequest, profilePromptBlock } from '@/lib/dogProfile'
 import { searchKnowledgeScored } from '@/lib/pinecone'
+import { loadHistory, saveExchange, isNewConversation } from '@/lib/chatMemory'
 import { isAllowed } from '@/lib/ratelimit'
 import { DISCLAIMER } from '@/lib/disclaimer'
 
@@ -100,10 +101,22 @@ mention they can scan the bag in the app to get it analysed properly.`
       systemText += `\n\n---\nKNOWLEDGE BASE (PARTIAL MATCH):\nThe following is partially relevant. Prefer it where it applies, then supplement with your general holistic knowledge.\n\n${weakChunks.join('\n\n---\n\n')}`
     }
 
-    const claudeMessages = messages.map((m: { role: string; content: string }) => ({
+    /**
+     * Prepend remembered turns only when the client is starting fresh. If it is
+     * already holding the thread, the same exchanges would arrive twice — once
+     * from the client, once from the table — and the model would see itself
+     * repeat.
+     */
+    const remembered = isNewConversation(messages) ? await loadHistory(req) : []
+
+    const claudeMessages = [...remembered, ...messages].map((m: { role: string; content: string }) => ({
       role: m.role === 'assistant' ? 'assistant' : 'user',
       content: m.content,
     }))
+
+    if (remembered.length > 0) {
+      systemText += `\n\n---\nEARLIER CONVERSATIONS WITH THIS OWNER: the messages above this turn are from previous sessions, not today. Use them to remember their dog and what you have already advised — do not re-ask what they have told you, and do not greet them as a stranger. Do not claim to remember anything that is not actually in them.`
+    }
 
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -123,6 +136,12 @@ mention they can scan the bag in the app to get it analysed properly.`
     const data = await response.json()
     const text = data?.content?.[0]?.text?.trim() || ''
     const message = text ? text + DISCLAIMER : "Sorry, I couldn't connect right now."
+
+    // Remember this exchange. Deliberately not awaited for correctness of the
+    // response — a failed write must not cost the user the reply they waited for.
+    if (text && query) {
+      saveExchange(req, query, text, hasScanContext ? 'app' : 'app').catch(() => {})
+    }
     return NextResponse.json({ message })
   } catch (e) {
     return NextResponse.json({ message: "Sorry, I couldn't connect right now." }, { status: 500 })
