@@ -165,15 +165,34 @@ export async function searchKnowledgeCited(
  * returned nothing for short lookups, so callers doing ingredient-style queries
  * pass a lower floor.
  */
+/**
+ * `topics` scopes the search to a notebook — a named set of `topic` tags.
+ *
+ * Embeddings measure similarity, not relevance, so an unfiltered search over
+ * all 999 pairs can surface a lymphoma chunk for a joints question purely
+ * because the language is close. Filtering to the tags that belong to the
+ * subject is the whole reason a NotebookLM-style scoped assistant answers
+ * better than a general one.
+ *
+ * Omit it and the search stays global, which must remain the default: a
+ * question that fits no notebook should see everything, never a silently
+ * narrowed corpus.
+ */
 export async function searchKnowledgeScored(
   query: string,
   topK = 8,
   minScore = 0.5,
+  topics?: string[],
 ): Promise<ScoredChunk[]> {
   if (!process.env.VOYAGE_API_KEY) return []
   try {
     const values = await embedText(query)
-    const results = await index.query({ vector: values, topK, includeMetadata: true })
+    const results = await index.query({
+      vector: values,
+      topK,
+      includeMetadata: true,
+      ...(topics?.length ? { filter: { topic: { $in: topics } } } : {}),
+    })
     return results.matches
       .map(m => ({ text: chunkText(m.metadata as Record<string, unknown>), score: m.score ?? 0 }))
       .filter(c => c.text && c.score > minScore)

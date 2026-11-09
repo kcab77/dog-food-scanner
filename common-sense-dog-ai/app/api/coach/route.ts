@@ -3,6 +3,7 @@ import { isValidAppRequest } from '@/lib/auth'
 import { getDogProfileFromRequest, profilePromptBlock } from '@/lib/dogProfile'
 import { searchKnowledgeScored } from '@/lib/pinecone'
 import { loadHistory, saveExchange, isNewConversation } from '@/lib/chatMemory'
+import { getNotebook, routeToNotebook } from '@/lib/notebooks'
 import { isAllowed } from '@/lib/ratelimit'
 import { DISCLAIMER } from '@/lib/disclaimer'
 
@@ -41,7 +42,7 @@ export async function POST(req: NextRequest) {
   if (!isValidAppRequest(req)) return NextResponse.json({ message: 'Forbidden' }, { status: 403 })
   if (!(await isAllowed(req))) return NextResponse.json({ message: "You're sending messages too fast — give it a sec and try again." }, { status: 429 })
   try {
-    const { productName, ingredientList, score, flaggedNames, messages } = await req.json()
+    const { productName, ingredientList, score, flaggedNames, messages, notebook } = await req.json()
 
     /**
      * The scan context is now OPTIONAL.
@@ -60,8 +61,21 @@ export async function POST(req: NextRequest) {
     // back to the holistic AI only when the knowledge base doesn't cover it.
     const lastUserMessage = [...messages].reverse().find((m: { role: string }) => m.role === 'user')
     const query = lastUserMessage?.content || ''
+    /**
+     * Scope the search to a notebook when we have one — chosen by the user, or
+     * inferred from the question when they just started typing. Conservative on
+     * purpose: an ambiguous question routes nowhere and searches everything,
+     * because a wrong notebook hides the right answer rather than merely
+     * failing to narrow.
+     */
+    const chosen = getNotebook(notebook) ?? routeToNotebook(query)
+
     const STRONG_THRESHOLD = 0.65
-    const scored = query ? await searchKnowledgeScored(query, 8) : []
+    let scored = query ? await searchKnowledgeScored(query, 8, 0.5, chosen?.topics) : []
+    // A notebook that turns up nothing is a worse answer than no notebook.
+    if (chosen && scored.length === 0 && query) {
+      scored = await searchKnowledgeScored(query, 8)
+    }
     const strongChunks = scored.filter(c => c.score >= STRONG_THRESHOLD).map(c => c.text)
     const weakChunks = scored.filter(c => c.score < STRONG_THRESHOLD).map(c => c.text)
 
@@ -113,6 +127,10 @@ mention they can scan the bag in the app to get it analysed properly.`
       role: m.role === 'assistant' ? 'assistant' : 'user',
       content: m.content,
     }))
+
+    if (chosen) {
+      systemText += `\n\n---\nNOTEBOOK: this question is being answered from the "${chosen.title}" notebook — ${chosen.blurb} If the question has clearly moved to a different subject, say so and answer it anyway; never refuse because of the notebook.`
+    }
 
     if (remembered.length > 0) {
       systemText += `\n\n---\nEARLIER CONVERSATIONS WITH THIS OWNER: the messages above this turn are from previous sessions, not today. Use them to remember their dog and what you have already advised — do not re-ask what they have told you, and do not greet them as a stranger. Do not claim to remember anything that is not actually in them.`
