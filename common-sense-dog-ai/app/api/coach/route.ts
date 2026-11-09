@@ -3,7 +3,7 @@ import { isValidAppRequest } from '@/lib/auth'
 import { getDogProfileFromRequest, profilePromptBlock } from '@/lib/dogProfile'
 import { searchKnowledgeScored } from '@/lib/pinecone'
 import { loadHistory, saveExchange, isNewConversation } from '@/lib/chatMemory'
-import { getNotebook, routeToNotebook } from '@/lib/notebooks'
+import { getNotebook, routeToNotebooks, topicsFor, labelFor } from '@/lib/notebooks'
 import { isAllowed } from '@/lib/ratelimit'
 import { DISCLAIMER } from '@/lib/disclaimer'
 
@@ -68,12 +68,17 @@ export async function POST(req: NextRequest) {
      * because a wrong notebook hides the right answer rather than merely
      * failing to narrow.
      */
-    const chosen = getNotebook(notebook) ?? routeToNotebook(query)
+    const picked = getNotebook(notebook)
+    const chosen = picked ? [picked] : routeToNotebooks(query)
+    const scopeTopics = topicsFor(chosen)
 
     const STRONG_THRESHOLD = 0.65
-    let scored = query ? await searchKnowledgeScored(query, 8, 0.5, chosen?.topics) : []
-    // A notebook that turns up nothing is a worse answer than no notebook.
-    if (chosen && scored.length === 0 && query) {
+    // A compound question searches the union of its subjects, so neither half
+    // is silently dropped. More topics means a wider net, so give it more room.
+    const k = chosen.length > 1 ? 12 : 8
+    let scored = query ? await searchKnowledgeScored(query, k, 0.5, scopeTopics.length ? scopeTopics : undefined) : []
+    // A scope that turns up nothing is a worse answer than no scope.
+    if (chosen.length > 0 && scored.length === 0 && query) {
       scored = await searchKnowledgeScored(query, 8)
     }
     const strongChunks = scored.filter(c => c.score >= STRONG_THRESHOLD).map(c => c.text)
@@ -128,8 +133,8 @@ mention they can scan the bag in the app to get it analysed properly.`
       content: m.content,
     }))
 
-    if (chosen) {
-      systemText += `\n\n---\nNOTEBOOK: this question is being answered from the "${chosen.title}" notebook — ${chosen.blurb} If the question has clearly moved to a different subject, say so and answer it anyway; never refuse because of the notebook.`
+    if (chosen.length > 0) {
+      systemText += `\n\n---\nNOTEBOOK: answering from "${labelFor(chosen)}".${chosen.length > 1 ? ' The owner asked about more than one thing — address every part of their question, not just the first.' : ''} If the question has clearly moved to another subject, say so and answer it anyway; never refuse because of the notebook.`
     }
 
     if (remembered.length > 0) {

@@ -111,23 +111,38 @@ export const getNotebook = (id?: string | null) =>
   NOTEBOOKS.find((n) => n.id === id) ?? null
 
 /**
- * Pick a notebook from the question itself, for the case where the user just
- * started typing instead of choosing one. Scores by how many of a notebook's
- * route words appear; ties and misses return null so the search stays global.
+ * Pick the notebooks a question belongs to — plural, deliberately.
  *
- * Deliberately conservative: a wrong notebook is worse than no notebook,
- * because it hides the right answer instead of merely failing to narrow.
+ * An earlier version returned one. "My dog has a lipoma and his joints are
+ * stiff" scored Joints 2, Lumps 1, picked Joints, and filtered every lipoma
+ * pair out of the search — the assistant then answered half the question with
+ * no sign the other half had been discarded. Owners ask compound questions
+ * constantly, because dogs have more than one thing wrong at a time.
+ *
+ * So: every notebook with a match contributes its tags, and the search runs
+ * over the union. Still far narrower than all 999 pairs, but it cannot drop a
+ * subject the owner actually raised. No match at all searches everything.
  */
-export function routeToNotebook(question: string): Notebook | null {
+export function routeToNotebooks(question: string): Notebook[] {
   const q = (question || '').toLowerCase()
-  if (q.length < 8) return null
-  let best: Notebook | null = null
-  let bestScore = 0
-  let tied = false
-  for (const nb of NOTEBOOKS) {
-    const score = nb.routes.reduce((n, w) => (q.includes(w) ? n + 1 : n), 0)
-    if (score > bestScore) { best = nb; bestScore = score; tied = false }
-    else if (score === bestScore && score > 0) tied = true
-  }
-  return bestScore > 0 && !tied ? best : null
+  if (q.length < 8) return []
+  return NOTEBOOKS
+    .map((nb) => ({ nb, score: nb.routes.reduce((n, w) => (q.includes(w) ? n + 1 : n), 0) }))
+    .filter((x) => x.score > 0)
+    .sort((a, b) => b.score - a.score)
+    // Three subjects in one question is the point at which scoping stops
+    // meaning anything — fall back to the global search instead.
+    .slice(0, 3)
+    .map((x) => x.nb)
+}
+
+/** The union of their tags, for the Pinecone filter. */
+export function topicsFor(nbs: Notebook[]): string[] {
+  // Array.from, not [...Set] — this project's tsconfig target predates downlevelIteration.
+  return Array.from(new Set(nbs.flatMap((n) => n.topics)))
+}
+
+/** Human-readable label for the prompt: "Joints & Mobility + Lumps & Cancer". */
+export function labelFor(nbs: Notebook[]): string {
+  return nbs.map((n) => n.title).join(' + ')
 }
