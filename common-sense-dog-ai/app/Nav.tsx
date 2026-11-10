@@ -13,6 +13,7 @@ import { usePathname } from 'next/navigation'
  */
 const LINKS = [
   { href: '/foods', label: 'Food scores' },
+  { href: '/remedies', label: 'Gentle fixes' },
   { href: '/library', label: 'Health A–Z' },
   { href: '/answers', label: 'Directory' },
   { href: '/recommended', label: 'Picks' },
