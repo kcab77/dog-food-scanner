@@ -12,6 +12,7 @@ import { usePathname } from 'next/navigation'
  * were.
  */
 const LINKS = [
+  { href: '/body', label: 'Body map' },
   { href: '/foods', label: 'Food scores' },
   { href: '/library', label: 'Health A–Z' },
   { href: '/answers', label: 'Directory' },
