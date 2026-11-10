@@ -3,6 +3,7 @@ import { blogPosts } from '@/lib/blog-data'
 import { getTopicSlugs } from '@/lib/library'
 import { getAnswerSlugs } from '@/lib/answers-data'
 import { foods } from '@/lib/foods-data'
+import { CONCERNS } from '@/lib/concerns'
 
 const BASE = 'https://commonsensedog.com'
 
@@ -55,5 +56,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }))
 
-  return [...staticPages, ...posts, ...topics, ...answers, ...foodPages]
+  const concernPages: MetadataRoute.Sitemap = CONCERNS.map((c) => ({
+    url: `${BASE}/remedies/${c.id}`,
+    lastModified: now,
+    changeFrequency: 'monthly',
+    priority: 0.8,
+  }))
+
+  return [...staticPages, ...posts, ...topics, ...answers, ...foodPages, ...concernPages]
 }
