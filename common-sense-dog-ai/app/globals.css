@@ -99,6 +99,28 @@
   --radius-lg:   20px;
   --radius-pill: 999px;
 
+
+  /* ── TAG COLOURS ────────────────────────────────────────────────────────
+     The Health A–Z was 44 cards of identical green, which made a long page
+     impossible to skim — you had to read every title to find the shape of it.
+     Colour here is wayfinding, not decoration: the same tag is the same hue
+     everywhere, so the eye learns the categories.
+
+     Four hues, not seven. Seven distinct categorical hues do not survive the
+     colourblind check on a warm light ground — gold and orange-red came out
+     0.6 ΔE apart under deuteranopia, i.e. identical. So the four biggest tags
+     get colour and the three smallest share the neutral. Validated in BOTH
+     themes with the palette validator: all checks pass.
+
+     Every pill also carries its tag name as text, so colour is never the only
+     signal.
+     ──────────────────────────────────────────────────────────────────────── */
+  --tag-conditions: #2F86C5;
+  --tag-nutrition:  #007A58;
+  --tag-supplements:#B37400;
+  --tag-parasites:  #A85585;
+  --tag-other:      #6E7468;
+
   /* Aliases so the pages that still use the old names keep working. */
   /* `--white` is a LIE in dark mode if it's literally white — point it at the
      themed surface token instead, so a card stays a card in both themes. */
@@ -119,6 +141,12 @@
    won't exist for viewers on the default "system" setting in light mode. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
+    --tag-conditions: #4593C2;
+    --tag-nutrition:  #008C62;
+    --tag-supplements:#BD8000;
+    --tag-parasites:  #A86287;
+    --tag-other:      #8A9184;
+
     --leaf:        #6FCB80;
     --leaf-deep:   #9ADFA6;
     --leaf-bright: #5BB86C;

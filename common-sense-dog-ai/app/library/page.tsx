@@ -9,6 +9,20 @@ import { answerPages } from '@/lib/answers-data'
 
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
 
+/**
+ * Tag -> colour token. Four tags carry a hue; the three smallest share the
+ * neutral, because seven distinct categorical hues do not survive the
+ * colourblind check on a warm light ground (see globals.css).
+ */
+function tagKey(tag: string): string {
+  const t = (tag || '').toLowerCase()
+  if (t.includes('condition')) return 'conditions'
+  if (t.includes('nutrition')) return 'nutrition'
+  if (t.includes('supplement')) return 'supplements'
+  if (t.includes('parasite')) return 'parasites'
+  return 'other'
+}
+
 export default function Library() {
   const [q, setQ] = useState('')
   const all = useMemo(() => getAllEntries(), [])
@@ -130,7 +144,17 @@ export default function Library() {
         .result-snippet { font-size: 13px; line-height: 1.55; color: var(--muted, var(--text-muted)); margin: 5px 0 0; }
         .letter-group { margin-top: 34px; scroll-margin-top: 80px; }
         .letter-head { font-size: 26px; font-weight: 800; color: var(--green); border-bottom: 2px solid var(--green-pale); padding-bottom: 6px; margin-bottom: 16px; }
-        .card:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(42,92,46,.10); border-color: var(--green); }
+        /* Tag colour: a left stripe and a matching pill, so a long A–Z reads as
+           categories at a glance instead of 44 identical green cards. */
+        .card { --tc: var(--tag-other); position: relative; overflow: hidden; }
+        .card[data-tag="conditions"]  { --tc: var(--tag-conditions); }
+        .card[data-tag="nutrition"]   { --tc: var(--tag-nutrition); }
+        .card[data-tag="supplements"] { --tc: var(--tag-supplements); }
+        .card[data-tag="parasites"]   { --tc: var(--tag-parasites); }
+        .card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+          background: var(--tc); opacity: .85; }
+        .card:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(42,92,46,.12); border-color: var(--tc); }
+        .card-tag { color: var(--tc); font-weight: 700; }
         .empty { text-align: center; color: var(--text-muted); padding: 60px 20px; }
         @media (max-width: 640px) { .nav-links { display: none; } .hero h1 { font-size: 32px; } .search { flex-direction: column; } }
       `}</style>
@@ -202,7 +226,7 @@ export default function Library() {
               <div className="letter-head">{group.letter}</div>
               <div className="cards">
                 {group.entries.map((e) => (
-                  <Link key={e.href} href={e.href} className="card">
+                  <Link key={e.href} href={e.href} className="card" data-tag={tagKey(e.tag)}>
                     <div className="card-top">
                       <span className="card-emoji">{e.emoji}</span>
                       <span className="card-title">{e.title}</span>
