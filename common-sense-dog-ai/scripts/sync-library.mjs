@@ -220,6 +220,16 @@ const TOPICS = [
     file: 'commonsensedog knowledge/Hershey Case - Post-Antibiotic Yeast Overgrowth.md',
   },
   {
+    // Folded in from the vault 2026-11-10. The note had sat in
+    // `commonsensedog knowledge/` since August, unpublished, while Parasite
+    // Prevention was the thinnest tag on the site — it is the strongest
+    // unpublished thing in the vault, CDC-sourced and evidence-tiered.
+    slug: 'tick-borne-disease-and-collars', title: 'Tick-Borne Disease & Collar Safety', letter: 'T',
+    emoji: '🕷️', tag: 'Parasite Prevention',
+    summary: 'A tick usually needs 24–36 hours attached to pass on Lyme — which is why a repellent that stops feeding buys you the whole window. Deer tick vs dog tick, regional Lyme rates, and what the collar research actually shows.',
+    file: 'commonsensedog knowledge/Tick-Borne Disease & Collar Safety — folded from knowledge-vault (2026-08-03).md',
+  },
+  {
     slug: 'holistic-parasite-prevention', title: 'Holistic Parasite Prevention & Natural Deworming', letter: 'H',
     emoji: '🪱', tag: 'Parasite Prevention',
     summary: 'Natural deworming options and prevention strategies, with honest notes on where they fall short of pharmaceutical dewormers.',
