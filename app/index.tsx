@@ -21,6 +21,7 @@ import {
     TouchableOpacity,
     UIManager,
     View,
+    Dimensions,
 } from "react-native";
 import { auditIngredientList } from "../lib/ingredientDatabase";
 import { analyzeIngredients } from "../lib/ingredientLookup";
@@ -16777,17 +16778,23 @@ const styles = StyleSheet.create({
     color: t.textMuted,
     fontSize: 13,
   },
-  // The framed viewfinder: fixed 250px, dashed border, rounded. Deliberately
-  // NOT flex:1 — a full-bleed camera pushed everything else off the screen.
+  // The viewfinder. Camera-first, the way every scanner app does it — Yuka,
+  // Open Food Facts, the lot. The camera IS the screen you land on, because a
+  // small window reads as a preview of a feature rather than the feature.
+  //
+  // Sized to the screen (52%, clamped 320–520) instead of a flat 250px: a flat
+  // height is a third of an iPhone 15 Pro Max and nearly half an SE, so the
+  // same number means two different screens. Deliberately NOT flex:1 — that
+  // was tried, and it pushed the sample scans and ingredient lookup entirely
+  // off the screen. This is dominant without being the only thing there.
   cameraWrapper: {
     alignSelf: "stretch",
-    height: 250,
+    height: Math.max(320, Math.min(520, Math.round(Dimensions.get("window").height * 0.52))),
     position: "relative",
-    marginHorizontal: 16,
-    borderRadius: 14,
+    marginHorizontal: 12,
+    borderRadius: 22,
     overflow: "hidden",
-    borderWidth: 2,
-    borderStyle: "dashed",
+    borderWidth: 1,
     borderColor: t.borderBright,
     backgroundColor: t.surfaceSunken,
   },
