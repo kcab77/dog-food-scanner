@@ -7191,18 +7191,25 @@ export default function App() {
   const [eggInfoOpen, setEggInfoOpen] = useState(false);
   // Which of the four doors is open. null = none, so the results screen
   // shows only the Layer 1 answer until the owner chooses to go deeper.
-  // Opens on "learn" because the app now LANDS on Learn (see below).
-  const [openDoor, setOpenDoor] = useState<string | null>("learn");
+  // Starts closed: the app now lands on Scan, and a door only opens once the
+  // owner goes looking (changed 2026-11-12).
+  const [openDoor, setOpenDoor] = useState<string | null>(null);
   const [openTopic, setOpenTopic] = useState<string | null>(null);
   // Learn without scanning (2026-08-21). The A–Z reference doesn't depend on a
   // scan — gating it behind one meant a new owner had to photograph a bag before
   // they could read anything. This opens the same index standalone.
   //
-  // Defaults to TRUE (2026-08-21): after the permission + disclaimer screens the
-  // app lands on Learn, not the camera. Someone who just installed a dog-food
-  // scanner usually doesn't have a bag in their hand — they have a question. The
-  // camera is one tap away and the permission prompt still comes first.
-  const [learnMode, setLearnMode] = useState(true);
+  // Defaults to FALSE (changed 2026-11-12): the app lands on SCAN.
+  //
+  // It landed on Learn from 2026-08-21 on the theory that a new owner has a
+  // question rather than a bag. In practice the first thing anyone saw was a
+  // wall of A–Z topics and no visible camera — Kyle's own words were "you don't
+  // even know where the scanner is". Scanning is the thing this app does that
+  // nothing else does, and it has to be the thing you land on.
+  //
+  // Learn is still one tap away on the tab bar and loses nothing: the A–Z is
+  // reachable without a scan exactly as before.
+  const [learnMode, setLearnMode] = useState(false);
   // Home-cooked builder: dog weight in lb, and activity multiplier on RER.
   const [hmWeight, setHmWeight] = useState("");
   const [hmActivity, setHmActivity] = useState(1.6);
@@ -16381,8 +16388,24 @@ export default function App() {
         }}
       >
         {[
-          /* Learn is FIRST and is where the app opens. Scan is second — still one
-             tap, but you no longer have to be holding a bag to get any value. */
+          /* Scan is FIRST and is where the app opens (reordered 2026-11-12).
+             It was second behind Learn, and the result was that the one thing
+             this app does that nothing else does was not visible on launch.
+             Order now matches what the app is for: scan it, then read about it,
+             then ask about it. Nothing was removed — Learn and Ask are the same
+             destinations, one tap away. */
+          {
+            key: "scan",
+            icon: "📷",
+            label: "Scan",
+            active: !learnMode,
+            onPress: () => {
+              LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+              setLearnMode(false);
+              setOpenDoor(null);
+              setOpenTopic(null);
+            },
+          },
           {
             key: "learn",
             icon: "📚",
@@ -16396,11 +16419,11 @@ export default function App() {
             },
           },
           {
-            key: "scan",
-            icon: "📷",
-            label: "Scan",
-            active: !learnMode,
-            onPress: () => { setLearnMode(false); setOpenDoor(null); setOpenTopic(null); },
+            key: "ask",
+            icon: "💬",
+            label: "Ask",
+            active: false,
+            onPress: () => setCoachVisible(true),
           },
           {
             key: "dog",
@@ -16411,13 +16434,6 @@ export default function App() {
               const s = await getSession();
               router.push((s ? "/dog-profile" : "/login") as Href);
             },
-          },
-          {
-            key: "ask",
-            icon: "💬",
-            label: "Ask",
-            active: false,
-            onPress: () => setCoachVisible(true),
           },
         ].map((tab) => (
           <TouchableOpacity
@@ -16430,16 +16446,26 @@ export default function App() {
             style={{
               flex: 1,
               alignItems: "center",
-              gap: 3,
-              paddingVertical: 4,
+              gap: 2,
+              paddingVertical: 2,
             }}
           >
-            <Text style={{ fontSize: 20, opacity: tab.active ? 1 : 0.55 }}>{tab.icon}</Text>
+            <View
+              style={{
+                paddingHorizontal: 14,
+                paddingVertical: 5,
+                borderRadius: 999,
+                backgroundColor: tab.active ? t.goodTint : "transparent",
+              }}
+            >
+              <Text style={{ fontSize: 19, opacity: tab.active ? 1 : 0.5 }}>{tab.icon}</Text>
+            </View>
             <Text
               numberOfLines={1}
               style={{
                 fontSize: 10.5,
-                fontWeight: "700",
+                fontWeight: tab.active ? "800" : "600",
+                letterSpacing: 0.1,
                 color: tab.active ? t.good : t.textFaint,
               }}
             >
