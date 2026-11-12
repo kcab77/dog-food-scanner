@@ -185,3 +185,93 @@ Right instinct, wrong order — do it **second**, and here's why that's not a br
 - **Writing it stalls everything else.** It shouldn't — the chapters are the site's content —
   but only if each chapter gets published to the site as it's written, not held back for the
   launch.
+
+---
+
+# 🗺️ THE BASE — the book's actual table of contents
+
+*Generated from the packs by `common-sense-dog-ai/scripts/build-base.mjs`, 2026-11-12.
+Every number is counted from the files, so this section cannot drift from the corpus —
+add a pack, re-run it, update this table.*
+
+**This replaces the sketched structure above.** That was a guess at a shape; this is the shape
+the material actually has. 73 packs grouped into the 19 sections an owner would arrive at,
+with the evidence weight of each shown rather than implied.
+
+Live version: `/base` on the site (noindex), and `/base/<section>` for each chapter.
+
+### Part I — Why this book
+Not in the corpus and has to be written from scratch: why you, why this, and Hershey. Kloss
+had a conversion story; yours is six years of kibble and a dog with lipomas. **This is the only
+part with no material behind it, and it's the part that sells the book.**
+
+### Part II — By what’s wrong  ·  452 answers
+
+| Chapter | Answers | Packs | Evidence |
+|---|---:|---:|---|
+| 🦠 **Gut & Digestion** | 127 | 9 | 🟢3 🟡12 ⚪18 |
+| 🛡️ **Immune, Lumps & Cancer** | 102 | 7 | 🟢7 🟡7 🟠4 ⚪6 |
+| 🐾 **Skin, Coat & Yeast** | 54 | 3 | — none tiered yet |
+| 💧 **Liver, Kidney & Metabolic** | 40 | 4 | 🟢10 🟡7 🟠3 ⚪4 |
+| 🦴 **Joints & Mobility** | 30 | 3 | — none tiered yet |
+| 🫁 **Airway & GOLPP** | 25 | 1 | — none tiered yet |
+| 🫀 **Heart** | 25 | 2 | 🟢2 🟡3 🟠2 ⚪3 |
+| 🦷 **Teeth & Gums** | 21 | 3 | 🟢8 🟡7 🟠4 ⚪2 |
+| 🧠 **Brain, Ageing & Anxiety** | 14 | 2 | 🟢3 🟡6 🟠1 ⚪1 |
+| 🦋 **Thyroid** | 14 | 3 | 🟢4 🟡7 ⚪6 |
+
+### Part III — What you put in  ·  274 answers
+
+| Chapter | Answers | Packs | Evidence |
+|---|---:|---:|---|
+| 💊 **Supplements** | 142 | 6 | 🟢7 🟡18 🟠30 ⚪1 |
+| ⚗️ **Vitamins & Minerals** | 92 | 2 | 🟢1 ⚪78 |
+| 🐟 **Omega-3 & Fish Oil** | 40 | 2 | 🟢6 🟡8 ⚪4 |
+
+### Part IV — What gets in anyway  ·  266 answers
+
+| Chapter | Answers | Packs | Evidence |
+|---|---:|---:|---|
+| 🥣 **Food & Labels** | 117 | 9 | 🟢3 🟡1 ⚪2 |
+| 🪳 **Fleas, Ticks & Worms** | 57 | 4 | 🟢1 🟡8 |
+| ⚠️ **Everyday Safety** | 35 | 6 | 🟢9 🟡12 ⚪2 |
+| ☣️ **Chemicals & Household** | 30 | 3 | 🟢5 🟡6 ⚪5 |
+| 📅 **Life Stage & Breed** | 27 | 3 | 🟢2 🟡13 ⚪1 |
+
+### Part V — One real dog  ·  7 answers
+
+| Chapter | Answers | Packs | Evidence |
+|---|---:|---:|---|
+| 🐕 **Hershey's Case Log** | 7 | 1 | — none tiered yet |
+
+## What this table tells you about the book
+
+**999 answers, 363 tiered — 36%.** That is the honest state. The tier discipline is the entire
+differentiator, so the gap between those two numbers *is* the editorial work. Not writing:
+checking.
+
+**Four chapters have nothing tiered at all** — Skin/Coat/Yeast, Joints & Mobility, Airway &
+GOLPP, and Hershey's Case Log. Those are 116 answers sitting at unknown confidence. They are
+the first editing pass, and they are also the reason not to promise a publication date yet.
+
+**The weight is lopsided and that's fine.** Supplements (142), Gut (127) and Food & Labels (117)
+carry a third of the book between them. Thyroid and Brain are 14 each. A reference book is
+allowed uneven chapters — what it is not allowed is a chapter that pretends to more certainty
+than it has.
+
+**The chapter order is already right.** Organ → Input → Exposure is how an owner thinks: what's
+wrong, what do I give him, what do I stop doing. Don't reorganise it into a herbal A–Z just
+because Back to Eden is one.
+
+## The one-section-at-a-time loop
+
+The whole book reduces to repeating this, 19 times:
+
+1. Open `/base/<section>` — the untiered answers are at the bottom, by design.
+2. Tier each one, or cut it. `docs/EVIDENCE_AUDIT.md` is the machinery.
+3. Write the connective prose that turns the Q&A into a chapter.
+4. Publish it to the site as a library topic the same week — the book and the site are the
+   same work, and holding chapters back for a launch wastes the SEO.
+5. Re-run `build-base.mjs`. The numbers move. That's the progress bar.
+
+One section a week is a book in under five months.
