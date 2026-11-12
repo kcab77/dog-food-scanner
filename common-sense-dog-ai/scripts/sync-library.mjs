@@ -230,6 +230,12 @@ const TOPICS = [
     file: 'commonsensedog knowledge/Tick-Borne Disease & Collar Safety — folded from knowledge-vault (2026-08-03).md',
   },
   {
+    slug: 'polyphenols-for-dogs', title: 'Polyphenols — the colour in the bowl', letter: 'P',
+    emoji: '🫐', tag: 'Nutrition',
+    summary: 'Deep purple, blue and dark green is where the anti-inflammatory compounds are — and a beige bowl has none of them. What they do, where to get them, and why "high in antioxidants" never means safe for a dog.',
+    file: 'commonsensedog knowledge/Polyphenols for Dogs.md',
+  },
+  {
     slug: 'holistic-parasite-prevention', title: 'Holistic Parasite Prevention & Natural Deworming', letter: 'H',
     emoji: '🪱', tag: 'Parasite Prevention',
     summary: 'Natural deworming options and prevention strategies, with honest notes on where they fall short of pharmaceutical dewormers.',
