@@ -7428,7 +7428,20 @@ export default function App() {
   const [feedbackSubmitting, setFeedbackSubmitting] = useState(false);
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
 
-  if (!permission) return <View />;
+  // An empty <View /> here is what the user actually sees whenever the camera
+  // permission check is slow or never settles — a browser with no camera, a
+  // device still showing the OS prompt, a cold start. It reads as a dead app,
+  // and it is the first screen PawGrade shows. Say what is happening instead.
+  if (!permission) {
+    return (
+      <View style={styles.center}>
+        <ActivityIndicator size="large" color={t.good} />
+        <Text style={[styles.message, { marginTop: 16, marginBottom: 0 }]}>
+          Getting the camera ready…
+        </Text>
+      </View>
+    );
+  }
 
   // [PREVIEW-ONLY, uncommitted] let web fall through so demo buttons are reachable
   if (!permission.granted && Platform.OS !== "web") {
