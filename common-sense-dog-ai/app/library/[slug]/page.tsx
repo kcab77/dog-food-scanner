@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation'
 import { getTopic, getTopicSlugs } from '@/lib/library'
 import { libraryTopics } from '@/lib/library-data'
 import AskBox from '../AskBox'
+import HersheyNote from '../../HersheyNote'
+import { hersheyNoteFor } from '@/lib/hershey'
 import LearnMore from './LearnMore'
 
 export function generateStaticParams() {
@@ -177,6 +179,9 @@ export default function TopicPage({ params }: { params: { slug: string } }) {
 
       <div className="article-wrap">
         <Link href="/library" className="back-link">← All topics (A–Z)</Link>
+
+        {/* Kyle's own dog first, general advice second. See lib/hershey.ts. */}
+        <HersheyNote note={hersheyNoteFor('library', topic.slug)} />
 
         <div className="article-content" dangerouslySetInnerHTML={{ __html: topic.contentHtml }} />
 

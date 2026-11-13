@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getAnswer, getAnswerSlugs, getRelatedAnswers } from '@/lib/answers-data'
+import HersheyNote from '../../HersheyNote'
+import { hersheyNoteFor } from '@/lib/hershey'
 
 export function generateStaticParams() {
   return getAnswerSlugs().map((slug) => ({ slug }))
@@ -82,6 +84,12 @@ export default function AnswerPage({ params }: { params: { slug: string } }) {
         <span className="emoji">{a.emoji}</span>
         <h1>{a.title}</h1>
         <p className="lead">{a.lead}</p>
+
+        {/* Kyle's own dog first — these pages are the organic entry point,
+            so the one thing no competing result has goes above the fold. */}
+        <div style={{ marginTop: 24 }}>
+          <HersheyNote note={hersheyNoteFor('answer', a.slug)} />
+        </div>
 
         <div className="cta">
           <h2>Ask about your own dog</h2>

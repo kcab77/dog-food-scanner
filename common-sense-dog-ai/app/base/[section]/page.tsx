@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { BASE_SECTIONS } from '@/lib/base-data'
+import HersheyNote from '../../HersheyNote'
+import { hersheyNoteFor } from '@/lib/hershey'
 
 export function generateStaticParams() {
   return BASE_SECTIONS.map((s) => ({ section: s.id }))
@@ -130,6 +132,11 @@ export default function BaseSectionPage({ params }: { params: { section: string 
         <span className="sx-em" aria-hidden="true">{s.emoji}</span>
         <h1>{s.label}</h1>
         <p className="sx-ask">{s.ask}</p>
+
+        {/* Kyle's own dog first, the corpus second. See lib/hershey.ts. */}
+        <div style={{ marginTop: 24 }}>
+          <HersheyNote note={hersheyNoteFor('base', s.id)} />
+        </div>
 
         <div className="sx-meta">
           <div><b>{s.pairs}</b><span>answers</span></div>

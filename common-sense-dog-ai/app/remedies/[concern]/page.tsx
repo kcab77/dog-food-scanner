@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation'
 import { CONCERNS, getConcern } from '@/lib/concerns'
 import { getTopic } from '@/lib/library'
 import { partners, AFFILIATE_DISCLOSURE } from '@/lib/partners'
+import HersheyNote from '../../HersheyNote'
+import { hersheyNoteFor } from '@/lib/hershey'
 
 export function generateStaticParams() {
   return CONCERNS.map((c) => ({ concern: c.id }))
@@ -101,6 +103,11 @@ export default function ConcernPage({ params }: { params: { concern: string } })
         <span className="cx-em" aria-hidden="true">{c.emoji}</span>
         <h1>{c.label}</h1>
         <p className="cx-lede">{c.blurb}</p>
+
+        {/* Kyle's own dog first, general advice second. See lib/hershey.ts. */}
+        <div style={{ marginTop: 26 }}>
+          <HersheyNote note={hersheyNoteFor('concern', c.id)} />
+        </div>
 
         <section className="cx-sec">
           <h2>Try this first</h2>
