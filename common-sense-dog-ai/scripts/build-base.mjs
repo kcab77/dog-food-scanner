@@ -15,6 +15,7 @@
 import { readFileSync, writeFileSync, readdirSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { SUBS, UNSORTED_SUB, classify } from './base-subs.mjs'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const SCRIPTS = here
@@ -109,6 +110,38 @@ for (const f of files) {
   }
 }
 
+/**
+ * Group a section's pairs into its sub-sections.
+ *
+ * A section with no rules yet gets one group holding everything — honest about
+ * being un-compartmentalised rather than pretending to a structure it lacks.
+ * Inside a group, tiered answers lead, same as the section itself.
+ */
+function buildSubs(sectionId, qa) {
+  const rules = SUBS[sectionId]
+  if (!rules) {
+    return [{ id: 'all', emoji: '', label: 'All answers', blurb: 'Not compartmentalised yet.',
+              qa: qa.slice(), tiers: tally(qa) }]
+  }
+  const bins = new Map(rules.map((r) => [r.id, []]))
+  bins.set(UNSORTED_SUB.id, [])
+  for (const p of qa) bins.get(classify(sectionId, p.q) ?? UNSORTED_SUB.id).push(p)
+  const meta = [...rules, UNSORTED_SUB]
+  return meta
+    .filter((r) => bins.get(r.id).length)                 // an empty drawer is noise
+    .map((r) => {
+      const items = bins.get(r.id)
+        .sort((a, b) => (a.tier === '' ? 1 : 0) - (b.tier === '' ? 1 : 0))
+      return { id: r.id, emoji: r.emoji, label: r.label, blurb: r.blurb, qa: items, tiers: tally(items) }
+    })
+}
+
+function tally(items) {
+  const t = { '🟢': 0, '🟡': 0, '🟠': 0, '⚪': 0 }
+  for (const p of items) if (p.tier) t[p.tier]++
+  return t
+}
+
 const out = Object.entries(sections)
   .map(([id, v]) => ({
     id, ...META[id],
@@ -117,10 +150,11 @@ const out = Object.entries(sections)
     tiers: v.tiers,
     topics: Object.entries(v.topics).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([t, n]) => ({ t, n })),
     // The pairs themselves, so a section page shows the actual knowledge rather
-    // than a count of it. Tier is read off the answer's own marker.
-    qa: v.qa
-      .sort((a, b) => (a.tier === '' ? 1 : 0) - (b.tier === '' ? 1 : 0))
-      .slice(0, 60),
+    // than a count of it. Tier is read off the answer's own marker. No cap: the
+    // answers now sit inside collapsed sub-sections, so volume is no longer what
+    // the reader faces first — a cap would just hide material silently.
+    qa: v.qa.sort((a, b) => (a.tier === '' ? 1 : 0) - (b.tier === '' ? 1 : 0)),
+    subs: buildSubs(id, v.qa),
   }))
   .sort((a, b) => b.pairs - a.pairs)
 
@@ -140,7 +174,16 @@ export type BaseSection = {
   packs: { file: string; pairs: number }[]
   tiers: Record<string, number>
   topics: { t: string; n: number }[]
-  qa: { q: string; a: string; tier: string; topic: string; source: string }[]
+  qa: BaseQA[]
+  subs: BaseSub[]
+}
+
+export type BaseQA = { q: string; a: string; tier: string; topic: string; source: string }
+
+export type BaseSub = {
+  id: string; emoji: string; label: string; blurb: string
+  qa: BaseQA[]
+  tiers: Record<string, number>
 }
 
 export const BASE_SECTIONS: BaseSection[] = ${JSON.stringify(out, null, 2)}
@@ -148,4 +191,12 @@ export const BASE_SECTIONS: BaseSection[] = ${JSON.stringify(out, null, 2)}
 export const BASE_TOTAL_PAIRS = ${totalPairs}
 `)
 console.log(`  ${out.length} sections · ${totalPairs} pairs mapped`)
+for (const sec of out) {
+  if (!SUBS[sec.id]) continue
+  const stray = sec.subs.find((x) => x.id === UNSORTED_SUB.id)
+  console.log(`  ${sec.emoji} ${sec.label}: ${sec.subs.length} compartments` +
+    (stray ? ` · ⚠️  ${stray.qa.length} filed here but off-topic` : ''))
+}
+const bare = out.filter((x) => !SUBS[x.id])
+if (bare.length) console.log(`  not compartmentalised yet (${bare.length}): ${bare.map((x) => x.id).join(', ')}`)
 if (unsorted.length) console.log(`  ⚠️  unmapped packs (${unsorted.length}): ${unsorted.join(', ')}`)
