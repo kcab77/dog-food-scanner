@@ -2938,8 +2938,10 @@ const OMEGA_SAFETY: { rule: string; icon: string; detail: string }[] = [
     detail: "Keep it cool and dark. Refrigerate once opened. Store in dark glass or brushed aluminium — never plastic, which can leach chemicals into the oil.",
   },
   {
-    rule: "Stop 7–14 days before surgery", icon: "🩺",
-    detail: "Fish oil decreases platelet stickiness and delays clotting time, making it a modest blood thinner. It must be stopped 7 to 14 days before any scheduled surgery to prevent excess bleeding.",
+    // Reconciled 2026-11-17 to Kyle's newer omega pack (qa-omega-sources-2026-08-05),
+    // which he approved over the older "must stop 7–14 days" wording.
+    rule: "Tell your vet before surgery", icon: "🩺",
+    detail: "High-dose omega-3 does lengthen bleeding time — it changes how platelets work. Older advice says stop it 7 to 14 days before surgery; newer evidence (including a large human heart-surgery trial) found no extra bleeding. The safe middle: tell your vet before any surgery or dental procedure, and take care alongside NSAIDs or aspirin.",
   },
   {
     rule: "Give it with fatty food", icon: "🍽️",
@@ -6479,6 +6481,15 @@ export const DOORS = [
 
 const DoorContext = React.createContext<string | null>(null);
 
+// ONE SCROLL AFTER A SCAN (Kyle, 2026-11-17): "only relevant food items for
+// the scans… it's too much." The numbered tab row is switched off and, after a
+// scan, the DoorContext value is "scan" — which opens BOTH food-specific doors
+// (whats-in-it + what-to-do) at once and keeps every door="learn" section off
+// the results screen. Those general articles live on the Learn tab, where
+// nothing changed. The tab-row JSX is kept (not deleted) behind this flag.
+const SHOW_SCAN_DOOR_TABS = false;
+const SCAN_DOOR = "scan";
+
 // A–Z topic index (2026-08-20). The "Learn" door held 16 sections stacked in no
 // order, which is a wall. Reference material works as an index, not a narrative:
 // one short chip per topic, alphabetical, tap to expand. A section declares its
@@ -6487,9 +6498,63 @@ const TopicContext = React.createContext<string | null>(null);
 
 export const LEARN_TOPICS = [
   "AAFCO", "Bloat", "Carbs", "Collagen", "Deficiency signs", "Gut health", "Heart",
+  "Hershey's Protocol", "Home-cooked bowl",
   "Kibble", "Larynx & GOLPP", "Life stages", "Lifespan", "Lipomas", "Lymphoma", "Mineral forms",
   "Missing nutrients", "Leaky gut", "Mushrooms", "Omega-3", "Probiotics", "Recalls & facts", "TCVM", "Yeast",
 ] as const;
+
+// ── LEARN TAB: SEARCH + MOST POPULAR (Kyle, 2026-11-17) ─────────────────────
+// "Too much going on." Learn now opens on a search bar and six popular topics;
+// the full A–Z sits behind "All topics" (nothing removed). Typing filters topics
+// by name + these keywords instantly; "Ask" sends the question to the AI coach,
+// which answers from the Pinecone knowledge base and keeps the 5-free-question
+// paywall (Kyle: the deeper AI answer is the upgrade).
+const TOPIC_KEYWORDS: Record<string, string> = {
+  "Omega-3": "fish oil omega epa dha ala krill flax chia salmon sardines glm green-lipped mussel joints arthritis stiff limp",
+  "Gut health": "gut probiotic digestion diarrhea leaky microbiome bone broth stool enzymes",
+  Probiotics: "probiotic gut diarrhea boulardii kefir yogurt",
+  Yeast: "yeast itchy itch paws frito corn chip smell ears skin malassezia",
+  Heart: "heart dcm taurine murmur cough carnitine coq10",
+  Lipomas: "lipoma lump bump fatty tumor mass",
+  Collagen: "collagen joints skin bone broth cartilage",
+  "Leaky gut": "leaky gut permeability allergy zonulin",
+  Bloat: "bloat gdv stomach twist deep chest",
+  Carbs: "carbs carbohydrate grain starch sugar",
+  Kibble: "kibble dry food processing extruded",
+  "Life stages": "puppy senior adult age old young",
+  Lifespan: "lifespan live longer lean weight age",
+  "Deficiency signs": "deficiency missing nutrient signs coat",
+  "Missing nutrients": "missing nutrient deficiency complete balanced",
+  "Mineral forms": "minerals sulfate oxide chelate zinc copper iron",
+  AAFCO: "aafco complete balanced minimum maximum",
+  Mushrooms: "mushroom turkey tail reishi lions mane cancer immune",
+  Lymphoma: "lymphoma cancer lymph node swollen",
+  "Larynx & GOLPP": "larynx golpp breathing bark voice paralysis",
+  TCVM: "tcvm hot cold warming cooling energetics chinese",
+  "Recalls & facts": "recall fda facts",
+  "Hershey's Protocol": "hershey teeth dental brushing flea tick routine",
+  "Home-cooked bowl": "home cooked homemade recipe bowl diy",
+};
+
+function matchTopics(query: string): string[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return [];
+  const words = q.split(/\s+/).filter((w) => w.length >= 3);
+  return LEARN_TOPICS.filter((topic) => {
+    const hay = `${topic.toLowerCase()} ${TOPIC_KEYWORDS[topic] ?? ""}`;
+    return hay.includes(q) || words.some((w) => hay.includes(w));
+  });
+}
+
+const POPULAR_TOPICS: { label: string; topic?: string; search?: string }[] = [
+  { label: "🐟 Fish oil", topic: "Omega-3" },
+  { label: "🦠 Probiotics & gut", topic: "Gut health" },
+  { label: "🍄‍🟫 Yeast", topic: "Yeast" },
+  // No Joints section yet — this runs a search instead (omega-3, collagen + Ask AI).
+  { label: "🦴 Joints", search: "joints" },
+  { label: "❤️ Heart", topic: "Heart" },
+  { label: "🧬 Lipomas", topic: "Lipomas" },
+];
 
 // ── THE KIBBLE GUIDE (added 2026-08-21) ──────────────────────────────────────
 // The Learn tab's landing content: read a bag WITHOUT scanning it. Same shape as
@@ -6988,6 +7053,456 @@ function KibbleGuideSection() {
   );
 }
 
+// ── 5 FACTS, THEN "READ MORE" (pilot, 2026-11-17) ───────────────────────────
+// Kyle: people won't read a paragraph of dog science. Each section leads with
+// 5 one-line facts anyone can take in at a glance; everything that was there
+// before sits behind "Read more", UNCHANGED. Nothing is deleted — this only
+// changes what shows first. Facts summarise the section's own text; they never
+// add a claim the full content doesn't already make.
+//
+// Every section also carries at least one study (Kyle's ask). Only sources that
+// were fetched and read go here, and `kind` says honestly what sort of
+// evidence it is — observational, food-only measurement, etc.
+type SectionStudy = { finding: string; cite: string; kind: string; url: string };
+
+function FactList({ facts }: { facts: string[] }) {
+  return (
+    <View>
+      {facts.slice(0, 5).map((f, i) => (
+        <View key={i} style={{ flexDirection: "row", marginBottom: 8 }}>
+          <Text style={{ color: t.good, fontSize: 14, fontWeight: "800", width: 16, lineHeight: 19.5 }}>•</Text>
+          <Text style={{ color: t.text, fontSize: 13.5, lineHeight: 19.5, flex: 1 }}>{f}</Text>
+        </View>
+      ))}
+    </View>
+  );
+}
+
+function StudyNote({ study }: { study: SectionStudy }) {
+  return (
+    <TouchableOpacity
+      activeOpacity={0.7}
+      onPress={() => Linking.openURL(study.url)}
+      style={{ backgroundColor: t.surfaceSunken, borderRadius: 10, padding: 11, marginTop: 8, borderLeftWidth: 3, borderLeftColor: t.good }}
+    >
+      <Text style={{ color: t.textStrong, fontSize: 12, fontWeight: "800", marginBottom: 3 }}>📚 The research</Text>
+      <Text style={{ color: t.text, fontSize: 12.5, lineHeight: 18 }}>{study.finding}</Text>
+      <Text style={{ color: t.textDim, fontSize: 11, marginTop: 5 }}>{study.cite}</Text>
+      <Text style={{ color: t.textMuted, fontSize: 10.5, fontWeight: "700", marginTop: 3, textTransform: "uppercase", letterSpacing: 0.4 }}>
+        {study.kind}
+      </Text>
+      <Text style={{ color: t.good, fontSize: 11.5, fontWeight: "700", marginTop: 6 }}>Read the study ›</Text>
+    </TouchableOpacity>
+  );
+}
+
+/** Kyle's topic format (2026-11-17), one per subject — fish oil first, then gut,
+ *  yeast… Same four blocks every time so the app reads as one system:
+ *    1. 5 facts + the one thing to watch for
+ *    2. How it applies to Hershey (the brand's real dog)
+ *    3. The cheap version, for owners with little money
+ *    4. A study, read and labelled
+ *  The section's full original content goes behind <ReadMore> underneath. */
+type QuickTopicData = {
+  facts: string[];
+  watchOut: string;
+  hershey: string;
+  cheap: { name: string; why: string }[];
+  study: SectionStudy;
+  /** Optional "don't forget" card — e.g. green-lipped mussel on the fish oil topic. */
+  note?: { title: string; text: string };
+  /** Optional groups shown as titles only — tap a title to open it (Kyle 2026-11-17). */
+  groups?: { heading: string; items: { title: string; text: string }[] }[];
+  /** More trials after the main one. */
+  extraStudies?: SectionStudy[];
+};
+
+/** A title that opens to one short paragraph. Closed by default. */
+function ExpandRow({ title, text }: { title: string; text: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <TouchableOpacity
+      activeOpacity={0.7}
+      onPress={() => {
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+        setOpen((o) => !o);
+      }}
+      style={{ paddingVertical: 9, borderBottomWidth: 1, borderBottomColor: t.border }}
+    >
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <Text style={{ color: t.textStrong, fontSize: 13.5, fontWeight: "700", flex: 1 }}>{title}</Text>
+        <Text style={{ color: t.textFaint, fontSize: 15, fontWeight: "600" }}>{open ? "⌄" : "›"}</Text>
+      </View>
+      {open && <Text style={{ color: t.textMuted, fontSize: 12.5, lineHeight: 18.5, marginTop: 5 }}>{text}</Text>}
+    </TouchableOpacity>
+  );
+}
+
+function QuickTopic({ data }: { data: QuickTopicData }) {
+  const label = (text: string) => (
+    <Text style={{ color: t.textMuted, fontSize: 11, fontWeight: "800", textTransform: "uppercase", letterSpacing: 0.6, marginBottom: 7 }}>
+      {text}
+    </Text>
+  );
+  return (
+    <View style={{ marginBottom: 4 }}>
+      {label("5 things to know")}
+      <FactList facts={data.facts} />
+      <View style={{ backgroundColor: t.moderateTint, borderRadius: 10, padding: 11, marginTop: 2, borderLeftWidth: 3, borderLeftColor: t.moderate }}>
+        <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "800", marginBottom: 3 }}>⚠️ Watch out for</Text>
+        <Text style={{ color: t.text, fontSize: 13, lineHeight: 19 }}>{data.watchOut}</Text>
+      </View>
+
+      {data.groups?.map((g) => (
+        <View key={g.heading} style={{ marginTop: 14 }}>
+          {label(g.heading)}
+          {g.items.map((it) => (
+            <ExpandRow key={it.title} title={it.title} text={it.text} />
+          ))}
+        </View>
+      ))}
+
+      <View style={{ backgroundColor: t.surfaceSunken, borderRadius: 10, padding: 11, marginTop: 12 }}>
+        <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "800", marginBottom: 3 }}>🐾 How Hershey does it</Text>
+        <Text style={{ color: t.text, fontSize: 13, lineHeight: 19 }}>{data.hershey}</Text>
+      </View>
+
+      {data.note && (
+        <View style={{ backgroundColor: t.goodTint, borderRadius: 10, padding: 11, marginTop: 12, borderLeftWidth: 3, borderLeftColor: t.good }}>
+          <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "800", marginBottom: 3 }}>💡 {data.note.title}</Text>
+          <Text style={{ color: t.text, fontSize: 13, lineHeight: 19 }}>{data.note.text}</Text>
+        </View>
+      )}
+
+      <View style={{ marginTop: 14 }}>
+        {label("On a budget")}
+        {data.cheap.map((c, i) => (
+          <View key={i} style={{ marginBottom: 8 }}>
+            <Text style={{ color: t.textStrong, fontSize: 13, fontWeight: "700" }}>{c.name}</Text>
+            <Text style={{ color: t.textMuted, fontSize: 12.5, lineHeight: 18 }}>{c.why}</Text>
+          </View>
+        ))}
+      </View>
+
+      <StudyNote study={data.study} />
+      {data.extraStudies?.map((s) => <StudyNote key={s.url} study={s} />)}
+    </View>
+  );
+}
+
+// ── FISH OIL ──
+// Facts 1/2/4/5 and the watch-out summarise OMEGA_BENEFITS / OMEGA_SAFETY / the
+// omega guide's own text. Fact 3 is the Mehler trial below. Hershey's line is
+// from docs/HERSHEY_TRACKER.csv + the 2026-08-13 diet plan (Kyle's own data).
+// The 2,350 mg figure = 69 mg/kg × 34 kg (75 lb).
+//
+// Study fetched and read 2026-11-17 (PubMed abstract — methods are in it).
+// RCT, double-blind, placebo-controlled, 78 dogs enrolled / 74 finished, 84
+// days, OA confirmed by one investigator. ⚠️ Authors include Veterinarian
+// Recommended Solutions (supplement maker) and OmegaQuant (fatty-acid testing).
+const FISH_OIL_TOPIC: QuickTopicData = {
+  // Kyle picked facts 4, 6, 7, 9 + watch-out A from his own notebook
+  // (vault "Omega-3 for Dogs" + qa-omegas.json + qa-omega-sources-2026-08-05.json)
+  // on 2026-11-17. Groups below = the rest of that menu, titles only.
+  facts: [
+    "Omega-3 takes 6–8 weeks to build into the cells — judge it then, not before.",
+    "Flax and chia are ALA, and dogs convert well under 10% of it. A flax-based \"great ratio\" can be 4–5× worse on real marine omega-3.",
+    "The target is 5:1 omega-6 to omega-3 or lower. Most kibble runs 15:1 to 30:1.",
+    "Omega-3 breaks down under kibble's heat and on the shelf — what was in the bag at the factory isn't what's in the bowl.",
+  ],
+  watchOut:
+    "Rancid oil is pro-inflammatory — the opposite of what you bought it for. Buy small bottles, keep them in the fridge, toss it if it smells sharp, and choose an oil preserved with mixed tocopherols (natural vitamin E).",
+  groups: [
+    {
+      heading: "What it helps",
+      items: [
+        { title: "🦴 Arthritis", text: "In a 127-dog trial across 18 vet clinics, dogs with arthritis got up from rest and played better within 6 weeks, and walked better by 12." },
+        { title: "🐾 Itchy skin & allergies", text: "One of its strongest uses — dry skin, hair loss, constant scratching, paw chewing and itching." },
+        { title: "🧠 Senior brain", text: "It can ease signs of canine dementia — pacing, waking at night, barking at walls, acting differently with you. DHA does most of that work." },
+        { title: "✨ Skin & coat change first", text: "Usually the first thing you'll see, within weeks. Joints take longer." },
+      ],
+    },
+    {
+      heading: "How to give it",
+      items: [
+        { title: "🐢 Start low, build slow", text: "Start at a quarter to half the dose and build over 2–4 weeks. Loose stool means you went too fast — not that your dog can't take fish oil." },
+        { title: "🍳 Always with a fatty meal", text: "Omega-3 is fat-soluble. On an empty stomach you waste part of what you paid for." },
+        { title: "🦐 Krill: half the dose", text: "Krill absorbs better, so it takes about 500 mg per 20 lb, vs 1,000 mg for fish oil." },
+        { title: "🥫 Sardines: the best value", text: "Small fish, low in mercury, plus protein and calcium. Packed in water, no salt added." },
+      ],
+    },
+    {
+      // Kyle 2026-11-17: show the disagreements in the app rather than hide them.
+      heading: "Where the advice differs",
+      items: [
+        { title: "🩸 Does it thin the blood?", text: "Older advice says stop fish oil 7–14 days before surgery. A large human heart-surgery trial (1,500+ patients) found no extra bleeding. But high doses do lengthen bleeding time — so the middle ground: tell your vet before any surgery or dental work, and take care alongside NSAIDs." },
+        { title: "🕐 How long is an open bottle good?", text: "Some guides say 4 weeks, others a couple of months. Your nose is the real test — if it smells sharp or strongly fishy, it's done. Small bottles, in the fridge." },
+        { title: "⚖️ How much for a big dog?", text: "Guides range widely. For a 75 lb dog, the 78-dog arthritis trial used about 2,350 mg EPA + DHA a day; therapeutic ranges built from the NRC safety limit run about 3,200–5,200 mg. Either way, start low and build up." },
+      ],
+    },
+  ],
+  extraStudies: [
+    {
+      // From Kyle's qa-omega-sources pack (trusted; PMID 20043800).
+      finding:
+        "127 dogs with arthritis across 18 vet clinics ate either a regular food or one with far more omega-3 for six months. On the omega-3 food, owners saw them rise and play better by 6 weeks, and walk better by 12 and 24.",
+      cite: "Roush et al., JAVMA 2010 · 18 private vet clinics",
+      kind: "Randomised · double-blind · controlled · multicentre",
+      url: "https://pubmed.ncbi.nlm.nih.gov/20043800/",
+    },
+  ],
+  hershey:
+    // Kyle, 2026-11-17: on half a can of sardines + close to a full serving of
+    // fish oil daily; hind legs and the night-time limp much better since.
+    "Hershey is a 75 lb, 8-year-old Lab mix who runs hot in TCVM — fish is cooling, so it suits him. He gets half a can of sardines a day plus close to a full serving of fish oil, and it's made a big difference: his hind legs and the limp he gets at night have improved a lot.",
+  cheap: [
+    { name: "🥫 Canned sardines in water", why: "The best deal going — whole small fish, low in mercury. Pick no-salt-added. Half a can a day suits a big dog." },
+    { name: "🐟 Canned pink salmon", why: "Cheap, and the soft bones that come in the can add calcium." },
+    { name: "🐠 Canned Atlantic mackerel", why: "Rich in omega-3. Atlantic, not king mackerel — king is high in mercury." },
+    { name: "🚫 Don't count on flax or chia", why: "Cheap, but dogs convert very little plant omega-3 into the forms they use." },
+  ],
+  // Hershey's GLM-first order and the ~2 vs 6–8 week timing are from Kyle's
+  // 2026-08-13 diet plan. ETA: Treschow 2007 (see OMEGA_ALPHABET below).
+  note: {
+    title: "Don't forget green-lipped mussel",
+    text: "A New Zealand shellfish, low on the food chain so it's clean — and the joint specialist. Its omega-3s come with a rare extra one, ETA, that fish oil doesn't have. For a stiff dog it can kick in faster: about 2 weeks, vs 6–8 for fish oil. GLM for the joints, fish oil for skin, coat, heart and lipomas — they work best together.",
+  },
+  study: {
+    finding:
+      "78 dogs with arthritis got either fish oil (about 69 mg EPA + DHA per kg a day) or a placebo oil for 12 weeks. Every measure of pain, lameness and joint severity improved more on fish oil, with no major side effects.",
+    cite: "Mehler et al., Prostaglandins Leukot Essent Fatty Acids 2016",
+    kind: "Randomised · double-blind · placebo-controlled · authors linked to a supplement company",
+    url: "https://doi.org/10.1016/j.plefa.2016.03.015",
+  },
+};
+
+// ── GUT HEALTH ──
+// Facts summarise the section's own content (the 80% rule, GUT_AXES,
+// GUT_LEAKY, GUT_FOODS, GUT_PROTOCOLS). Watch-out = Kyle's own lesson from
+// trying the Four Leaf Rover leaky-gut protocol all at once. Hershey line from
+// Kyle 2026-11-17 (also in docs/HERSHEY_TRACKER.csv → GUT UPDATE).
+// Study: Herstad 2010 — see docs/SOURCES.md. Leaky gut itself has no canine
+// diet trial behind it; the fact line describes the mechanism the section
+// already teaches and doesn't claim a trial.
+const GUT_TOPIC: QuickTopicData = {
+  facts: [
+    "70–80% of the immune system sits right behind the gut wall. Calm gut, calm immune system.",
+    "Gut trouble often shows up somewhere else first — itchy skin, ear infections, paw chewing, even anxiety.",
+    "Leaky gut: when the lining's seal loosens, food proteins slip into the blood and the immune system attacks them.",
+    "Bone broth, fermented goat's milk and a little plant fibre (pumpkin, sweet potato) help rebuild it.",
+    "Wake probiotics up: open the capsule into yogurt or bone broth and let it sit 30–60 minutes before feeding.",
+  ],
+  watchOut:
+    "Go slow. Add one new thing at a time and give it a few days before the next. Starting a whole gut protocol at once can upset a sensitive gut — and you won't know what helped or what didn't.",
+  hershey:
+    "Hershey is rebuilding right now. He went months without a probiotic while switching to a freeze-dried food (which has digestive enzymes built in), and I suspect leaky gut. I tried Four Leaf Rover's leaky-gut protocol, but it was too many new things at once. The plan: restart his probiotic this week, then bring the protocol back one piece at a time.",
+  cheap: [
+    { name: "🥛 Plain full-fat yogurt or kefir", why: "Live cultures for a dollar or two. Plain only — no sugar, no xylitol." },
+    { name: "🍲 Homemade bone broth", why: "Simmer leftover bones for a day. The gelatin is what helps repair the gut lining." },
+    { name: "🎃 Plain canned pumpkin", why: "Cheap prebiotic fibre — the food good bacteria live on. Pumpkin, not pie filling." },
+    { name: "⏰ Space out meals and treats", why: "Free. 2.5–3 hours between eating lets the gut sweep itself clean." },
+  ],
+  study: {
+    finding:
+      "36 dogs with sudden diarrhea got either a multi-strain probiotic or a look-alike placebo. On the probiotic, diarrhea cleared in 1.3 days on average, vs 2.2 days on placebo. It didn't change vomiting.",
+    cite: "Herstad et al., J Small Anim Pract 2010 · Oslo",
+    kind: "Randomised · double-blind · placebo-controlled · short-term diarrhea only",
+    url: "https://doi.org/10.1111/j.1748-5827.2009.00853.x",
+  },
+};
+
+// ── YEAST ──
+// Facts summarise YEAST_VS_ALLERGY / YEAST_ELIMINATE / YEAST_TOPICAL /
+// YEAST_TIMELINE. Watch-out combines YEAST_ELIMINATE.steroids, the gut
+// section's antibiotic point, and Hershey's own history. Hershey line: Kyle
+// 2026-11-17 — 7 years yeast-free except once after antibiotics; swims most
+// summer days and air-dries fine; now one flaky spot on a front leg, trying
+// the leaky-gut protocol for it.
+// Study: Olivry 2010 is an expert GUIDELINE, not a trial. No canine trial was
+// found linking dietary sugar/starch to skin yeast (see SOURCES.md) — the
+// "starve it" fact is phrased as the plan, not as a proven mechanism.
+const YEAST_TOPIC: QuickTopicData = {
+  facts: [
+    "The tell is the smell: yeast smells like corn chips, strongest around the paws, ears and skin folds.",
+    "Itching without that smell usually points to allergies or the gut — not yeast.",
+    "The yeast plan starts in the bowl: cut sugary, starchy fillers like rice, corn, peas and potatoes.",
+    "A 50/50 vinegar-and-water rinse, left to air dry, makes skin a place yeast doesn't want to live.",
+    "Give it 3–8 weeks. Most people quit at week two and decide it didn't work.",
+  ],
+  watchOut:
+    "Antibiotics and steroids. Antibiotics wipe out the good gut bacteria that keep yeast in check; steroids raise blood sugar and hide the itch, and when the course ends yeast often comes back worse. If your dog needs antibiotics, plan a probiotic alongside.",
+  hershey:
+    "For the first 7 years of his life Hershey never had a yeast infection — except once, right after a course of antibiotics. He swims most days all summer and usually air-dries just fine. His yeast has settled down now. There's one flaky spot on his front leg, so I'm trying the leaky-gut protocol to see if rebuilding his gut clears it.",
+  cheap: [
+    { name: "🧴 Vinegar rinse", why: "1 part white or apple cider vinegar to 1 part water. Pennies a bath — and let it air dry." },
+    { name: "🐟 Sardines in water", why: "Omega-3s to calm the inflammation underneath. In water, never oil." },
+    { name: "🌿 Dried oregano", why: "A pinch in food. It carries thymol, a natural antifungal." },
+    { name: "🚫 Cut the starchy treats", why: "Free — and the first step of the plan." },
+  ],
+  study: {
+    finding:
+      "An international panel of veterinary dermatologists lists yeast (Malassezia) as a known trigger for itchy-skin flares in dogs, and recommends gentle bathing and essential fatty acid supplements as part of care.",
+    cite: "Olivry et al., Veterinary Dermatology 2010 · International Task Force",
+    kind: "Expert guideline · not a trial · didn't test diet sugar",
+    url: "https://doi.org/10.1111/j.1365-3164.2010.00889.x",
+  },
+};
+
+// ── THE OMEGA ALPHABET (Read more, fish oil topic) ──────────────────────────
+// Kyle's ask 2026-11-17: explain ALA / EPA / DHA / ETA etc., why flax falls
+// short, and why GLM can be more potent. Flax + SDA + gut-lining + brain/eye
+// lines restate OMEGA_SOURCES / OMEGA_BENEFITS. ETA is from Treschow 2007
+// (RMIT, Comp Biochem Physiol B 147:645) — abstract read: C20:4 n-3 was the
+// predominant PUFA in GLM lipid extract and inhibited lipoxygenase products in
+// stimulated HUMAN neutrophils IN VITRO. Lab result, not a dog trial — the
+// text says so. GLM review: SOURCES.md — keep "moderate amount of evidence",
+// don't upgrade it.
+const OMEGA_ALPHABET: { code: string; name: string; side: "3" | "6"; text: string }[] = [
+  { code: "ALA", name: "alpha-linolenic acid", side: "3", text: "The plant omega-3 — flax, chia, hemp. It's raw material, not the finished product: the body has to convert it into EPA and DHA, and dogs do that poorly." },
+  { code: "EPA", name: "eicosapentaenoic acid", side: "3", text: "The anti-inflammatory workhorse. It competes with omega-6 for the same enzymes, so more EPA means calmer inflammation signals — joints, skin, heart." },
+  { code: "DHA", name: "docosahexaenoic acid", side: "3", text: "The building block. It sits in the brain, the eyes and cell walls — including the gut lining." },
+  { code: "ETA", name: "eicosatetraenoic acid", side: "3", text: "The rare one, found in green-lipped mussel. In lab tests it also blocked a second inflammation pathway — one EPA mostly leaves alone." },
+  { code: "SDA", name: "stearidonic acid", side: "3", text: "Found in Ahiflower oil. A shortcut past the conversion bottleneck — it turns into EPA about 4× better than flax's ALA." },
+  { code: "LA", name: "linoleic acid", side: "6", text: "The main omega-6 — chicken fat, seed oils. Essential, but kibble is loaded with it. That's what drives the 15:1–30:1 ratios." },
+  { code: "AA", name: "arachidonic acid", side: "6", text: "What LA becomes. It makes the body's inflammation signals — needed in balance, a problem in surplus. EPA is what keeps it in check." },
+];
+
+const GLM_REVIEW_STUDY: SectionStudy = {
+  finding:
+    "A systematic review of the green-lipped mussel trials found \"a moderate amount of evidence\" that it helps dogs with arthritis — while noting weaknesses in how some of those trials were run.",
+  cite: "Abshirini et al., Inflammopharmacology 2021",
+  kind: "Systematic review · moderate evidence",
+  url: "https://doi.org/10.1007/s10787-021-00801-2",
+};
+
+function OmegaAlphabet() {
+  const h = (text: string) => (
+    <Text style={{ color: t.textStrong, fontWeight: "800", fontSize: 13.5, marginTop: 14, marginBottom: 6 }}>{text}</Text>
+  );
+  const p = (text: string) => <Text style={{ color: t.text, fontSize: 12.5, lineHeight: 18.5, marginBottom: 6 }}>{text}</Text>;
+  return (
+    <View style={{ marginBottom: 6 }}>
+      {h("🔤 The omega alphabet")}
+      {OMEGA_ALPHABET.map((o) => (
+        <View key={o.code} style={{ flexDirection: "row", marginBottom: 9 }}>
+          <View
+            style={{
+              width: 44,
+              paddingVertical: 3,
+              borderRadius: 6,
+              alignItems: "center",
+              alignSelf: "flex-start",
+              marginRight: 10,
+              backgroundColor: o.side === "3" ? t.goodTint : t.moderateTint,
+            }}
+          >
+            <Text style={{ color: o.side === "3" ? t.good : t.moderateDeep, fontWeight: "800", fontSize: 12 }}>{o.code}</Text>
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={{ color: t.textDim, fontSize: 11 }}>
+              {o.name} · omega-{o.side}
+            </Text>
+            <Text style={{ color: t.text, fontSize: 12.5, lineHeight: 18 }}>{o.text}</Text>
+          </View>
+        </View>
+      ))}
+
+      {h("🌾 Why flaxseed oil falls short")}
+      {p("Flax is cheap and it's on a lot of labels — but it's ALA, the raw material. Dogs lack efficient enzymes to turn ALA into EPA and DHA, so a food that lists flaxseed as its omega-3 source hasn't given your dog meaningful EPA or DHA.")}
+      {p("Fish, krill, algae and green-lipped mussel skip that step: they deliver EPA and DHA ready-made. If your dog can't have marine sources, Ahiflower is the plant option that actually converts.")}
+
+      {h("🦪 Why green-lipped mussel can be more potent")}
+      {p("1. It brings ETA. In lab tests on immune cells, ETA blocked a second inflammation pathway on top of the one EPA works on — that's lab work, not a dog trial, but it's the leading explanation for why small amounts do so much.")}
+      {p("2. It's a whole food, not just an oil. The omega-3s come along with the rest of the mussel, which is why it's the go-to for joints specifically.")}
+      {p("3. It's clean. It sits near the bottom of the food chain, so there's virtually nothing in it to accumulate.")}
+      {p("4. It's faster for stiffness — around 2 weeks to notice, vs 6–8 for fish oil. Fish oil still covers things GLM doesn't: skin, coat, heart and lipomas. Use both.")}
+      <StudyNote study={GLM_REVIEW_STUDY} />
+    </View>
+  );
+}
+
+/** Hides `children` until tapped. The button sits below whatever is open, so a
+ *  long section can be folded back up from where the reader finished. */
+function ReadMore({
+  children,
+  moreLabel = "Read more",
+  lessLabel = "Show less",
+  style,
+}: {
+  children: React.ReactNode;
+  moreLabel?: string;
+  lessLabel?: string;
+  style?: any;
+}) {
+  const [open, setOpen] = useState(false);
+  return (
+    <View>
+      {open && children}
+      <TouchableOpacity
+        activeOpacity={0.7}
+        hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+        onPress={() => {
+          LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+          setOpen((o) => !o);
+        }}
+        style={[
+          {
+            alignSelf: "flex-start",
+            paddingVertical: 8,
+            paddingHorizontal: 14,
+            borderRadius: 999,
+            borderWidth: 1,
+            borderColor: t.border,
+            backgroundColor: t.surface,
+            marginTop: 8,
+            marginBottom: 4,
+          },
+          style,
+        ]}
+      >
+        <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>
+          {open ? `${lessLabel} ▴` : `${moreLabel} ▾`}
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+// Fetched and read 2026-11-17 (PubMed abstract; full text paywalled).
+// Wageningen University. Measured compounds IN the food — no health outcomes.
+// Canned was highest, then pelleted, then extruded — so this supports "high
+// heat changes food", NOT "kibble is the worst". Keep the wording that way.
+const PROCESSING_STUDY: SectionStudy = {
+  finding:
+    "Researchers measured heat-damage compounds (Maillard products) in 67 commercial dog and cat foods. Canned foods had the most, then pellets and kibble. For their size, dogs took in about 122× more of one of them (HMF) than adult humans do.",
+  cite: "van Rooijen et al., J Agric Food Chem 2014 · Wageningen University",
+  kind: "Measured in the food · long-term health effects not yet studied",
+  url: "https://doi.org/10.1021/jf502064h",
+};
+
+// Fetched and read 2026-11-17 (full text, PLOS ONE, open access). UC Davis;
+// no specific funding. Prospective OBSERVATIONAL, no control group, one breed,
+// treatment not standardised. ⚠️ Abstract says "23 of 24 improved" but only 16
+// had follow-up echo — the Discussion's 15 of 16 is the defensible number.
+const HEART_STUDY: SectionStudy = {
+  finding:
+    "24 Golden Retrievers had DCM and low taurine — most were eating grain-free diets with legumes high on the label. After a diet change plus taurine, 15 of the 16 dogs that had a follow-up heart scan improved.",
+  cite: "Kaplan et al., PLOS ONE 2018 · UC Davis",
+  kind: "Observational · no control group · one breed",
+  url: "https://doi.org/10.1371/journal.pone.0209112",
+};
+
+// Each line summarises something HeartSection already says.
+const HEART_QUICK_FACTS = [
+  "Count breaths while your dog sleeps — under 30–35 a minute is normal. A rising count is the earliest warning.",
+  "Small breeds tend toward mitral valve disease; big breeds like Dobermans toward DCM, which can stay silent.",
+  "Taurine and L-carnitine are concentrated in heart muscle — low-meat diets run short on both.",
+  "Feed the heart: beef heart, dark-meat poultry and fresh omega-3 fish like sardines.",
+  "Everything here goes alongside heart meds like Vetmedin and Lasix — never instead of them.",
+];
+
+const SEVERITY_RANK: Record<string, number> = { toxic: 0, severe: 1, moderate: 2, mild: 3 };
+
 function AccordionSection({
   title,
   children,
@@ -7017,7 +7532,8 @@ function AccordionSection({
   const activeTopic = React.useContext(TopicContext);
   const [open, setOpen] = useState(defaultOpen);
   // Hooks above, early return below — hook order stays stable either way.
-  if (door && activeDoor !== door) return null;
+  const doorOpen = !door || activeDoor === door || (activeDoor === SCAN_DOOR && door !== "learn");
+  if (!doorOpen) return null;
   if (topic && activeTopic !== topic) return null;
   const toggle = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -7196,6 +7712,9 @@ export default function App() {
   // owner goes looking (changed 2026-11-12).
   const [openDoor, setOpenDoor] = useState<string | null>(null);
   const [openTopic, setOpenTopic] = useState<string | null>(null);
+  // Learn tab search + "All topics" toggle (2026-11-17).
+  const [learnQuery, setLearnQuery] = useState("");
+  const [showAllTopics, setShowAllTopics] = useState(false);
   // Learn without scanning (2026-08-21). The A–Z reference doesn't depend on a
   // scan — gating it behind one meant a new owner had to photograph a bag before
   // they could read anything. This opens the same index standalone.
@@ -9084,9 +9603,10 @@ export default function App() {
       return;
     }
 
-    const opener = `Ask me anything about **${productName}** — I'll answer for ${
-      dogProfileName ?? "your dog"
-    }.`;
+    // From the Learn search there's no scanned product — don't print "about ****".
+    const opener = productName
+      ? `Ask me anything about **${productName}** — I'll answer for ${dogProfileName ?? "your dog"}.`
+      : `Here's what I know — answered for ${dogProfileName ?? "your dog"}.`;
     const userMsg = { role: "user", content: question };
     const seeded = [{ role: "assistant", content: opener }, userMsg];
     setCoachMessages(seeded);
@@ -9096,7 +9616,7 @@ export default function App() {
     const reply = await askNutritionCoach(
       productName,
       ingredients.join(", "),
-      score ?? 0,
+      score ?? undefined, // no scan → no "Score: 0/100" sent to the coach
       flagged.map((f) => f.name),
       seeded,
     );
@@ -9123,7 +9643,7 @@ export default function App() {
     const reply = await askNutritionCoach(
       productName,
       ingredients.join(", "),
-      score ?? 0,
+      score ?? undefined,
       flagged.map((f) => f.name),
       updated,
     );
@@ -10289,7 +10809,7 @@ export default function App() {
         </View>
       ) : (
         <TopicContext.Provider value={openTopic}>
-        <DoorContext.Provider value={openDoor}>
+        <DoorContext.Provider value={learnMode ? openDoor : SCAN_DOOR}>
         <ScrollView
           contentContainerStyle={styles.results}
           showsVerticalScrollIndicator={false}
@@ -10343,7 +10863,7 @@ export default function App() {
               came up blank. Hoisted to be a sibling of the result blocks on
               2026-08-21. Nothing was rewritten; the same JSX moved up one
               level so it renders for a food scan, a treat scan, or Learn. */}
-            {score !== null && (
+            {SHOW_SCAN_DOOR_TABS && score !== null && (
               <View style={{ marginHorizontal: 16, marginBottom: 14 }}>
                 {/* Segmented tab row. Was a wrapping grid of large cards, which
                     cost a lot of vertical space before the user reached anything.
@@ -10411,23 +10931,113 @@ export default function App() {
               </View>
             )}
 
-            {/* The kibble guide sits ABOVE the A–Z index, because it's the
-                thing a brand-new owner needs and the A–Z assumes you already
-                know which of 15 topics you want. */}
-            {(score !== null || learnMode) && openDoor === "learn" && !openTopic && (
-              <KibbleGuideSection />
-            )}
-
-            {/* A–Z topic index — only under the Learn door. Alphabetical chips,
-                one short phrase each, tap to expand that section below. */}
+            {/* ── LEARN: search + most popular + All topics (Kyle, 2026-11-17) ──
+                Replaces the always-open wall of 24 chips. Same chips, same
+                sections — they now sit behind "All topics". The kibble guide
+                moved with them. Nothing was removed. */}
             {(score !== null || learnMode) && openDoor === "learn" && (
               <View style={{ marginHorizontal: 16, marginBottom: 14 }}>
-                <Text style={{ color: t.textDim, fontSize: 12.5, lineHeight: 18, marginBottom: 8 }}>
-                  {openTopic
-                    ? "Tap the same topic again to close it."
-                    : "Pick a topic. You don't need to read them in order."}
-                </Text>
-                <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 7 }}>
+                {openTopic ? (
+                  <TouchableOpacity
+                    activeOpacity={0.75}
+                    onPress={() => {
+                      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+                      setOpenTopic(null);
+                    }}
+                    style={{ alignSelf: "flex-start", paddingVertical: 7, paddingHorizontal: 13, borderRadius: 999, borderWidth: 1, borderColor: t.border, backgroundColor: t.surface }}
+                  >
+                    <Text style={{ color: t.textStrong, fontSize: 12.5, fontWeight: "700" }}>← All topics</Text>
+                  </TouchableOpacity>
+                ) : (
+                  <>
+                    {/* Search: filters topics as you type; Ask sends it to the AI. */}
+                    <View style={{ flexDirection: "row", alignItems: "center", backgroundColor: t.surface, borderRadius: 12, borderWidth: 1, borderColor: t.border, paddingLeft: 12 }}>
+                      <Text style={{ fontSize: 15, marginRight: 6 }}>🔍</Text>
+                      <TextInput
+                        value={learnQuery}
+                        onChangeText={setLearnQuery}
+                        placeholder="Search or ask anything…"
+                        placeholderTextColor={t.textFaint}
+                        returnKeyType="search"
+                        onSubmitEditing={() => learnQuery.trim() && askAboutSection(learnQuery.trim())}
+                        style={{ flex: 1, color: t.textStrong, fontSize: 15, paddingVertical: 12 }}
+                      />
+                      {learnQuery.trim() !== "" && (
+                        <TouchableOpacity onPress={() => setLearnQuery("")} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }} style={{ paddingHorizontal: 10 }}>
+                          <Text style={{ color: t.textFaint, fontSize: 15 }}>✕</Text>
+                        </TouchableOpacity>
+                      )}
+                    </View>
+
+                    {learnQuery.trim() !== "" ? (
+                      <View style={{ marginTop: 12 }}>
+                        {(() => {
+                          const hits = matchTopics(learnQuery);
+                          return hits.length > 0 ? (
+                            <>
+                              <Text style={{ color: t.textMuted, fontSize: 11, fontWeight: "800", textTransform: "uppercase", letterSpacing: 0.6, marginBottom: 7 }}>In the app</Text>
+                              <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 7 }}>
+                                {hits.map((topic) => (
+                                  <TouchableOpacity
+                                    key={topic}
+                                    onPress={() => {
+                                      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+                                      setOpenTopic(topic);
+                                      setLearnQuery("");
+                                    }}
+                                    style={{ backgroundColor: t.goodTint, borderWidth: 1, borderColor: t.good, borderRadius: 999, paddingVertical: 7, paddingHorizontal: 13 }}
+                                  >
+                                    <Text style={{ color: t.goodDeep, fontSize: 12.5, fontWeight: "700" }}>{topic}</Text>
+                                  </TouchableOpacity>
+                                ))}
+                              </View>
+                            </>
+                          ) : (
+                            <Text style={{ color: t.textDim, fontSize: 12.5 }}>No topic by that name in the app yet — ask the AI instead.</Text>
+                          );
+                        })()}
+                        <TouchableOpacity
+                          activeOpacity={0.8}
+                          onPress={() => askAboutSection(learnQuery.trim())}
+                          style={{ marginTop: 12, backgroundColor: t.good, borderRadius: 12, paddingVertical: 12, paddingHorizontal: 14 }}
+                        >
+                          <Text style={{ color: t.onAccent, fontSize: 13.5, fontWeight: "800" }}>✨ Ask PawGrade AI: “{learnQuery.trim()}”</Text>
+                          <Text style={{ color: t.onAccent, fontSize: 11.5, marginTop: 2, opacity: 0.85 }}>A deeper answer from our knowledge base</Text>
+                        </TouchableOpacity>
+                      </View>
+                    ) : (
+                      <>
+                        <Text style={{ color: t.textMuted, fontSize: 11, fontWeight: "800", textTransform: "uppercase", letterSpacing: 0.6, marginTop: 16, marginBottom: 8 }}>⭐ Most popular</Text>
+                        <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between", rowGap: 8 }}>
+                          {POPULAR_TOPICS.map((p) => (
+                            <TouchableOpacity
+                              key={p.label}
+                              activeOpacity={0.75}
+                              onPress={() => {
+                                LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+                                if (p.topic) setOpenTopic(p.topic);
+                                else if (p.search) setLearnQuery(p.search);
+                              }}
+                              style={{ width: "48.5%", backgroundColor: t.surface, borderWidth: 1, borderColor: t.border, borderRadius: 12, paddingVertical: 14, paddingHorizontal: 12 }}
+                            >
+                              <Text style={{ color: t.textStrong, fontSize: 14, fontWeight: "700" }}>{p.label}</Text>
+                            </TouchableOpacity>
+                          ))}
+                        </View>
+
+                        <TouchableOpacity
+                          activeOpacity={0.75}
+                          onPress={() => {
+                            LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+                            setShowAllTopics((v) => !v);
+                          }}
+                          style={{ flexDirection: "row", alignItems: "center", marginTop: 16, paddingVertical: 6 }}
+                        >
+                          <Text style={{ color: t.textStrong, fontSize: 14, fontWeight: "700", flex: 1 }}>All topics</Text>
+                          <Text style={{ color: t.textFaint, fontSize: 15, fontWeight: "600" }}>{showAllTopics ? "⌄" : "›"}</Text>
+                        </TouchableOpacity>
+                        {showAllTopics && (
+                          <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 7, marginTop: 8 }}>
                   {LEARN_TOPICS.map((topic) => {
                     const on = openTopic === topic;
                     return (
@@ -10455,8 +11065,19 @@ export default function App() {
                       </TouchableOpacity>
                     );
                   })}
-                </View>
+                          </View>
+                        )}
+                      </>
+                    )}
+                  </>
+                )}
               </View>
+            )}
+
+            {/* The kibble guide (read a bag without scanning) now lives under
+                "All topics" with the rest of the reference material. */}
+            {(score !== null || learnMode) && openDoor === "learn" && !openTopic && showAllTopics && learnQuery.trim() === "" && (
+              <KibbleGuideSection />
             )}
 
           {!loading &&
@@ -10502,7 +11123,16 @@ export default function App() {
                       )
                     }
                   >
-                    {scoreBreakdown.map((item, i) => (
+                    {(() => {
+                      // Top 5 by impact first, the rest behind Read more (2026-11-17).
+                      // "Base score" / "Starting point" stays pinned on top — it's
+                      // the number everything else adds to or takes from.
+                      const isBase = (b: { label: string }) => b.label === "Base score" || b.label === "Starting point";
+                      const base = scoreBreakdown.filter(isBase);
+                      const ranked = scoreBreakdown
+                        .filter((b) => !isBase(b))
+                        .sort((a, b) => Math.abs(b.value) - Math.abs(a.value));
+                      const renderRow = (item: (typeof scoreBreakdown)[number], i: number) => (
                       <View key={i} style={styles.breakdownRow}>
                         <Text style={[styles.breakdownLabel, {
                           color: item.severity === 'toxic' ? t.critical
@@ -10527,7 +11157,22 @@ export default function App() {
                           {item.value > 0 ? `+${item.value}` : item.value}
                         </Text>
                       </View>
-                    ))}
+                      );
+                      const top = ranked.slice(0, 5);
+                      const more = ranked.slice(5);
+                      return (
+                        <>
+                          {base.map(renderRow)}
+                          {top.map((item, i) => renderRow(item, i + base.length))}
+                          {more.length > 0 && (
+                            <ReadMore moreLabel={`Show ${more.length} more`}>
+                              {more.map((item, i) => renderRow(item, i + base.length + top.length))}
+                            </ReadMore>
+                          )}
+                          <StudyNote study={PROCESSING_STUDY} />
+                        </>
+                      );
+                    })()}
                   </AccordionSection>
                 )}
 
@@ -11857,7 +12502,9 @@ export default function App() {
               {(score !== null || learnMode) && (
                 <AccordionSection
                   title="🍳 Build a home-cooked bowl"
-                  door="what-to-do"
+                  // Moved to Learn 2026-11-17 — same for every dog, not about the bag.
+                  door="learn"
+                  topic="Home-cooked bowl"
                   askLabel="Check my recipe"
                   onAskAI={() =>
                     askAboutSection(
@@ -12296,7 +12943,7 @@ export default function App() {
                   WHICH source you're buying before the arithmetic is worth
                   doing. The calculator below is untouched. */}
               <AccordionSection
-                title="🐟 The omega guide"
+                title="🐟 Fish oil & omega-3"
                   topic="Omega-3"
                   door="learn"
                 askLabel="Ask AI"
@@ -12306,6 +12953,10 @@ export default function App() {
                   )
                 }
               >
+                {/* Quick version first (2026-11-17); the full guide below is unchanged. */}
+                <QuickTopic data={FISH_OIL_TOPIC} />
+                <ReadMore moreLabel="Read the full omega guide">
+                <OmegaAlphabet />
                 <View style={{ backgroundColor: t.goodTint, borderRadius: 9, padding: 11, marginBottom: 10, borderLeftWidth: 3, borderLeftColor: t.good }}>
                   <Text style={{ color: t.good, fontWeight: "800", fontSize: 13 }}>
                     Why this is foundational, not optional
@@ -12428,6 +13079,7 @@ export default function App() {
                   resizeMode="contain"
                   accessibilityLabel="The Canine Omega Guide — why omegas matter, the bioavailability spectrum of plant versus marine sources, fish oil versus krill and algal alternatives, therapeutic dosing guidelines, and the safety first protocol"
                 />
+                </ReadMore>
               </AccordionSection>
 
               {/* Omega calculator — the arithmetic this app kept doing by hand.
@@ -14407,7 +15059,12 @@ export default function App() {
                       severity at a glance (matching the approved prototype),
                       the tag pill on the right names the tier in words too —
                       colour is never the only signal. */}
-                  {flagged.map((f, i, arr) => {
+                  {(() => {
+                  // Most serious 5 first, the rest behind "Show more" (2026-11-17).
+                  const sorted = [...flagged].sort(
+                    (a, b) => (SEVERITY_RANK[a.severity] ?? 9) - (SEVERITY_RANK[b.severity] ?? 9),
+                  );
+                  const renderFlag = (f: (typeof flagged)[number], i: number, arr: typeof flagged) => {
                     const open = !!expandedRedFlags[f.name];
                     const sev = SEVERITY_COLORS[f.severity] || t.critical;
                     return (
@@ -14454,7 +15111,20 @@ export default function App() {
                         )}
                       </View>
                     );
-                  })}
+                  };
+                  const top = sorted.slice(0, 5);
+                  const more = sorted.slice(5);
+                  return (
+                    <>
+                      {top.map((f, i) => renderFlag(f, i, top))}
+                      {more.length > 0 && (
+                        <ReadMore moreLabel={`Show ${more.length} more`}>
+                          {more.map((f, i) => renderFlag(f, i, more))}
+                        </ReadMore>
+                      )}
+                    </>
+                  );
+                  })()}
                 </AccordionSection>
               )}
 
@@ -14727,7 +15397,9 @@ export default function App() {
 
               {(score !== null || learnMode) && (
                 <AccordionSection title="🐾 Hershey's Protocol"
-                  door="what-to-do" bare>
+                  // Moved off the scan results 2026-11-17 (Kyle): his whole
+                  // routine — teeth, flea/tick — not about the food scanned.
+                  door="learn" topic="Hershey's Protocol" bare>
                   <HersheyProtocolSection />
                 </AccordionSection>
               )}
@@ -14862,7 +15534,14 @@ export default function App() {
                   askLabel="Ask"
                   onAskAI={() => askAboutSection("Explain the holistic approach to canine heart disease for my dog — the TCVM view, what to feed, and which supplements have doses. Be clear about what is clinical experience versus trial evidence, and remind me what must stay alongside prescribed cardiac medication.")}
                 >
-                  <HeartSection />
+                  {/* 5 facts + study first; the full guide is unchanged behind Read more. */}
+                  <View style={{ backgroundColor: t.surfaceAlt, borderRadius: 16, padding: 16, marginHorizontal: 16, marginBottom: 4 }}>
+                    <FactList facts={HEART_QUICK_FACTS} />
+                    <StudyNote study={HEART_STUDY} />
+                  </View>
+                  <ReadMore moreLabel="Read the full heart guide" style={{ marginHorizontal: 16, marginBottom: 12 }}>
+                    <HeartSection />
+                  </ReadMore>
                 </AccordionSection>
               )}
 
@@ -15380,6 +16059,9 @@ export default function App() {
                     )
                   }
                 >
+                  {/* Quick version first (2026-11-17); the full section below is unchanged. */}
+                  <QuickTopic data={YEAST_TOPIC} />
+                  <ReadMore moreLabel="Read the full yeast guide">
                   <Text style={{ color: t.text, fontSize: 12.5, lineHeight: 18 }}>
                     Yeast lives on sugar and a damaged gut wall. You starve it from the
                     inside while managing the surface from the outside — and it takes{" "}
@@ -15447,6 +16129,7 @@ export default function App() {
                     <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 4, lineHeight: 17 }}>{YEAST_TIMELINE.detail}</Text>
                     <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 6, lineHeight: 17 }}>{YEAST_TIMELINE.maintenance}</Text>
                   </View>
+                  </ReadMore>
                 </AccordionSection>
               )}
 
@@ -15462,6 +16145,9 @@ export default function App() {
                     )
                   }
                 >
+                  {/* Quick version first (2026-11-17); the full section below is unchanged. */}
+                  <QuickTopic data={GUT_TOPIC} />
+                  <ReadMore moreLabel="Read the full gut guide">
                   <View style={{ backgroundColor: t.goodTint, borderRadius: 10, padding: 12, borderLeftWidth: 3, borderLeftColor: t.good }}>
                     <Text style={{ color: t.goodDeep, fontSize: 13, fontWeight: "800" }}>
                       The 80% rule
@@ -15703,6 +16389,8 @@ export default function App() {
                     accessibilityLabel="The garden within — a dog's guide to gut health: the modern saboteurs, the 80 percent rule, leaky gut syndrome, the microbiome toolkit, herbal support and dietary foundations"
                   />
 
+                  </ReadMore>
+                  {/* Kept outside Read more on purpose — the safety line stays visible. */}
                   <Text style={{ color: t.textDim, fontSize: 11, lineHeight: 17, marginTop: 12 }}>
                     ⚠️ Educational only, not veterinary advice. FMT and ozone therapy are done
                     through a vet, and any dog on antibiotics, acid reducers or steroids needs that

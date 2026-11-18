@@ -107,3 +107,22 @@ Keep these visible — they're the ones most likely to be quoted at you.
 `~/.claude/skills/primary-sources/SKILL.md` (how to check) ·
 `~/.claude/skills/storm-research/SKILL.md` (the pipeline that produced most of this) ·
 `storm-reports/` (full briefings)
+
+---
+
+## 📱 Cited in the app's "5 facts" cards
+
+*Verified 2026-11-17 — each one is shown in the app with this exact evidence label.*
+
+| Source | Good for | Institution / funding |
+|---|---|---|
+| **[Mehler et al. 2016, PLEFA 109:1–7](https://doi.org/10.1016/j.plefa.2016.03.015)** | **Fish oil → arthritis.** Randomised, double-blind, placebo-controlled; 78 dogs enrolled, 74 finished, OA confirmed by one investigator. ~69 mg EPA+DHA/kg/day for 84 days → all pain/lameness/joint-severity measures improved vs placebo (p<0.05), no major side effects. *Read from the PubMed abstract (methods stated there); full text not read.* This is the trial behind the 69 mg/kg figure in the Omega section above. | ⚠️ Authors include **Veterinarian Recommended Solutions** (supplement maker) and **OmegaQuant** (fatty-acid testing). |
+| **[Kaplan et al. 2018, PLOS ONE e0209112](https://doi.org/10.1371/journal.pone.0209112)** | **Taurine + diet change → DCM.** Prospective observational, **no control group**, golden retrievers only, treatment not standardised. 24 dogs; only **16 had follow-up echo, 15 of 16 improved.** ⚠️ The abstract says "23 of 24 improved" — that does not match its own results. Use 15/16. Authors: causation "impossible to prove." *Full text read.* | UC Davis; "no specific funding." Fascetti directs the UC Davis Amino Acid Lab (fee-for-service taurine testing). |
+| **[van Rooijen et al. 2014, J Agric Food Chem 62:8883](https://doi.org/10.1021/jf502064h)** | **Heat processing → Maillard products.** 67 commercial dog/cat foods measured by UPLC-MS. **Canned highest**, then pelleted, then extruded. Dogs' HMF intake ~122× adult humans per kg^0.75. **Measured in food only — no health outcomes.** Does NOT show kibble is worst. *PubMed abstract read.* | Wageningen University, Animal Nutrition Group. |
+| **[Herstad et al. 2010, J Small Anim Pract 51:34](https://doi.org/10.1111/j.1748-5827.2009.00853.x)** | **Probiotics → acute diarrhoea.** Randomised, double-blind, placebo, single centre, 36 dogs. Multi-strain (L. acidophilus, P. acidilactici, B. subtilis, B. licheniformis, L. farciminis). Last abnormal stool **1.3 vs 2.2 days** (P=0.04). **No effect on vomiting.** Acute self-limiting cases only — says nothing about chronic gut disease. *Abstract read.* | Petvett Ekeberg clinic, Oslo. Funding not stated in abstract. |
+| **[Raghavan et al. 2006, JAAHA 42:28](https://doi.org/10.5326/0420028)** | **Bloat (GDV) → fat high on a dry-food label.** Nested case-control, 85 GDV vs 194 controls, each eating one dry food. Oil/fat in the **first four ingredients → 2.4× GDV risk** (P=0.01). ⚠️ The study's actual hypothesis — more cereal/soy, less animal protein → more bloat — was **NOT supported** (P=0.83, P=0.79). Observational; high-risk dogs. *Abstract read.* | Purdue University. |
+| **[Olivry et al. 2010, Vet Dermatol 21:233](https://doi.org/10.1111/j.1365-3164.2010.00889.x)** | **Yeast.** International Task Force guideline on canine atopic dermatitis: lists **Malassezia yeast** as a recognised flare factor; recommends non-irritating baths + **essential fatty acid supplementation**. **Expert consensus, not a trial.** Nothing in it links dietary carbs/sugar to skin yeast — no such canine trial was found. *Abstract read.* | NC State + international task force. |
+
+**Looked for, not usable yet:** Stockman et al. 2013 JAVMA 242:1500 (home-prepared recipes, UC Davis) — PubMed has no abstract and the journal returned 403. **Do not cite until read.**
+| **[Treschow et al. 2007, Comp Biochem Physiol B 147:645](https://doi.org/10.1016/j.cbpb.2007.04.004)** | **Why GLM is potent — ETA.** Identified novel omega-3s in Perna canaliculus lipid extract; **C20:4 n-3 (ETA) was the predominant PUFA**; inhibited lipoxygenase products in stimulated **human neutrophils, in vitro**. ⚠️ **Lab/mechanism only — no dogs.** *Abstract read.* | RMIT University, Australia. |
+| **[Abshirini et al. 2021, Inflammopharmacology](https://doi.org/10.1007/s10787-021-00801-2)** (PMC8298224) | Same GLM systematic review as the Omega section above — now with its citation. Shown in the app as *"Systematic review · moderate evidence."* | Massey University (Coad, Wolber, von Hurst). |

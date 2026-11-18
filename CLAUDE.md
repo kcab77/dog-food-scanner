@@ -302,6 +302,16 @@ app.** Never do this. When restyling:
 5. Before saying "done": run `npx tsc --noEmit` (app/ + lib/ must be zero errors), then
    walk the checklist below and report ✅ per item. You cannot run the app — say so.
 
+**⚠️ CHANGED 2026-11-17 (Kyle): "a scan shows only what's about that food."** The
+numbered door tabs (1 What's in it / 2 What to do / 3 Learn more) are switched off
+(`SHOW_SCAN_DOOR_TABS = false`). After a scan, everything with `door="whats-in-it"` or
+`door="what-to-do"` shows in one scroll; every `door="learn"` section (Hershey's Protocol,
+home-cooked bowl, lipomas, TCVM, gut, yeast…) shows **only on the Learn tab**, which opens on a
+🔍 search bar (topics + "Ask PawGrade AI", 5-free-question paywall kept on purpose) → ⭐ 6 popular
+topics → "All topics". "Must still render" below now means *reachable* — on results OR on Learn.
+Topic cards use the `QuickTopic` format (facts → watch-out → tap-to-open groups → Hershey →
+budget → studies → Read more). Kyle's running list: `docs/PAWGRADE_ISSUES.md`.
+
 **All 16 sections must still render:** compassionate note · "how to improve" card · Why
 This Score · Guaranteed Analysis · Processing Method · Ingredient Breakdown pills ·
 Ingredients to Watch · Simple additions · Hershey's Protocol · Recommended Supplements
