@@ -139,6 +139,8 @@ dog-food-scanner/
 │
 │  ── 5. Docs & records ──
 ├── docs/                       # TODO.md · APP_SPEC.md · NUTRITION_NOTES.md · BLOG_POSTS.md
+│                               # PAWGRADE_ISSUES.md 🐞 Kyle's running bug/fix list — read
+│                               #   first when asked "what's wrong with the app" / "what's next"
 │                               # EVIDENCE_AUDIT.md 🔬 every app claim vs its primary source,
 │                               #   + THE CHANGE LIST — read before editing any claim text
 │                               # BREED_DIET_RULES.md 🐕 breed→food rules, ⚠️ UNVERIFIED —

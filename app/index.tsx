@@ -7443,19 +7443,12 @@ export default function App() {
     );
   }
 
-  // [PREVIEW-ONLY, uncommitted] let web fall through so demo buttons are reachable
-  if (!permission.granted && Platform.OS !== "web") {
-    return (
-      <View style={styles.center}>
-        <Text style={styles.message}>
-          We need camera access to scan barcodes.
-        </Text>
-        <TouchableOpacity style={styles.button} onPress={requestPermission}>
-          <Text style={styles.buttonText}>Continue</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
+  // No full-screen camera gate here any more (removed 2026-11-17). It used to
+  // block the WHOLE app until camera access was granted — and once a user tapped
+  // "Don't Allow", iOS never shows the prompt again, so they were stuck forever.
+  // The ask now lives inside the camera frame itself (see `cameraBlocked`), with
+  // an Open Settings fallback, and manual entry / samples work without a camera.
+  const cameraBlocked = !permission.granted && Platform.OS !== "web";
 
   if (showDisclaimer) {
     return (
@@ -8679,6 +8672,9 @@ export default function App() {
     sheetProcessingMethod: string,
     knownOmegaRatio?: string | null,
     isDemo?: boolean,
+    // true when re-scoring a product already on screen (e.g. the "What type
+    // of food is this?" picker). It's the same scan, so don't log it twice.
+    isRescore?: boolean,
   ) => {
     const customIngredients = await loadCustomIngredients();
     const top5 = ingredientList.slice(0, 5).map((i) => i.toLowerCase());
@@ -9046,7 +9042,7 @@ export default function App() {
     total = Math.max(5, Math.round(total));
     setScore(total);
     setScoreBreakdown(breakdown);
-    if (!isDemo) logScan({ productName: name, score: total, processingMethod: processingResult.method, ingredientCount: ingredientList.length, scanMethod: scanMode }).catch(() => {});
+    if (!isDemo && !isRescore) logScan({ productName: name, score: total, processingMethod: processingResult.method, ingredientCount: ingredientList.length, scanMethod: scanMode }).catch(() => {});
     // Fire recall check in background — don't await, never blocks results
     const brandWord = name.split(" ")[0];
     if (brandWord && brandWord.length > 2)
@@ -10037,6 +10033,12 @@ export default function App() {
                 value={manualIngredientText}
                 onChangeText={setManualIngredientText}
                 multiline
+                // On a multiline box iOS's Return key inserts a newline, so there
+                // was no way to put the keyboard down (bug logged 2026-11-17).
+                // Ingredients are comma-separated, so Return becomes "Done".
+                // Pasting a list that contains line breaks still works.
+                returnKeyType="done"
+                submitBehavior="blurAndSubmit"
               />
               <TouchableOpacity
                 style={{
@@ -10088,6 +10090,26 @@ export default function App() {
                 border, rather than flex:1 filling the screen — so the sample
                 scans and the ingredient lookup underneath are reachable without
                 scrolling past a wall of live video. */}
+            {cameraBlocked ? (
+              <View style={[styles.cameraWrapper, { alignItems: "center", justifyContent: "center", padding: 20 }]}>
+                <Text style={[styles.message, { marginBottom: 14 }]}>
+                  {permission.canAskAgain
+                    ? "PawGrade needs your camera to scan barcodes and ingredient labels."
+                    : "Camera access is turned off for PawGrade. Turn it on in Settings to scan — or type ingredients in by hand."}
+                </Text>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() =>
+                    permission.canAskAgain ? requestPermission() : Linking.openSettings()
+                  }
+                >
+                  <Text style={styles.buttonText}>
+                    {permission.canAskAgain ? "Allow camera" : "Open Settings"}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
+            <>
             <View style={styles.cameraWrapper}>
               <CameraView
                 ref={cameraRef}
@@ -10111,6 +10133,8 @@ export default function App() {
             <TouchableOpacity style={styles.shutterBtn} onPress={handleSmartScan}>
               <Text style={styles.shutterIcon}>📸</Text>
             </TouchableOpacity>
+            </>
+            )}
             </View>
           )}
           {scanMode !== "manual" && (
@@ -10995,7 +11019,7 @@ export default function App() {
                         key={opt.value}
                         onPress={async () => {
                           const list = rawIngredientsText.split(/,|;/).map((i: string) => i.trim()).filter((i: string) => i.length > 0);
-                          await processIngredients(productName, rawIngredientsText, list, opt.value);
+                          await processIngredients(productName, rawIngredientsText, list, opt.value, undefined, false, true);
                         }}
                         style={{
                           flex: 1,
