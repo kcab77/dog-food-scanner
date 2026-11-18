@@ -1,0 +1,71 @@
+name: Scanner health check
+
+# Daily alarm for "is the PawGrade scanner actually working?"
+#
+# WHY THIS EXISTS: from ~2026-09-19 to 2026-11-17 the Anthropic balance sat at
+# $0 and every scan in the app failed. Nobody knew for two months — the last
+# logged scan was 9/19 while downloads kept coming in. This makes that
+# impossible to miss again.
+#
+# HOW IT ALERTS: if this job fails, GitHub emails the repo owner automatically.
+# It is silent when everything is fine — it only ever emails when something is
+# genuinely broken. (Don't let it become noise like build-ios.yml did.)
+#
+# WHAT IT CHECKS: one real ingredient lookup through commonsensedog.com, the
+# same server path the app uses — app secret, Vercel, Anthropic key AND credit
+# balance in a single request (~$0.001/day on Haiku). It does NOT just check
+# for HTTP 200: when credits run out, /api/ingredient still answers 200 with an
+# empty `null` body. That's exactly how it failed silently. So we require a real
+# answer field in the response.
+#
+# SETUP (once): GitHub repo → Settings → Secrets and variables → Actions →
+# New repository secret → name APP_SECRET, value = EXPO_PUBLIC_APP_SECRET from .env
+
+on:
+  schedule:
+    - cron: "0 15 * * *" # daily, 15:00 UTC (≈ 7–8am Pacific)
+  workflow_dispatch: # "Run workflow" button for a manual test
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Real ingredient lookup must return a real answer
+        env:
+          APP_SECRET: ${{ secrets.APP_SECRET }}
+        run: |
+          if [ -z "$APP_SECRET" ]; then
+            echo "::error::APP_SECRET repo secret is not set — see SETUP in this file."
+            exit 1
+          fi
+
+          check() {
+            curl -s -m 60 -o body.json -w "%{http_code}" \
+              -X POST https://commonsensedog.com/api/ingredient \
+              -H "Content-Type: application/json" \
+              -H "x-app-secret: $APP_SECRET" \
+              -d '{"ingredient":"chicken meal"}'
+          }
+
+          # Two tries, a minute apart, so one network blip doesn't email Kyle.
+          for attempt in 1 2; do
+            code=$(check || echo "000")
+            if [ "$code" = "200" ] && grep -q '"what_it_is"' body.json; then
+              echo "✅ Scanner API healthy (attempt $attempt)."
+              exit 0
+            fi
+            echo "Attempt $attempt failed: HTTP $code, body: $(head -c 300 body.json 2>/dev/null)"
+            [ "$attempt" = "1" ] && sleep 60
+          done
+
+          case "$code" in
+            200) why="Server answered but with NO real answer — almost always the Anthropic balance is \$0. Top up at console.anthropic.com → Billing." ;;
+            403) why="App secret rejected — APP_SECRET here or on Vercel has changed." ;;
+            429) why="Rate-limited — unusual for one daily request; check Upstash/abuse." ;;
+            5*)  why="Server error on commonsensedog.com — check Vercel logs and the Anthropic key." ;;
+            000) why="Couldn't reach commonsensedog.com at all — site/DNS/Vercel down." ;;
+            *)   why="Unexpected response." ;;
+          esac
+          echo "::error::🚨 PawGrade scanner is DOWN (HTTP $code). $why"
+          exit 1
