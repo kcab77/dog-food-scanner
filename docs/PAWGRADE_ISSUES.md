@@ -3,7 +3,7 @@
 Kyle's running list of what's wrong with the app. Add to it as things come up; mark items
 ✅ with the date + build they shipped in. Newest status at the top of each item.
 
-**Last updated:** 2026-11-17 · **1.9.2 (66) SUBMITTED FOR REVIEW 2026-11-17** (camera fix); **build 67** = 66 + keyboard fix + scan-count fix
+**Last updated:** 2026-11-18 · **1.9.2 (66) SUBMITTED FOR REVIEW 2026-11-17** (camera fix); **build 67** = 66 + keyboard fix + scan-count fix + the simpler app (food-only scan results, Learn search + popular topics, fish oil/gut/yeast/heart cards) + 2026-11-18: search box on the results screen, new Joints card, gut & yeast rebuilt from Kyle's packs
 
 ---
 
@@ -103,6 +103,18 @@ Kyle's running list of what's wrong with the app. Add to it as things come up; m
 ---
 
 ## ✅ Fixed
+
+### Scans now save WHAT was scanned — added 2026-11-19, ships in build 67
+- **Was:** a scan row had only name, score, processing method and ingredient *count* — no way to
+  see a real user's ingredients.
+- **Now:** each scan also saves `ingredients` (the full list) and `flagged_ingredients`.
+  `scripts/scan-report.mjs` prints the latest 10 with their ingredients + flags.
+- **Kyle must run once:** `supabase/migrations/20261119_scans_ingredients.sql` in the Supabase
+  SQL Editor. The app falls back to the old columns if it hasn't run, so no scan is lost either way.
+- Only scans from build 67+ will have ingredients; older rows stay as they were.
+- Seen again 2026-11-18: a new user's raw re-pick counted as 2 scans — that's the bug below,
+  already fixed for 67 (they're on 66 or older).
+
 
 ### Changing the food type counted as a second scan — fixed 2026-11-17, NOT in build 66
 - **Was:** after a scan, tapping "What type of food is this?" → Raw re-ran the whole analysis,

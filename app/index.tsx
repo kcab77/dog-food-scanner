@@ -6498,7 +6498,7 @@ const TopicContext = React.createContext<string | null>(null);
 
 export const LEARN_TOPICS = [
   "AAFCO", "Bloat", "Carbs", "Collagen", "Deficiency signs", "Gut health", "Heart",
-  "Hershey's Protocol", "Home-cooked bowl",
+  "Hershey's Protocol", "Joints", "Home-cooked bowl",
   "Kibble", "Larynx & GOLPP", "Life stages", "Lifespan", "Lipomas", "Lymphoma", "Mineral forms",
   "Missing nutrients", "Leaky gut", "Mushrooms", "Omega-3", "Probiotics", "Recalls & facts", "TCVM", "Yeast",
 ] as const;
@@ -6514,6 +6514,7 @@ const TOPIC_KEYWORDS: Record<string, string> = {
   "Gut health": "gut probiotic digestion diarrhea leaky microbiome bone broth stool enzymes",
   Probiotics: "probiotic gut diarrhea boulardii kefir yogurt",
   Yeast: "yeast itchy itch paws frito corn chip smell ears skin malassezia",
+  Joints: "joints joint arthritis stiff limp hips elbows mobility glucosamine chondroitin green-lipped mussel glm uc-ii cbd turmeric weight",
   Heart: "heart dcm taurine murmur cough carnitine coq10",
   Lipomas: "lipoma lump bump fatty tumor mass",
   Collagen: "collagen joints skin bone broth cartilage",
@@ -6550,8 +6551,7 @@ const POPULAR_TOPICS: { label: string; topic?: string; search?: string }[] = [
   { label: "🐟 Fish oil", topic: "Omega-3" },
   { label: "🦠 Probiotics & gut", topic: "Gut health" },
   { label: "🍄‍🟫 Yeast", topic: "Yeast" },
-  // No Joints section yet — this runs a search instead (omega-3, collagen + Ask AI).
-  { label: "🦴 Joints", search: "joints" },
+  { label: "🦴 Joints", topic: "Joints" },
   { label: "❤️ Heart", topic: "Heart" },
   { label: "🧬 Lipomas", topic: "Lipomas" },
 ];
@@ -7209,6 +7209,8 @@ const FISH_OIL_TOPIC: QuickTopicData = {
     "Flax and chia are ALA, and dogs convert well under 10% of it. A flax-based \"great ratio\" can be 4–5× worse on real marine omega-3.",
     "The target is 5:1 omega-6 to omega-3 or lower. Most kibble runs 15:1 to 30:1.",
     "Omega-3 breaks down under kibble's heat and on the shelf — what was in the bag at the factory isn't what's in the bowl.",
+    // Kyle 2026-11-19, from Dr. Judy Morgan (trusted — Kyle's source).
+    "Dr. Judy Morgan: fish oil isn't harmful, and it's especially good for kibble dogs, whose food lacks fresh fats. The worst case is bad diarrhea — which is why you start low.",
   ],
   watchOut:
     "Rancid oil is pro-inflammatory — the opposite of what you bought it for. Buy small bottles, keep them in the fridge, toss it if it smells sharp, and choose an oil preserved with mixed tocopherols (natural vitamin E).",
@@ -7225,7 +7227,7 @@ const FISH_OIL_TOPIC: QuickTopicData = {
     {
       heading: "How to give it",
       items: [
-        { title: "🐢 Start low, build slow", text: "Start at a quarter to half the dose and build over 2–4 weeks. Loose stool means you went too fast — not that your dog can't take fish oil." },
+        { title: "🐢 Start low, build slow", text: "Start with a drop, or a quarter to half the dose, and build up to the full serving over 2–4 weeks. Adding rich oils too fast can cause soft stool or bad diarrhea — that means you went too fast, not that your dog can't take fish oil." },
         { title: "🍳 Always with a fatty meal", text: "Omega-3 is fat-soluble. On an empty stomach you waste part of what you paid for." },
         { title: "🦐 Krill: half the dose", text: "Krill absorbs better, so it takes about 500 mg per 20 lb, vs 1,000 mg for fish oil." },
         { title: "🥫 Sardines: the best value", text: "Small fish, low in mercury, plus protein and calcium. Packed in water, no salt added." },
@@ -7237,7 +7239,16 @@ const FISH_OIL_TOPIC: QuickTopicData = {
       items: [
         { title: "🩸 Does it thin the blood?", text: "Older advice says stop fish oil 7–14 days before surgery. A large human heart-surgery trial (1,500+ patients) found no extra bleeding. But high doses do lengthen bleeding time — so the middle ground: tell your vet before any surgery or dental work, and take care alongside NSAIDs." },
         { title: "🕐 How long is an open bottle good?", text: "Some guides say 4 weeks, others a couple of months. Your nose is the real test — if it smells sharp or strongly fishy, it's done. Small bottles, in the fridge." },
-        { title: "⚖️ How much for a big dog?", text: "Guides range widely. For a 75 lb dog, the 78-dog arthritis trial used about 2,350 mg EPA + DHA a day; therapeutic ranges built from the NRC safety limit run about 3,200–5,200 mg. Either way, start low and build up." },
+        { title: "⚖️ How much for a big dog?", text: "Guides range widely. For a 75 lb dog, the 78-dog arthritis trial used about 2,350 mg EPA + DHA a day; therapeutic ranges built from the NRC safety limit run about 3,200–5,200 mg. Dr. Andrew Jones goes higher for seniors with chronic joint pain or cognitive decline: 1,000 mg of EFAs per 10 lb a day (about 7,500 mg for a 75 lb dog). Either way, start low and build up." },
+      ],
+    },
+    {
+      // Kyle 2026-11-19 (pasted notes — trusted). Multimodal pairing for seniors.
+      heading: "Pairs well with",
+      items: [
+        { title: "🍄 Lion's mane — brain + gut", text: "Its erinacines (in the mycelium) and hericenones (in the fruiting body) support memory, cognition and nerve health. Its ergothioneine crosses into the brain to cut oxidative stress and fuel brain-cell energy. For cognitive decline: about 100 mg per 20 lb a day. It works along the gut–brain axis — Japanese studies found just sprinkling the powder on kibble improved gut microbiome diversity." },
+        { title: "🍄 Turkey tail — immune defence", text: "The most beta-glucans, and the widest variety, of any medicinal mushroom. They reach the bone marrow and help regenerate red and white blood cells — including those depleted by chemo. UPenn trials in dogs with hemangiosarcoma found a high-beta-glucan extract significantly extended survival. Its fibre and terpenes also feed the gut bacteria behind ~80% of the immune system." },
+        { title: "🧩 Why all three", text: "Fish oil lowers joint and brain inflammation, lion's mane supports brain cells and the microbiome, and turkey tail boosts immune defence — mind, gut and immunity covered at once." },
       ],
     },
   ],
@@ -7284,13 +7295,54 @@ const FISH_OIL_TOPIC: QuickTopicData = {
 // Study: Herstad 2010 — see docs/SOURCES.md. Leaky gut itself has no canine
 // diet trial behind it; the fact line describes the mechanism the section
 // already teaches and doesn't claim a trial.
+// Rebuilt 2026-11-18 from Kyle's packs: qa-gut-probiotics, qa-probiotics-protocol,
+// qa-leaky-gut (trusted — Kyle's own content).
 const GUT_TOPIC: QuickTopicData = {
   facts: [
     "70–80% of the immune system sits right behind the gut wall. Calm gut, calm immune system.",
     "Gut trouble often shows up somewhere else first — itchy skin, ear infections, paw chewing, even anxiety.",
-    "Leaky gut: when the lining's seal loosens, food proteins slip into the blood and the immune system attacks them.",
-    "Bone broth, fermented goat's milk and a little plant fibre (pumpkin, sweet potato) help rebuild it.",
-    "Wake probiotics up: open the capsule into yogurt or bone broth and let it sit 30–60 minutes before feeding.",
+    "The order matters more than the product: calm the inflammation, fix digestion, clear the overgrowth — then add probiotics. Most protocols that \"didn't work\" started at the last step.",
+    "Wake freeze-dried probiotics up: stir into goat's milk, bone broth or yogurt, wait 30–60 minutes, and give it 30 minutes before a meal.",
+    "Variety beats a big CFU number. Rotate between different probiotics instead of staying on one formula forever.",
+  ],
+  groups: [
+    {
+      heading: "How to give probiotics",
+      items: [
+        { title: "💊 Never with antibiotics", text: "The antibiotic kills the probiotic on contact — space them 4–6 hours apart. The exception: S. boulardii is a yeast, not a bacterium, so it can go right through an antibiotic course." },
+        { title: "🔄 Rotate, then rest", text: "Use one formula for a week or two, take a break on whole foods, then switch to a different kind (multi-strain, plant-based, soil-based). Each new one adds diversity." },
+        { title: "🥛 Whole foods count", text: "Raw goat's milk and kefir can go in every day — you can't overdose a living food. The body keeps what it needs and passes the rest." },
+        { title: "🍳 Enzymes on cooked food", text: "Cooking destroys the enzymes in raw ingredients. On a cooked diet, digestive enzymes are the one thing that doesn't rotate — keep them going daily." },
+      ],
+    },
+    {
+      heading: "Read the gut at home — free",
+      items: [
+        { title: "🧘 The prey stance", text: "Front legs flat, rear end up, outside of play and done often — he's stretching his belly to ease gas or cramping. Lip-licking and gulping are silent reflux." },
+        { title: "💩 Chunks of food in the stool", text: "His digestive enzymes are running low." },
+        { title: "🫧 Mucus, gurgling, gas", text: "Jelly-like mucus means an irritated lining. Loud gurgling and gas after meals mean food is sitting and fermenting." },
+        { title: "🍑 Anal gland trouble", text: "Almost always digestive — soft stool doesn't press hard enough to empty the glands." },
+      ],
+    },
+    {
+      heading: "Healing leaky gut, in order",
+      items: [
+        { title: "1️⃣ Diet first", text: "Low-starch, fresh, whole food. This does most of the work — skipping it for supplements is why protocols stall around week three." },
+        { title: "2️⃣ Bone broth + colostrum", text: "Collagen and amino acids to help seal the lining. They're foods, so they're early, cheap and hard to overdo." },
+        { title: "3️⃣ L-glutamine + zinc carnosine", text: "Targeted repair — most useful once whatever damaged the gut has stopped." },
+        { title: "4️⃣ Slippery elm — short-term only", text: "It coats rather than repairs, and it can block absorption of other things. A dog who needs it daily to hold a normal stool has a hidden problem worth finding." },
+        { title: "⏳ How long", text: "Weeks to months. Stool improves first, then energy, then skin and coat last. Keep a journal — you can't hold six weeks of slow change in your head." },
+        { title: "🩺 When to see the vet", text: "Blood in the stool, weight loss, going off food, vomiting that won't settle, or a dog getting worse rather than plateauing." },
+      ],
+    },
+    {
+      heading: "Where the advice differs",
+      items: [
+        { title: "📅 A probiotic every day?", text: "One view: powders are temporary support — stop once the gut is stable and let his own bacteria take over. The other: daily is fine, as long as you rotate products every few months. Both agree: not the same formula forever." },
+        { title: "🍽️ With food or before?", text: "Mixing it into food is the common way and it's fine. The stronger method: wake it up in liquid first and give it 30 minutes before the meal, so it slips past the stomach acid." },
+        { title: "🪜 What comes first?", text: "One protocol starts with soothing herbs to calm inflammation. The leaky-gut protocol starts with the diet and saves soothing herbs for last, as short-term cover. Either way — probiotics come after, not first." },
+      ],
+    },
   ],
   watchOut:
     "Go slow. Add one new thing at a time and give it a few days before the next. Starting a whole gut protocol at once can upset a sensitive gut — and you won't know what helped or what didn't.",
@@ -7325,12 +7377,51 @@ const YEAST_TOPIC: QuickTopicData = {
   facts: [
     "The tell is the smell: yeast smells like corn chips, strongest around the paws, ears and skin folds.",
     "Itching without that smell usually points to allergies or the gut — not yeast.",
+    "Yeast is almost always secondary. Ask what keeps giving it the conditions — an allergy, the gut, thyroid, or skin that stays wet.",
     "The yeast plan starts in the bowl: cut sugary, starchy fillers like rice, corn, peas and potatoes.",
-    "A 50/50 vinegar-and-water rinse, left to air dry, makes skin a place yeast doesn't want to live.",
-    "Give it 3–8 weeks. Most people quit at week two and decide it didn't work.",
+    "Give it 3–8 weeks, and don't stop when it looks better — the symptoms fade before the yeast does. Finish the paws and armpits last.",
+  ],
+  // Groups rebuilt 2026-11-18 from Kyle's qa-yeast, qa-gut-probiotics and
+  // qa-post-antibiotic-yeast packs (trusted).
+  groups: [
+    {
+      heading: "Yeast or allergy?",
+      items: [
+        { title: "👃 The smell", text: "Musty, corn-chip smell and often greasy skin points to yeast. Itch with no smell usually points to allergy or the gut." },
+        { title: "📍 Where it itches", text: "Yeast tends to be scattered — belly, neck, different spots. Food allergy often sticks to paws, ears and rear." },
+        { title: "⏱️ When it started", text: "Itch that flares right after antibiotics, a gap in probiotics, or dirty water points to yeast — not a food he's eaten for years." },
+        { title: "🔬 Only a vet can confirm", text: "A skin cytology is the real test. Worth it if it keeps coming back." },
+      ],
+    },
+    {
+      heading: "The yeast plan",
+      items: [
+        { title: "🥦 Safe vegetables", text: "Broccoli, zucchini, kale, cabbage, okra, spinach (go light on spinach if he's had kidney stones). Fibre without the sugar." },
+        { title: "🥕 Skip for now", text: "Potatoes, sweet potatoes, peas, carrots and all fruit while the detox runs. Carrots are healthy normally — just too sweet for a yeast bloom." },
+        { title: "🧴 Vinegar rinse", text: "1 part vinegar to 1 part water, and let it air dry — that's what shifts the skin's pH. A fast surface fix; the diet is what resolves it." },
+        { title: "🌱 Weed, heal, seed", text: "Weed: pause heavy probiotics and use S. boulardii to crowd out yeast. Heal: S. boulardii + colostrum to rebuild the gut lining. Seed: then bring probiotics back, ideally as goat's milk or kefir." },
+      ],
+    },
+    {
+      heading: "When to see the vet",
+      items: [
+        { title: "🚩 No better by day 7–10", text: "Or any worsening — spreading redness, heat, discharge, or a change in appetite or energy." },
+        { title: "🛁 The best-proven treatment", text: "A shampoo with 2% miconazole + 2% chlorhexidine, about twice a week with 10 minutes of contact time. It knocks the yeast down while you fix the cause." },
+        { title: "💊 Antibiotics won't help yeast", text: "They target bacteria, not fungus — and they often start the problem. Make sure the diagnosis is right." },
+      ],
+    },
+    {
+      heading: "Where the advice differs",
+      items: [
+        { title: "🍞 Does cutting carbs cure it?", text: "The yeast protocol says starve it — cut the sugar and starch. The research is weaker than that: studies are mixed, and some point to dietary fat rather than sugar. Lower-carb whole food is still a healthy move — just not a guaranteed cure on its own." },
+        { title: "📆 How fast should it work?", text: "One source says 3–8 weeks before you see it in the coat. Another says itching often eases within 5–7 days and to see a vet if nothing changes by day 10. Both fit: the itch calms first, the skin and coat last." },
+        { title: "🏊 Does swimming cause it?", text: "One view: a dog who swims and isn't dried — armpits, between the toes — keeps relapsing. The other: water is only the trigger; a weak gut is the cause. Hershey swims most summer days, air-dries, and has had yeast once in 8 years — right after antibiotics." },
+        { title: "🦠 Probiotics during a flare?", text: "Usually they help, especially after antibiotics. But restarting a heavy probiotic on an inflamed gut can set off a flare — which is why weed-heal-seed pauses them first and leads with S. boulardii." },
+      ],
+    },
   ],
   watchOut:
-    "Antibiotics and steroids. Antibiotics wipe out the good gut bacteria that keep yeast in check; steroids raise blood sugar and hide the itch, and when the course ends yeast often comes back worse. If your dog needs antibiotics, plan a probiotic alongside.",
+    "Antibiotics and steroids. Antibiotics wipe out the good gut bacteria that keep yeast in check; steroids raise blood sugar and hide the itch, and when the course ends yeast often comes back worse. If your dog needs antibiotics, plan for the gut: S. boulardii can go right through the course, other probiotics 4–6 hours apart.",
   hershey:
     "For the first 7 years of his life Hershey never had a yeast infection — except once, right after a course of antibiotics. He swims most days all summer and usually air-dries just fine. His yeast has settled down now. There's one flaky spot on his front leg, so I'm trying the leaky-gut protocol to see if rebuilding his gut clears it.",
   cheap: [
@@ -7346,6 +7437,85 @@ const YEAST_TOPIC: QuickTopicData = {
     kind: "Expert guideline · not a trial · didn't test diet sugar",
     url: "https://doi.org/10.1111/j.1365-3164.2010.00889.x",
   },
+};
+
+// ── JOINTS (2026-11-18) ──
+// From Kyle's qa-joints-arthritis + qa-joints-research packs (trusted). Hershey
+// line = what Kyle said 2026-11-17 (sardines + fish oil, hind legs / night limp
+// better) + his swimming. Study: Marshall 2010 — abstract read 2026-11-18
+// (PMID 20237844): 14 obese OA dogs, OPEN prospective trial, no control group,
+// 16 weeks, lameness down from 6.1% weight loss, gait analysis from 8.85%.
+const JOINTS_TOPIC: QuickTopicData = {
+  facts: [
+    "Keeping him lean is the strongest thing you can do, and it's free. Lameness dropped after losing just 6% of body weight.",
+    "Omega-3 is the best-proven supplement: on a force plate, weight-bearing improved in 82% of fish-oil dogs vs 38% of the others.",
+    "Green-lipped mussel is close behind — blinded trials show less pain, and it can kick in within about 2 weeks.",
+    "Glucosamine and chondroitin are more popular than proven. In a 75-dog force-plate trial they didn't beat a placebo.",
+    "Owners \"see\" improvement in 40–50% of dogs given a placebo. Trust blinded studies over testimonials — including your own eyes.",
+  ],
+  watchOut:
+    "Natural first — but never let a dog hurt in the name of natural. Long-term NSAIDs carry real gut, liver and kidney risks, so build the base (weight, omega-3, movement) to need less of them, and use pain relief when he needs it.",
+  groups: [
+    {
+      heading: "Signs he's hurting",
+      items: [
+        { title: "🌅 Stiff after rest", text: "Especially in the morning or after a nap. Dogs hide pain — this is often the first clue." },
+        { title: "🚗 Won't jump or do stairs", text: "Hesitating at the car, the couch or the stairs." },
+        { title: "🐇 Bunny-hopping", text: "Both back legs moving together, or any change in how he walks." },
+        { title: "👅 Licking a joint", text: "Plus lagging behind on walks, slipping on floors, or less interest in play." },
+      ],
+    },
+    {
+      heading: "Movement that helps",
+      items: [
+        { title: "🚶 Short walks, often", text: "Steady daily leash walks beat one long weekend hike." },
+        { title: "🏊 Swimming", text: "Buoyancy takes the load off while building muscle — one of the best things for a stiff dog." },
+        { title: "🛑 Skip the bursts", text: "No weekend-warrior sprints, hard jumping or ball-slamming on sore joints." },
+        { title: "🧶 Grip on the floors", text: "Rugs or runners on slippery floors. Slipping strains joints that are already sore." },
+      ],
+    },
+    {
+      heading: "Add-ons worth trying",
+      items: [
+        { title: "🦴 UC-II collagen", text: "A tiny dose. In one trial it cut pain scores by about a third — about as much as a prescription NSAID." },
+        { title: "🟡 Turmeric blends", text: "Trials use absorbable extracts, often with collagen and green tea. Plain turmeric absorbs poorly — use pepper and fat. Tell your vet before surgery; it can affect clotting." },
+        { title: "🌿 CBD", text: "Placebo-controlled trials showed less pain and more activity. Quality varies wildly, and it can raise liver enzymes — use it with your vet." },
+        { title: "☝️ One at a time", text: "Add one thing, give it 6–8 weeks, then decide. Otherwise you'll never know what worked." },
+      ],
+    },
+    {
+      heading: "Where the advice differs",
+      items: [
+        { title: "💊 Does glucosamine work?", text: "A 2007 trial found less pain and better weight-bearing by day 70. A 2023 force-plate trial in 75 dogs found it no better than placebo, while green-lipped mussel products matched a prescription NSAID. Safe to try — just don't make it the foundation." },
+        { title: "🟡 Is turmeric worth it?", text: "It's a genuine anti-inflammatory. But plain turmeric barely absorbs in dogs, and the trials that worked used enhanced extracts in blends — so a pinch on food isn't what was tested." },
+        { title: "🌿 CBD: promising or hype?", text: "Several blinded trials say it helps. The catch is the product: dosing and quality vary so much that the trial result may not be what's in your bottle." },
+      ],
+    },
+  ],
+  hershey:
+    "Hershey is a 75 lb, 8-year-old Lab mix. He gets half a can of sardines a day plus close to a full serving of fish oil, and his hind legs and the limp he gets at night have improved a lot since. In summer he swims most days — the easiest joint workout there is.",
+  cheap: [
+    { name: "⚖️ Keep him lean", why: "Free, and the strongest evidence of anything. You should easily feel his ribs." },
+    { name: "🥫 Sardines in water", why: "Omega-3 for joints at a fraction of a supplement's price. No salt added." },
+    { name: "🚶 Daily walks + swims", why: "Free. Regular gentle movement keeps joints moving and muscle on." },
+    { name: "🧶 Cheap rugs or yoga mats", why: "Traction on slippery floors for a few dollars." },
+  ],
+  study: {
+    finding:
+      "14 overweight dogs with arthritis went on a calorie-cut diet for 16 weeks. Their lameness dropped once they'd lost about 6% of their weight, and gait sensors confirmed it from about 9%.",
+    cite: "Marshall et al., Vet Res Commun 2010 · University of Glasgow",
+    kind: "Prospective trial · small · no control group",
+    url: "https://pubmed.ncbi.nlm.nih.gov/20237844/",
+  },
+  extraStudies: [
+    {
+      finding:
+        "38 dogs with arthritis ate a regular food or one with 3.5% fish oil for 90 days. Measured on a force plate, weight-bearing improved in 82% of the fish-oil dogs vs 38% of the others.",
+      cite: "Roush et al., JAVMA 2010 · Kansas State + 2 university clinics",
+      kind: "Randomised · double-blind · force-plate · several authors from Hill's Pet Nutrition",
+      url: "https://pubmed.ncbi.nlm.nih.gov/20043801/",
+    },
+  ],
 };
 
 // ── THE OMEGA ALPHABET (Read more, fish oil topic) ──────────────────────────
@@ -7714,6 +7884,8 @@ export default function App() {
   const [openTopic, setOpenTopic] = useState<string | null>(null);
   // Learn tab search + "All topics" toggle (2026-11-17).
   const [learnQuery, setLearnQuery] = useState("");
+  // Results-screen search ("Still have a question about this food?", 2026-11-18).
+  const [foodQuery, setFoodQuery] = useState("");
   const [showAllTopics, setShowAllTopics] = useState(false);
   // Learn without scanning (2026-08-21). The A–Z reference doesn't depend on a
   // scan — gating it behind one meant a new owner had to photograph a bag before
@@ -9561,7 +9733,7 @@ export default function App() {
     total = Math.max(5, Math.round(total));
     setScore(total);
     setScoreBreakdown(breakdown);
-    if (!isDemo && !isRescore) logScan({ productName: name, score: total, processingMethod: processingResult.method, ingredientCount: ingredientList.length, scanMethod: scanMode }).catch(() => {});
+    if (!isDemo && !isRescore) logScan({ productName: name, score: total, processingMethod: processingResult.method, ingredientCount: ingredientList.length, scanMethod: scanMode, ingredients: ingredientList, flaggedIngredients: foundHarmful.map((f) => f.name) }).catch(() => {});
     // Fire recall check in background — don't await, never blocks results
     const brandWord = name.split(" ")[0];
     if (brandWord && brandWord.length > 2)
@@ -10214,7 +10386,7 @@ export default function App() {
       total = Math.max(5, Math.round(total));
       setScore(total);
       setScoreBreakdown(breakdown);
-      logScan({ productName: name, score: total, processingMethod: processingResult.method, ingredientCount: ingredientList.length, scanMethod: 'name_search' }).catch(() => {});
+      logScan({ productName: name, score: total, processingMethod: processingResult.method, ingredientCount: ingredientList.length, scanMethod: 'name_search', ingredients: ingredientList, flaggedIngredients: foundHarmful.map((f) => f.name) }).catch(() => {});
       // Save scan to Google Sheet in background
       saveToGoogleSheet(
         data,
@@ -11872,33 +12044,110 @@ export default function App() {
                   renders. Closed by default, so a scared owner sees the answer
                   and four calm choices instead of twenty-two headers. */}
 
-              {/* Entry point to the AI coach. Placed straight after the score and the
-                  "how to improve" card, because that's the moment the owner has a
-                  question. Personalised once a dog profile exists. */}
+              {/* Entry point to the AI coach + search about THIS food (search added
+                  2026-11-18, Kyle: "AI throughout the whole app"). The original card
+                  is kept — tap the header → coach, as before. Under it: a search box
+                  and food-specific starter questions. Questions go through
+                  askAboutSection → the same 5-free paywall. Topic matches jump to that
+                  topic on the Learn tab. */}
               {score !== null && (
-                <TouchableOpacity
-                  onPress={openCoach}
+                <View
                   style={{
-                    flexDirection: "row", alignItems: "center", gap: 12,
                     backgroundColor: t.goodTint, borderRadius: 18, padding: 16,
                     marginHorizontal: 16, marginBottom: 14,
                     borderWidth: 1, borderColor: t.good,
                   }}
-                  accessibilityLabel="Ask the AI nutrition coach about this food"
                 >
-                  <Text style={{ fontSize: 24 }}>💬</Text>
-                  <View style={{ flex: 1 }}>
-                    <Text style={{ color: t.textStrong, fontSize: 15, fontWeight: "800" }}>
-                      {dogProfileName ? `Ask about this for ${dogProfileName}` : "Ask about this food"}
-                    </Text>
-                    <Text style={{ color: t.textMuted, fontSize: 12.5, lineHeight: 18, marginTop: 2 }}>
-                      {dogProfileName
-                        ? "Answers account for their diet, supplements and health issues."
-                        : "Get holistic answers — add your dog's profile to make them specific."}
-                    </Text>
+                  <TouchableOpacity
+                    onPress={openCoach}
+                    style={{ flexDirection: "row", alignItems: "center", gap: 12 }}
+                    accessibilityLabel="Ask the AI nutrition coach about this food"
+                  >
+                    <Text style={{ fontSize: 24 }}>💬</Text>
+                    <View style={{ flex: 1 }}>
+                      <Text style={{ color: t.textStrong, fontSize: 15, fontWeight: "800" }}>
+                        {dogProfileName ? `Ask about this for ${dogProfileName}` : "Still have a question about this food?"}
+                      </Text>
+                      <Text style={{ color: t.textMuted, fontSize: 12.5, lineHeight: 18, marginTop: 2 }}>
+                        {dogProfileName
+                          ? "Answers account for their diet, supplements and health issues."
+                          : "Get holistic answers — add your dog's profile to make them specific."}
+                      </Text>
+                    </View>
+                    <Text style={{ color: t.good, fontSize: 20, fontWeight: "700" }}>›</Text>
+                  </TouchableOpacity>
+
+                  <View style={{ flexDirection: "row", alignItems: "center", backgroundColor: t.surface, borderRadius: 12, borderWidth: 1, borderColor: t.border, paddingLeft: 12, marginTop: 12 }}>
+                    <Text style={{ fontSize: 15, marginRight: 6 }}>🔍</Text>
+                    <TextInput
+                      value={foodQuery}
+                      onChangeText={setFoodQuery}
+                      placeholder="Search or ask about this food…"
+                      placeholderTextColor={t.textFaint}
+                      returnKeyType="search"
+                      onSubmitEditing={() => {
+                        const q = foodQuery.trim();
+                        if (q) { askAboutSection(q); setFoodQuery(""); }
+                      }}
+                      style={{ flex: 1, color: t.textStrong, fontSize: 15, paddingVertical: 11 }}
+                    />
+                    {foodQuery.trim() !== "" && (
+                      <TouchableOpacity onPress={() => setFoodQuery("")} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }} style={{ paddingHorizontal: 10 }}>
+                        <Text style={{ color: t.textFaint, fontSize: 15 }}>✕</Text>
+                      </TouchableOpacity>
+                    )}
                   </View>
-                  <Text style={{ color: t.good, fontSize: 20, fontWeight: "700" }}>›</Text>
-                </TouchableOpacity>
+
+                  {foodQuery.trim() !== "" ? (
+                    <View style={{ marginTop: 10 }}>
+                      {matchTopics(foodQuery).length > 0 && (
+                        <>
+                          <Text style={{ color: t.textMuted, fontSize: 11, fontWeight: "800", textTransform: "uppercase", letterSpacing: 0.6, marginBottom: 7 }}>Read about it</Text>
+                          <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 7 }}>
+                            {matchTopics(foodQuery).map((topic) => (
+                              <TouchableOpacity
+                                key={topic}
+                                onPress={() => {
+                                  LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+                                  setLearnMode(true);
+                                  setOpenDoor("learn");
+                                  setOpenTopic(topic);
+                                  setFoodQuery("");
+                                }}
+                                style={{ backgroundColor: t.surface, borderWidth: 1, borderColor: t.good, borderRadius: 999, paddingVertical: 7, paddingHorizontal: 13 }}
+                              >
+                                <Text style={{ color: t.goodDeep, fontSize: 12.5, fontWeight: "700" }}>{topic} ›</Text>
+                              </TouchableOpacity>
+                            ))}
+                          </View>
+                        </>
+                      )}
+                      <TouchableOpacity
+                        activeOpacity={0.8}
+                        onPress={() => { askAboutSection(foodQuery.trim()); setFoodQuery(""); }}
+                        style={{ marginTop: 10, backgroundColor: t.good, borderRadius: 12, paddingVertical: 11, paddingHorizontal: 14 }}
+                      >
+                        <Text style={{ color: t.onAccent, fontSize: 13.5, fontWeight: "800" }}>✨ Ask PawGrade AI: “{foodQuery.trim()}”</Text>
+                      </TouchableOpacity>
+                    </View>
+                  ) : (
+                    <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 7, marginTop: 10 }}>
+                      {[
+                        flagged.length > 0 ? `Is ${flagged[0].name} bad for my dog?` : null,
+                        score < 70 ? "What's the easiest way to make this food better?" : "What could I add to make this even better?",
+                        "How much fish oil should I add with this food?",
+                      ].filter((q): q is string => !!q).map((q) => (
+                        <TouchableOpacity
+                          key={q}
+                          onPress={() => askAboutSection(q)}
+                          style={{ backgroundColor: t.surface, borderWidth: 1, borderColor: t.border, borderRadius: 999, paddingVertical: 7, paddingHorizontal: 12 }}
+                        >
+                          <Text style={{ color: t.textStrong, fontSize: 12.5 }}>{q}</Text>
+                        </TouchableOpacity>
+                      ))}
+                    </View>
+                  )}
+                </View>
               )}
 
               {/* Compare two foods. Either save this one as the baseline, or — if a
@@ -16040,6 +16289,24 @@ export default function App() {
                       <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 3, lineHeight: 17 }}>{y.purpose}</Text>
                     </View>
                   ))}
+                </AccordionSection>
+              )}
+
+              {/* Joints (2026-11-18). Kyle's #3 topic; was a search placeholder in
+                  Most popular. QuickTopic only — no long guide exists yet. */}
+              {(score !== null || learnMode) && (
+                <AccordionSection
+                  title="🦴 Joints & arthritis"
+                  topic="Joints"
+                  door="learn"
+                  askLabel="Ask AI"
+                  onAskAI={() =>
+                    askAboutSection(
+                      `My dog is getting stiff and limps after resting. What should I try first for his joints, and how long before I'd see a difference?`,
+                    )
+                  }
+                >
+                  <QuickTopic data={JOINTS_TOPIC} />
                 </AccordionSection>
               )}
 

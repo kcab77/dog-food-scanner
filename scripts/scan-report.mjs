@@ -157,6 +157,20 @@ for (const [k, n] of tally(rows, (r) => r.processing_method)) {
   console.log(`  ${String(k).padEnd(18)} ${String(n).padStart(4)}  ${pct(n, rows.length)}`);
 }
 
+// ── Latest scans, ingredient by ingredient (2026-11-19) ─────────────────
+// Needs supabase/migrations/20261119_scans_ingredients.sql. Rows logged before
+// that migration (or by app builds older than 67) have no ingredient list.
+section('Latest scans — what was in them');
+const withIng = rows.filter((r) => Array.isArray(r.ingredients) && r.ingredients.length);
+if (!withIng.length) {
+  console.log('  (no ingredient lists yet — run the 20261119 migration, then scans from build 67+ will show here)');
+}
+for (const r of withIng.slice(0, 10)) {
+  console.log(`\n  ${(r.scanned_at ?? '').slice(0, 16).replace('T', ' ')}  ${String(r.product_name ?? '(no name)').slice(0, 50)}  ·  ${r.score ?? '—'}/100  ·  ${r.processing_method ?? '?'}  ·  ${r.scan_method ?? ''}`);
+  console.log(`    ingredients: ${r.ingredients.join(', ').slice(0, 400)}`);
+  if (r.flagged_ingredients?.length) console.log(`    \x1b[31mflagged:\x1b[0m ${r.flagged_ingredients.join(', ')}`);
+}
+
 // ── Feedback ─────────────────────────────────────────────────────────────
 try {
   const fb = await fetchAll('feedback', `select=*&order=created_at.desc`);
