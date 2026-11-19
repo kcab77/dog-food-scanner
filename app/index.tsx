@@ -6488,6 +6488,15 @@ const DoorContext = React.createContext<string | null>(null);
 // the results screen. Those general articles live on the Learn tab, where
 // nothing changed. The tab-row JSX is kept (not deleted) behind this flag.
 const SHOW_SCAN_DOOR_TABS = false;
+// Scan screen simplified 2026-11-19 (Kyle): "make the scan feature the main
+// part, then smaller sections where you can type it in, and take the treat
+// thing out for now so it doesn't cause overwhelm." The Camera / Type in /
+// Treats segmented row is hidden; typing in is a small link under the shutter.
+// Treats is switched OFF, not deleted — scoreTreats, TREAT_HARMFUL,
+// TREAT_OK_INGREDIENTS and the treat results all still exist. Flip to true to
+// bring the Treats tab + the Milk-Bone sample back.
+const SHOW_SCAN_MODE_TABS = false;
+const SHOW_TREATS = false;
 const SCAN_DOOR = "scan";
 
 // A–Z topic index (2026-08-20). The "Learn" door held 16 sections stacked in no
@@ -7673,6 +7682,221 @@ const HEART_QUICK_FACTS = [
 
 const SEVERITY_RANK: Record<string, number> = { toxic: 0, severe: 1, moderate: 2, mild: 3 };
 
+// ── NUTRIENT CHECK (2026-11-19, Kyle) ───────────────────────────────────────
+// "If I say liver it should know what percentage it should be and what
+// vitamins/minerals it has... if they add egg shells it says source of calcium.
+// I want it to be smart for every vitamin/mineral."
+//
+// The 25 nutrients are AAFCO's adult-dog list (12 minerals, 11 vitamins incl.
+// choline) + omega-3 EPA/DHA + taurine. A term listed under a nutrient means that food is
+// a MEANINGFUL source (general USDA food-composition knowledge, consistent with
+// ORGAN_PROFILES, INGREDIENT_NUTRIENTS and INGREDIENT_DB above) — not that it
+// covers the requirement. Approximate; re-verify against USDA FDC before this is
+// ever used to formulate a diet. Premix forms map too, so a kibble's added
+// "zinc proteinate" shows up as its zinc source.
+// Fats, oils, milk and broth ("chicken fat", "salmon oil", "goat milk",
+// "chicken broth") don't count as the meat/fish —
+// an oil only counts where it's named explicitly (omega-3, vitamin E).
+// "mixed tocopherols" is deliberately NOT a vitamin E source — it's a
+// preservative at a tiny dose.
+// Shares: liver ~5% and organs ~10% total (ORGAN_PROFILES.limit); raw bone
+// 10–15% and eggshell ½ tsp/lb (home-cooked bowl section); sardines half a can
+// for a big dog (FISH_OIL_TOPIC). Presentation only — never touches the score.
+type NutrientKey =
+  | "calcium" | "phosphorus" | "potassium" | "sodium" | "chloride" | "magnesium"
+  | "iron" | "copper" | "manganese" | "zinc" | "iodine" | "selenium"
+  | "vitA" | "vitD" | "vitE" | "b1" | "b2" | "b3" | "b5" | "b6" | "folate" | "b12" | "choline"
+  | "omega3" | "taurine";
+
+const MEATS = ["beef", "chicken", "turkey", "lamb", "pork", "venison", "bison", "duck", "rabbit", "goat", "elk", "kangaroo", "meat"];
+const FISHES = ["fish", "salmon", "sardine", "anchov", "herring", "mackerel", "menhaden", "pollock", "cod", "trout", "tuna", "whitefish"];
+const ORGANS_ALL = ["liver", "kidney", "spleen", "heart", "pancreas", "brain"];
+
+const NUTRIENTS: { key: NutrientKey; label: string; kind: "mineral" | "vitamin" | "fat" | "other"; why: string; fix: string; terms: string[] }[] = [
+  { key: "calcium", label: "Calcium", kind: "mineral", why: "Bones and teeth. Meat is high in phosphorus and low in calcium, so homemade bowls run short first here.", fix: "Raw meaty bones (raw only), ground eggshell (~½ tsp per lb of food), or sardines with bones",
+    terms: ["eggshell", "egg shell", "bone meal", "raw meaty bone", "chicken neck", "turkey neck", "chicken feet", "sardine", "calcium carbonate", "calcium citrate", "dicalcium phosphate", "tricalcium phosphate", "calcium", "kale", "green tripe", "seaweed calcium"] },
+  { key: "phosphorus", label: "Phosphorus", kind: "mineral", why: "Partners with calcium for bones and energy.", fix: "Any meat, fish or egg",
+    terms: [...MEATS, ...FISHES, ...ORGANS_ALL, "egg", "phosphate", "pumpkin seed"] },
+  { key: "potassium", label: "Potassium", kind: "mineral", why: "Muscles, nerves and heart rhythm.", fix: "Meat, fish, sweet potato or pumpkin",
+    terms: [...MEATS, ...FISHES, "sweet potato", "pumpkin", "spinach", "banana", "potassium chloride", "potassium"] },
+  { key: "sodium", label: "Sodium", kind: "mineral", why: "Fluid balance and nerve signals.", fix: "Meat, fish, egg, or a pinch of kelp",
+    terms: [...MEATS, ...FISHES, "egg", "salt", "sodium chloride", "kelp", "seaweed"] },
+  { key: "chloride", label: "Chloride", kind: "mineral", why: "Fluid balance and stomach acid.", fix: "Meat, fish, egg, or a pinch of kelp",
+    terms: [...MEATS, ...FISHES, "egg", "salt", "chloride", "kelp", "seaweed"] },
+  { key: "magnesium", label: "Magnesium", kind: "mineral", why: "Muscles, nerves and hundreds of enzymes.", fix: "Pumpkin seeds, spinach, sardines or hemp seeds",
+    terms: ["pumpkin seed", "spinach", "sardine", "mackerel", "salmon", "hemp", "kelp", "magnesium", "chia", "quinoa", "oat"] },
+  { key: "iron", label: "Iron", kind: "mineral", why: "Carries oxygen in the blood.", fix: "Liver, spleen, heart or red meat",
+    terms: ["liver", "spleen", "heart", "kidney", "beef", "lamb", "venison", "bison", "sardine", "mussel", "oyster", "egg", "iron", "ferrous", "gizzard"] },
+  { key: "copper", label: "Copper", kind: "mineral", why: "Blood, connective tissue and pigment.", fix: "A little beef liver, or mussels",
+    terms: ["liver", "oyster", "mussel", "sunflower seed", "copper"] },
+  { key: "manganese", label: "Manganese", kind: "mineral", why: "Cartilage, joints and energy use. Often missing in raw and homemade bowls.", fix: "Mussels (blue or green-lipped), pumpkin seeds, spinach or oats",
+    terms: ["mussel", "pumpkin seed", "spinach", "kale", "oat", "brown rice", "hemp", "green tripe", "manganese"] },
+  { key: "zinc", label: "Zinc", kind: "mineral", why: "Skin, coat, immunity and healing. A classic homemade shortfall.", fix: "Red meat, oysters, pumpkin seeds or heart",
+    terms: ["beef", "lamb", "venison", "bison", "oyster", "pumpkin seed", "liver", "heart", "gizzard", "crab", "hemp", "zinc"] },
+  { key: "iodine", label: "Iodine", kind: "mineral", why: "Thyroid hormones — and through them, metabolism.", fix: "A small pinch of kelp, or fish",
+    terms: ["kelp", "seaweed", "cod", "pollock", "whitefish", "fish", "egg", "iodide", "iodate", "iodized"] },
+  { key: "selenium", label: "Selenium", kind: "mineral", why: "Antioxidant defence and thyroid.", fix: "Kidney, fish, eggs or turkey",
+    terms: ["kidney", ...FISHES, "egg", "turkey", "chicken", "selenium", "selenite"] },
+  // Plant beta-carotene (carrot, sweet potato, pumpkin, kale) deliberately NOT
+  // counted: dogs convert it inefficiently — docs/SYNTHETIC_VS_NATURAL.md
+  // "Carrots are not a reliable vitamin A source. Liver and animal fats are."
+  { key: "vitA", label: "Vitamin A", kind: "vitamin", why: "Eyes, skin and immunity. Dogs convert carrot-type beta-carotene poorly, so it needs to come from animal foods.", fix: "A little liver, or egg yolk",
+    terms: ["liver", "egg", "cod liver oil", "vitamin a", "retinyl"] },
+  { key: "vitD", label: "Vitamin D", kind: "vitamin", why: "Calcium absorption. Dogs make very little from sunlight, so it has to come from food.", fix: "Sardines, salmon, mackerel or egg yolks",
+    terms: ["sardine", "salmon", "mackerel", "herring", "trout", "cod liver oil", "egg", "vitamin d", "cholecalciferol"] },
+  { key: "vitE", label: "Vitamin E", kind: "vitamin", why: "Protects fats from going rancid inside the body — the more fish oil, the more E is needed.", fix: "Ground sunflower seeds, hemp seeds, spinach, or a natural E supplement",
+    terms: ["sunflower", "wheat germ", "hemp", "spinach", "kale", "vitamin e", "d-alpha tocopherol", "dl-alpha tocopherol", "tocopheryl"] },
+  { key: "b1", label: "B1 (thiamine)", kind: "vitamin", why: "Turns food into energy; easily destroyed by cooking.", fix: "Pork, liver, sunflower seeds or salmon",
+    terms: ["pork", "liver", "sunflower seed", "salmon", "trout", "brewer", "nutritional yeast", "thiamine"] },
+  { key: "b2", label: "B2 (riboflavin)", kind: "vitamin", why: "Energy and healthy skin.", fix: "Liver, kidney, heart, eggs or kefir",
+    terms: ["liver", "kidney", "heart", "egg", "kefir", "yogurt", "yoghurt", "mushroom", "riboflavin"] },
+  { key: "b3", label: "B3 (niacin)", kind: "vitamin", why: "Energy, skin and nerves.", fix: "Chicken, turkey, fish or liver",
+    terms: ["chicken", "turkey", "beef", ...FISHES, "liver", "niacin"] },
+  { key: "b5", label: "B5 (pantothenic acid)", kind: "vitamin", why: "Energy and making hormones.", fix: "Liver, kidney, eggs or mushrooms",
+    terms: ["liver", "kidney", "egg", "chicken", "mushroom", "sunflower seed", "pantothen"] },
+  { key: "b6", label: "B6", kind: "vitamin", why: "Protein use, red blood cells and the brain.", fix: "Chicken, turkey, fish or sweet potato",
+    terms: ["chicken", "turkey", "beef", "salmon", "tuna", "liver", "sweet potato", "potato", "banana", "pyridoxine"] },
+  { key: "folate", label: "Folate", kind: "vitamin", why: "New cells and red blood cells.", fix: "Liver, spinach, kale or broccoli",
+    terms: ["liver", "spinach", "kale", "broccoli", "asparagus", "brewer", "egg", "folic acid", "folate"] },
+  { key: "b12", label: "B12", kind: "vitamin", why: "Nerves, blood and the gut.", fix: "Liver, kidney, red meat, sardines or eggs",
+    terms: ["liver", "kidney", "heart", "beef", "lamb", "venison", "sardine", "mussel", "oyster", "egg", "gizzard", "b12", "cobalamin"] },
+  { key: "choline", label: "Choline", kind: "vitamin", why: "The liver and the brain. Easy to miss in homemade bowls.", fix: "Eggs (the best source), liver or kidney",
+    terms: ["egg", "liver", "kidney", "heart", "beef", ...FISHES, "choline"] },
+  { key: "omega3", label: "Omega-3 (EPA/DHA)", kind: "fat", why: "Calms inflammation — joints, skin, heart and brain.", fix: "Sardines (about half a can a day for a big dog) or fish oil",
+    terms: [...FISHES, "fish oil", "salmon oil", "sardine oil", "anchovy oil", "herring oil", "menhaden oil", "pollock oil", "cod liver oil", "krill", "mussel", "algal oil", "algae oil", "brain"] },
+  // Not on AAFCO's required list — dogs can make it. Tracked anyway because
+  // large breeds on low-meat diets can fall short (SYNTHETIC_VS_NATURAL.md:
+  // "Relevant to a Labrador") and it's the nutrient at the centre of DCM.
+  { key: "taurine", label: "Taurine", kind: "other", why: "Heart muscle. Dogs can make it, but big dogs on low-meat or legume-heavy food can fall short — it's the nutrient at the centre of the DCM question.", fix: "Heart (the best source), dark poultry meat, fish or mussels",
+    terms: ["heart", "gizzard", "turkey", "chicken", "duck", ...FISHES, "mussel", "oyster", "krill", "taurine"] },
+];
+
+// How much of the bowl each kind of ingredient should be — first match wins.
+const FOOD_SHARES: { terms: string[]; share: string }[] = [
+  { terms: ["sunflower oil", "safflower oil", "corn oil", "soybean oil", "vegetable oil", "canola oil"], share: "Mostly omega-6 — small amounts; it's what pushes kibble ratios to 20:1" },
+  { terms: ["liver"], share: "Keep it to about 5% of the bowl — vitamin A and copper build up" },
+  { terms: ["kidney", "spleen", "pancreas", "brain"], share: "A secreting organ — together with liver, about 10% of the bowl" },
+  { terms: ["heart", "gizzard", "tongue"], share: "Counts as muscle meat — can be a big part of the bowl" },
+  { terms: ["eggshell", "egg shell"], share: "About ½ tsp per pound of finished food" },
+  { terms: ["bone meal"], share: "Follow the label — it's concentrated" },
+  { terms: ["neck", "feet", "raw meaty bone"], share: "About 10–15% of the bowl if raw. Never feed cooked bones" },
+  { terms: ["kelp", "seaweed"], share: "Just a pinch — iodine adds up fast" },
+  { terms: ["sardine"], share: "About half a can a day for a big dog — in water, no salt added" },
+  { terms: ["cod liver oil"], share: "Small amounts only — it's concentrated vitamin A and D, which build up" },
+  { terms: ["fish oil", "salmon oil", "krill oil", "sardine oil", "anchovy oil", "menhaden oil", "pollock oil", "herring oil"], share: "Start low and build up over 2–4 weeks" },
+  { terms: ["egg"], share: "An egg a day suits most medium-to-large dogs" },
+  { terms: ["pumpkin seed", "sunflower seed", "hemp"], share: "A teaspoon or so, ground — they're calorie-dense" },
+  { terms: ["mussel", "oyster"], share: "A small amount a few times a week" },
+  { terms: ["kefir", "yogurt", "yoghurt", "goat milk", "goat's milk"], share: "A spoonful or two, plain" },
+  { terms: FISHES, share: "A protein — can be part of the main meat" },
+  { terms: MEATS, share: "The base — most of the bowl" },
+  { terms: ["spinach", "kale", "broccoli", "carrot", "pumpkin", "sweet potato", "squash", "zucchini", "asparagus", "blueberr"], share: "Veg and fruit — around 10% of the bowl or less" },
+];
+
+function analyzeNutrients(ingredientList: string[]) {
+  const list = ingredientList.map((i) => i.trim()).filter(Boolean);
+  const low = list.map((i) => i.toLowerCase());
+  // "mixed tocopherols" is a preservative; "bone broth"/"deboned"/"boneless" aren't calcium.
+  const usable = (ing: string, term: string) => {
+    if (!ing.includes(term)) return false;
+    // Short terms must start a word: "oat" isn't in "goat", "egg" isn't in "nutmeg".
+    if (term.length <= 4 && !new RegExp(`\\b${term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`).test(ing)) return false;
+    if (term.includes("tocopher") && ing.includes("mixed")) return false;
+    if (term === "egg" && /shell/.test(ing)) return false;
+    // "chicken fat", "pork fat", "beef tallow" are fats, not meat — they carry
+    // none of the meat's minerals or B vitamins. Fish oil keeps its omega-3.
+    if (/\b(fat|tallow|lard|grease|milk|broth)\b/.test(ing) && (MEATS.includes(term) || FISHES.includes(term))) return false;
+    // An oil counts only for oil terms ("cod liver oil" is not liver).
+    if (/\boil\b/.test(ing) && !term.includes("oil") && !["sunflower", "wheat germ", "hemp", "krill"].includes(term)) return false;
+    return true;
+  };
+  const sourcesFor = (n: (typeof NUTRIENTS)[number]) => {
+    const hits = list.filter((_, i) => n.terms.some((t) => usable(low[i], t)));
+    if (n.key === "calcium") {
+      low.forEach((ing, i) => { if (/\bbones?\b(?! broth)/.test(ing) && !hits.includes(list[i])) hits.push(list[i]); });
+    }
+    return hits;
+  };
+  const coverage = NUTRIENTS.map((n) => ({ ...n, sources: sourcesFor(n) }));
+  const perIngredient = list
+    .map((name, i) => {
+      const ing = low[i];
+      const brings = NUTRIENTS.filter((n) => n.terms.some((t) => usable(ing, t)) || (n.key === "calcium" && /\bbones?\b(?! broth)/.test(ing))).map((n) => n.label);
+      const share = FOOD_SHARES.find((f) => f.terms.some((t) => usable(ing, t)))?.share;
+      return { name, brings, share };
+    })
+    .filter((x) => x.brings.length > 0);
+  return {
+    coverage,
+    missing: coverage.filter((c) => c.sources.length === 0),
+    covered: coverage.filter((c) => c.sources.length > 0),
+    perIngredient,
+  };
+}
+
+function NutrientCheck({ ingredientList, hasPremix }: { ingredientList: string[]; hasPremix: boolean }) {
+  const a = analyzeNutrients(ingredientList);
+  const total = a.coverage.length;
+  const pill = (txt: string, ok: boolean) => (
+    <View key={txt} style={{ backgroundColor: ok ? t.goodTint : t.surfaceSunken, borderRadius: 999, paddingVertical: 3, paddingHorizontal: 8, marginRight: 5, marginBottom: 5 }}>
+      <Text style={{ color: ok ? t.goodDeep : t.textMuted, fontSize: 11, fontWeight: "700" }}>{txt}</Text>
+    </View>
+  );
+  return (
+    <View>
+      <Text style={{ color: t.textStrong, fontSize: 15, fontWeight: "800" }}>
+        {a.covered.length} of {total} nutrients have a source on this list
+      </Text>
+      <Text style={{ color: t.textMuted, fontSize: 12.5, lineHeight: 18, marginTop: 4 }}>
+        {hasPremix
+          ? "This food has an added vitamin & mineral mix, so it's built to hit AAFCO minimums. Here's where each nutrient comes from."
+          : "No vitamin & mineral mix on this list — so everything has to come from the food itself. Here's what each ingredient brings, and what's missing."}
+      </Text>
+
+      {a.missing.length > 0 && (
+        <View style={{ marginTop: 14 }}>
+          <Text style={{ color: t.moderateDeep, fontSize: 11, fontWeight: "800", textTransform: "uppercase", letterSpacing: 0.8, marginBottom: 6 }}>
+            ⚠️ No source on this list ({a.missing.length})
+          </Text>
+          {a.missing.map((m) => (
+            <ExpandRow key={m.key} title={m.label} text={`${m.why}\n\nAdd: ${m.fix}.`} />
+          ))}
+        </View>
+      )}
+
+      {a.perIngredient.length > 0 && (
+        <View style={{ marginTop: 14 }}>
+          <Text style={{ color: t.goodDeep, fontSize: 11, fontWeight: "800", textTransform: "uppercase", letterSpacing: 0.8, marginBottom: 6 }}>
+            ✅ What each ingredient brings
+          </Text>
+          {a.perIngredient.slice(0, 6).map((p) => (
+            <View key={p.name} style={{ marginBottom: 10 }}>
+              <Text style={{ color: t.textStrong, fontSize: 13.5, fontWeight: "700", textTransform: "capitalize" }}>{p.name}</Text>
+              {p.share && <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 1, marginBottom: 4 }}>{p.share}</Text>}
+              <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop: p.share ? 0 : 4 }}>{p.brings.map((b) => pill(b, true))}</View>
+            </View>
+          ))}
+          {a.perIngredient.length > 6 && (
+            <ReadMore moreLabel={`Show ${a.perIngredient.length - 6} more`} lessLabel="Show less">
+              {a.perIngredient.slice(6).map((p) => (
+                <View key={p.name} style={{ marginBottom: 10 }}>
+                  <Text style={{ color: t.textStrong, fontSize: 13.5, fontWeight: "700", textTransform: "capitalize" }}>{p.name}</Text>
+                  {p.share && <Text style={{ color: t.textMuted, fontSize: 12, marginTop: 1, marginBottom: 4 }}>{p.share}</Text>}
+                  <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop: p.share ? 0 : 4 }}>{p.brings.map((b) => pill(b, true))}</View>
+                </View>
+              ))}
+            </ReadMore>
+          )}
+        </View>
+      )}
+
+      <Text style={{ color: t.textDim, fontSize: 11, lineHeight: 15, marginTop: 12, fontStyle: "italic" }}>
+        Read from what&apos;s listed. It shows whether a source is there — not whether there&apos;s enough. That takes a full recipe check against AAFCO or NRC, so treat this as a guide, not a guarantee.
+      </Text>
+    </View>
+  );
+}
+
 function AccordionSection({
   title,
   children,
@@ -7783,11 +8007,122 @@ function getVerdict(score: number): string {
   return "Poor quality — we'd avoid this one.";
 }
 
+// ── WHAT THIS BOWL IS MISSING (2026-11-19) ──────────────────────────────────
+// Rung 1 of docs/BLUEPRINT_BOWL_ADDITIONS.md, widened at Kyle's ask to the gaps
+// a label can show ACCURATELY. Reads the ingredient list only — presentation,
+// never the score.
+//
+// Accuracy rules (why it's built this way):
+//  • It detects whether a SOURCE is listed, never how much. Copy never claims
+//    an amount is short.
+//  • Calcium + vitamin D are only checked when there's NO vitamin/mineral premix
+//    on the label (i.e. homemade / typed-in / fresh-without-premix). A food sold
+//    as complete & balanced must meet AAFCO minimums for both, so telling a
+//    kibble buyer "no calcium" would be false and frightening.
+//  • Omega: no marine source → add one. Marine source present but the ratio is
+//    still poor → say it's outnumbered (blueprint § 5). Present + good → silent.
+// Doses reuse what the app already says elsewhere: sardines (FISH_OIL_TOPIC),
+// eggshell ½ tsp per lb of finished food (home-cooked bowl section).
+type BowlGap = { icon: string; what: string; why: string };
+const MARINE_TERMS = ["fish", "salmon", "sardine", "anchov", "herring", "mackerel", "menhaden", "pollock", "cod", "trout", "tuna", "krill", "mussel", "algal oil", "algae oil"];
+const PREMIX_TERMS = ["vitamin", "mineral", "supplement", "sulfate", "proteinate", "chelate", "oxide", "selenite", "cholecalciferol", "premix", "amino acid complex"];
+const CALCIUM_TERMS = ["eggshell", "egg shell", "calcium", "bone meal", "sardine", "neck"];
+// Liver is NOT here: INGREDIENT_DB has it at 0–16 IU/100 g — not a real source.
+const VITAMIN_D_TERMS = [...MARINE_TERMS, "egg", "cholecalciferol", "vitamin d"];
+
+function labelHasPremix(ingredientList: string[]): boolean {
+  const list = ingredientList.map((i) => i.toLowerCase());
+  return list.some((ing) => [...PREMIX_TERMS, ...ADDED_VITAMINS].some((t) => ing.includes(t)));
+}
+
+function getBowlGaps(
+  ingredientList: string[],
+  processing: { rating?: string; method?: string } | null,
+  omegaLabel?: string,
+): BowlGap[] {
+  const list = ingredientList.map((i) => i.toLowerCase());
+  if (list.length === 0) return [];
+  const has = (terms: string[]) => list.some((ing) => terms.some((t) => ing.includes(t)));
+  // "bone" counts as calcium only as a word — not "deboned", "boneless" or bone broth.
+  const hasBone = list.some((ing) => /\bbones?\b(?! broth)/.test(ing));
+  const fmt = `${processing?.rating ?? ""} ${processing?.method ?? ""}`.toLowerCase();
+  const heatProcessed = /kibble|extrud|baked|dry/.test(fmt);
+  const hasPremix = labelHasPremix(ingredientList);
+  const gaps: BowlGap[] = [];
+
+  if (!hasPremix) {
+    if (!has(CALCIUM_TERMS) && !hasBone)
+      gaps.push({
+        icon: "🦴",
+        what: "a calcium source",
+        why: "Nothing on this list supplies calcium — the #1 gap in homemade food. Meat is high in phosphorus and low in calcium, and over time that pulls calcium from the bones. Feeding raw: raw meaty bones. Cooking: never cooked bones — use ground eggshell, about ½ tsp per pound of finished food.",
+      });
+    // Eggshell is calcium, not vitamin D — don't let "egg" in "eggshell" count.
+    if (!list.some((ing) => !/shell/.test(ing) && VITAMIN_D_TERMS.some((t) => ing.includes(t))))
+      gaps.push({
+        icon: "☀️",
+        what: "a vitamin D source",
+        why: "Dogs make very little vitamin D from sunlight, so it has to come from food — oily fish like sardines, salmon or mackerel, or egg yolks.",
+      });
+    // The rest of the classic homemade shortfalls, rolled into one line so the
+    // short version stays short. Full detail: the Vitamins & minerals check.
+    const others = analyzeNutrients(ingredientList).missing
+      .filter((m) => ["zinc", "vitE", "iodine", "manganese", "choline", "copper"].includes(m.key))
+      .map((m) => m.label);
+    if (others.length > 0)
+      gaps.push({
+        icon: "🧪",
+        what: `${others.length === 1 ? "a source of" : "sources of"} ${others.join(", ")}`,
+        why: `Nothing on this list supplies ${others.join(", ")} — common gaps in homemade bowls. The Vitamins & minerals check below shows what to add for each.`,
+      });
+  }
+
+  const marine = has(MARINE_TERMS);
+  const poorRatio = /poor/i.test(omegaLabel ?? "");
+  if (!marine)
+    gaps.push({
+      icon: "🐟",
+      what: "fish or fish oil",
+      why: "There's no fish or fish oil on this list, so the omega-3s that calm inflammation are missing. Sardines in water are the best value — about half a can a day for a big dog — or a fish oil, started low.",
+    });
+  else if (poorRatio)
+    gaps.push({
+      icon: "🐟",
+      what: "more omega-3",
+      why: "There IS fish in here — it's just outnumbered by the omega-6 fats, so the ratio still runs high. Sardines or fish oil help by shifting that ratio toward 5:1.",
+    });
+
+  if (!has(ORGAN_MEATS))
+    gaps.push({
+      icon: "🫀",
+      what: "a little organ meat",
+      why: "Organs are where the vitamins and minerals are concentrated. A little beef liver or heart a few times a week — keep liver small, because too much vitamin A is its own problem.",
+    });
+
+  if (heatProcessed && !list.some((ing) => /\begg/.test(ing)))
+    gaps.push({
+      icon: "🥚",
+      what: "something fresh, like an egg",
+      why: "Everything here was cooked at high heat. An egg a day adds the best-quality protein there is, plus choline for the liver.",
+    });
+
+  if (heatProcessed && !has(PROBIOTIC_SOURCES) && !has(["kefir", "yogurt", "yoghurt", "goat milk", "goat's milk"]))
+    gaps.push({
+      icon: "🦠",
+      what: "live cultures",
+      why: "No probiotics on this label. A spoon of plain kefir or yogurt, or a probiotic — most useful on dry food or after antibiotics.",
+    });
+
+  return gaps;
+}
+
 // Single most actionable next step: upgrade the format if it's heavily processed,
 // otherwise recommend the top whole-food topper to add. Returns copy + an affiliate CTA.
 function getNextStep(
   score: number,
   processing: { rating?: string } | null,
+  ingredientList: string[] = [],
+  omegaLabel?: string,
 ): { headline: string; detail: string; rec: (typeof SUPPLEMENT_RECS)[number] } {
   const rating = (processing?.rating || "").toLowerCase();
   const poorFormat =
@@ -7796,6 +8131,20 @@ function getNextStep(
     rating.includes("baked") ||
     rating.includes("extruded");
   const fishOil = SUPPLEMENT_RECS[2]; // Fish Oil (Omega-3) — universal anti-inflammatory topper
+  // 2026-11-19 (Kyle): "how to improve after a scan based on missing
+  // ingredients". Lead with this label's biggest gap when there is one; the
+  // two generic messages below remain the fallback.
+  const gaps = getBowlGaps(ingredientList, processing, omegaLabel);
+  if (gaps.length > 0) {
+    const g = gaps[0];
+    return {
+      headline: `Biggest easy win: ${g.what}`,
+      detail: poorFormat
+        ? `${g.why} Longer term, swapping part of each meal for gently cooked, freeze-dried or raw is the biggest upgrade of all.`
+        : g.why,
+      rec: fishOil,
+    };
+  }
   if (poorFormat || score < 45) {
     return {
       headline: "Upgrade the format — or top it off",
@@ -10621,6 +10970,21 @@ export default function App() {
                 ? "Scan a treat"
                 : "Scan a bag"}
           </Text>
+          {!SHOW_SCAN_MODE_TABS && scanMode !== "manual" && (
+            <Text style={{ color: t.textMuted, fontSize: 13.5, textAlign: "center", marginTop: -4, marginBottom: 10, paddingHorizontal: 24 }}>
+              Snap the ingredient list — get a score and what to add to the bowl.
+            </Text>
+          )}
+          {!SHOW_SCAN_MODE_TABS && scanMode === "manual" && (
+            <TouchableOpacity
+              onPress={() => { setScanMode("smart"); setScanned(false); setIsTreatScan(false); setTreatScore(null); setProductName(""); scanningRef.current = false; }}
+              style={{ alignSelf: "center", paddingVertical: 6, paddingHorizontal: 14, marginBottom: 4 }}
+              accessibilityRole="button"
+            >
+              <Text style={{ color: t.good, fontSize: 13.5, fontWeight: "700" }}>📷 Back to the camera</Text>
+            </TouchableOpacity>
+          )}
+          {SHOW_SCAN_MODE_TABS && (
           <View style={styles.modeToggle}>
             <TouchableOpacity
               style={[
@@ -10656,7 +11020,9 @@ export default function App() {
             </TouchableOpacity>
             {/* Treats mode re-enabled 2026-08-11. The scoring path (scoreTreats),
                 TREAT_HARMFUL, TREAT_OK_INGREDIENTS and the results rendering were
-                all intact the whole time — only this button was missing. */}
+                all intact the whole time — only this button was missing.
+                Hidden again 2026-11-19 behind SHOW_TREATS (Kyle: less overwhelm). */}
+            {SHOW_TREATS && (
             <TouchableOpacity
               style={[
                 styles.modeBtn,
@@ -10673,7 +11039,9 @@ export default function App() {
                 Treats
               </Text>
             </TouchableOpacity>
+            )}
           </View>
+          )}
           {/* In camera modes the instruction now lives INSIDE the viewfinder
               frame (below), where the mockup puts it. Type-in mode has no
               viewfinder, so it keeps a one-line instruction of its own. */}
@@ -10827,6 +11195,18 @@ export default function App() {
             </TouchableOpacity>
             </>
             )}
+            {/* The smaller way in (2026-11-19): typing replaces the old tab. */}
+            {!SHOW_SCAN_MODE_TABS && (
+              <TouchableOpacity
+                onPress={() => { setScanMode("manual"); setScanned(false); setIsTreatScan(false); setTreatScore(null); setProductName(""); scanningRef.current = false; }}
+                style={{ alignSelf: "center", paddingVertical: 8, paddingHorizontal: 14, marginTop: 2 }}
+                accessibilityRole="button"
+              >
+                <Text style={{ color: t.textMuted, fontSize: 13 }}>
+                  No camera handy? <Text style={{ color: t.good, fontWeight: "700" }}>Type the ingredients in ›</Text>
+                </Text>
+              </TouchableOpacity>
+            )}
             </View>
           )}
           {scanMode !== "manual" && (
@@ -10860,6 +11240,7 @@ export default function App() {
                   <Text style={styles.demoBtnText}>Simple Food Project</Text>
                 </TouchableOpacity>
               </View>
+              {SHOW_TREATS && (
               <View style={[styles.demoRow, { marginTop: 6 }]}>
                 <TouchableOpacity
                   style={[styles.demoBtn, styles.demoBtnBad, { flex: 1 }]}
@@ -10870,6 +11251,7 @@ export default function App() {
                   </Text>
                 </TouchableOpacity>
               </View>
+              )}
             </>
           )}
           {/* Quick ingredient lookup — ask about one or a few ingredients
@@ -11964,6 +12346,9 @@ export default function App() {
                 // The three additions with the best evidence behind them. Deliberately
                 // the same three regardless of score — they help every bowl, and a
                 // scared owner needs one consistent answer, not a branching tree.
+                // 2026-11-19: label-driven gaps first; ADDITIONS stays as the
+                // fallback when this label shows no gap (blueprint § 7).
+                const bowlGaps = getBowlGaps(ingredients, processing, omegaRating?.label);
                 const ADDITIONS = [
                   { icon: "🥚", what: "An egg a day", why: "The highest biological-value protein there is, plus choline for the liver" },
                   { icon: "🐟", what: "Fish oil or sardines", why: "82% of arthritic dogs improved weight-bearing on a force-plate trial. Also coat, skin and heart" },
@@ -12006,9 +12391,12 @@ export default function App() {
 
                     <View style={{ backgroundColor: t.goodTint, borderRadius: 12, padding: 13, marginTop: 12 }}>
                       <Text style={{ color: t.goodDeep, fontSize: 11, fontWeight: "800", textTransform: "uppercase", letterSpacing: 1, marginBottom: 7 }}>
-                        👉 Three things that upgrade any bowl
+                        {bowlGaps.length > 0 ? "👉 What this bowl is missing" : "👉 Three things that upgrade any bowl"}
                       </Text>
-                      {ADDITIONS.map((a, i) => (
+                      {(bowlGaps.length > 0
+                        ? bowlGaps.slice(0, 3).map((g) => ({ icon: g.icon, what: g.what.charAt(0).toUpperCase() + g.what.slice(1), why: g.why }))
+                        : ADDITIONS
+                      ).map((a, i) => (
                         <View key={i} style={{ flexDirection: "row", marginTop: i === 0 ? 0 : 9 }}>
                           <Text style={{ fontSize: 16, marginRight: 9 }}>{a.icon}</Text>
                           <View style={{ flex: 1 }}>
@@ -12017,6 +12405,11 @@ export default function App() {
                           </View>
                         </View>
                       ))}
+                      {bowlGaps.length > 0 && (
+                        <Text style={{ color: t.textDim, fontSize: 11, lineHeight: 15, marginTop: 10, fontStyle: "italic" }}>
+                          Read from what&apos;s listed — it can tell whether a source is there, not how much.
+                        </Text>
+                      )}
                     </View>
 
                     <Text style={{ color: t.textMuted, fontSize: 12.5, marginTop: 13, lineHeight: 18, fontStyle: "italic" }}>
@@ -12030,10 +12423,10 @@ export default function App() {
               {score !== null && (
                 <View style={{ backgroundColor: t.dcmTint, borderRadius: 18, padding: 18, marginHorizontal: 16, marginBottom: 14, borderWidth: 1, borderColor: t.dcmDeep }}>
                   <Text style={{ color: t.infoSoft, fontSize: 11, fontWeight: "800", marginBottom: 8, textTransform: "uppercase", letterSpacing: 1.1 }}>
-                    💡 {getNextStep(score, processing).headline}
+                    💡 {getNextStep(score, processing, ingredients, omegaRating?.label).headline}
                   </Text>
                   <Text style={{ color: t.text, fontSize: 14, lineHeight: 22 }}>
-                    {getNextStep(score, processing).detail}
+                    {getNextStep(score, processing, ingredients, omegaRating?.label).detail}
                   </Text>
                 </View>
               )}
@@ -15133,6 +15526,24 @@ export default function App() {
                       </Text>
                     </View>
                   ))}
+                </AccordionSection>
+              )}
+
+              {/* Vitamins & minerals check (2026-11-19, Kyle). Food-relevant, so it
+                  renders on the scan (no learn door). Open by default for bowls
+                  with no premix — that's where the gaps are real. */}
+              {ingredients.length > 0 && (
+                <AccordionSection
+                  title="🧪 Vitamins & minerals check"
+                  defaultOpen={!labelHasPremix(ingredients)}
+                  askLabel="Ask AI"
+                  onAskAI={() =>
+                    askAboutSection(
+                      `Looking at these ingredients (${ingredients.slice(0, 25).join(", ")}), which vitamins and minerals is my dog most likely short on, and what's the simplest way to add each one?`,
+                    )
+                  }
+                >
+                  <NutrientCheck ingredientList={ingredients} hasPremix={labelHasPremix(ingredients)} />
                 </AccordionSection>
               )}
 

@@ -25,6 +25,18 @@ Kyle's running list of what's wrong with the app. Add to it as things come up; m
 
 ---
 
+## ❓ Kyle to confirm (logged 2026-11-19 — defaults in place, nothing blocked)
+
+- **Liver: 5% or 10% of the bowl?** App uses ~5% (all organs ~10%). Vault note says "only
+  liver has the 10% cap". Default kept: 5%.
+- **Goat milk / kefir / yogurt as calcium?** Default: not counted (a spoonful is very little).
+- **Check the Ingredient Nutrient Map** — https://claude.ai/artifact/Q7vruTqg2QUEmCr992ZcwQ —
+  mark each food ✓/✗, then tell Claude "I checked it" to apply the fixes.
+- **Not committed yet:** today's scan-screen, bowl-gaps and vitamins & minerals work.
+- Then: test in the simulator → bump to 1.9.3 → TestFlight build 67.
+
+---
+
 ## 🎯 Long-term goals
 
 ### 2. Type-in should understand a whole homemade meal, not just a bag label
